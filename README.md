@@ -22,3 +22,5 @@ Stack (D-A approved): PWA, portable TypeScript, no framework. Theme (D-E approve
 | `docs/register` | original Register + `…_v2_1_G1_evidence.xlsx` (statuses upgraded only where evidence passes) |
 
 Report of the first work block: `docs/G1-report-1.md`.
+
+Autonomy rules for every session: see `CLAUDE.md` (auto-loaded) and `DECISIONS_LOG.md`.

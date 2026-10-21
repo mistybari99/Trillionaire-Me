@@ -215,7 +215,7 @@ export const FIELDS: FieldDef[] = [
   f({ id: "finance.period", entity: "finance_item", family: "FAM-07", type: "choice", purpose: "finance_basics", privacy: "financial", step: 7, importance: "optional",
     options: [opt("once", "একবার", "One-off"), opt("monthly", "মাসিক", "Monthly"), opt("yearly", "বার্ষিক", "Yearly")],
     label: bi("কত সময় পর পর", "How often"), what: bi("আয় বা খরচ কত ঘন ঘন হয়।", "How often the income or expense recurs."),
-    why: bi("৯০ দিনের নগদ প্রবাহের হিসাবের জন্য (পরের গেটে)।", "For the 90-day cash-flow view (later gate)."), example: bi("মাসিক", "Monthly") }),
+    why: bi("৯০ দিনের নগদ প্রবাহের হিসাবের জন্য (পরে)।", "For the 90-day cash-flow view (later)."), example: bi("মাসিক", "Monthly") }),
 
   // ── Deen / Ibadah (FAM-13) — schema + privacy only, no scripture text ──
   f({ id: "prayer_log.date", entity: "prayer_log", family: "FAM-13", type: "date", purpose: "deen_tracking", privacy: "worship", importance: "optional",
@@ -256,7 +256,7 @@ export const FIELDS: FieldDef[] = [
   f({ id: "learning_item.title", entity: "learning_item", family: "FAM-13", type: "text", purpose: "deen_tracking", privacy: "worship", importance: "optional",
     label: bi("দ্বীনি শিক্ষার বিষয়", "Deen learning topic"),
     what: bi("যা শিখতে চান।", "What you want to learn."),
-    why: bi("শেখার ট্র্যাক সমান্তরালে চলে, ধনের গেটের অধীনে নয়।", "Learning runs in parallel, not under the wealth gates."),
+    why: bi("শেখার ট্র্যাক সমান্তরালে চলে, ধনের ধাপের অধীনে নয়।", "Learning runs in parallel, not under the wealth stages."),
     example: bi("নামাজের মাসআলা পড়া", "Study the rules of prayer") }),
   f({ id: "right_duty.note", entity: "right_duty", family: "FAM-13", type: "text", purpose: "deen_tracking", privacy: "worship", importance: "optional",
     label: bi("হক ও দায়িত্বের নোট", "Rights & duties note"),
@@ -264,21 +264,21 @@ export const FIELDS: FieldDef[] = [
     why: bi("তৃতীয় পক্ষের নাম এড়িয়ে সংক্ষেপে লিখুন।", "Keep it brief and avoid naming third parties."),
     example: bi("আত্মীয়ের ধার পরিশোধ বাকি", "A loan from a relative to repay"), format: bi("এক-দুই বাক্য", "One or two sentences") }),
 
-  // ── journey log / gate pass (FAM-39) ──
+  // ── journey log / stage pass (FAM-39) ──
   f({ id: "journey_log.entry", entity: "journey_log", family: "FAM-39", type: "text", purpose: "journey_log", importance: "useful",
     label: bi("যাত্রা-লগের লেখা", "Journey log entry"),
     what: bi("কী করলেন ও কী শিখলেন।", "What you did and learned."),
-    why: bi("গেট পার হওয়ার আগে-পরে তুলনা দেখাতে।", "To show before-and-after at each gate."),
+    why: bi("ধাপ পার হওয়ার আগে-পরে তুলনা দেখাতে।", "To show before-and-after at each stage."),
     example: bi("প্রথম দক্ষতা তালিকা শেষ", "Finished my first skills list"), format: bi("কয়েক বাক্য", "A few sentences") }),
-  f({ id: "gate_pass.gate_code", entity: "gate_pass", family: "FAM-39", type: "choice", purpose: "journey_log", importance: "useful",
-    options: ["A", "B", "C", "D", "E", "F", "G", "H"].map((g) => opt(g, `গেট ${g}`, `Gate ${g}`)),
-    label: bi("যে গেট পার হলো", "Gate passed"),
+  f({ id: "stage_pass.stage_code", entity: "stage_pass", family: "FAM-39", type: "choice", purpose: "journey_log", importance: "useful",
+    options: ["A", "B", "C", "D", "E", "F", "G", "H"].map((g) => opt(g, `ধাপ ${g}`, `Stage ${g}`)),
+    label: bi("যে ধাপ পার হলো", "Stage passed"),
     what: bi("কোন ধাপ পূর্ণ হয়েছে।", "Which stage was completed."),
-    why: bi("প্রতিটি গেটে স্পষ্ট কৃতিত্ব ও যাত্রা-লগ।", "Each gate has a clear achievement and log entry."),
-    example: bi("গেট A", "Gate A") }),
-  f({ id: "gate_pass.evidence", entity: "gate_pass", family: "FAM-39", type: "text", purpose: "journey_log", importance: "useful",
+    why: bi("প্রতিটি ধাপে স্পষ্ট কৃতিত্ব ও যাত্রা-লগ।", "Each stage has a clear achievement and log entry."),
+    example: bi("ধাপ A", "Stage A") }),
+  f({ id: "stage_pass.evidence", entity: "stage_pass", family: "FAM-39", type: "text", purpose: "journey_log", importance: "useful",
     label: bi("প্রমাণ", "Evidence"),
-    what: bi("গেটের বের-শর্ত পূরণের প্রমাণ, নিজের ভাষায়।", "Your own words on how the exit condition was met."),
+    what: bi("ধাপের বের-শর্ত পূরণের প্রমাণ, নিজের ভাষায়।", "Your own words on how the exit condition was met."),
     why: bi("সামাজিক লাইক নয়, বাস্তব প্রমাণ।", "Real evidence, not likes."),
     example: bi("মূল্যায়নের ৮০% সম্পন্ন", "80% of assessment completed") }),
 ];

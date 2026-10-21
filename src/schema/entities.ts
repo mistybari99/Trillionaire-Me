@@ -38,7 +38,7 @@ export const ENTITIES: EntityDef[] = [
   e("learning_item", "FAM-13", "দ্বীনি শিক্ষা", "Deen learning", "M13", "worship"),
   e("right_duty", "FAM-13", "হক ও দায়িত্ব", "Rights & duties", "M13", "worship"),
   e("journey_log", "FAM-39", "যাত্রা-লগ", "Journey log", "M05", "personal"),
-  e("gate_pass", "FAM-39", "গেট পাস", "Gate pass", "M05", "personal"),
+  e("stage_pass", "FAM-39", "ধাপ পাস", "Stage pass", "M05", "personal"),
 ];
 
 export const entityById = (id: string): EntityDef | undefined => ENTITIES.find((x) => x.id === id);

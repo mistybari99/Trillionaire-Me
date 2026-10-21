@@ -4,7 +4,7 @@ import type { Key } from "../i18n/packs";
 import { LOCALES, type Locale } from "../i18n/registry";
 import { applyPrefs, prefs, store } from "./state";
 import { demoBadge, disclaimers, fieldHelp, num, valueEl } from "./components";
-import { GATES, DEMO_CURRENT_GATE, DEMO_DATE, DEMO_TASKS } from "../demo/seed";
+import { STAGES, DEMO_CURRENT_STAGE, DEMO_DATE, DEMO_TASKS } from "../demo/seed";
 import { MODULES, CAP_STATUSES, type ModuleDef } from "../modules/capability";
 import { ENTITIES } from "../schema/entities";
 import { FIELDS, CATALOG_VERSION, intakeSteps, fieldById } from "../catalog/fields";
@@ -13,6 +13,7 @@ import { completeness, nextStep, stepFields, type Answers } from "../core/intake
 import { checkFreeText } from "../core/safety";
 import { type FieldValue, type TMRecord, type UnknownState } from "../core/types";
 import type { FieldDef } from "../catalog/types";
+import { GLOSSARY } from "../catalog/glossary";
 
 const L = () => prefs.lang;
 const link = (href: string, cls: string, ...kids: Array<Node | string>) => h("a", { href, class: cls }, ...kids);
@@ -40,11 +41,11 @@ function saveAnswers(step: number, vals: Answers) {
 }
 
 // ---- shared bits ----
-function gateLadder(lang: Locale): HTMLElement {
-  const ol = h("ol", { class: "ladder", "aria-label": t("gate.ladder", lang) });
-  GATES.forEach((g, i) => {
-    const st = i < DEMO_CURRENT_GATE ? "done" : i === DEMO_CURRENT_GATE ? "now" : "locked";
-    ol.append(h("li", { class: st }, h("b", {}, g.code), h("div", {}, h("div", {}, tb(g.name, lang)), h("div", { class: "muted" }, tb(g.exit, lang))), h("span", { class: `tag ${st === "done" ? "ok" : st === "now" ? "warn" : "off"}` }, t(`gate.${st === "now" ? "current" : st}` as Key, lang))));
+function stageLadder(lang: Locale): HTMLElement {
+  const ol = h("ol", { class: "ladder", "aria-label": t("stage.ladder", lang) });
+  STAGES.forEach((g, i) => {
+    const st = i < DEMO_CURRENT_STAGE ? "done" : i === DEMO_CURRENT_STAGE ? "now" : "locked";
+    ol.append(h("li", { class: st }, h("b", {}, g.code), h("div", {}, h("div", {}, tb(g.name, lang)), h("div", { class: "muted" }, tb(g.exit, lang))), h("span", { class: `tag ${st === "done" ? "ok" : st === "now" ? "warn" : "off"}` }, t(`stage.${st === "now" ? "current" : st}` as Key, lang))));
   });
   return ol;
 }
@@ -64,17 +65,17 @@ function moduleCard(m: ModuleDef, lang: Locale) {
 // ---- screens ----
 export function today(): HTMLElement {
   const lang = L();
-  const gate = GATES[DEMO_CURRENT_GATE]!;
+  const stage = STAGES[DEMO_CURRENT_STAGE]!;
   const nxt = nextStep(loadAnswers());
-  const rungs = h("ul", { class: "rungs", role: "img", "aria-label": t("home.rungs", lang, { done: num(DEMO_CURRENT_GATE, lang), total: num(GATES.length, lang), now: num(DEMO_CURRENT_GATE + 1, lang) }) },
-    ...GATES.map((_, i) => h("li", { class: i < DEMO_CURRENT_GATE ? "done" : i === DEMO_CURRENT_GATE ? "now" : "" })));
+  const rungs = h("ul", { class: "rungs", role: "img", "aria-label": t("home.rungs", lang, { done: num(DEMO_CURRENT_STAGE, lang), total: num(STAGES.length, lang), now: num(DEMO_CURRENT_STAGE + 1, lang) }) },
+    ...STAGES.map((_, i) => h("li", { class: i < DEMO_CURRENT_STAGE ? "done" : i === DEMO_CURRENT_STAGE ? "now" : "" })));
   return h("main", {},
     h("p", { class: "muted" }, valueEl(tb(DEMO_DATE, lang), "DEMO", lang)),
     h("h1", {}, t("home.title", lang)),
-    h("p", { class: "sub" }, t("home.step", lang), " — ", valueEl(t("gate.progress", lang, { now: num(DEMO_CURRENT_GATE + 1, lang), total: num(GATES.length, lang) }), "DEMO", lang)),
-    h("section", { class: "gate", "aria-label": t("home.gate", lang) },
-      h("small", {}, `${t("home.gate", lang)} · ${tb(gate.name, lang)}`),
-      h("div", { class: "n" }, num(DEMO_CURRENT_GATE + 1, lang), h("span", { style: "font-size:22px;color:var(--muted)" }, ` / ${num(GATES.length, lang)}`)),
+    h("p", { class: "sub" }, t("home.step", lang), " — ", valueEl(t("stage.progress", lang, { now: num(DEMO_CURRENT_STAGE + 1, lang), total: num(STAGES.length, lang) }), "DEMO", lang)),
+    h("section", { class: "stage", "aria-label": t("home.stage", lang) },
+      h("small", {}, `${t("home.stage", lang)} · ${tb(stage.name, lang)}`),
+      h("div", { class: "n" }, num(DEMO_CURRENT_STAGE + 1, lang), h("span", { style: "font-size:22px;color:var(--muted)" }, ` / ${num(STAGES.length, lang)}`)),
       rungs),
     h("h2", {}, t("home.tasks", lang)),
     ...DEMO_TASKS.slice(0, 3).map((k, i) => h("div", { class: "task" }, h("b", {}, num(i + 1, lang)),
@@ -88,8 +89,8 @@ export function journey(): HTMLElement {
   const lang = L();
   return h("main", {},
     h("h1", {}, t("journey.title", lang)),
-    h("p", { class: "sub" }, t("empty.gateNote", lang)),
-    gateLadder(lang),
+    h("p", { class: "sub" }, t("empty.stageNote", lang)),
+    stageLadder(lang),
     h("h2", {}, t("journey.slots", lang)),
     ...MODULES.filter((m) => m.tab === "journey").map((m) => moduleCard(m, lang)),
     disclaimers(lang));
@@ -215,7 +216,7 @@ export function deen(): HTMLElement {
 export function more(): HTMLElement {
   const lang = L();
   const seg = (label: string, active: boolean, on: () => void) => h("button", { type: "button", "aria-pressed": String(active), onclick: on }, label);
-  const items: Array<[string, Key, Key]> = [["#/more/status", "more.status", "more.status.desc"], ["#/more/fields", "more.fields", "more.fields.desc"], ["#/more/safety", "more.safety", "more.safety.desc"], ["#/more/data", "more.data", "more.data.desc"]];
+  const items: Array<[string, Key, Key]> = [["#/more/status", "more.status", "more.status.desc"], ["#/more/fields", "more.fields", "more.fields.desc"], ["#/more/glossary", "more.glossary", "more.glossary.desc"], ["#/more/safety", "more.safety", "more.safety.desc"], ["#/more/data", "more.data", "more.data.desc"]];
   return h("main", {},
     h("h1", {}, t("more.title", lang)),
     ...items.map(([href, k, d]) => link(href, "card link", h("h3", {}, t(k, lang)), h("p", { class: "muted" }, t(d, lang)))),
@@ -279,4 +280,16 @@ export function dataScreen(): HTMLElement {
     h("p", { class: "muted" }, t("data.nopromote", lang)),
     h("button", { class: "btn ghost", type: "button", onclick: () => { store.demo.clear(); rerender(); } }, t("data.clearDemo", lang)),
     disclaimers(lang));
+}
+
+export function glossary(): HTMLElement {
+  const lang = L();
+  return h("main", {},
+    link("#/more", "crumb", `← ${t("more.title", lang)}`),
+    h("h1", {}, t("glossary.title", lang)),
+    h("p", { class: "sub" }, t("glossary.unreviewed", lang)),
+    ...GLOSSARY.map((g) => h("div", { class: "card", "data-term": g.id },
+      h("div", { class: "row" }, h("h3", {}, tb(g.term, lang)), h("span", { class: "tag warn" }, t("glossary.tag", lang))),
+      h("p", {}, tb(g.meaning, lang)))),
+    disclaimers(lang, ["noFatwa"]));
 }

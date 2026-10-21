@@ -205,8 +205,8 @@ describe("i18n parity (completeness gate)", () => {
 });
 
 describe("TM-TST-006 every rendered value is labelled (all routes, both languages)", () => {
-  const paths = ["/today", "/journey", "/diary", "/diary/intake/1", "/diary/intake/2", "/diary/intake/3", "/diary/intake/4", "/diary/intake/5", "/diary/intake/6", "/diary/intake/7", "/deen", "/more", "/more/status", "/more/fields", "/more/safety", "/more/data"];
-  it("route table is fully covered", () => { for (const p of paths) expect(ROUTES.some(([re]) => re.test(p)), p).toBe(true); expect(ROUTES.length).toBe(10); });
+  const paths = ["/today", "/journey", "/diary", "/diary/intake/1", "/diary/intake/2", "/diary/intake/3", "/diary/intake/4", "/diary/intake/5", "/diary/intake/6", "/diary/intake/7", "/deen", "/more", "/more/status", "/more/fields", "/more/glossary", "/more/safety", "/more/data"];
+  it("route table is fully covered", () => { for (const p of paths) expect(ROUTES.some(([re]) => re.test(p)), p).toBe(true); expect(ROUTES.length).toBe(11); });
   for (const lang of ["bn", "en"] as const) it(`0 unlabelled values in ${lang}`, () => {
     let seen = 0;
     for (const p of paths) {
@@ -224,7 +224,7 @@ describe("TM-TST-006 every rendered value is labelled (all routes, both language
   it("home value tokens (date, gate, minutes, completeness) are inside labelled values", () => {
     document.body.innerHTML = '<div id="app"></div>'; localStorage.setItem("tm:ui:lang", "en"); location.hash = "#/today"; render();
     const vals = [...document.querySelectorAll("[data-value]")].map((e) => e.textContent ?? "");
-    expect(vals.some((v) => /22 October/.test(v))).toBe(true); expect(vals.some((v) => /Gate 1 \/ 8/.test(v))).toBe(true); expect(vals.some((v) => /10 min/.test(v))).toBe(true);
+    expect(vals.some((v) => /22 October/.test(v))).toBe(true); expect(vals.some((v) => /Stage 1 \/ 8/.test(v))).toBe(true); expect(vals.some((v) => /10 min/.test(v))).toBe(true);
     expect(document.querySelector("[data-label='DEMO']")).not.toBeNull();
   });
 });
@@ -235,10 +235,10 @@ describe("TM-TST-144 UI + TM-TST-171 home structure", () => {
     const cards = document.querySelectorAll("[data-module]"); expect(cards.length).toBe(24);
     for (const c of cards) expect(c.querySelector("[data-cap]"), c.getAttribute("data-module") ?? "").not.toBeNull();
   });
-  it("home shows only 1–3 actions and the current gate", () => {
+  it("home shows only 1–3 actions and the current stage", () => {
     document.body.innerHTML = '<div id="app"></div>'; localStorage.setItem("tm:ui:lang", "bn"); location.hash = "#/today"; render();
     const n = document.querySelectorAll(".task").length; expect(n).toBeGreaterThanOrEqual(1); expect(n).toBeLessThanOrEqual(3);
-    expect(document.querySelectorAll(".gate").length).toBe(1);
+    expect(document.querySelectorAll(".stage").length).toBe(1);
   });
   it("deen screen has no scoring widgets; every entity card is marked private", () => {
     document.body.innerHTML = '<div id="app"></div>'; location.hash = "#/deen"; render();

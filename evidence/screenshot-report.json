@@ -1,6 +1,6 @@
 {
   "viewport": "360x740",
-  "generated": "2026-10-21T23:07:48.635Z",
+  "generated": "2026-10-21T23:37:13.252Z",
   "screens": [
     {
       "lang": "bn",
@@ -84,6 +84,12 @@
       "lang": "bn",
       "route": "more/fields",
       "file": "evidence/screenshots/bn-more_fields.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "more/glossary",
+      "file": "evidence/screenshots/bn-more_glossary.png",
       "horizontalOverflow": false
     },
     {
@@ -180,6 +186,12 @@
       "lang": "en",
       "route": "more/fields",
       "file": "evidence/screenshots/en-more_fields.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "more/glossary",
+      "file": "evidence/screenshots/en-more_glossary.png",
       "horizontalOverflow": false
     },
     {

@@ -16,6 +16,7 @@ export const ROUTES: Array<[RegExp, (m: RegExpMatchArray) => HTMLElement, string
   [/^\/more$/, () => S.more(), "more"],
   [/^\/more\/status$/, () => S.status(), "more"],
   [/^\/more\/fields$/, () => S.fieldsGuide(), "more"],
+  [/^\/more\/glossary$/, () => S.glossary(), "more"],
   [/^\/more\/safety$/, () => S.safety(), "more"],
   [/^\/more\/data$/, () => S.dataScreen(), "more"],
 ];

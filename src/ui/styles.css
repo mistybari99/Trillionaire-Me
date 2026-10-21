@@ -32,9 +32,9 @@ h1{font:700 28px/1.35 "Noto Serif Bengali","Fraunces",serif;margin:22px 0 4px;te
 h2{font:700 20px/1.4 "Noto Serif Bengali","Fraunces",serif;margin:26px 0 8px}
 h3{font:600 17px/1.4 "Hind Siliguri",sans-serif;margin:0 0 2px}
 .sub,.muted{color:var(--muted);font-size:15px}
-.gate{margin:20px 0;border-top:2px solid var(--ink);border-bottom:1px solid var(--rule);padding:14px 0}
-.gate small{font:600 12px/1.6 "Hind Siliguri";color:var(--muted)}
-.gate .n{font:600 52px/1.25 "Fraunces",serif;color:var(--ember)}
+.stage{margin:20px 0;border-top:2px solid var(--ink);border-bottom:1px solid var(--rule);padding:14px 0}
+.stage small{font:600 12px/1.6 "Hind Siliguri";color:var(--muted)}
+.stage .n{font:600 52px/1.25 "Fraunces",serif;color:var(--ember)}
 .rungs{display:flex;gap:4px;margin-top:10px;padding:0;list-style:none}
 .rungs li{flex:1;height:8px;background:var(--rule)}
 .rungs li.done{background:var(--moss)} .rungs li.now{background:var(--ember)}
