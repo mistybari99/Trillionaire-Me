@@ -83,6 +83,7 @@ const en = {
   "data.nopromote": "Demo data can never be converted into real data.",
   "data.clearDemo": "Delete my demo entries",
   "data.cleared": "Demo entries deleted.",
+  "backup.title": "Backup", "backup.save": "Download demo backup", "backup.restore": "Restore from backup file", "backup.ok": "Restored {n} records.", "backup.bad": "This file cannot be restored: {why}. Nothing was changed.", "backup.note": "Restoring replaces your demo entries. Real data is locked.",
   "empty.slot": "Empty — structure only",
   "empty.stageNote": "Pass rules are built later.",
 } as const;
@@ -172,6 +173,7 @@ const bn: Record<Key, string> = {
   "data.nopromote": "ডেমো ডেটা কখনো আসল ডেটায় রূপান্তর করা যায় না।",
   "data.clearDemo": "আমার ডেমো এন্ট্রি মুছুন",
   "data.cleared": "ডেমো এন্ট্রি মুছে ফেলা হয়েছে।",
+  "backup.title": "ব্যাকআপ", "backup.save": "ডেমো ব্যাকআপ নামান", "backup.restore": "ব্যাকআপ ফাইল থেকে ফেরান", "backup.ok": "{n}টি রেকর্ড ফেরানো হয়েছে।", "backup.bad": "এই ফাইল ফেরানো যাবে না: {why}। কিছুই বদলায়নি।", "backup.note": "ফেরালে আপনার ডেমো এন্ট্রি বদলে যাবে। আসল ডেটা বন্ধ।",
   "empty.slot": "ফাঁকা — শুধু কাঠামো",
   "empty.stageNote": "পাসের নিয়ম পরে বানানো হবে।",
 };

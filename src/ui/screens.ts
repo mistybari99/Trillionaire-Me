@@ -13,6 +13,8 @@ import { completeness, nextStep, stepFields, type Answers } from "../core/intake
 import { checkFreeText } from "../core/safety";
 import { type FieldValue, type TMRecord, type UnknownState } from "../core/types";
 import type { FieldDef } from "../catalog/types";
+import { StoreRepo } from "../adapters/storeRepo";
+import { createBackup, restoreBackup } from "../core/backup";
 import { GLOSSARY } from "../catalog/glossary";
 
 const L = () => prefs.lang;
@@ -279,6 +281,21 @@ export function dataScreen(): HTMLElement {
     h("div", { class: "card", "data-ns": "demo" }, h("h3", {}, t("data.demo", lang), " ", demoBadge(lang)), h("p", {}, t("data.demo.count", lang, { n: num(store.demo.list().length, lang) }))),
     h("p", { class: "muted" }, t("data.nopromote", lang)),
     h("button", { class: "btn ghost", type: "button", onclick: () => { store.demo.clear(); rerender(); } }, t("data.clearDemo", lang)),
+    h("h2", {}, t("backup.title", lang)),
+    h("p", { class: "muted" }, t("backup.note", lang)),
+    h("button", { class: "btn", type: "button", "data-act": "backup", onclick: async () => {
+      const b = await createBackup(new StoreRepo(store), "demo");
+      const a = h("a", { href: URL.createObjectURL(new Blob([JSON.stringify(b)], { type: "application/json" })), download: `tm-demo-backup-${b.createdAt.slice(0, 10)}.json` });
+      document.body.append(a); a.click(); a.remove();
+    } }, t("backup.save", lang)),
+    h("label", { class: "btn ghost", style: "cursor:pointer" }, t("backup.restore", lang),
+      h("input", { type: "file", accept: "application/json,.json", "data-act": "restore", style: "display:none", onchange: async (e: Event) => {
+        const f = (e.target as HTMLInputElement).files?.[0]; if (!f) return;
+        const out = document.getElementById("backup-msg")!;
+        try { const n = await restoreBackup(new StoreRepo(store), await f.text()); out.className = "ok-msg"; out.textContent = t("backup.ok", lang, { n: num(n, lang) }); }
+        catch (err) { out.className = "err"; out.textContent = t("backup.bad", lang, { why: (err as Error).message }); }
+      } })),
+    h("p", { id: "backup-msg", role: "status" }),
     disclaimers(lang));
 }
 

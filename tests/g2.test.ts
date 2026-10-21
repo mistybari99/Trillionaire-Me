@@ -54,3 +54,15 @@ describe("G2 backup / restore", () => {
     expect(() => parseBackup(JSON.stringify({ ...f, schemaVersion: 99 }))).toThrow(/newer/);
   });
 });
+
+import { MemoryKV, Store } from "../src/core/store";
+import { StoreRepo } from "../src/adapters/storeRepo";
+describe("G2 backup via the app's current store", () => {
+  it("demo store backs up and restores into a fresh device; real stays locked", async () => {
+    const s1 = new Store(new MemoryKV()); s1.demo.put(rec("a")); s1.demo.put(rec("b"));
+    const file = JSON.stringify(await createBackup(new StoreRepo(s1), "demo"));
+    const s2 = new Store(new MemoryKV());
+    expect(await restoreBackup(new StoreRepo(s2), file)).toBe(2);
+    expect(s2.demo.list().length).toBe(2); expect(s2.real.list()).toEqual([]);
+  });
+});
