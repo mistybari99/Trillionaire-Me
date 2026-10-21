@@ -1,0 +1,59 @@
+{
+  "generated": "2026-10-21T23:07:50.230Z",
+  "results": [
+    {
+      "id": "TM-TST-143",
+      "name": "empty start: no demo/real records after visiting every tab",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "id": "TM-TST-034",
+      "name": "secret typed into a free-text field is rejected and nothing saved",
+      "pass": true,
+      "detail": "এটি পাসওয়ার্ড, ওটিপি, কার্ড বা আইডি নম্বরের মতো দেখাচ্ছে। এখানে দেবেন না। কিছুই সংরক্ষিত হয়নি।"
+    },
+    {
+      "id": "TM-TST-143",
+      "name": "saved intake is in demo namespace only, labelled DEMO",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "TM-TST-021",
+      "name": "blank skill level/evidence stay unanswered (not 0)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "TM-TST-021",
+      "name": "‘don't know’ hours saved as unknown state, not 0",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "TM-TST-143",
+      "name": "real namespace still empty after demo entry",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G1-OFFLINE",
+      "name": "app shell loads and works with network off",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G1-OFFLINE",
+      "name": "status screen renders offline",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G1-NONET",
+      "name": "0 third-party/external requests during all of the above",
+      "pass": true,
+      "detail": "[]"
+    }
+  ]
+}

@@ -1,0 +1,198 @@
+{
+  "viewport": "360x740",
+  "generated": "2026-10-21T23:07:48.635Z",
+  "screens": [
+    {
+      "lang": "bn",
+      "route": "today",
+      "file": "evidence/screenshots/bn-today.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "journey",
+      "file": "evidence/screenshots/bn-journey.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "diary",
+      "file": "evidence/screenshots/bn-diary.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "diary/intake/1",
+      "file": "evidence/screenshots/bn-diary_intake_1.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "diary/intake/2",
+      "file": "evidence/screenshots/bn-diary_intake_2.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "diary/intake/3",
+      "file": "evidence/screenshots/bn-diary_intake_3.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "diary/intake/4",
+      "file": "evidence/screenshots/bn-diary_intake_4.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "diary/intake/5",
+      "file": "evidence/screenshots/bn-diary_intake_5.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "diary/intake/6",
+      "file": "evidence/screenshots/bn-diary_intake_6.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "diary/intake/7",
+      "file": "evidence/screenshots/bn-diary_intake_7.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "deen",
+      "file": "evidence/screenshots/bn-deen.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "more",
+      "file": "evidence/screenshots/bn-more.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "more/status",
+      "file": "evidence/screenshots/bn-more_status.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "more/fields",
+      "file": "evidence/screenshots/bn-more_fields.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "more/safety",
+      "file": "evidence/screenshots/bn-more_safety.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "more/data",
+      "file": "evidence/screenshots/bn-more_data.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "today",
+      "file": "evidence/screenshots/en-today.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "journey",
+      "file": "evidence/screenshots/en-journey.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "diary",
+      "file": "evidence/screenshots/en-diary.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "diary/intake/1",
+      "file": "evidence/screenshots/en-diary_intake_1.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "diary/intake/2",
+      "file": "evidence/screenshots/en-diary_intake_2.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "diary/intake/3",
+      "file": "evidence/screenshots/en-diary_intake_3.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "diary/intake/4",
+      "file": "evidence/screenshots/en-diary_intake_4.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "diary/intake/5",
+      "file": "evidence/screenshots/en-diary_intake_5.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "diary/intake/6",
+      "file": "evidence/screenshots/en-diary_intake_6.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "diary/intake/7",
+      "file": "evidence/screenshots/en-diary_intake_7.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "deen",
+      "file": "evidence/screenshots/en-deen.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "more",
+      "file": "evidence/screenshots/en-more.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "more/status",
+      "file": "evidence/screenshots/en-more_status.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "more/fields",
+      "file": "evidence/screenshots/en-more_fields.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "more/safety",
+      "file": "evidence/screenshots/en-more_safety.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "more/data",
+      "file": "evidence/screenshots/en-more_data.png",
+      "horizontalOverflow": false
+    }
+  ]
+}

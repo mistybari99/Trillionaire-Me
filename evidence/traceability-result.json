@@ -1,0 +1,170 @@
+{
+  "generated": "2026-10-21T23:07:51.849Z",
+  "totalTests": 39,
+  "failed": 0,
+  "results": {
+    "TM-TST-006": {
+      "outcome": "Pass",
+      "scope": "G1 automated: DOM audit of all 16 routes x 2 languages, 0 unlabelled values",
+      "artifacts": [
+        "tests/g1.test.ts",
+        "evidence/screenshot-report.json"
+      ],
+      "tests": 4,
+      "e2e": 0,
+      "evidenceOk": true,
+      "finalOutcome": "Pass"
+    },
+    "TM-TST-010": {
+      "outcome": "Partial",
+      "scope": "Structural check passes (max 7 fields/screen). 3-user timed usability session NOT run",
+      "artifacts": [
+        "tests/g1.test.ts"
+      ],
+      "tests": 4,
+      "e2e": 0,
+      "evidenceOk": true,
+      "finalOutcome": "Partial"
+    },
+    "TM-TST-017": {
+      "outcome": "Pass",
+      "scope": "G1 automated: intake completes 100% with every health field empty; health fields private, per-item authorised",
+      "artifacts": [
+        "tests/g1.test.ts"
+      ],
+      "tests": 4,
+      "e2e": 0,
+      "evidenceOk": true,
+      "finalOutcome": "Pass"
+    },
+    "TM-TST-021": {
+      "outcome": "Pass",
+      "scope": "G1 automated: 1000-case property test + browser e2e (blank and 'don't know' never stored as 0)",
+      "artifacts": [
+        "tests/g1.test.ts",
+        "tools/e2e.mjs",
+        "evidence/e2e-report.json"
+      ],
+      "tests": 2,
+      "e2e": 2,
+      "evidenceOk": true,
+      "finalOutcome": "Pass"
+    },
+    "TM-TST-034": {
+      "outcome": "Pass",
+      "scope": "G1 automated: 30 secret fixtures rejected, benign text allowed, 0 logging/network sinks in source, export redaction, browser rejection",
+      "artifacts": [
+        "tests/g1.test.ts",
+        "tools/e2e.mjs",
+        "evidence/e2e-report.json"
+      ],
+      "tests": 4,
+      "e2e": 1,
+      "evidenceOk": true,
+      "finalOutcome": "Pass"
+    },
+    "TM-TST-066": {
+      "outcome": "Partial",
+      "scope": "Catalog 100% help/what-why-example/format complete. 5-user usability session NOT run",
+      "artifacts": [
+        "evidence/catalog-report.json"
+      ],
+      "tests": 4,
+      "e2e": 0,
+      "evidenceOk": true,
+      "finalOutcome": "Partial"
+    },
+    "TM-TST-067": {
+      "outcome": "Partial",
+      "scope": "Completeness indicator + next-needed with reason in 500/500 random states. User sessions NOT run",
+      "artifacts": [
+        "tests/g1.test.ts"
+      ],
+      "tests": 4,
+      "e2e": 0,
+      "evidenceOk": true,
+      "finalOutcome": "Partial"
+    },
+    "TM-TST-092": {
+      "outcome": "Pass",
+      "scope": "G1 automated: 100% fields have purpose + access rule + privacy class; sensitive fields never required",
+      "artifacts": [
+        "evidence/catalog-report.json",
+        "tests/g1.test.ts"
+      ],
+      "tests": 4,
+      "e2e": 0,
+      "evidenceOk": true,
+      "finalOutcome": "Pass"
+    },
+    "TM-TST-100": {
+      "outcome": "Pass",
+      "scope": "G1 automated: 0 piety score/rank/leaderboard/acceptance wording in strings, catalog and source",
+      "artifacts": [
+        "tests/g1.test.ts"
+      ],
+      "tests": 4,
+      "e2e": 0,
+      "evidenceOk": true,
+      "finalOutcome": "Pass"
+    },
+    "TM-TST-114": {
+      "outcome": "Pass",
+      "scope": "G1 automated: worship/health values absent from exports without per-item authorisation",
+      "artifacts": [
+        "tests/g1.test.ts"
+      ],
+      "tests": 4,
+      "e2e": 0,
+      "evidenceOk": true,
+      "finalOutcome": "Pass"
+    },
+    "TM-TST-130": {
+      "outcome": "Partial",
+      "scope": "Checklist done; owner confirmation line still open",
+      "artifacts": [
+        "docs/process/TM-TST-130-checklist.md"
+      ],
+      "tests": 1,
+      "e2e": 0,
+      "evidenceOk": true,
+      "finalOutcome": "Partial"
+    },
+    "TM-TST-143": {
+      "outcome": "Pass",
+      "scope": "G1 automated: empty start, no promote API, DEMO never enters real, browser e2e",
+      "artifacts": [
+        "tests/g1.test.ts",
+        "tools/e2e.mjs",
+        "evidence/e2e-report.json"
+      ],
+      "tests": 7,
+      "e2e": 3,
+      "evidenceOk": true,
+      "finalOutcome": "Pass"
+    },
+    "TM-TST-144": {
+      "outcome": "Pass",
+      "scope": "G1 automated: 24/24 modules labelled, status screen shows tag for each",
+      "artifacts": [
+        "tests/g1.test.ts",
+        "evidence/screenshots/"
+      ],
+      "tests": 4,
+      "e2e": 0,
+      "evidenceOk": true,
+      "finalOutcome": "Pass"
+    },
+    "TM-TST-161": {
+      "outcome": "Partial",
+      "scope": "Bangla glossary (30 terms) + field help exist. Human reviewer sign-off NOT done",
+      "artifacts": [
+        "src/catalog/glossary.ts"
+      ],
+      "tests": 1,
+      "e2e": 0,
+      "evidenceOk": true,
+      "finalOutcome": "Partial"
+    }
+  }
+}
