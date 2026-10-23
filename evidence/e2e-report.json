@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-21T23:50:16.274Z",
+  "generated": "2026-10-23T17:45:36.028Z",
   "results": [
     {
       "id": "TM-TST-143",
@@ -11,7 +11,7 @@
       "id": "TM-TST-034",
       "name": "secret typed into a free-text field is rejected and nothing saved",
       "pass": true,
-      "detail": "এটি পাসওয়ার্ড, ওটিপি, কার্ড বা আইডি নম্বরের মতো দেখাচ্ছে। এখানে দেবেন না। কিছুই সংরক্ষিত হয়নি।"
+      "detail": "এটি password, OTP, card বা ID নম্বরের মতো দেখাচ্ছে। এখানে দেবেন না। কিছুই সংরক্ষিত হয়নি।"
     },
     {
       "id": "TM-TST-143",
@@ -34,6 +34,24 @@
     {
       "id": "TM-TST-143",
       "name": "real namespace still empty after demo entry",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G2-PERSIST",
+      "name": "demo entries survive reload via IndexedDB",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G2-PERSIST",
+      "name": "records are not duplicated in localStorage",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G2-INSTALL",
+      "name": "manifest has 192 and 512 PNG icons, standalone",
       "pass": true,
       "detail": ""
     },

@@ -1,8 +1,16 @@
 import { DEFAULT_LOCALE, LOCALES, type Locale } from "../i18n/registry";
-import { LocalKV, Store } from "../core/store";
+import { LocalKV, MemoryKV, Store } from "../core/store";
+import { MirrorKV, hydrate, mirrorToRepo } from "../core/persist";
+import { DexieRepo } from "../adapters/dexie";
 
-const kv = new LocalKV();
+const legacy = new LocalKV();
+const mem = new MemoryKV();
+const repo = typeof indexedDB !== "undefined" ? new DexieRepo() : null;
+// With IndexedDB: memory is mirrored to it. Without (private mode/old browser): fall back to the old localStorage store.
+const kv = repo ? new MirrorKV(mem, mirrorToRepo(repo)) : legacy;
 export const store = new Store(kv);
+/** Call once before the first render. */
+export async function initStorage(): Promise<void> { if (repo) { try { await hydrate(mem, repo, legacy); } catch { /* start empty rather than crash */ } } }
 
 const get = (k: string) => { try { return localStorage.getItem(k); } catch { return null; } };
 const set = (k: string, v: string) => { try { localStorage.setItem(k, v); } catch { /* ignore */ } };

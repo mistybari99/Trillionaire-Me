@@ -15,3 +15,5 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 | L-10 | G2 slice 3: pure op-queue + deterministic field-level conflict rule (highest ts/device/opId wins, loser kept in `conflicts`) | no server exists yet; rules must be testable offline; never lose data silently | CRDT lib (more deps) | `src/core/sync.ts` is unused by UI until a sync target is approved |
 | L-11 | Bangla version keeps common English words (Demo, Backup, Online…); allowlist in tests | owner request: easier to read | full translation | edit `COMMON_ENGLISH_KEYS` + pack |
 | L-12 | Research = injected provider + consent contract now; engine choice deferred to G4 | Google API key cannot live in a browser; paid beyond free quota (§4.1) | wire Google now | swap provider |
+| L-13 | App storage = in-memory store mirrored write-through to IndexedDB; old localStorage records imported once | screens stay synchronous; durable data | rewrite screens async | `initStorage()` in `src/ui/state.ts`; remove MirrorKV |
+| L-14 | Notifications hide worship/health/money/third-party details by default | MR-14 | show details | `hideDetails:false` pref |

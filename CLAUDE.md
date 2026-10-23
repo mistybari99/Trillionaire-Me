@@ -44,3 +44,6 @@ Never invent data, statistics or guarantees of wealth/returns. Never store passw
 
 ## 7. Done means
 G1 done = Brief §3 satisfied. Then continue to G2 without waiting, unless §4 blocks you. Final target: Spec §0 vision (personal first, public edition later at G8 with new owner approval).
+
+## 8. Added by owner (23 Oct 2026) — see docs/PLAN.md
+Host = free static site (Cloudflare Pages), installable PWA, offline after first visit. UI = English/Bangla switch; Bangla keeps common English words. In-app search = 2–3 option cards inside the app (Wikipedia first, Google later via server function, owner approves key). Personal edition first; staff/customer data-viewing edition is G8. Never publish or connect hosting/accounts without owner doing the account step.
