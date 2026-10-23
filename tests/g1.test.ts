@@ -185,6 +185,8 @@ describe("TM-TST-144 capability status", () => {
   });
 });
 
+// Owner decision: common English words stay in English inside the Bangla version (easier to read).
+const COMMON_ENGLISH_KEYS = new Set(["badge.demo", "status.online", "status.offline", "label.DEMO", "help.format", "more.theme", "cap.demo", "data.demo", "backup.title"]);
 describe("i18n parity (completeness gate)", () => {
   const en = PACKS.en as Record<string, string>, bn = PACKS.bn as Record<string, string>;
   it("key parity, no empties, same placeholders, Bangla script present", () => {
@@ -193,7 +195,7 @@ describe("i18n parity (completeness gate)", () => {
     for (const k of Object.keys(en)) {
       expect(en[k]!.trim(), k).not.toBe(""); expect(bn[k]!.trim(), k).not.toBe("");
       expect(ph(bn[k]!), k).toBe(ph(en[k]!));
-      expect(LOCALES.bn.scripts.test(bn[k]!), k).toBe(true);
+      if (!COMMON_ENGLISH_KEYS.has(k)) expect(LOCALES.bn.scripts.test(bn[k]!), k).toBe(true);
     }
   });
   it("missing key throws in strict mode, never silently", () => { setStrict(true); expect(() => t("nope" as Key, "bn")).toThrow(); });

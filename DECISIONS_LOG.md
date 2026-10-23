@@ -13,3 +13,5 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 | L-08 | Register copy `…_v2_1_G1_evidence.xlsx` kept beside the original; original untouched | evidence-only updates | edit in place | delete the copy |
 | L-09 | G2 slice 1: `RecordRepo` contract + Dexie adapter + checksum backup/restore (not yet wired to UI) | charter stack; pure core + adapters | wire UI first | adapter is isolated in `src/adapters`; UI still uses G1 KV store |
 | L-10 | G2 slice 3: pure op-queue + deterministic field-level conflict rule (highest ts/device/opId wins, loser kept in `conflicts`) | no server exists yet; rules must be testable offline; never lose data silently | CRDT lib (more deps) | `src/core/sync.ts` is unused by UI until a sync target is approved |
+| L-11 | Bangla version keeps common English words (Demo, Backup, Online…); allowlist in tests | owner request: easier to read | full translation | edit `COMMON_ENGLISH_KEYS` + pack |
+| L-12 | Research = injected provider + consent contract now; engine choice deferred to G4 | Google API key cannot live in a browser; paid beyond free quota (§4.1) | wire Google now | swap provider |
