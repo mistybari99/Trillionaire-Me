@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-23T17:45:36.028Z",
+  "generated": "2026-10-23T18:12:14.236Z",
   "results": [
     {
       "id": "TM-TST-143",
@@ -34,6 +34,30 @@
     {
       "id": "TM-TST-143",
       "name": "real namespace still empty after demo entry",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G4-SUGGEST",
+      "name": "0 Wikipedia requests before the user taps search",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G4-SUGGEST",
+      "name": "3 option cards with source, no raw HTML",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G4-SUGGEST",
+      "name": "tapping a card fills the field",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G4-SUGGEST",
+      "name": "secret-looking search is blocked before sending",
       "pass": true,
       "detail": ""
     },

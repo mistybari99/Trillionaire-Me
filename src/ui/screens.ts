@@ -15,6 +15,8 @@ import { type FieldValue, type TMRecord, type UnknownState } from "../core/types
 import type { FieldDef } from "../catalog/types";
 import { StoreRepo } from "../adapters/storeRepo";
 import { createBackup, restoreBackup } from "../core/backup";
+import { research, safeQuery } from "../core/research";
+import { wikipedia } from "../adapters/wikipedia";
 import { GLOSSARY } from "../catalog/glossary";
 
 const L = () => prefs.lang;
@@ -153,6 +155,32 @@ function inputFor(f: FieldDef, lang: Locale, cur: FieldValue | undefined): { el:
   return { el, read };
 }
 
+const SUGGESTABLE = new Set(["interest.topic", "skill.name", "strength.name", "value.name", "goal.title"]);
+
+/** Inline option cards: nothing is sent until the user taps the search button (consent). */
+function suggestPanel(f: FieldDef, lang: Locale, getInput: () => HTMLInputElement): HTMLElement {
+  const box = h("div", { class: "suggest", "data-suggest": f.id });
+  const out = h("div", { role: "status" });
+  const go = h("button", { class: "btn ghost", type: "button", "data-act": "suggest-go" }, t("suggest.go", lang));
+  go.addEventListener("click", async () => {
+    const input = getInput(); const q = input.value.trim();
+    if (!q) { out.replaceChildren(h("p", { class: "err" }, t("suggest.empty", lang))); return; }
+    const safe = safeQuery(q);
+    if (!safe) { out.replaceChildren(h("p", { class: "err" }, t("suggest.secret", lang))); return; }
+    out.replaceChildren(h("p", { class: "muted" }, t("suggest.loading", lang)));
+    const r = await research(safe, true, { provider: wikipedia(lang), online: () => navigator.onLine });
+    const cards = r.options.map((o) => h("div", { class: "card", "data-option": o.id },
+      h("h3", {}, o.title), h("p", { class: "muted" }, o.snippet),
+      h("p", { class: "muted" }, t("suggest.source", lang, { s: o.sourceName, d: o.fetchedAt.slice(0, 10) })),
+      h("button", { class: "btn", type: "button", onclick: () => { input.value = o.title; out.replaceChildren(); input.focus(); } }, t("suggest.use", lang))));
+    const note = r.status === "too_few" ? "suggest.none" : r.status === "offline" ? "suggest.offline" : r.status === "error" ? "suggest.error" : null;
+    out.replaceChildren(...cards, ...(note ? [h("p", { class: "muted" }, t(note, lang))] : []),
+      h("button", { class: "btn ghost", type: "button", onclick: () => { out.replaceChildren(); getInput().focus(); } }, t("suggest.own", lang)));
+  });
+  box.append(h("p", { class: "muted" }, t("suggest.consent", lang)), go, out);
+  return h("details", { class: "help" }, h("summary", {}, t("suggest.btn", lang)), box);
+}
+
 export function intake(stepParam: string | undefined): HTMLElement {
   const lang = L();
   const steps = intakeSteps();
@@ -170,7 +198,7 @@ export function intake(stepParam: string | undefined): HTMLElement {
     readers.push({ f, read: ip.read, err });
     form.append(h("div", { class: "field", "data-field": f.id },
       h("label", { for: `f-${f.id}` }, tb(f.label, lang), " ", h("span", { class: "tag" }, t(`requirement.${f.requirement}` as Key, lang))),
-      ip.el, err, fieldHelp(f, lang)));
+      ip.el, err, SUGGESTABLE.has(f.id) ? suggestPanel(f, lang, () => document.getElementById(`f-${f.id}`) as HTMLInputElement) : null, fieldHelp(f, lang)));
   }
   form.addEventListener("submit", (ev) => {
     ev.preventDefault();

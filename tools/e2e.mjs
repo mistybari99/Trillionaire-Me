@@ -8,7 +8,9 @@ const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PAT
 const ctx = await browser.newContext({ viewport: { width: 360, height: 740 } });
 const page = await ctx.newPage();
 const external = [];
-page.on("request", (r) => { if (!r.url().startsWith("http://localhost:4174")) external.push(r.url()); });
+const wiki = [];
+page.on("request", (r) => { const u = r.url(); if (u.startsWith("http://localhost:4174")) return; (u.startsWith("https://en.wikipedia.org/") ? wiki : external).push(u); });
+await page.route("https://en.wikipedia.org/**", (route) => route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ query: { search: [1, 2, 3, 4].map((i) => ({ title: `Bookkeeping ${i}`, snippet: `A <span>record</span> ${i}` })) } }) }));
 const results = [];
 const idb = (pg) => pg.evaluate(() => new Promise((res) => { const q = indexedDB.open("tm-db"); q.onerror = () => res([]); q.onsuccess = () => { const db = q.result; if (!db.objectStoreNames.contains("records")) return res([]); db.transaction("records").objectStore("records").getAll().onsuccess = (e) => res(e.target.result); }; }));
 const check = (id, name, pass, detail = "") => { results.push({ id, name, pass, detail }); console.log(pass ? "PASS" : "FAIL", id, name, detail); };
@@ -50,6 +52,24 @@ check("TM-TST-021", "‘don't know’ hours saved as unknown state, not 0", unk.
 const realKeys = (await idb(page)).filter((r) => r.ns === "real");
 check("TM-TST-143", "real namespace still empty after demo entry", realKeys.length === 0);
 
+// in-app suggestions (G4 preview): nothing leaves before the click; cards fill the field
+await page.evaluate(() => localStorage.setItem("tm:ui:lang", "en"));
+await page.goto("http://localhost:4174/#/diary/intake/3"); await page.reload(); await page.waitForSelector("main");
+await page.fill("#f-skill\\.name", "bookkeeping");
+await page.click("[data-field='skill.name'] details.help summary:has-text('Suggest')");
+check("G4-SUGGEST", "0 Wikipedia requests before the user taps search", wiki.length === 0);
+await page.click("[data-suggest='skill.name'] [data-act=suggest-go]");
+await page.waitForSelector("[data-option]");
+const nOpt = await page.locator("[data-option]").count();
+const hasHtml = await page.locator("[data-option]").first().innerHTML();
+check("G4-SUGGEST", "3 option cards with source, no raw HTML", nOpt === 3 && !/<span/.test(await page.locator("[data-option] p").first().innerText()) && hasHtml.includes("Source:"));
+await page.locator("[data-option]").nth(1).locator("button").click();
+check("G4-SUGGEST", "tapping a card fills the field", (await page.inputValue("#f-skill\\.name")) === "Bookkeeping 2" && wiki.length === 1);
+await page.fill("#f-skill\\.name", "password: abc12345");
+await page.click("[data-suggest='skill.name'] [data-act=suggest-go]");
+check("G4-SUGGEST", "secret-looking search is blocked before sending", wiki.length === 1);
+await page.fill("#f-skill\\.name", "");
+await page.evaluate(() => localStorage.setItem("tm:ui:lang", "bn")); await page.reload(); await page.waitForSelector("main");
 // data survives a full reload (IndexedDB)
 await page.reload(); await page.waitForSelector("main");
 const afterReload = await idb(page);

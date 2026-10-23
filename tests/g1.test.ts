@@ -58,7 +58,8 @@ describe("TM-TST-034 secrets are rejected", () => {
   it("does not block ordinary text", () => { for (const g of good) expect(checkFreeText(g).ok, g).toBe(true); });
   it("code has no logging, network or analytics sinks (0 occurrences)", () => {
     const re = /console\.|\bfetch\s*\(|XMLHttpRequest|sendBeacon|WebSocket|navigator\.share|gtag|analytics/;
-    for (const f of srcFiles().filter((x) => x.endsWith(".ts"))) expect(re.test(read(f)), f).toBe(false);
+    // the Wikipedia adapter is the single allowed network file; everything else must stay offline-pure
+    for (const f of srcFiles().filter((x) => x.endsWith(".ts") && !x.endsWith("adapters/wikipedia.ts"))) expect(re.test(read(f)), f).toBe(false);
   });
   it("exports redact secret-looking strings", () => {
     const store = new Store(new MemoryKV());
@@ -186,7 +187,7 @@ describe("TM-TST-144 capability status", () => {
 });
 
 // Owner decision: common English words stay in English inside the Bangla version (easier to read).
-const COMMON_ENGLISH_KEYS = new Set(["badge.demo", "status.online", "status.offline", "label.DEMO", "help.format", "more.theme", "cap.demo", "data.demo", "backup.title"]);
+const COMMON_ENGLISH_KEYS = new Set(["badge.demo", "status.online", "status.offline", "label.DEMO", "help.format", "more.theme", "cap.demo", "data.demo", "backup.title", "suggest.btn"]);
 describe("i18n parity (completeness gate)", () => {
   const en = PACKS.en as Record<string, string>, bn = PACKS.bn as Record<string, string>;
   it("key parity, no empties, same placeholders, Bangla script present", () => {
