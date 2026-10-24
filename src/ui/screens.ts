@@ -85,7 +85,7 @@ function capTag(s: ModuleDef["statuses"][number], lang: Locale) {
 
 function moduleCard(m: ModuleDef, lang: Locale) {
   return h("div", { class: "card", "data-module": m.id },
-    h("div", { class: "row" }, h("h3", {}, `${m.id} · ${tb(m.name, lang)}`)),
+    h("div", { class: "row" }, h("h2", { class: "card-h", }, `${m.id} · ${tb(m.name, lang)}`)),
     h("p", { class: "muted" }, tb(m.note, lang)),
     h("div", { class: "tags" }, ...m.statuses.map((s) => capTag(s, lang)), h("span", { class: "tag off" }, t("cap.gate", lang, { g: m.gate }))));
 }
@@ -170,7 +170,7 @@ export function planFlow(cp: ReturnType<typeof currentPlan>, lang: Locale): HTML
   const svg = svgEl("svg", { viewBox: `0 0 ${W} ${y}`, class: "flow", role: "img", "aria-label": `${t("plan.flow.title", lang)}. ${aria.join(". ")}`, "data-flow": "1", focusable: "false" },
     svgEl("defs", {}, svgEl("marker", { id: "fl-head", viewBox: "0 0 10 10", refX: 9, refY: 5, markerWidth: 7, markerHeight: 7, orient: "auto" }, svgEl("path", { d: "M0,0 L10,5 L0,10 z", class: "fl-head" }))),
     ...parts);
-  return h("div", { class: "card", "data-flow-card": "1" }, h("h3", {}, t("plan.flow.title", lang)), h("p", { class: "muted" }, t("plan.flow.intro", lang)), svg);
+  return h("div", { class: "card", "data-flow-card": "1" }, h("h2", { class: "card-h", }, t("plan.flow.title", lang)), h("p", { class: "muted" }, t("plan.flow.intro", lang)), svg);
 }
 
 export function planScreen(): HTMLElement {
@@ -204,18 +204,18 @@ export function planScreen(): HTMLElement {
   const taskRows = cp.recs.filter((r) => r.entity === "task").sort((a, b) => a.id.localeCompare(b.id)).map((r) => {
     const mv = r.values["task.minutes"];
     return h("div", { class: "card", "data-task": r.id }, h("div", { class: "row" },
-      h("div", {}, h("h3", {}, cp.titles.get(r.id) ?? ""), h("p", { class: "muted" }, mv && mv.state === "value" ? valueEl(t("task.minutes", lang, { n: num(Number(mv.value), lang) }), "DEMO", lang) : t("plan.task.minutes.later", lang))),
+      h("div", {}, h("h2", { class: "card-h", }, cp.titles.get(r.id) ?? ""), h("p", { class: "muted" }, mv && mv.state === "value" ? valueEl(t("task.minutes", lang, { n: num(Number(mv.value), lang) }), "DEMO", lang) : t("plan.task.minutes.later", lang))),
       r.values["task.done_on"]?.state === "value" ? h("span", { class: "tag ok" }, t("reward.done", lang))
         : r.values["task.not_true_on"]?.state === "value" ? h("div", {}, h("span", { class: "tag off" }, t("reality.tag", lang, { date: String((r.values["task.not_true_on"] as { value?: unknown }).value) })), h("p", { class: "muted" }, t("reality.note", lang)), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => { store.demo.delete(r.id); rerender(); } }, t("plan.task.remove", lang)))
         : h("div", {}, doneBtn(r.id, lang), focusBtn(r.id, lang), h("button", { class: "btn ghost", type: "button", "data-act": "reality-changed", "data-task-id": r.id, style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => markRealityChanged(r.id, lang) }, t("reality.btn", lang)), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => { store.demo.delete(r.id); rerender(); } }, t("plan.task.remove", lang)))));
   });
   const byDay = (d: number) => cp.plan.placements.filter((p) => p.day === d).sort((a, b) => a.start - b.start);
-  const week = [0, 1, 2, 3, 4, 5, 6].map((i) => (new Date().getDay() + i) % 7).filter((d) => byDay(d).length).map((d) => h("div", { class: "card", "data-day": String(d) }, h("h3", {}, weekday(d, lang)),
+  const week = [0, 1, 2, 3, 4, 5, 6].map((i) => (new Date().getDay() + i) % 7).filter((d) => byDay(d).length).map((d) => h("div", { class: "card", "data-day": String(d) }, h("h2", { class: "card-h", }, weekday(d, lang)),
     ...byDay(d).map((p) => h("p", { "data-placement": p.taskId }, `${fmtClock(p.start)}–${fmtClock(p.end)} · ${cp.titles.get(p.taskId) ?? ""}`))));
   return h("main", { class: "scr scr-plan" },
     link("#/diary", "crumb", `← ${t("diary.title", lang)}`),
     h("h1", {}, t("plan.title", lang)), h("p", { class: "sub" }, t("plan.intro", lang)),
-    h("div", { class: "card", "data-capacity": cp.state }, h("h3", {}, t("plan.free", lang)), h("p", {}, free)),
+    h("div", { class: "card", "data-capacity": cp.state }, h("h2", { class: "card-h", }, t("plan.free", lang)), h("p", {}, free)),
     planFlow(cp, lang),
     assessmentSection(cp.recs, lang),
     h("h2", {}, t("plan.mode", lang)), h("div", { class: "seg", role: "group" }, seg("normal"), seg("minimum_week"), seg("pause")),
@@ -224,7 +224,7 @@ export function planScreen(): HTMLElement {
     cp.hasTasks ? h("div", {}, ...taskRows) : h("p", { class: "muted" }, t("plan.task.empty", lang)),
     h("h2", {}, t("plan.week", lang)),
     week.length ? h("div", {}, ...week, h("p", { class: "muted" }, t("plan.used", lang, { m: num(cp.plan.usedMinutes, lang), c: num(cp.input.weeklyFreeMinutes ?? 0, lang) }))) : h("p", { class: "muted" }, t("plan.nothing", lang)),
-    cp.plan.deferred.length ? h("div", {}, h("h3", {}, t("plan.later", lang)), ...cp.plan.deferred.map((d) => h("p", { class: "muted", "data-deferred": d.reason }, `${cp.titles.get(d.taskId) ?? ""} — ${t(`plan.why.${d.reason}` as Key, lang)}`))) : null,
+    cp.plan.deferred.length ? h("div", {}, h("h2", { class: "card-h", }, t("plan.later", lang)), ...cp.plan.deferred.map((d) => h("p", { class: "muted", "data-deferred": d.reason }, `${cp.titles.get(d.taskId) ?? ""} — ${t(`plan.why.${d.reason}` as Key, lang)}`))) : null,
     disclaimers(lang));
 }
 
@@ -264,13 +264,13 @@ export function moneyScreen(): HTMLElement {
   const show = (c: Calc) => c.ok ? valueEl(t("money.bdt", lang, { v: new Intl.NumberFormat(intlLocale(lang)).format(c.value) }), "INFERENCE", lang) : h("span", { class: "muted", "data-unknown": "1" }, t("money.unknown", lang, { n: num(c.missing, lang) }));
   // nothing entered is "nothing yet", not a computed 0
   const has = (sc: "personal" | "business", kinds: string[]) => fv.items.some((i) => i.scope === sc && kinds.includes(i.kind));
-  const sum = (sc: "personal" | "business") => h("div", { class: "card", "data-scope": sc }, h("h3", {}, t(`money.${sc}` as Key, lang)),
+  const sum = (sc: "personal" | "business") => h("div", { class: "card", "data-scope": sc }, h("h2", { class: "card-h", }, t(`money.${sc}` as Key, lang)),
     h("p", {}, t("money.networth", lang), ": ", has(sc, ["asset", "liability"]) ? show(netWorth(fv.items, sc)) : h("span", { class: "muted", "data-none": "1" }, t("money.none", lang))),
     h("p", {}, t("money.cashflow", lang), ": ", has(sc, ["income", "expense"]) ? show(monthlyCashFlow(fv.items, sc)) : h("span", { class: "muted", "data-none": "1" }, t("money.none", lang))));
   const rows = recs.filter((r) => r.entity === "finance_item").sort((a, b) => a.id.localeCompare(b.id)).map((r) => {
     const a = r.values["finance.amount"]!;
     return h("div", { class: "card", "data-fin": r.id }, h("div", { class: "row" }, h("div", {},
-      h("h3", {}, fv.labels.get(r.id) ?? String((r.values["finance.label"] as { value?: unknown })?.value ?? "")),
+      h("h2", { class: "card-h", }, fv.labels.get(r.id) ?? String((r.values["finance.label"] as { value?: unknown })?.value ?? "")),
       h("p", { class: "muted" }, a.state === "value" ? valueEl(t("money.bdt", lang, { v: new Intl.NumberFormat(intlLocale(lang)).format(Number(a.value)) }), "DEMO", lang) : t(`unknown.${a.state}` as Key, lang))),
       h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0;min-height:44px", onclick: () => { store.demo.delete(r.id); rerender(); } }, t("money.remove", lang))));
   });
@@ -351,7 +351,7 @@ function stagePanel(lang: Locale): HTMLElement {
   });
   const left = cs.filter((c) => !c.met && c.auto).length > 0;
   return h("div", { class: "card", "data-stage-panel": code },
-    h("h3", {}, `${t("stage.currentLabel", lang)}: ${code} · ${tb(names[cur]!.name, lang)}`),
+    h("h2", { class: "card-h", }, `${t("stage.currentLabel", lang)}: ${code} · ${tb(names[cur]!.name, lang)}`),
     h("p", { class: "muted" }, t("stage.conditions", lang)),
     h("ul", { style: "padding-inline-start:20px" }, ...cs.map((c) => h("li", { "data-cond": c.id, "data-met": String(c.met) }, `${tb(c.text, lang)} — `, h("b", {}, c.auto ? t(c.met ? "stage.met" : "stage.open", lang) : ""))).map((li) => li)),
     left ? h("p", { class: "muted" }, t("stage.leftNote", lang)) : null,
@@ -406,11 +406,11 @@ export function captureScreen(): HTMLElement {
     if (!checkFreeText(text).ok) { err.textContent = t("intake.secretRejected", lang); return; }
     const cands = extract(text); const edits = new Map<string, string>(); const checks = new Map<string, HTMLInputElement>();
     const rows = cands.map((c) => {
-      const cb = h("input", { type: "checkbox", id: `cb-${c.id}`, ...(c.confidence === "high" ? { checked: true } : {}), style: "width:24px;min-height:24px;margin:0" }) as HTMLInputElement; checks.set(c.id, cb);
+      const cb = h("input", { type: "checkbox", id: `cb-${c.id}`, ...(c.confidence === "high" ? { checked: true } : {}), style: "width:24px;margin:0" }) as HTMLInputElement; checks.set(c.id, cb);
       const shown = c.kind === "decision" ? (c.text ?? "") : c.kind === "date" ? (c.date ?? "") : String(c.number ?? "");
       const edit = h("input", { type: "text", value: shown, "data-edit": c.id, "aria-label": t(`capture.kind.${c.kind}` as Key, lang) }) as HTMLInputElement;
       edit.addEventListener("input", () => edits.set(c.id, edit.value));
-      return h("div", { class: "card", "data-cand": c.kind }, h("label", { for: `cb-${c.id}`, style: "display:flex;gap:10px;align-items:center" }, cb,
+      return h("div", { class: "card", "data-cand": c.kind }, h("label", { for: `cb-${c.id}`, style: "display:flex;gap:10px;align-items:center;min-height:44px" }, cb,
         h("b", {}, t(`capture.kind.${c.kind}` as Key, lang)), c.unit && c.kind === "amount" ? h("span", { class: "muted" }, c.unit) : null, c.confidence === "low" ? h("span", { class: "tag warn" }, t("capture.confirmLow", lang)) : null), edit);
     });
     const saveSel = h("button", { class: "btn", type: "button", "data-act": "capture-save" }, t("capture.save", lang));
@@ -425,7 +425,7 @@ export function captureScreen(): HTMLElement {
 
 export function reportScreen(): HTMLElement {
   const lang = L(); const items = store.demo.list().filter((r) => r.entity === "capture_item").map(itemOf); const s = summarize(items);
-  const sec = (title: Key, ...kids: Array<Node | string | null>) => h("div", { class: "card" }, h("h3", {}, t(title, lang)), ...kids);
+  const sec = (title: Key, ...kids: Array<Node | string | null>) => h("div", { class: "card" }, h("h2", { class: "card-h", }, t(title, lang)), ...kids);
   return h("main", {}, link("#/journey", "crumb", `← ${t("journey.title", lang)}`), h("h1", {}, t("report.title", lang)), h("p", { class: "sub" }, t("report.intro", lang)),
     items.length ? h("div", {},
       sec("report.decisions", s.decisions.length ? h("ul", { style: "padding-inline-start:20px" }, ...s.decisions.map((x) => h("li", { "data-decision": "1" }, x))) : h("p", { class: "muted" }, t("report.empty", lang))),
@@ -462,7 +462,7 @@ export function stuckScreen(): HTMLElement {
             values: { "task.title": { state: "value", value: nm, label: "DEMO" }, "task.minutes": { state: "value", value: 5, label: "DEMO" }, "task.priority": { state: "value", value: "high", label: "DEMO" } } });
           log(d, hp); out.replaceChildren(h("p", { class: "ok-msg", "data-done": hp }, t("stuck.done.tiny_step", lang)), link("#/diary/plan", "btn ghost", t("plan.title", lang)));
         });
-        return h("div", { class: "card" }, h("h3", {}, t("stuck.h.tiny_step", lang)), h("label", { for: "stuck-step" }, t("stuck.stepName", lang)), name, msg, add);
+        return h("div", { class: "card" }, h("h2", { class: "card-h", }, t("stuck.h.tiny_step", lang)), h("label", { for: "stuck-step" }, t("stuck.stepName", lang)), name, msg, add);
       }
       const b = h("button", { class: "btn", type: "button", "data-helper": hp }, t(`stuck.h.${hp}` as Key, lang));
       b.addEventListener("click", () => { prefs.mode = hp; log(d, hp); out.replaceChildren(h("p", { class: "ok-msg", "data-done": hp }, t(`stuck.done.${hp}` as Key, lang)), link("#/diary/plan", "btn ghost", t("plan.title", lang))); });
@@ -493,7 +493,7 @@ function reflectionCards(lang: Locale): HTMLElement[] {
 // ---- topics (library) ----
 function tipCard(tp: Tip, lang: Locale): HTMLElement {
   return h("div", { class: "card", "data-tip": tp.id },
-    h("div", { class: "row" }, h("h3", {}, tb(tp.title, lang)), h("span", { class: "tag warn" }, t("topics.draft", lang))),
+    h("div", { class: "row" }, h("h2", { class: "card-h", }, tb(tp.title, lang)), h("span", { class: "tag warn" }, t("topics.draft", lang))),
     h("p", {}, tb(tp.how, lang)), diagram(tp, lang),
     tp.appLink ? link(tp.appLink, "btn ghost", t("topics.tryIt", lang)) : null);
 }
@@ -501,7 +501,7 @@ function tipCard(tp: Tip, lang: Locale): HTMLElement {
 export function topicsIndex(): HTMLElement {
   const lang = L();
   return h("main", {}, link("#/more", "crumb", `← ${t("more.title", lang)}`), h("h1", {}, t("topics.title", lang)), h("p", { class: "sub" }, t("topics.intro", lang)),
-    ...(Object.keys(LAYERS) as (keyof typeof LAYERS)[]).flatMap((ly) => [h("h2", {}, tb(LAYERS[ly], lang)), ...TOPICS.filter((x) => x.layer === ly).map((x) => link(`#/topic/${x.id}`, "card link", h("h3", {}, tb(x.name, lang)), h("p", { class: "muted" }, `${num(tipsOf(x.id).length, lang)} ${t("topics.tips", lang)}`)))]),
+    ...(Object.keys(LAYERS) as (keyof typeof LAYERS)[]).flatMap((ly) => [h("h2", {}, tb(LAYERS[ly], lang)), ...TOPICS.filter((x) => x.layer === ly).map((x) => link(`#/topic/${x.id}`, "card link", h("h2", { class: "card-h", }, tb(x.name, lang)), h("p", { class: "muted" }, `${num(tipsOf(x.id).length, lang)} ${t("topics.tips", lang)}`)))]),
     disclaimers(lang));
 }
 
@@ -538,7 +538,7 @@ export function rewardScreen(): HTMLElement {
   const lang = L(); let fresh = false; try { fresh = sessionStorage.getItem("tm:newStar") === "1"; sessionStorage.removeItem("tm:newStar"); } catch { /* ignore */ }
   const n = completedCount(); const ms = fresh ? milestoneAt(n) : null;
   return h("main", {}, h("h1", {}, t("reward.title", lang)),
-    fresh && n ? h("div", { class: "card", role: "status", "data-fresh": "1" }, ms ? h("h3", { "data-milestone": String(ms) }, t(`reward.ms${ms}` as Key, lang)) : null, h("p", { class: "ok-msg" }, t(`reward.m${messageIndex(n, 6)}` as Key, lang))) : null,
+    fresh && n ? h("div", { class: "card", role: "status", "data-fresh": "1" }, ms ? h("h2", { class: "card-h",  "data-milestone": String(ms) }, t(`reward.ms${ms}` as Key, lang)) : null, h("p", { class: "ok-msg" }, t(`reward.m${messageIndex(n, 6)}` as Key, lang))) : null,
     pictureBlock(lang, { newest: fresh && n > 0, milestone: !!ms }), link("#/today", "cta", t("reward.back", lang)), disclaimers(lang, ["noGuarantee"]));
 }
 
@@ -633,7 +633,7 @@ export function habitsScreen(): HTMLElement {
     }));
     const c = Habits.consistency(hb, logs, Habits.addDays(today, -27), today, today);
     return h("div", { class: "card", "data-habit-card": hb.id },
-      h("div", { class: "row" }, h("h3", {}, hb.title), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0;min-height:40px", onclick: () => { store.demo.delete(hb.id); for (const r of store.demo.list()) if (r.entity === "habit_log" && r.links?.habit === hb.id) store.demo.delete(r.id); rerender(); } }, t("habits.remove", lang))),
+      h("div", { class: "row" }, h("h2", { class: "card-h", }, hb.title), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0;min-height:44px", onclick: () => { store.demo.delete(hb.id); for (const r of store.demo.list()) if (r.entity === "habit_log" && r.links?.habit === hb.id) store.demo.delete(r.id); rerender(); } }, t("habits.remove", lang))),
       main, dots,
       h("p", { class: "muted", "data-consistency": "1" }, c.planned ? valueEl(t("habits.month", lang, { d: num(c.done, lang), p: num(c.planned, lang) }), "INFERENCE", lang) : t("habits.noPlanned", lang)),
       Habits.restartPlan(hb, logs, today) === "smallest_version" ? h("p", { class: "note", "data-restart": "1" }, t("habits.restart", lang)) : null);
@@ -679,7 +679,7 @@ export function cardsScreen(): HTMLElement {
     const grade = (knew: boolean) => h("button", { class: knew ? "btn" : "btn ghost", type: "button", "data-act": knew ? "card-knew" : "card-not", onclick: () => { putCard(Cards.review(c, knew, today)); showCard(i + 1); } }, t(knew ? "cards.knew" : "cards.notyet", lang));
     const row = h("div", { hidden: true, "data-grade": "1" }, grade(true), grade(false));
     reveal.addEventListener("click", () => { ans.hidden = false; row.hidden = false; reveal.hidden = true; });
-    study.replaceChildren(h("div", { class: "card", "data-card-front": c.id }, h("h3", {}, c.front)), ans, reveal, row);
+    study.replaceChildren(h("div", { class: "card", "data-card-front": c.id }, h("h2", { class: "card-h", }, c.front)), ans, reveal, row);
   };
   const go = h("button", { class: "btn", type: "button", "data-act": "cards-study", onclick: () => showCard(0) }, t("cards.study", lang));
   const front = h("input", { id: "cd-front", type: "text", maxlength: "120", autocomplete: "off" }) as HTMLInputElement; const back = h("input", { id: "cd-back", type: "text", maxlength: "200", autocomplete: "off" }) as HTMLInputElement;
@@ -691,8 +691,8 @@ export function cardsScreen(): HTMLElement {
   const boxes = Cards.byBox(all);
   return h("main", {}, link("#/more/topics", "crumb", `← ${t("topics.title", lang)}`), h("h1", {}, t("cards.title", lang)), h("p", { class: "sub" }, t("cards.intro", lang)),
     all.length ? h("div", {}, h("p", { "data-cards-due": String(queue.length) }, valueEl(queue.length ? t("cards.due", lang, { n: num(queue.length, lang) }) : t("cards.none", lang), "INFERENCE", lang)), ...(queue.length ? [go] : []), study,
-      h("h3", {}, t("cards.boxes", lang)), h("div", { class: "seg", role: "img", "aria-label": boxes.join(", ") }, ...boxes.map((n, i) => h("span", { class: "tag" }, `${num(i + 1, lang)}: ${num(n, lang)}`)))) : h("p", { class: "muted" }, t("cards.empty", lang)),
-    h("h2", {}, t("cards.add", lang)), form, ...all.map((c) => h("div", { class: "card", "data-card": c.id }, h("div", { class: "row" }, h("span", {}, c.front), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0;min-height:40px", onclick: () => { store.demo.delete(c.id); rerender(); } }, t("cards.remove", lang))))), disclaimers(lang));
+      h("h2", { class: "card-h", }, t("cards.boxes", lang)), h("div", { class: "seg", role: "img", "aria-label": boxes.join(", ") }, ...boxes.map((n, i) => h("span", { class: "tag" }, `${num(i + 1, lang)}: ${num(n, lang)}`)))) : h("p", { class: "muted" }, t("cards.empty", lang)),
+    h("h2", {}, t("cards.add", lang)), form, ...all.map((c) => h("div", { class: "card", "data-card": c.id }, h("div", { class: "row" }, h("span", {}, c.front), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0;min-height:44px", onclick: () => { store.demo.delete(c.id); rerender(); } }, t("cards.remove", lang))))), disclaimers(lang));
 }
 
 // ---- screens ----
@@ -738,7 +738,7 @@ export function today(): HTMLElement {
 function templatePicker(lang: Locale): HTMLElement {
   const cur = prefs.stageTemplate;
   const seg = (id: TemplateId) => h("button", { type: "button", "data-tpl": id, "aria-pressed": String(cur === id), onclick: () => { prefs.stageTemplate = id; rerender(); } }, tb(TEMPLATES[id].name, lang));
-  return h("section", { class: "card", "data-card": "stage_templates" }, h("h3", {}, t("stage.tpl.h", lang)),
+  return h("section", { class: "card", "data-card": "stage_templates" }, h("h2", { class: "card-h", }, t("stage.tpl.h", lang)),
     h("div", { class: "seg", role: "group", "aria-label": t("stage.tpl.h", lang) }, ...TEMPLATE_IDS.map(seg)),
     h("p", { class: "muted" }, t("stage.tpl.note", lang)));
 }
@@ -748,7 +748,7 @@ export function reviewScreen(): HTMLElement {
   const lang = L(); const recs = store.demo.list();
   const s = reviewSummary(recs, todayIso());
   const card = (id: string, title: Key, value: string | null) => h("section", { class: "card", "data-review": id },
-    h("h3", {}, t(title, lang)),
+    h("h2", { class: "card-h", }, t(title, lang)),
     value === null ? h("p", { class: "muted", "data-review-empty": id }, t("review.notEnough", lang)) : valueEl(value, "INFERENCE", lang));
   return h("main", {}, link("#/journey", "crumb", `← ${t("journey.title", lang)}`),
     h("h1", {}, t("review.title", lang)),
@@ -793,10 +793,10 @@ export function diary(): HTMLElement {
     h("h1", {}, t("diary.title", lang)),
     h("p", { class: "sub" }, t("diary.intro", lang)),
     h("section", { class: "card", "aria-label": t("diary.completeness", lang) },
-      h("h3", {}, t("diary.completeness", lang), " ", valueEl(`${num(c.pct, lang)}%`, "INFERENCE", lang)),
+      h("h2", { class: "card-h", }, t("diary.completeness", lang), " ", valueEl(`${num(c.pct, lang)}%`, "INFERENCE", lang)),
       h("div", { class: "bar", role: "img", "aria-label": `${c.pct}%` }, h("i", { style: `width:${c.pct}%` })),
       h("p", { class: "muted" }, t("diary.completeness.detail", lang, { filled: num(c.filled, lang), total: num(c.total, lang), addressed: num(c.addressed, lang) }))),
-    h("section", { class: "card", "data-next": "1" }, h("h3", {}, t("diary.next", lang)), h("p", {}, nextText)),
+    h("section", { class: "card", "data-next": "1" }, h("h2", { class: "card-h", }, t("diary.next", lang)), h("p", {}, nextText)),
     link("#/diary/intake", "cta", t("diary.start", lang)),
     link("#/diary/plan", "btn ghost", t("plan.title", lang)),
     link("#/diary/money", "btn ghost", t("money.title", lang)),
@@ -868,7 +868,7 @@ function suggestPanel(f: FieldDef, lang: Locale, getInput: () => HTMLInputElemen
     const wasSaved = savedSearchResults(store.demo, f.id, safe).length >= 2;
     const r = await research(safe, true, { provider: wikipedia(lang === "en" ? "en" : "bn"), online: () => navigator.onLine, cached: (qq) => savedSearchResults(store.demo, f.id, qq) });
     const cards = r.options.map((o) => h("div", { class: "card", "data-option": o.id },
-      h("h3", {}, o.title), h("p", { class: "muted" }, o.snippet),
+      h("h2", { class: "card-h", }, o.title), h("p", { class: "muted" }, o.snippet),
       h("p", { class: "muted" }, t("suggest.source", lang, { s: o.sourceName, d: o.fetchedAt.slice(0, 10) })),
       h("button", { class: "btn", type: "button", onclick: () => {
         // Keep the results the user tapped from, so the same term shows here offline next time.
@@ -919,7 +919,7 @@ export function intake(stepParam: string | undefined): HTMLElement {
   });
   form.append(h("button", { class: "btn", type: "submit" }, idx === steps.length - 1 ? t("intake.finish", lang) : t("intake.next", lang)));
   return h("main", {},
-    link("#/diary", "crumb", `← ${t("intake.back", lang)}`),
+    link("#/diary", "crumb", `← ${t("intake.back", lang)}`), h("h1", { class: "sr-only" }, t("diary.title", lang)),
     h("div", { class: "top", style: "margin-top:8px" }, h("span", {}, t("intake.step", lang, { n: num(idx + 1, lang), total: num(steps.length, lang) })), demoBadge(lang)),
     h("p", { class: "muted" }, t("intake.demoNote", lang)),
     form, msg,
@@ -937,7 +937,7 @@ export function deen(): HTMLElement {
     ...ents.map((e) => {
       const fs = FIELDS.filter((f) => f.entity === e.id);
       return h("div", { class: "card", "data-entity": e.id },
-        h("div", { class: "row" }, h("h3", {}, tb(e.name, lang)), h("span", { class: "tag ok" }, t("deen.private", lang))),
+        h("div", { class: "row" }, h("h2", { class: "card-h", }, tb(e.name, lang)), h("span", { class: "tag ok" }, t("deen.private", lang))),
         h("p", { class: "muted" }, t("deen.fields", lang, { n: num(fs.length, lang) }), " · ", t("access.device_only_per_item_authorisation", lang)),
         ...fs.map((f) => fieldHelp(f, lang)));
     }),
@@ -951,13 +951,13 @@ export function more(): HTMLElement {
   const items: Array<[string, Key, Key]> = [["#/topics", "topics.title", "topics.intro"], ["#/more/status", "more.status", "more.status.desc"], ["#/more/fields", "more.fields", "more.fields.desc"], ["#/more/glossary", "more.glossary", "more.glossary.desc"], ["#/more/safety", "more.safety", "more.safety.desc"], ["#/more/data", "more.data", "more.data.desc"]];
   return h("main", { class: "scr scr-more" },
     h("h1", {}, t("more.title", lang)),
-    ...items.map(([href, k, d]) => link(href, "card link", h("h3", {}, t(k, lang)), h("p", { class: "muted" }, t(d, lang)))),
+    ...items.map(([href, k, d]) => link(href, "card link", h("h2", { class: "card-h", }, t(k, lang)), h("p", { class: "muted" }, t(d, lang)))),
     h("h2", {}, t("more.display", lang)),
-    h("div", { class: "card" }, h("h3", {}, t("more.language", lang)),
+    h("div", { class: "card" }, h("h2", { class: "card-h", }, t("more.language", lang)),
       h("div", { class: "seg" }, ...LOCALE_ORDER.map((c) => seg(LOCALES[c].endonym, prefs.lang === c, () => { prefs.lang = c; applyPrefs(); rerender(); })))),
-    h("div", { class: "card" }, h("h3", {}, t("more.theme", lang)),
+    h("div", { class: "card" }, h("h2", { class: "card-h", }, t("more.theme", lang)),
       h("div", { class: "seg" }, ...(["auto", "light", "dark"] as const).map((c) => seg(t(`more.theme.${c}` as Key, lang), prefs.theme === c, () => { prefs.theme = c; applyPrefs(); rerender(); })))),
-    h("div", { class: "card" }, h("h3", {}, t("more.textsize", lang)),
+    h("div", { class: "card" }, h("h2", { class: "card-h", }, t("more.textsize", lang)),
       h("div", { class: "seg" }, ...[100, 125, 150, 200].map((c) => seg(`${num(c, lang)}%`, prefs.scale === c, () => { prefs.scale = c; applyPrefs(); rerender(); })))),
     h("h2", {}, t("more.modules", lang)),
     ...MODULES.filter((m) => m.tab === "more" && m.id !== "M22").map((m) => moduleCard(m, lang)),
@@ -984,7 +984,7 @@ export function fieldsGuide(): HTMLElement {
     ...ENTITIES.filter((e) => FIELDS.some((f) => f.entity === e.id)).flatMap((e) => [
       h("h2", {}, tb(e.name, lang)),
       ...FIELDS.filter((f) => f.entity === e.id).map((f) => h("div", { class: "card", "data-field-card": f.id },
-        h("h3", {}, tb(f.label, lang)),
+        h("h2", { class: "card-h", }, tb(f.label, lang)),
         h("div", { class: "tags" }, h("span", { class: "tag" }, t(`privacy.${f.privacy}` as Key, lang)), h("span", { class: "tag" }, valueEl(t(`label.${semanticLabel(f)}` as Key, lang), semanticLabel(f), lang))),
         fieldHelp(f, lang))),
     ]),
@@ -1007,8 +1007,8 @@ export function dataScreen(): HTMLElement {
   return h("main", {},
     link("#/more", "crumb", `← ${t("more.title", lang)}`),
     h("h1", {}, t("data.title", lang)),
-    h("div", { class: "card", "data-ns": "real" }, h("h3", {}, t("data.real", lang)), h("p", {}, t("data.real.count", lang, { n: num(store.real.list().length, lang) })), h("p", { class: "muted" }, t("data.real.locked", lang))),
-    h("div", { class: "card", "data-ns": "demo" }, h("h3", {}, t("data.demo", lang), " ", demoBadge(lang)), h("p", {}, t("data.demo.count", lang, { n: num(store.demo.list().length, lang) }))),
+    h("div", { class: "card", "data-ns": "real" }, h("h2", { class: "card-h", }, t("data.real", lang)), h("p", {}, t("data.real.count", lang, { n: num(store.real.list().length, lang) })), h("p", { class: "muted" }, t("data.real.locked", lang))),
+    h("div", { class: "card", "data-ns": "demo" }, h("h2", { class: "card-h", }, t("data.demo", lang), " ", demoBadge(lang)), h("p", {}, t("data.demo.count", lang, { n: num(store.demo.list().length, lang) }))),
     h("p", { class: "muted" }, t("data.nopromote", lang)),
     h("button", { class: "btn ghost", type: "button", onclick: () => { store.demo.clear(); rerender(); } }, t("data.clearDemo", lang)),
     h("h2", {}, t("backup.title", lang)),
@@ -1019,7 +1019,7 @@ export function dataScreen(): HTMLElement {
       document.body.append(a); a.click(); a.remove();
     } }, t("backup.save", lang)),
     h("label", { class: "btn ghost", style: "cursor:pointer" }, t("backup.restore", lang),
-      h("input", { type: "file", accept: "application/json,.json", "data-act": "restore", style: "display:none", onchange: async (e: Event) => {
+      h("input", { type: "file", accept: "application/json,.json", "data-act": "restore", class: "sr-only", onchange: async (e: Event) => {
         const f = (e.target as HTMLInputElement).files?.[0]; if (!f) return;
         const out = document.getElementById("backup-msg")!;
         try { const n = await restoreBackup(new StoreRepo(store), await f.text()); out.className = "ok-msg"; out.textContent = t("backup.ok", lang, { n: num(n, lang) }); }
@@ -1036,7 +1036,7 @@ export function glossary(): HTMLElement {
     h("h1", {}, t("glossary.title", lang)),
     h("p", { class: "sub" }, t("glossary.unreviewed", lang)),
     ...GLOSSARY.map((g) => h("div", { class: "card", "data-term": g.id },
-      h("div", { class: "row" }, h("h3", {}, tb(g.term, lang)), h("span", { class: "tag warn" }, t("glossary.tag", lang))),
+      h("div", { class: "row" }, h("h2", { class: "card-h", }, tb(g.term, lang)), h("span", { class: "tag warn" }, t("glossary.tag", lang))),
       h("p", {}, tb(g.meaning, lang)))),
     disclaimers(lang, ["noFatwa"]));
 }

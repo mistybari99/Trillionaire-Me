@@ -56,7 +56,12 @@ export function render() {
     h("span", { class: "right" }, h("span", { class: "net", "data-net": online ? "online" : "offline" }, t(online ? "status.online" : "status.offline", lang)), demoBadge(lang)));
   const nav = h("nav", { "aria-label": t("nav.aria", lang) }, ...TABS.map(([r, k]) => h("a", { class: "tab", href: `#/${r}`, ...(tab === r ? { "aria-current": "page" } : {}) }, t(k, lang))));
   const app = document.getElementById("app")!;
-  app.replaceChildren(top, body, nav, drawer);
+  // Skip link (first Tab stop) jumps past the top bar to the screen content.
+  // Keep the screen's own id (the focus timer looks up "focus-root"); only add one when there is none.
+  if (!body.id) body.id = "content";
+  body.tabIndex = -1;
+  const skip = h("a", { class: "skip", href: `#${body.id}` }, t("a11y.skip", lang));
+  app.replaceChildren(skip, top, body, nav, drawer);
   window.scrollTo(0, 0);
 }
 

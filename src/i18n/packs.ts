@@ -3,6 +3,7 @@
 const en = {
   "app.title": "Trillionaire Me",
   "nav.aria": "Main menu",
+  "a11y.skip": "Skip to content",
   "nav.today": "Today", "nav.journey": "Journey", "nav.diary": "Diary", "nav.deen": "Deen", "nav.more": "More",
   "badge.demo": "Demo data",
   "status.online": "Online", "status.offline": "Offline",
@@ -198,6 +199,7 @@ export type Key = keyof typeof en;
 const bn: Record<Key, string> = {
   "app.title": "ট্রিলিয়নেয়ার মি",
   "nav.aria": "প্রধান মেনু",
+  "a11y.skip": "মূল বিষয়বস্তুতে যান",
   "nav.today": "আজ", "nav.journey": "যাত্রা", "nav.diary": "ডায়েরি", "nav.deen": "দ্বীন", "nav.more": "আরও",
   "badge.demo": "Demo data",
   "status.online": "Online", "status.offline": "Offline",
