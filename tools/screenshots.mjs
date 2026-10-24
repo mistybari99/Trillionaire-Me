@@ -3,7 +3,9 @@ import { chromium } from "playwright";
 import { preview } from "vite";
 import { mkdirSync, writeFileSync } from "node:fs";
 
-const routes = ["today", "journey", "diary", "diary/intake/1", "diary/intake/2", "diary/intake/3", "diary/intake/4", "diary/intake/5", "diary/intake/6", "diary/intake/7", "diary/plan", "diary/money", "journey/log", "journey/report", "journey/horizon", "capture", "stuck", "topics", "topic/procrastination", "topic/emotions", "reward", "journey/art", "habits", "cards", "deen", "more", "more/status", "more/fields", "more/glossary", "more/safety", "more/data"];
+const routes = ["today", "journey", "diary", "diary/intake/1", "diary/intake/2", "diary/intake/3", "diary/intake/4", "diary/intake/5", "diary/intake/6", "diary/intake/7", "diary/plan", "diary/money", "journey/log", "journey/report", "journey/horizon", "capture", "stuck", "topics", "topic/procrastination", "topic/emotions", "reward", "journey/art", "habits", "cards", "deen", "more", "more/status", "more/fields", "more/glossary", "more/safety", "more/data", "focus/shot-task"];
+// Demo task seeded only for the focus screenshot (demo namespace, DEMO-labelled values, never real data).
+const SEED_TASK = { id: "shot-task", entity: "task", ns: "demo", ownerId: "demo-user", schemaVersion: 1, createdAt: new Date().toISOString(), values: { "task.title": { state: "value", value: "Write the report outline", label: "DEMO" }, "task.minutes": { state: "value", value: 25, label: "DEMO" }, "task.priority": { state: "value", value: "high", label: "DEMO" } } };
 const out = "evidence/screenshots";
 mkdirSync(out, { recursive: true });
 const server = await preview({ preview: { port: 4173, strictPort: true } });
@@ -12,9 +14,12 @@ const report = [];
 for (const lang of ["bn", "en"]) {
   const ctx = await browser.newContext({ viewport: { width: 360, height: 740 }, deviceScaleFactor: 2 });
   await ctx.addInitScript((l) => localStorage.setItem("tm:ui:lang", l), lang);
+  // Seed the demo task before the app boots, and only for the focus route (a hash change alone would not re-run this).
+  await ctx.addInitScript((rec) => { try { if (location.hash.startsWith("#/focus/")) localStorage.setItem(`tm:demo:${rec.id}`, JSON.stringify(rec)); } catch { /* storage blocked */ } }, SEED_TASK);
   const page = await ctx.newPage();
   for (const r of routes) {
-    await page.goto(`http://localhost:4173/#/${r}`);
+    if (r.startsWith("focus/")) await page.goto("about:blank"); // fresh document so the init script seeds the task
+    await page.goto(`http://localhost:4173/#/${r.replace("shot-task", SEED_TASK.id)}`);
     await page.waitForSelector("main");
     await page.waitForTimeout(1500); // let fade-in and journey micro-animations settle before capture
     const file = `${out}/${lang}-${r.replace(/\//g, "_")}.png`;

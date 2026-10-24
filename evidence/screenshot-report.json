@@ -1,6 +1,6 @@
 {
   "viewport": "360x740",
-  "generated": "2026-10-24T14:15:25.458Z",
+  "generated": "2026-10-24T14:47:52.047Z",
   "screens": [
     {
       "lang": "bn",
@@ -189,6 +189,12 @@
       "horizontalOverflow": false
     },
     {
+      "lang": "bn",
+      "route": "focus/shot-task",
+      "file": "evidence/screenshots/bn-focus_shot-task.png",
+      "horizontalOverflow": false
+    },
+    {
       "lang": "en",
       "route": "today",
       "file": "evidence/screenshots/en-today.png",
@@ -372,6 +378,12 @@
       "lang": "en",
       "route": "more/data",
       "file": "evidence/screenshots/en-more_data.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "focus/shot-task",
+      "file": "evidence/screenshots/en-focus_shot-task.png",
       "horizontalOverflow": false
     }
   ]

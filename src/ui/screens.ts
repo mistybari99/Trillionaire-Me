@@ -473,7 +473,7 @@ export function stuckScreen(): HTMLElement {
       ...(d.unansweredCount ? [h("p", { class: "muted" }, t("stuck.unanswered", lang, { n: num(d.unansweredCount, lang) }))] : []),
       h("h2", {}, t("stuck.helpers", lang)), ...helperBtns);
   });
-  return h("main", {}, link("#/today", "crumb", `← ${t("nav.today", lang)}`), h("h1", {}, t("stuck.title", lang)), h("p", { class: "sub" }, t("stuck.intro", lang)), ...rows, show, out, ...reflectionCards(lang), disclaimers(lang, ["noGuarantee"]));
+  return h("main", { class: "scr scr-stuck" }, link("#/today", "crumb", `← ${t("nav.today", lang)}`), h("h1", {}, t("stuck.title", lang)), h("p", { class: "sub" }, t("stuck.intro", lang)), ...rows, show, out, ...reflectionCards(lang), disclaimers(lang, ["noGuarantee"]));
 }
 
 // Calm, static reflection cards (ROADMAP B7/B8). Plain text only: no colour cue, nothing counted or ordered.
@@ -537,14 +537,14 @@ function pictureBlock(lang: Locale, opts: { newest?: boolean; milestone?: boolea
 export function rewardScreen(): HTMLElement {
   const lang = L(); let fresh = false; try { fresh = sessionStorage.getItem("tm:newStar") === "1"; sessionStorage.removeItem("tm:newStar"); } catch { /* ignore */ }
   const n = completedCount(); const ms = fresh ? milestoneAt(n) : null;
-  return h("main", {}, h("h1", {}, t("reward.title", lang)),
+  return h("main", { class: "scr scr-reward" }, h("h1", {}, t("reward.title", lang)),
     fresh && n ? h("div", { class: "card", role: "status", "data-fresh": "1" }, ms ? h("h2", { class: "card-h",  "data-milestone": String(ms) }, t(`reward.ms${ms}` as Key, lang)) : null, h("p", { class: "ok-msg" }, t(`reward.m${messageIndex(n, 6)}` as Key, lang))) : null,
     pictureBlock(lang, { newest: fresh && n > 0, milestone: !!ms }), link("#/today", "cta", t("reward.back", lang)), disclaimers(lang, ["noGuarantee"]));
 }
 
 export function artScreen(): HTMLElement {
   const lang = L();
-  return h("main", {}, link("#/journey", "crumb", `← ${t("journey.title", lang)}`), h("h1", {}, t("reward.title", lang)), pictureBlock(lang), disclaimers(lang, ["noGuarantee"]));
+  return h("main", { class: "scr scr-reward" }, link("#/journey", "crumb", `← ${t("journey.title", lang)}`), h("h1", {}, t("reward.title", lang)), pictureBlock(lang), disclaimers(lang, ["noGuarantee"]));
 }
 
 
@@ -564,7 +564,7 @@ export function focusScreen(taskId: string | undefined): HTMLElement {
   const lang = L(); const task = taskId ? store.demo.get(taskId) : null;
   if (!task || task.entity !== "task") return h("main", {}, link("#/today", "crumb", `← ${t("nav.today", lang)}`), h("h1", {}, t("focus.title", lang)), h("p", { class: "muted" }, t("focus.none", lang)));
   const title = String((task.values["task.title"] as { value?: unknown })?.value ?? "");
-  const root = h("main", { id: "focus-root", "data-task": task.id });
+  const root = h("main", { id: "focus-root", "data-task": task.id, class: "scr scr-focus" });
   const total = h("p", { class: "muted", "data-focus-total": "1" });
   const body = h("div", {});
   let timer: ReturnType<typeof setInterval> | null = null;
@@ -789,7 +789,7 @@ export function diary(): HTMLElement {
   const nextText = nxt.field
     ? t(`diary.next.${nxt.reasonKey}` as Key, lang, { field: tb(nxt.field.label, lang), why: tb(nxt.field.help.why, lang) })
     : t("diary.next.all_done", lang);
-  return h("main", {},
+  return h("main", { class: "scr scr-diary" },
     h("h1", {}, t("diary.title", lang)),
     h("p", { class: "sub" }, t("diary.intro", lang)),
     h("section", { class: "card", "aria-label": t("diary.completeness", lang) },
@@ -918,7 +918,7 @@ export function intake(stepParam: string | undefined): HTMLElement {
     location.hash = nextIdx < steps.length ? `#/diary/intake/${steps[nextIdx]}` : "#/diary";
   });
   form.append(h("button", { class: "btn", type: "submit" }, idx === steps.length - 1 ? t("intake.finish", lang) : t("intake.next", lang)));
-  return h("main", {},
+  return h("main", { class: "scr scr-intake" },
     link("#/diary", "crumb", `← ${t("intake.back", lang)}`), h("h1", { class: "sr-only" }, t("diary.title", lang)),
     h("div", { class: "top", style: "margin-top:8px" }, h("span", {}, t("intake.step", lang, { n: num(idx + 1, lang), total: num(steps.length, lang) })), demoBadge(lang)),
     h("p", { class: "muted" }, t("intake.demoNote", lang)),

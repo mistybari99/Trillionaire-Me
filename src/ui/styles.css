@@ -218,3 +218,62 @@ dl{margin:6px 0} .hrow{display:grid;grid-template-columns:96px 1fr;gap:8px;paddi
 .scr-more .card .tags{margin-top:8px}
 /* Card titles are h2 for heading order (screens have no h3 directly under h1); they keep the h3 look. */
 h2.card-h{font:600 17px/1.4 "Hind Siliguri",sans-serif;margin:0 0 2px}
+
+/* Visual polish pass 3 (Focus, Reward/picture, Stuck, Diary, Intake). Rhythm, grouping and touch targets only; colours come from the tokens above. */
+.scr-diary h1,.scr-intake h1,.scr-stuck h1,.scr-reward h1,.scr-focus h1{margin-top:18px;margin-bottom:6px}
+.scr-diary h2,.scr-stuck h2,.scr-reward h2,.scr-focus h2{margin:26px 0 6px}
+.scr-diary .sub,.scr-stuck .sub,.scr-focus .sub,.scr-reward .sub{margin-bottom:4px}
+/* Diary: completeness and next-step cards, then action buttons with even gaps */
+.scr-diary .card{padding:16px 16px 14px;margin:12px 0}
+.scr-diary .card h2.card-h{margin-bottom:8px}
+.scr-diary .card .bar{margin:8px 0 10px}
+.scr-diary .card p{margin:0}
+.scr-diary [data-next] p{line-height:1.6}
+.scr-diary .cta,.scr-diary .btn{margin-top:12px}
+.scr-diary .btn.ghost{margin-top:10px}
+.scr-diary .card.link{margin:10px 0}
+.scr-diary .card.link h3{margin-bottom:4px}
+/* Intake: one question per field block, label and tag on one line, help tucked under */
+.scr-intake .top{margin:8px 0 4px}
+.scr-intake form .field{margin:14px 0;padding-bottom:14px}
+.scr-intake form .field label{margin-bottom:2px;display:flex;flex-wrap:wrap;align-items:center;gap:6px;line-height:1.5}
+.scr-intake form .field label .tag{margin-top:0;font-weight:400}
+.scr-intake form .field .unk{margin-top:8px}
+.scr-intake form .field .err{margin-top:6px}
+.scr-intake details.help{margin-top:8px;padding-top:6px;border-top:1px solid var(--rule)}
+.scr-intake details.help summary{min-height:44px;display:flex;align-items:center}
+.scr-intake form>.btn{margin-top:20px}
+.scr-intake>p.muted{margin:12px 0 0}
+/* Stuck: each question is a row with its three answers in equal columns */
+.scr-stuck .field{margin:12px 0;padding:0 0 14px}
+.scr-stuck .field p{margin:0 0 8px;font-weight:600;line-height:1.5}
+.scr-stuck .field .seg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:0}
+.scr-stuck .field .seg button{min-width:0;padding-inline:6px;font-size:16px}
+.scr-stuck .btn{margin-top:18px}
+.scr-stuck section.card,.scr-stuck .card{padding:16px 16px 14px;margin:12px 0}
+.scr-stuck section.card h2,.scr-stuck .card h2.card-h{font:600 18px/1.4 "Hind Siliguri",sans-serif;margin:0 0 6px}
+.scr-stuck section.card ul{margin:0 0 6px}
+.scr-stuck section.card p{margin:0}
+.scr-stuck [data-card] .muted{margin-top:8px}
+.scr-stuck .card+.card{margin-top:12px}
+.scr-stuck .note{margin-top:20px}
+/* Focus: the timer is the centre of the screen; adjust and pause/stop sit under it */
+.scr-focus .note{margin:12px 0}
+.scr-focus .stage{margin:16px 0 14px;text-align:center}
+.scr-focus .stage .n{font-variant-numeric:tabular-nums}
+.scr-focus .stage .bar{margin:10px auto 0;max-width:280px}
+.scr-focus .row{justify-content:center;gap:10px;margin-top:4px}
+.scr-focus .row .btn{flex:1 1 0;min-width:0;margin-top:0}
+.scr-focus .btn{margin-top:12px}
+.scr-focus .seg{margin-top:10px}
+.scr-focus .seg button{flex:1 1 calc(50% - 6px);min-width:0}
+/* Reward / picture: framed picture, message card above it, one clear action */
+.scr-reward .card{padding:16px 16px 14px;margin:12px 0}
+.scr-reward .card h2.card-h{margin-bottom:4px}
+.scr-reward .card p{margin:0}
+.scr-reward .reward{margin:12px 0 10px}
+.scr-reward .reward+p{margin:0 2px 6px;line-height:1.6}
+.scr-reward .reward+p+p{margin:0 2px}
+.scr-reward .cta{margin-top:16px}
+@media (prefers-reduced-motion:no-preference){.scr-reward [data-fresh]{animation:inspireIn .6s ease-out both}}
+@media (prefers-reduced-motion:reduce){.scr-reward [data-fresh]{animation:none!important}}
