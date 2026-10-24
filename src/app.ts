@@ -4,6 +4,7 @@ import { t } from "./i18n/t";
 import type { Key } from "./i18n/packs";
 import { demoBadge } from "./ui/components";
 import * as S from "./ui/screens";
+import { LAYERS, TOPICS } from "./library/topics";
 
 const TABS: Array<[string, Key]> = [["today", "nav.today"], ["journey", "nav.journey"], ["diary", "nav.diary"], ["deen", "nav.deen"], ["more", "nav.more"]];
 
@@ -18,6 +19,10 @@ export const ROUTES: Array<[RegExp, (m: RegExpMatchArray) => HTMLElement, string
   [/^\/capture$/, () => S.captureScreen(), "today"],
   [/^\/journey\/report$/, () => S.reportScreen(), "journey"],
   [/^\/stuck$/, () => S.stuckScreen(), "today"],
+  [/^\/topics$/, () => S.topicsIndex(), "more"],
+  [/^\/topic\/([\w-]+)$/, (m) => S.topicScreen(m[1]), "more"],
+  [/^\/reward$/, () => S.rewardScreen(), "today"],
+  [/^\/journey\/art$/, () => S.artScreen(), "journey"],
   [/^\/deen$/, () => S.deen(), "deen"],
   [/^\/more$/, () => S.more(), "more"],
   [/^\/more\/status$/, () => S.status(), "more"],
@@ -27,6 +32,8 @@ export const ROUTES: Array<[RegExp, (m: RegExpMatchArray) => HTMLElement, string
   [/^\/more\/data$/, () => S.dataScreen(), "more"],
 ];
 
+function toggleDrawer(open: boolean) { const d = document.getElementById("drawer"); if (d) { d.classList.toggle("open", open); d.setAttribute("aria-hidden", String(!open)); } }
+
 export function render() {
   applyPrefs();
   const lang = prefs.lang;
@@ -35,11 +42,16 @@ export function render() {
   for (const [re, fn, tb] of ROUTES) { const m = path.match(re); if (m) { body = fn(m); tab = tb; break; } }
   if (!body) { location.hash = "#/today"; return; }
   const online = navigator.onLine;
-  const top = h("div", { class: "top" }, h("span", {}, t("app.title", lang)),
+  const drawer = h("div", { class: "drawer", id: "drawer", role: "dialog", "aria-label": t("topics.menu", lang), "aria-hidden": "true" },
+    h("div", { class: "scrim", onclick: () => toggleDrawer(false) }),
+    h("div", { class: "panel" }, h("button", { class: "btn ghost", type: "button", "data-act": "drawer-close", onclick: () => toggleDrawer(false), style: "margin:0" }, t("topics.close", lang)),
+      ...(Object.keys(LAYERS) as (keyof typeof LAYERS)[]).flatMap((ly) => [h("h2", {}, LAYERS[ly][lang]), ...TOPICS.filter((x) => x.layer === ly).map((x) => h("a", { class: "item", href: `#/topic/${x.id}`, "data-topic": x.id, onclick: () => toggleDrawer(false) }, x.name[lang]))])));
+  const menuBtn = h("button", { class: "menu-btn", type: "button", "data-act": "drawer-open", "aria-label": t("topics.open", lang), "aria-controls": "drawer", onclick: () => toggleDrawer(true) }, "☰");
+  const top = h("div", { class: "top" }, h("span", {}, menuBtn, " ", t("app.title", lang)),
     h("span", { class: "right" }, h("span", { class: "net", "data-net": online ? "online" : "offline" }, t(online ? "status.online" : "status.offline", lang)), demoBadge(lang)));
   const nav = h("nav", { "aria-label": t("nav.aria", lang) }, ...TABS.map(([r, k]) => h("a", { class: "tab", href: `#/${r}`, ...(tab === r ? { "aria-current": "page" } : {}) }, t(k, lang))));
   const app = document.getElementById("app")!;
-  app.replaceChildren(top, body, nav);
+  app.replaceChildren(top, body, nav, drawer);
   window.scrollTo(0, 0);
 }
 

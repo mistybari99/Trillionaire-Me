@@ -23,5 +23,20 @@
   "id": "TM-REQ-182",
   "requirement": "Field rules: one fact per field, taps over typing, short text ≤80 chars, every field shows what/why/example/format",
   "gate": "G1"
+ },
+ {
+  "id": "TM-REQ-183",
+  "requirement": "Topic library: every owner topic (20 + Deen) has short practical tips with a visual; tips share tags so related tips appear across topics; all drafts marked unreviewed; sensitive topics carry safety notes",
+  "gate": "G3"
+ },
+ {
+  "id": "TM-REQ-184",
+  "requirement": "Reward picture: each finished task adds a star, each passed stage adds a garden layer; milestone moments; no points/ranks/streaks/comparison; text equivalent",
+  "gate": "G3"
+ },
+ {
+  "id": "TM-REQ-185",
+  "requirement": "Hideable side drawer listing all topics while the 5 phone tabs stay primary",
+  "gate": "G3"
  }
 ]

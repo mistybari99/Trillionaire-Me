@@ -23,7 +23,7 @@ export function freeWindow(a: RecordValues): WindowResult {
 const PRIORITY: Record<string, number> = { high: 3, normal: 2, low: 1 };
 
 export function tasksFrom(records: TMRecord[]): PlanTask[] {
-  return records.filter((r) => r.entity === "task").sort((a, b) => a.id.localeCompare(b.id)).map((r) => ({
+  return records.filter((r) => r.entity === "task" && r.values["task.done_on"]?.state !== "value").sort((a, b) => a.id.localeCompare(b.id)).map((r) => ({
     id: r.id,
     minutes: (() => { const m = numVal(r.values["task.minutes"]); return m !== null && m > 0 ? Math.round(m) : null; })(),
     priority: PRIORITY[String(val(r.values["task.priority"]) ?? "normal")] ?? 2,

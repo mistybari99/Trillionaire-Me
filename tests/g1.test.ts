@@ -208,8 +208,8 @@ describe("i18n parity (completeness gate)", () => {
 });
 
 describe("TM-TST-006 every rendered value is labelled (all routes, both languages)", () => {
-  const paths = ["/today", "/journey", "/diary", "/diary/intake/1", "/diary/intake/2", "/diary/intake/3", "/diary/intake/4", "/diary/intake/5", "/diary/intake/6", "/diary/intake/7", "/diary/plan", "/diary/money", "/journey/log", "/journey/report", "/capture", "/stuck", "/deen", "/more", "/more/status", "/more/fields", "/more/glossary", "/more/safety", "/more/data"];
-  it("route table is fully covered", () => { for (const p of paths) expect(ROUTES.some(([re]) => re.test(p)), p).toBe(true); expect(ROUTES.length).toBe(17); });
+  const paths = ["/today", "/journey", "/diary", "/diary/intake/1", "/diary/intake/2", "/diary/intake/3", "/diary/intake/4", "/diary/intake/5", "/diary/intake/6", "/diary/intake/7", "/diary/plan", "/diary/money", "/journey/log", "/journey/report", "/capture", "/stuck", "/topics", "/topic/procrastination", "/reward", "/journey/art", "/deen", "/more", "/more/status", "/more/fields", "/more/glossary", "/more/safety", "/more/data"];
+  it("route table is fully covered", () => { for (const p of paths) expect(ROUTES.some(([re]) => re.test(p)), p).toBe(true); expect(ROUTES.length).toBe(21); });
   for (const lang of ["bn", "en"] as const) it(`0 unlabelled values in ${lang}`, () => {
     let seen = 0;
     for (const p of paths) {

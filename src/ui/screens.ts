@@ -18,6 +18,10 @@ import { createBackup, restoreBackup } from "../core/backup";
 import { schedule, todaysActions } from "../core/planner";
 import { buildPlanInput, capacityState, fmtClock, freeWindow } from "../core/planInputs";
 import { STAGE_CODES, StageError, conditions, currentIndex, passStage, stageStates, type StageCode } from "../core/stages";
+import { LAYERS, TOPICS, topicById, tipsOf, relatedTips, type Tip } from "../library/topics";
+import { journeyArt } from "./rewardArt";
+import { messageIndex, milestoneAt } from "../core/reward";
+import { diagram } from "./diagram";
 import { CAUSE_TEXT, QUESTIONS, diagnose, type Answer, type Helper } from "../core/stuck";
 import { extract, summarize, type Candidate, type Item } from "../core/capture";
 import { netWorth, monthlyCashFlow, type Calc } from "../core/finance";
@@ -116,7 +120,7 @@ export function planScreen(): HTMLElement {
     const mv = r.values["task.minutes"];
     return h("div", { class: "card", "data-task": r.id }, h("div", { class: "row" },
       h("div", {}, h("h3", {}, cp.titles.get(r.id) ?? ""), h("p", { class: "muted" }, mv && mv.state === "value" ? valueEl(t("task.minutes", lang, { n: num(Number(mv.value), lang) }), "DEMO", lang) : t("plan.task.minutes.later", lang))),
-      h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0;min-height:44px", onclick: () => { store.demo.delete(r.id); rerender(); } }, t("plan.task.remove", lang))));
+      r.values["task.done_on"]?.state === "value" ? h("span", { class: "tag ok" }, t("reward.done", lang)) : h("div", {}, doneBtn(r.id, lang), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => { store.demo.delete(r.id); rerender(); } }, t("plan.task.remove", lang)))));
   });
   const byDay = (d: number) => cp.plan.placements.filter((p) => p.day === d).sort((a, b) => a.start - b.start);
   const week = [0, 1, 2, 3, 4, 5, 6].map((i) => (new Date().getDay() + i) % 7).filter((d) => byDay(d).length).map((d) => h("div", { class: "card", "data-day": String(d) }, h("h3", {}, weekday(d, lang)),
@@ -233,7 +237,7 @@ function stagePanel(lang: Locale): HTMLElement {
 function passedBanner(lang: Locale): HTMLElement | null {
   let code: string | null = null;
   try { code = sessionStorage.getItem("tm:passed"); sessionStorage.removeItem("tm:passed"); } catch { /* ignore */ }
-  return code ? h("div", { class: "card", role: "status", "data-passed": code }, h("p", { class: "ok-msg" }, t("stage.passedMsg", lang, { code }))) : null;
+  return code ? h("div", { class: "card", role: "status", "data-passed": code }, h("p", { class: "ok-msg" }, t("stage.passedMsg", lang, { code })), h("p", {}, t("reward.stageUnlocked", lang, { code })), link("#/journey/art", "btn ghost", t("reward.see", lang))) : null;
 }
 
 export function journeyLog(): HTMLElement {
@@ -343,12 +347,70 @@ export function stuckScreen(): HTMLElement {
   return h("main", {}, link("#/today", "crumb", `← ${t("nav.today", lang)}`), h("h1", {}, t("stuck.title", lang)), h("p", { class: "sub" }, t("stuck.intro", lang)), ...rows, show, out, disclaimers(lang, ["noGuarantee"]));
 }
 
+
+// ---- topics (library) ----
+function tipCard(tp: Tip, lang: Locale): HTMLElement {
+  return h("div", { class: "card", "data-tip": tp.id },
+    h("div", { class: "row" }, h("h3", {}, tp.title[lang]), h("span", { class: "tag warn" }, t("topics.draft", lang))),
+    h("p", {}, tp.how[lang]), diagram(tp, lang),
+    tp.appLink ? link(tp.appLink, "btn ghost", t("topics.tryIt", lang)) : null);
+}
+
+export function topicsIndex(): HTMLElement {
+  const lang = L();
+  return h("main", {}, link("#/more", "crumb", `← ${t("more.title", lang)}`), h("h1", {}, t("topics.title", lang)), h("p", { class: "sub" }, t("topics.intro", lang)),
+    ...(Object.keys(LAYERS) as (keyof typeof LAYERS)[]).flatMap((ly) => [h("h2", {}, LAYERS[ly][lang]), ...TOPICS.filter((x) => x.layer === ly).map((x) => link(`#/topic/${x.id}`, "card link", h("h3", {}, x.name[lang]), h("p", { class: "muted" }, `${num(tipsOf(x.id).length, lang)} ${t("topics.tips", lang)}`)))]),
+    disclaimers(lang));
+}
+
+export function topicScreen(id: string | undefined): HTMLElement {
+  const lang = L(); const tp = id ? topicById(id) : undefined;
+  if (!tp) return topicsIndex();
+  const mine = tipsOf(tp.id); const rel = relatedTips(tp.id);
+  return h("main", {}, link("#/topics", "crumb", `← ${t("topics.title", lang)}`), h("h1", {}, tp.name[lang]),
+    tp.sensitive ? h("div", { class: "note", role: "note", "data-safety": tp.sensitive }, h("p", {}, t(`topics.safety.${tp.sensitive}` as Key, lang))) : null,
+    tp.appLink ? link(tp.appLink, "btn", t("topics.tryIt", lang)) : null,
+    h("h2", {}, t("topics.tips", lang)), ...(mine.length ? mine.map((x) => tipCard(x, lang)) : [h("p", { class: "muted" }, t("topics.empty", lang))]),
+    ...(rel.length ? [h("h2", {}, t("topics.related", lang)), ...rel.map((x) => tipCard(x, lang))] : []), disclaimers(lang));
+}
+
+
+// ---- finishing tasks + the journey picture ----
+const completedCount = () => store.demo.list().filter((r) => r.entity === "task" && r.values["task.done_on"]?.state === "value").length;
+const todayIso = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; };
+function markDone(taskId: string) {
+  const r = store.demo.get(taskId); if (!r || r.values["task.done_on"]?.state === "value") return;
+  store.demo.put({ ...r, values: { ...r.values, "task.done_on": { state: "value", value: todayIso(), label: "DEMO" } } });
+  try { sessionStorage.setItem("tm:newStar", "1"); } catch { /* ignore */ }
+  const was = location.hash; location.hash = "#/reward"; if (was === "#/reward") rerender(); // a changed hash re-renders by itself; a second render would eat the one-time "new star" flag
+}
+const doneBtn = (taskId: string, lang: Locale) => h("button", { class: "btn ghost", type: "button", "data-act": "task-done", "data-task-id": taskId, style: "width:auto;margin:0;min-height:44px", onclick: () => markDone(taskId) }, t("reward.doneBtn", lang));
+
+function pictureBlock(lang: Locale, opts: { newest?: boolean; milestone?: boolean } = {}): HTMLElement {
+  const n = completedCount(); const k = Math.min(stageData().passed.length, 8);
+  return h("div", {}, h("div", { class: "reward", "data-reward": "1" }, journeyArt(n, k, opts)),
+    h("p", { class: "muted", "data-reward-text": "1" }, n ? t("reward.completed", lang, { n: num(n, lang), k: num(k, lang) }) : t("reward.empty", lang)), h("p", { class: "muted" }, t("reward.next", lang)));
+}
+
+export function rewardScreen(): HTMLElement {
+  const lang = L(); let fresh = false; try { fresh = sessionStorage.getItem("tm:newStar") === "1"; sessionStorage.removeItem("tm:newStar"); } catch { /* ignore */ }
+  const n = completedCount(); const ms = fresh ? milestoneAt(n) : null;
+  return h("main", {}, h("h1", {}, t("reward.title", lang)),
+    fresh && n ? h("div", { class: "card", role: "status", "data-fresh": "1" }, ms ? h("h3", { "data-milestone": String(ms) }, t(`reward.ms${ms}` as Key, lang)) : null, h("p", { class: "ok-msg" }, t(`reward.m${messageIndex(n, 6)}` as Key, lang))) : null,
+    pictureBlock(lang, { newest: fresh && n > 0, milestone: !!ms }), link("#/today", "cta", t("reward.back", lang)), disclaimers(lang, ["noGuarantee"]));
+}
+
+export function artScreen(): HTMLElement {
+  const lang = L();
+  return h("main", {}, link("#/journey", "crumb", `← ${t("journey.title", lang)}`), h("h1", {}, t("reward.title", lang)), pictureBlock(lang), disclaimers(lang, ["noGuarantee"]));
+}
+
 // ---- screens ----
 function todayFromPlan(cp: ReturnType<typeof currentPlan>, lang: Locale): HTMLElement[] {
   const acts = todaysActions(cp.plan, new Date().getDay());
   if (!acts.length) return [h("p", { class: "muted", "data-today": "none" }, t("home.today.none", lang), " ", link("#/diary/plan", "crumb", t("home.today.open", lang)))];
   return acts.map((p, i) => h("div", { class: "task", "data-placement": p.taskId }, h("b", {}, num(i + 1, lang)),
-    h("div", {}, cp.titles.get(p.taskId) ?? "", h("p", {}, valueEl(`${fmtClock(p.start)}–${fmtClock(p.end)}`, "DEMO", lang)))));
+    h("div", {}, cp.titles.get(p.taskId) ?? "", h("p", {}, valueEl(`${fmtClock(p.start)}–${fmtClock(p.end)}`, "DEMO", lang)), doneBtn(p.taskId, lang))));
 }
 
 export function today(): HTMLElement {
@@ -382,6 +444,7 @@ export function journey(): HTMLElement {
     h("h1", {}, t("journey.title", lang)),
     passedBanner(lang),
     stagePanel(lang),
+    link("#/journey/art", "btn ghost", t("reward.see", lang)),
     link("#/journey/log", "btn ghost", t("log.link", lang)),
     link("#/journey/report", "btn ghost", t("report.link", lang)),
     stageLadder(lang),
@@ -538,7 +601,7 @@ export function deen(): HTMLElement {
 export function more(): HTMLElement {
   const lang = L();
   const seg = (label: string, active: boolean, on: () => void) => h("button", { type: "button", "aria-pressed": String(active), onclick: on }, label);
-  const items: Array<[string, Key, Key]> = [["#/more/status", "more.status", "more.status.desc"], ["#/more/fields", "more.fields", "more.fields.desc"], ["#/more/glossary", "more.glossary", "more.glossary.desc"], ["#/more/safety", "more.safety", "more.safety.desc"], ["#/more/data", "more.data", "more.data.desc"]];
+  const items: Array<[string, Key, Key]> = [["#/topics", "topics.title", "topics.intro"], ["#/more/status", "more.status", "more.status.desc"], ["#/more/fields", "more.fields", "more.fields.desc"], ["#/more/glossary", "more.glossary", "more.glossary.desc"], ["#/more/safety", "more.safety", "more.safety.desc"], ["#/more/data", "more.data", "more.data.desc"]];
   return h("main", {},
     h("h1", {}, t("more.title", lang)),
     ...items.map(([href, k, d]) => link(href, "card link", h("h3", {}, t(k, lang)), h("p", { class: "muted" }, t(d, lang)))),

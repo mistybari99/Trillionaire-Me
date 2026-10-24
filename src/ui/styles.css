@@ -72,3 +72,32 @@ dl{margin:6px 0} .hrow{display:grid;grid-template-columns:96px 1fr;gap:8px;paddi
 .seg{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px} .seg button{min-height:44px;padding:4px 14px;font:inherit;background:var(--card);color:var(--ink);border:1.5px solid var(--ink)} .seg button[aria-pressed="true"]{background:var(--primary);color:var(--on-primary)}
 .crumb{display:inline-block;margin-top:8px;color:var(--primary)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* topic visuals */
+.dg{margin:10px 0}
+.dg-steps{display:flex;flex-direction:column;align-items:stretch;gap:2px}
+.dg-steps .node{display:grid;grid-template-columns:32px 1fr;gap:10px;align-items:center;border:1.5px solid var(--ink);background:var(--card);padding:8px 10px}
+.dg-steps .node b{display:grid;place-items:center;width:28px;height:28px;border:1.5px solid var(--primary);color:var(--primary);font:600 14px "Fraunces",serif}
+.dg-steps .arrow{text-align:center;color:var(--muted);line-height:1}
+.dg-cycle .arrow.back{color:var(--ember);font-size:22px}
+.dg-matrix{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.dg-matrix .cell{border:1.5px solid var(--ink);background:var(--card);padding:10px;font-size:14px;line-height:1.4}
+.dg-matrix .c0{border-color:var(--moss)} .dg-matrix .c1{border-color:var(--primary)} .dg-matrix .c2{border-color:var(--demo)} .dg-matrix .c3{border-color:var(--rule);color:var(--muted)}
+/* drawer */
+.menu-btn{min-height:44px;min-width:44px;background:none;border:1.5px solid var(--rule);color:var(--ink);font:600 18px system-ui;cursor:pointer}
+.drawer{position:fixed;inset:0;z-index:30;display:none}
+.drawer.open{display:block}
+.drawer .scrim{position:absolute;inset:0;background:rgba(0,0,0,.45)}
+.drawer .panel{position:absolute;inset-block:0;inset-inline-start:0;width:min(88%,360px);background:var(--paper);border-inline-end:1px solid var(--rule);overflow-y:auto;padding:16px}
+.drawer h2{margin-top:16px}
+.drawer a.item{display:block;padding:10px 0;border-bottom:1px solid var(--rule);color:var(--ink);text-decoration:none;min-height:44px}
+/* reward art */
+.reward{border:1px solid var(--rule);background:var(--card);padding:0;margin:12px 0}
+.reward svg{display:block;width:100%;height:auto}
+.star{animation:twinkle 3s ease-in-out infinite}
+.star.new{animation:pop 1.2s ease-out both,twinkle 3s 1.2s ease-in-out infinite}
+@keyframes twinkle{50%{opacity:.55}} @keyframes pop{0%{transform:scale(0);opacity:0}60%{transform:scale(2.2);opacity:1}100%{transform:scale(1)}}
+.star.new{transform-box:fill-box;transform-origin:center}
+.shoot{animation:shoot 1.6s ease-out both}
+@keyframes shoot{from{transform:translate(0,0);opacity:1}to{transform:translate(120px,70px);opacity:0}}
+@media (prefers-reduced-motion:reduce){.star,.star.new,.shoot{animation:none!important}}

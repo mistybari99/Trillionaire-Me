@@ -142,6 +142,16 @@ check("G3-STUCK", "choosing it switches mode and adds 0 tasks", (await idb(page)
 await page.goto("http://localhost:4174/#/diary/plan"); await page.waitForSelector("[data-mode]");
 check("G3-STUCK", "plan screen shows Minimum week as active", (await page.locator("[data-mode=minimum_week]").getAttribute("aria-pressed")) === "true");
 await page.click("[data-mode=normal]");
+// topics drawer + finishing a task adds a star
+await page.goto("http://localhost:4174/#/today"); await page.waitForSelector("main");
+await page.click("[data-act=drawer-open]"); await page.click("#drawer a[data-topic=procrastination]"); await page.waitForSelector("[data-tip]");
+check("G3-TOPICS", "sidebar opens, topic page shows tips with a visual and an app link", (await page.locator("[data-tip]").count()) >= 2 && (await page.locator("[data-diagram]").count()) >= 2 && !(await page.locator("#drawer.open").count()));
+await page.goto("http://localhost:4174/#/diary/plan"); await page.waitForSelector("form[data-form=task]");
+await page.fill("#pt-title", "Quick win"); await page.fill("#pt-min", "10"); await page.click("form[data-form=task] button[type=submit]"); await page.waitForSelector("[data-task]");
+const starsBefore = await page.evaluate(async () => { const q = indexedDB.open("tm-db"); await new Promise((r) => (q.onsuccess = r)); const all = await new Promise((r) => (q.result.transaction("records").objectStore("records").getAll().onsuccess = (e) => r(e.target.result))); return all.filter((x) => x.entity === "task" && x.values["task.done_on"]?.state === "value").length; });
+await page.locator("[data-act=task-done]").last().click(); await page.waitForSelector("[data-reward] svg");
+const nStars = Number(await page.locator("[data-reward] svg").getAttribute("data-stars"));
+check("G3-REWARD", "finishing a task opens the picture and adds exactly one star", nStars === starsBefore + 1 && (await page.locator("[data-fresh]").count()) === 1, `${starsBefore}->${nStars}`);
 // data survives a full reload (IndexedDB)
 await page.reload(); await page.waitForSelector("main");
 const afterReload = await idb(page);

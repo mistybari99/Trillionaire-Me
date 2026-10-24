@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-24T01:07:44.403Z",
+  "generated": "2026-10-24T04:46:29.481Z",
   "results": [
     {
       "id": "TM-TST-143",
@@ -168,6 +168,18 @@
       "name": "plan screen shows Minimum week as active",
       "pass": true,
       "detail": ""
+    },
+    {
+      "id": "G3-TOPICS",
+      "name": "sidebar opens, topic page shows tips with a visual and an app link",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G3-REWARD",
+      "name": "finishing a task opens the picture and adds exactly one star",
+      "pass": true,
+      "detail": "0->1"
     },
     {
       "id": "G2-PERSIST",

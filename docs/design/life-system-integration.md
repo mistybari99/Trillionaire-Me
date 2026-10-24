@@ -1,17 +1,16 @@
-# Life Success brief — what we take, what we leave (REVISED 24 Oct 2026)
-Owner clarified: **do not apply the whole brief.** Add only the parts that fit this project, built on top of what already runs (Today · Journey · Diary · Deen · More, planner, stages, money, quick capture, Suggest).
+# Life Success brief — how it lands in the app (REVISED 24 Oct 2026, second pass)
+Owner direction: take only what fits the running app, **but no topic is dropped** — topics without a direct feature get short tips + a visual on how to control/build that area. Keep the 5 phone tabs, add a hideable side drawer. Visual rewards are a must. Tags are important. Goal-linking stays small.
 
-## Taken (fits the running app)
-| Idea | How it lands in our app | Status |
-|---|---|---|
-| "I'm stuck" problem loop | Rule-based, no typing: 6 yes/no/unknown taps → likely causes → ≤3 helpers that use existing features (5-minute step → Today plan, Minimum week, Pause). Tired/overloaded never *adds* tasks (Charter §6). | built |
-| Habits without shaming | later, inside Journey: consistency trend + restart plan; **no streak counters** | planned |
-| Why a day was missed | gentle one-tap reasons (sleep, load, unclear step) in the weekly review | planned |
-| Goal tree view / skill gap | uses the existing goal tree + diary skills | planned, small |
-| Weekly review, plan-vs-actual | uses the real plan already running | planned |
+| Brief point | Built how |
+|---|---|
+| 1 four layers | grouping in the drawer / topics index (Goal architecture · Capability · Obstacles · Execution) |
+| 2 twenty topics (+ Deen) | **Topic library** (`src/library/topics.ts`): 21 topics × 2 tips = 42 tips. Each tip: 2-line how-to + visual (steps / cycle / 2×2) + "use it in the app" link where a feature exists. All marked "খসড়া — যাচাই হয়নি". Health, emotions, money, worship topics show a safety note. |
+| 3 navigation | 5 phone tabs stay; **☰ drawer** (hideable) lists all topics by group |
+| 4 problem loop | "I'm stuck" (6 taps, rule-based; tired/overloaded never adds work) |
+| 5 visuals / rewards | **Journey picture**: finishing a task adds a star to a constellation; passing a stage adds a layer to the garden (8 layers: sprout → stem → trunk → canopy → flowers → fruit → sun & bird → aurora + golden halo); milestone moments at 1, 5, 10, 25, 50, 100 stars (shooting star + title). No points, ranks, streaks or comparison. Text equivalent for the picture. Topic tips each carry a visual. |
+| 6 tag system | Each tip has tags; a topic page also shows related tips from other topics that share a tag — one tip lives in many places, no copies. |
+| 7 goal link | small: tips for goals (shrink a goal, plan backwards); goal → task → plan already runs; "Your goal" line on Home is a later small step |
+| 8 principles | goal-driven · problem-driven · feedback-driven kept as rules |
 
-## Left out (parked, not built)
-The 20-category library, 200+ tags, content guides, nine-item sidebar, six visual families, evidence/tag database. Reason: not requested for this project, large, and needs reviewed content (health/emotion) we cannot invent. Can be revisited if the owner asks.
-
-## Rules that stay
-Unknown ≠ 0 · calm copy, no red/shame · one focus on Today · phone-first 5 tabs · Deen first-class and private · no AI until owner approves (G6) · no invented content.
+Still planned (small): habits with restart plan (no streak counters) · weekly review with gentle "what got in the way" · goal tree screen · stage-themed reward scenes beyond the garden.
+Needs the owner: someone to review tips (especially health/emotion/money/worship) before the "draft" tag is removed.
