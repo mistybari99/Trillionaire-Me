@@ -16,6 +16,7 @@ const get = (k: string) => { try { return localStorage.getItem(k); } catch { ret
 const set = (k: string, v: string) => { try { localStorage.setItem(k, v); } catch { /* ignore */ } };
 
 export type PlanMode = "normal" | "minimum_week" | "pause";
+export type HorizonView = "stack" | "compact";
 export const prefs = {
   get lang(): Locale { const v = get("tm:ui:lang"); return v && v in LOCALES ? (v as Locale) : DEFAULT_LOCALE; },
   set lang(v: Locale) { set("tm:ui:lang", v); },
@@ -25,6 +26,9 @@ export const prefs = {
   set scale(v: number) { set("tm:ui:scale", String(v)); },
   get mode(): PlanMode { const v = get("tm:ui:mode"); return v === "minimum_week" || v === "pause" ? v : "normal"; },
   set mode(v: PlanMode) { set("tm:ui:mode", v); },
+  /** Horizon screen template. Unknown or missing value falls back to "stack" (the original view). */
+  get horizonView(): HorizonView { const v = get("tm:ui:horizonView"); return v === "compact" ? "compact" : "stack"; },
+  set horizonView(v: HorizonView) { set("tm:ui:horizonView", v === "compact" ? "compact" : "stack"); },
 };
 
 export function applyPrefs() {

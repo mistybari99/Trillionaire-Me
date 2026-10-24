@@ -4,7 +4,7 @@ import { h } from "./dom";
 import { t, tb } from "../i18n/t";
 import type { Key } from "../i18n/packs";
 import { LOCALES, type Locale } from "../i18n/registry";
-import { applyPrefs, prefs, store, type PlanMode } from "./state";
+import { applyPrefs, prefs, store, type HorizonView, type PlanMode } from "./state";
 import { demoBadge, disclaimers, fieldHelp, num, valueEl } from "./components";
 import { STAGES, DEMO_DATE, DEMO_TASKS } from "../demo/seed";
 import { MODULES, CAP_STATUSES, type ModuleDef } from "../modules/capability";
@@ -216,10 +216,23 @@ export function horizonScreen(): HTMLElement {
   const section = (key: string, list: HorizonGoal[]) => h("section", { "data-horizon": key },
     h("h2", {}, t(`horizon.${key}` as Key, lang)),
     ...(list.length ? list.map(card) : [h("p", { class: "muted" }, t("horizon.empty", lang))]));
+  // Template chooser: "stack" = sections (default), "compact" = one line per goal with its horizon label. Same goals, same ids.
+  const view = prefs.horizonView;
+  const seg = (v: HorizonView) => h("button", { type: "button", "data-view": v, "aria-pressed": String(view === v), onclick: () => { prefs.horizonView = v; rerender(); } }, t(`horizon.view.${v}` as Key, lang));
+  const toggle = h("div", { class: "seg", role: "group", "aria-label": t("horizon.view", lang) }, seg("stack"), seg("compact"));
+  const line = (x: HorizonGoal, key: string) => h("li", { "data-goal": x.id, "data-line": key },
+    h("span", { class: "muted" }, t(`horizon.${key}` as Key, lang)), " · ", h("strong", {}, x.title));
+  const body = view === "compact"
+    ? h("ul", { class: "horizon-compact", "data-view": "compact" },
+      ...HORIZONS.flatMap((k) => g.byHorizon[k].map((x) => line(x, k))),
+      ...g.unset.map((x) => line(x, "unset")))
+    : h("div", { "data-view": "stack" },
+      ...HORIZONS.map((k) => section(k, g.byHorizon[k])),
+      g.unset.length ? section("unset", g.unset) : null);
   return h("main", {},
     h("h1", {}, t("horizon.title", lang)),
-    ...HORIZONS.map((k) => section(k, g.byHorizon[k])),
-    g.unset.length ? section("unset", g.unset) : null);
+    toggle,
+    body);
 }
 
 // ---- stages + journey log ----
