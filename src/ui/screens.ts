@@ -1,4 +1,5 @@
 import { todaysInspiration, THEME_LABEL } from "../library/inspiration";
+import { groupByHorizon, HORIZONS, type HorizonGoal } from "../core/horizon";
 import { h } from "./dom";
 import { t, tb } from "../i18n/t";
 import type { Key } from "../i18n/packs";
@@ -198,6 +199,28 @@ export function moneyScreen(): HTMLElement {
     h("p", { class: "muted" }, t("money.note", lang)), disclaimers(lang));
 }
 
+
+
+// ---- horizon view (R2) ----
+export function horizonScreen(): HTMLElement {
+  const lang = L();
+  const goals: HorizonGoal[] = store.demo.list().filter((r) => r.entity === "goal" && r.values["goal.title"]?.state === "value").map((r) => ({
+    id: r.id,
+    title: String((r.values["goal.title"] as { value?: unknown }).value ?? ""),
+    why: r.values["goal.why"]?.state === "value" ? String((r.values["goal.why"] as { value?: unknown }).value) : undefined,
+    horizon: r.values["goal.horizon"]?.state === "value" ? String((r.values["goal.horizon"] as { value?: unknown }).value) : undefined,
+  }));
+  const g = groupByHorizon(goals);
+  const card = (x: HorizonGoal) => h("article", { class: "card", "data-goal": x.id }, h("strong", {}, x.title),
+    x.why ? h("p", { class: "muted" }, `${t("horizon.why", lang)}: ${x.why}`) : null);
+  const section = (key: string, list: HorizonGoal[]) => h("section", { "data-horizon": key },
+    h("h2", {}, t(`horizon.${key}` as Key, lang)),
+    ...(list.length ? list.map(card) : [h("p", { class: "muted" }, t("horizon.empty", lang))]));
+  return h("main", {},
+    h("h1", {}, t("horizon.title", lang)),
+    ...HORIZONS.map((k) => section(k, g.byHorizon[k])),
+    g.unset.length ? section("unset", g.unset) : null);
+}
 
 // ---- stages + journey log ----
 function stageData() {
@@ -603,6 +626,7 @@ export function journey(): HTMLElement {
     stagePanel(lang),
     link("#/journey/art", "btn ghost", t("reward.see", lang)),
     link("#/journey/log", "btn ghost", t("log.link", lang)),
+    link("#/journey/horizon", "btn ghost", t("horizon.link", lang)),
     link("#/journey/report", "btn ghost", t("report.link", lang)),
     stageLadder(lang),
     h("h2", {}, t("journey.slots", lang)),
