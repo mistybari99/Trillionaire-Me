@@ -88,6 +88,16 @@ check("G3-PLAN", "Home shows the user's own planned task (today first)", (await 
 await page.goto("http://localhost:4174/#/diary/plan"); await page.click("[data-mode=pause]");
 check("G3-PLAN", "pause mode places nothing, no error text", (await page.locator("[data-placement]").count()) === 0 && (await page.locator("[data-deferred='paused']").count()) === 1);
 await page.click("[data-mode=normal]");
+// G3: money — unknown stays unknown, scopes apart
+await page.goto("http://localhost:4174/#/diary/money"); await page.waitForSelector("main");
+const addFin = async (kind, scope, name, amt, period = "once") => { await page.selectOption("#mf-kind", kind); await page.selectOption("#mf-scope", scope); await page.fill("#mf-name", name); await page.fill("#mf-amount", amt); await page.selectOption("#mf-period", period); await page.click("form[data-form=money] button[type=submit]"); await page.waitForTimeout(150); };
+await addFin("asset", "personal", "Savings", "1000"); await addFin("liability", "personal", "Loan", "");
+check("G3-MONEY", "blank liability makes personal net worth 'not known', not 0", (await page.locator("[data-scope=personal] [data-unknown]").count()) === 1);
+await addFin("asset", "business", "Stock", "5000");
+const bizTxt = await page.locator("[data-scope=business]").innerText();
+check("G3-MONEY", "business net worth is separate and computed (5,000)", /৫,০০০/.test(bizTxt) && !/১,০০০/.test(bizTxt), JSON.stringify(bizTxt));
+await page.fill("#mf-name", "password: abc12345"); await page.fill("#mf-amount", "5"); await page.click("form[data-form=money] button[type=submit]");
+check("G3-MONEY", "secret-looking name rejected", (await page.locator("[data-fin]").count()) === 3);
 // data survives a full reload (IndexedDB)
 await page.reload(); await page.waitForSelector("main");
 const afterReload = await idb(page);

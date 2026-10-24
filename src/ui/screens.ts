@@ -17,6 +17,8 @@ import { StoreRepo } from "../adapters/storeRepo";
 import { createBackup, restoreBackup } from "../core/backup";
 import { schedule, todaysActions } from "../core/planner";
 import { buildPlanInput, capacityState, fmtClock, freeWindow } from "../core/planInputs";
+import { netWorth, monthlyCashFlow, type Calc } from "../core/finance";
+import { financeFrom } from "../core/financeInputs";
 import { research, safeQuery } from "../core/research";
 import { wikipedia } from "../adapters/wikipedia";
 import { GLOSSARY } from "../catalog/glossary";
@@ -129,6 +131,61 @@ export function planScreen(): HTMLElement {
     disclaimers(lang));
 }
 
+
+// ---- money (finance maths wired to the UI) ----
+export function moneyScreen(): HTMLElement {
+  const lang = L(); const recs = store.demo.list(); const fv = financeFrom(recs);
+  const sel = (id: string, f: string) => h("select", { id }, ...fieldById(f)!.options!.map((o) => h("option", { value: o.code }, tb(o.label, lang))));
+  const kind = sel("mf-kind", "finance.kind"), scope = sel("mf-scope", "finance.scope"), period = sel("mf-period", "finance.period");
+  const name = h("input", { id: "mf-name", type: "text", maxlength: "80", autocomplete: "off" });
+  const amount = h("input", { id: "mf-amount", type: "text", inputmode: "decimal" });
+  const unk = h("select", { id: "mf-state", "aria-label": t("intake.valueFor", lang) }, h("option", { value: "value" }, t("intake.valueFor", lang)), ...(["unknown", "later", "prefer_not"] as const).map((u) => h("option", { value: u }, t(`unknown.${u}` as Key, lang))));
+  const err = h("p", { class: "err", role: "alert" });
+  const form = h("form", { novalidate: true, "data-form": "money" },
+    h("label", { for: "mf-kind" }, t("money.kind", lang)), kind, h("label", { for: "mf-scope" }, t("money.scope", lang)), scope,
+    h("label", { for: "mf-name" }, t("money.name", lang)), name, h("p", { class: "muted" }, t("money.nameHint", lang)),
+    h("label", { for: "mf-amount" }, t("money.amount", lang)), amount, unk,
+    h("label", { for: "mf-period" }, t("money.period", lang)), period, err,
+    h("button", { class: "btn", type: "submit" }, t("money.save", lang)));
+  form.addEventListener("submit", (ev) => {
+    ev.preventDefault(); err.textContent = "";
+    const nm = name.value.trim(); if (!nm) return;
+    if (!checkFreeText(nm).ok) { err.textContent = t("intake.secretRejected", lang); return; }
+    let amt: FieldValue;
+    if (unk.value !== "value") amt = { state: unk.value as UnknownState };
+    else {
+      const raw = amount.value.trim().replace(/,/g, "").replace(/[০-৯]/g, (c) => String(c.charCodeAt(0) - 0x09e6));
+      if (raw === "") amt = { state: "unknown" };
+      else { const n = Number(raw); if (!Number.isFinite(n) || n < 0) { err.textContent = t("intake.invalidNumber", lang); return; } amt = { state: "value", value: n, label: "DEMO" }; }
+    }
+    const d = (x: string): FieldValue => ({ state: "value", value: x, label: "DEMO" });
+    const id = `fin-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`;
+    store.demo.put({ id, entity: "finance_item", ns: "demo", ownerId: "demo-user", schemaVersion: 1, createdAt: new Date().toISOString(),
+      values: { "finance.kind": d(kind.value), "finance.scope": d(scope.value), "finance.label": d(nm), "finance.amount": amt, "finance.period": d(period.value) } });
+    rerender();
+  });
+  const show = (c: Calc) => c.ok ? valueEl(t("money.bdt", lang, { v: new Intl.NumberFormat(lang === "bn" ? "bn-BD" : "en-US").format(c.value) }), "INFERENCE", lang) : h("span", { class: "muted", "data-unknown": "1" }, t("money.unknown", lang, { n: num(c.missing, lang) }));
+  // nothing entered is "nothing yet", not a computed 0
+  const has = (sc: "personal" | "business", kinds: string[]) => fv.items.some((i) => i.scope === sc && kinds.includes(i.kind));
+  const sum = (sc: "personal" | "business") => h("div", { class: "card", "data-scope": sc }, h("h3", {}, t(`money.${sc}` as Key, lang)),
+    h("p", {}, t("money.networth", lang), ": ", has(sc, ["asset", "liability"]) ? show(netWorth(fv.items, sc)) : h("span", { class: "muted", "data-none": "1" }, t("money.none", lang))),
+    h("p", {}, t("money.cashflow", lang), ": ", has(sc, ["income", "expense"]) ? show(monthlyCashFlow(fv.items, sc)) : h("span", { class: "muted", "data-none": "1" }, t("money.none", lang))));
+  const rows = recs.filter((r) => r.entity === "finance_item").sort((a, b) => a.id.localeCompare(b.id)).map((r) => {
+    const a = r.values["finance.amount"]!;
+    return h("div", { class: "card", "data-fin": r.id }, h("div", { class: "row" }, h("div", {},
+      h("h3", {}, fv.labels.get(r.id) ?? String((r.values["finance.label"] as { value?: unknown })?.value ?? "")),
+      h("p", { class: "muted" }, a.state === "value" ? valueEl(t("money.bdt", lang, { v: new Intl.NumberFormat(lang === "bn" ? "bn-BD" : "en-US").format(Number(a.value)) }), "DEMO", lang) : t(`unknown.${a.state}` as Key, lang))),
+      h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0;min-height:44px", onclick: () => { store.demo.delete(r.id); rerender(); } }, t("money.remove", lang))));
+  });
+  return h("main", {},
+    link("#/diary", "crumb", `← ${t("diary.title", lang)}`), h("h1", {}, t("money.title", lang)), h("p", { class: "sub" }, t("money.intro", lang)),
+    h("h2", {}, t("money.summary", lang)), sum("personal"), sum("business"),
+    fv.notMonthly ? h("p", { class: "muted" }, t("money.notMonthly", lang, { n: num(fv.notMonthly, lang) })) : null,
+    h("h2", {}, t("money.add", lang)), form,
+    rows.length ? h("div", {}, ...rows) : h("p", { class: "muted" }, t("money.empty", lang)),
+    h("p", { class: "muted" }, t("money.note", lang)), disclaimers(lang));
+}
+
 // ---- screens ----
 function todayFromPlan(cp: ReturnType<typeof currentPlan>, lang: Locale): HTMLElement[] {
   const acts = todaysActions(cp.plan, new Date().getDay());
@@ -188,6 +245,7 @@ export function diary(): HTMLElement {
     h("section", { class: "card", "data-next": "1" }, h("h3", {}, t("diary.next", lang)), h("p", {}, nextText)),
     link("#/diary/intake", "cta", t("diary.start", lang)),
     link("#/diary/plan", "btn ghost", t("plan.title", lang)),
+    link("#/diary/money", "btn ghost", t("money.title", lang)),
     h("h2", {}, t("diary.modules", lang)),
     ...MODULES.filter((m) => m.tab === "diary").map((m) => moduleCard(m, lang)),
     disclaimers(lang));

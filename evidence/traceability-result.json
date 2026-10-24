@@ -1,6 +1,6 @@
 {
-  "generated": "2026-10-24T00:09:11.422Z",
-  "totalTests": 93,
+  "generated": "2026-10-24T00:34:57.697Z",
+  "totalTests": 99,
   "failed": 0,
   "results": {
     "TM-TST-006": {
@@ -45,7 +45,7 @@
         "tools/e2e.mjs",
         "evidence/e2e-report.json"
       ],
-      "tests": 5,
+      "tests": 7,
       "e2e": 2,
       "evidenceOk": true,
       "finalOutcome": "Pass"
@@ -192,24 +192,25 @@
     },
     "TM-TST-022": {
       "outcome": "Partial",
-      "scope": "Net-worth maths (personal/business separate, unknown→unknown) done; no screen yet",
+      "scope": "Money screen: net worth per scope from saved items, unknown stays unknown, nothing-entered shows 'nothing yet'. Real-user test not run",
       "artifacts": [
         "tests/g3.test.ts",
-        "src/core/finance.ts"
+        "tests/money.test.ts",
+        "tools/e2e.mjs"
       ],
-      "tests": 3,
+      "tests": 5,
       "e2e": 0,
       "evidenceOk": true,
       "finalOutcome": "Partial"
     },
     "TM-TST-023": {
       "outcome": "Partial",
-      "scope": "Monthly cash-flow + runway maths done; 90-day review screen not built",
+      "scope": "Monthly cash flow on screen (one-off/yearly counted aside). 90-day review view not built",
       "artifacts": [
         "tests/g3.test.ts",
-        "src/core/finance.ts"
+        "tests/money.test.ts"
       ],
-      "tests": 3,
+      "tests": 5,
       "e2e": 0,
       "evidenceOk": true,
       "finalOutcome": "Partial"
