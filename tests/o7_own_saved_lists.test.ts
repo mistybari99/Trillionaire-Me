@@ -9,7 +9,7 @@ const at = (i: number) => new Date(Date.UTC(2026, 9, 24, 0, 0, i));
 const sug = (n: number): Suggestion[] => Array.from({ length: n }, (_, i) => ({ id: `opt-${i + 1}`, title: `T${i}`, snippet: "s", sourceName: "Wikipedia", sourceUrl: `https://en.wikipedia.org/wiki/T${i}`, fetchedAt: "2026-10-24T00:00:00.000Z" }));
 const fresh = () => new Store(new MemoryKV()).demo;
 
-describe("O7 own options (per field, cap 20)", () => {
+describe("TM-TST-053 O7 own options (per field, cap 20)", () => {
   it("keeps the newest 20 and removes the oldest first", () => {
     const s = fresh();
     for (let i = 0; i < 23; i++) expect(saveOwnOption(s, "interest.topic", `opt ${i}`, at(i))).toBe("saved");
@@ -43,7 +43,7 @@ describe("O7 own options (per field, cap 20)", () => {
   });
 });
 
-describe("O7 saved offline search list (per field, cap 20)", () => {
+describe("TM-TST-053 O7 saved offline search list (per field, cap 20)", () => {
   it("stores tapped results under the normalised term and reads them back", () => {
     const s = fresh();
     saveSearchResults(s, "interest.topic", "  Bookkeeping ", sug(3), at(1));
@@ -77,7 +77,7 @@ describe("O7 saved offline search list (per field, cap 20)", () => {
   });
 });
 
-describe("O7 render: own options show above the suggestions", () => {
+describe("TM-TST-053 O7 render: own options show above the suggestions", () => {
   beforeEach(() => { localStorage.clear(); store.demo.clear(); document.body.innerHTML = '<div id="app"></div>'; localStorage.setItem("tm:ui:lang", "en"); });
   it("a saved own option is listed in the topic field panel, and a new typed one can be saved", () => {
     saveOwnOption(store.demo, "interest.topic", "Pottery at home", new Date("2026-10-24T00:00:00Z"));

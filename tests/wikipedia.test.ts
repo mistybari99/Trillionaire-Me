@@ -3,7 +3,7 @@ import { wikipedia } from "../src/adapters/wikipedia";
 import { research } from "../src/core/research";
 
 const fakeFetch = (rows: { title: string; snippet: string }[], ok = true) => vi.fn(async (_u: string) => ({ ok, json: async () => ({ query: { search: rows } }) }));
-describe("Wikipedia provider", () => {
+describe("TM-TST-146 Wikipedia provider", () => {
   it("builds a safe URL per language and strips HTML from snippets", async () => {
     const f = fakeFetch([{ title: "Book keeping", snippet: 'A <span class="x">record</span> &amp; more <script>x</script>' }]);
     const r = await wikipedia("bn", f).search("a b&c");

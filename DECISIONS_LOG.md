@@ -80,3 +80,9 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 - Privacy: text that looks like a password, OTP, ID or card number is refused before it is stored (`detectSecret`).
 - Alternatives: a new Dexie table (rejected: schema change for no gain); localStorage (rejected: state should survive like other demo records); no cap (rejected: brief says 20).
 - How to undo: remove the `ownBox`/`saveOwn` lines and the `saveSearchResults` call in `suggestPanel`; drop the cached-first branch in `research()`; delete `src/core/savedLists.ts` and `tests/o7_own_saved_lists.test.ts`. Stored records can be cleared with the demo clear action.
+
+### O7 addendum — "more screens" check and traceability (2026-10-24)
+- What: checked every intake field. Only the 5 suggestable fields (`interest.topic`, `skill.name`, `strength.name`, `value.name`, `goal.title`) get a suggestion panel, and all 5 go through `suggestPanel`, which already has own options and the saved list. No intake screen was missing support, so no UI change was made.
+- Traceability: 3 test files mapped to TM-TST ids where the criterion really fits: `o7_own_saved_lists` to TM-TST-053, `wikipedia` to TM-TST-146, `o5_assessment_fit` to TM-TST-165. All are Partial. The 8 other unmapped files are listed in `docs/register/EVIDENCE_REFRESH.md`, with the reason for each.
+- Why: the evidence gate counts only tests whose describe title carries the id, so the describe titles were tagged (same convention as `tests/g1.test.ts`). Only the titles changed; no assertions.
+- How to undo: remove the three `TM-TST-` rows from `tools/traceability.json` and the prefixes from the describe titles.

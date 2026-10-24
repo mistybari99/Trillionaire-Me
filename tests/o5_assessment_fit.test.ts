@@ -15,7 +15,7 @@ const skill = (id: string, name: string, level?: FieldValue) => rec(id, "skill",
 const strength = (id: string, name: string) => rec(id, "strength", { "strength.name": v(name) });
 const none: Assessment = { interests: [], skills: [], strengths: [] };
 
-describe("O5 assessment scoring: unknown is not 0", () => {
+describe("TM-TST-165 O5 assessment scoring: unknown is not 0", () => {
   it("no answers: every dimension is not_enough_data, no score, nothing ready", () => {
     const s = levelsOf(assessmentFrom([]));
     for (const d of ["interests", "skills", "strengths"] as const) {
@@ -51,7 +51,7 @@ describe("O5 assessment scoring: unknown is not 0", () => {
   });
 });
 
-describe("O5 path fit: theme matching with plain reasons", () => {
+describe("TM-TST-165 O5 path fit: theme matching with plain reasons", () => {
   it("no answers: not_enough_data, never a guess", () => {
     expect(pathFit(none)).toEqual({ status: "not_enough_data", matches: [], unmapped: [] });
   });

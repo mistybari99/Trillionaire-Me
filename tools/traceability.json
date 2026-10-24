@@ -156,5 +156,26 @@
       "src/core/stages.ts",
       "tools/e2e.mjs"
     ]
+  },
+  "TM-TST-053": {
+    "outcome": "Partial",
+    "scope": "O7 own options + saved offline search list: save, cap 20 per field, add-own, source snapshot kept for offline reuse, secrets refused. Select/compare/customize/reject/defer and replace-history not covered",
+    "artifacts": [
+      "tests/o7_own_saved_lists.test.ts"
+    ]
+  },
+  "TM-TST-146": {
+    "outcome": "Partial",
+    "scope": "Research contract via Wikipedia provider: 2-3 options with source and date, HTTP error never crashes, saved term read first. UI select/compare/reject/defer actions not covered",
+    "artifacts": [
+      "tests/wikipedia.test.ts"
+    ]
+  },
+  "TM-TST-165": {
+    "outcome": "Partial",
+    "scope": "O5 scoring and path fit keep unknown as unknown (not_enough_data, no guess, no 0). 'incomplete' label on early path suggestions and the full assessment flow not covered",
+    "artifacts": [
+      "tests/o5_assessment_fit.test.ts"
+    ]
   }
 }
