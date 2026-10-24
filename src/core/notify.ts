@@ -3,6 +3,7 @@
 import type { PrivacyClass } from "../catalog/types";
 import type { Bi, Locale } from "../i18n/registry";
 import { swapMixTerms } from "../i18n/packs";
+import { latinDigits } from "../i18n/digits";
 
 export interface NotifyItem { title: Bi; body: Bi; privacy: PrivacyClass }
 export type NotifyCategory = "worship" | "health" | "financial" | "third_party";
@@ -35,6 +36,6 @@ export function buildNotification(item: NotifyItem, prefs: NotifyPrefs = DEFAULT
 /** One line of notification text in the chosen UI mode. Mix is derived from the Bangla text, like the UI packs. */
 export function notifyText(b: Bi, lang: Locale): string {
   if (lang === "en") return b.en;
-  if (lang === "mix") return swapMixTerms(b.bn);
-  return b.bn;
+  if (lang === "mix") return latinDigits(swapMixTerms(b.bn));
+  return latinDigits(b.bn);
 }

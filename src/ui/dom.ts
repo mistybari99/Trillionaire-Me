@@ -1,4 +1,5 @@
 // Tiny DOM helper. Text always goes through textContent — translated strings are never injected as HTML.
+import { latinDigits } from "../i18n/digits";
 type Child = Node | string | null | undefined | false;
 export function h<K extends keyof HTMLElementTagNameMap>(tag: K, attrs: Record<string, string | boolean | ((e: Event) => void) | undefined> = {}, ...kids: Child[]): HTMLElementTagNameMap[K] {
   const el = document.createElement(tag);
@@ -8,6 +9,6 @@ export function h<K extends keyof HTMLElementTagNameMap>(tag: K, attrs: Record<s
     else if (v === true) el.setAttribute(k, "");
     else el.setAttribute(k, v);
   }
-  for (const c of kids) if (c) el.append(typeof c === "string" ? document.createTextNode(c) : c);
+  for (const c of kids) if (c) el.append(typeof c === "string" ? document.createTextNode(latinDigits(c)) : c);
   return el;
 }

@@ -101,3 +101,10 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 - Alternatives: one global switch (rejected: owner asked for per category); storing it in the record store (rejected: a device-level display choice, not user data); keeping `personal` hidden too (rejected: not in the ROADMAP list; general and personal reminders show their text).
 - Not done: no notification scheduler is wired yet, so `buildNotification` is not called by a real delivery path. Lock-screen behaviour on a phone is an Owner check (ROADMAP O8, TM-TST-155 device part).
 - How to undo: restore the old `NotifyPrefs = { hideDetails }` shape in `notify.ts`; remove the `notifyShow` getter/setter in `state.ts` and the `more()` card; the `more.lock*` keys can stay unused, or be deleted from en and bn together so parity holds.
+
+## L-digits — Latin digits everywhere, plain Bangla copy (owner phone feedback)
+- What: every number is shown with Latin 0–9 in Bangla and Mix (`latinDigits` in `src/i18n/digits.ts`, applied in `t()`, `tb()`, `h()` text, notifications and diagram labels; numbers formatted with `en-US`). Bangla pack rewritten in plain spoken Bangla, same keys, same meaning; a few English lines shortened. Input parsing still accepts Bangla digits.
+- Why: owner could not read Bangla digits on the phone. Plain copy reads faster for a non-programmer user.
+- Alternatives: wrap digits in a span with a Latin font (rejected: more DOM and CSS for the same result; Hind Siliguri already has Latin digits, and headings fall back to Fraunces); keep Bangla digits and only change the font (rejected: owner asked for 0–9).
+- Kept: reviewer-pending flags (`glossary.unreviewed`, `topics.draft`, `fit.draft`), key set, behaviour, banned-word guard.
+- How to undo: restore `intlLocale` number formatting in `src/i18n/t.ts` (`fmtNumber`) and remove the `latinDigits` calls; restore the old `bn` block in `src/i18n/packs.ts` from git history.

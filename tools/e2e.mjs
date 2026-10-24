@@ -95,7 +95,7 @@ await addFin("asset", "personal", "Savings", "1000"); await addFin("liability", 
 check("G3-MONEY", "blank liability makes personal net worth 'not known', not 0", (await page.locator("[data-scope=personal] [data-unknown]").count()) === 1);
 await addFin("asset", "business", "Stock", "5000");
 const bizTxt = await page.locator("[data-scope=business]").innerText();
-check("G3-MONEY", "business net worth is separate and computed (5,000)", /৫,০০০/.test(bizTxt) && !/১,০০০/.test(bizTxt), JSON.stringify(bizTxt));
+check("G3-MONEY", "business net worth is separate and computed (5,000)", /5,000/.test(bizTxt) && !/1,000\b/.test(bizTxt), JSON.stringify(bizTxt));
 await page.fill("#mf-name", "password: abc12345"); await page.fill("#mf-amount", "5"); await page.click("form[data-form=money] button[type=submit]");
 check("G3-MONEY", "secret-looking name rejected", (await page.locator("[data-fin]").count()) === 3);
 // G3: Stage A -> B (needs required answers + a goal; calm when not met; history kept)
@@ -103,7 +103,7 @@ await page.goto("http://localhost:4174/#/journey"); await page.waitForSelector("
 check("G3-STAGE", "Stage A pass button is disabled while conditions are open (no error colour copy)", await page.locator("[data-act=pass-stage]").isDisabled() && (await page.locator("[data-stage-panel] .err").innerText()) === "");
 for (const step of [1, 2, 3, 4, 5, 6, 7]) {
   await page.goto(`http://localhost:4174/#/diary/intake/${step}`); await page.waitForSelector("main");
-  const reqs = await page.locator("[data-field]").evaluateAll((els) => els.filter((e) => e.querySelector(".tag")?.textContent && /Required|আবশ্যক/.test(e.querySelector(".tag").textContent)).map((e) => e.getAttribute("data-field")));
+  const reqs = await page.locator("[data-field]").evaluateAll((els) => els.filter((e) => e.querySelector(".tag")?.textContent && /Required|আবশ্যক|লাগবে/.test(e.querySelector(".tag").textContent)).map((e) => e.getAttribute("data-field")));
   for (const id of reqs) { const sel = page.locator(`[data-field='${id}'] select[data-role=state]`); if (await sel.count()) await sel.selectOption("later"); }
   if (step === 1) await page.selectOption("#f-profile\\.language", "bn");
   if (step === 6) { await page.selectOption("[data-field='goal.title'] select[data-role=state]", "value"); await page.fill("#f-goal\\.title", "Steady income"); }
@@ -141,7 +141,7 @@ await page.locator("[data-cand=date] input[type=checkbox]").uncheck();
 await page.click("[data-act=capture-save]"); await page.waitForSelector("[data-saved]");
 await page.goto("http://localhost:4174/#/journey/report"); await page.waitForSelector("main");
 const rep = await page.locator("main").innerText();
-check("G3-CAPTURE", "report shows confirmed amount (৫,০০০) and decision; unconfirmed date is absent", /৫,০০০/.test(rep) && /নতুন দোকান নেব/.test(rep) && (await page.locator("[data-value][data-label=DEMO]").count()) === 0);
+check("G3-CAPTURE", "report shows confirmed amount (5,000) and decision; unconfirmed date is absent", /5,000/.test(rep) && /নতুন দোকান নেব/.test(rep) && (await page.locator("[data-value][data-label=DEMO]").count()) === 0);
 await page.goto("http://localhost:4174/#/capture"); await page.fill("#cap-note", "my password: abc12345 pay 500 tk"); await page.click("[data-act=capture-find]");
 check("G3-CAPTURE", "secret in a note is rejected before anything is found", (await page.locator("[data-cand]").count()) === 0 && (await page.locator(".err").first().innerText()).length > 5);
 // I'm stuck: tired -> only lighter modes, nothing added

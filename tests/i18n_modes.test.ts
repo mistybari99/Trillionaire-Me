@@ -42,8 +42,8 @@ describe("TM-TST-161 language modes: parity across en / bn / mix", () => {
     for (const k of Object.keys(bn)) if (!COMMON_ENGLISH_KEYS.has(k)) expect(LOCALES.bn.scripts.test(bn[k]!), k).toBe(true);
   });
 
-  it("Mix uses Bangla digits and falls back to English for missing keys", () => {
-    expect(intlLocale("mix")).toBe("bn-BD");
+  it("Mix uses Latin digits and falls back to English for missing keys", () => {
+    expect(intlLocale("mix")).toBe("bn-BD"); // words (weekday names) stay Bangla
     expect(intlLocale("en")).toBe("en-US");
     setStrict(false);
     expect(t("home.stage" as Key, "mix")).toBe("Stage");

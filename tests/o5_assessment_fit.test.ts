@@ -141,7 +141,7 @@ describe("O5 render on the Plan screen (en and bn)", () => {
     go("#/diary/plan");
     const sec = document.querySelector("[data-assessment]")!;
     for (const d of ["interests", "skills", "strengths"]) expect(sec.querySelector(`[data-dim='${d}']`)?.getAttribute("data-status")).toBe("not_enough_data");
-    expect(sec.textContent).toMatch(/এখনো পর্যাপ্ত তথ্য নেই/);
+    expect(sec.textContent).toMatch(/এখনো তথ্য কম/);
     expect(sec.querySelectorAll("[data-path]").length).toBe(0);
     expect(sec.querySelector("[data-fit='not_enough_data']")).not.toBeNull();
     expect(sec.querySelector(".err")).toBeNull();
@@ -151,6 +151,6 @@ describe("O5 render on the Plan screen (en and bn)", () => {
     localStorage.setItem("tm:ui:lang", "bn");
     seed();
     go("#/diary/plan");
-    expect(document.querySelector("[data-assessment] [data-path='bookkeeping']")!.textContent).toMatch(/আপনার দক্ষতা "Excel" থেকে: হিসাব ও সংখ্যা এর সঙ্গে মেলে/);
+    expect(document.querySelector("[data-assessment] [data-path='bookkeeping']")!.textContent).toMatch(/আপনার দক্ষতা “Excel” থেকে: হিসাব ও সংখ্যা-এর সঙ্গে মিলছে/);
   });
 });

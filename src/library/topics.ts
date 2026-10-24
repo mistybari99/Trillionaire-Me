@@ -1,6 +1,7 @@
 // Topic library (owner's 20 topics + Deen). Short, practical tips with a small visual each. Practice-based DRAFTS: shown as "যাচাই হয়নি" until reviewed.
 // Tags connect tips across topics (one tip, many places) so nothing is duplicated.
 import type { Bi } from "../i18n/registry";
+import { latinDigits } from "../i18n/digits";
 
 export type Layer = "goal" | "capability" | "obstacle" | "execution";
 export const LAYERS: Record<Layer, Bi> = {
@@ -92,4 +93,4 @@ export function relatedTips(topic: string, limit = 3): Tip[] {
   const tags = new Set(tipsOf(topic).flatMap((t) => t.tags));
   return TIPS.filter((t) => t.topic !== topic && t.tags.some((g) => tags.has(g))).slice(0, limit);
 }
-export const labels = (d: Tip["diagram"], lang: "bn" | "en" | "mix") => (lang === "en" ? d.en : d.bn).split("|").map((s) => s.trim());
+export const labels = (d: Tip["diagram"], lang: "bn" | "en" | "mix") => latinDigits(lang === "en" ? d.en : d.bn).split("|").map((s) => s.trim());
