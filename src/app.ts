@@ -5,6 +5,8 @@ import type { Key } from "./i18n/packs";
 import { demoBadge } from "./ui/components";
 import * as S from "./ui/screens";
 import { LAYERS, TOPICS } from "./library/topics";
+import { dismissReminder, inAppReminders } from "./ui/prayerAlerts";
+import { notifyText } from "./core/notify";
 
 const TABS: Array<[string, Key]> = [["today", "nav.today"], ["journey", "nav.journey"], ["diary", "nav.diary"], ["deen", "nav.deen"], ["more", "nav.more"]];
 
@@ -61,7 +63,11 @@ export function render() {
   if (!body.id) body.id = "content";
   body.tabIndex = -1;
   const skip = h("a", { class: "skip", href: `#${body.id}` }, t("a11y.skip", lang));
-  app.replaceChildren(skip, top, body, nav, drawer);
+  // In-app prayer reminders (M13) show above the screen when the phone cannot show a notification.
+  const reminders = inAppReminders().map((r) => h("div", { class: "card", role: "status", "data-inapp-reminder": r.id },
+    h("h2", { class: "card-h" }, t("deen.alert.title", lang)), h("p", {}, notifyText(r.text, lang)),
+    h("button", { class: "btn ghost", type: "button", "data-act": "reminder-dismiss", style: "width:auto;margin:0;min-height:44px", onclick: () => { dismissReminder(r.id); render(); } }, t("deen.alert.dismiss", lang))));
+  app.replaceChildren(skip, top, ...reminders, body, nav, drawer);
   window.scrollTo(0, 0);
 }
 

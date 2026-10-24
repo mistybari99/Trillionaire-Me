@@ -4,6 +4,8 @@ import { isTemplateId, type TemplateId } from "../core/stageTemplates";
 import { MirrorKV, hydrate, mirrorToRepo } from "../core/persist";
 import { DexieRepo } from "../adapters/dexie";
 import { parseNotifyPrefs, type NotifyPrefs } from "../core/notify";
+import { DHAKA_COORDS, validCoords, type Coords } from "../core/prayer";
+import { DEFAULT_ALERT_PREFS, parseAlertPrefs, type AlertPrefs } from "../core/prayerAlerts";
 
 const legacy = new LocalKV();
 const mem = new MemoryKV();
@@ -38,6 +40,15 @@ export const prefs = {
   /** Lock-screen "show details" per category (O8). Per-device only; missing or broken value = everything hidden. */
   get notifyShow(): NotifyPrefs { try { return parseNotifyPrefs(JSON.parse(get("tm:ui:notifyShow") ?? "null")); } catch { return {}; } },
   set notifyShow(v: NotifyPrefs) { set("tm:ui:notifyShow", JSON.stringify(parseNotifyPrefs(v))); },
+  /** Prayer-time place (M13). Per device, never sent anywhere. Missing or broken value = Dhaka. */
+  get prayerCoords(): Coords { try { const v = JSON.parse(get("tm:ui:prayerCoords") ?? "null"); return validCoords(v) ? { lat: v.lat, lon: v.lon } : { ...DHAKA_COORDS }; } catch { return { ...DHAKA_COORDS }; } },
+  set prayerCoords(v: Coords) { set("tm:ui:prayerCoords", JSON.stringify(validCoords(v) ? { lat: v.lat, lon: v.lon } : DHAKA_COORDS)); },
+  /** Pre-prayer and azan alerts (M13). Both off by default. */
+  get prayerAlerts(): AlertPrefs { try { return parseAlertPrefs(JSON.parse(get("tm:ui:prayerAlerts") ?? "null")); } catch { return { ...DEFAULT_ALERT_PREFS }; } },
+  set prayerAlerts(v: AlertPrefs) { set("tm:ui:prayerAlerts", JSON.stringify(parseAlertPrefs(v))); },
+  /** Alert slots already delivered for one Dhaka date, so each alert fires once. */
+  get prayerFired(): { date: string; ids: string[] } { try { const v = JSON.parse(get("tm:ui:prayerFired") ?? "null") as { date?: unknown; ids?: unknown }; return typeof v?.date === "string" && Array.isArray(v.ids) ? { date: v.date, ids: v.ids.filter((x): x is string => typeof x === "string") } : { date: "", ids: [] }; } catch { return { date: "", ids: [] }; } },
+  set prayerFired(v: { date: string; ids: string[] }) { set("tm:ui:prayerFired", JSON.stringify(v)); },
 };
 
 export function applyPrefs() {

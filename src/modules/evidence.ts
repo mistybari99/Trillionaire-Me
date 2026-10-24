@@ -21,7 +21,7 @@ export const EVIDENCE: Record<string, Evidence> = {
   M10: NONE,
   M11: ev(["#/diary/intake"], ["src/ui/screens.ts#intake", "src/core/research.ts#research", "src/adapters/wikipedia.ts#wikipedia"], [], ["tests/research.test.ts", "tests/wikipedia.test.ts"]),
   M12: ev(["#/diary/plan"], ["src/core/reality.ts#markNotTrue"], [], ["tests/o6_reality_review_templates.test.ts"]),
-  M13: ev(["#/deen"], [], ["src/schema/entities.ts"], ["tests/g1.test.ts"]),
+  M13: ev(["#/deen"], ["src/core/prayer.ts#prayerTimes", "src/core/prayerAlerts.ts#alertSlots", "src/core/prayerLog.ts#markedOn"], ["src/schema/entities.ts"], ["tests/g1.test.ts", "tests/prayer.test.ts"]),
   M14: ev([], [], ["src/catalog/fields.ts"], ["tests/g1.test.ts"]),
   M15: NONE,
   M16: ev(["#/journey/review", "#/journey/report"], ["src/core/review.ts#reviewSummary"], [], ["tests/o6_reality_review_templates.test.ts"]),

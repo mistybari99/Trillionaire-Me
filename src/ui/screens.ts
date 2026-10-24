@@ -42,6 +42,10 @@ import { research, safeQuery } from "../core/research";
 import { ownOptions, saveOwnOption, saveSearchResults, savedSearchResults } from "../core/savedLists";
 import { wikipedia } from "../adapters/wikipedia";
 import { GLOSSARY } from "../catalog/glossary";
+import { DHAKA_COORDS, PRAYER_KEYS, dhakaNow, prayerClock, isoDate, parseCoord, prayerTimes, type PrayerKey } from "../core/prayer";
+import { markedOn, prayerLogId, prayerLogRecord } from "../core/prayerLog";
+import { DEFAULT_ALERT_PREFS, parseAlertPrefs } from "../core/prayerAlerts";
+import { canNotify } from "./prayerAlerts";
 
 const L = () => prefs.lang;
 const link = (href: string, cls: string, ...kids: Array<Node | string>) => h("a", { href, class: cls }, ...kids);
@@ -928,6 +932,75 @@ export function intake(stepParam: string | undefined): HTMLElement {
     disclaimers(lang, ["noGuarantee"]));
 }
 
+// ---- Prayer times, one-tap marks and alert settings (M13). Marks use the prayer_log entity, demo namespace (real stays closed, D-B). ----
+function togglePrayerMark(day: string, k: PrayerKey) {
+  const id = prayerLogId(day, k);
+  if (store.demo.get(id)) store.demo.delete(id);
+  else store.demo.put(prayerLogRecord(day, k, new Date().toISOString()));
+}
+
+function prayerTimesCard(lang: Locale): HTMLElement {
+  const now = dhakaNow(Date.now()); const day = isoDate(now.date);
+  const times = prayerTimes(now.date, prefs.prayerCoords);
+  const marked = markedOn(store.demo.list(), day);
+  return h("div", { class: "card", "data-prayer-times": day },
+    h("h2", { class: "card-h" }, t("deen.prayer.title", lang)),
+    h("p", { class: "muted" }, day),
+    h("p", { class: "muted" }, t("deen.prayer.hint", lang)),
+    ...PRAYER_KEYS.map((k) => {
+      const at = times[k]; const isMarked = marked.has(k);
+      const passedNotMarked = at !== null && now.minute >= at && !isMarked;
+      return h("div", { class: "row", "data-prayer-row": k },
+        h("span", {}, h("strong", {}, t(`deen.prayer.name.${k}` as Key, lang)), " ", h("span", { "data-prayer-time": k }, prayerClock(at) ?? t("deen.prayer.none", lang)),
+          ...(passedNotMarked ? [h("br"), h("span", { class: "muted", "data-prayer-pending": k }, t("deen.prayer.notYet", lang))] : [])),
+        h("button", { class: isMarked ? "btn" : "btn ghost", type: "button", "data-act": "prayer-mark", "data-prayer": k, "aria-pressed": String(isMarked), style: "width:auto;margin:0;min-height:44px",
+          ...(at === null ? { disabled: true } : {}), onclick: () => { togglePrayerMark(day, k); rerender(); } }, isMarked ? t("deen.prayer.marked", lang) : t("deen.prayer.mark", lang)));
+    }),
+    h("p", { class: "note", "data-prayer-note": "1" }, t("deen.prayer.note", lang)));
+}
+
+function prayerSettingsCard(lang: Locale): HTMLElement {
+  const coords = prefs.prayerCoords; const alerts = parseAlertPrefs(prefs.prayerAlerts);
+  const err = h("p", { class: "err", role: "alert" });
+  const lat = h("input", { id: "pr-lat", type: "text", inputmode: "decimal", autocomplete: "off", value: String(coords.lat) }) as HTMLInputElement;
+  const lon = h("input", { id: "pr-lon", type: "text", inputmode: "decimal", autocomplete: "off", value: String(coords.lon) }) as HTMLInputElement;
+  const save = (c: { lat: number; lon: number }) => { prefs.prayerCoords = c; rerender(); };
+  const form = h("form", { novalidate: true, "data-form": "prayer-place" },
+    h("label", { for: "pr-lat" }, t("deen.set.lat", lang)), lat,
+    h("label", { for: "pr-lon" }, t("deen.set.lon", lang)), lon, err,
+    h("button", { class: "btn", type: "submit" }, t("deen.set.save", lang)));
+  form.addEventListener("submit", (ev) => {
+    ev.preventDefault();
+    const la = parseCoord(lat.value, 90), lo = parseCoord(lon.value, 180);
+    if (la === null || lo === null) { err.textContent = t("deen.set.locErr", lang); return; }
+    save({ lat: la, lon: lo });
+  });
+  const dhaka = h("button", { class: "btn ghost", type: "button", "data-act": "prayer-dhaka", style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => save({ ...DHAKA_COORDS }) }, t("deen.set.dhaka", lang));
+  const onOff = (label: Key, active: boolean, on: () => void) => h("button", { type: "button", "aria-pressed": String(active), onclick: on }, t(label, lang));
+  const setAlerts = (next: typeof alerts) => { prefs.prayerAlerts = next; rerender(); };
+  const toggle = (key: "preAlert" | "azan") => (on: boolean) => {
+    const next = { ...alerts, [key]: on };
+    // Asking for permission needs a tap, so it happens right here when the user switches an alert on.
+    if (on && typeof Notification !== "undefined" && Notification.permission === "default") { try { void Notification.requestPermission().finally(() => setAlerts(next)); return; } catch { /* fall through */ } }
+    setAlerts(next);
+  };
+  const mins = h("input", { id: "pr-min", type: "number", min: "1", max: "60", step: "1", inputmode: "numeric", value: String(alerts.preMinutes), "aria-label": t("deen.set.preMin", lang), style: "width:6em" }) as HTMLInputElement;
+  mins.addEventListener("change", () => { const n = Number(mins.value); setAlerts({ ...alerts, preMinutes: Number.isInteger(n) && n >= 1 && n <= 60 ? n : DEFAULT_ALERT_PREFS.preMinutes }); });
+  const perm = typeof Notification === "undefined" ? t("deen.set.permNo", lang) : canNotify() ? t("deen.set.permOk", lang) : Notification.permission === "denied" ? t("deen.set.permNo", lang) : t("deen.set.permAsk", lang);
+  return h("div", { class: "card", "data-prayer-settings": "1" },
+    h("h2", { class: "card-h" }, t("deen.set.title", lang)),
+    h("h3", {}, t("deen.set.place", lang)),
+    form, dhaka,
+    h("h3", {}, t("deen.set.pre", lang)),
+    h("div", { class: "row" }, h("div", { class: "seg", "data-pre-alert": String(alerts.preAlert) }, onOff("deen.set.off", !alerts.preAlert, () => setAlerts({ ...alerts, preAlert: false })), onOff("deen.set.on", alerts.preAlert, () => toggle("preAlert")(true)))),
+    h("label", { for: "pr-min" }, t("deen.set.preMin", lang)), mins,
+    h("h3", {}, t("deen.set.azan", lang)),
+    h("div", { class: "row" }, h("div", { class: "seg", "data-azan-alert": String(alerts.azan) }, onOff("deen.set.off", !alerts.azan, () => setAlerts({ ...alerts, azan: false })), onOff("deen.set.on", alerts.azan, () => toggle("azan")(true)))),
+    h("p", { class: "muted" }, t("deen.set.defaultNote", lang)),
+    h("p", { class: "muted", "data-perm": "1" }, perm),
+    h("p", { class: "muted" }, t("deen.set.lock", lang)));
+}
+
 export function deen(): HTMLElement {
   const lang = L();
   const ents = ENTITIES.filter((e) => e.module === "M13");
@@ -935,6 +1008,8 @@ export function deen(): HTMLElement {
     h("h1", {}, t("deen.title", lang)),
     h("p", { class: "sub" }, t("deen.intro", lang)),
     h("p", { class: "muted" }, t("deen.control", lang)),
+    prayerTimesCard(lang),
+    prayerSettingsCard(lang),
     ...ents.map((e) => {
       const fs = FIELDS.filter((f) => f.entity === e.id);
       return h("div", { class: "card", "data-entity": e.id },
