@@ -92,4 +92,4 @@ export function relatedTips(topic: string, limit = 3): Tip[] {
   const tags = new Set(tipsOf(topic).flatMap((t) => t.tags));
   return TIPS.filter((t) => t.topic !== topic && t.tags.some((g) => tags.has(g))).slice(0, limit);
 }
-export const labels = (d: Tip["diagram"], lang: "bn" | "en") => d[lang].split("|").map((s) => s.trim());
+export const labels = (d: Tip["diagram"], lang: "bn" | "en" | "mix") => (lang === "en" ? d.en : d.bn).split("|").map((s) => s.trim());

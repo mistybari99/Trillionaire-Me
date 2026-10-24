@@ -3,10 +3,11 @@ import { h } from "./dom";
 import type { Tip } from "../library/topics";
 import { labels } from "../library/topics";
 import type { Locale } from "../i18n/registry";
+import { tb } from "../i18n/t";
 
 export function diagram(tip: Tip, lang: Locale): HTMLElement {
   const items = labels(tip.diagram, lang);
-  const label = `${tip.title[lang]}: ${items.join(" → ")}`;
+  const label = `${tb(tip.title, lang)}: ${items.join(" → ")}`;
   if (tip.diagram.type === "matrix") {
     return h("div", { class: "dg dg-matrix", role: "img", "aria-label": label, "data-diagram": "matrix" }, ...items.slice(0, 4).map((x, i) => h("div", { class: `cell c${i}` }, x)));
   }

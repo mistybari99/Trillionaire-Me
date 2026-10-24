@@ -70,7 +70,7 @@ const en = {
   "more.display": "Display", "more.language": "Language", "more.theme": "Theme", "more.theme.auto": "Automatic", "more.theme.light": "Light", "more.theme.dark": "Dark", "more.textsize": "Text size",
   "more.modules": "Other modules",
   "cap.title": "Capability status",
-  "cap.intro": "An honest list. A module is “implemented” only when a passing test backs it.",
+  "cap.intro": "An honest list. A part counts as done only when a test that proves it works has passed.",
   "cap.implemented": "Implemented", "cap.demo": "Demo", "cap.offline-ok": "Works offline", "cap.internet-needed": "Needs internet", "cap.not-built": "Not built",
   "cap.gate": "Planned gate: {g}",
   "fields.title": "Field guide",
@@ -78,7 +78,7 @@ const en = {
   "fields.entity": "Section",
   "safety.title": "Safety & limits",
   "safety.never": "Never enter: bank passwords, OTPs, PINs, card numbers, recovery phrases, ID numbers. The app rejects them.",
-  "safety.demo": "G1 uses synthetic demo data only. No AI, no network calls, no paid service.",
+  "safety.demo": "This version uses made-up demo data only. No AI, no network calls, no paid service.",
   "safety.deen": "Worship records are private by default and leave the device only with your permission, item by item.",
   "data.title": "Demo & real data",
   "data.real": "Real data", "data.real.count": "{n} records", "data.real.locked": "Locked — real personal data is not allowed yet.",
@@ -158,7 +158,7 @@ const bn: Record<Key, string> = {
   "nav.today": "আজ", "nav.journey": "যাত্রা", "nav.diary": "ডায়েরি", "nav.deen": "দ্বীন", "nav.more": "আরও",
   "badge.demo": "Demo data",
   "status.online": "Online", "status.offline": "Offline",
-  "status.shell": "Offlineে চলে · কিছুই কোথাও পাঠানো হয় না",
+  "status.shell": "অফলাইনেও চলে · কিছুই কোথাও পাঠানো হয় না",
   "label.FACT": "তথ্য", "label.ESTIMATE": "অনুমান", "label.INFERENCE": "সিদ্ধান্ত", "label.EXTERNAL": "বাইরের সূত্র", "label.DEMO": "Demo",
   "unknown.unknown": "জানি না", "unknown.later": "পরে", "unknown.not_applicable": "প্রযোজ্য নয়", "unknown.prefer_not": "বলব না",
   "unknown.shown": "দেওয়া হয়নি",
@@ -193,7 +193,7 @@ const bn: Record<Key, string> = {
   "diary.modules": "ডায়েরির অংশ",
   "intake.step": "ধাপ {n} / {total}",
   "intake.back": "পেছনে", "intake.next": "Save করে এগোন", "intake.finish": "Save করে শেষ করুন", "intake.skipHint": "যা ফাঁকা রাখবেন তা ফাঁকাই থাকবে — কখনো শূন্য ধরা হবে না।",
-  "intake.demoNote": "এখানে যা লিখবেন তা শুধু এই deviceে Demo data হিসেবে থাকবে। আসল data বন্ধ।",
+  "intake.demoNote": "এখানে যা লিখবেন তা শুধু এই ডিভাইসে ডেমো ডেটা হিসেবে থাকবে। আসল ডেটা বন্ধ।",
   "intake.choose": "বেছে নিন…",
   "intake.valueFor": "মান দিচ্ছি",
   "intake.secretRejected": "এটি password, OTP, card বা ID নম্বরের মতো দেখাচ্ছে। এখানে দেবেন না। কিছুই সংরক্ষিত হয়নি।",
@@ -205,7 +205,7 @@ const bn: Record<Key, string> = {
   "importance.core": "মূল", "importance.useful": "সহায়ক", "importance.optional": "ঐচ্ছিক",
   "requirement.required": "আবশ্যক", "requirement.optional": "ঐচ্ছিক", "requirement.conditional": "শর্তসাপেক্ষ",
   "privacy.general": "সাধারণ", "privacy.personal": "ব্যক্তিগত", "privacy.financial": "আর্থিক", "privacy.health": "স্বাস্থ্য (গোপন)", "privacy.worship": "ইবাদত (গোপন)", "privacy.third_party": "তৃতীয় পক্ষ",
-  "access.device_only": "শুধু এই deviceে", "access.device_only_per_item_authorisation": "শুধু এই deviceে; আপনি প্রতিটি আইটেমে অনুমতি দিলেই বাইরে যাবে",
+  "access.device_only": "শুধু এই ডিভাইসে", "access.device_only_per_item_authorisation": "শুধু এই ডিভাইসে; আপনি প্রতিটি আইটেমে অনুমতি দিলেই বাইরে যাবে",
   "purpose.assessment": "নিজেকে চেনা", "purpose.planning": "পরিকল্পনা", "purpose.finance_basics": "অর্থের মৌলিক হিসাব", "purpose.time_capacity": "সময় ও সক্ষমতা", "purpose.deen_tracking": "আপনার নিজস্ব দ্বীনি নোট", "purpose.journey_log": "যাত্রা-লগ", "purpose.venture_registry": "উদ্যোগের তালিকা", "purpose.habit": "অভ্যাস", "purpose.safety": "নিরাপত্তা",
   "deen.title": "দ্বীন ও আখিরাত",
   "deen.intro": "ডিফল্টভাবে ব্যক্তিগত। এখানে কিছুই মূল্যায়ন, তুলনা বা শেয়ার করা হয় না। কাঠামো প্রস্তুত; কোনো ধর্মীয় পাঠ্য যুক্ত নেই।",
@@ -222,19 +222,19 @@ const bn: Record<Key, string> = {
   "more.display": "প্রদর্শন", "more.language": "ভাষা", "more.theme": "Theme", "more.theme.auto": "স্বয়ংক্রিয়", "more.theme.light": "হালকা", "more.theme.dark": "গাঢ়", "more.textsize": "লেখার আকার",
   "more.modules": "অন্যান্য module",
   "cap.title": "সক্ষমতার অবস্থা",
-  "cap.intro": "সৎ তালিকা। কোনো module “সম্পন্ন” লেখা হয় শুধু পাস করা পরীক্ষা থাকলে।",
-  "cap.implemented": "সম্পন্ন", "cap.demo": "Demo", "cap.offline-ok": "Offlineে চলে", "cap.internet-needed": "internet লাগবে", "cap.not-built": "এখনো বানানো হয়নি",
+  "cap.intro": "সৎ তালিকা। কোনো অংশ “সম্পন্ন” লেখা হয় শুধু তখনই, যখন প্রমাণ করার পরীক্ষা পাস করেছে।",
+  "cap.implemented": "সম্পন্ন", "cap.demo": "Demo", "cap.offline-ok": "অফলাইনে চলে", "cap.internet-needed": "internet লাগবে", "cap.not-built": "এখনো বানানো হয়নি",
   "cap.gate": "পরিকল্পিত গেট: {g}",
   "fields.title": "ঘরের গাইড",
   "fields.count": "{n}টি ঘর · ক্যাটালগ সংস্করণ {v}",
   "fields.entity": "অংশ",
   "safety.title": "নিরাপত্তা ও সীমা",
   "safety.never": "কখনো দেবেন না: ব্যাংকের password, OTP, পিন, card নম্বর, রিকভারি ফ্রেজ, ID নম্বর। অ্যাপ এগুলো প্রত্যাখ্যান করে।",
-  "safety.demo": "G1-এ শুধু কৃত্রিম Demo data। কোনো AI, network কল বা পেইড সেবা নেই।",
-  "safety.deen": "ইবাদতের রেকর্ড ডিফল্টভাবে ব্যক্তিগত; আপনি আইটেম ধরে অনুমতি দিলেই কেবল deviceের বাইরে যায়।",
+  "safety.demo": "এই সংস্করণে শুধু নকল ডেমো ডেটা। কোনো AI, নেটওয়ার্ক কল বা পেইড সেবা নেই।",
+  "safety.deen": "ইবাদতের রেকর্ড ডিফল্টভাবে ব্যক্তিগত; আপনি আইটেম ধরে অনুমতি দিলেই কেবল ডিভাইসের বাইরে যায়।",
   "data.title": "Demo ও আসল data",
   "data.real": "আসল data", "data.real.count": "{n}টি রেকর্ড", "data.real.locked": "বন্ধ — আসল ব্যক্তিগত data এখনো অনুমোদিত নয়।",
-  "data.demo": "Demo data", "data.demo.count": "এই deviceে {n}টি রেকর্ড সংরক্ষিত",
+  "data.demo": "Demo data", "data.demo.count": "এই ডিভাইসে {n}টি রেকর্ড সংরক্ষিত",
   "data.nopromote": "Demo data কখনো আসল dataয় রূপান্তর করা যায় না।",
   "data.clearDemo": "আমার Demo এন্ট্রি মুছুন",
   "data.cleared": "Demo এন্ট্রি মুছে ফেলা হয়েছে।",
@@ -294,4 +294,15 @@ const bn: Record<Key, string> = {
   "empty.stageNote": "পাসের নিয়ম পরে বানানো হবে।",
 };
 
-export const PACKS = { en, bn } as const;
+// Mix mode: Bangla sentences with common English words kept (owner request, decision L-11).
+// Keys listed here show English in Mix (they are already English-first in the Bangla pack).
+export const COMMON_ENGLISH_KEYS: ReadonlySet<string> = new Set(["badge.demo", "status.online", "status.offline", "label.DEMO", "help.format", "more.theme", "cap.demo", "data.demo", "backup.title", "suggest.btn", "habits.of"]);
+// Standalone Bangla words that Mix swaps for the English word. Only whole words are swapped, so a Bangla suffix is never glued onto a Latin word.
+export const MIX_TERMS: ReadonlyArray<readonly [string, string]> = [
+  ["ধাপ", "Stage"], ["লক্ষ্য", "Goal"], ["যাত্রা", "Journey"], ["ডায়েরি", "Diary"],
+  ["ডেমো", "Demo"], ["ব্যাকআপ", "Backup"], ["অনলাইন", "Online"], ["অফলাইন", "Offline"],
+];
+const swapMixTerms = (text: string): string => MIX_TERMS.reduce((acc, [bnWord, en]) => acc.replace(new RegExp(`(?<=^|[\\s(·,।:“"'-])${bnWord}(?=$|[\\s).,।:!?”"'·])`, "gu"), en), text);
+const mix = Object.fromEntries(Object.keys(en).map((k) => [k, COMMON_ENGLISH_KEYS.has(k) ? en[k as Key] : swapMixTerms(bn[k as Key])])) as Record<Key, string>;
+
+export const PACKS: Record<"en" | "bn" | "mix", Record<Key, string>> = { en, bn, mix };

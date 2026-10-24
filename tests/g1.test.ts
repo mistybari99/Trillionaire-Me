@@ -5,7 +5,7 @@ import { validateCatalog } from "../src/catalog/validate";
 import { GLOSSARY } from "../src/catalog/glossary";
 import { ENTITIES, orphanFields, WORSHIP_ENTITIES } from "../src/schema/entities";
 import { MODULES, CAP_STATUSES } from "../src/modules/capability";
-import { PACKS } from "../src/i18n/packs";
+import { PACKS, COMMON_ENGLISH_KEYS } from "../src/i18n/packs";
 import { LOCALES } from "../src/i18n/registry";
 import { LABELS, UNKNOWN_STATES, numberOrNull, sumKnown, type FieldValue, type TMRecord } from "../src/core/types";
 import { checkFreeText, detectSecret, redact } from "../src/core/safety";
@@ -187,7 +187,6 @@ describe("TM-TST-144 capability status", () => {
 });
 
 // Owner decision: common English words stay in English inside the Bangla version (easier to read).
-const COMMON_ENGLISH_KEYS = new Set(["badge.demo", "status.online", "status.offline", "label.DEMO", "help.format", "more.theme", "cap.demo", "data.demo", "backup.title", "suggest.btn", "habits.of"]);
 describe("i18n parity (completeness gate)", () => {
   const en = PACKS.en as Record<string, string>, bn = PACKS.bn as Record<string, string>;
   it("key parity, no empties, same placeholders, Bangla script present", () => {
@@ -210,11 +209,11 @@ describe("i18n parity (completeness gate)", () => {
 describe("TM-TST-006 every rendered value is labelled (all routes, both languages)", () => {
   const paths = ["/today", "/journey", "/diary", "/diary/intake/1", "/diary/intake/2", "/diary/intake/3", "/diary/intake/4", "/diary/intake/5", "/diary/intake/6", "/diary/intake/7", "/diary/plan", "/diary/money", "/journey/log", "/journey/report", "/capture", "/stuck", "/topics", "/topic/procrastination", "/reward", "/journey/art", "/habits", "/cards", "/focus/none", "/deen", "/more", "/more/status", "/more/fields", "/more/glossary", "/more/safety", "/more/data"];
   it("route table is fully covered", () => { for (const p of paths) expect(ROUTES.some(([re]) => re.test(p)), p).toBe(true); expect(ROUTES.length).toBe(25); });
-  for (const lang of ["bn", "en"] as const) it(`0 unlabelled values in ${lang}`, () => {
+  for (const lang of ["bn", "en", "mix"] as const) it(`0 unlabelled values in ${lang}`, () => {
     let seen = 0;
     for (const p of paths) {
       document.body.innerHTML = '<div id="app"></div>'; localStorage.setItem("tm:ui:lang", lang); location.hash = "#" + p; render();
-      expect(document.documentElement.lang).toBe(lang);
+      expect(document.documentElement.lang).toBe(lang === "en" ? "en" : "bn");
       for (const el of document.querySelectorAll("[data-value]")) {
         seen++;
         expect(LABELS as readonly string[], p).toContain(el.getAttribute("data-label"));

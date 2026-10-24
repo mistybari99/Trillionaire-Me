@@ -1,5 +1,5 @@
 // One lookup, one fallback policy (i18n skill §2): strict in dev/test, falls back along the chain in production and reports.
-import { LOCALES, type Bi, type Locale } from "./registry";
+import { LOCALES, intlLocale, type Bi, type Locale } from "./registry";
 import { PACKS, type Key } from "./packs";
 
 export const missingReport: string[] = [];
@@ -18,6 +18,6 @@ export function t(key: Key, locale: Locale, args: Record<string, string | number
 }
 
 /** Bilingual data text (catalog, demo seed): both languages are required by the type. */
-export const tb = (b: Bi, locale: Locale): string => b[locale];
+export const tb = (b: Bi, locale: Locale): string => (locale === "en" ? b.en : b.bn);
 
-export const fmtNumber = (n: number, locale: Locale): string => new Intl.NumberFormat(locale === "bn" ? "bn-BD" : "en-US").format(n);
+export const fmtNumber = (n: number, locale: Locale): string => new Intl.NumberFormat(intlLocale(locale)).format(n);

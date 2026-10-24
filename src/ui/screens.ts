@@ -3,7 +3,7 @@ import { groupByHorizon, HORIZONS, type HorizonGoal } from "../core/horizon";
 import { h } from "./dom";
 import { t, tb } from "../i18n/t";
 import type { Key } from "../i18n/packs";
-import { LOCALES, type Locale } from "../i18n/registry";
+import { LOCALES, LOCALE_ORDER, intlLocale, type Locale } from "../i18n/registry";
 import { applyPrefs, prefs, store, type HorizonView, type PlanMode } from "./state";
 import { demoBadge, disclaimers, fieldHelp, num, valueEl } from "./components";
 import { STAGES, DEMO_DATE, DEMO_TASKS } from "../demo/seed";
@@ -91,7 +91,7 @@ function currentPlan() {
   const titles = new Map(recs.filter((r) => r.entity === "task").map((r) => [r.id, String((r.values["task.title"] as { value?: unknown })?.value ?? "")]));
   return { a, recs, input, plan: schedule(input), state: capacityState(a), titles, hasTasks: titles.size > 0 };
 }
-const weekday = (d: number, lang: Locale) => new Intl.DateTimeFormat(lang === "bn" ? "bn-BD" : "en-US", { weekday: "long" }).format(new Date(2023, 0, 1 + d));
+const weekday = (d: number, lang: Locale) => new Intl.DateTimeFormat(intlLocale(lang), { weekday: "long" }).format(new Date(2023, 0, 1 + d));
 
 export function planScreen(): HTMLElement {
   const lang = L(); const cp = currentPlan();
@@ -177,7 +177,7 @@ export function moneyScreen(): HTMLElement {
       values: { "finance.kind": d(kind.value), "finance.scope": d(scope.value), "finance.label": d(nm), "finance.amount": amt, "finance.period": d(period.value) } });
     rerender();
   });
-  const show = (c: Calc) => c.ok ? valueEl(t("money.bdt", lang, { v: new Intl.NumberFormat(lang === "bn" ? "bn-BD" : "en-US").format(c.value) }), "INFERENCE", lang) : h("span", { class: "muted", "data-unknown": "1" }, t("money.unknown", lang, { n: num(c.missing, lang) }));
+  const show = (c: Calc) => c.ok ? valueEl(t("money.bdt", lang, { v: new Intl.NumberFormat(intlLocale(lang)).format(c.value) }), "INFERENCE", lang) : h("span", { class: "muted", "data-unknown": "1" }, t("money.unknown", lang, { n: num(c.missing, lang) }));
   // nothing entered is "nothing yet", not a computed 0
   const has = (sc: "personal" | "business", kinds: string[]) => fv.items.some((i) => i.scope === sc && kinds.includes(i.kind));
   const sum = (sc: "personal" | "business") => h("div", { class: "card", "data-scope": sc }, h("h3", {}, t(`money.${sc}` as Key, lang)),
@@ -187,7 +187,7 @@ export function moneyScreen(): HTMLElement {
     const a = r.values["finance.amount"]!;
     return h("div", { class: "card", "data-fin": r.id }, h("div", { class: "row" }, h("div", {},
       h("h3", {}, fv.labels.get(r.id) ?? String((r.values["finance.label"] as { value?: unknown })?.value ?? "")),
-      h("p", { class: "muted" }, a.state === "value" ? valueEl(t("money.bdt", lang, { v: new Intl.NumberFormat(lang === "bn" ? "bn-BD" : "en-US").format(Number(a.value)) }), "DEMO", lang) : t(`unknown.${a.state}` as Key, lang))),
+      h("p", { class: "muted" }, a.state === "value" ? valueEl(t("money.bdt", lang, { v: new Intl.NumberFormat(intlLocale(lang)).format(Number(a.value)) }), "DEMO", lang) : t(`unknown.${a.state}` as Key, lang))),
       h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0;min-height:44px", onclick: () => { store.demo.delete(r.id); rerender(); } }, t("money.remove", lang))));
   });
   return h("main", {},
@@ -290,7 +290,7 @@ export function journeyLog(): HTMLElement {
 
 // ---- quick capture + report ----
 const itemOf = (r: TMRecord): Item => { const g = (k: string) => (r.values[k] as { value?: unknown } | undefined)?.value; return { kind: g("capture_item.kind") as Item["kind"], number: typeof g("capture_item.number") === "number" ? (g("capture_item.number") as number) : undefined, unit: g("capture_item.unit") as string | undefined, text: g("capture_item.text") as string | undefined, date: g("capture_item.date") as string | undefined }; };
-const fmtNum = (n: number, lang: Locale) => new Intl.NumberFormat(lang === "bn" ? "bn-BD" : "en-US").format(n);
+const fmtNum = (n: number, lang: Locale) => new Intl.NumberFormat(intlLocale(lang)).format(n);
 
 export function captureScreen(): HTMLElement {
   const lang = L();
@@ -391,15 +391,15 @@ export function stuckScreen(): HTMLElement {
 // ---- topics (library) ----
 function tipCard(tp: Tip, lang: Locale): HTMLElement {
   return h("div", { class: "card", "data-tip": tp.id },
-    h("div", { class: "row" }, h("h3", {}, tp.title[lang]), h("span", { class: "tag warn" }, t("topics.draft", lang))),
-    h("p", {}, tp.how[lang]), diagram(tp, lang),
+    h("div", { class: "row" }, h("h3", {}, tb(tp.title, lang)), h("span", { class: "tag warn" }, t("topics.draft", lang))),
+    h("p", {}, tb(tp.how, lang)), diagram(tp, lang),
     tp.appLink ? link(tp.appLink, "btn ghost", t("topics.tryIt", lang)) : null);
 }
 
 export function topicsIndex(): HTMLElement {
   const lang = L();
   return h("main", {}, link("#/more", "crumb", `← ${t("more.title", lang)}`), h("h1", {}, t("topics.title", lang)), h("p", { class: "sub" }, t("topics.intro", lang)),
-    ...(Object.keys(LAYERS) as (keyof typeof LAYERS)[]).flatMap((ly) => [h("h2", {}, LAYERS[ly][lang]), ...TOPICS.filter((x) => x.layer === ly).map((x) => link(`#/topic/${x.id}`, "card link", h("h3", {}, x.name[lang]), h("p", { class: "muted" }, `${num(tipsOf(x.id).length, lang)} ${t("topics.tips", lang)}`)))]),
+    ...(Object.keys(LAYERS) as (keyof typeof LAYERS)[]).flatMap((ly) => [h("h2", {}, tb(LAYERS[ly], lang)), ...TOPICS.filter((x) => x.layer === ly).map((x) => link(`#/topic/${x.id}`, "card link", h("h3", {}, tb(x.name, lang)), h("p", { class: "muted" }, `${num(tipsOf(x.id).length, lang)} ${t("topics.tips", lang)}`)))]),
     disclaimers(lang));
 }
 
@@ -407,7 +407,7 @@ export function topicScreen(id: string | undefined): HTMLElement {
   const lang = L(); const tp = id ? topicById(id) : undefined;
   if (!tp) return topicsIndex();
   const mine = tipsOf(tp.id); const rel = relatedTips(tp.id);
-  return h("main", {}, link("#/topics", "crumb", `← ${t("topics.title", lang)}`), h("h1", {}, tp.name[lang]),
+  return h("main", {}, link("#/topics", "crumb", `← ${t("topics.title", lang)}`), h("h1", {}, tb(tp.name, lang)),
     tp.sensitive ? h("div", { class: "note", role: "note", "data-safety": tp.sensitive }, h("p", {}, t(`topics.safety.${tp.sensitive}` as Key, lang))) : null,
     tp.appLink ? link(tp.appLink, "btn", t("topics.tryIt", lang)) : null,
     h("h2", {}, t("topics.tips", lang)), ...(mine.length ? mine.map((x) => tipCard(x, lang)) : [h("p", { class: "muted" }, t("topics.empty", lang))]),
@@ -519,7 +519,7 @@ function setLog(h0: Habits.Habit, date: string, count: number) {
 
 export function habitsScreen(): HTMLElement {
   const lang = L(); const { habits, logs } = habitsFromStore(); const today = Habits.todayIso();
-  const wd = (i: number) => new Intl.DateTimeFormat(lang === "bn" ? "bn-BD" : "en-US", { weekday: "short" }).format(new Date(2023, 0, 1 + i));
+  const wd = (i: number) => new Intl.DateTimeFormat(intlLocale(lang), { weekday: "short" }).format(new Date(2023, 0, 1 + i));
   const cards = habits.map((hb) => {
     const done = Habits.isDone(hb, logs, today); const cnt = Habits.countOn(hb, logs, today);
     const main = hb.target === null
@@ -717,7 +717,7 @@ function suggestPanel(f: FieldDef, lang: Locale, getInput: () => HTMLInputElemen
     const safe = safeQuery(q);
     if (!safe) { out.replaceChildren(h("p", { class: "err" }, t("suggest.secret", lang))); return; }
     out.replaceChildren(h("p", { class: "muted" }, t("suggest.loading", lang)));
-    const r = await research(safe, true, { provider: wikipedia(lang), online: () => navigator.onLine });
+    const r = await research(safe, true, { provider: wikipedia(lang === "en" ? "en" : "bn"), online: () => navigator.onLine });
     const cards = r.options.map((o) => h("div", { class: "card", "data-option": o.id },
       h("h3", {}, o.title), h("p", { class: "muted" }, o.snippet),
       h("p", { class: "muted" }, t("suggest.source", lang, { s: o.sourceName, d: o.fetchedAt.slice(0, 10) })),
@@ -801,7 +801,7 @@ export function more(): HTMLElement {
     ...items.map(([href, k, d]) => link(href, "card link", h("h3", {}, t(k, lang)), h("p", { class: "muted" }, t(d, lang)))),
     h("h2", {}, t("more.display", lang)),
     h("div", { class: "card" }, h("h3", {}, t("more.language", lang)),
-      h("div", { class: "seg" }, ...(Object.keys(LOCALES) as Locale[]).map((c) => seg(LOCALES[c].endonym, prefs.lang === c, () => { prefs.lang = c; applyPrefs(); rerender(); })))),
+      h("div", { class: "seg" }, ...LOCALE_ORDER.map((c) => seg(LOCALES[c].endonym, prefs.lang === c, () => { prefs.lang = c; applyPrefs(); rerender(); })))),
     h("div", { class: "card" }, h("h3", {}, t("more.theme", lang)),
       h("div", { class: "seg" }, ...(["auto", "light", "dark"] as const).map((c) => seg(t(`more.theme.${c}` as Key, lang), prefs.theme === c, () => { prefs.theme = c; applyPrefs(); rerender(); })))),
     h("div", { class: "card" }, h("h3", {}, t("more.textsize", lang)),

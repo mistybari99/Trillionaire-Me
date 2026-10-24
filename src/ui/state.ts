@@ -1,4 +1,4 @@
-import { DEFAULT_LOCALE, LOCALES, type Locale } from "../i18n/registry";
+import { DEFAULT_LOCALE, LOCALES, isLocale, type Locale } from "../i18n/registry";
 import { LocalKV, MemoryKV, Store } from "../core/store";
 import { MirrorKV, hydrate, mirrorToRepo } from "../core/persist";
 import { DexieRepo } from "../adapters/dexie";
@@ -18,7 +18,8 @@ const set = (k: string, v: string) => { try { localStorage.setItem(k, v); } catc
 export type PlanMode = "normal" | "minimum_week" | "pause";
 export type HorizonView = "stack" | "compact";
 export const prefs = {
-  get lang(): Locale { const v = get("tm:ui:lang"); return v && v in LOCALES ? (v as Locale) : DEFAULT_LOCALE; },
+  /** Unknown, missing or blocked storage falls back to the default (Bangla). */
+  get lang(): Locale { const v = get("tm:ui:lang"); return isLocale(v) ? v : DEFAULT_LOCALE; },
   set lang(v: Locale) { set("tm:ui:lang", v); },
   get theme(): "auto" | "light" | "dark" { const v = get("tm:ui:theme"); return v === "light" || v === "dark" ? v : "auto"; },
   set theme(v: "auto" | "light" | "dark") { set("tm:ui:theme", v); },
@@ -33,8 +34,8 @@ export const prefs = {
 
 export function applyPrefs() {
   const r = document.documentElement;
-  r.lang = prefs.lang; r.dir = LOCALES[prefs.lang].dir;
+  r.lang = prefs.lang === "en" ? "en" : "bn"; r.dir = LOCALES[prefs.lang].dir; // mix is Bangla-script, so html lang is bn
   r.dataset.theme = prefs.theme;
   r.style.fontSize = `${prefs.scale}%`;
-  document.title = prefs.lang === "bn" ? "ট্রিলিয়নেয়ার মি" : "Trillionaire Me";
+  document.title = prefs.lang === "en" ? "Trillionaire Me" : "ট্রিলিয়নেয়ার মি";
 }

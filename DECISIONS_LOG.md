@@ -37,3 +37,10 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 - Alternatives: fetch quotes from an online service. Not done: external integration needs owner approval (Charter §4.3/§8). Offline bundled list works without network.
 - How to undo: remove the `aside.inspire` block in `today()` in src/ui/screens.ts and delete src/library/inspiration.ts.
 - Open for owner: approve an online quote source (e.g. a free API) if the daily online change is wanted.
+
+## Language mode "Mix" (owner request)
+- What: third language mode "mix" next to English and Bangla. Mix = the Bangla pack with whole standalone words swapped for English (Stage, Goal, Journey, Diary, Demo, Backup, Online, Offline). Keys in COMMON_ENGLISH_KEYS show the English text. Switch on More shows English / বাংলা / Mix. Default stays Bangla.
+- Why: owner wants Bangla sentences that keep common English words readable.
+- Alternatives: a separate hand-written mix pack (more work, drifts from bn). Swapping inside suffixed words (e.g. "Offlineে") was rejected because it produces broken spelling.
+- How to undo: remove "mix" from Locale/LOCALES/LOCALE_ORDER in src/i18n/registry.ts and the mix pack in src/i18n/packs.ts; the switch falls back to Bangla for unknown values.
+- Also: fixed mixed-script strings in the Bangla pack (e.g. "Offlineে চলে", "এই deviceে") and plain-language wording of cap.intro and safety.demo (no internal "G1" name shown to users).

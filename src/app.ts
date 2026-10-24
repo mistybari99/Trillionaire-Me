@@ -1,6 +1,6 @@
 import { h } from "./ui/dom";
 import { applyPrefs, prefs } from "./ui/state";
-import { t } from "./i18n/t";
+import { t, tb } from "./i18n/t";
 import type { Key } from "./i18n/packs";
 import { demoBadge } from "./ui/components";
 import * as S from "./ui/screens";
@@ -49,7 +49,7 @@ export function render() {
   const drawer = h("div", { class: "drawer", id: "drawer", role: "dialog", "aria-label": t("topics.menu", lang), "aria-hidden": "true" },
     h("div", { class: "scrim", onclick: () => toggleDrawer(false) }),
     h("div", { class: "panel" }, h("button", { class: "btn ghost", type: "button", "data-act": "drawer-close", onclick: () => toggleDrawer(false), style: "margin:0" }, t("topics.close", lang)),
-      ...(Object.keys(LAYERS) as (keyof typeof LAYERS)[]).flatMap((ly) => [h("h2", {}, LAYERS[ly][lang]), ...TOPICS.filter((x) => x.layer === ly).map((x) => h("a", { class: "item", href: `#/topic/${x.id}`, "data-topic": x.id, onclick: () => toggleDrawer(false) }, x.name[lang]))])));
+      ...(Object.keys(LAYERS) as (keyof typeof LAYERS)[]).flatMap((ly) => [h("h2", {}, tb(LAYERS[ly], lang)), ...TOPICS.filter((x) => x.layer === ly).map((x) => h("a", { class: "item", href: `#/topic/${x.id}`, "data-topic": x.id, onclick: () => toggleDrawer(false) }, tb(x.name, lang)))])));
   const menuBtn = h("button", { class: "menu-btn", type: "button", "data-act": "drawer-open", "aria-label": t("topics.open", lang), "aria-controls": "drawer", onclick: () => toggleDrawer(true) }, "☰");
   const top = h("div", { class: "top" }, h("span", {}, menuBtn, " ", t("app.title", lang)),
     h("span", { class: "right" }, h("span", { class: "net", "data-net": online ? "online" : "offline" }, t(online ? "status.online" : "status.offline", lang)), demoBadge(lang)));
