@@ -27,3 +27,4 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 | L-22 | No streak counters; habits use consistency trend + recovery plan | CLAUDE.md §2/§6 no streak-shame | streaks | n/a |
 | L-23 | Library content ships only with sources, date, evidence level and reviewed=true; emotional/health entries need human review | never invent facts; safety | ship drafts | `LibraryEntry` in `src/library/categories.ts` |
 | L-24 | First build slice = "I'm stuck" Obstacle Center (rule-based, no AI) | brief's signature feature; works offline | start with content library | phase P1 in the plan |
+| L-25 | Quick capture = rule-based finder + mandatory confirm step; bare numbers never guessed as money; "কাল" flagged low-confidence; raw note kept on device, reports use only confirmed items | owner request 24 Oct; no AI; unknown≠guess | auto-save extracted items | `src/core/capture.ts` |

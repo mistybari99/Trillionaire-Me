@@ -38,5 +38,15 @@
   "id": "TM-REQ-180",
   "requirement": "After missed days the app asks gently what got in the way (sleep, load, unclear step…)",
   "gate": "G3"
+ },
+ {
+  "id": "TM-REQ-181",
+  "requirement": "Quick capture: free note/decision → rule-based extraction of amounts, percents, durations, dates, decisions → user confirms → reports use only confirmed items; original note stays on device",
+  "gate": "G3"
+ },
+ {
+  "id": "TM-REQ-182",
+  "requirement": "Field rules: one fact per field, taps over typing, short text ≤80 chars, every field shows what/why/example/format",
+  "gate": "G1"
  }
 ]

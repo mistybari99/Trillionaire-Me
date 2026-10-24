@@ -117,6 +117,19 @@ await page.goto("http://localhost:4174/#/journey/log"); await page.waitForSelect
 check("G3-STAGE", "journey log has the entry with before/after", (await page.locator("[data-log]").count()) === 1 && /%/.test(await page.locator("[data-log]").innerText()));
 await page.goto("http://localhost:4174/#/today"); await page.waitForSelector(".stage");
 check("G3-STAGE", "Home shows 2 / 8 after passing Stage A", /২ \/ ৮|2 \/ 8/.test(await page.locator(".stage .n").innerText()));
+// quick capture: write naturally -> confirm -> report built from confirmed items only
+await page.goto("http://localhost:4174/#/capture"); await page.waitForSelector("#cap-note");
+await page.fill("#cap-note", "কাল সরবরাহকারীকে ৫ হাজার টাকা দেব। ঠিক করলাম নতুন দোকান নেব।");
+await page.click("[data-act=capture-find]"); await page.waitForSelector("[data-cand]");
+const kinds = await page.locator("[data-cand]").evaluateAll((e) => e.map((x) => x.getAttribute("data-cand")));
+check("G3-CAPTURE", "finds amount, date and decision from a Bangla note", ["amount", "date", "decision"].every((k) => kinds.includes(k)), kinds.join(","));
+await page.locator("[data-cand=date] input[type=checkbox]").uncheck();
+await page.click("[data-act=capture-save]"); await page.waitForSelector("[data-saved]");
+await page.goto("http://localhost:4174/#/journey/report"); await page.waitForSelector("main");
+const rep = await page.locator("main").innerText();
+check("G3-CAPTURE", "report shows confirmed amount (৫,০০০) and decision; unconfirmed date is absent", /৫,০০০/.test(rep) && /নতুন দোকান নেব/.test(rep) && (await page.locator("[data-value][data-label=DEMO]").count()) === 0);
+await page.goto("http://localhost:4174/#/capture"); await page.fill("#cap-note", "my password: abc12345 pay 500 tk"); await page.click("[data-act=capture-find]");
+check("G3-CAPTURE", "secret in a note is rejected before anything is found", (await page.locator("[data-cand]").count()) === 0 && (await page.locator(".err").first().innerText()).length > 5);
 // data survives a full reload (IndexedDB)
 await page.reload(); await page.waitForSelector("main");
 const afterReload = await idb(page);

@@ -18,6 +18,7 @@ import { createBackup, restoreBackup } from "../core/backup";
 import { schedule, todaysActions } from "../core/planner";
 import { buildPlanInput, capacityState, fmtClock, freeWindow } from "../core/planInputs";
 import { STAGE_CODES, StageError, conditions, currentIndex, passStage, stageStates, type StageCode } from "../core/stages";
+import { extract, summarize, type Candidate, type Item } from "../core/capture";
 import { netWorth, monthlyCashFlow, type Calc } from "../core/finance";
 import { financeFrom } from "../core/financeInputs";
 import { research, safeQuery } from "../core/research";
@@ -241,6 +242,65 @@ export function journeyLog(): HTMLElement {
     disclaimers(lang));
 }
 
+
+// ---- quick capture + report ----
+const itemOf = (r: TMRecord): Item => { const g = (k: string) => (r.values[k] as { value?: unknown } | undefined)?.value; return { kind: g("capture_item.kind") as Item["kind"], number: typeof g("capture_item.number") === "number" ? (g("capture_item.number") as number) : undefined, unit: g("capture_item.unit") as string | undefined, text: g("capture_item.text") as string | undefined, date: g("capture_item.date") as string | undefined }; };
+const fmtNum = (n: number, lang: Locale) => new Intl.NumberFormat(lang === "bn" ? "bn-BD" : "en-US").format(n);
+
+export function captureScreen(): HTMLElement {
+  const lang = L();
+  const ta = h("textarea", { id: "cap-note", rows: "4", maxlength: "500", placeholder: t("capture.placeholder", lang) }) as HTMLTextAreaElement;
+  const out = h("div", { role: "status" }); const err = h("p", { class: "err", role: "alert" });
+  const stamp = () => Date.now().toString(36);
+  const saveAll = (picked: Candidate[], edits: Map<string, string>) => {
+    const d = (x: unknown): FieldValue => ({ state: "value", value: x, label: "DEMO" }); const id = `cap-${stamp()}`;
+    const base = { ns: "demo" as const, ownerId: "demo-user", schemaVersion: 1, createdAt: new Date().toISOString() };
+    store.demo.put({ ...base, id, entity: "capture", values: { "capture.note": d(ta.value.trim()) } });
+    picked.forEach((c, i) => {
+      const v: Record<string, FieldValue> = { "capture_item.kind": d(c.kind) };
+      const ed = edits.get(c.id);
+      if (c.kind === "decision") v["capture_item.text"] = d((ed ?? c.text ?? "").slice(0, 140));
+      else if (c.kind === "date") v["capture_item.date"] = d(ed ?? c.date);
+      else { const n = ed !== undefined ? Number(ed.replace(/,/g, "")) : c.number; v["capture_item.number"] = Number.isFinite(n) ? d(n) : { state: "unknown" }; if (c.unit) v["capture_item.unit"] = d(c.unit); }
+      store.demo.put({ ...base, id: `${id}-i${i}`, entity: "capture_item", links: { note: id }, values: v });
+    });
+    out.replaceChildren(h("p", { class: "ok-msg", "data-saved": "1" }, t("capture.saved", lang))); ta.value = "";
+  };
+  const understand = h("button", { class: "btn", type: "button", "data-act": "capture-find" }, t("capture.understand", lang));
+  understand.addEventListener("click", () => {
+    err.textContent = ""; const text = ta.value.trim(); if (!text) { err.textContent = t("capture.empty", lang); return; }
+    if (!checkFreeText(text).ok) { err.textContent = t("intake.secretRejected", lang); return; }
+    const cands = extract(text); const edits = new Map<string, string>(); const checks = new Map<string, HTMLInputElement>();
+    const rows = cands.map((c) => {
+      const cb = h("input", { type: "checkbox", id: `cb-${c.id}`, ...(c.confidence === "high" ? { checked: true } : {}), style: "width:24px;min-height:24px;margin:0" }) as HTMLInputElement; checks.set(c.id, cb);
+      const shown = c.kind === "decision" ? (c.text ?? "") : c.kind === "date" ? (c.date ?? "") : String(c.number ?? "");
+      const edit = h("input", { type: "text", value: shown, "data-edit": c.id, "aria-label": t(`capture.kind.${c.kind}` as Key, lang) }) as HTMLInputElement;
+      edit.addEventListener("input", () => edits.set(c.id, edit.value));
+      return h("div", { class: "card", "data-cand": c.kind }, h("label", { for: `cb-${c.id}`, style: "display:flex;gap:10px;align-items:center" }, cb,
+        h("b", {}, t(`capture.kind.${c.kind}` as Key, lang)), c.unit && c.kind === "amount" ? h("span", { class: "muted" }, c.unit) : null, c.confidence === "low" ? h("span", { class: "tag warn" }, t("capture.confirmLow", lang)) : null), edit);
+    });
+    const saveSel = h("button", { class: "btn", type: "button", "data-act": "capture-save" }, t("capture.save", lang));
+    saveSel.addEventListener("click", () => saveAll(cands.filter((c) => checks.get(c.id)?.checked), edits));
+    const saveNote = h("button", { class: "btn ghost", type: "button", "data-act": "capture-note" }, t("capture.saveNote", lang));
+    saveNote.addEventListener("click", () => saveAll([], edits));
+    out.replaceChildren(cands.length ? h("p", {}, t("capture.found", lang)) : h("p", { class: "muted" }, t("capture.none", lang)), ...rows, ...(cands.length ? [saveSel] : []), saveNote);
+  });
+  return h("main", {}, link("#/today", "crumb", `← ${t("nav.today", lang)}`), h("h1", {}, t("capture.title", lang)), h("p", { class: "sub" }, t("capture.intro", lang)),
+    h("label", { for: "cap-note" }, tb(fieldById("capture.note")!.label, lang)), ta, err, understand, out, fieldHelp(fieldById("capture.note")!, lang), disclaimers(lang));
+}
+
+export function reportScreen(): HTMLElement {
+  const lang = L(); const items = store.demo.list().filter((r) => r.entity === "capture_item").map(itemOf); const s = summarize(items);
+  const sec = (title: Key, ...kids: Array<Node | string | null>) => h("div", { class: "card" }, h("h3", {}, t(title, lang)), ...kids);
+  return h("main", {}, link("#/journey", "crumb", `← ${t("journey.title", lang)}`), h("h1", {}, t("report.title", lang)), h("p", { class: "sub" }, t("report.intro", lang)),
+    items.length ? h("div", {},
+      sec("report.decisions", s.decisions.length ? h("ul", { style: "padding-inline-start:20px" }, ...s.decisions.map((x) => h("li", { "data-decision": "1" }, x))) : h("p", { class: "muted" }, t("report.empty", lang))),
+      sec("report.amounts", s.amountCount ? valueEl(t("report.amountTotal", lang, { n: num(s.amountCount, lang), v: t("money.bdt", lang, { v: fmtNum(s.amountTotal, lang) }) }), "INFERENCE", lang) : h("p", { class: "muted" }, t("report.empty", lang))),
+      sec("report.durations", s.durationMinutes ? valueEl(t("report.minutes", lang, { m: fmtNum(s.durationMinutes, lang) }), "INFERENCE", lang) : h("p", { class: "muted" }, t("report.empty", lang))),
+      sec("report.dates", s.dates.length ? h("div", {}, ...s.dates.map((d) => h("p", {}, valueEl(d, "DEMO", lang)))) : h("p", { class: "muted" }, t("report.empty", lang)))) : h("p", { class: "muted" }, t("report.empty", lang)),
+    disclaimers(lang));
+}
+
 // ---- screens ----
 function todayFromPlan(cp: ReturnType<typeof currentPlan>, lang: Locale): HTMLElement[] {
   const acts = todaysActions(cp.plan, new Date().getDay());
@@ -268,6 +328,7 @@ export function today(): HTMLElement {
     ...(cp.hasTasks ? todayFromPlan(cp, lang) : DEMO_TASKS.slice(0, 3).map((k, i) => h("div", { class: "task" }, h("b", {}, num(i + 1, lang)),
       h("div", {}, tb(k.title, lang), h("p", {}, valueEl(t("task.minutes", lang, { n: num(k.minutes, lang) }), "DEMO", lang), " · ", tb(k.hint, lang)))))),
     link("#/diary/intake", "cta", t("home.start", lang)),
+    link("#/capture", "btn ghost", t("capture.link", lang)),
     nxt.field ? h("p", { class: "muted", style: "margin-top:12px" }, t("home.next", lang, { field: tb(nxt.field.label, lang) })) : null,
     disclaimers(lang));
 }
@@ -279,6 +340,7 @@ export function journey(): HTMLElement {
     passedBanner(lang),
     stagePanel(lang),
     link("#/journey/log", "btn ghost", t("log.link", lang)),
+    link("#/journey/report", "btn ghost", t("report.link", lang)),
     stageLadder(lang),
     h("h2", {}, t("journey.slots", lang)),
     ...MODULES.filter((m) => m.tab === "journey").map((m) => moduleCard(m, lang)),
@@ -323,7 +385,7 @@ function inputFor(f: FieldDef, lang: Locale, cur: FieldValue | undefined): { el:
   } else if (f.type === "date") {
     input = h("input", { id: `f-${f.id}`, type: "date" });
   } else {
-    input = h("input", { id: `f-${f.id}`, type: "text", maxlength: "200", autocomplete: "off" });
+    input = h("input", { id: `f-${f.id}`, type: "text", maxlength: /\.(note|entry|evidence)$/.test(f.id) ? "200" : "80", autocomplete: "off" });
   }
   input.value = curVal;
   const el = h("div", {}, input, f.unknownStates.length ? h("div", { class: "unk" }, unkSel) : null);

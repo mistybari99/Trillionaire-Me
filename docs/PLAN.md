@@ -21,7 +21,7 @@
 | G8 | pilot, PC, staff edition, public edition |
 
 ## Life Success system (owner design, 23 Oct) — see docs/design/life-system-integration.md
-P1 Obstacle Center ("I'm stuck") → P2 goal view + skill/knowledge gaps → P3 habits + review → P4 library content (reviewed). Runs inside G3.
+Done: Quick capture + Decisions & numbers report (docs/design/field-rules.md). P1 Obstacle Center ("I'm stuck") → P2 goal view + skill/knowledge gaps → P3 habits + review → P4 library content (reviewed). Runs inside G3.
 
 ## Next actions (in order)
 1. App storage → IndexedDB (write-through, migrate localStorage) 

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-24T00:54:27.338Z",
+  "generated": "2026-10-24T01:05:18.915Z",
   "results": [
     {
       "id": "TM-TST-143",
@@ -130,6 +130,24 @@
     {
       "id": "G3-STAGE",
       "name": "Home shows 2 / 8 after passing Stage A",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G3-CAPTURE",
+      "name": "finds amount, date and decision from a Bangla note",
+      "pass": true,
+      "detail": "amount,date,decision"
+    },
+    {
+      "id": "G3-CAPTURE",
+      "name": "report shows confirmed amount (৫,০০০) and decision; unconfirmed date is absent",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G3-CAPTURE",
+      "name": "secret in a note is rejected before anything is found",
       "pass": true,
       "detail": ""
     },
