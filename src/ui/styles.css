@@ -166,3 +166,48 @@ dl{margin:6px 0} .hrow{display:grid;grid-template-columns:96px 1fr;gap:8px;paddi
 .reward svg{border-bottom:1px solid var(--rule)}
 .reward+p{margin:0 4px}
 .scr-journey .actions{margin-bottom:8px}
+
+/* Visual polish pass 2 (Plan, Money, Deen, More). Rhythm, headings and card grouping only; colours come from the tokens above. */
+.scr-plan h1,.scr-money h1,.scr-deen h1,.scr-more h1{margin-top:18px;margin-bottom:6px}
+.scr-plan h2,.scr-money h2,.scr-deen h2,.scr-more h2{margin:26px 0 6px}
+.scr-plan .sub,.scr-money .sub,.scr-deen .sub{margin-bottom:4px}
+.scr-plan .card,.scr-money .card,.scr-deen .card,.scr-more .card{padding:14px 16px}
+.scr-plan .card h3,.scr-money .card h3,.scr-deen .card h3,.scr-more .card h3{margin-bottom:4px}
+/* Plan: flow and assessment cards get their own inner rhythm */
+.scr-plan [data-flow-card]{padding:16px 16px 14px;margin:14px 0 12px}
+.scr-plan [data-flow-card] .flow{margin:10px auto 0}
+.scr-plan [data-flow-card] .muted{margin-bottom:4px}
+.scr-plan section[data-assessment] .card{margin:8px 0}
+.scr-plan section[data-assessment] .card[data-fit-card]{margin-top:14px;padding:16px}
+.scr-plan section[data-assessment] .card[data-path]{margin:10px 0 0;background:var(--paper)}
+.scr-plan section[data-assessment] .card[data-path] p{margin-top:4px}
+.scr-plan .seg{margin-bottom:6px}
+.scr-plan form .field,.scr-plan form>label{margin-top:12px}
+.scr-plan form .btn{margin-top:14px}
+/* Money: summary cards read as figures, items as a list */
+.scr-money [data-scope]{padding:16px 16px 14px;margin:8px 0}
+.scr-money [data-scope] h3{margin-bottom:6px}
+.scr-money [data-scope] p{margin:4px 0;line-height:1.5}
+.scr-money [data-fin]{margin:8px 0}
+.scr-money [data-fin] .row{align-items:center}
+.scr-money [data-fin] button{flex:none}
+.scr-money form>label{margin-top:12px}
+.scr-money form .btn{margin-top:14px}
+/* Deen: one private group per card, help links tucked under the description */
+.scr-deen [data-entity]{padding:16px 16px 12px;margin:12px 0}
+.scr-deen [data-entity] .row{align-items:center;margin-bottom:4px}
+.scr-deen [data-entity] .row .tag{margin-top:0}
+.scr-deen [data-entity] p.muted{margin-bottom:6px}
+.scr-deen [data-entity] details.help{margin-top:2px;padding-top:6px;border-top:1px solid var(--rule)}
+.scr-deen [data-entity] details.help:last-of-type{margin-bottom:0}
+.scr-deen [data-entity] details.help summary{min-height:40px;display:flex;align-items:center}
+.scr-deen .card[data-module]{margin:12px 0}
+/* More: menu cards with clear title/description, settings grouped */
+.scr-more .card.link{padding:14px 16px;margin:10px 0}
+.scr-more .card.link h3{margin-bottom:2px}
+.scr-more .card.link p{line-height:1.5}
+.scr-more .card:not(.link){margin:10px 0}
+.scr-more .card:not(.link) .seg{margin-top:8px}
+.scr-more .seg{gap:8px}
+.scr-more .seg button{flex:1 1 0;min-width:0;padding-inline:8px}
+.scr-more .card .tags{margin-top:8px}

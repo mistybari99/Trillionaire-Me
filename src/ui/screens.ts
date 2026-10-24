@@ -212,7 +212,7 @@ export function planScreen(): HTMLElement {
   const byDay = (d: number) => cp.plan.placements.filter((p) => p.day === d).sort((a, b) => a.start - b.start);
   const week = [0, 1, 2, 3, 4, 5, 6].map((i) => (new Date().getDay() + i) % 7).filter((d) => byDay(d).length).map((d) => h("div", { class: "card", "data-day": String(d) }, h("h3", {}, weekday(d, lang)),
     ...byDay(d).map((p) => h("p", { "data-placement": p.taskId }, `${fmtClock(p.start)}–${fmtClock(p.end)} · ${cp.titles.get(p.taskId) ?? ""}`))));
-  return h("main", {},
+  return h("main", { class: "scr scr-plan" },
     link("#/diary", "crumb", `← ${t("diary.title", lang)}`),
     h("h1", {}, t("plan.title", lang)), h("p", { class: "sub" }, t("plan.intro", lang)),
     h("div", { class: "card", "data-capacity": cp.state }, h("h3", {}, t("plan.free", lang)), h("p", {}, free)),
@@ -274,7 +274,7 @@ export function moneyScreen(): HTMLElement {
       h("p", { class: "muted" }, a.state === "value" ? valueEl(t("money.bdt", lang, { v: new Intl.NumberFormat(intlLocale(lang)).format(Number(a.value)) }), "DEMO", lang) : t(`unknown.${a.state}` as Key, lang))),
       h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0;min-height:44px", onclick: () => { store.demo.delete(r.id); rerender(); } }, t("money.remove", lang))));
   });
-  return h("main", {},
+  return h("main", { class: "scr scr-money" },
     link("#/diary", "crumb", `← ${t("diary.title", lang)}`), h("h1", {}, t("money.title", lang)), h("p", { class: "sub" }, t("money.intro", lang)),
     h("h2", {}, t("money.summary", lang)), sum("personal"), sum("business"),
     fv.notMonthly ? h("p", { class: "muted" }, t("money.notMonthly", lang, { n: num(fv.notMonthly, lang) })) : null,
@@ -930,7 +930,7 @@ export function intake(stepParam: string | undefined): HTMLElement {
 export function deen(): HTMLElement {
   const lang = L();
   const ents = ENTITIES.filter((e) => e.module === "M13");
-  return h("main", {},
+  return h("main", { class: "scr scr-deen" },
     h("h1", {}, t("deen.title", lang)),
     h("p", { class: "sub" }, t("deen.intro", lang)),
     h("p", { class: "muted" }, t("deen.control", lang)),
@@ -949,7 +949,7 @@ export function more(): HTMLElement {
   const lang = L();
   const seg = (label: string, active: boolean, on: () => void) => h("button", { type: "button", "aria-pressed": String(active), onclick: on }, label);
   const items: Array<[string, Key, Key]> = [["#/topics", "topics.title", "topics.intro"], ["#/more/status", "more.status", "more.status.desc"], ["#/more/fields", "more.fields", "more.fields.desc"], ["#/more/glossary", "more.glossary", "more.glossary.desc"], ["#/more/safety", "more.safety", "more.safety.desc"], ["#/more/data", "more.data", "more.data.desc"]];
-  return h("main", {},
+  return h("main", { class: "scr scr-more" },
     h("h1", {}, t("more.title", lang)),
     ...items.map(([href, k, d]) => link(href, "card link", h("h3", {}, t(k, lang)), h("p", { class: "muted" }, t(d, lang)))),
     h("h2", {}, t("more.display", lang)),
