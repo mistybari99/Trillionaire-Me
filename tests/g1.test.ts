@@ -179,10 +179,11 @@ describe("TM-TST-010/067/017 intake", () => {
 });
 
 describe("TM-TST-144 capability status", () => {
-  it("100% of modules have a valid status; nothing is 'implemented' without being the status screen", () => {
+  it("100% of modules have a valid status; 'implemented' modules are the evidence-backed set (see m_list_status)", () => {
     expect(MODULES.length).toBe(25);
     for (const m of MODULES) { expect(m.statuses.length).toBeGreaterThan(0); for (const s of m.statuses) expect(CAP_STATUSES).toContain(s); }
-    expect(MODULES.filter((m) => m.statuses.includes("implemented")).map((m) => m.id)).toEqual(["M22"]);
+    // "implemented" (আছে) is now evidence-based; the per-item file/route/test check lives in tests/m_list_status.test.ts.
+    expect(MODULES.filter((m) => m.statuses.includes("implemented")).map((m) => m.id)).toEqual(["M01", "M02", "M04", "M05", "M06", "M07", "M08", "M11", "M16", "M17", "M21", "M22", "M25"]);
   });
 });
 

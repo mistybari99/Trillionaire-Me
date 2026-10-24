@@ -80,7 +80,7 @@ function stageLadder(lang: Locale): HTMLElement {
 }
 
 function capTag(s: ModuleDef["statuses"][number], lang: Locale) {
-  const cls = s === "implemented" || s === "offline-ok" ? "ok" : s === "demo" || s === "internet-needed" ? "warn" : "off";
+  const cls = s === "implemented" || s === "offline-ok" ? "ok" : s === "demo" || s === "internet-needed" || s === "partial" ? "warn" : "off";
   return h("span", { class: `tag ${cls}`, "data-cap": s }, t(`cap.${s}` as Key, lang));
 }
 
@@ -88,7 +88,7 @@ function moduleCard(m: ModuleDef, lang: Locale) {
   return h("div", { class: "card", "data-module": m.id },
     h("div", { class: "row" }, h("h2", { class: "card-h", }, `${m.id} · ${tb(m.name, lang)}`)),
     h("p", { class: "muted" }, tb(m.note, lang)),
-    h("div", { class: "tags" }, ...m.statuses.map((s) => capTag(s, lang)), h("span", { class: "tag off" }, t("cap.gate", lang, { g: m.gate }))));
+    h("div", { class: "tags" }, ...m.statuses.map((s) => capTag(s, lang)), ...(m.statuses.includes("implemented") ? [] : [h("span", { class: "tag off" }, t("cap.gate", lang, { g: m.gate }))])));
 }
 
 

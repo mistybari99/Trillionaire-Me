@@ -108,3 +108,10 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 - Alternatives: wrap digits in a span with a Latin font (rejected: more DOM and CSS for the same result; Hind Siliguri already has Latin digits, and headings fall back to Fraunces); keep Bangla digits and only change the font (rejected: owner asked for 0–9).
 - Kept: reviewer-pending flags (`glossary.unreviewed`, `topics.draft`, `fit.draft`), key set, behaviour, banned-word guard.
 - How to undo: restore `intlLocale` number formatting in `src/i18n/t.ts` (`fmtNumber`) and remove the `latinDigits` calls; restore the old `bn` block in `src/i18n/packs.ts` from git history.
+
+## M-list — honest module status (আছে / আংশিক / নেই)
+- What: the "কী কী চলছে" list (`src/modules/capability.ts`) now uses three levels. "আছে" (`implemented`) = a screen or function is reachable in the app and has a test. "আংশিক" (`partial`, new status) = only part is reachable, or only rules or data exist. "নেই" (`not-built`) = nothing user-facing yet. Every item's evidence (route, function, file, test) is in `src/modules/evidence.ts`, checked by `tests/m_list_status.test.ts`. Full table: `docs/design/m-list-status.md`.
+- Why: the owner found items marked "not built" that exist, and items marked "built" or "G1" that only exist as rules or data. A status must point at evidence.
+- Result: 13 আছে, 8 আংশিক, 4 নেই (of 25). Gate tags ("পরিকল্পনা: G…") are hidden on built items.
+- Alternatives: keep the old two-level list and fix only the wording (rejected: it could not show data-only items honestly); remove the not-built items (rejected: they are the planned roadmap).
+- How to undo: remove the `partial` status and `src/modules/evidence.ts`, delete `tests/m_list_status.test.ts`, and restore the old `MODULES` statuses and `cap.*` labels in both packs from git history.
