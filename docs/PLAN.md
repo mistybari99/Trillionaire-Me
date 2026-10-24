@@ -13,7 +13,7 @@
 | G0 | frozen by owner |
 | G1 | built, evidence in `evidence/`; open: usability sessions, Bangla review |
 | G2 | repo+Dexie ✅, backup/restore ✅, op-queue/conflict rules ✅; **next:** app on IndexedDB, PNG install icons, notifications privacy, PWA-vs-native note; owner: real-phone airplane test |
-| G3 | planner, finance maths, stage rules (no AI) |
+| G3 | in progress: scheduler ✅, goal tree ✅, finance maths ✅ (pure core, tested); open: screens, assessment scoring, path fit, stage-pass rules, reality-changed loop |
 | G4 | in progress: Wikipedia provider ✅, option cards on 5 intake fields ✅; open: own-options list, saved offline list, more screens |
 | G5 | Deen content verification (needs D-D) |
 | G6 | AI/automation (needs D-C) |

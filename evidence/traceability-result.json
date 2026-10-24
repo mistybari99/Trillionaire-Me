@@ -1,6 +1,6 @@
 {
-  "generated": "2026-10-23T18:12:32.734Z",
-  "totalTests": 70,
+  "generated": "2026-10-24T00:01:52.226Z",
+  "totalTests": 81,
   "failed": 0,
   "results": {
     "TM-TST-006": {
@@ -45,7 +45,7 @@
         "tools/e2e.mjs",
         "evidence/e2e-report.json"
       ],
-      "tests": 2,
+      "tests": 5,
       "e2e": 2,
       "evidenceOk": true,
       "finalOutcome": "Pass"
@@ -162,6 +162,54 @@
         "src/catalog/glossary.ts"
       ],
       "tests": 1,
+      "e2e": 0,
+      "evidenceOk": true,
+      "finalOutcome": "Partial"
+    },
+    "TM-TST-003": {
+      "outcome": "Pass",
+      "scope": "G3 core: 100 generated plans, 0 tasks inside prayer/family/rest blocks, never over capacity, nothing silently dropped, deterministic",
+      "artifacts": [
+        "tests/g3.test.ts",
+        "src/core/planner.ts"
+      ],
+      "tests": 5,
+      "e2e": 0,
+      "evidenceOk": true,
+      "finalOutcome": "Pass"
+    },
+    "TM-TST-037": {
+      "outcome": "Pass",
+      "scope": "G3 core: 200 random split/merge/delete ops, every task still reaches its goal, 0 orphans",
+      "artifacts": [
+        "tests/g3.test.ts",
+        "src/core/goals.ts"
+      ],
+      "tests": 3,
+      "e2e": 0,
+      "evidenceOk": true,
+      "finalOutcome": "Pass"
+    },
+    "TM-TST-022": {
+      "outcome": "Partial",
+      "scope": "Net-worth maths (personal/business separate, unknown→unknown) done; no screen yet",
+      "artifacts": [
+        "tests/g3.test.ts",
+        "src/core/finance.ts"
+      ],
+      "tests": 3,
+      "e2e": 0,
+      "evidenceOk": true,
+      "finalOutcome": "Partial"
+    },
+    "TM-TST-023": {
+      "outcome": "Partial",
+      "scope": "Monthly cash-flow + runway maths done; 90-day review screen not built",
+      "artifacts": [
+        "tests/g3.test.ts",
+        "src/core/finance.ts"
+      ],
+      "tests": 3,
       "e2e": 0,
       "evidenceOk": true,
       "finalOutcome": "Partial"

@@ -1,16 +1,141 @@
 {
-  "TM-TST-006": { "outcome": "Pass", "scope": "G1 automated: DOM audit of all 16 routes x 2 languages, 0 unlabelled values", "artifacts": ["tests/g1.test.ts", "evidence/screenshot-report.json"] },
-  "TM-TST-010": { "outcome": "Partial", "scope": "Structural check passes (max 7 fields/screen). 3-user timed usability session NOT run", "artifacts": ["tests/g1.test.ts"] },
-  "TM-TST-017": { "outcome": "Pass", "scope": "G1 automated: intake completes 100% with every health field empty; health fields private, per-item authorised", "artifacts": ["tests/g1.test.ts"] },
-  "TM-TST-021": { "outcome": "Pass", "scope": "G1 automated: 1000-case property test + browser e2e (blank and 'don't know' never stored as 0)", "artifacts": ["tests/g1.test.ts", "tools/e2e.mjs", "evidence/e2e-report.json"] },
-  "TM-TST-034": { "outcome": "Pass", "scope": "G1 automated: 30 secret fixtures rejected, benign text allowed, 0 logging/network sinks in source, export redaction, browser rejection", "artifacts": ["tests/g1.test.ts", "tools/e2e.mjs", "evidence/e2e-report.json"] },
-  "TM-TST-066": { "outcome": "Partial", "scope": "Catalog 100% help/what-why-example/format complete. 5-user usability session NOT run", "artifacts": ["evidence/catalog-report.json"] },
-  "TM-TST-067": { "outcome": "Partial", "scope": "Completeness indicator + next-needed with reason in 500/500 random states. User sessions NOT run", "artifacts": ["tests/g1.test.ts"] },
-  "TM-TST-092": { "outcome": "Pass", "scope": "G1 automated: 100% fields have purpose + access rule + privacy class; sensitive fields never required", "artifacts": ["evidence/catalog-report.json", "tests/g1.test.ts"] },
-  "TM-TST-100": { "outcome": "Pass", "scope": "G1 automated: 0 piety score/rank/leaderboard/acceptance wording in strings, catalog and source", "artifacts": ["tests/g1.test.ts"] },
-  "TM-TST-114": { "outcome": "Pass", "scope": "G1 automated: worship/health values absent from exports without per-item authorisation", "artifacts": ["tests/g1.test.ts"] },
-  "TM-TST-130": { "outcome": "Partial", "scope": "Checklist done; owner confirmation line still open", "artifacts": ["docs/process/TM-TST-130-checklist.md"] },
-  "TM-TST-143": { "outcome": "Pass", "scope": "G1 automated: empty start, no promote API, DEMO never enters real, browser e2e", "artifacts": ["tests/g1.test.ts", "tools/e2e.mjs", "evidence/e2e-report.json"] },
-  "TM-TST-144": { "outcome": "Pass", "scope": "G1 automated: 24/24 modules labelled, status screen shows tag for each", "artifacts": ["tests/g1.test.ts", "evidence/screenshots/"] },
-  "TM-TST-161": { "outcome": "Partial", "scope": "Bangla glossary (30 terms) + field help exist. Human reviewer sign-off NOT done", "artifacts": ["src/catalog/glossary.ts"] }
+  "TM-TST-006": {
+    "outcome": "Pass",
+    "scope": "G1 automated: DOM audit of all 16 routes x 2 languages, 0 unlabelled values",
+    "artifacts": [
+      "tests/g1.test.ts",
+      "evidence/screenshot-report.json"
+    ]
+  },
+  "TM-TST-010": {
+    "outcome": "Partial",
+    "scope": "Structural check passes (max 7 fields/screen). 3-user timed usability session NOT run",
+    "artifacts": [
+      "tests/g1.test.ts"
+    ]
+  },
+  "TM-TST-017": {
+    "outcome": "Pass",
+    "scope": "G1 automated: intake completes 100% with every health field empty; health fields private, per-item authorised",
+    "artifacts": [
+      "tests/g1.test.ts"
+    ]
+  },
+  "TM-TST-021": {
+    "outcome": "Pass",
+    "scope": "G1 automated: 1000-case property test + browser e2e (blank and 'don't know' never stored as 0)",
+    "artifacts": [
+      "tests/g1.test.ts",
+      "tools/e2e.mjs",
+      "evidence/e2e-report.json"
+    ]
+  },
+  "TM-TST-034": {
+    "outcome": "Pass",
+    "scope": "G1 automated: 30 secret fixtures rejected, benign text allowed, 0 logging/network sinks in source, export redaction, browser rejection",
+    "artifacts": [
+      "tests/g1.test.ts",
+      "tools/e2e.mjs",
+      "evidence/e2e-report.json"
+    ]
+  },
+  "TM-TST-066": {
+    "outcome": "Partial",
+    "scope": "Catalog 100% help/what-why-example/format complete. 5-user usability session NOT run",
+    "artifacts": [
+      "evidence/catalog-report.json"
+    ]
+  },
+  "TM-TST-067": {
+    "outcome": "Partial",
+    "scope": "Completeness indicator + next-needed with reason in 500/500 random states. User sessions NOT run",
+    "artifacts": [
+      "tests/g1.test.ts"
+    ]
+  },
+  "TM-TST-092": {
+    "outcome": "Pass",
+    "scope": "G1 automated: 100% fields have purpose + access rule + privacy class; sensitive fields never required",
+    "artifacts": [
+      "evidence/catalog-report.json",
+      "tests/g1.test.ts"
+    ]
+  },
+  "TM-TST-100": {
+    "outcome": "Pass",
+    "scope": "G1 automated: 0 piety score/rank/leaderboard/acceptance wording in strings, catalog and source",
+    "artifacts": [
+      "tests/g1.test.ts"
+    ]
+  },
+  "TM-TST-114": {
+    "outcome": "Pass",
+    "scope": "G1 automated: worship/health values absent from exports without per-item authorisation",
+    "artifacts": [
+      "tests/g1.test.ts"
+    ]
+  },
+  "TM-TST-130": {
+    "outcome": "Partial",
+    "scope": "Checklist done; owner confirmation line still open",
+    "artifacts": [
+      "docs/process/TM-TST-130-checklist.md"
+    ]
+  },
+  "TM-TST-143": {
+    "outcome": "Pass",
+    "scope": "G1 automated: empty start, no promote API, DEMO never enters real, browser e2e",
+    "artifacts": [
+      "tests/g1.test.ts",
+      "tools/e2e.mjs",
+      "evidence/e2e-report.json"
+    ]
+  },
+  "TM-TST-144": {
+    "outcome": "Pass",
+    "scope": "G1 automated: 24/24 modules labelled, status screen shows tag for each",
+    "artifacts": [
+      "tests/g1.test.ts",
+      "evidence/screenshots/"
+    ]
+  },
+  "TM-TST-161": {
+    "outcome": "Partial",
+    "scope": "Bangla glossary (30 terms) + field help exist. Human reviewer sign-off NOT done",
+    "artifacts": [
+      "src/catalog/glossary.ts"
+    ]
+  },
+  "TM-TST-003": {
+    "outcome": "Pass",
+    "scope": "G3 core: 100 generated plans, 0 tasks inside prayer/family/rest blocks, never over capacity, nothing silently dropped, deterministic",
+    "artifacts": [
+      "tests/g3.test.ts",
+      "src/core/planner.ts"
+    ]
+  },
+  "TM-TST-037": {
+    "outcome": "Pass",
+    "scope": "G3 core: 200 random split/merge/delete ops, every task still reaches its goal, 0 orphans",
+    "artifacts": [
+      "tests/g3.test.ts",
+      "src/core/goals.ts"
+    ]
+  },
+  "TM-TST-022": {
+    "outcome": "Partial",
+    "scope": "Net-worth maths (personal/business separate, unknown→unknown) done; no screen yet",
+    "artifacts": [
+      "tests/g3.test.ts",
+      "src/core/finance.ts"
+    ]
+  },
+  "TM-TST-023": {
+    "outcome": "Partial",
+    "scope": "Monthly cash-flow + runway maths done; 90-day review screen not built",
+    "artifacts": [
+      "tests/g3.test.ts",
+      "src/core/finance.ts"
+    ]
+  }
 }
