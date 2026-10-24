@@ -15,7 +15,10 @@ export interface ResearchDeps { provider: SearchProvider; online: () => boolean;
 export async function research(query: string, userClicked: boolean, d: ResearchDeps): Promise<ResearchResult> {
   const q = query.trim();
   if (!userClicked || !q) throw new Error("research needs an explicit click and a query");
-  if (!d.online()) { const c = (d.cached?.(q) ?? []).slice(0, 3); return { status: "offline", options: c, allowOwn: true }; }
+  // O7: a term the user already saved (2+ results) is read from the phone first. No provider call, online or not.
+  const saved = (d.cached?.(q) ?? []).slice(0, 3);
+  if (saved.length >= 2) return { status: "options", options: saved, allowOwn: true };
+  if (!d.online()) return { status: "offline", options: saved, allowOwn: true };
   try {
     const raw = await d.provider.search(q);
     const stamp = (d.now?.() ?? new Date()).toISOString();

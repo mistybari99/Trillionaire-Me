@@ -38,6 +38,7 @@ import { extract, summarize, type Candidate, type Item } from "../core/capture";
 import { netWorth, monthlyCashFlow, type Calc } from "../core/finance";
 import { financeFrom } from "../core/financeInputs";
 import { research, safeQuery } from "../core/research";
+import { ownOptions, saveOwnOption, saveSearchResults, savedSearchResults } from "../core/savedLists";
 import { wikipedia } from "../adapters/wikipedia";
 import { GLOSSARY } from "../catalog/glossary";
 
@@ -841,6 +842,20 @@ const SUGGESTABLE = new Set(["interest.topic", "skill.name", "strength.name", "v
 function suggestPanel(f: FieldDef, lang: Locale, getInput: () => HTMLInputElement): HTMLElement {
   const box = h("div", { class: "suggest", "data-suggest": f.id });
   const out = h("div", { role: "status" });
+  // O7 own options: saved on this phone per field (cap 20, oldest removed), shown above the search button.
+  const ownBox = h("div", { "data-own-list": f.id });
+  const renderOwn = () => {
+    const list = ownOptions(store.demo, f.id);
+    ownBox.replaceChildren(...(list.length ? [h("p", { class: "muted" }, t("suggest.ownList", lang)),
+      ...list.map((text) => h("button", { class: "btn ghost", type: "button", "data-own-option": f.id, onclick: () => { getInput().value = text; out.replaceChildren(); getInput().focus(); } }, text))] : []));
+  };
+  renderOwn();
+  const saveNote = h("p", { class: "muted", role: "status" });
+  const saveOwn = h("button", { class: "btn ghost", type: "button", "data-act": "suggest-save-own", onclick: () => {
+    const res = saveOwnOption(store.demo, f.id, getInput().value, new Date());
+    saveNote.textContent = res === "empty" ? t("suggest.empty", lang) : res === "secret" ? t("suggest.secret", lang) : t("suggest.ownSaved", lang);
+    if (res === "saved" || res === "duplicate_updated") renderOwn();
+  } }, t("suggest.saveOwn", lang));
   const go = h("button", { class: "btn ghost", type: "button", "data-act": "suggest-go" }, t("suggest.go", lang));
   go.addEventListener("click", async () => {
     const input = getInput(); const q = input.value.trim();
@@ -848,16 +863,21 @@ function suggestPanel(f: FieldDef, lang: Locale, getInput: () => HTMLInputElemen
     const safe = safeQuery(q);
     if (!safe) { out.replaceChildren(h("p", { class: "err" }, t("suggest.secret", lang))); return; }
     out.replaceChildren(h("p", { class: "muted" }, t("suggest.loading", lang)));
-    const r = await research(safe, true, { provider: wikipedia(lang === "en" ? "en" : "bn"), online: () => navigator.onLine });
+    const wasSaved = savedSearchResults(store.demo, f.id, safe).length >= 2;
+    const r = await research(safe, true, { provider: wikipedia(lang === "en" ? "en" : "bn"), online: () => navigator.onLine, cached: (qq) => savedSearchResults(store.demo, f.id, qq) });
     const cards = r.options.map((o) => h("div", { class: "card", "data-option": o.id },
       h("h3", {}, o.title), h("p", { class: "muted" }, o.snippet),
       h("p", { class: "muted" }, t("suggest.source", lang, { s: o.sourceName, d: o.fetchedAt.slice(0, 10) })),
-      h("button", { class: "btn", type: "button", onclick: () => { input.value = o.title; out.replaceChildren(); input.focus(); } }, t("suggest.use", lang))));
-    const note = r.status === "too_few" ? "suggest.none" : r.status === "offline" ? "suggest.offline" : r.status === "error" ? "suggest.error" : null;
+      h("button", { class: "btn", type: "button", onclick: () => {
+        // Keep the results the user tapped from, so the same term shows here offline next time.
+        if (r.status === "options") saveSearchResults(store.demo, f.id, safe, r.options, new Date());
+        input.value = o.title; out.replaceChildren(); input.focus();
+      } }, t("suggest.use", lang))));
+    const note = wasSaved && r.status === "options" ? "suggest.savedNote" : r.status === "too_few" ? "suggest.none" : r.status === "offline" ? "suggest.offline" : r.status === "error" ? "suggest.error" : null;
     out.replaceChildren(...cards, ...(note ? [h("p", { class: "muted" }, t(note, lang))] : []),
       h("button", { class: "btn ghost", type: "button", onclick: () => { out.replaceChildren(); getInput().focus(); } }, t("suggest.own", lang)));
   });
-  box.append(h("p", { class: "muted" }, t("suggest.consent", lang)), go, out);
+  box.append(h("p", { class: "muted" }, t("suggest.consent", lang)), ownBox, saveOwn, saveNote, go, out);
   return h("details", { class: "help" }, h("summary", {}, t("suggest.btn", lang)), box);
 }
 

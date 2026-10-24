@@ -72,3 +72,11 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 - Bangla: new strings are a draft pending native review (TM-TST-161).
 - Alternatives: a numeric fit percentage (rejected: looks like a prediction and invites ranking); AI matching (rejected: D-C); keeping matches on a separate Journey page (rejected for now: Plan already has the answers and the cards are short).
 - How to undo: remove `assessmentSection(cp.recs, lang),` from planScreen in `src/ui/screens.ts`; delete `src/ui/assessment.ts`, `src/core/assessment.ts`, `src/library/paths.ts`, `tests/o5_assessment_fit.test.ts`; delete the `assess.*` and `fit.*` keys in `src/i18n/packs.ts`.
+
+## O7 — Own options, saved offline search list (G4)
+- What: (a) on the 5 search fields, the user can save what they typed ("Save what I typed") and it shows above the search button next time; (b) the 2–3 Wikipedia results the user taps from are saved per field and term. A saved term is read from the phone first, so no network call happens, online or offline. Caps: 20 entries per field, oldest removed first. Re-saving a term moves it to the top.
+- Where: `src/core/savedLists.ts` (pure), `src/core/research.ts` (saved-first read), `src/ui/screens.ts` (`suggestPanel`). Stored as `own_option` / `saved_search` records in the demo namespace (IndexedDB through the existing mirror).
+- Why: stays on the device, no new external call, no new table or schema version (reuses the record store).
+- Privacy: text that looks like a password, OTP, ID or card number is refused before it is stored (`detectSecret`).
+- Alternatives: a new Dexie table (rejected: schema change for no gain); localStorage (rejected: state should survive like other demo records); no cap (rejected: brief says 20).
+- How to undo: remove the `ownBox`/`saveOwn` lines and the `saveSearchResults` call in `suggestPanel`; drop the cached-first branch in `research()`; delete `src/core/savedLists.ts` and `tests/o7_own_saved_lists.test.ts`. Stored records can be cleared with the demo clear action.
