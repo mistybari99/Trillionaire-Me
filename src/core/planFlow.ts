@@ -1,6 +1,6 @@
 // B9 (R6): data behind the Plan flow diagram. Pure: every value is either a real number/text from the user's own records or null (= unknown). Unknown is never turned into 0.
 import type { FieldValue, RecordValues, TMRecord } from "./types";
-import type { CapacityState } from "./planInputs";
+import { isOpenTask, type CapacityState } from "./planInputs";
 
 export type FlowData = {
   /** constraint.weekly_free_hours, or null when not entered. A real 0 stays 0. */
@@ -26,7 +26,7 @@ export function planFlowData(recs: TMRecord[], a: RecordValues, capacity: Capaci
   const count = (keep: (r: TMRecord) => boolean): number | null => { const n = recs.filter(keep).length; return n > 0 ? n : null; };
   const tools = count((r) => r.entity === "resource" && val(r.values["resource.kind"]) === "tools");
   const skills = count((r) => r.entity === "skill" && nonEmpty(val(r.values["skill.name"])));
-  const openTasks = recs.filter((r) => r.entity === "task" && r.values["task.done_on"]?.state !== "value").length;
+  const openTasks = recs.filter(isOpenTask).length;
   const goal = recs.filter((r) => r.entity === "goal").sort((x, y) => x.id.localeCompare(y.id))
     .map((r) => val(r.values["goal.title"])).find(nonEmpty) ?? null;
   return {

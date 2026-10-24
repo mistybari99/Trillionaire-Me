@@ -22,8 +22,11 @@ export function freeWindow(a: RecordValues): WindowResult {
 
 const PRIORITY: Record<string, number> = { high: 3, normal: 2, low: 1 };
 
+/** A plan step the scheduler may still place: not finished and not marked “no longer true” (O6). */
+export const isOpenTask = (r: TMRecord): boolean => r.entity === "task" && r.values["task.done_on"]?.state !== "value" && r.values["task.not_true_on"]?.state !== "value";
+
 export function tasksFrom(records: TMRecord[]): PlanTask[] {
-  return records.filter((r) => r.entity === "task" && r.values["task.done_on"]?.state !== "value").sort((a, b) => a.id.localeCompare(b.id)).map((r) => ({
+  return records.filter(isOpenTask).sort((a, b) => a.id.localeCompare(b.id)).map((r) => ({
     id: r.id,
     minutes: (() => { const m = numVal(r.values["task.minutes"]); return m !== null && m > 0 ? Math.round(m) : null; })(),
     priority: PRIORITY[String(val(r.values["task.priority"]) ?? "normal")] ?? 2,

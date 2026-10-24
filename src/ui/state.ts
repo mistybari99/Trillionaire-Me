@@ -1,5 +1,6 @@
 import { DEFAULT_LOCALE, LOCALES, isLocale, type Locale } from "../i18n/registry";
 import { LocalKV, MemoryKV, Store } from "../core/store";
+import { isTemplateId, type TemplateId } from "../core/stageTemplates";
 import { MirrorKV, hydrate, mirrorToRepo } from "../core/persist";
 import { DexieRepo } from "../adapters/dexie";
 
@@ -30,6 +31,9 @@ export const prefs = {
   /** Horizon screen template. Unknown or missing value falls back to "stack" (the original view). */
   get horizonView(): HorizonView { const v = get("tm:ui:horizonView"); return v === "compact" ? "compact" : "stack"; },
   set horizonView(v: HorizonView) { set("tm:ui:horizonView", v === "compact" ? "compact" : "stack"); },
+  /** Stage-name template (O6). Unknown or missing value falls back to "default" (the Spec journey). Names only; codes and passes never change. */
+  get stageTemplate(): TemplateId { const v = get("tm:ui:stageTemplate"); return isTemplateId(v) ? v : "default"; },
+  set stageTemplate(v: TemplateId) { set("tm:ui:stageTemplate", isTemplateId(v) ? v : "default"); },
 };
 
 export function applyPrefs() {

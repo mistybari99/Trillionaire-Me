@@ -20,6 +20,9 @@ import { createBackup, restoreBackup } from "../core/backup";
 import { schedule, todaysActions } from "../core/planner";
 import { buildPlanInput, capacityState, fmtClock, freeWindow } from "../core/planInputs";
 import { planFlowData } from "../core/planFlow";
+import { markNotTrue, realityLogRecord, RealityError } from "../core/reality";
+import { reviewSummary } from "../core/review";
+import { stagesFor, TEMPLATE_IDS, TEMPLATES, type TemplateId } from "../core/stageTemplates";
 import { STAGE_CODES, StageError, conditions, currentIndex, passStage, stageStates, type StageCode } from "../core/stages";
 import { LAYERS, TOPICS, topicById, tipsOf, relatedTips, type Tip } from "../library/topics";
 import { journeyArt } from "./rewardArt";
@@ -66,7 +69,7 @@ function saveAnswers(step: number, vals: Answers) {
 function stageLadder(lang: Locale): HTMLElement {
   const ol = h("ol", { class: "ladder", "aria-label": t("stage.ladder", lang) });
   const states = stageStates(stageData().passed);
-  STAGES.forEach((g, i) => {
+  stagesFor(prefs.stageTemplate).forEach((g, i) => {
     const st = states[i]!;
     ol.append(h("li", { class: st }, h("b", {}, g.code), h("div", {}, h("div", {}, tb(g.name, lang)), h("div", { class: "muted" }, tb(g.exit, lang))), h("span", { class: `tag ${st === "done" ? "ok" : st === "now" ? "warn" : "off"}` }, t(`stage.${st === "now" ? "current" : st}` as Key, lang))));
   });
@@ -87,6 +90,17 @@ function moduleCard(m: ModuleDef, lang: Locale) {
 
 
 // ---- plan (G3 core wired to the UI) ----
+// O6: "reality changed". The step stays on record, is no longer scheduled, and the change is appended to the journey log.
+function markRealityChanged(taskId: string, lang: Locale) {
+  const r = store.demo.get(taskId); if (!r) return;
+  const day = new Date(); const iso = `${day.getFullYear()}-${String(day.getMonth() + 1).padStart(2, "0")}-${String(day.getDate()).padStart(2, "0")}`;
+  try {
+    const title = String((r.values["task.title"] as { value?: unknown } | undefined)?.value ?? "");
+    store.demo.put(markNotTrue(r, iso));
+    store.demo.put(realityLogRecord({ id: `reality-${taskId}-${Date.now().toString(36)}`, taskId, text: t("reality.logged", lang, { title, date: iso }), createdAt: day.toISOString() }));
+    rerender();
+  } catch (e) { if (!(e instanceof RealityError)) throw e; }
+}
 function currentPlan() {
   const a = loadAnswers(); const recs = store.demo.list();
   const input = buildPlanInput(a, recs, prefs.mode, new Date().getDay());
@@ -189,7 +203,9 @@ export function planScreen(): HTMLElement {
     const mv = r.values["task.minutes"];
     return h("div", { class: "card", "data-task": r.id }, h("div", { class: "row" },
       h("div", {}, h("h3", {}, cp.titles.get(r.id) ?? ""), h("p", { class: "muted" }, mv && mv.state === "value" ? valueEl(t("task.minutes", lang, { n: num(Number(mv.value), lang) }), "DEMO", lang) : t("plan.task.minutes.later", lang))),
-      r.values["task.done_on"]?.state === "value" ? h("span", { class: "tag ok" }, t("reward.done", lang)) : h("div", {}, doneBtn(r.id, lang), focusBtn(r.id, lang), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => { store.demo.delete(r.id); rerender(); } }, t("plan.task.remove", lang)))));
+      r.values["task.done_on"]?.state === "value" ? h("span", { class: "tag ok" }, t("reward.done", lang))
+        : r.values["task.not_true_on"]?.state === "value" ? h("div", {}, h("span", { class: "tag off" }, t("reality.tag", lang, { date: String((r.values["task.not_true_on"] as { value?: unknown }).value) })), h("p", { class: "muted" }, t("reality.note", lang)), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => { store.demo.delete(r.id); rerender(); } }, t("plan.task.remove", lang)))
+        : h("div", {}, doneBtn(r.id, lang), focusBtn(r.id, lang), h("button", { class: "btn ghost", type: "button", "data-act": "reality-changed", "data-task-id": r.id, style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => markRealityChanged(r.id, lang) }, t("reality.btn", lang)), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => { store.demo.delete(r.id); rerender(); } }, t("plan.task.remove", lang)))));
   });
   const byDay = (d: number) => cp.plan.placements.filter((p) => p.day === d).sort((a, b) => a.start - b.start);
   const week = [0, 1, 2, 3, 4, 5, 6].map((i) => (new Date().getDay() + i) % 7).filter((d) => byDay(d).length).map((d) => h("div", { class: "card", "data-day": String(d) }, h("h3", {}, weekday(d, lang)),
@@ -312,7 +328,7 @@ const lastProgress = (recs: TMRecord[]) => recs.filter((r) => r.entity === "jour
 function stagePanel(lang: Locale): HTMLElement {
   const sd = stageData(); const cur = currentIndex(sd.passed);
   if (cur >= STAGE_CODES.length) return h("div", { class: "card" }, h("p", {}, t("stage.alldone", lang)));
-  const code = STAGE_CODES[cur] as StageCode; const cs = conditions(sd.ctx, code);
+  const code = STAGE_CODES[cur] as StageCode; const cs = conditions(sd.ctx, code); const names = stagesFor(prefs.stageTemplate);
   const manual = !cs.some((c) => c.auto);
   const ev = h("textarea", { id: "st-evidence", rows: "3", maxlength: "300" }) as HTMLTextAreaElement;
   const err = h("p", { class: "err", role: "alert" });
@@ -332,7 +348,7 @@ function stagePanel(lang: Locale): HTMLElement {
   });
   const left = cs.filter((c) => !c.met && c.auto).length > 0;
   return h("div", { class: "card", "data-stage-panel": code },
-    h("h3", {}, `${t("stage.currentLabel", lang)}: ${code} · ${tb(STAGES[cur]!.name, lang)}`),
+    h("h3", {}, `${t("stage.currentLabel", lang)}: ${code} · ${tb(names[cur]!.name, lang)}`),
     h("p", { class: "muted" }, t("stage.conditions", lang)),
     h("ul", { style: "padding-inline-start:20px" }, ...cs.map((c) => h("li", { "data-cond": c.id, "data-met": String(c.met) }, `${tb(c.text, lang)} — `, h("b", {}, c.auto ? t(c.met ? "stage.met" : "stage.open", lang) : ""))).map((li) => li)),
     left ? h("p", { class: "muted" }, t("stage.leftNote", lang)) : null,
@@ -688,7 +704,7 @@ export function today(): HTMLElement {
   const lang = L(); const cp = currentPlan();
   const insp = todaysInspiration(new Date());
   const curStage = Math.min(currentIndex(stageData().passed), STAGES.length - 1);
-  const stage = STAGES[curStage]!;
+  const stage = stagesFor(prefs.stageTemplate)[curStage]!;
   const nxt = nextStep(loadAnswers());
   const rungs = h("ul", { class: "rungs", role: "img", "aria-label": t("home.rungs", lang, { done: num(curStage, lang), total: num(STAGES.length, lang), now: num(curStage + 1, lang) }) },
     ...STAGES.map((_, i) => h("li", { class: i < curStage ? "done" : i === curStage ? "now" : "" })));
@@ -714,6 +730,34 @@ export function today(): HTMLElement {
     disclaimers(lang));
 }
 
+// O6: stage-name template chooser. Names only; codes, order and past passes are never changed.
+function templatePicker(lang: Locale): HTMLElement {
+  const cur = prefs.stageTemplate;
+  const seg = (id: TemplateId) => h("button", { type: "button", "data-tpl": id, "aria-pressed": String(cur === id), onclick: () => { prefs.stageTemplate = id; rerender(); } }, tb(TEMPLATES[id].name, lang));
+  return h("section", { class: "card", "data-card": "stage_templates" }, h("h3", {}, t("stage.tpl.h", lang)),
+    h("div", { class: "seg", role: "group", "aria-label": t("stage.tpl.h", lang) }, ...TEMPLATE_IDS.map(seg)),
+    h("p", { class: "muted" }, t("stage.tpl.note", lang)));
+}
+
+// O6: 90-day review. Counts only; a measure with no record in the window reads "not enough data", never 0.
+export function reviewScreen(): HTMLElement {
+  const lang = L(); const recs = store.demo.list();
+  const s = reviewSummary(recs, todayIso());
+  const card = (id: string, title: Key, value: string | null) => h("section", { class: "card", "data-review": id },
+    h("h3", {}, t(title, lang)),
+    value === null ? h("p", { class: "muted", "data-review-empty": id }, t("review.notEnough", lang)) : valueEl(value, "INFERENCE", lang));
+  return h("main", {}, link("#/journey", "crumb", `← ${t("journey.title", lang)}`),
+    h("h1", {}, t("review.title", lang)),
+    h("p", { class: "sub" }, t("review.intro", lang)),
+    h("p", { class: "muted", "data-review-period": "1" }, valueEl(t("review.period", lang, { from: s.from, to: s.to }), "DEMO", lang)),
+    card("tasks", "review.tasks", s.tasksDone === null ? null : t("review.tasks.n", lang, { n: num(s.tasksDone, lang) })),
+    card("focus", "review.focus", s.focusMinutes === null ? null : t("review.focus.n", lang, { m: num(Math.round(s.focusMinutes), lang) })),
+    s.focusUnknown > 0 ? h("p", { class: "muted" }, t("review.unknownFocus", lang, { n: num(s.focusUnknown, lang) })) : null,
+    card("passes", "review.passes", s.stagePasses === null ? null : t("review.passes.n", lang, { n: num(s.stagePasses, lang) })),
+    h("p", { class: "muted" }, t("review.quiet", lang)),
+    disclaimers(lang));
+}
+
 export function journey(): HTMLElement {
   const lang = L();
   return h("main", {},
@@ -724,6 +768,8 @@ export function journey(): HTMLElement {
     link("#/journey/log", "btn ghost", t("log.link", lang)),
     link("#/journey/horizon", "btn ghost", t("horizon.link", lang)),
     link("#/journey/report", "btn ghost", t("report.link", lang)),
+    link("#/journey/review", "btn ghost", t("review.link", lang)),
+    templatePicker(lang),
     stageLadder(lang),
     h("h2", {}, t("journey.slots", lang)),
     ...MODULES.filter((m) => m.tab === "journey").map((m) => moduleCard(m, lang)),
