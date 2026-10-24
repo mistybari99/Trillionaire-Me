@@ -119,6 +119,36 @@ Owner instruction (24 Oct 2026): batches of 4–5 images (7–8+ batches, some v
 - Claims to avoid copying: unverified statistics (e.g. "53.5%", "top 0.04%").
 - Strong template candidates now: **goal rung ladder** (58), **Goal→milestone→action→today journey** (55), **decision wizard** (65/73/67), **attention leak audit** (71), **reality-changed three questions** (63), **ownership triage** (54).
 
+## Batch 6 (20 images, captured on Haiku 5.5)
+| # | What it shows | Visual pattern | New / usable for us |
+|---|---|---|---|
+| 74 | **21-step system framework** ("why every system dies at week 3"): foundation / build / maintain phases on a scaffold tower | scaffold + numbered list | Already noted (batch 5, #72). Ignore its unverified statistic. |
+| 75 | **Which leg of your life is wobbling?** — table with 4 legs: Finance, Tasks, Weekly, Habits; one leg broken | bold table illustration | **Life-balance four legs** status view (Finance · Tasks · Weekly review · Habits). Weakest leg highlighted, gentle prompt. Good Home/dashboard card. |
+| 76 | **Attention leaks** (repeat of #71) | isometric box | Duplicate of batch 5 #71 — merged. |
+| 77 | **Dopamine ladder** (curiosity loop: hook → question → mini payoff → next question) | ladder with numbered rungs | Content idea for **content engagement**, not a planner feature. Keep to general learning tips; avoid "dopamine" science claims. |
+| 78 | **Knowledge system loop**: capture → summarise → connect → organise → retrieve → apply around a central "your knowledge base" | six-node circular loop | **Knowledge loop** for the Knowledge topic and quick capture (capture → organise → apply). Circle-of-nodes premium visual. |
+| 79 | **Vague goal → clear action**: learn a skill → milestone → project → task → stage 4 "choose first topic" (descending boxes) | stepped boxes (same as #60) | Duplicate pattern of #60 — confirms the **goal stack** template. |
+| 80 | **Big assignment: break it before you start** — 7 steps on an isometric staircase with start date, buffer day, due date | isometric stair with numbers | **Deadline breakdown** template: due date, buffer day, steps 1–7 with dates computed back from the deadline. Great for Money/Venture tasks too. |
+| 81 | **Clarity first, everything else second**: capture → cluster → evaluate (impact/effort grid) → prioritise the few → break down & plan → review, refine, refocus | 6-step table with mini sketches | **Clarity workflow**: capture-all → 2×2 impact/effort → top 3 → next 7 days. Strong for the planner's priority logic. |
+| 82 | **Strategic thinking** (think / tell / act): long-term mindset, second-order thinking, problem solving, force multiplier, synthesis, storytelling, decision making | black/yellow/green grid of 7 frameworks | **Thinking-mode picker** (Think / Tell / Act tags); reuse as a Decisions topic index. |
+| 83 | **Phone screenshot: "Learn from your phone" home** (Goal & Strategy / Execution & Consistency / Problem-Solving / Learning & Capability / Wellbeing visuals). Contains the owner's own earlier list (ZH text) | app store-like list of visual families | Already captured in the original brief. Note: visuals per family = the template library. |
+| 84 | **Fear of being behind**: two paths (theirs smooth, yours wavy) — "there is no universal timeline"; focused late start beats distracted early start | line chart, quotes | **Pace reassurance** card (no comparison) — pairs with the wave visual (#37) in the journey log. |
+| 85 | **Habit tracker & journal** (app screenshot, dark): week ring progress, habit rows with streaks, colourful 30-day dot heatmaps | dark dashboard with rings and dot grids | **Dot-grid heatmap** for habits (no streak shame: show totals/recovery, not broken streaks). Week rings = daily completion. Our habit topic remains streak-free. |
+| 86 | **Efficient list view** (habits × 5 days, coloured squares) | matrix grid of coloured tiles | **Habit matrix** (habits × days) for the weekly review — colours = done / partial / not yet (no red "failure" colour). |
+| 87 | **Log your journey** (timeline of entries with photos and notes, by date) | vertical timeline cards with photo | **Journey timeline** = our journey log; allow an optional photo/note per entry (keep images on device). |
+| 88 | **Track, count or measure** (habit list with streak, counts like 8000/10000 steps, glasses, words; habit score %) | list with progress rings per habit | **Measured habits**: numeric habits show progress (e.g. 4/8 glasses) instead of a bare tick. Habit score % = share of planned habits done this week (computed, not graded). |
+| 89 | **Build your habit score** (gauge with categories: health, social…; score 34/100) | gauge dials | Use gauges sparingly; prefer neutral progress rings. Avoid a single "score" (conflicts with our no-ranking rule) — show per-area progress only. |
+| 90 | **Start from backdate** (calendar with completed days highlighted; current streak, best streak, efficiency) | calendar overlay | **Backfill**: mark past days done from a calendar (honest history). Remove "best streak"; keep "days done this month". |
+| 91 | **Interactive widgets** (home-screen widgets: habit cards, month dot grid, 'code daily' 4-month heatmap) | widget mockups | **Home-screen widget** idea for later (PWA can't do widgets; note for native wrap). Record as future. |
+| 92 | **Progress tracker app** (subjects with % rings and time spent; overall completed %) | list of ring progress cards | **Subject/skill progress rings** from the Skills topic (time spent + % of items). |
+| 93 | **Multi-level project tracker** (topic → subtopic checkboxes, nested progress bars, "add new topic") | nested tree with bars | **Nested checklist with bars** for the project/goal tree (% rolls up from children, computed). Matches our goal hierarchy exactly. |
+
+### Batch 6 — notes
+- Duplicates: #76 = batch 5 #71; #74 = #72; #79 ≈ #60. Merged here.
+- Strong new template candidates: **life four-legs status** (75), **deadline breakdown with buffer** (80), **clarity 2×2 workflow** (81), **thinking-mode picker** (82), **dot-grid heatmap + matrix** (85/86), **backdate calendar** (90), **nested progress tree** (93).
+- Guardrails kept: no "best streak", no single overall score, no red failure colours, no dopamine-science claims.
+- Widgets (91) recorded as future (needs native wrapper; PWA has no widgets).
+
 ### Cross-batch ideas so far
 - Pattern library to build: **staircase · funnel · vertical flow · grid trackers (daily/weekly/monthly/long-range) · challenge tracker · action-plan table · cross/radial map · hub map · working-style tree · daily planner sheet · worksheet card · life-areas wheel · SMART badges line · SWOT 2×2 · SOP document · strategy blueprint · 6-block starter · Want→Feel→Do table · acronym card-grid · snake path · numbered list · staircase-with-figure · object-centred map · maturity funnel · Venn**.
 - **Template chooser** setting (per dashboard/category): same data, different view.
