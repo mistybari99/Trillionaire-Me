@@ -232,7 +232,7 @@ describe("TM-TST-006 every rendered value is labelled (all routes, both language
   });
 });
 
-describe("TM-TST-144 UI + TM-TST-171 home structure", () => {
+describe("TM-TST-144/171 UI status and home structure", () => {
   it("status screen shows a status tag for every module", () => {
     document.body.innerHTML = '<div id="app"></div>'; localStorage.setItem("tm:ui:lang", "en"); location.hash = "#/more/status"; render();
     const cards = document.querySelectorAll("[data-module]"); expect(cards.length).toBe(24);

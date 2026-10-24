@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-24T00:08:53.041Z",
+  "generated": "2026-10-24T00:09:11.422Z",
   "totalTests": 93,
   "failed": 0,
   "results": {
@@ -222,10 +222,10 @@
         "tests/g3ui.test.ts",
         "tools/e2e.mjs"
       ],
-      "tests": 0,
+      "tests": 3,
       "e2e": 0,
-      "evidenceOk": false,
-      "finalOutcome": "Fail"
+      "evidenceOk": true,
+      "finalOutcome": "Partial"
     }
   }
 }
