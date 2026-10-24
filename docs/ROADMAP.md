@@ -26,7 +26,7 @@ Status words: **Done** (built + tested) · **Next** (decided, build now) · **La
 | O2 | Bangla glossary native review (TM-TST-161) | G1 | Owner (reviewer) |
 | O3 | Usability sessions | G1 | Owner |
 | O4 | Hosting account (Cloudflare Pages) step | §8 | Owner |
-| O5 | Assessment scoring, path fit + opportunity library | G3 | Builder |
+| O5 | Assessment scoring, path fit + opportunity library | G3 | Builder · **Done** (tests/o5_assessment_fit.test.ts; see DECISIONS_LOG O5). Path list is a draft (যাচাই হয়নি) |
 | O6 | Reality-changed loop, 90-day review, editable stage templates | G3 | Builder · **Done** (tests/o6_reality_review_templates.test.ts; see DECISIONS_LOG O6) |
 | O7 | Own-options list, saved offline search list, more screens | G4 | Builder |
 | O8 | Notification lock-screen privacy settings (verify on device) | G2 | Builder + Owner test |
