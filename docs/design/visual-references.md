@@ -170,3 +170,17 @@ Owner instruction (24 Oct 2026): batches of 4–5 images (7–8+ batches, some v
 - Video-style micro-visuals: animated step transitions (stair descending, funnel filling, flow arrows drawing, star appearing). Build as small SVG/CSS animations; no heavy video files.
 - New data needs: **success criteria** per goal, **"My why"** per goal/challenge, **working style**, horizons (5-year/1-year/monthly/weekly/daily/now) as levels of one goal.
 - Guardrails: no grades/ranks/streaks; no hardcoded hustle targets; BDT; unknown ≠ 0; Deen stays private and unscored.
+
+## Batch 8 — 10 screen recordings (24 Oct 2026)
+Method: one frame per recording at 3 s (full motion not reviewed yet). Notes only.
+- Stepping-stones: "Don't focus here → Focus here" path; green step = current. Build: "next step" highlight on Today.
+- Plan → Action → Success path: a figure climbs from a cliff, a glowing flower = reward. Build: journey art per stage (already have sky/garden layers).
+- Success gauge with Planning / Action / Discipline pillars. Build: three pillar icons on Stage view (no score shown).
+- Arrows flowing right ("follow the crowd" vs "be different"). Build: micro-animation of arrows drawing on step done.
+- Arc from "a year from now … you had started" to "today" (glowing). Build: horizon arc (5y/1y/month/week/today) on Journey; ties to horizons note above.
+- Goal dot with "???" path to GOAL; "change your perspective" spotlight. Build: optional "My why" card reveal; no grades.
+- Graph "You must fall to rise" (curve dips then rises). Build: setback-to-recovery message on Stuck screen; calm copy only.
+- Daily affirmation on purple gradient with Voice/Timer/Background sounds sheets. Build: already have inspiration card; sounds/timer LATER (needs audio assets, no external files without approval).
+- Focus / Mute toggles and a person at a desk (line art). Build: Focus session screen already exists; "mute notifications" = later.
+- Motivational quote cards (Day N/365) in Instagram-style feeds. Build: daily inspiration card (done, L-28).
+Guardrails kept: no streak/rank, no shame copy, no third-party brand marks copied.
