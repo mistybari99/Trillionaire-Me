@@ -101,3 +101,14 @@ dl{margin:6px 0} .hrow{display:grid;grid-template-columns:96px 1fr;gap:8px;paddi
 .shoot{animation:shoot 1.6s ease-out both}
 @keyframes shoot{from{transform:translate(0,0);opacity:1}to{transform:translate(120px,70px);opacity:0}}
 @media (prefers-reduced-motion:reduce){.star,.star.new,.shoot{animation:none!important}}
+
+/* Daily inspiration card (R1): calm fade-in, theme accent, reduced-motion safe */
+.inspire{position:relative;overflow:hidden;border-inline-start:3px solid var(--rule);animation:inspireIn .6s ease-out both}
+.inspire.motivation{border-inline-start-color:#C9A227}
+.inspire.discipline{border-inline-start-color:#3E6E8E}
+.inspire.patience{border-inline-start-color:#4F7A5A}
+.inspire.care{border-inline-start-color:#9A6B8E}
+.inspire-bn{font:600 18px/1.6 "Hind Siliguri",sans-serif;color:var(--ink);margin:6px 0 2px}
+.inspire-en{font-size:14px;margin:0}
+@keyframes inspireIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){.inspire{animation:none}}

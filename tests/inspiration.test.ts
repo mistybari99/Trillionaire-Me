@@ -16,3 +16,13 @@ describe("daily inspiration board (batch 7 owner request)", () => {
     expect(text).not.toMatch(/streak|fail|broken|lost|shame|score|rank/);
   });
 });
+
+import { THEME_LABEL } from "../src/library/inspiration";
+describe("inspiration theme labels", () => {
+  it("every theme has a Bangla and English label", () => {
+    for (const k of Object.keys(THEME_LABEL) as (keyof typeof THEME_LABEL)[]) {
+      expect(THEME_LABEL[k].bn.length).toBeGreaterThan(0);
+      expect(THEME_LABEL[k].en.length).toBeGreaterThan(0);
+    }
+  });
+});

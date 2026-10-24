@@ -1,6 +1,6 @@
 {
   "viewport": "360x740",
-  "generated": "2026-10-24T04:46:45.902Z",
+  "generated": "2026-10-24T06:43:40.465Z",
   "screens": [
     {
       "lang": "bn",
@@ -126,6 +126,18 @@
       "lang": "bn",
       "route": "journey/art",
       "file": "evidence/screenshots/bn-journey_art.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "habits",
+      "file": "evidence/screenshots/bn-habits.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "cards",
+      "file": "evidence/screenshots/bn-cards.png",
       "horizontalOverflow": false
     },
     {
@@ -294,6 +306,18 @@
       "lang": "en",
       "route": "journey/art",
       "file": "evidence/screenshots/en-journey_art.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "habits",
+      "file": "evidence/screenshots/en-habits.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "cards",
+      "file": "evidence/screenshots/en-cards.png",
       "horizontalOverflow": false
     },
     {

@@ -1,4 +1,4 @@
-import { todaysInspiration } from "../library/inspiration";
+import { todaysInspiration, THEME_LABEL } from "../library/inspiration";
 import { h } from "./dom";
 import { t, tb } from "../i18n/t";
 import type { Key } from "../i18n/packs";
@@ -576,7 +576,9 @@ export function today(): HTMLElement {
   return h("main", {},
     h("p", { class: "muted" }, valueEl(tb(DEMO_DATE, lang), "DEMO", lang)),
     h("h1", {}, t("home.title", lang)),
-    h("aside", { class: "card inspire", "aria-label": "Inspiration" }, h("p", {}, insp.bn), h("p", { class: "muted" }, insp.en)),
+    h("aside", { class: `card inspire ${insp.theme}`, "aria-label": "Inspiration" },
+      h("span", { class: "chip" }, `${THEME_LABEL[insp.theme].bn} · ${THEME_LABEL[insp.theme].en}`),
+      h("p", { class: "inspire-bn" }, insp.bn), h("p", { class: "muted inspire-en" }, insp.en)),
     h("p", { class: "sub" }, t("home.step", lang), " — ", valueEl(t("stage.progress", lang, { now: num(curStage + 1, lang), total: num(STAGES.length, lang) }), "DEMO", lang)),
     h("section", { class: "stage", "aria-label": t("home.stage", lang) },
       h("small", {}, `${t("home.stage", lang)} · ${tb(stage.name, lang)}`),

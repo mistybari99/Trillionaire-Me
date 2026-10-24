@@ -30,3 +30,10 @@ export function todaysInspiration(date: Date, list: readonly Inspiration[] = INS
   const i = ((dayIndex(date) % n) + n) % n;
   return list[i]!;
 }
+
+export const THEME_LABEL: Record<Inspiration["theme"], { bn: string; en: string }> = {
+  motivation: { bn: "অনুপ্রেরণা", en: "Motivation" },
+  discipline: { bn: "শৃঙ্খলা", en: "Discipline" },
+  patience: { bn: "ধৈর্য", en: "Patience" },
+  care: { bn: "যত্ন", en: "Care" },
+};

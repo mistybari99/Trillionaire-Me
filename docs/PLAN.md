@@ -1,4 +1,6 @@
-# PLAN (living) — updated 23 Oct 2026
+# PLAN (living) — updated 24 Oct 2026
+
+> Master sequence now lives in `docs/ROADMAP.md`. This file keeps owner decisions and gate status.
 
 ## Owner decisions added this session
 - **Hosting:** static site on a free host (Cloudflare Pages recommended, private repo). Works as installable PWA; offline after first visit; internet only for search/AI/cloud features. Not published yet — owner connects the host account.
@@ -23,7 +25,12 @@
 ## Life Success brief — selective (docs/design/life-system-integration.md)
 Only what fits the running app: "I'm stuck" flow → habits without streaks → weekly review/missed-day reasons → goal tree view/skill gap. The big library/tags/20-category build is parked.
 
-## Next actions (in order)
+## Status 24 Oct 2026
+- Tests: 163 unit passing, TypeScript clean, build OK, e2e 36 PASS / 0 FAIL, 60 screenshots no horizontal overflow.
+- R1 (ROADMAP §4): daily inspiration card with theme chip, bilingual, calm fade-in (reduced-motion safe) — done. Next-step highlight (B6) still open.
+- Register rows NOT changed in this pass (update_register.py needs input files; evidence JSON only).
+
+## Next actions (in order, superseded by ROADMAP §4 for build order)
 1. App storage → IndexedDB (write-through, migrate localStorage) 
 2. PNG icons + manifest for install
 3. Notification privacy settings (lock-screen hiding)
