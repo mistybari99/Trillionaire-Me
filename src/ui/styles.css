@@ -112,3 +112,7 @@ dl{margin:6px 0} .hrow{display:grid;grid-template-columns:96px 1fr;gap:8px;paddi
 .inspire-en{font-size:14px;margin:0}
 @keyframes inspireIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion: reduce){.inspire{animation:none}}
+
+/* Next step highlight (R1 / B6) */
+.next-step{border-inline-start:3px solid var(--ink);margin-top:12px}
+.next-step p{margin:4px 0 0;font-size:15px}

@@ -591,7 +591,7 @@ export function today(): HTMLElement {
     link("#/habits", "btn ghost", t("habits.link", lang)),
     link("#/stuck", "btn ghost", t("stuck.link", lang)),
     link("#/capture", "btn ghost", t("capture.link", lang)),
-    nxt.field ? h("p", { class: "muted", style: "margin-top:12px" }, t("home.next", lang, { field: tb(nxt.field.label, lang) })) : null,
+    nxt.field ? h("aside", { class: "card next-step", "data-next-step": nxt.field.id }, h("small", {}, "→ "), h("p", {}, t("home.next", lang, { field: tb(nxt.field.label, lang) }))) : null,
     disclaimers(lang));
 }
 
