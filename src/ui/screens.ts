@@ -28,6 +28,7 @@ import * as Focus from "../core/focus";
 import * as Habits from "../core/habits";
 import * as Cards from "../core/cards";
 import { CAUSE_TEXT, QUESTIONS, diagnose, type Answer, type Helper } from "../core/stuck";
+import { wordChain } from "../core/learning";
 import { extract, summarize, type Candidate, type Item } from "../core/capture";
 import { netWorth, monthlyCashFlow, type Calc } from "../core/finance";
 import { financeFrom } from "../core/financeInputs";
@@ -282,7 +283,12 @@ function passedBanner(lang: Locale): HTMLElement | null {
 
 export function journeyLog(): HTMLElement {
   const lang = L(); const logs = store.demo.list().filter((r) => r.entity === "journey_log").sort((a, b) => b.createdAt.localeCompare(a.createdAt));
-  return h("main", {}, link("#/journey", "crumb", `← ${t("journey.title", lang)}`), h("h1", {}, t("log.title", lang)),
+  const passes = store.demo.list().filter((r) => r.entity === "stage_pass").sort((a, b) => a.createdAt.localeCompare(b.createdAt))
+    .map((r) => ({ code: String((r.values["stage_pass.stage_code"] as { value?: unknown } | undefined)?.value ?? ""), note: String((r.values["stage_pass.evidence"] as { value?: unknown } | undefined)?.value ?? "") }));
+  const chain = wordChain(passes, 5);
+  const learn = h("section", { class: "card", "data-card": "learn_chain" }, h("h2", {}, t("log.learn.h", lang)),
+    chain.length ? h("p", { "data-chain": "1" }, chain.join(" → ")) : h("p", { class: "muted" }, t("log.learn.empty", lang)));
+  return h("main", {}, link("#/journey", "crumb", `← ${t("journey.title", lang)}`), h("h1", {}, t("log.title", lang)), learn,
     logs.length ? h("div", {}, ...logs.map((r) => h("div", { class: "card", "data-log": r.id }, h("p", { class: "muted" }, valueEl(r.createdAt.slice(0, 10), "DEMO", lang)), h("p", {}, String((r.values["journey_log.entry"] as { value?: unknown })?.value ?? ""))))) : h("p", { class: "muted" }, t("log.empty", lang)),
     disclaimers(lang));
 }
@@ -384,7 +390,20 @@ export function stuckScreen(): HTMLElement {
       ...(d.unansweredCount ? [h("p", { class: "muted" }, t("stuck.unanswered", lang, { n: num(d.unansweredCount, lang) }))] : []),
       h("h2", {}, t("stuck.helpers", lang)), ...helperBtns);
   });
-  return h("main", {}, link("#/today", "crumb", `← ${t("nav.today", lang)}`), h("h1", {}, t("stuck.title", lang)), h("p", { class: "sub" }, t("stuck.intro", lang)), ...rows, show, out, disclaimers(lang, ["noGuarantee"]));
+  return h("main", {}, link("#/today", "crumb", `← ${t("nav.today", lang)}`), h("h1", {}, t("stuck.title", lang)), h("p", { class: "sub" }, t("stuck.intro", lang)), ...rows, show, out, ...reflectionCards(lang), disclaimers(lang, ["noGuarantee"]));
+}
+
+// Calm, static reflection cards (ROADMAP B7/B8). Plain text only: no colour cue, nothing counted or ordered.
+function reflectionCards(lang: Locale): HTMLElement[] {
+  return [
+    h("section", { class: "card", "data-card": "two_paths" }, h("h2", {}, t("stuck.two.h", lang)),
+      h("ul", { style: "padding-inline-start:20px" }, h("li", {}, t("stuck.two.fun", lang)), h("li", {}, t("stuck.two.struggle", lang))),
+      h("p", { class: "muted" }, t("stuck.two.note", lang))),
+    h("section", { class: "card", "data-card": "effort_timing" }, h("h2", {}, t("stuck.timing.h", lang)), h("p", {}, t("stuck.timing.body", lang))),
+    h("section", { class: "card", "data-card": "where_time_goes" }, h("h2", {}, t("stuck.time.h", lang)),
+      h("ul", { style: "padding-inline-start:20px" }, h("li", {}, t("stuck.time.1", lang)), h("li", {}, t("stuck.time.2", lang)), h("li", {}, t("stuck.time.3", lang))),
+      h("p", { class: "muted" }, t("stuck.time.note", lang))),
+  ];
 }
 
 

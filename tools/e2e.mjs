@@ -156,6 +156,13 @@ check("G3-STUCK", "choosing it switches mode and adds 0 tasks", (await idb(page)
 await page.goto("http://localhost:4174/#/diary/plan"); await page.waitForSelector("[data-mode]");
 check("G3-STUCK", "plan screen shows Minimum week as active", (await page.locator("[data-mode=minimum_week]").getAttribute("aria-pressed")) === "true");
 await page.click("[data-mode=normal]");
+// R5 (B7/B8/B10): calm reflection cards on the stuck page, word chain in the journey log
+await page.goto("http://localhost:4174/#/stuck"); await page.waitForSelector("[data-card=where_time_goes]");
+const cardIds = await page.locator("[data-card]").evaluateAll((e) => e.map((x) => x.getAttribute("data-card")));
+check("R5-CARDS", "stuck page shows two paths, effort timing and where-time-goes cards", ["two_paths", "effort_timing", "where_time_goes"].every((c) => cardIds.includes(c)), cardIds.join(","));
+check("R5-CARDS", "reflection cards have no red error or alert element", (await page.locator("[data-card] .err, [data-card] [role=alert]").count()) === 0);
+await page.goto("http://localhost:4174/#/journey/log"); await page.waitForSelector("[data-card=learn_chain]");
+check("R5-CHAIN", "journey log shows the what-I-learned card (empty hint or chain)", (await page.locator("[data-card=learn_chain]").count()) === 1);
 // topics drawer + finishing a task adds a star
 await page.goto("http://localhost:4174/#/today"); await page.waitForSelector("main");
 await page.click("[data-act=drawer-open]"); await page.click("#drawer a[data-topic=procrastination]"); await page.waitForSelector("[data-tip]");
