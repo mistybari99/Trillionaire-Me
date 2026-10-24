@@ -98,6 +98,25 @@ const bizTxt = await page.locator("[data-scope=business]").innerText();
 check("G3-MONEY", "business net worth is separate and computed (5,000)", /৫,০০০/.test(bizTxt) && !/১,০০০/.test(bizTxt), JSON.stringify(bizTxt));
 await page.fill("#mf-name", "password: abc12345"); await page.fill("#mf-amount", "5"); await page.click("form[data-form=money] button[type=submit]");
 check("G3-MONEY", "secret-looking name rejected", (await page.locator("[data-fin]").count()) === 3);
+// G3: Stage A -> B (needs required answers + a goal; calm when not met; history kept)
+await page.goto("http://localhost:4174/#/journey"); await page.waitForSelector("[data-stage-panel]");
+check("G3-STAGE", "Stage A pass button is disabled while conditions are open (no error colour copy)", await page.locator("[data-act=pass-stage]").isDisabled() && (await page.locator("[data-stage-panel] .err").innerText()) === "");
+for (const step of [1, 2, 3, 4, 5, 6, 7]) {
+  await page.goto(`http://localhost:4174/#/diary/intake/${step}`); await page.waitForSelector("main");
+  const reqs = await page.locator("[data-field]").evaluateAll((els) => els.filter((e) => e.querySelector(".tag")?.textContent && /Required|আবশ্যক/.test(e.querySelector(".tag").textContent)).map((e) => e.getAttribute("data-field")));
+  for (const id of reqs) { const sel = page.locator(`[data-field='${id}'] select[data-role=state]`); if (await sel.count()) await sel.selectOption("later"); }
+  if (step === 1) await page.selectOption("#f-profile\\.language", "bn");
+  if (step === 6) { await page.selectOption("[data-field='goal.title'] select[data-role=state]", "value"); await page.fill("#f-goal\\.title", "Steady income"); }
+  await page.click("button[type=submit]"); await page.waitForTimeout(150);
+}
+await page.goto("http://localhost:4174/#/journey"); await page.waitForSelector("[data-stage-panel]");
+check("G3-STAGE", "conditions met -> button enabled", !(await page.locator("[data-act=pass-stage]").isDisabled()));
+await page.click("[data-act=pass-stage]"); await page.waitForSelector("[data-passed='A']");
+check("G3-STAGE", "Stage A passed, Stage B is now current, calm banner shown", (await page.locator("[data-stage-panel]").getAttribute("data-stage-panel")) === "B");
+await page.goto("http://localhost:4174/#/journey/log"); await page.waitForSelector("main");
+check("G3-STAGE", "journey log has the entry with before/after", (await page.locator("[data-log]").count()) === 1 && /%/.test(await page.locator("[data-log]").innerText()));
+await page.goto("http://localhost:4174/#/today"); await page.waitForSelector(".stage");
+check("G3-STAGE", "Home shows 2 / 8 after passing Stage A", /২ \/ ৮|2 \/ 8/.test(await page.locator(".stage .n").innerText()));
 // data survives a full reload (IndexedDB)
 await page.reload(); await page.waitForSelector("main");
 const afterReload = await idb(page);

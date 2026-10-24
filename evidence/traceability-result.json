@@ -1,6 +1,6 @@
 {
-  "generated": "2026-10-24T00:34:57.697Z",
-  "totalTests": 99,
+  "generated": "2026-10-24T00:54:49.801Z",
+  "totalTests": 108,
   "failed": 0,
   "results": {
     "TM-TST-006": {
@@ -224,6 +224,19 @@
         "tools/e2e.mjs"
       ],
       "tests": 3,
+      "e2e": 0,
+      "evidenceOk": true,
+      "finalOutcome": "Partial"
+    },
+    "TM-TST-166": {
+      "outcome": "Partial",
+      "scope": "Stage rules + journey log work: order fixed, evidence required, history append-only, calm copy (scan), before/after logged; browser e2e A->B. Stage templates beyond A are generic; usability test NOT run",
+      "artifacts": [
+        "tests/stages.test.ts",
+        "src/core/stages.ts",
+        "tools/e2e.mjs"
+      ],
+      "tests": 6,
       "e2e": 0,
       "evidenceOk": true,
       "finalOutcome": "Partial"

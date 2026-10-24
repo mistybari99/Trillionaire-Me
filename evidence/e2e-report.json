@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-24T00:34:44.735Z",
+  "generated": "2026-10-24T00:54:27.338Z",
   "results": [
     {
       "id": "TM-TST-143",
@@ -100,6 +100,36 @@
     {
       "id": "G3-MONEY",
       "name": "secret-looking name rejected",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G3-STAGE",
+      "name": "Stage A pass button is disabled while conditions are open (no error colour copy)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G3-STAGE",
+      "name": "conditions met -> button enabled",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G3-STAGE",
+      "name": "Stage A passed, Stage B is now current, calm banner shown",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G3-STAGE",
+      "name": "journey log has the entry with before/after",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G3-STAGE",
+      "name": "Home shows 2 / 8 after passing Stage A",
       "pass": true,
       "detail": ""
     },

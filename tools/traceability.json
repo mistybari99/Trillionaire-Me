@@ -147,5 +147,14 @@
       "tests/g3ui.test.ts",
       "tools/e2e.mjs"
     ]
+  },
+  "TM-TST-166": {
+    "outcome": "Partial",
+    "scope": "Stage rules + journey log work: order fixed, evidence required, history append-only, calm copy (scan), before/after logged; browser e2e A->B. Stage templates beyond A are generic; usability test NOT run",
+    "artifacts": [
+      "tests/stages.test.ts",
+      "src/core/stages.ts",
+      "tools/e2e.mjs"
+    ]
   }
 }

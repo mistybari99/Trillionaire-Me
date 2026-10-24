@@ -1,6 +1,6 @@
 {
   "viewport": "360x740",
-  "generated": "2026-10-24T00:34:53.056Z",
+  "generated": "2026-10-24T00:54:44.793Z",
   "screens": [
     {
       "lang": "bn",
@@ -72,6 +72,12 @@
       "lang": "bn",
       "route": "diary/money",
       "file": "evidence/screenshots/bn-diary_money.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "journey/log",
+      "file": "evidence/screenshots/bn-journey_log.png",
       "horizontalOverflow": false
     },
     {
@@ -186,6 +192,12 @@
       "lang": "en",
       "route": "diary/money",
       "file": "evidence/screenshots/en-diary_money.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "journey/log",
+      "file": "evidence/screenshots/en-journey_log.png",
       "horizontalOverflow": false
     },
     {

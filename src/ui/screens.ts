@@ -4,7 +4,7 @@ import type { Key } from "../i18n/packs";
 import { LOCALES, type Locale } from "../i18n/registry";
 import { applyPrefs, prefs, store, type PlanMode } from "./state";
 import { demoBadge, disclaimers, fieldHelp, num, valueEl } from "./components";
-import { STAGES, DEMO_CURRENT_STAGE, DEMO_DATE, DEMO_TASKS } from "../demo/seed";
+import { STAGES, DEMO_DATE, DEMO_TASKS } from "../demo/seed";
 import { MODULES, CAP_STATUSES, type ModuleDef } from "../modules/capability";
 import { ENTITIES } from "../schema/entities";
 import { FIELDS, CATALOG_VERSION, intakeSteps, fieldById } from "../catalog/fields";
@@ -17,6 +17,7 @@ import { StoreRepo } from "../adapters/storeRepo";
 import { createBackup, restoreBackup } from "../core/backup";
 import { schedule, todaysActions } from "../core/planner";
 import { buildPlanInput, capacityState, fmtClock, freeWindow } from "../core/planInputs";
+import { STAGE_CODES, StageError, conditions, currentIndex, passStage, stageStates, type StageCode } from "../core/stages";
 import { netWorth, monthlyCashFlow, type Calc } from "../core/finance";
 import { financeFrom } from "../core/financeInputs";
 import { research, safeQuery } from "../core/research";
@@ -51,8 +52,9 @@ function saveAnswers(step: number, vals: Answers) {
 // ---- shared bits ----
 function stageLadder(lang: Locale): HTMLElement {
   const ol = h("ol", { class: "ladder", "aria-label": t("stage.ladder", lang) });
+  const states = stageStates(stageData().passed);
   STAGES.forEach((g, i) => {
-    const st = i < DEMO_CURRENT_STAGE ? "done" : i === DEMO_CURRENT_STAGE ? "now" : "locked";
+    const st = states[i]!;
     ol.append(h("li", { class: st }, h("b", {}, g.code), h("div", {}, h("div", {}, tb(g.name, lang)), h("div", { class: "muted" }, tb(g.exit, lang))), h("span", { class: `tag ${st === "done" ? "ok" : st === "now" ? "warn" : "off"}` }, t(`stage.${st === "now" ? "current" : st}` as Key, lang))));
   });
   return ol;
@@ -186,6 +188,59 @@ export function moneyScreen(): HTMLElement {
     h("p", { class: "muted" }, t("money.note", lang)), disclaimers(lang));
 }
 
+
+// ---- stages + journey log ----
+function stageData() {
+  const recs = store.demo.list();
+  const passed = recs.filter((r) => r.entity === "stage_pass").map((r) => String((r.values["stage_pass.stage_code"] as { value?: unknown })?.value ?? ""));
+  const goalCount = recs.filter((r) => r.entity === "goal" && r.values["goal.title"]?.state === "value").length;
+  return { recs, passed, ctx: { answers: loadAnswers(), goalCount } };
+}
+const lastProgress = (recs: TMRecord[]) => recs.filter((r) => r.entity === "journey_log").map((r) => Number((r.values["stage_pass.progress_pct"] as { value?: unknown })?.value ?? 0)).pop() ?? 0;
+
+function stagePanel(lang: Locale): HTMLElement {
+  const sd = stageData(); const cur = currentIndex(sd.passed);
+  if (cur >= STAGE_CODES.length) return h("div", { class: "card" }, h("p", {}, t("stage.alldone", lang)));
+  const code = STAGE_CODES[cur] as StageCode; const cs = conditions(sd.ctx, code);
+  const manual = !cs.some((c) => c.auto);
+  const ev = h("textarea", { id: "st-evidence", rows: "3", maxlength: "300" }) as HTMLTextAreaElement;
+  const err = h("p", { class: "err", role: "alert" });
+  const autoMet = cs.filter((c) => c.auto).every((c) => c.met);
+  const btn = h("button", { class: "btn", type: "button", "data-act": "pass-stage", ...(autoMet ? {} : { disabled: true }) }, t("stage.pass", lang));
+  btn.addEventListener("click", () => {
+    err.textContent = "";
+    if (!checkFreeText(ev.value).ok) { err.textContent = t("intake.secretRejected", lang); return; }
+    try {
+      const sd2 = stageData(); const rec = passStage(sd2.ctx, sd2.passed, code, ev.value);
+      const before = lastProgress(sd2.recs); const d = (x: unknown): FieldValue => ({ state: "value", value: x, label: "DEMO" });
+      const base = { entity: "", ns: "demo" as const, ownerId: "demo-user", schemaVersion: 1, createdAt: rec.at };
+      store.demo.put({ ...base, id: `stagepass-${code}`, entity: "stage_pass", values: { "stage_pass.stage_code": d(code), "stage_pass.evidence": d(rec.evidence || "—"), "stage_pass.progress_pct": d(rec.progressPct) } });
+      store.demo.put({ ...base, id: `log-${Date.now().toString(36)}`, entity: "journey_log", values: { "journey_log.entry": d(t("log.entry", lang, { code, before: num(before, lang), after: num(rec.progressPct, lang) })), "stage_pass.progress_pct": d(rec.progressPct) } });
+      sessionStorage.setItem("tm:passed", code); rerender();
+    } catch (e) { err.textContent = e instanceof StageError ? "" : t("intake.invalidNumber", lang); }
+  });
+  const left = cs.filter((c) => !c.met && c.auto).length > 0;
+  return h("div", { class: "card", "data-stage-panel": code },
+    h("h3", {}, `${t("stage.currentLabel", lang)}: ${code} · ${tb(STAGES[cur]!.name, lang)}`),
+    h("p", { class: "muted" }, t("stage.conditions", lang)),
+    h("ul", { style: "padding-inline-start:20px" }, ...cs.map((c) => h("li", { "data-cond": c.id, "data-met": String(c.met) }, `${tb(c.text, lang)} — `, h("b", {}, c.auto ? t(c.met ? "stage.met" : "stage.open", lang) : ""))).map((li) => li)),
+    left ? h("p", { class: "muted" }, t("stage.leftNote", lang)) : null,
+    manual ? h("div", {}, h("label", { for: "st-evidence" }, t("stage.evidence", lang)), ev) : null, err, btn);
+}
+
+function passedBanner(lang: Locale): HTMLElement | null {
+  let code: string | null = null;
+  try { code = sessionStorage.getItem("tm:passed"); sessionStorage.removeItem("tm:passed"); } catch { /* ignore */ }
+  return code ? h("div", { class: "card", role: "status", "data-passed": code }, h("p", { class: "ok-msg" }, t("stage.passedMsg", lang, { code }))) : null;
+}
+
+export function journeyLog(): HTMLElement {
+  const lang = L(); const logs = store.demo.list().filter((r) => r.entity === "journey_log").sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+  return h("main", {}, link("#/journey", "crumb", `← ${t("journey.title", lang)}`), h("h1", {}, t("log.title", lang)),
+    logs.length ? h("div", {}, ...logs.map((r) => h("div", { class: "card", "data-log": r.id }, h("p", { class: "muted" }, valueEl(r.createdAt.slice(0, 10), "DEMO", lang)), h("p", {}, String((r.values["journey_log.entry"] as { value?: unknown })?.value ?? ""))))) : h("p", { class: "muted" }, t("log.empty", lang)),
+    disclaimers(lang));
+}
+
 // ---- screens ----
 function todayFromPlan(cp: ReturnType<typeof currentPlan>, lang: Locale): HTMLElement[] {
   const acts = todaysActions(cp.plan, new Date().getDay());
@@ -196,17 +251,18 @@ function todayFromPlan(cp: ReturnType<typeof currentPlan>, lang: Locale): HTMLEl
 
 export function today(): HTMLElement {
   const lang = L(); const cp = currentPlan();
-  const stage = STAGES[DEMO_CURRENT_STAGE]!;
+  const curStage = Math.min(currentIndex(stageData().passed), STAGES.length - 1);
+  const stage = STAGES[curStage]!;
   const nxt = nextStep(loadAnswers());
-  const rungs = h("ul", { class: "rungs", role: "img", "aria-label": t("home.rungs", lang, { done: num(DEMO_CURRENT_STAGE, lang), total: num(STAGES.length, lang), now: num(DEMO_CURRENT_STAGE + 1, lang) }) },
-    ...STAGES.map((_, i) => h("li", { class: i < DEMO_CURRENT_STAGE ? "done" : i === DEMO_CURRENT_STAGE ? "now" : "" })));
+  const rungs = h("ul", { class: "rungs", role: "img", "aria-label": t("home.rungs", lang, { done: num(curStage, lang), total: num(STAGES.length, lang), now: num(curStage + 1, lang) }) },
+    ...STAGES.map((_, i) => h("li", { class: i < curStage ? "done" : i === curStage ? "now" : "" })));
   return h("main", {},
     h("p", { class: "muted" }, valueEl(tb(DEMO_DATE, lang), "DEMO", lang)),
     h("h1", {}, t("home.title", lang)),
-    h("p", { class: "sub" }, t("home.step", lang), " — ", valueEl(t("stage.progress", lang, { now: num(DEMO_CURRENT_STAGE + 1, lang), total: num(STAGES.length, lang) }), "DEMO", lang)),
+    h("p", { class: "sub" }, t("home.step", lang), " — ", valueEl(t("stage.progress", lang, { now: num(curStage + 1, lang), total: num(STAGES.length, lang) }), "DEMO", lang)),
     h("section", { class: "stage", "aria-label": t("home.stage", lang) },
       h("small", {}, `${t("home.stage", lang)} · ${tb(stage.name, lang)}`),
-      h("div", { class: "n" }, num(DEMO_CURRENT_STAGE + 1, lang), h("span", { style: "font-size:22px;color:var(--muted)" }, ` / ${num(STAGES.length, lang)}`)),
+      h("div", { class: "n" }, num(curStage + 1, lang), h("span", { style: "font-size:22px;color:var(--muted)" }, ` / ${num(STAGES.length, lang)}`)),
       rungs),
     h("h2", {}, t("home.tasks", lang)),
     ...(cp.hasTasks ? todayFromPlan(cp, lang) : DEMO_TASKS.slice(0, 3).map((k, i) => h("div", { class: "task" }, h("b", {}, num(i + 1, lang)),
@@ -220,7 +276,9 @@ export function journey(): HTMLElement {
   const lang = L();
   return h("main", {},
     h("h1", {}, t("journey.title", lang)),
-    h("p", { class: "sub" }, t("empty.stageNote", lang)),
+    passedBanner(lang),
+    stagePanel(lang),
+    link("#/journey/log", "btn ghost", t("log.link", lang)),
     stageLadder(lang),
     h("h2", {}, t("journey.slots", lang)),
     ...MODULES.filter((m) => m.tab === "journey").map((m) => moduleCard(m, lang)),

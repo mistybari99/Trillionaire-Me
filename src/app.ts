@@ -10,6 +10,7 @@ const TABS: Array<[string, Key]> = [["today", "nav.today"], ["journey", "nav.jou
 export const ROUTES: Array<[RegExp, (m: RegExpMatchArray) => HTMLElement, string]> = [
   [/^\/today$/, () => S.today(), "today"],
   [/^\/journey$/, () => S.journey(), "journey"],
+  [/^\/journey\/log$/, () => S.journeyLog(), "journey"],
   [/^\/diary$/, () => S.diary(), "diary"],
   [/^\/diary\/intake(?:\/(\d+))?$/, (m) => S.intake(m[1]), "diary"],
   [/^\/diary\/plan$/, () => S.planScreen(), "diary"],
