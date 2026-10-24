@@ -47,3 +47,6 @@ G1 done = Brief §3 satisfied. Then continue to G2 without waiting, unless §4 b
 
 ## 8. Added by owner (23 Oct 2026) — see docs/PLAN.md
 Host = free static site (Cloudflare Pages), installable PWA, offline after first visit. UI = English/Bangla switch; Bangla keeps common English words. In-app search = 2–3 option cards inside the app (Wikipedia first, Google later via server function, owner approves key). Personal edition first; staff/customer data-viewing edition is G8. Never publish or connect hosting/accounts without owner doing the account step.
+
+## 9. Visual reference batches (owner, 24 Oct 2026)
+Owner sends image/video batches (4–5 each). For each batch: **do not reply**, only append notes to `docs/design/visual-references.md` (content, visual idea, what is new for us). Later build them as selectable templates/patterns (setting to choose the view), super-premium look, short SVG/CSS micro-animations. Ideas only — never copy brand marks or figures; keep guardrails (no grades/ranks/streaks, BDT, unknown ≠ 0).
