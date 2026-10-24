@@ -100,7 +100,15 @@ dl{margin:6px 0} .hrow{display:grid;grid-template-columns:96px 1fr;gap:8px;paddi
 .star.new{transform-box:fill-box;transform-origin:center}
 .shoot{animation:shoot 1.6s ease-out both}
 @keyframes shoot{from{transform:translate(0,0);opacity:1}to{transform:translate(120px,70px);opacity:0}}
-@media (prefers-reduced-motion:reduce){.star,.star.new,.shoot{animation:none!important}}
+@media (prefers-reduced-motion:reduce){.star,.star.new,.shoot,.arrow-draw,.step-lit{animation:none!important}.arrow-draw{stroke-dasharray:none!important;stroke-dashoffset:0!important}}
+/* R4 journey micro-animations: arrow draws, newest stair step lights. Hidden start state only exists when motion is allowed,
+   so with reduced motion the picture is simply shown in its final state (the text equivalent is always there). */
+@media (prefers-reduced-motion:no-preference){
+  .arrow-draw{stroke-dasharray:1;stroke-dashoffset:1;animation:arrowDraw 1.2s ease-out .5s forwards}
+  .step-lit{animation:stepLight .9s ease-out .3s both}
+}
+@keyframes arrowDraw{to{stroke-dashoffset:0}}
+@keyframes stepLight{from{opacity:.2}to{opacity:1}}
 
 /* Daily inspiration card (R1): calm fade-in, theme accent, reduced-motion safe */
 .inspire{position:relative;overflow:hidden;border-inline-start:3px solid var(--rule);animation:inspireIn .6s ease-out both}

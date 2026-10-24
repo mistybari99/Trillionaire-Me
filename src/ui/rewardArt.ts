@@ -4,6 +4,9 @@ import { gardenLayers, stars, tier } from "../core/reward";
 const NS = "http://www.w3.org/2000/svg";
 const el = (tag: string, a: Record<string, string | number> = {}, ...kids: SVGElement[]) => { const e = document.createElementNS(NS, tag); for (const [k, v] of Object.entries(a)) e.setAttribute(k, String(v)); kids.forEach((c) => e.append(c)); return e as SVGElement; };
 
+const STAIRS = 4;
+const stagesPassedSafe = (n: number) => Math.max(0, Math.min(8, Math.floor(n)));
+
 export function journeyArt(completed: number, stagesPassed: number, opts: { newest?: boolean; milestone?: boolean } = {}): SVGElement {
   const t = tier(completed); const g = gardenLayers(stagesPassed); const ss = stars(completed);
   const gold = ["#E9E3D0", "#F3D98B", "#F3D98B", "#F6C453", "#F6C453", "#FFB347", "#FFB347"][t]!;
@@ -13,6 +16,12 @@ export function journeyArt(completed: number, stagesPassed: number, opts: { newe
   ss.forEach((s, i) => { if (i > 0 && Math.hypot(s.x - ss[i - 1]!.x, s.y - ss[i - 1]!.y) < 80) root.append(el("line", { x1: ss[i - 1]!.x, y1: ss[i - 1]!.y, x2: s.x, y2: s.y, stroke: gold, "stroke-opacity": 0.28, "stroke-width": 0.8 })); });
   ss.forEach((s, i) => { const isNew = !!opts.newest && i === ss.length - 1; root.append(el("circle", { cx: s.x, cy: s.y, r: s.r * (isNew ? 1.6 : 1), fill: gold, class: isNew ? "star new" : "star" })); if (isNew && opts.milestone) root.append(el("circle", { cx: s.x, cy: s.y, r: 14, fill: "none", stroke: gold, "stroke-opacity": 0.6 })); });
   if (opts.milestone && ss.length) root.append(el("path", { d: "M20 20 L60 36", stroke: "#fff", "stroke-width": 1.6, "stroke-linecap": "round", class: "shoot" }));
+  // just-finished step: an arrow draws from the sky toward the garden, and the newest stair step lights (motion only without reduced-motion)
+  if (opts.newest && ss.length) root.append(el("path", { d: "M24 120 Q70 40 128 70 M128 70 l-9 -3 M128 70 l-3 9", pathLength: 1, stroke: gold, "stroke-width": 1.6, "stroke-linecap": "round", fill: "none", class: "arrow-draw" }));
+  if (opts.newest && stagesPassedSafe(stagesPassed) > 0) {
+    const lit = Math.min(STAIRS, stagesPassedSafe(stagesPassed)) - 1;
+    for (let i = 0; i < STAIRS; i++) root.append(el("rect", { x: 8 + 12 * i, y: 220 - 8 * (i + 1), width: 12, height: 8 * (i + 1), fill: i <= lit ? gold : "#243021", ...(i === lit ? { class: "step-lit" } : {}) }));
+  }
   // garden: each passed stage adds one layer
   root.append(el("rect", { x: 0, y: 178, width: 300, height: 42, fill: g >= 1 ? "#2F5D3A" : "#243021" }));              // ground
   if (g >= 1) root.append(el("path", { d: "M150 178 q-2 -14 0 -22", stroke: "#7BC47F", "stroke-width": 3, fill: "none" }), el("ellipse", { cx: 146, cy: 158, rx: 6, ry: 3, fill: "#7BC47F" })); // sprout

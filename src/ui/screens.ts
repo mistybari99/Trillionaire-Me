@@ -494,7 +494,7 @@ export function focusScreen(taskId: string | undefined): HTMLElement {
     timer = setInterval(() => { if (!document.getElementById("focus-root")) { stopTimer(); return; } if (Focus.isFinished(s, Date.now())) finish(s); else draw(); }, 1000);
   };
   const begin = (phase: Focus.Phase, minutes: number) => run(Focus.start(phase, minutes, Date.now()));
-  root.append(link("#/today", "crumb", `← ${t("nav.today", lang)}`), h("h1", {}, t("focus.title", lang)), h("p", { class: "sub" }, title), h("p", { class: "muted" }, t("focus.intro", lang)), total, body, disclaimers(lang, ["noGuarantee"]));
+  root.append(link("#/today", "crumb", `← ${t("nav.today", lang)}`), h("h1", {}, t("focus.title", lang)), h("p", { class: "sub" }, title), h("p", { class: "muted" }, t("focus.intro", lang)), h("p", { class: "note", "data-focus-tip": "1" }, t("focus.tip", lang)), total, body, disclaimers(lang, ["noGuarantee"]));
   const saved = loadFocus();
   if (saved && saved.taskId === task.id) { if (Focus.isFinished(saved.session, Date.now())) finish(saved.session); else run(saved.session); } else picker();
   return root;
