@@ -1,6 +1,6 @@
 {
-  "generated": "2026-10-24T07:46:46.491Z",
-  "totalTests": 165,
+  "generated": "2026-10-24T09:30:47.183Z",
+  "totalTests": 259,
   "failed": 0,
   "results": {
     "TM-TST-006": {
@@ -10,7 +10,7 @@
         "tests/g1.test.ts",
         "evidence/screenshot-report.json"
       ],
-      "tests": 4,
+      "tests": 5,
       "e2e": 0,
       "evidenceOk": true,
       "finalOutcome": "Pass"

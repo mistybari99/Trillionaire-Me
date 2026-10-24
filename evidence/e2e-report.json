@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-24T04:46:29.481Z",
+  "generated": "2026-10-24T09:30:33.441Z",
   "results": [
     {
       "id": "TM-TST-143",
@@ -134,6 +134,30 @@
       "detail": ""
     },
     {
+      "id": "R2-HORIZON",
+      "name": "page renders the 5 horizon sections in order",
+      "pass": true,
+      "detail": "five_year,one_year,month,week,today,unset"
+    },
+    {
+      "id": "R2-HORIZON",
+      "name": "goal with no horizon appears in the 'unset' section",
+      "pass": true,
+      "detail": "five_year,one_year,month,week,today,unset"
+    },
+    {
+      "id": "R2-HORIZON",
+      "name": "goal with horizon one_year lands in the one_year section only",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "R2-HORIZON",
+      "name": "no red/shame words on the horizon page (EN and BN)",
+      "pass": true,
+      "detail": ""
+    },
+    {
       "id": "G3-CAPTURE",
       "name": "finds amount, date and decision from a Bangla note",
       "pass": true,
@@ -166,6 +190,24 @@
     {
       "id": "G3-STUCK",
       "name": "plan screen shows Minimum week as active",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "R5-CARDS",
+      "name": "stuck page shows two paths, effort timing and where-time-goes cards",
+      "pass": true,
+      "detail": "two_paths,effort_timing,where_time_goes"
+    },
+    {
+      "id": "R5-CARDS",
+      "name": "reflection cards have no red error or alert element",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "R5-CHAIN",
+      "name": "journey log shows the what-I-learned card (empty hint or chain)",
       "pass": true,
       "detail": ""
     },
