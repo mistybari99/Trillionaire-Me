@@ -14,7 +14,7 @@ const BANNED_EN = /\b(fail\w*|wrong|lazy|shame\w*|should|score\w*|rank\w*|streak
 const BANNED_BN = /(ব্যর্থ|ফেল|লজ্জা|ভুল|স্কোর|স্ট্রিক|গ্রেড|র‍্যাঙ্ক|খারাপ|পিছিয়ে|সতর্ক)/u;
 const v = (x: unknown): FieldValue => ({ state: "value", value: x, label: "DEMO" });
 
-describe("R5 calm copy guard (new stuck + log keys)", () => {
+describe("TM-TST-116 R5 calm copy guard (new stuck + log keys)", () => {
   it("there are new keys to guard", () => { expect(NEW_KEYS.length).toBeGreaterThanOrEqual(13); });
   it("no judging, score, streak or grade words in English or Bangla", () => {
     for (const k of NEW_KEYS) {

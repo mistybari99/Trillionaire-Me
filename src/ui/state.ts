@@ -3,6 +3,7 @@ import { LocalKV, MemoryKV, Store } from "../core/store";
 import { isTemplateId, type TemplateId } from "../core/stageTemplates";
 import { MirrorKV, hydrate, mirrorToRepo } from "../core/persist";
 import { DexieRepo } from "../adapters/dexie";
+import { parseNotifyPrefs, type NotifyPrefs } from "../core/notify";
 
 const legacy = new LocalKV();
 const mem = new MemoryKV();
@@ -34,6 +35,9 @@ export const prefs = {
   /** Stage-name template (O6). Unknown or missing value falls back to "default" (the Spec journey). Names only; codes and passes never change. */
   get stageTemplate(): TemplateId { const v = get("tm:ui:stageTemplate"); return isTemplateId(v) ? v : "default"; },
   set stageTemplate(v: TemplateId) { set("tm:ui:stageTemplate", isTemplateId(v) ? v : "default"); },
+  /** Lock-screen "show details" per category (O8). Per-device only; missing or broken value = everything hidden. */
+  get notifyShow(): NotifyPrefs { try { return parseNotifyPrefs(JSON.parse(get("tm:ui:notifyShow") ?? "null")); } catch { return {}; } },
+  set notifyShow(v: NotifyPrefs) { set("tm:ui:notifyShow", JSON.stringify(parseNotifyPrefs(v))); },
 };
 
 export function applyPrefs() {

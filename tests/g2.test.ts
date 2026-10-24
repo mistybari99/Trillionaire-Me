@@ -24,7 +24,7 @@ describe("G2 local database (IndexedDB adapter)", () => {
   });
 });
 
-describe("G2 backup / restore", () => {
+describe("TM-TST-088 G2 backup / restore", () => {
   it("round-trips to a clean database (clean-device restore)", async () => {
     const a = fresh(); for (const i of ["a", "b", "c"]) await a.put(rec(i));
     const file = JSON.stringify(await createBackup(a, "demo"));

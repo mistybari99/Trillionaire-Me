@@ -14,7 +14,7 @@ const BANNED_BN = /(ব্যর্থ|ফেল|লজ্জা|ভুল|স�
 const v = (x: unknown): FieldValue => ({ state: "value", value: x, label: "DEMO" });
 const rec = (id: string, entity: string, values: Record<string, FieldValue>): TMRecord => ({ id, entity, ns: "demo", ownerId: "u", schemaVersion: 1, createdAt: "2026-10-24T00:00:00Z", values });
 
-describe("B9 plan flow: pure data (unknown is not 0)", () => {
+describe("TM-TST-021 B9 plan flow: pure data (unknown is not 0)", () => {
   it("nothing entered: every value is null", () => {
     const d = planFlowData([], {} as RecordValues, "need_hours", new Set(), 0, 10);
     expect(d).toEqual({ hours: null, tools: null, skills: null, research: null, plan: null, goal: null });

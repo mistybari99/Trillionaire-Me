@@ -31,7 +31,7 @@ describe("copy review: plain English", () => {
   });
 });
 
-describe("copy review: no banned words in any mode", () => {
+describe("TM-TST-041 copy review: no banned words in any mode", () => {
   it("no banned English words in bn or mix (English words inside Bangla lines)", () => {
     for (const k of keys) {
       expect(BANNED_EN.exec(bn[k]!)?.[0], `bn ${k}`).toBeUndefined();

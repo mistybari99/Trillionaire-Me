@@ -57,6 +57,17 @@ describe("goal entry form (intake step 6)", () => {
     expect(view.querySelector("[data-horizon='unset'] [data-goal='intake-goal']")).toBeNull();
   });
 
+});
+
+describe("TM-TST-021 goal form: blank horizon is unset, never 0", () => {
+  beforeEach(() => {
+    localStorage.clear();
+    localStorage.setItem("tm:ui:lang", "en");
+    store.demo.clear();
+    prefs.horizonView = "stack";
+    document.body.innerHTML = '<div id="app"></div>';
+  });
+
   it("leaving horizon blank stores nothing (unset, not zero) and the goal lands in the unset section", () => {
     stepSix();
     fill("f-goal.title", "Walk daily");

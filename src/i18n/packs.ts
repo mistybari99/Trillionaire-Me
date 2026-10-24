@@ -69,6 +69,7 @@ const en = {
   "more.safety": "Safety & limits", "more.safety.desc": "What this tool will and won't do",
   "more.data": "Demo & real data", "more.data.desc": "Where your data lives",
   "more.display": "Display", "more.language": "Language", "more.theme": "Theme", "more.theme.auto": "Automatic", "more.theme.light": "Light", "more.theme.dark": "Dark", "more.textsize": "Text size",
+  "more.lock": "Lock-screen details", "more.lock.desc": "Off by default: the lock screen shows only a neutral line. Turn on a category only if its details may show there.", "more.lock.hide": "Hide", "more.lock.show": "Show details", "more.lock.preview": "Lock screen now reads: “{text}”",
   "more.modules": "Other sections",
   "cap.title": "Capability status",
   "cap.intro": "An honest list. A part counts as done only when a test that proves it works has passed.",
@@ -264,7 +265,7 @@ const bn: Record<Key, string> = {
   "glossary.title": "শব্দকোষ", "glossary.unreviewed": "খসড়া — যাচাই হয়নি। বাংলা-পর্যালোচকের অপেক্ষায়।", "glossary.tag": "যাচাই হয়নি",
   "more.safety": "নিরাপত্তা ও সীমা", "more.safety.desc": "এই টুল কী করবে, কী করবে না",
   "more.data": "Demo ও আসল data", "more.data.desc": "আপনার data কোথায় থাকে",
-  "more.display": "প্রদর্শন", "more.language": "ভাষা", "more.theme": "Theme", "more.theme.auto": "স্বয়ংক্রিয়", "more.theme.light": "হালকা", "more.theme.dark": "গাঢ়", "more.textsize": "লেখার আকার",
+  "more.display": "প্রদর্শন", "more.language": "ভাষা", "more.theme": "Theme", "more.theme.auto": "স্বয়ংক্রিয়", "more.theme.light": "হালকা", "more.theme.dark": "গাঢ়", "more.textsize": "লেখার আকার", "more.lock": "লক-স্ক্রিনের বিবরণ", "more.lock.desc": "ডিফল্ট বন্ধ: লক-স্ক্রিনে শুধু একটি নিরপেক্ষ লাইন দেখায়। কোনো বিভাগের বিবরণ সেখানে দেখাতে চাইলে শুধু সেটি চালু করুন।", "more.lock.hide": "লুকান", "more.lock.show": "বিবরণ দেখান", "more.lock.preview": "লক-স্ক্রিনে এখন লেখা থাকবে: “{text}”",
   "more.modules": "অন্যান্য অংশ",
   "cap.title": "সক্ষমতার অবস্থা",
   "cap.intro": "সৎ তালিকা। কোনো অংশ “সম্পন্ন” লেখা হয় শুধু তখনই, যখন প্রমাণ করার পরীক্ষা পাস করেছে।",
@@ -390,7 +391,7 @@ export const MIX_TERMS: ReadonlyArray<readonly [string, string]> = [
   ["ধাপ", "Stage"], ["লক্ষ্য", "Goal"], ["যাত্রা", "Journey"], ["ডায়েরি", "Diary"],
   ["ডেমো", "Demo"], ["ব্যাকআপ", "Backup"], ["অনলাইন", "Online"], ["অফলাইন", "Offline"],
 ];
-const swapMixTerms = (text: string): string => MIX_TERMS.reduce((acc, [bnWord, en]) => acc.replace(new RegExp(`(?<=^|[\\s(·,।:“"'-])${bnWord}(?=$|[\\s).,।:!?”"'·])`, "gu"), en), text);
+export const swapMixTerms = (text: string): string => MIX_TERMS.reduce((acc, [bnWord, en]) => acc.replace(new RegExp(`(?<=^|[\\s(·,।:“"'-])${bnWord}(?=$|[\\s).,।:!?”"'·])`, "gu"), en), text);
 const mix = Object.fromEntries(Object.keys(en).map((k) => [k, COMMON_ENGLISH_KEYS.has(k) ? en[k as Key] : swapMixTerms(bn[k as Key])])) as Record<Key, string>;
 
 export const PACKS: Record<"en" | "bn" | "mix", Record<Key, string>> = { en, bn, mix };

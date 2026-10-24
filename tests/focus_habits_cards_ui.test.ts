@@ -40,7 +40,7 @@ describe("focus timer screen", () => {
   });
 });
 
-describe("habits screen", () => {
+describe("TM-TST-148 habits screen", () => {
   beforeEach(() => { reset(); vi.useFakeTimers(); vi.setSystemTime(new Date("2026-10-24T09:00:00")); });
   afterEach(() => vi.useRealTimers());
   const habit = (extra: Record<string, FieldValue> = {}): TMRecord => ({ ...base, id: "habit-1", entity: "habit", values: { "habit.title": v("Read"), "habit.days": v("0,1,2,3,4,5,6"), ...extra } });

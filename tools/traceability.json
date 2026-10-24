@@ -23,11 +23,13 @@
   },
   "TM-TST-021": {
     "outcome": "Pass",
-    "scope": "G1 automated: 1000-case property test + browser e2e (blank and 'don't know' never stored as 0)",
+    "scope": "G1 automated: 1000-case property test + browser e2e (blank and 'don't know' never stored as 0); goal form blank horizon and B9 plan blank inputs stay unset, never 0 (unit)",
     "artifacts": [
       "tests/g1.test.ts",
       "tools/e2e.mjs",
-      "evidence/e2e-report.json"
+      "evidence/e2e-report.json",
+      "tests/goal_form.test.ts",
+      "tests/b9_plan_flow.test.ts"
     ]
   },
   "TM-TST-034": {
@@ -101,9 +103,10 @@
   },
   "TM-TST-161": {
     "outcome": "Partial",
-    "scope": "Bangla glossary (30 terms) + field help exist. Human reviewer sign-off NOT done",
+    "scope": "Bangla glossary (30 terms) + field help exist. Human reviewer sign-off NOT done; every key present and non-empty in en, bn and mix (unit parity)",
     "artifacts": [
-      "src/catalog/glossary.ts"
+      "src/catalog/glossary.ts",
+      "tests/i18n_modes.test.ts"
     ]
   },
   "TM-TST-003": {
@@ -166,9 +169,10 @@
   },
   "TM-TST-146": {
     "outcome": "Partial",
-    "scope": "Research contract via Wikipedia provider: 2-3 options with source and date, HTTP error never crashes, saved term read first. UI select/compare/reject/defer actions not covered",
+    "scope": "Research contract via Wikipedia provider: 2-3 options with source and date, HTTP error never crashes, saved term read first. UI select/compare/reject/defer actions not covered; research contract: 0 calls without click, <2 results invents nothing (unit)",
     "artifacts": [
-      "tests/wikipedia.test.ts"
+      "tests/wikipedia.test.ts",
+      "tests/research.test.ts"
     ]
   },
   "TM-TST-165": {
@@ -176,6 +180,72 @@
     "scope": "O5 scoring and path fit keep unknown as unknown (not_enough_data, no guess, no 0). 'incomplete' label on early path suggestions and the full assessment flow not covered",
     "artifacts": [
       "tests/o5_assessment_fit.test.ts"
+    ]
+  },
+  "TM-TST-041": {
+    "outcome": "Partial",
+    "scope": "Copy string scan: no banned punitive/judging words in en, bn or mix across all keys (habit-specific wording in TM-TST-148). Review of copy by a human not done",
+    "artifacts": [
+      "tests/copy_review.test.ts"
+    ]
+  },
+  "TM-TST-043": {
+    "outcome": "Partial",
+    "scope": "O6 90-day review: no records gives 'not enough data' (null, never 0); only in-window records counted. Weekly review itself not covered",
+    "artifacts": [
+      "tests/o6_reality_review_templates.test.ts"
+    ]
+  },
+  "TM-TST-088": {
+    "outcome": "Partial",
+    "scope": "G2 backup/restore round-trip into a clean database; damaged or tampered file rejected; demo backup never restored as real; newer schema refused. Device-level checksum and attachments not covered",
+    "artifacts": [
+      "tests/g2.test.ts"
+    ]
+  },
+  "TM-TST-116": {
+    "outcome": "Partial",
+    "scope": "Calm copy guard on the stuck and log keys: no judging, score, streak or grade words in en/bn/mix. Crisis-mode screens and 'adds 0 tasks' not covered here",
+    "artifacts": [
+      "tests/r5_stuck_log.test.ts"
+    ]
+  },
+  "TM-TST-117": {
+    "outcome": "Partial",
+    "scope": "Automated part: focus rings, 44px targets, skip link, label and heading checks on every route in en and bn. TalkBack, 200% font on device and small-viewport device runs NOT done",
+    "artifacts": [
+      "tests/a11y.test.ts"
+    ]
+  },
+  "TM-TST-148": {
+    "outcome": "Partial",
+    "scope": "Habits: two missed days gives a kind restart offer, never red or run-count copy; no run-count or score function. Cue/frequency/goal link not covered",
+    "artifacts": [
+      "tests/focus_habits_cards_ui.test.ts",
+      "tests/focus_habits_cards.test.ts"
+    ]
+  },
+  "TM-TST-151": {
+    "outcome": "Partial",
+    "scope": "Sensitive topics (emotions, health, money, deen) carry a sensitive flag; app links are real routes. Advice-boundary note and expert-review flag on each finance/legal/tax/medical/religious screen NOT covered",
+    "artifacts": [
+      "tests/topics_rewards.test.ts"
+    ]
+  },
+  "TM-TST-155": {
+    "outcome": "Partial",
+    "scope": "Lock-screen text hidden by default for worship, health, money and third-party; per-category 'Show details' opt-in; neutral en/bn/mix text. On-device lock-screen check, app lock and passphrase recovery NOT done (Owner)",
+    "artifacts": [
+      "src/core/notify.ts",
+      "tests/o8_notify_privacy.test.ts",
+      "tests/notify.test.ts"
+    ]
+  },
+  "TM-TST-158": {
+    "outcome": "Partial",
+    "scope": "Horizon view places goals from stored data; unset goals kept apart; empty horizons are empty, not zero. Gantt, kanban, resource and readiness maps and text-equivalent check NOT covered",
+    "artifacts": [
+      "tests/horizon.test.ts"
     ]
   }
 }

@@ -23,6 +23,7 @@ import { planFlowData } from "../core/planFlow";
 import { assessmentSection } from "./assessment";
 import { markNotTrue, realityLogRecord, RealityError } from "../core/reality";
 import { reviewSummary } from "../core/review";
+import { NEUTRAL_TITLE, NOTIFY_CATEGORIES, notifyText } from "../core/notify";
 import { stagesFor, TEMPLATE_IDS, TEMPLATES, type TemplateId } from "../core/stageTemplates";
 import { STAGE_CODES, StageError, conditions, currentIndex, passStage, stageStates, type StageCode } from "../core/stages";
 import { LAYERS, TOPICS, topicById, tipsOf, relatedTips, type Tip } from "../library/topics";
@@ -959,6 +960,16 @@ export function more(): HTMLElement {
       h("div", { class: "seg" }, ...(["auto", "light", "dark"] as const).map((c) => seg(t(`more.theme.${c}` as Key, lang), prefs.theme === c, () => { prefs.theme = c; applyPrefs(); rerender(); })))),
     h("div", { class: "card" }, h("h2", { class: "card-h", }, t("more.textsize", lang)),
       h("div", { class: "seg" }, ...[100, 125, 150, 200].map((c) => seg(`${num(c, lang)}%`, prefs.scale === c, () => { prefs.scale = c; applyPrefs(); rerender(); })))),
+    h("div", { class: "card", "data-lock-settings": "" }, h("h2", { class: "card-h", }, t("more.lock", lang)),
+      h("p", { class: "muted" }, t("more.lock.desc", lang)),
+      ...NOTIFY_CATEGORIES.map((c) => {
+        const shown = prefs.notifyShow[c] === true;
+        const setTo = (on: boolean) => () => { const cur = { ...prefs.notifyShow, [c]: on }; prefs.notifyShow = cur; rerender(); };
+        return h("div", { class: "row", "data-lock-cat": c },
+          h("span", {}, t(`privacy.${c}` as Key, lang)),
+          h("div", { class: "seg" }, seg(t("more.lock.hide", lang), !shown, setTo(false)), seg(t("more.lock.show", lang), shown, setTo(true))));
+      }),
+      h("p", { class: "muted" }, t("more.lock.preview", lang, { text: notifyText(NEUTRAL_TITLE, lang) }))),
     h("h2", {}, t("more.modules", lang)),
     ...MODULES.filter((m) => m.tab === "more" && m.id !== "M22").map((m) => moduleCard(m, lang)),
     disclaimers(lang, ["noGuarantee", "advice"]));

@@ -9,7 +9,7 @@ import { t, setStrict } from "../src/i18n/t";
 const en = PACKS.en as Record<string, string>, bn = PACKS.bn as Record<string, string>, mix = PACKS.mix as Record<string, string>;
 const ph = (s: string) => (s.match(/\{\w+\}/g) ?? []).sort().join();
 
-describe("language modes: parity across en / bn / mix", () => {
+describe("TM-TST-161 language modes: parity across en / bn / mix", () => {
   it("every key exists in all three packs, none empty, placeholders match", () => {
     const keys = Object.keys(en).sort();
     expect(Object.keys(bn).sort()).toEqual(keys);

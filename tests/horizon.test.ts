@@ -51,7 +51,7 @@ describe("horizon template chooser (R3)", () => {
   });
 });
 
-describe("horizon view (R2)", () => {
+describe("TM-TST-158 horizon view (R2): goals placed from stored data", () => {
   it("places each goal on its horizon and keeps unset goals separate", () => {
     const g = groupByHorizon([
       { id: "a", title: "Income", horizon: "one_year", why: "Stability" },

@@ -4,7 +4,7 @@ import { research, safeQuery, type SearchProvider } from "../src/core/research";
 const mk = (n: number): SearchProvider => ({ name: "fake", search: vi.fn(async () => Array.from({ length: n }, (_, i) => ({ title: `T${i}`, snippet: "s", sourceName: "Src", sourceUrl: `https://example.org/${i}` }))) });
 const online = () => true;
 
-describe("TM-REQ-146 research contract (G4 groundwork)", () => {
+describe("TM-TST-146 / TM-REQ-146 research contract (G4 groundwork)", () => {
   it("makes 0 provider calls without a click", async () => {
     const p = mk(3); await expect(research("x", false, { provider: p, online })).rejects.toThrow();
     expect(p.search).not.toHaveBeenCalled();

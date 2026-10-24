@@ -74,7 +74,7 @@ function rules(css: string) {
 }
 const RULES = rules(CSS);
 
-describe("focus and touch styles", () => {
+describe("TM-TST-117 focus and touch styles", () => {
   it("every button, link, summary and input has a visible focus ring (outline, 3px)", () => {
     const focus = RULES.filter((r) => r.prelude.includes(":focus-visible") && /outline:\s*3px/.test(r.body));
     const selectors = focus.map((r) => r.prelude).join(",");
@@ -134,7 +134,7 @@ const named = (el: Element) => {
   return false;
 };
 
-describe("rendered screens", () => {
+describe("TM-TST-117 rendered screens: labels, headings, names", () => {
   beforeAll(() => { document.body.innerHTML = '<div id="app"></div>'; });
   for (const lang of ["bn", "en"] as const) {
     describe(`lang=${lang}`, () => {

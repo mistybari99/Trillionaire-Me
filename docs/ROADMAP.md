@@ -29,7 +29,7 @@ Status words: **Done** (built + tested) · **Next** (decided, build now) · **La
 | O5 | Assessment scoring, path fit + opportunity library | G3 | Builder · **Done** (tests/o5_assessment_fit.test.ts; see DECISIONS_LOG O5). Path list is a draft (যাচাই হয়নি) |
 | O6 | Reality-changed loop, 90-day review, editable stage templates | G3 | Builder · **Done** (tests/o6_reality_review_templates.test.ts; see DECISIONS_LOG O6) |
 | O7 | Own-options list, saved offline search list, more screens | G4 | Builder · **Done** (was partly done): own options + saved offline search list (tests/o7_own_saved_lists.test.ts; see DECISIONS_LOG O7). "More screens": checked, none missing (all 5 suggestable intake fields already have own options and the saved list) |
-| O8 | Notification lock-screen privacy settings (verify on device) | G2 | Builder + Owner test |
+| O8 | Notification lock-screen privacy settings (verify on device) | G2 | Builder · **Done** in code (per-category "Show details" in More → Lock-screen details; neutral text en/bn/mix; tests/o8_notify_privacy.test.ts; see DECISIONS_LOG O8). **Owner-only, still open:** on-device lock-screen check (TM-TST-155 device part) |
 | O9 | Evidence update in Register from real test runs (only where tests pass) | all | Builder |
 
 ## 3. New ideas from visual batches 1–9 — decision for each
@@ -101,3 +101,4 @@ Each sprint = one PR (draft), small commits, DECISIONS_LOG entry for any choice.
 
 ## 7. Change log
 - 24 Oct 2026: roadmap rebuilt from PLAN.md + visual batches 1–9; status verified against 162 passing tests.
+- 24 Oct 2026: O8 built in code (lock-screen privacy per category). On-device check stays Owner-only. O9: traceability extended to more feature test files (see docs/register/EVIDENCE_REFRESH.md).

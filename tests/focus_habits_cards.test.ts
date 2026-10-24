@@ -25,7 +25,7 @@ describe("focus timer maths", () => {
   it("formats mm:ss", () => { expect(F.fmt(25 * 60_000)).toBe("25:00"); expect(F.fmt(61_000)).toBe("01:01"); expect(F.fmt(0)).toBe("00:00"); });
 });
 
-describe("habits: consistency without run-counts", () => {
+describe("TM-TST-148 habits: consistency without run-counts", () => {
   const daily: H.Habit = { id: "h", title: "Read", days: [0, 1, 2, 3, 4, 5, 6], target: null, unit: "" };
   const today = "2026-10-24"; // Saturday
   const log = (date: string, count = 1): H.Log => ({ habitId: "h", date, count });

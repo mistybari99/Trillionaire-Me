@@ -54,7 +54,7 @@ describe("O6 reality-changed loop (pure)", () => {
 });
 
 // ---- (b) 90-day review ----
-describe("O6 90-day review (pure)", () => {
+describe("TM-TST-043 O6 90-day review (pure)", () => {
   const today = "2026-10-24";
   it("window is 90 calendar days ending today, inclusive", () => {
     expect(REVIEW_DAYS).toBe(90);

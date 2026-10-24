@@ -29,10 +29,6 @@ describe("topic library", () => {
     for (const r of rel) expect(r.topic).not.toBe("procrastination");
     expect(TIPS.filter((t) => t.tags.length === 0)).toEqual([]);
   });
-  it("sensitive topics carry a safety note; app links point to real routes", () => {
-    for (const id of ["emotions", "health", "money", "deen"]) expect(TOPICS.find((t) => t.id === id)!.sensitive, id).toBeTruthy();
-    for (const l of [...TOPICS.map((t) => t.appLink), ...TIPS.map((t) => t.appLink)].filter(Boolean)) expect(l).toMatch(/^#\//);
-  });
 });
 
 describe("reward picture core", () => {
@@ -81,5 +77,12 @@ describe("rewards + topics in the app", () => {
     go("#/topic/emotions"); expect(document.querySelector("[data-safety=mental_health]")).not.toBeNull();
     expect(document.querySelectorAll("[data-tip]").length).toBeGreaterThanOrEqual(2); expect(document.querySelector("[data-diagram]")).not.toBeNull();
     go("#/topic/deen"); expect(document.querySelector("[data-safety=worship]")!.textContent).toMatch(/scholar/);
+  });
+});
+
+describe("TM-TST-151 sensitive topics carry a safety note", () => {
+  it("sensitive topics carry a safety note; app links point to real routes", () => {
+    for (const id of ["emotions", "health", "money", "deen"]) expect(TOPICS.find((t) => t.id === id)!.sensitive, id).toBeTruthy();
+    for (const l of [...TOPICS.map((t) => t.appLink), ...TIPS.map((t) => t.appLink)].filter(Boolean)) expect(l).toMatch(/^#\//);
   });
 });
