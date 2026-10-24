@@ -44,3 +44,11 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 - Alternatives: a separate hand-written mix pack (more work, drifts from bn). Swapping inside suffixed words (e.g. "Offlineে") was rejected because it produces broken spelling.
 - How to undo: remove "mix" from Locale/LOCALES/LOCALE_ORDER in src/i18n/registry.ts and the mix pack in src/i18n/packs.ts; the switch falls back to Bangla for unknown values.
 - Also: fixed mixed-script strings in the Bangla pack (e.g. "Offlineে চলে", "এই deviceে") and plain-language wording of cap.intro and safety.demo (no internal "G1" name shown to users).
+
+## Plan flow diagram (R6, ROADMAP B9)
+- What: Plan screen shows an inline SVG flow: Time / Tools / Skills → Research → Plan → AI step (disabled, "later") → Your goal. Data model in src/core/planFlow.ts; SVG in planScreen (src/ui/screens.ts). Demo data only, same as the rest of the plan screen.
+- Why: owner wants to see how a plan is made, from his own inputs, with no AI.
+- Rules chosen: a missing value shows "unknown" (EN and BN), never 0. Tools/skills count = records entered, so zero records = unknown. Research = intake answers so far. Plan = placed open tasks, only when capacity is known. Goal = first goal title, shortened to 24 characters.
+- Reduced motion: the diagram has no animation at all. The AI step is dimmed (opacity), not dashed, because the R4 reduced-motion guard flags any stroke-dasharray outside the motion-allowed block.
+- Alternatives: HTML boxes (rejected: the roadmap asks for SVG). Dashed AI box (rejected, see above).
+- How to undo: remove `planFlow(cp, lang),` from planScreen, delete the `planFlow` and SVG helper functions in src/ui/screens.ts, the `plan.flow.*` keys in src/i18n/packs.ts, the `.flow` CSS block in src/ui/styles.css, and src/core/planFlow.ts plus tests/b9_plan_flow.test.ts.

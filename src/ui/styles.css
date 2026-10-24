@@ -80,6 +80,19 @@ dl{margin:6px 0} .hrow{display:grid;grid-template-columns:96px 1fr;gap:8px;paddi
 .dg-steps .node b{display:grid;place-items:center;width:28px;height:28px;border:1.5px solid var(--primary);color:var(--primary);font:600 14px "Fraunces",serif}
 .dg-steps .arrow{text-align:center;color:var(--muted);line-height:1}
 .dg-cycle .arrow.back{color:var(--ember);font-size:22px}
+/* B9 plan flow (inline SVG). Static: no animation. */
+.flow{display:block;width:100%;height:auto;max-width:360px;margin:8px 0 0}
+.flow .fl-box{fill:var(--card);stroke:var(--ink);stroke-width:1.5}
+.flow .fl-box-ai{fill:none;stroke:var(--muted);opacity:.7}
+.flow .fl-label{font:600 14px "Hind Siliguri",system-ui,sans-serif;fill:var(--ink)}
+.flow .fl-val{font:500 15px "Hind Siliguri",system-ui,sans-serif;fill:var(--ink)}
+.flow .fl-unk{fill:var(--muted);font-style:italic}
+.flow .fl-muted{fill:var(--muted)}
+.flow .fl-note{font:400 12px "Hind Siliguri",system-ui,sans-serif;fill:var(--muted)}
+.flow .fl-arrow{stroke:var(--ink);stroke-width:1.5;fill:none}
+.flow .fl-arrow-ai{stroke:var(--muted);opacity:.7}
+.flow .fl-head{fill:var(--ink)}
+
 .dg-matrix{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .dg-matrix .cell{border:1.5px solid var(--ink);background:var(--card);padding:10px;font-size:14px;line-height:1.4}
 .dg-matrix .c0{border-color:var(--moss)} .dg-matrix .c1{border-color:var(--primary)} .dg-matrix .c2{border-color:var(--demo)} .dg-matrix .c3{border-color:var(--rule);color:var(--muted)}

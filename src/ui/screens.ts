@@ -19,6 +19,7 @@ import { StoreRepo } from "../adapters/storeRepo";
 import { createBackup, restoreBackup } from "../core/backup";
 import { schedule, todaysActions } from "../core/planner";
 import { buildPlanInput, capacityState, fmtClock, freeWindow } from "../core/planInputs";
+import { planFlowData } from "../core/planFlow";
 import { STAGE_CODES, StageError, conditions, currentIndex, passStage, stageStates, type StageCode } from "../core/stages";
 import { LAYERS, TOPICS, topicById, tipsOf, relatedTips, type Tip } from "../library/topics";
 import { journeyArt } from "./rewardArt";
@@ -94,6 +95,68 @@ function currentPlan() {
 }
 const weekday = (d: number, lang: Locale) => new Intl.DateTimeFormat(intlLocale(lang), { weekday: "long" }).format(new Date(2023, 0, 1 + d));
 
+// B9 (R6): plan flow as inline SVG. Static on purpose (no animation), so reduced motion needs nothing extra.
+// Every value comes from the user's own records; a missing value is shown as "unknown", never 0.
+const SVG_NS = "http://www.w3.org/2000/svg";
+function svgEl(tag: string, attrs: Record<string, string | number>, ...kids: Array<SVGElement | string>): SVGElement {
+  const el = document.createElementNS(SVG_NS, tag);
+  for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, String(v));
+  for (const c of kids) el.append(typeof c === "string" ? document.createTextNode(c) : c);
+  return el;
+}
+const clip = (s: string, n = 24) => (s.length > n ? `${s.slice(0, n - 1)}…` : s);
+export function planFlow(cp: ReturnType<typeof currentPlan>, lang: Locale): HTMLElement {
+  const W = 320, NODE = 56, GAP = 26, INPUT = 100, AI = 72, VAL_X = 124, MID = W / 2;
+  const U = t("plan.flow.unknown", lang), c = completeness(cp.a);
+  const d = planFlowData(cp.recs, cp.a, cp.state, new Set(cp.plan.placements.map((p) => p.taskId)), c.addressed, c.total);
+  type Row = { id: string; label: string; value: string | null; state?: "later" };
+  const inputs: Row[] = [
+    { id: "time", label: t("plan.flow.time", lang), value: d.hours === null ? null : t("plan.flow.hours", lang, { h: num(d.hours, lang) }) },
+    { id: "tools", label: t("plan.flow.tools", lang), value: d.tools === null ? null : t("plan.flow.listed", lang, { n: num(d.tools, lang) }) },
+    { id: "skills", label: t("plan.flow.skills", lang), value: d.skills === null ? null : t("plan.flow.listed", lang, { n: num(d.skills, lang) }) },
+  ];
+  const research = d.research ? t("plan.flow.answered", lang, { n: num(d.research.answered, lang), total: num(d.research.total, lang) }) : null;
+  const plan = d.plan ? t("plan.flow.placed", lang, { n: num(d.plan.placed, lang), total: num(d.plan.tasks, lang) }) : null;
+  const goal = d.goal === null ? null : clip(d.goal);
+  const aria = [...inputs.map((r) => `${r.label}: ${r.value ?? U}`), `${t("plan.flow.research", lang)}: ${research ?? U}`, `${t("plan.flow.plan", lang)}: ${plan ?? U}`, `${t("plan.flow.ai", lang)}: ${t("plan.flow.later", lang)}`, `${t("plan.flow.goal", lang)}: ${goal ?? U}`];
+
+  const parts: SVGElement[] = [];
+  let y = 0;
+  const arrow = (y0: number, ai = false) => parts.push(svgEl("line", { x1: MID, y1: y0, x2: MID, y2: y0 + GAP - 4, class: ai ? "fl-arrow fl-arrow-ai" : "fl-arrow", "marker-end": "url(#fl-head)", "aria-hidden": "true" }));
+  const valueText = (x: number, yc: number, text: string | null, cls = "fl-val") => svgEl("text", { x: VAL_X, y: yc, "dominant-baseline": "central", class: text === null ? `${cls} fl-unk` : cls }, text ?? U);
+  // Input group: three plain lines in one box.
+  parts.push(svgEl("rect", { x: 0, y, width: W, height: INPUT, rx: 4, class: "fl-box" }));
+  inputs.forEach((r, i) => {
+    const yc = y + 28 + i * 24;
+    parts.push(svgEl("g", { "data-flow-node": r.id, "data-state": r.value === null ? "unknown" : "value" },
+      svgEl("text", { x: 14, y: yc, "dominant-baseline": "central", class: "fl-label" }, r.label), valueText(VAL_X, yc, r.value)));
+  });
+  y += INPUT; arrow(y); y += GAP;
+  // Research, plan, then the AI step (later, disabled), then the goal.
+  const row = (id: string, label: string, value: string | null) => {
+    const yc = y + NODE / 2;
+    parts.push(svgEl("g", { "data-flow-node": id, "data-state": value === null ? "unknown" : "value" },
+      svgEl("rect", { x: 0, y, width: W, height: NODE, rx: 4, class: "fl-box" }),
+      svgEl("text", { x: 14, y: yc, "dominant-baseline": "central", class: "fl-label" }, label), valueText(VAL_X, yc, value)));
+    y += NODE;
+  };
+  row("research", t("plan.flow.research", lang), research); arrow(y); y += GAP;
+  row("plan", t("plan.flow.plan", lang), plan); arrow(y); y += GAP;
+  // AI step: shown, disabled, marked later. The app has no AI (decision D-C not approved).
+  parts.push(svgEl("g", { "data-flow-node": "ai", "data-state": "later", class: "fl-ai-g", "aria-disabled": "true" },
+    svgEl("rect", { x: 0, y, width: W, height: AI, rx: 4, class: "fl-box fl-box-ai" }),
+    svgEl("text", { x: 14, y: y + 24, "dominant-baseline": "central", class: "fl-label fl-muted" }, t("plan.flow.ai", lang)),
+    valueText(VAL_X, y + 24, t("plan.flow.later", lang), "fl-val fl-muted"),
+    svgEl("text", { x: 14, y: y + 50, "dominant-baseline": "central", class: "fl-note" }, t("plan.flow.ai.note", lang))));
+  y += AI; arrow(y, true); y += GAP;
+  row("goal", t("plan.flow.goal", lang), goal);
+
+  const svg = svgEl("svg", { viewBox: `0 0 ${W} ${y}`, class: "flow", role: "img", "aria-label": `${t("plan.flow.title", lang)}. ${aria.join(". ")}`, "data-flow": "1", focusable: "false" },
+    svgEl("defs", {}, svgEl("marker", { id: "fl-head", viewBox: "0 0 10 10", refX: 9, refY: 5, markerWidth: 7, markerHeight: 7, orient: "auto" }, svgEl("path", { d: "M0,0 L10,5 L0,10 z", class: "fl-head" }))),
+    ...parts);
+  return h("div", { class: "card", "data-flow-card": "1" }, h("h3", {}, t("plan.flow.title", lang)), h("p", { class: "muted" }, t("plan.flow.intro", lang)), svg);
+}
+
 export function planScreen(): HTMLElement {
   const lang = L(); const cp = currentPlan();
   const w = freeWindow(cp.a);
@@ -135,6 +198,7 @@ export function planScreen(): HTMLElement {
     link("#/diary", "crumb", `← ${t("diary.title", lang)}`),
     h("h1", {}, t("plan.title", lang)), h("p", { class: "sub" }, t("plan.intro", lang)),
     h("div", { class: "card", "data-capacity": cp.state }, h("h3", {}, t("plan.free", lang)), h("p", {}, free)),
+    planFlow(cp, lang),
     h("h2", {}, t("plan.mode", lang)), h("div", { class: "seg", role: "group" }, seg("normal"), seg("minimum_week"), seg("pause")),
     prefs.mode !== "normal" ? h("p", { class: "muted" }, t(`plan.mode.${prefs.mode}.desc` as Key, lang)) : null,
     h("h2", {}, t("plan.add", lang)), form,
