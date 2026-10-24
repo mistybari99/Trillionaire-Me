@@ -184,3 +184,16 @@ Method: one frame per recording at 3 s (full motion not reviewed yet). Notes onl
 - Focus / Mute toggles and a person at a desk (line art). Build: Focus session screen already exists; "mute notifications" = later.
 - Motivational quote cards (Day N/365) in Instagram-style feeds. Build: daily inspiration card (done, L-28).
 Guardrails kept: no streak/rank, no shame copy, no third-party brand marks copied.
+
+## Batch 9 — 9 screen recordings (24 Oct 2026)
+Method: one frame per recording at 3 s (full motion not reviewed). Notes only.
+- Chained figure with word ladder PAST → GROWTH → LEARNING → ADAPTATION… (chain breaks = growth). Build: "what I learned" chain on Journey log (words, not scores).
+- Hard Now / Easy Later vs Easy Now / Hard Later quadrant with a boulder on a curve. Build: friendly "effort timing" explainer in Tips (topic library), no grades.
+- Archer + target: focused vs multitasking (scattered targets). Build: Focus screen tip "one target at a time"; micro-animation of targets converging.
+- Bike timeline: TODAY → IN A MONTH → IN A YEAR (rider moves further as time passes). Build: horizon view (today/month/year) with a moving marker; matches batch-8 arc idea.
+- Motivation vs Discipline: figure on a bar, faded vs glowing. Build: Discipline vs Motivation card on inspiration board (bilingual, neutral copy).
+- Funnel of time/energy → Social Media / Procrastination / Fear → Goals cup. Build: "where my time goes" visual on Stuck screen (diagnose step); no shame copy.
+- Self-doubt / anger particles falling to a GOAL cup. Build: calm particle motion on reward screen only; no negative labels shown to user.
+- Path diagram: time + smart tools + skills → research → plan → AI → Your Goal, with effort as a spring. Build: plan-step flow diagram on Plan screen (AI part = LATER, no AI in app).
+- Two-path fork: FUN for 2–3 years vs STRUGGLE for 2–3 years, converging on YOU. Build: "two paths" reflection card (Stuck/Reflection); neutral wording, no red for missing goals.
+Guardrails kept: no streaks/ranks/grades; no red copy for missed goals; no third-party marks copied; AI parts LATER.
