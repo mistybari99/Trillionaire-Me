@@ -117,6 +117,20 @@ await page.goto("http://localhost:4174/#/journey/log"); await page.waitForSelect
 check("G3-STAGE", "journey log has the entry with before/after", (await page.locator("[data-log]").count()) === 1 && /%/.test(await page.locator("[data-log]").innerText()));
 await page.goto("http://localhost:4174/#/today"); await page.waitForSelector(".stage");
 check("G3-STAGE", "Home shows 2 / 8 after passing Stage A", /২ \/ ৮|2 \/ 8/.test(await page.locator(".stage .n").innerText()));
+// R2 horizon view: 5 sections, 'unset' bucket for goals with no horizon, no shame/red copy
+await page.goto("http://localhost:4174/#/journey/horizon"); await page.waitForSelector("main h1");
+const horizonSecs = await page.locator("[data-horizon]").evaluateAll((e) => e.map((x) => x.getAttribute("data-horizon")));
+const fiveKeys = ["five_year", "one_year", "month", "week", "today"];
+check("R2-HORIZON", "page renders the 5 horizon sections in order", JSON.stringify(horizonSecs.filter((s) => s !== "unset")) === JSON.stringify(fiveKeys), horizonSecs.join(","));
+check("R2-HORIZON", "goal with no horizon appears in the 'unset' section", (await page.locator("[data-horizon=unset]").innerText()).includes("Steady income"), horizonSecs.join(","));
+// seed one demo goal that has a horizon (no intake step asks for it yet), then reload the view
+await page.evaluate(() => new Promise((res, rej) => { const q = indexedDB.open("tm-db"); q.onerror = () => rej(q.error); q.onsuccess = () => { const db = q.result; const tx = db.transaction("records", "readwrite"); tx.objectStore("records").put({ id: "e2e-goal-horizon", entity: "goal", ns: "demo", ownerId: "demo-user", schemaVersion: 1, createdAt: new Date().toISOString(), values: { "goal.title": { state: "value", value: "Horizon check", label: "DEMO" }, "goal.horizon": { state: "value", value: "one_year", label: "DEMO" } } }); tx.oncomplete = () => { db.close(); res(); }; tx.onerror = () => rej(tx.error); }; }));
+await page.goto("http://localhost:4174/#/journey/horizon"); await page.reload(); await page.waitForSelector("main h1");
+const oneYear = page.locator("[data-horizon=one_year]");
+check("R2-HORIZON", "goal with horizon one_year lands in the one_year section only", (await oneYear.locator("[data-goal]").count()) === 1 && (await oneYear.innerText()).includes("Horizon check") && !(await page.locator("[data-horizon=unset]").innerText()).includes("Horizon check"));
+const horizonText = await page.locator("main").innerText();
+const shameHit = horizonText.match(/fail|shame|guilt|lazy|overdue|behind|wrong|\bred\b|ব্যর্থ|লজ্জা|অলস|পিছিয়ে|দোষ|খারাপ/i);
+check("R2-HORIZON", "no red/shame words on the horizon page (EN and BN)", !shameHit, shameHit ? shameHit[0] : "");
 // quick capture: write naturally -> confirm -> report built from confirmed items only
 await page.goto("http://localhost:4174/#/capture"); await page.waitForSelector("#cap-note");
 await page.fill("#cap-note", "কাল সরবরাহকারীকে ৫ হাজার টাকা দেব। ঠিক করলাম নতুন দোকান নেব।");

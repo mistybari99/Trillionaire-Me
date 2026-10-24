@@ -3,7 +3,7 @@ import { chromium } from "playwright";
 import { preview } from "vite";
 import { mkdirSync, writeFileSync } from "node:fs";
 
-const routes = ["today", "journey", "diary", "diary/intake/1", "diary/intake/2", "diary/intake/3", "diary/intake/4", "diary/intake/5", "diary/intake/6", "diary/intake/7", "diary/plan", "diary/money", "journey/log", "journey/report", "capture", "stuck", "topics", "topic/procrastination", "topic/emotions", "reward", "journey/art", "habits", "cards", "deen", "more", "more/status", "more/fields", "more/glossary", "more/safety", "more/data"];
+const routes = ["today", "journey", "diary", "diary/intake/1", "diary/intake/2", "diary/intake/3", "diary/intake/4", "diary/intake/5", "diary/intake/6", "diary/intake/7", "diary/plan", "diary/money", "journey/log", "journey/report", "journey/horizon", "capture", "stuck", "topics", "topic/procrastination", "topic/emotions", "reward", "journey/art", "habits", "cards", "deen", "more", "more/status", "more/fields", "more/glossary", "more/safety", "more/data"];
 const out = "evidence/screenshots";
 mkdirSync(out, { recursive: true });
 const server = await preview({ preview: { port: 4173, strictPort: true } });
