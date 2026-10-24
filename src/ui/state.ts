@@ -15,6 +15,7 @@ export async function initStorage(): Promise<void> { if (repo) { try { await hyd
 const get = (k: string) => { try { return localStorage.getItem(k); } catch { return null; } };
 const set = (k: string, v: string) => { try { localStorage.setItem(k, v); } catch { /* ignore */ } };
 
+export type PlanMode = "normal" | "minimum_week" | "pause";
 export const prefs = {
   get lang(): Locale { const v = get("tm:ui:lang"); return v && v in LOCALES ? (v as Locale) : DEFAULT_LOCALE; },
   set lang(v: Locale) { set("tm:ui:lang", v); },
@@ -22,6 +23,8 @@ export const prefs = {
   set theme(v: "auto" | "light" | "dark") { set("tm:ui:theme", v); },
   get scale(): number { const n = Number(get("tm:ui:scale")); return [100, 125, 150, 200].includes(n) ? n : 100; },
   set scale(v: number) { set("tm:ui:scale", String(v)); },
+  get mode(): PlanMode { const v = get("tm:ui:mode"); return v === "minimum_week" || v === "pause" ? v : "normal"; },
+  set mode(v: PlanMode) { set("tm:ui:mode", v); },
 };
 
 export function applyPrefs() {

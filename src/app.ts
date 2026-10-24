@@ -12,6 +12,7 @@ export const ROUTES: Array<[RegExp, (m: RegExpMatchArray) => HTMLElement, string
   [/^\/journey$/, () => S.journey(), "journey"],
   [/^\/diary$/, () => S.diary(), "diary"],
   [/^\/diary\/intake(?:\/(\d+))?$/, (m) => S.intake(m[1]), "diary"],
+  [/^\/diary\/plan$/, () => S.planScreen(), "diary"],
   [/^\/deen$/, () => S.deen(), "deen"],
   [/^\/more$/, () => S.more(), "more"],
   [/^\/more\/status$/, () => S.status(), "more"],

@@ -70,6 +70,24 @@ await page.click("[data-suggest='skill.name'] [data-act=suggest-go]");
 check("G4-SUGGEST", "secret-looking search is blocked before sending", wiki.length === 1);
 await page.fill("#f-skill\\.name", "");
 await page.evaluate(() => localStorage.setItem("tm:ui:lang", "bn")); await page.reload(); await page.waitForSelector("main");
+// G3: capacity + tasks → plan → Home (everything inside the user's own free window)
+await page.goto("http://localhost:4174/#/diary/plan"); await page.waitForSelector("main");
+await page.fill("#pt-title", "Call supplier"); await page.fill("#pt-min", "30"); await page.click("form[data-form=task] button[type=submit]");
+await page.waitForSelector("[data-task]");
+check("G3-PLAN", "without free hours nothing is planned and the user is asked", (await page.locator("[data-placement]").count()) === 0 && (await page.locator("[data-deferred='unknown_capacity']").count()) === 1);
+await page.goto("http://localhost:4174/#/diary/intake/4"); await page.waitForSelector("main");
+await page.selectOption("[data-field='constraint.hours_per_week'] select[data-role=state]", "value");
+await page.selectOption("[data-field='constraint.weekly_free_hours'] select[data-role=state]", "value");
+await page.fill("#f-constraint\\.weekly_free_hours", "6"); await page.fill("#f-constraint\\.free_from", "20:00"); await page.fill("#f-constraint\\.free_to", "22:00");
+await page.click("button[type=submit]"); await page.waitForFunction(() => location.hash.includes("/intake/5"));
+await page.goto("http://localhost:4174/#/diary/plan"); await page.waitForSelector("[data-placement]");
+const txt = await page.locator("[data-placement]").first().innerText();
+check("G3-PLAN", "task is placed inside 20:00–22:00", /^2[01]:\d\d–(2[012]:\d\d)/.test(txt) && /Call supplier/.test(txt), txt);
+await page.goto("http://localhost:4174/#/today"); await page.waitForSelector(".task");
+check("G3-PLAN", "Home shows the user's own planned task (today first)", (await page.locator(".task").count()) >= 1 && /Call supplier/.test(await page.locator(".task").first().innerText()));
+await page.goto("http://localhost:4174/#/diary/plan"); await page.click("[data-mode=pause]");
+check("G3-PLAN", "pause mode places nothing, no error text", (await page.locator("[data-placement]").count()) === 0 && (await page.locator("[data-deferred='paused']").count()) === 1);
+await page.click("[data-mode=normal]");
 // data survives a full reload (IndexedDB)
 await page.reload(); await page.waitForSelector("main");
 const afterReload = await idb(page);

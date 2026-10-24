@@ -7,6 +7,8 @@ export interface PlanInput {
   blocked: Block[];                       // hard constraints (prayer, family, rest, job)
   tasks: PlanTask[];
   mode?: CapacityMode;
+  /** weekday (0=Sunday) the plan starts on; the week is filled from here so today comes first */
+  startDay?: number;
   dayWindow?: { start: number; end: number };
 }
 export interface Placement { taskId: string; day: number; start: number; end: number }
@@ -33,13 +35,15 @@ export function schedule(inp: PlanInput): Plan {
   if (inp.weeklyFreeMinutes === null) return { placements: [], deferred: order.map((t) => ({ taskId: t.id, reason: "unknown_capacity" as const })), usedMinutes: 0 };
   const cap = inp.weeklyFreeMinutes;
   const free = Array.from({ length: 7 }, (_, d) => freeWindows(d, inp.blocked, w));
+  const start = ((inp.startDay ?? 0) % 7 + 7) % 7;
   const placements: Placement[] = []; let used = 0; const perDay = new Array<number>(7).fill(0);
   for (const t of order) {
     if (t.minutes === null) { deferred.push({ taskId: t.id, reason: "needs_estimate" }); continue; }
     if (mode === "minimum_week" && placements.length >= MIN_WEEK_MAX_TASKS) { deferred.push({ taskId: t.id, reason: "no_room" }); continue; }
     if (used + t.minutes > cap || t.minutes <= 0) { deferred.push({ taskId: t.id, reason: "no_room" }); continue; }
     let done = false;
-    for (let d = 0; d < 7 && !done; d++) {
+    for (let i = 0; i < 7 && !done; i++) {
+      const d = (start + i) % 7;
       if (mode === "minimum_week" && perDay[d]! >= 1) continue;
       for (const win of free[d]!) {
         if (win[1] - win[0] >= t.minutes) {

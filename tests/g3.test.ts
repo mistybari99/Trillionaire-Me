@@ -43,6 +43,12 @@ describe("TM-TST-003 hard constraints are never violated (100 generated plans)",
       expect(minw).toBeLessThanOrEqual(Math.min(3, normal)); expect(schedule({ ...base, mode: "pause" }).placements).toEqual([]);
     }
   });
+  it("the week starts on the chosen day, so today's tasks come first", () => {
+    for (const sd of [0, 3, 6]) {
+      const p = schedule({ weeklyFreeMinutes: 600, blocked: [], tasks: [{ id: "a", minutes: 30, priority: 1 }], startDay: sd });
+      expect(p.placements[0]!.day).toBe(sd);
+    }
+  });
   it("Home shows at most 3 actions for a day", () => {
     const tasks = Array.from({ length: 12 }, (_, i) => ({ id: `t${i}`, minutes: 20, priority: i }));
     expect(todaysActions(schedule({ weeklyFreeMinutes: 5000, blocked: [], tasks }), 0).length).toBeLessThanOrEqual(3);

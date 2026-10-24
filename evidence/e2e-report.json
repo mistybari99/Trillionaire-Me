@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-23T18:12:14.236Z",
+  "generated": "2026-10-24T00:08:24.262Z",
   "results": [
     {
       "id": "TM-TST-143",
@@ -58,6 +58,30 @@
     {
       "id": "G4-SUGGEST",
       "name": "secret-looking search is blocked before sending",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G3-PLAN",
+      "name": "without free hours nothing is planned and the user is asked",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G3-PLAN",
+      "name": "task is placed inside 20:00–22:00",
+      "pass": true,
+      "detail": "20:00–20:30 · Call supplier"
+    },
+    {
+      "id": "G3-PLAN",
+      "name": "Home shows the user's own planned task (today first)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G3-PLAN",
+      "name": "pause mode places nothing, no error text",
       "pass": true,
       "detail": ""
     },

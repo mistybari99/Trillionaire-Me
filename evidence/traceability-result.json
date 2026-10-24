@@ -1,6 +1,6 @@
 {
-  "generated": "2026-10-24T00:01:52.226Z",
-  "totalTests": 81,
+  "generated": "2026-10-24T00:08:53.041Z",
+  "totalTests": 93,
   "failed": 0,
   "results": {
     "TM-TST-006": {
@@ -173,7 +173,7 @@
         "tests/g3.test.ts",
         "src/core/planner.ts"
       ],
-      "tests": 5,
+      "tests": 6,
       "e2e": 0,
       "evidenceOk": true,
       "finalOutcome": "Pass"
@@ -213,6 +213,19 @@
       "e2e": 0,
       "evidenceOk": true,
       "finalOutcome": "Partial"
+    },
+    "TM-TST-171": {
+      "outcome": "Partial",
+      "scope": "Home shows 1-3 own planned actions + current stage only (DOM test + browser e2e). 5-user 10-second usability test NOT run",
+      "artifacts": [
+        "tests/g1.test.ts",
+        "tests/g3ui.test.ts",
+        "tools/e2e.mjs"
+      ],
+      "tests": 0,
+      "e2e": 0,
+      "evidenceOk": false,
+      "finalOutcome": "Fail"
     }
   }
 }

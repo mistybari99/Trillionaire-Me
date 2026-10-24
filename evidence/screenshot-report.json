@@ -1,6 +1,6 @@
 {
   "viewport": "360x740",
-  "generated": "2026-10-23T18:12:29.607Z",
+  "generated": "2026-10-24T00:08:37.875Z",
   "screens": [
     {
       "lang": "bn",
@@ -60,6 +60,12 @@
       "lang": "bn",
       "route": "diary/intake/7",
       "file": "evidence/screenshots/bn-diary_intake_7.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "diary/plan",
+      "file": "evidence/screenshots/bn-diary_plan.png",
       "horizontalOverflow": false
     },
     {
@@ -162,6 +168,12 @@
       "lang": "en",
       "route": "diary/intake/7",
       "file": "evidence/screenshots/en-diary_intake_7.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "diary/plan",
+      "file": "evidence/screenshots/en-diary_plan.png",
       "horizontalOverflow": false
     },
     {

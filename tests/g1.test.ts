@@ -200,7 +200,7 @@ describe("i18n parity (completeness gate)", () => {
     }
   });
   it("missing key throws in strict mode, never silently", () => { setStrict(true); expect(() => t("nope" as Key, "bn")).toThrow(); });
-  it("no call-site English fallbacks in UI code", () => { for (const f of srcFiles().filter((x) => x.includes("/ui/"))) expect(read(f)).not.toMatch(/t\([^)]*\)\s*(\|\||\?\?)\s*["'`]/); });
+  it("no call-site English fallbacks in UI code", () => { for (const f of srcFiles().filter((x) => x.includes("/ui/"))) expect(read(f)).not.toMatch(/\bt\([^)]*\)\s*(\|\||\?\?)\s*["'`]/); });
   it("no-guarantee copy exists in both languages (TM-TST-004 stub)", () => {
     expect(bn["disclaimer.noGuarantee"]).toMatch(/গ্যারান্টি নেই/); expect(en["disclaimer.noGuarantee"]).toMatch(/No guarantee/);
     expect(JSON.stringify(PACKS)).not.toMatch(/guaranteed (wealth|returns|success)|you will become/i);
@@ -208,8 +208,8 @@ describe("i18n parity (completeness gate)", () => {
 });
 
 describe("TM-TST-006 every rendered value is labelled (all routes, both languages)", () => {
-  const paths = ["/today", "/journey", "/diary", "/diary/intake/1", "/diary/intake/2", "/diary/intake/3", "/diary/intake/4", "/diary/intake/5", "/diary/intake/6", "/diary/intake/7", "/deen", "/more", "/more/status", "/more/fields", "/more/glossary", "/more/safety", "/more/data"];
-  it("route table is fully covered", () => { for (const p of paths) expect(ROUTES.some(([re]) => re.test(p)), p).toBe(true); expect(ROUTES.length).toBe(11); });
+  const paths = ["/today", "/journey", "/diary", "/diary/intake/1", "/diary/intake/2", "/diary/intake/3", "/diary/intake/4", "/diary/intake/5", "/diary/intake/6", "/diary/intake/7", "/diary/plan", "/deen", "/more", "/more/status", "/more/fields", "/more/glossary", "/more/safety", "/more/data"];
+  it("route table is fully covered", () => { for (const p of paths) expect(ROUTES.some(([re]) => re.test(p)), p).toBe(true); expect(ROUTES.length).toBe(12); });
   for (const lang of ["bn", "en"] as const) it(`0 unlabelled values in ${lang}`, () => {
     let seen = 0;
     for (const p of paths) {

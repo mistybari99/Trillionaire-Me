@@ -2,7 +2,7 @@ import { h } from "./dom";
 import { t, tb } from "../i18n/t";
 import type { Key } from "../i18n/packs";
 import { LOCALES, type Locale } from "../i18n/registry";
-import { applyPrefs, prefs, store } from "./state";
+import { applyPrefs, prefs, store, type PlanMode } from "./state";
 import { demoBadge, disclaimers, fieldHelp, num, valueEl } from "./components";
 import { STAGES, DEMO_CURRENT_STAGE, DEMO_DATE, DEMO_TASKS } from "../demo/seed";
 import { MODULES, CAP_STATUSES, type ModuleDef } from "../modules/capability";
@@ -15,6 +15,8 @@ import { type FieldValue, type TMRecord, type UnknownState } from "../core/types
 import type { FieldDef } from "../catalog/types";
 import { StoreRepo } from "../adapters/storeRepo";
 import { createBackup, restoreBackup } from "../core/backup";
+import { schedule, todaysActions } from "../core/planner";
+import { buildPlanInput, capacityState, fmtClock, freeWindow } from "../core/planInputs";
 import { research, safeQuery } from "../core/research";
 import { wikipedia } from "../adapters/wikipedia";
 import { GLOSSARY } from "../catalog/glossary";
@@ -66,9 +68,77 @@ function moduleCard(m: ModuleDef, lang: Locale) {
     h("div", { class: "tags" }, ...m.statuses.map((s) => capTag(s, lang)), h("span", { class: "tag off" }, t("cap.gate", lang, { g: m.gate }))));
 }
 
+
+// ---- plan (G3 core wired to the UI) ----
+function currentPlan() {
+  const a = loadAnswers(); const recs = store.demo.list();
+  const input = buildPlanInput(a, recs, prefs.mode, new Date().getDay());
+  const titles = new Map(recs.filter((r) => r.entity === "task").map((r) => [r.id, String((r.values["task.title"] as { value?: unknown })?.value ?? "")]));
+  return { a, recs, input, plan: schedule(input), state: capacityState(a), titles, hasTasks: titles.size > 0 };
+}
+const weekday = (d: number, lang: Locale) => new Intl.DateTimeFormat(lang === "bn" ? "bn-BD" : "en-US", { weekday: "long" }).format(new Date(2023, 0, 1 + d));
+
+export function planScreen(): HTMLElement {
+  const lang = L(); const cp = currentPlan();
+  const w = freeWindow(cp.a);
+  const free = cp.state === "ok"
+    ? valueEl(t("plan.hours", lang, { h: num(Number((cp.a["constraint.weekly_free_hours"] as { value: number }).value), lang), from: fmtClock(w!.from), to: fmtClock(w!.to) }), "DEMO", lang)
+    : h("span", {}, t(cp.state === "need_hours" ? "plan.need_hours" : "plan.need_window", lang), " ", link("#/diary/intake/4", "crumb", t("plan.setup", lang)));
+  const seg = (m: PlanMode) => h("button", { type: "button", "data-mode": m, "aria-pressed": String(prefs.mode === m), onclick: () => { prefs.mode = m; rerender(); } }, t(`plan.mode.${m}` as Key, lang));
+  const title = h("input", { id: "pt-title", type: "text", maxlength: "120", autocomplete: "off" });
+  const mins = h("input", { id: "pt-min", type: "text", inputmode: "numeric" });
+  const prio = h("select", { id: "pt-prio" }, ...fieldById("task.priority")!.options!.map((o) => h("option", { value: o.code, ...(o.code === "normal" ? { selected: true } : {}) }, tb(o.label, lang))));
+  const err = h("p", { class: "err", role: "alert" });
+  const form = h("form", { novalidate: true, "data-form": "task" },
+    h("label", { for: "pt-title" }, t("plan.task.title", lang)), title,
+    h("label", { for: "pt-min" }, t("plan.task.minutes", lang)), mins,
+    h("label", { for: "pt-prio" }, t("plan.task.priority", lang)), prio, err,
+    h("button", { class: "btn", type: "submit" }, t("plan.task.save", lang)));
+  form.addEventListener("submit", (ev) => {
+    ev.preventDefault(); err.textContent = "";
+    const name = title.value.trim(); if (!name) return;
+    if (!checkFreeText(name).ok) { err.textContent = t("intake.secretRejected", lang); return; }
+    const raw = mins.value.trim().replace(/[০-৯]/g, (c) => String(c.charCodeAt(0) - 0x09e6)); let m: FieldValue;
+    if (raw === "") m = { state: "later" };
+    else { const n = Number(raw); if (!Number.isFinite(n) || n <= 0 || n > 1440) { err.textContent = t("intake.invalidNumber", lang); return; } m = { state: "value", value: Math.round(n), label: "DEMO" }; }
+    const id = `task-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`;
+    store.demo.put({ id, entity: "task", ns: "demo", ownerId: "demo-user", schemaVersion: 1, createdAt: new Date().toISOString(),
+      values: { "task.title": { state: "value", value: name, label: "DEMO" }, "task.minutes": m, "task.priority": { state: "value", value: prio.value, label: "DEMO" } } });
+    rerender();
+  });
+  const taskRows = cp.recs.filter((r) => r.entity === "task").sort((a, b) => a.id.localeCompare(b.id)).map((r) => {
+    const mv = r.values["task.minutes"];
+    return h("div", { class: "card", "data-task": r.id }, h("div", { class: "row" },
+      h("div", {}, h("h3", {}, cp.titles.get(r.id) ?? ""), h("p", { class: "muted" }, mv && mv.state === "value" ? valueEl(t("task.minutes", lang, { n: num(Number(mv.value), lang) }), "DEMO", lang) : t("plan.task.minutes.later", lang))),
+      h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0;min-height:44px", onclick: () => { store.demo.delete(r.id); rerender(); } }, t("plan.task.remove", lang))));
+  });
+  const byDay = (d: number) => cp.plan.placements.filter((p) => p.day === d).sort((a, b) => a.start - b.start);
+  const week = [0, 1, 2, 3, 4, 5, 6].map((i) => (new Date().getDay() + i) % 7).filter((d) => byDay(d).length).map((d) => h("div", { class: "card", "data-day": String(d) }, h("h3", {}, weekday(d, lang)),
+    ...byDay(d).map((p) => h("p", { "data-placement": p.taskId }, `${fmtClock(p.start)}–${fmtClock(p.end)} · ${cp.titles.get(p.taskId) ?? ""}`))));
+  return h("main", {},
+    link("#/diary", "crumb", `← ${t("diary.title", lang)}`),
+    h("h1", {}, t("plan.title", lang)), h("p", { class: "sub" }, t("plan.intro", lang)),
+    h("div", { class: "card", "data-capacity": cp.state }, h("h3", {}, t("plan.free", lang)), h("p", {}, free)),
+    h("h2", {}, t("plan.mode", lang)), h("div", { class: "seg", role: "group" }, seg("normal"), seg("minimum_week"), seg("pause")),
+    prefs.mode !== "normal" ? h("p", { class: "muted" }, t(`plan.mode.${prefs.mode}.desc` as Key, lang)) : null,
+    h("h2", {}, t("plan.add", lang)), form,
+    cp.hasTasks ? h("div", {}, ...taskRows) : h("p", { class: "muted" }, t("plan.task.empty", lang)),
+    h("h2", {}, t("plan.week", lang)),
+    week.length ? h("div", {}, ...week, h("p", { class: "muted" }, t("plan.used", lang, { m: num(cp.plan.usedMinutes, lang), c: num(cp.input.weeklyFreeMinutes ?? 0, lang) }))) : h("p", { class: "muted" }, t("plan.nothing", lang)),
+    cp.plan.deferred.length ? h("div", {}, h("h3", {}, t("plan.later", lang)), ...cp.plan.deferred.map((d) => h("p", { class: "muted", "data-deferred": d.reason }, `${cp.titles.get(d.taskId) ?? ""} — ${t(`plan.why.${d.reason}` as Key, lang)}`))) : null,
+    disclaimers(lang));
+}
+
 // ---- screens ----
+function todayFromPlan(cp: ReturnType<typeof currentPlan>, lang: Locale): HTMLElement[] {
+  const acts = todaysActions(cp.plan, new Date().getDay());
+  if (!acts.length) return [h("p", { class: "muted", "data-today": "none" }, t("home.today.none", lang), " ", link("#/diary/plan", "crumb", t("home.today.open", lang)))];
+  return acts.map((p, i) => h("div", { class: "task", "data-placement": p.taskId }, h("b", {}, num(i + 1, lang)),
+    h("div", {}, cp.titles.get(p.taskId) ?? "", h("p", {}, valueEl(`${fmtClock(p.start)}–${fmtClock(p.end)}`, "DEMO", lang)))));
+}
+
 export function today(): HTMLElement {
-  const lang = L();
+  const lang = L(); const cp = currentPlan();
   const stage = STAGES[DEMO_CURRENT_STAGE]!;
   const nxt = nextStep(loadAnswers());
   const rungs = h("ul", { class: "rungs", role: "img", "aria-label": t("home.rungs", lang, { done: num(DEMO_CURRENT_STAGE, lang), total: num(STAGES.length, lang), now: num(DEMO_CURRENT_STAGE + 1, lang) }) },
@@ -82,8 +152,8 @@ export function today(): HTMLElement {
       h("div", { class: "n" }, num(DEMO_CURRENT_STAGE + 1, lang), h("span", { style: "font-size:22px;color:var(--muted)" }, ` / ${num(STAGES.length, lang)}`)),
       rungs),
     h("h2", {}, t("home.tasks", lang)),
-    ...DEMO_TASKS.slice(0, 3).map((k, i) => h("div", { class: "task" }, h("b", {}, num(i + 1, lang)),
-      h("div", {}, tb(k.title, lang), h("p", {}, valueEl(t("task.minutes", lang, { n: num(k.minutes, lang) }), "DEMO", lang), " · ", tb(k.hint, lang))))),
+    ...(cp.hasTasks ? todayFromPlan(cp, lang) : DEMO_TASKS.slice(0, 3).map((k, i) => h("div", { class: "task" }, h("b", {}, num(i + 1, lang)),
+      h("div", {}, tb(k.title, lang), h("p", {}, valueEl(t("task.minutes", lang, { n: num(k.minutes, lang) }), "DEMO", lang), " · ", tb(k.hint, lang)))))),
     link("#/diary/intake", "cta", t("home.start", lang)),
     nxt.field ? h("p", { class: "muted", style: "margin-top:12px" }, t("home.next", lang, { field: tb(nxt.field.label, lang) })) : null,
     disclaimers(lang));
@@ -117,6 +187,7 @@ export function diary(): HTMLElement {
       h("p", { class: "muted" }, t("diary.completeness.detail", lang, { filled: num(c.filled, lang), total: num(c.total, lang), addressed: num(c.addressed, lang) }))),
     h("section", { class: "card", "data-next": "1" }, h("h3", {}, t("diary.next", lang)), h("p", {}, nextText)),
     link("#/diary/intake", "cta", t("diary.start", lang)),
+    link("#/diary/plan", "btn ghost", t("plan.title", lang)),
     h("h2", {}, t("diary.modules", lang)),
     ...MODULES.filter((m) => m.tab === "diary").map((m) => moduleCard(m, lang)),
     disclaimers(lang));
