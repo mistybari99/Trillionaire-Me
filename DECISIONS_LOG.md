@@ -30,3 +30,10 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 | L-25 | Quick capture = rule-based finder + mandatory confirm step; bare numbers never guessed as money; "কাল" flagged low-confidence; raw note kept on device, reports use only confirmed items | owner request 24 Oct; no AI; unknown≠guess | auto-save extracted items | `src/core/capture.ts` |
 | L-26 | SUPERSEDES L-21, L-23, L-24: owner said do not apply the whole brief → removed `src/library` and 5 of 8 new requirements (173,176,177,179,180); adopt only features that fit the running app; first = "I'm stuck" | owner instruction 24 Oct | build the library | git history has the removed skeleton |
 | L-27 | SUPERSEDES L-26 partly: no topic is dropped. 21 topics × 2 short tips + visuals, tags link related tips, ☰ drawer for topics, reward picture (stars per finished task, garden layer per stage). Tips are practice-based drafts marked unreviewed | owner 24 Oct (second instruction) | full evidence database | `src/library/topics.ts`, `src/core/reward.ts` |
+
+## L-28 — Daily inspiration board (owner request, batch 7 follow-up)
+- What: Today screen shows one bilingual (Bangla + English) card per day from a bundled list of 15 neutral lines (motivation, discipline, patience, care). Changes at local midnight.
+- Why: owner wants motivation + discipline daily, both languages, no streak/shame copy.
+- Alternatives: fetch quotes from an online service. Not done: external integration needs owner approval (Charter §4.3/§8). Offline bundled list works without network.
+- How to undo: remove the `aside.inspire` block in `today()` in src/ui/screens.ts and delete src/library/inspiration.ts.
+- Open for owner: approve an online quote source (e.g. a free API) if the daily online change is wanted.

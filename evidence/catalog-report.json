@@ -1,10 +1,10 @@
 {
   "version": 1,
-  "fields": 59,
-  "withHelp": 59,
-  "withPrivacy": 59,
-  "withPurposeAndAccess": 59,
-  "withBilingualLabel": 59,
-  "withUnknownRule": 59,
+  "fields": 70,
+  "withHelp": 70,
+  "withPrivacy": 70,
+  "withPurposeAndAccess": 70,
+  "withBilingualLabel": 70,
+  "withUnknownRule": 70,
   "problems": []
 }

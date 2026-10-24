@@ -1,3 +1,4 @@
+import { todaysInspiration } from "../library/inspiration";
 import { h } from "./dom";
 import { t, tb } from "../i18n/t";
 import type { Key } from "../i18n/packs";
@@ -22,6 +23,9 @@ import { LAYERS, TOPICS, topicById, tipsOf, relatedTips, type Tip } from "../lib
 import { journeyArt } from "./rewardArt";
 import { messageIndex, milestoneAt } from "../core/reward";
 import { diagram } from "./diagram";
+import * as Focus from "../core/focus";
+import * as Habits from "../core/habits";
+import * as Cards from "../core/cards";
 import { CAUSE_TEXT, QUESTIONS, diagnose, type Answer, type Helper } from "../core/stuck";
 import { extract, summarize, type Candidate, type Item } from "../core/capture";
 import { netWorth, monthlyCashFlow, type Calc } from "../core/finance";
@@ -120,7 +124,7 @@ export function planScreen(): HTMLElement {
     const mv = r.values["task.minutes"];
     return h("div", { class: "card", "data-task": r.id }, h("div", { class: "row" },
       h("div", {}, h("h3", {}, cp.titles.get(r.id) ?? ""), h("p", { class: "muted" }, mv && mv.state === "value" ? valueEl(t("task.minutes", lang, { n: num(Number(mv.value), lang) }), "DEMO", lang) : t("plan.task.minutes.later", lang))),
-      r.values["task.done_on"]?.state === "value" ? h("span", { class: "tag ok" }, t("reward.done", lang)) : h("div", {}, doneBtn(r.id, lang), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => { store.demo.delete(r.id); rerender(); } }, t("plan.task.remove", lang)))));
+      r.values["task.done_on"]?.state === "value" ? h("span", { class: "tag ok" }, t("reward.done", lang)) : h("div", {}, doneBtn(r.id, lang), focusBtn(r.id, lang), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => { store.demo.delete(r.id); rerender(); } }, t("plan.task.remove", lang)))));
   });
   const byDay = (d: number) => cp.plan.placements.filter((p) => p.day === d).sort((a, b) => a.start - b.start);
   const week = [0, 1, 2, 3, 4, 5, 6].map((i) => (new Date().getDay() + i) % 7).filter((d) => byDay(d).length).map((d) => h("div", { class: "card", "data-day": String(d) }, h("h3", {}, weekday(d, lang)),
@@ -405,16 +409,165 @@ export function artScreen(): HTMLElement {
   return h("main", {}, link("#/journey", "crumb", `← ${t("journey.title", lang)}`), h("h1", {}, t("reward.title", lang)), pictureBlock(lang), disclaimers(lang, ["noGuarantee"]));
 }
 
+
+// ---- focus timer ----
+const FOCUS_KEY = "tm:ui:focus";
+type Saved = { taskId: string; session: Focus.Session } | null;
+const loadFocus = (): Saved => { try { return JSON.parse(localStorage.getItem(FOCUS_KEY) ?? "null") as Saved; } catch { return null; } };
+const saveFocus = (v: Saved) => { try { if (v) localStorage.setItem(FOCUS_KEY, JSON.stringify(v)); else localStorage.removeItem(FOCUS_KEY); } catch { /* ignore */ } };
+const focusMinutesOf = (taskId: string) => store.demo.list().filter((r) => r.entity === "focus_session" && r.links?.task === taskId).reduce((a, r) => a + Number((r.values["focus_session.minutes"] as { value?: unknown })?.value ?? 0), 0);
+function recordFocus(taskId: string, minutes: number) {
+  if (minutes < 1) return;
+  store.demo.put({ id: `fs-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 4)}`, entity: "focus_session", ns: "demo", ownerId: "demo-user", schemaVersion: 1, createdAt: new Date().toISOString(), links: { task: taskId },
+    values: { "focus_session.minutes": { state: "value", value: minutes, label: "DEMO" }, "focus_session.date": { state: "value", value: todayIso(), label: "DEMO" } } });
+}
+
+export function focusScreen(taskId: string | undefined): HTMLElement {
+  const lang = L(); const task = taskId ? store.demo.get(taskId) : null;
+  if (!task || task.entity !== "task") return h("main", {}, link("#/today", "crumb", `← ${t("nav.today", lang)}`), h("h1", {}, t("focus.title", lang)), h("p", { class: "muted" }, t("focus.none", lang)));
+  const title = String((task.values["task.title"] as { value?: unknown })?.value ?? "");
+  const root = h("main", { id: "focus-root", "data-task": task.id });
+  const total = h("p", { class: "muted", "data-focus-total": "1" });
+  const body = h("div", {});
+  let timer: ReturnType<typeof setInterval> | null = null;
+  const stopTimer = () => { if (timer) { clearInterval(timer); timer = null; } };
+  const refreshTotal = () => { total.replaceChildren(valueEl(t("focus.total", lang, { m: num(focusMinutesOf(task.id), lang) }), "INFERENCE", lang)); };
+  const picker = () => {
+    stopTimer(); saveFocus(null); refreshTotal();
+    body.replaceChildren(h("h2", {}, t("focus.pick", lang)), h("div", { class: "seg" }, ...Focus.PRESETS.map((m) => h("button", { type: "button", "data-preset": String(m), onclick: () => begin("focus", m) }, t("focus.min", lang, { n: num(m, lang) })))));
+  };
+  const finish = (s: Focus.Session) => {
+    stopTimer(); saveFocus(null);
+    if (s.phase === "focus") recordFocus(task.id, s.minutes);
+    refreshTotal();
+    body.replaceChildren(h("p", { class: "ok-msg", role: "status", "data-focus-finished": s.phase }, t("focus.finished", lang)),
+      ...(s.phase === "focus" ? [h("button", { class: "btn", type: "button", "data-act": "focus-done", onclick: () => markDone(task.id) }, t("focus.markDone", lang)), h("button", { class: "btn ghost", type: "button", onclick: () => begin("rest", Focus.REST_MINUTES) }, t("focus.rest", lang)), h("button", { class: "btn ghost", type: "button", onclick: picker }, t("focus.again", lang))]
+        : [h("button", { class: "btn", type: "button", onclick: picker }, t("focus.again", lang)), link("#/today", "btn ghost", t("focus.backToday", lang))]));
+  };
+  const run = (initial: Focus.Session) => {
+    let s = initial; saveFocus({ taskId: task.id, session: s });
+    const time = h("div", { class: "n", "data-focus-time": "1", role: "timer" }, ""); const ring = h("div", { class: "bar", role: "img", "aria-label": t("focus.title", lang) }, h("i", { style: "width:0%" }));
+    const pauseBtn = h("button", { class: "btn", type: "button", "data-act": "focus-pause" }, t("focus.pause", lang));
+    const draw = () => { const now = Date.now(); time.textContent = Focus.fmt(Focus.remainingMs(s, now)); (ring.firstChild as HTMLElement).style.width = `${Math.round((Focus.elapsedMs(s, now) / (s.minutes * 60_000)) * 100)}%`; pauseBtn.textContent = t(s.pausedAt === null ? "focus.pause" : "focus.resume", lang); };
+    pauseBtn.addEventListener("click", () => { s = s.pausedAt === null ? Focus.pause(s, Date.now()) : Focus.resume(s, Date.now()); saveFocus({ taskId: task.id, session: s }); draw(); });
+    const adj = (d: number) => h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0", "data-adj": String(d), onclick: () => { s = Focus.adjust(s, d, Date.now()); saveFocus({ taskId: task.id, session: s }); draw(); } }, t(d > 0 ? "focus.plus" : "focus.minus", lang));
+    const stop = h("button", { class: "btn ghost", type: "button", "data-act": "focus-stop" }, t("focus.stop", lang));
+    stop.addEventListener("click", () => { const m = Focus.focusedMinutes(s, Date.now()); stopTimer(); saveFocus(null); if (s.phase === "focus") recordFocus(task.id, m); refreshTotal(); body.replaceChildren(h("p", { class: "ok-msg", role: "status", "data-focus-stopped": "1" }, t("focus.stopped", lang, { m: num(m, lang) })), h("button", { class: "btn", type: "button", onclick: picker }, t("focus.again", lang))); });
+    body.replaceChildren(h("h2", {}, t(s.phase === "focus" ? "focus.title" : "focus.restOn", lang)), h("div", { class: "stage" }, time, ring), h("div", { class: "row" }, adj(-5), adj(5)), pauseBtn, stop);
+    draw(); stopTimer();
+    timer = setInterval(() => { if (!document.getElementById("focus-root")) { stopTimer(); return; } if (Focus.isFinished(s, Date.now())) finish(s); else draw(); }, 1000);
+  };
+  const begin = (phase: Focus.Phase, minutes: number) => run(Focus.start(phase, minutes, Date.now()));
+  root.append(link("#/today", "crumb", `← ${t("nav.today", lang)}`), h("h1", {}, t("focus.title", lang)), h("p", { class: "sub" }, title), h("p", { class: "muted" }, t("focus.intro", lang)), total, body, disclaimers(lang, ["noGuarantee"]));
+  const saved = loadFocus();
+  if (saved && saved.taskId === task.id) { if (Focus.isFinished(saved.session, Date.now())) finish(saved.session); else run(saved.session); } else picker();
+  return root;
+}
+const focusBtn = (taskId: string, lang: Locale) => link(`#/focus/${taskId}`, "btn ghost", t("focus.link", lang));
+
+// ---- habits ----
+function habitsFromStore() {
+  const recs = store.demo.list(); const g = (r: TMRecord, k: string) => (r.values[k] as { value?: unknown } | undefined)?.value;
+  const habits: Habits.Habit[] = recs.filter((r) => r.entity === "habit" && r.values["habit.title"]?.state === "value").sort((a, b) => a.id.localeCompare(b.id)).map((r) => ({
+    id: r.id, title: String(g(r, "habit.title")), days: String(g(r, "habit.days") ?? "0,1,2,3,4,5,6").split(",").filter((x) => x !== "").map(Number),
+    target: typeof g(r, "habit.target") === "number" && (g(r, "habit.target") as number) > 0 ? (g(r, "habit.target") as number) : null, unit: String(g(r, "habit.unit") ?? "") }));
+  const logs: Habits.Log[] = recs.filter((r) => r.entity === "habit_log").map((r) => ({ habitId: r.links?.habit ?? "", date: String(g(r, "habit_log.date")), count: Number(g(r, "habit_log.count") ?? 0) }));
+  return { habits, logs };
+}
+function setLog(h0: Habits.Habit, date: string, count: number) {
+  const id = `hl-${h0.id}-${date}`;
+  if (count <= 0) { store.demo.delete(id); return; }
+  store.demo.put({ id, entity: "habit_log", ns: "demo", ownerId: "demo-user", schemaVersion: 1, createdAt: new Date().toISOString(), links: { habit: h0.id },
+    values: { "habit_log.date": { state: "value", value: date, label: "DEMO" }, "habit_log.count": { state: "value", value: count, label: "DEMO" } } });
+}
+
+export function habitsScreen(): HTMLElement {
+  const lang = L(); const { habits, logs } = habitsFromStore(); const today = Habits.todayIso();
+  const wd = (i: number) => new Intl.DateTimeFormat(lang === "bn" ? "bn-BD" : "en-US", { weekday: "short" }).format(new Date(2023, 0, 1 + i));
+  const cards = habits.map((hb) => {
+    const done = Habits.isDone(hb, logs, today); const cnt = Habits.countOn(hb, logs, today);
+    const main = hb.target === null
+      ? h("button", { class: done ? "btn" : "btn ghost", type: "button", "data-act": "habit-tick", "data-habit": hb.id, "aria-pressed": String(done), onclick: () => { setLog(hb, today, done ? 0 : 1); rerender(); } }, `${done ? "✓ " : ""}${t("habits.tick", lang)}`)
+      : h("button", { class: done ? "btn" : "btn ghost", type: "button", "data-act": "habit-plus", "data-habit": hb.id, onclick: () => { setLog(hb, today, cnt + 1); rerender(); } }, `${t("habits.plus", lang)} · ${t("habits.of", lang, { c: num(cnt, lang), t: num(hb.target!, lang), u: hb.unit })}`);
+    const dots = h("div", { class: "seg", role: "group", "aria-label": t("habits.dots", lang) }, ...Array.from({ length: 7 }, (_, i) => Habits.addDays(today, i - 6)).map((d) => {
+      const planned = Habits.isPlanned(hb, d), dn = Habits.isDone(hb, logs, d);
+      return h("button", { type: "button", "data-day": d, "data-done": String(dn), "aria-pressed": String(dn), ...(planned ? {} : { style: "opacity:.45" }), "aria-label": `${d} ${dn ? "✓" : ""}`, onclick: () => { setLog(hb, d, dn ? 0 : (hb.target ?? 1)); rerender(); } }, `${wd(Habits.parseIso(d).getDay())} ${dn ? "●" : "○"}`);
+    }));
+    const c = Habits.consistency(hb, logs, Habits.addDays(today, -27), today, today);
+    return h("div", { class: "card", "data-habit-card": hb.id },
+      h("div", { class: "row" }, h("h3", {}, hb.title), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0;min-height:40px", onclick: () => { store.demo.delete(hb.id); for (const r of store.demo.list()) if (r.entity === "habit_log" && r.links?.habit === hb.id) store.demo.delete(r.id); rerender(); } }, t("habits.remove", lang))),
+      main, dots,
+      h("p", { class: "muted", "data-consistency": "1" }, c.planned ? valueEl(t("habits.month", lang, { d: num(c.done, lang), p: num(c.planned, lang) }), "INFERENCE", lang) : t("habits.noPlanned", lang)),
+      Habits.restartPlan(hb, logs, today) === "smallest_version" ? h("p", { class: "note", "data-restart": "1" }, t("habits.restart", lang)) : null);
+  });
+  // add form
+  const name = h("input", { id: "hb-name", type: "text", maxlength: "80", autocomplete: "off" }) as HTMLInputElement;
+  const chosen = new Set<number>([0, 1, 2, 3, 4, 5, 6]);
+  const chips = h("div", { class: "seg", role: "group" }, ...Array.from({ length: 7 }, (_, i) => h("button", { type: "button", "data-wd": String(i), "aria-pressed": "true", onclick: (e: Event) => { const b = e.currentTarget as HTMLElement; if (chosen.has(i)) chosen.delete(i); else chosen.add(i); b.setAttribute("aria-pressed", String(chosen.has(i))); } }, wd(i))));
+  const target = h("input", { id: "hb-target", type: "text", inputmode: "numeric" }) as HTMLInputElement; const unit = h("input", { id: "hb-unit", type: "text", maxlength: "20" }) as HTMLInputElement;
+  const err = h("p", { class: "err", role: "alert" });
+  const form = h("form", { novalidate: true, "data-form": "habit" }, h("label", { for: "hb-name" }, t("habits.name", lang)), name, h("label", {}, t("habits.days", lang)), chips,
+    h("label", { for: "hb-target" }, t("habits.target", lang)), target, h("label", { for: "hb-unit" }, t("habits.unit", lang)), unit, err, h("button", { class: "btn", type: "submit" }, t("habits.save", lang)));
+  form.addEventListener("submit", (ev) => {
+    ev.preventDefault(); err.textContent = ""; const nm = name.value.trim(); if (!nm) return;
+    if (!checkFreeText(nm).ok || !checkFreeText(unit.value).ok) { err.textContent = t("intake.secretRejected", lang); return; }
+    const raw = target.value.trim().replace(/[০-৯]/g, (c) => String(c.charCodeAt(0) - 0x09e6)); let tv: FieldValue | null = null;
+    if (raw !== "") { const n = Number(raw); if (!Number.isFinite(n) || n <= 0 || n > 1000) { err.textContent = t("intake.invalidNumber", lang); return; } tv = { state: "value", value: Math.round(n), label: "DEMO" }; }
+    const d = (x: unknown): FieldValue => ({ state: "value", value: x, label: "DEMO" });
+    store.demo.put({ id: `habit-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 4)}`, entity: "habit", ns: "demo", ownerId: "demo-user", schemaVersion: 1, createdAt: new Date().toISOString(),
+      values: { "habit.title": d(nm), "habit.days": d([...chosen].sort().join(",")), ...(tv ? { "habit.target": tv, "habit.unit": d(unit.value.trim()) } : {}) } });
+    rerender();
+  });
+  return h("main", {}, link("#/today", "crumb", `← ${t("nav.today", lang)}`), h("h1", {}, t("habits.title", lang)), h("p", { class: "sub" }, t("habits.intro", lang)),
+    ...(cards.length ? cards : [h("p", { class: "muted" }, t("habits.empty", lang))]), h("p", { class: "muted" }, t("habits.tip", lang)), h("h2", {}, t("habits.add", lang)), form, disclaimers(lang, ["noGuarantee"]));
+}
+
+// ---- flashcards ----
+function cardsFromStore(): Cards.Card[] {
+  const g = (r: TMRecord, k: string) => (r.values[k] as { value?: unknown } | undefined)?.value;
+  return store.demo.list().filter((r) => r.entity === "card" && r.values["card.front"]?.state === "value").sort((a, b) => a.id.localeCompare(b.id))
+    .map((r) => ({ id: r.id, front: String(g(r, "card.front")), back: String(g(r, "card.back") ?? ""), box: Number(g(r, "card.box") ?? 1), due: String(g(r, "card.due") ?? Habits.todayIso()) }));
+}
+const putCard = (c: Cards.Card) => store.demo.put({ id: c.id, entity: "card", ns: "demo", ownerId: "demo-user", schemaVersion: 1, createdAt: new Date().toISOString(),
+  values: { "card.front": { state: "value", value: c.front, label: "DEMO" }, "card.back": { state: "value", value: c.back, label: "DEMO" }, "card.box": { state: "value", value: c.box, label: "DEMO" }, "card.due": { state: "value", value: c.due, label: "DEMO" } } });
+
+export function cardsScreen(): HTMLElement {
+  const lang = L(); const today = Habits.todayIso(); const all = cardsFromStore(); const queue = Cards.dueCards(all, today);
+  const study = h("div", { role: "status" });
+  const showCard = (i: number) => {
+    if (i >= queue.length) { study.replaceChildren(h("p", { class: "ok-msg", "data-cards-done": "1" }, t("cards.done", lang))); return; }
+    const c = queue[i]!; const ans = h("div", { class: "card", hidden: true, "data-answer": "1" }, h("p", {}, c.back));
+    const reveal = h("button", { class: "btn", type: "button", "data-act": "card-show" }, t("cards.show", lang));
+    const grade = (knew: boolean) => h("button", { class: knew ? "btn" : "btn ghost", type: "button", "data-act": knew ? "card-knew" : "card-not", onclick: () => { putCard(Cards.review(c, knew, today)); showCard(i + 1); } }, t(knew ? "cards.knew" : "cards.notyet", lang));
+    const row = h("div", { hidden: true, "data-grade": "1" }, grade(true), grade(false));
+    reveal.addEventListener("click", () => { ans.hidden = false; row.hidden = false; reveal.hidden = true; });
+    study.replaceChildren(h("div", { class: "card", "data-card-front": c.id }, h("h3", {}, c.front)), ans, reveal, row);
+  };
+  const go = h("button", { class: "btn", type: "button", "data-act": "cards-study", onclick: () => showCard(0) }, t("cards.study", lang));
+  const front = h("input", { id: "cd-front", type: "text", maxlength: "120", autocomplete: "off" }) as HTMLInputElement; const back = h("input", { id: "cd-back", type: "text", maxlength: "200", autocomplete: "off" }) as HTMLInputElement;
+  const err = h("p", { class: "err", role: "alert" });
+  const form = h("form", { novalidate: true, "data-form": "card" }, h("label", { for: "cd-front" }, t("cards.front", lang)), front, h("label", { for: "cd-back" }, t("cards.back", lang)), back, err, h("button", { class: "btn", type: "submit" }, t("cards.save", lang)));
+  form.addEventListener("submit", (ev) => { ev.preventDefault(); err.textContent = ""; const f1 = front.value.trim(), b1 = back.value.trim(); if (!f1 || !b1) return;
+    if (!checkFreeText(f1).ok || !checkFreeText(b1).ok) { err.textContent = t("intake.secretRejected", lang); return; }
+    putCard(Cards.newCard(`card-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 4)}`, f1, b1, today)); rerender(); });
+  const boxes = Cards.byBox(all);
+  return h("main", {}, link("#/more/topics", "crumb", `← ${t("topics.title", lang)}`), h("h1", {}, t("cards.title", lang)), h("p", { class: "sub" }, t("cards.intro", lang)),
+    all.length ? h("div", {}, h("p", { "data-cards-due": String(queue.length) }, valueEl(queue.length ? t("cards.due", lang, { n: num(queue.length, lang) }) : t("cards.none", lang), "INFERENCE", lang)), ...(queue.length ? [go] : []), study,
+      h("h3", {}, t("cards.boxes", lang)), h("div", { class: "seg", role: "img", "aria-label": boxes.join(", ") }, ...boxes.map((n, i) => h("span", { class: "tag" }, `${num(i + 1, lang)}: ${num(n, lang)}`)))) : h("p", { class: "muted" }, t("cards.empty", lang)),
+    h("h2", {}, t("cards.add", lang)), form, ...all.map((c) => h("div", { class: "card", "data-card": c.id }, h("div", { class: "row" }, h("span", {}, c.front), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0;min-height:40px", onclick: () => { store.demo.delete(c.id); rerender(); } }, t("cards.remove", lang))))), disclaimers(lang));
+}
+
 // ---- screens ----
 function todayFromPlan(cp: ReturnType<typeof currentPlan>, lang: Locale): HTMLElement[] {
   const acts = todaysActions(cp.plan, new Date().getDay());
   if (!acts.length) return [h("p", { class: "muted", "data-today": "none" }, t("home.today.none", lang), " ", link("#/diary/plan", "crumb", t("home.today.open", lang)))];
   return acts.map((p, i) => h("div", { class: "task", "data-placement": p.taskId }, h("b", {}, num(i + 1, lang)),
-    h("div", {}, cp.titles.get(p.taskId) ?? "", h("p", {}, valueEl(`${fmtClock(p.start)}–${fmtClock(p.end)}`, "DEMO", lang)), doneBtn(p.taskId, lang))));
+    h("div", {}, cp.titles.get(p.taskId) ?? "", h("p", {}, valueEl(`${fmtClock(p.start)}–${fmtClock(p.end)}`, "DEMO", lang)), h("div", { class: "row" }, doneBtn(p.taskId, lang), focusBtn(p.taskId, lang)))));
 }
 
 export function today(): HTMLElement {
   const lang = L(); const cp = currentPlan();
+  const insp = todaysInspiration(new Date());
   const curStage = Math.min(currentIndex(stageData().passed), STAGES.length - 1);
   const stage = STAGES[curStage]!;
   const nxt = nextStep(loadAnswers());
@@ -423,6 +576,7 @@ export function today(): HTMLElement {
   return h("main", {},
     h("p", { class: "muted" }, valueEl(tb(DEMO_DATE, lang), "DEMO", lang)),
     h("h1", {}, t("home.title", lang)),
+    h("aside", { class: "card inspire", "aria-label": "Inspiration" }, h("p", {}, insp.bn), h("p", { class: "muted" }, insp.en)),
     h("p", { class: "sub" }, t("home.step", lang), " — ", valueEl(t("stage.progress", lang, { now: num(curStage + 1, lang), total: num(STAGES.length, lang) }), "DEMO", lang)),
     h("section", { class: "stage", "aria-label": t("home.stage", lang) },
       h("small", {}, `${t("home.stage", lang)} · ${tb(stage.name, lang)}`),
@@ -432,6 +586,7 @@ export function today(): HTMLElement {
     ...(cp.hasTasks ? todayFromPlan(cp, lang) : DEMO_TASKS.slice(0, 3).map((k, i) => h("div", { class: "task" }, h("b", {}, num(i + 1, lang)),
       h("div", {}, tb(k.title, lang), h("p", {}, valueEl(t("task.minutes", lang, { n: num(k.minutes, lang) }), "DEMO", lang), " · ", tb(k.hint, lang)))))),
     link("#/diary/intake", "cta", t("home.start", lang)),
+    link("#/habits", "btn ghost", t("habits.link", lang)),
     link("#/stuck", "btn ghost", t("stuck.link", lang)),
     link("#/capture", "btn ghost", t("capture.link", lang)),
     nxt.field ? h("p", { class: "muted", style: "margin-top:12px" }, t("home.next", lang, { field: tb(nxt.field.label, lang) })) : null,

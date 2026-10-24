@@ -149,6 +149,20 @@ Owner instruction (24 Oct 2026): batches of 4–5 images (7–8+ batches, some v
 - Guardrails kept: no "best streak", no single overall score, no red failure colours, no dopamine-science claims.
 - Widgets (91) recorded as future (needs native wrapper; PWA has no widgets).
 
+## Batch 7 (20 app screenshots) — owner: "build some software systems into my app; decide yourself"
+| # | What it shows | Decision for our app |
+|---|---|---|
+| 94 | **Spaced-repetition flashcards** (subject, cards due today ring, study cards, add cards, next review "in 3 days") | **BUILD** — own-card flashcards with a simple box schedule (1/2/4/8/16 days), offline, calm wording. Fits Knowledge topic. |
+| 95 | **Pomodoro focus timer tied to a subject** (ring timer, spent today/total, parts done) | **BUILD** — focus timer for a planned task (10/25/45 min), records minutes, then "mark done?" → star. |
+| 96 | **Share your progress** (card image with chart, theme/colour picker) | **LATER** — sharing leaves the device (needs owner OK each time); possible as "save picture" only. Colour/theme picker idea noted. |
+| 97 | **1000+ preloaded templates** (exam/programming/medical, searchable) | **LATER** — our version = starter packs (goal templates, SMART wizard, venture starter). Not copying exam lists. |
+| 98–99 | **Clarify (ADHD-style app)**: "structure your distracted brain", choose a task, check it off | Matches our one-focus Today; no new build. |
+| 100 | **AI coaches** (time sculptor, focus toolkit, motivation booster) | **NOT NOW** — AI needs G6 + owner approval of cost. Noted. |
+| 101 | **Streak with milestone and "streak freeze"** | **NO** — conflicts with no-streak-shame rule; we show "days done this month" and restart plans instead. |
+| 102 | **Immersive to-do with timer** (pie timer, ±15 min, ambient sound option) | Folded into the focus timer (±5 min buttons). Sound = later (bundled offline audio). |
+| 103–107 | **Habit/task app** (today list mixing habits and tasks, lists, notes/alarms/reminders, statistics with habit score + bar chart, per-habit week dots, edit form: category, description, reminders, priority, frequency by weekday, start/end date, daily goal "at least 3", extra goals) | **BUILD habits** (no streaks): weekday frequency, optional numeric target (e.g. 4/8 glasses), week dots, backfill from calendar, "x of y planned days" consistency. Reminders later (notification privacy already built). No single habit score. |
+| 108–113 | **Self-assessment tests** (personality, social anxiety, depression/anxiety/stress scales, trauma impact, relationship scales; free/paid; 3–13 min) | **NOT BUILDING** — clinical-style tests need licensed instruments, interpretation safety and professional review (mental-health safety rule). Possible far later with a reviewer. We keep the non-clinical diary self-assessment (interests/strengths/values). |
+
 ### Cross-batch ideas so far
 - Pattern library to build: **staircase · funnel · vertical flow · grid trackers (daily/weekly/monthly/long-range) · challenge tracker · action-plan table · cross/radial map · hub map · working-style tree · daily planner sheet · worksheet card · life-areas wheel · SMART badges line · SWOT 2×2 · SOP document · strategy blueprint · 6-block starter · Want→Feel→Do table · acronym card-grid · snake path · numbered list · staircase-with-figure · object-centred map · maturity funnel · Venn**.
 - **Template chooser** setting (per dashboard/category): same data, different view.

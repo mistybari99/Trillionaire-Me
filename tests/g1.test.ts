@@ -187,7 +187,7 @@ describe("TM-TST-144 capability status", () => {
 });
 
 // Owner decision: common English words stay in English inside the Bangla version (easier to read).
-const COMMON_ENGLISH_KEYS = new Set(["badge.demo", "status.online", "status.offline", "label.DEMO", "help.format", "more.theme", "cap.demo", "data.demo", "backup.title", "suggest.btn"]);
+const COMMON_ENGLISH_KEYS = new Set(["badge.demo", "status.online", "status.offline", "label.DEMO", "help.format", "more.theme", "cap.demo", "data.demo", "backup.title", "suggest.btn", "habits.of"]);
 describe("i18n parity (completeness gate)", () => {
   const en = PACKS.en as Record<string, string>, bn = PACKS.bn as Record<string, string>;
   it("key parity, no empties, same placeholders, Bangla script present", () => {
@@ -208,8 +208,8 @@ describe("i18n parity (completeness gate)", () => {
 });
 
 describe("TM-TST-006 every rendered value is labelled (all routes, both languages)", () => {
-  const paths = ["/today", "/journey", "/diary", "/diary/intake/1", "/diary/intake/2", "/diary/intake/3", "/diary/intake/4", "/diary/intake/5", "/diary/intake/6", "/diary/intake/7", "/diary/plan", "/diary/money", "/journey/log", "/journey/report", "/capture", "/stuck", "/topics", "/topic/procrastination", "/reward", "/journey/art", "/deen", "/more", "/more/status", "/more/fields", "/more/glossary", "/more/safety", "/more/data"];
-  it("route table is fully covered", () => { for (const p of paths) expect(ROUTES.some(([re]) => re.test(p)), p).toBe(true); expect(ROUTES.length).toBe(21); });
+  const paths = ["/today", "/journey", "/diary", "/diary/intake/1", "/diary/intake/2", "/diary/intake/3", "/diary/intake/4", "/diary/intake/5", "/diary/intake/6", "/diary/intake/7", "/diary/plan", "/diary/money", "/journey/log", "/journey/report", "/capture", "/stuck", "/topics", "/topic/procrastination", "/reward", "/journey/art", "/habits", "/cards", "/focus/none", "/deen", "/more", "/more/status", "/more/fields", "/more/glossary", "/more/safety", "/more/data"];
+  it("route table is fully covered", () => { for (const p of paths) expect(ROUTES.some(([re]) => re.test(p)), p).toBe(true); expect(ROUTES.length).toBe(24); });
   for (const lang of ["bn", "en"] as const) it(`0 unlabelled values in ${lang}`, () => {
     let seen = 0;
     for (const p of paths) {

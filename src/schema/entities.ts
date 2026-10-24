@@ -40,6 +40,9 @@ export const ENTITIES: EntityDef[] = [
   e("capture", "FAM-17", "নোট/সিদ্ধান্ত", "Note / decision", "M16", "personal"),
   e("capture_item", "FAM-17", "নোট থেকে নেওয়া তথ্য", "Item from a note", "M16", "personal", "capture"),
   e("stuck_log", "FAM-40", "আটকে-যাওয়ার লগ", "Stuck log", "M25", "personal"),
+  e("focus_session", "FAM-08", "ফোকাস সেশন", "Focus session", "M08", "personal", "task"),
+  e("habit_log", "FAM-06", "অভ্যাসের দিন", "Habit day", "M06", "personal", "habit"),
+  e("card", "FAM-04", "কার্ড", "Flashcard", "M17", "personal"),
   e("journey_log", "FAM-39", "যাত্রা-লগ", "Journey log", "M05", "personal"),
   e("stage_pass", "FAM-39", "ধাপ পাস", "Stage pass", "M05", "personal"),
 ];
