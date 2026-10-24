@@ -125,9 +125,9 @@ describe("O5 render on the Plan screen (en and bn)", () => {
     go("#/diary/plan");
     const sec = document.querySelector("[data-assessment]")!;
     expect(sec).not.toBeNull();
-    expect(sec.querySelector("[data-dim='interests'] [data-rating='given']")?.textContent).toMatch(/Average self-rating 4 out of 5/);
+    expect(sec.querySelector("[data-dim='interests'] [data-rating='given']")?.textContent).toMatch(/Average of your answers: 4 out of 5/);
     expect(sec.querySelector("[data-dim='interests']")?.textContent).toMatch(/Drawing, Teaching maths/);
-    expect(sec.querySelector("[data-dim='interests']")?.textContent).toMatch(/1 of 2 rated/);
+    expect(sec.querySelector("[data-dim='interests']")?.textContent).toMatch(/1 of 2 answered/);
     expect(sec.querySelector("[data-dim='strengths']")?.getAttribute("data-status")).toBe("scored");
     const bookkeeping = sec.querySelector("[data-path='bookkeeping']")!;
     expect(bookkeeping.textContent).toMatch(/From your skill "Excel": links to Numbers & accounts/);
