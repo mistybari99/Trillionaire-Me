@@ -18,6 +18,7 @@ import { createBackup, restoreBackup } from "../core/backup";
 import { schedule, todaysActions } from "../core/planner";
 import { buildPlanInput, capacityState, fmtClock, freeWindow } from "../core/planInputs";
 import { STAGE_CODES, StageError, conditions, currentIndex, passStage, stageStates, type StageCode } from "../core/stages";
+import { CAUSE_TEXT, QUESTIONS, diagnose, type Answer, type Helper } from "../core/stuck";
 import { extract, summarize, type Candidate, type Item } from "../core/capture";
 import { netWorth, monthlyCashFlow, type Calc } from "../core/finance";
 import { financeFrom } from "../core/financeInputs";
@@ -301,6 +302,47 @@ export function reportScreen(): HTMLElement {
     disclaimers(lang));
 }
 
+
+// ---- "I'm stuck" ----
+export function stuckScreen(): HTMLElement {
+  const lang = L(); const ans: Record<string, Answer> = {};
+  const out = h("div", { role: "status" });
+  const rows = QUESTIONS.map((q) => {
+    const set = (a: Answer) => { ans[q.id] = a; row.querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(b.getAttribute("data-a") === a))); };
+    const mk = (a: Answer, label: string) => h("button", { type: "button", "data-a": a, "aria-pressed": "false", onclick: () => set(a) }, label);
+    const row = h("div", { class: "field", "data-q": q.id }, h("p", {}, tb(q.text, lang)), h("div", { class: "seg" }, mk("yes", t("stuck.yes", lang)), mk("no", t("stuck.no", lang)), mk("unknown", t("unknown.unknown", lang))));
+    return row;
+  });
+  const log = (d: ReturnType<typeof diagnose>, helper: Helper) => store.demo.put({ id: `stuck-${Date.now().toString(36)}`, entity: "stuck_log", ns: "demo", ownerId: "demo-user", schemaVersion: 1, createdAt: new Date().toISOString(),
+    values: { "stuck_log.causes": { state: "value", value: d.causes.join(",") || "none", label: "DEMO" }, "stuck_log.action": { state: "value", value: helper, label: "DEMO" } } });
+  const show = h("button", { class: "btn", type: "button", "data-act": "stuck-show" }, t("stuck.show", lang));
+  show.addEventListener("click", () => {
+    const d = diagnose(ans);
+    const helperBtns = d.helpers.map((hp) => {
+      if (hp === "tiny_step") {
+        const name = h("input", { type: "text", maxlength: "80", id: "stuck-step", "aria-label": t("stuck.stepName", lang) }) as HTMLInputElement;
+        const add = h("button", { class: "btn", type: "button", "data-helper": hp }, t("stuck.stepAdd", lang));
+        const msg = h("p", { class: "err", role: "alert" });
+        add.addEventListener("click", () => {
+          const nm = name.value.trim(); if (!nm) return; if (!checkFreeText(nm).ok) { msg.textContent = t("intake.secretRejected", lang); return; }
+          store.demo.put({ id: `task-${Date.now().toString(36)}s`, entity: "task", ns: "demo", ownerId: "demo-user", schemaVersion: 1, createdAt: new Date().toISOString(),
+            values: { "task.title": { state: "value", value: nm, label: "DEMO" }, "task.minutes": { state: "value", value: 5, label: "DEMO" }, "task.priority": { state: "value", value: "high", label: "DEMO" } } });
+          log(d, hp); out.replaceChildren(h("p", { class: "ok-msg", "data-done": hp }, t("stuck.done.tiny_step", lang)), link("#/diary/plan", "btn ghost", t("plan.title", lang)));
+        });
+        return h("div", { class: "card" }, h("h3", {}, t("stuck.h.tiny_step", lang)), h("label", { for: "stuck-step" }, t("stuck.stepName", lang)), name, msg, add);
+      }
+      const b = h("button", { class: "btn", type: "button", "data-helper": hp }, t(`stuck.h.${hp}` as Key, lang));
+      b.addEventListener("click", () => { prefs.mode = hp; log(d, hp); out.replaceChildren(h("p", { class: "ok-msg", "data-done": hp }, t(`stuck.done.${hp}` as Key, lang)), link("#/diary/plan", "btn ghost", t("plan.title", lang))); });
+      return h("div", { class: "card" }, b);
+    });
+    out.replaceChildren(h("h2", {}, t("stuck.causes", lang)),
+      d.causes.length ? h("ul", { style: "padding-inline-start:20px" }, ...d.causes.map((c) => h("li", { "data-cause": c }, tb(CAUSE_TEXT[c], lang)))) : h("p", { class: "muted" }, t("stuck.noCause", lang)),
+      ...(d.unansweredCount ? [h("p", { class: "muted" }, t("stuck.unanswered", lang, { n: num(d.unansweredCount, lang) }))] : []),
+      h("h2", {}, t("stuck.helpers", lang)), ...helperBtns);
+  });
+  return h("main", {}, link("#/today", "crumb", `← ${t("nav.today", lang)}`), h("h1", {}, t("stuck.title", lang)), h("p", { class: "sub" }, t("stuck.intro", lang)), ...rows, show, out, disclaimers(lang, ["noGuarantee"]));
+}
+
 // ---- screens ----
 function todayFromPlan(cp: ReturnType<typeof currentPlan>, lang: Locale): HTMLElement[] {
   const acts = todaysActions(cp.plan, new Date().getDay());
@@ -328,6 +370,7 @@ export function today(): HTMLElement {
     ...(cp.hasTasks ? todayFromPlan(cp, lang) : DEMO_TASKS.slice(0, 3).map((k, i) => h("div", { class: "task" }, h("b", {}, num(i + 1, lang)),
       h("div", {}, tb(k.title, lang), h("p", {}, valueEl(t("task.minutes", lang, { n: num(k.minutes, lang) }), "DEMO", lang), " · ", tb(k.hint, lang)))))),
     link("#/diary/intake", "cta", t("home.start", lang)),
+    link("#/stuck", "btn ghost", t("stuck.link", lang)),
     link("#/capture", "btn ghost", t("capture.link", lang)),
     nxt.field ? h("p", { class: "muted", style: "margin-top:12px" }, t("home.next", lang, { field: tb(nxt.field.label, lang) })) : null,
     disclaimers(lang));

@@ -1,6 +1,6 @@
 {
   "viewport": "360x740",
-  "generated": "2026-10-24T01:05:36.669Z",
+  "generated": "2026-10-24T01:07:58.410Z",
   "screens": [
     {
       "lang": "bn",
@@ -90,6 +90,12 @@
       "lang": "bn",
       "route": "capture",
       "file": "evidence/screenshots/bn-capture.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "stuck",
+      "file": "evidence/screenshots/bn-stuck.png",
       "horizontalOverflow": false
     },
     {
@@ -222,6 +228,12 @@
       "lang": "en",
       "route": "capture",
       "file": "evidence/screenshots/en-capture.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "stuck",
+      "file": "evidence/screenshots/en-stuck.png",
       "horizontalOverflow": false
     },
     {

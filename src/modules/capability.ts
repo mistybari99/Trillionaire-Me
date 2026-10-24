@@ -37,4 +37,5 @@ export const MODULES: ModuleDef[] = [
   m("M22", "সক্ষমতার অবস্থা ও Demo", "Capability status & demo", "more", ["implemented", "offline-ok"], "G1", "এই পর্দা।", "This screen."),
   m("M23", "AI স্তর", "AI layer", "more", ["not-built", "internet-needed"], "G6", "AI ছাড়াই সব চলবে; G6-এ যোগ হবে।", "Everything works without AI; added in G6."),
   m("M24", "template লাইব্রেরি", "Template library", "more", ["not-built"], "G3", SLOT_BN, SLOT_EN),
+  m("M25", "আটকে গেলে", "When stuck", "journey", ["demo", "offline-ok"], "G3", "৬টি ট্যাপে সম্ভাব্য কারণ ও ছোট সাহায্য; AI ছাড়া।", "Six taps → likely causes and small helpers; no AI."),
 ];

@@ -180,7 +180,7 @@ describe("TM-TST-010/067/017 intake", () => {
 
 describe("TM-TST-144 capability status", () => {
   it("100% of modules have a valid status; nothing is 'implemented' without being the status screen", () => {
-    expect(MODULES.length).toBe(24);
+    expect(MODULES.length).toBe(25);
     for (const m of MODULES) { expect(m.statuses.length).toBeGreaterThan(0); for (const s of m.statuses) expect(CAP_STATUSES).toContain(s); }
     expect(MODULES.filter((m) => m.statuses.includes("implemented")).map((m) => m.id)).toEqual(["M22"]);
   });
@@ -208,8 +208,8 @@ describe("i18n parity (completeness gate)", () => {
 });
 
 describe("TM-TST-006 every rendered value is labelled (all routes, both languages)", () => {
-  const paths = ["/today", "/journey", "/diary", "/diary/intake/1", "/diary/intake/2", "/diary/intake/3", "/diary/intake/4", "/diary/intake/5", "/diary/intake/6", "/diary/intake/7", "/diary/plan", "/diary/money", "/journey/log", "/journey/report", "/capture", "/deen", "/more", "/more/status", "/more/fields", "/more/glossary", "/more/safety", "/more/data"];
-  it("route table is fully covered", () => { for (const p of paths) expect(ROUTES.some(([re]) => re.test(p)), p).toBe(true); expect(ROUTES.length).toBe(16); });
+  const paths = ["/today", "/journey", "/diary", "/diary/intake/1", "/diary/intake/2", "/diary/intake/3", "/diary/intake/4", "/diary/intake/5", "/diary/intake/6", "/diary/intake/7", "/diary/plan", "/diary/money", "/journey/log", "/journey/report", "/capture", "/stuck", "/deen", "/more", "/more/status", "/more/fields", "/more/glossary", "/more/safety", "/more/data"];
+  it("route table is fully covered", () => { for (const p of paths) expect(ROUTES.some(([re]) => re.test(p)), p).toBe(true); expect(ROUTES.length).toBe(17); });
   for (const lang of ["bn", "en"] as const) it(`0 unlabelled values in ${lang}`, () => {
     let seen = 0;
     for (const p of paths) {
@@ -235,7 +235,7 @@ describe("TM-TST-006 every rendered value is labelled (all routes, both language
 describe("TM-TST-144/171 UI status and home structure", () => {
   it("status screen shows a status tag for every module", () => {
     document.body.innerHTML = '<div id="app"></div>'; localStorage.setItem("tm:ui:lang", "en"); location.hash = "#/more/status"; render();
-    const cards = document.querySelectorAll("[data-module]"); expect(cards.length).toBe(24);
+    const cards = document.querySelectorAll("[data-module]"); expect(cards.length).toBe(25);
     for (const c of cards) expect(c.querySelector("[data-cap]"), c.getAttribute("data-module") ?? "").not.toBeNull();
   });
   it("home shows only 1–3 actions and the current stage", () => {

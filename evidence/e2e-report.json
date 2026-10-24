@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-24T01:05:18.915Z",
+  "generated": "2026-10-24T01:07:44.403Z",
   "results": [
     {
       "id": "TM-TST-143",
@@ -148,6 +148,24 @@
     {
       "id": "G3-CAPTURE",
       "name": "secret in a note is rejected before anything is found",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G3-STUCK",
+      "name": "tired offers Minimum week/Pause only (no new task)",
+      "pass": true,
+      "detail": "minimum_week,pause"
+    },
+    {
+      "id": "G3-STUCK",
+      "name": "choosing it switches mode and adds 0 tasks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G3-STUCK",
+      "name": "plan screen shows Minimum week as active",
       "pass": true,
       "detail": ""
     },

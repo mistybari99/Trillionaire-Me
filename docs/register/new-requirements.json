@@ -1,10 +1,5 @@
 [
  {
-  "id": "TM-REQ-173",
-  "requirement": "Life-Success knowledge library with one shared tag system (categories ≠ menu items)",
-  "gate": "G3"
- },
- {
   "id": "TM-REQ-174",
   "requirement": "'I'm stuck' problem loop: Identify → Diagnose → Intervene → Execute → Measure",
   "gate": "G3"
@@ -15,28 +10,8 @@
   "gate": "G3"
  },
  {
-  "id": "TM-REQ-176",
-  "requirement": "Every library entry has evidence level, sources+date and safety notes; unverified never shown as advice",
-  "gate": "G3"
- },
- {
-  "id": "TM-REQ-177",
-  "requirement": "Emotional/health content shows professional-help notice and needs human review before shipping",
-  "gate": "G3"
- },
- {
   "id": "TM-REQ-178",
   "requirement": "Habits use recovery/restart plans; no streak counters or shaming copy",
-  "gate": "G3"
- },
- {
-  "id": "TM-REQ-179",
-  "requirement": "Skill-gap and knowledge-gap maps with text equivalents",
-  "gate": "G3"
- },
- {
-  "id": "TM-REQ-180",
-  "requirement": "After missed days the app asks gently what got in the way (sleep, load, unclear step…)",
   "gate": "G3"
  },
  {

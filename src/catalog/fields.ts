@@ -300,6 +300,13 @@ export const FIELDS: FieldDef[] = [
     why: bi("রিপোর্টে সিদ্ধান্ত আলাদা তালিকায় আসে।", "Decisions appear as their own list in reports."), example: bi("নতুন দোকান নেব", "Take the new shop"), format: bi("এক লাইন", "One line") }),
   f({ id: "capture_item.date", entity: "capture_item", family: "FAM-17", type: "date", purpose: "journey_log", importance: "optional",
     label: bi("তারিখ", "Date"), what: bi("নোটে যে দিনের কথা বলা হয়েছে।", "The day mentioned in the note."), why: bi("আসন্ন তারিখ রিপোর্টে দেখাতে।", "To list upcoming dates in reports."), example: bi("২০২৬-১১-০৫", "2026-11-05"), format: bi("বছর-মাস-দিন", "YYYY-MM-DD") }),
+  f({ id: "stuck_log.causes", entity: "stuck_log", family: "FAM-40", type: "text", purpose: "journey_log", importance: "optional",
+    label: bi("কী আটকে দিচ্ছিল", "What was in the way"), what: bi("আপনার উত্তর থেকে অ্যাপ যে সম্ভাব্য কারণগুলো পেয়েছে।", "The likely causes the app found from your answers."),
+    why: bi("পরে রিভিউতে দেখতে, কোন বাধা বারবার আসে।", "To see in reviews which obstacles repeat."), example: bi("ক্লান্তি", "Low energy"), format: bi("অ্যাপ নিজে ভরে", "Filled by the app") }),
+  f({ id: "stuck_log.action", entity: "stuck_log", family: "FAM-40", type: "choice", purpose: "journey_log", importance: "optional",
+    options: [opt("tiny_step", "৫ মিনিটের ছোট ধাপ", "5-minute step"), opt("minimum_week", "ন্যূনতম সপ্তাহ", "Minimum week"), opt("pause", "বিরতি", "Pause")],
+    label: bi("যে সাহায্য নিলেন", "Help you chose"), what: bi("আপনি কোন পদক্ষেপ বেছে নিয়েছেন।", "The step you picked."),
+    why: bi("কোনটা কাজে লাগে তা দেখতে।", "To see what helps you."), example: bi("ন্যূনতম সপ্তাহ", "Minimum week") }),
   // ── journey log / stage pass (FAM-39) ──
   f({ id: "journey_log.entry", entity: "journey_log", family: "FAM-39", type: "text", purpose: "journey_log", importance: "useful",
     label: bi("যাত্রা-লগের লেখা", "Journey log entry"),

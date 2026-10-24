@@ -130,6 +130,18 @@ const rep = await page.locator("main").innerText();
 check("G3-CAPTURE", "report shows confirmed amount (৫,০০০) and decision; unconfirmed date is absent", /৫,০০০/.test(rep) && /নতুন দোকান নেব/.test(rep) && (await page.locator("[data-value][data-label=DEMO]").count()) === 0);
 await page.goto("http://localhost:4174/#/capture"); await page.fill("#cap-note", "my password: abc12345 pay 500 tk"); await page.click("[data-act=capture-find]");
 check("G3-CAPTURE", "secret in a note is rejected before anything is found", (await page.locator("[data-cand]").count()) === 0 && (await page.locator(".err").first().innerText()).length > 5);
+// I'm stuck: tired -> only lighter modes, nothing added
+await page.goto("http://localhost:4174/#/stuck"); await page.waitForSelector("[data-q]");
+await page.click("[data-q=q_tired] [data-a=yes]"); await page.click("[data-act=stuck-show]"); await page.waitForSelector("[data-helper]");
+const helpers = await page.locator("[data-helper]").evaluateAll((e) => e.map((x) => x.getAttribute("data-helper")));
+check("G3-STUCK", "tired offers Minimum week/Pause only (no new task)", helpers.includes("minimum_week") && !helpers.includes("tiny_step"), helpers.join(","));
+const before = (await idb(page)).filter((r) => r.entity === "task").length;
+await page.click("[data-helper=minimum_week]"); await page.waitForSelector("[data-done=minimum_week]");
+await page.waitForTimeout(250);
+check("G3-STUCK", "choosing it switches mode and adds 0 tasks", (await idb(page)).filter((r) => r.entity === "task").length === before);
+await page.goto("http://localhost:4174/#/diary/plan"); await page.waitForSelector("[data-mode]");
+check("G3-STUCK", "plan screen shows Minimum week as active", (await page.locator("[data-mode=minimum_week]").getAttribute("aria-pressed")) === "true");
+await page.click("[data-mode=normal]");
 // data survives a full reload (IndexedDB)
 await page.reload(); await page.waitForSelector("main");
 const afterReload = await idb(page);
@@ -149,7 +161,7 @@ const offlineOk = await page.evaluate(() => !!document.querySelector("main h1") 
 check("G1-OFFLINE", "app shell loads and works with network off", offlineOk);
 await page.goto("http://localhost:4174/#/more/status").catch(() => {});
 await page.waitForSelector("[data-module]", { timeout: 5000 }).catch(() => {});
-check("G1-OFFLINE", "status screen renders offline", (await page.locator("[data-module]").count()) === 24);
+check("G1-OFFLINE", "status screen renders offline", (await page.locator("[data-module]").count()) === 25);
 await ctx.setOffline(false);
 
 check("G1-NONET", "0 third-party/external requests during all of the above", external.length === 0, JSON.stringify(external));
