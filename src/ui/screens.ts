@@ -711,7 +711,7 @@ export function today(): HTMLElement {
   const nxt = nextStep(loadAnswers());
   const rungs = h("ul", { class: "rungs", role: "img", "aria-label": t("home.rungs", lang, { done: num(curStage, lang), total: num(STAGES.length, lang), now: num(curStage + 1, lang) }) },
     ...STAGES.map((_, i) => h("li", { class: i < curStage ? "done" : i === curStage ? "now" : "" })));
-  return h("main", {},
+  return h("main", { class: "scr scr-today" },
     h("p", { class: "muted" }, valueEl(tb(DEMO_DATE, lang), "DEMO", lang)),
     h("h1", {}, t("home.title", lang)),
     h("aside", { class: `card inspire ${insp.theme}`, "aria-label": "Inspiration" },
@@ -725,10 +725,11 @@ export function today(): HTMLElement {
     h("h2", {}, t("home.tasks", lang)),
     ...(cp.hasTasks ? todayFromPlan(cp, lang) : DEMO_TASKS.slice(0, 3).map((k, i) => h("div", { class: "task" }, h("b", {}, num(i + 1, lang)),
       h("div", {}, tb(k.title, lang), h("p", {}, valueEl(t("task.minutes", lang, { n: num(k.minutes, lang) }), "DEMO", lang), " · ", tb(k.hint, lang)))))),
-    link("#/diary/intake", "cta", t("home.start", lang)),
-    link("#/habits", "btn ghost", t("habits.link", lang)),
-    link("#/stuck", "btn ghost", t("stuck.link", lang)),
-    link("#/capture", "btn ghost", t("capture.link", lang)),
+    h("div", { class: "actions" },
+      link("#/diary/intake", "cta", t("home.start", lang)),
+      link("#/habits", "btn ghost", t("habits.link", lang)),
+      link("#/stuck", "btn ghost", t("stuck.link", lang)),
+      link("#/capture", "btn ghost", t("capture.link", lang))),
     nxt.field ? h("aside", { class: "card next-step", "data-next-step": nxt.field.id }, h("small", {}, "→ "), h("p", {}, t("home.next", lang, { field: tb(nxt.field.label, lang) }))) : null,
     disclaimers(lang));
 }
@@ -763,15 +764,16 @@ export function reviewScreen(): HTMLElement {
 
 export function journey(): HTMLElement {
   const lang = L();
-  return h("main", {},
+  return h("main", { class: "scr scr-journey" },
     h("h1", {}, t("journey.title", lang)),
     passedBanner(lang),
     stagePanel(lang),
-    link("#/journey/art", "btn ghost", t("reward.see", lang)),
-    link("#/journey/log", "btn ghost", t("log.link", lang)),
-    link("#/journey/horizon", "btn ghost", t("horizon.link", lang)),
-    link("#/journey/report", "btn ghost", t("report.link", lang)),
-    link("#/journey/review", "btn ghost", t("review.link", lang)),
+    h("div", { class: "actions" },
+      link("#/journey/art", "btn ghost", t("reward.see", lang)),
+      link("#/journey/log", "btn ghost", t("log.link", lang)),
+      link("#/journey/horizon", "btn ghost", t("horizon.link", lang)),
+      link("#/journey/report", "btn ghost", t("report.link", lang)),
+      link("#/journey/review", "btn ghost", t("review.link", lang))),
     templatePicker(lang),
     stageLadder(lang),
     h("h2", {}, t("journey.slots", lang)),

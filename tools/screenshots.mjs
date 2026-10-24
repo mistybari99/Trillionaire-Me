@@ -16,6 +16,7 @@ for (const lang of ["bn", "en"]) {
   for (const r of routes) {
     await page.goto(`http://localhost:4173/#/${r}`);
     await page.waitForSelector("main");
+    await page.waitForTimeout(1500); // let fade-in and journey micro-animations settle before capture
     const file = `${out}/${lang}-${r.replace(/\//g, "_")}.png`;
     await page.screenshot({ path: file, fullPage: true });
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth);

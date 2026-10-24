@@ -1,6 +1,6 @@
 {
   "viewport": "360x740",
-  "generated": "2026-10-24T06:43:40.465Z",
+  "generated": "2026-10-24T14:07:15.991Z",
   "screens": [
     {
       "lang": "bn",
@@ -84,6 +84,12 @@
       "lang": "bn",
       "route": "journey/report",
       "file": "evidence/screenshots/bn-journey_report.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "journey/horizon",
+      "file": "evidence/screenshots/bn-journey_horizon.png",
       "horizontalOverflow": false
     },
     {
@@ -264,6 +270,12 @@
       "lang": "en",
       "route": "journey/report",
       "file": "evidence/screenshots/en-journey_report.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "journey/horizon",
+      "file": "evidence/screenshots/en-journey_horizon.png",
       "horizontalOverflow": false
     },
     {

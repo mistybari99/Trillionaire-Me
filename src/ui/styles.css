@@ -137,3 +137,32 @@ dl{margin:6px 0} .hrow{display:grid;grid-template-columns:96px 1fr;gap:8px;paddi
 /* Next step highlight (R1 / B6) */
 .next-step{border-inline-start:3px solid var(--ink);margin-top:12px}
 .next-step p{margin:4px 0 0;font-size:15px}
+
+/* Visual polish pass (Today + Journey). Layout and rhythm only; colours come from the tokens above, so dark mode follows them. */
+.scr-today h1,.scr-journey h1{margin-top:18px;margin-bottom:6px}
+.scr-today .stage{margin:20px 0 16px;padding:16px 0 14px}
+.scr-today .stage small{display:block;letter-spacing:.02em}
+.scr-today .stage .n{font-size:64px;line-height:1.1;margin-top:6px}
+.scr-today .rungs{margin-top:12px}
+.scr-today .rungs li{height:6px}
+.scr-today h2{margin:24px 0 2px}
+/* Daily inspiration card: its own surface, clear hierarchy (theme chip, Bangla line, English line) */
+.inspire{margin:14px 0 12px;padding:16px 18px 16px 16px;background:var(--card);border:1px solid var(--rule);border-inline-start-width:4px}
+.inspire .chip{margin:0 0 4px;display:inline-block}
+.inspire-bn{font-size:20px;line-height:1.55;margin:6px 0 4px}
+.inspire-en{font-size:14px;line-height:1.5}
+/* Next-step card: arrow sits beside the text, not on its own line */
+.next-step{display:flex;gap:10px;align-items:baseline;margin:16px 0 0;padding:14px 16px;background:var(--card)}
+.next-step small{flex:none;font-size:18px;font-weight:600;color:var(--ember)}
+.next-step p{flex:1;margin:0;font-size:15px}
+/* Action group: primary full width, secondary links in a 2-column grid, last one full width */
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.actions .cta,.actions .btn{margin:0;min-height:52px}
+.actions .cta,.actions .btn:last-child{grid-column:1/-1}
+.actions .btn.ghost{font-size:16px;padding:10px 8px}
+/* Journey: stage panel and picture get more air, the picture gets a framed caption area */
+.scr-journey .card[data-stage-panel]{padding:16px 16px 14px;margin:14px 0 12px}
+.reward{margin:14px 0 8px;box-shadow:0 2px 0 var(--rule)}
+.reward svg{border-bottom:1px solid var(--rule)}
+.reward+p{margin:0 4px}
+.scr-journey .actions{margin-bottom:8px}
