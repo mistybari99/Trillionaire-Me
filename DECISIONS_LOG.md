@@ -23,3 +23,7 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 | L-18 | Scheduler fills the week starting from TODAY, inside the daily free window the user sets (not blocked windows) | non-programmer-friendly: "when am I free?"; worship/family/rest are outside the window by construction | ask for each blocked window | `startDay`, `freeWindow()` |
 | L-19 | Capacity is "known" only if weekly hours AND daily window are both known; real 0 hours is respected as 0 | unknown≠0 | assume default window | `capacityState()` |
 | L-20 | Stage A auto-checks (required diary answered incl. "Later" + ≥1 goal); stages B–H need the user's own written evidence; stage order fixed; pass records are never deleted; unmet = calm "what is left" | Spec §3.4, DP-04, no shame copy | free pass / manual tick only | `src/core/stages.ts` |
+| L-21 | Owner's 20 categories become a knowledge library (+ Deen as 21st); navigation stays 5 phone tabs | Spec DP-03 one-focus; DP-12 Deen first-class | 9-item sidebar | `docs/design/life-system-integration.md` |
+| L-22 | No streak counters; habits use consistency trend + recovery plan | CLAUDE.md §2/§6 no streak-shame | streaks | n/a |
+| L-23 | Library content ships only with sources, date, evidence level and reviewed=true; emotional/health entries need human review | never invent facts; safety | ship drafts | `LibraryEntry` in `src/library/categories.ts` |
+| L-24 | First build slice = "I'm stuck" Obstacle Center (rule-based, no AI) | brief's signature feature; works offline | start with content library | phase P1 in the plan |

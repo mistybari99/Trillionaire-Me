@@ -16,5 +16,10 @@ for r in reqs.iter_rows(min_row=4):
     x = req_of.get(r[0].value)
     if x:
         r[14].value = ("Verified for G1 scope (automated evidence)" if x["outcome"] == "Pass" else "Partial — automated part passes; manual/human gate pending") + " — see Tests v2"
+new = json.load(open("docs/register/new-requirements.json", encoding="utf-8"))
+have = {r[0].value for r in reqs.iter_rows(min_row=4)}
+for n in new:
+    if n["id"] not in have:
+        reqs.append([n["id"], "Life Success system", n["requirement"], "U", "", "R1", n["gate"], n["gate"], "FIRST-BUILD (G1-G3)", "", "", "", "", "", "Not verified — no build"])
 wb.save(dst)
 print("updated", len(req_of), "requirement rows")
