@@ -17,6 +17,13 @@ export const netWorth = (items: FinItem[], scope: FinItem["scope"]) => diff(tota
 /** Monthly figures only: caller must pass monthly amounts (one-off and yearly items are not silently converted). */
 export const monthlyCashFlow = (items: FinItem[], scope: FinItem["scope"]) => diff(total(items, "income", scope), total(items, "expense", scope));
 
+/** 90-day cash flow (TM-REQ-023) = three months of monthly flows. One-off and yearly items have no known date here,
+ *  so they are counted separately (notMonthly) and never converted. Unknown amounts stay unknown. */
+export const cashFlow90Days = (items: FinItem[], scope: FinItem["scope"]): Calc => {
+  const m = monthlyCashFlow(items, scope);
+  return m.ok ? { ok: true, value: m.value * 3 } : m;
+};
+
 /** Months of cash left at the current burn. null when burn is not positive (nothing to run out of) — never "infinite". */
 export function runwayMonths(cash: FieldValue, monthlyFlow: Calc): Calc | { ok: true; value: null } {
   const c = num(cash);

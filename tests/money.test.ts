@@ -28,7 +28,7 @@ describe("money screen", () => {
     go("#/diary/money");
     expect(document.querySelectorAll("[data-fin]").length).toBe(0);
     expect(document.querySelectorAll("[data-scope] [data-value]").length).toBe(0); // no computed numbers from nothing
-    expect(document.querySelectorAll("[data-scope] [data-none]").length).toBe(4);
+    expect(document.querySelectorAll("[data-scope] [data-none]").length).toBe(6); // net worth, cash flow and 90-day cash flow, for two scopes
   });
   it("unknown amount shows 'not known yet', all computed values are labelled INFERENCE", () => {
     store.demo.put(fin("a", "asset", "personal", { state: "unknown" }, "once", "Savings"));

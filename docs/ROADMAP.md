@@ -102,3 +102,4 @@ Each sprint = one PR (draft), small commits, DECISIONS_LOG entry for any choice.
 ## 7. Change log
 - 24 Oct 2026: roadmap rebuilt from PLAN.md + visual batches 1–9; status verified against 162 passing tests.
 - 24 Oct 2026: O8 built in code (lock-screen privacy per category). On-device check stays Owner-only. O9: traceability extended to more feature test files (see docs/register/EVIDENCE_REFRESH.md).
+- 24 Oct 2026 (early-plan pass): early items checked in `docs/design/early-plan-status.md`. Built: M11 background cache label, M15 risks, M09 ventures, M10 team roles, M12 plan history, M03 North Star ladder, M06 "do this after", 90-day cash flow, M13 fasting mark, online/offline badge fix. Skipped items and owner needs listed there (§7, §9).

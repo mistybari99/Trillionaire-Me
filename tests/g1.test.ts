@@ -183,7 +183,7 @@ describe("TM-TST-144 capability status", () => {
     expect(MODULES.length).toBe(25);
     for (const m of MODULES) { expect(m.statuses.length).toBeGreaterThan(0); for (const s of m.statuses) expect(CAP_STATUSES).toContain(s); }
     // "implemented" (আছে) is now evidence-based; the per-item file/route/test check lives in tests/m_list_status.test.ts.
-    expect(MODULES.filter((m) => m.statuses.includes("implemented")).map((m) => m.id)).toEqual(["M01", "M02", "M04", "M05", "M06", "M07", "M08", "M11", "M16", "M17", "M21", "M22", "M25"]);
+    expect(MODULES.filter((m) => m.statuses.includes("implemented")).map((m) => m.id)).toEqual(["M01", "M02", "M04", "M05", "M06", "M07", "M08", "M11", "M15", "M16", "M17", "M21", "M22", "M25"]);
   });
 });
 
@@ -208,8 +208,8 @@ describe("i18n parity (completeness gate)", () => {
 });
 
 describe("TM-TST-006 every rendered value is labelled (all routes, both languages)", () => {
-  const paths = ["/today", "/journey", "/diary", "/diary/intake/1", "/diary/intake/2", "/diary/intake/3", "/diary/intake/4", "/diary/intake/5", "/diary/intake/6", "/diary/intake/7", "/diary/plan", "/diary/money", "/journey/log", "/journey/report", "/journey/review", "/capture", "/stuck", "/topics", "/topic/procrastination", "/reward", "/journey/art", "/habits", "/cards", "/focus/none", "/deen", "/more", "/more/status", "/more/fields", "/more/glossary", "/more/safety", "/more/data"];
-  it("route table is fully covered", () => { for (const p of paths) expect(ROUTES.some(([re]) => re.test(p)), p).toBe(true); expect(ROUTES.length).toBe(26); });
+  const paths = ["/today", "/journey", "/journey/risks", "/journey/history", "/journey/northstar", "/diary/ventures", "/diary/team", "/diary", "/diary/intake/1", "/diary/intake/2", "/diary/intake/3", "/diary/intake/4", "/diary/intake/5", "/diary/intake/6", "/diary/intake/7", "/diary/plan", "/diary/money", "/journey/log", "/journey/report", "/journey/review", "/capture", "/stuck", "/topics", "/topic/procrastination", "/reward", "/journey/art", "/habits", "/cards", "/focus/none", "/deen", "/more", "/more/status", "/more/fields", "/more/glossary", "/more/safety", "/more/data"];
+  it("route table is fully covered", () => { for (const p of paths) expect(ROUTES.some(([re]) => re.test(p)), p).toBe(true); expect(ROUTES.length).toBe(31); });  // 26 + 5 G3 register screens (risks, history, North Star, ventures, team)
   for (const lang of ["bn", "en", "mix"] as const) it(`0 unlabelled values in ${lang}`, () => {
     let seen = 0;
     for (const p of paths) {

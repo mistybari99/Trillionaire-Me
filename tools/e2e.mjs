@@ -68,6 +68,13 @@ check("G4-SUGGEST", "tapping a card fills the field", (await page.inputValue("#f
 await page.fill("#f-skill\\.name", "password: abc12345");
 await page.click("[data-suggest='skill.name'] [data-act=suggest-go]");
 check("G4-SUGGEST", "secret-looking search is blocked before sending", wiki.length === 1);
+// M11 (owner, 24 Oct 2026): the first search was saved on the phone, so the same term works offline with no new request.
+await page.context().setOffline(true);
+await page.fill("#f-skill\\.name", "bookkeeping");
+await page.click("[data-suggest='skill.name'] [data-act=suggest-go]");
+await page.waitForSelector("[data-option]", { timeout: 5000 }).catch(() => {});
+check("M11-CACHE", "same term offline shows the saved options with no new Wikipedia request", (await page.locator("[data-option]").count()) === 3 && wiki.length === 1);
+await page.context().setOffline(false);
 await page.fill("#f-skill\\.name", "");
 await page.evaluate(() => localStorage.setItem("tm:ui:lang", "bn")); await page.reload(); await page.waitForSelector("main");
 // G3: capacity + tasks → plan → Home (everything inside the user's own free window)

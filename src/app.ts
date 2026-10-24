@@ -4,6 +4,7 @@ import { t, tb } from "./i18n/t";
 import type { Key } from "./i18n/packs";
 import { demoBadge } from "./ui/components";
 import * as S from "./ui/screens";
+import * as P from "./ui/planScreens";
 import { LAYERS, TOPICS } from "./library/topics";
 import { dismissReminder, inAppReminders } from "./ui/prayerAlerts";
 import { notifyText } from "./core/notify";
@@ -22,6 +23,11 @@ export const ROUTES: Array<[RegExp, (m: RegExpMatchArray) => HTMLElement, string
   [/^\/capture$/, () => S.captureScreen(), "today"],
   [/^\/journey\/report$/, () => S.reportScreen(), "journey"],
   [/^\/journey\/review$/, () => S.reviewScreen(), "journey"],
+  [/^\/journey\/risks$/, () => P.riskScreen(), "journey"],
+  [/^\/journey\/history$/, () => P.planHistoryScreen(), "journey"],
+  [/^\/journey\/northstar$/, () => P.northStarScreen(), "journey"],
+  [/^\/diary\/ventures$/, () => P.ventureScreen(), "diary"],
+  [/^\/diary\/team$/, () => P.teamScreen(), "diary"],
   [/^\/stuck$/, () => S.stuckScreen(), "today"],
   [/^\/topics$/, () => S.topicsIndex(), "more"],
   [/^\/topic\/([\w-]+)$/, (m) => S.topicScreen(m[1]), "more"],

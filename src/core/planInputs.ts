@@ -30,6 +30,7 @@ export function tasksFrom(records: TMRecord[]): PlanTask[] {
     id: r.id,
     minutes: (() => { const m = numVal(r.values["task.minutes"]); return m !== null && m > 0 ? Math.round(m) : null; })(),
     priority: PRIORITY[String(val(r.values["task.priority"]) ?? "normal")] ?? 2,
+    ...(r.links?.after ? { after: r.links.after } : {}),
   }));
 }
 

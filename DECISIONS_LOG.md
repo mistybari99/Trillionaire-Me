@@ -125,3 +125,50 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 - Storage: prayer marks are written to the demo namespace with `DEMO` labels, the same way habit logs are stored. The real namespace stays closed (CLAUDE.md §2, D-B). When the owner approves D-B, these marks need a migration to the real namespace. Place and alert settings are per-device prefs in localStorage (`tm:ui:prayerCoords`, `tm:ui:prayerAlerts`, `tm:ui:prayerFired`), as other display prefs are.
 - Limit: times are shown in UTC+6 clock. If the place is outside Bangladesh the numbers are still the local clock times of that place, but shown in the Dhaka clock. Alerts only fire while the app is open (no background scheduler, no service-worker timer). No azan audio: the azan alert is a notification or in-app card only.
 - How to undo: delete `src/core/prayer.ts`, `src/core/prayerAlerts.ts`, `src/core/prayerLog.ts`, `src/ui/prayerAlerts.ts`, `tests/prayer.test.ts`, `tools/prayer_reference.py`; remove the prayer blocks in `src/ui/screens.ts` (`prayerTimesCard`, `prayerSettingsCard`, `togglePrayerMark`, and the two calls in `deen()`), the reminder block and imports in `src/app.ts`, the start line in `src/main.ts`, the `prayerCoords`/`prayerAlerts`/`prayerFired` getters in `src/ui/state.ts`, the `deen.prayer.*`, `deen.set.*`, `deen.alert.*` keys in `src/i18n/packs.ts` (both languages), and restore the M13 line in `src/modules/capability.ts` and `src/modules/evidence.ts`.
+## M11 — "Wikipedia (saved in background)" (owner, 24 Oct 2026)
+- What: the M11 status tag reads "Wikipedia (saved in background)" / "উইকিপিডিয়া (ব্যাকগ্রাউন্ডে সংরক্ষিত)". The first successful search result is saved on the phone when it arrives (`saveSearchResults` in the Suggest handler, `src/ui/screens.ts`), not only when a card is picked. The same term then shows from the phone, offline, with no request. No search runs at app start (only the tap calls `research()`). The consent line says results are saved on this phone. "internet needed" is removed from M11 and M23 (`src/modules/capability.ts`). Keys stay: module IDs and the `internet-needed` status key remain in the registry, but no module uses it.
+- Why: owner asked for this wording and for the cache to work on the first tap.
+- Alternatives: keep saving only on pick (rejected: owner asked for the first tap to be cached); a new "cache" table (rejected: the existing saved-list record is enough, no schema change).
+- How to undo: remove the `if (r.status === "options" && !wasSaved) saveSearchResults(...)` line in `suggestPanel` and restore the M11 status and note from git history.
+- Proof: `tests/m11_background_cache.test.ts`; `tools/e2e.mjs` check `M11-CACHE` (offline, same term, 3 cards, no new request).
+
+## Online / offline badge (bug found in the M11 check)
+- What: `main.ts` used to call a full `render()` on every online and offline event. That closed open panels and dropped text the user had typed but not saved (e.g. a search about to be sent). Now `updateNetBadge()` (`src/ui/net.ts`) updates only the status badge.
+- Why: a phone changes connection often; losing typed text is a real bug.
+- How to undo: restore `window.addEventListener("online", render)` and `("offline", render)` in `src/main.ts`.
+- Proof: `tests/net_badge.test.ts`.
+
+## G3 register screens: risks, ventures, team roles, plan history, North Star (M15, M09, M10, M12, M03)
+- What: five small screens on demo data, same pattern as the money screen: `#/journey/risks` (risk + stop rule + review date), `#/diary/ventures` (name, stage, ownership), `#/diary/team` (role + who covers it), `#/journey/history` (finished and no-longer-true steps, read-only), `#/journey/northstar` (measure, unit, start, target, step ladder). Pure rules in `src/core/risk.ts`, `src/core/ventures.ts`, `src/core/team.ts`, `src/core/planHistory.ts`, `src/core/northStar.ts`. Screens in `src/ui/planScreens.ts`.
+- Schema: three new entities (`risk`, `team_role`, `north_star`) and ten catalog fields. All additive and optional, so `SCHEMA_VERSION` stays 1 and no migration is needed. Records use the demo namespace and DEMO labels.
+- Rules chosen: unknown stays unknown (blank ownership or number = unknown, never 0; no equity value is derived). A ladder needs both start and target (otherwise "not known: …"). Start = target gives "same", not an empty ladder. Team roles store roles only: an email or phone-like text is refused. Risk likelihood unknown is stored as unknown, not guessed. Dates must be real calendar dates.
+- Alternatives: separate pages per module (rejected: one generic pattern is simpler to test); storing people's names for team (rejected: third-party data, TM-REQ-092).
+- How to undo: remove the five routes in `src/app.ts`, the links in `journey()` and `diary()`, delete the three `src/core/*` files, `src/ui/planScreens.ts`, the new catalog fields and entities, and the keys `risk.*`, `ven.*`, `team.*`, `hist.*`, `ns.*`.
+- Proof: `tests/m_registers.test.ts`, `tests/m_screens_ui.test.ts`; route list and hub links in `tests/g1.test.ts`.
+
+## M06 dependency: "do this after" (planner)
+- What: a task can be set to come after another open task (`links.after` on the task record, chosen in the Plan form). The planner places it later in the week than its prerequisite. If the prerequisite is not placed (no estimate, no room, or a cycle), the task waits with reason `waiting_for_prerequisite`. Tasks with no link are planned exactly as before.
+- Why: Spec M06 asks for dependency. This is the basic version: one prerequisite per task.
+- Alternatives: a full dependency graph with a graph view (later). A new schema field (rejected: uses the existing `links` structure).
+- How to undo: remove the `after` handling in `schedule()` (`src/core/planner.ts`), the select in `planScreen`, and `after` in `tasksFrom()`.
+- Proof: `tests/m_dependency.test.ts` (same plan for same input; no loop on cycles; unchanged plan with no link).
+
+## TM-REQ-023 90-day cash flow
+- What: `cashFlow90Days()` in `src/core/finance.ts` = three months of monthly income minus expense, shown on the Money screen as "90-day cash flow (3 × monthly)".
+- Why: TM-REQ-023 asks for a 90-day cash-flow review.
+- Rules chosen: one-off and yearly items have no known date, so they are counted in the existing "not monthly" note and never converted. Unknown amounts stay unknown.
+- How to undo: remove `cashFlow90Days` and the `data-cash90` line in `moneyScreen`, and the `money.cash90` keys.
+- Proof: `tests/m_registers.test.ts` (TM-REQ-023 block), `tests/money.test.ts` (empty-state count updated from 4 to 6 for the new line).
+
+## M13 fasting day mark (content-free)
+- What: a "I fasted today" toggle on the Deen screen, one record per Dhaka date in the existing `fast` entity. Tap to mark, tap again to undo. No count, streak or ranking. Demo namespace only.
+- Why: G3 says Deen tracking without content. Prayer marks already exist (another session, commit f60c8b7); this adds the same pattern for fasting.
+- Alternatives: a fasting counter (rejected: counts drift into streak-like pressure). Make-up fasts (later, with owner review of wording).
+- How to undo: remove `fastCard` and `toggleFastMark` in `src/ui/screens.ts`, `src/core/fastLog.ts`, the `deen.fast.*` keys and `tests/fast_log.test.ts`.
+- Proof: `tests/fast_log.test.ts`.
+
+## M-list status pass (24 Oct 2026)
+- Statuses now match the code: M15 built; M09, M10, M03, M12, M13 partial; M11 "saved in background"; M23 not built. M13's old note was out of date (prayer marks and prayer times exist); corrected with evidence.
+- Owner hosting steps added to `docs/design/in-app-search-and-hosting.md` (no account created).
+- Two parallel streams: the M13 prayer work (commit f60c8b7, pushed by another session on this branch) is in the same files. This pass's commit is rebased on top of it; its tests are included in the full run.
+- Proof: `docs/design/early-plan-status.md` (item-by-item evidence), `docs/design/m-list-status.md` (generated from `src/modules/capability.ts` and `evidence.ts`).

@@ -15,3 +15,11 @@ Recommended: start with the free open-data provider (no key, no cost), add Googl
 
 ## Hosting
 `npm run build` makes a plain static folder (`dist/`) with relative paths and hash routing: it runs on any free static host (GitHub Pages, Cloudflare Pages, Netlify) without server settings. Not deployed yet — publishing is the owner's call. Offline use still works after first visit (service worker), and the app never needs the internet except for research/AI features.
+
+## Owner steps for hosting (when you decide; the builder does not create accounts)
+Free plan only. Nothing is published until you do steps 1–2 yourself.
+1. Make a free Cloudflare account (you sign up; keep the password to yourself).
+2. Create a Pages project from the private GitHub repo (or upload the `dist` folder). Build command: `npm run build`. Output folder: `dist`.
+3. Open the link on your phone in Chrome. Menu → "Add to Home screen". Turn on airplane mode, open the app again and check that Today still opens (this is the O1 test).
+4. Tell the builder the result. Nothing else is needed for the personal edition.
+Wikipedia search runs only when you tap "Suggest options". The first result is saved on the phone, so the same search works offline later.

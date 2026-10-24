@@ -18,7 +18,7 @@ import type { FieldDef } from "../catalog/types";
 import { StoreRepo } from "../adapters/storeRepo";
 import { createBackup, restoreBackup } from "../core/backup";
 import { schedule, todaysActions } from "../core/planner";
-import { buildPlanInput, capacityState, fmtClock, freeWindow } from "../core/planInputs";
+import { buildPlanInput, capacityState, fmtClock, freeWindow, isOpenTask } from "../core/planInputs";
 import { planFlowData } from "../core/planFlow";
 import { assessmentSection } from "./assessment";
 import { markNotTrue, realityLogRecord, RealityError } from "../core/reality";
@@ -36,7 +36,7 @@ import * as Cards from "../core/cards";
 import { CAUSE_TEXT, QUESTIONS, diagnose, type Answer, type Helper } from "../core/stuck";
 import { wordChain } from "../core/learning";
 import { extract, summarize, type Candidate, type Item } from "../core/capture";
-import { netWorth, monthlyCashFlow, type Calc } from "../core/finance";
+import { netWorth, monthlyCashFlow, cashFlow90Days, type Calc } from "../core/finance";
 import { financeFrom } from "../core/financeInputs";
 import { research, safeQuery } from "../core/research";
 import { ownOptions, saveOwnOption, saveSearchResults, savedSearchResults } from "../core/savedLists";
@@ -44,6 +44,7 @@ import { wikipedia } from "../adapters/wikipedia";
 import { GLOSSARY } from "../catalog/glossary";
 import { DHAKA_COORDS, PRAYER_KEYS, dhakaNow, prayerClock, isoDate, parseCoord, prayerTimes, type PrayerKey } from "../core/prayer";
 import { markedOn, prayerLogId, prayerLogRecord } from "../core/prayerLog";
+import { fastLogId, fastLogRecord, isFastMarked } from "../core/fastLog";
 import { DEFAULT_ALERT_PREFS, parseAlertPrefs } from "../core/prayerAlerts";
 import { canNotify } from "./prayerAlerts";
 
@@ -84,7 +85,7 @@ function stageLadder(lang: Locale): HTMLElement {
 }
 
 function capTag(s: ModuleDef["statuses"][number], lang: Locale) {
-  const cls = s === "implemented" || s === "offline-ok" ? "ok" : s === "demo" || s === "internet-needed" || s === "partial" ? "warn" : "off";
+  const cls = s === "implemented" || s === "offline-ok" || s === "saved-background" ? "ok" : s === "demo" || s === "internet-needed" || s === "partial" ? "warn" : "off";
   return h("span", { class: `tag ${cls}`, "data-cap": s }, t(`cap.${s}` as Key, lang));
 }
 
@@ -188,11 +189,16 @@ export function planScreen(): HTMLElement {
   const title = h("input", { id: "pt-title", type: "text", maxlength: "120", autocomplete: "off" });
   const mins = h("input", { id: "pt-min", type: "text", inputmode: "numeric" });
   const prio = h("select", { id: "pt-prio" }, ...fieldById("task.priority")!.options!.map((o) => h("option", { value: o.code, ...(o.code === "normal" ? { selected: true } : {}) }, tb(o.label, lang))));
+  // M06 dependency: "do this after" lists open tasks only; nothing is chosen by default.
+  const openTasks = cp.recs.filter(isOpenTask).sort((a, b) => a.id.localeCompare(b.id));
+  const afterSel = h("select", { id: "pt-after" }, h("option", { value: "" }, t("plan.after.none", lang)),
+    ...openTasks.map((r) => h("option", { value: r.id }, cp.titles.get(r.id) ?? r.id)));
   const err = h("p", { class: "err", role: "alert" });
   const form = h("form", { novalidate: true, "data-form": "task" },
     h("label", { for: "pt-title" }, t("plan.task.title", lang)), title,
     h("label", { for: "pt-min" }, t("plan.task.minutes", lang)), mins,
-    h("label", { for: "pt-prio" }, t("plan.task.priority", lang)), prio, err,
+    h("label", { for: "pt-prio" }, t("plan.task.priority", lang)), prio,
+    ...(openTasks.length ? [h("label", { for: "pt-after" }, t("plan.after.label", lang)), afterSel] : []), err,
     h("button", { class: "btn", type: "submit" }, t("plan.task.save", lang)));
   form.addEventListener("submit", (ev) => {
     ev.preventDefault(); err.textContent = "";
@@ -203,13 +209,16 @@ export function planScreen(): HTMLElement {
     else { const n = Number(raw); if (!Number.isFinite(n) || n <= 0 || n > 1440) { err.textContent = t("intake.invalidNumber", lang); return; } m = { state: "value", value: Math.round(n), label: "DEMO" }; }
     const id = `task-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`;
     store.demo.put({ id, entity: "task", ns: "demo", ownerId: "demo-user", schemaVersion: 1, createdAt: new Date().toISOString(),
-      values: { "task.title": { state: "value", value: name, label: "DEMO" }, "task.minutes": m, "task.priority": { state: "value", value: prio.value, label: "DEMO" } } });
+      values: { "task.title": { state: "value", value: name, label: "DEMO" }, "task.minutes": m, "task.priority": { state: "value", value: prio.value, label: "DEMO" } },
+      ...(afterSel.value ? { links: { after: afterSel.value } } : {}) });
     rerender();
   });
+  const afterTitle = (id: string) => cp.titles.get(id) || "";
   const taskRows = cp.recs.filter((r) => r.entity === "task").sort((a, b) => a.id.localeCompare(b.id)).map((r) => {
     const mv = r.values["task.minutes"];
     return h("div", { class: "card", "data-task": r.id }, h("div", { class: "row" },
-      h("div", {}, h("h2", { class: "card-h", }, cp.titles.get(r.id) ?? ""), h("p", { class: "muted" }, mv && mv.state === "value" ? valueEl(t("task.minutes", lang, { n: num(Number(mv.value), lang) }), "DEMO", lang) : t("plan.task.minutes.later", lang))),
+      h("div", {}, h("h2", { class: "card-h", }, cp.titles.get(r.id) ?? ""), h("p", { class: "muted" }, mv && mv.state === "value" ? valueEl(t("task.minutes", lang, { n: num(Number(mv.value), lang) }), "DEMO", lang) : t("plan.task.minutes.later", lang)),
+        r.links?.after ? h("p", { class: "muted", "data-after": r.links.after }, t("plan.after.shown", lang, { title: afterTitle(r.links.after) })) : null),
       r.values["task.done_on"]?.state === "value" ? h("span", { class: "tag ok" }, t("reward.done", lang))
         : r.values["task.not_true_on"]?.state === "value" ? h("div", {}, h("span", { class: "tag off" }, t("reality.tag", lang, { date: String((r.values["task.not_true_on"] as { value?: unknown }).value) })), h("p", { class: "muted" }, t("reality.note", lang)), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => { store.demo.delete(r.id); rerender(); } }, t("plan.task.remove", lang)))
         : h("div", {}, doneBtn(r.id, lang), focusBtn(r.id, lang), h("button", { class: "btn ghost", type: "button", "data-act": "reality-changed", "data-task-id": r.id, style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => markRealityChanged(r.id, lang) }, t("reality.btn", lang)), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => { store.demo.delete(r.id); rerender(); } }, t("plan.task.remove", lang)))));
@@ -271,7 +280,8 @@ export function moneyScreen(): HTMLElement {
   const has = (sc: "personal" | "business", kinds: string[]) => fv.items.some((i) => i.scope === sc && kinds.includes(i.kind));
   const sum = (sc: "personal" | "business") => h("div", { class: "card", "data-scope": sc }, h("h2", { class: "card-h", }, t(`money.${sc}` as Key, lang)),
     h("p", {}, t("money.networth", lang), ": ", has(sc, ["asset", "liability"]) ? show(netWorth(fv.items, sc)) : h("span", { class: "muted", "data-none": "1" }, t("money.none", lang))),
-    h("p", {}, t("money.cashflow", lang), ": ", has(sc, ["income", "expense"]) ? show(monthlyCashFlow(fv.items, sc)) : h("span", { class: "muted", "data-none": "1" }, t("money.none", lang))));
+    h("p", {}, t("money.cashflow", lang), ": ", has(sc, ["income", "expense"]) ? show(monthlyCashFlow(fv.items, sc)) : h("span", { class: "muted", "data-none": "1" }, t("money.none", lang))),
+    h("p", { "data-cash90": sc }, t("money.cash90", lang), ": ", has(sc, ["income", "expense"]) ? show(cashFlow90Days(fv.items, sc)) : h("span", { class: "muted", "data-none": "1" }, t("money.none", lang))));
   const rows = recs.filter((r) => r.entity === "finance_item").sort((a, b) => a.id.localeCompare(b.id)).map((r) => {
     const a = r.values["finance.amount"]!;
     return h("div", { class: "card", "data-fin": r.id }, h("div", { class: "row" }, h("div", {},
@@ -778,7 +788,10 @@ export function journey(): HTMLElement {
       link("#/journey/log", "btn ghost", t("log.link", lang)),
       link("#/journey/horizon", "btn ghost", t("horizon.link", lang)),
       link("#/journey/report", "btn ghost", t("report.link", lang)),
-      link("#/journey/review", "btn ghost", t("review.link", lang))),
+      link("#/journey/review", "btn ghost", t("review.link", lang)),
+      link("#/journey/risks", "btn ghost", t("risk.link", lang)),
+      link("#/journey/history", "btn ghost", t("hist.link", lang)),
+      link("#/journey/northstar", "btn ghost", t("ns.link", lang))),
     templatePicker(lang),
     stageLadder(lang),
     h("h2", {}, t("journey.slots", lang)),
@@ -805,6 +818,8 @@ export function diary(): HTMLElement {
     link("#/diary/intake", "cta", t("diary.start", lang)),
     link("#/diary/plan", "btn ghost", t("plan.title", lang)),
     link("#/diary/money", "btn ghost", t("money.title", lang)),
+    link("#/diary/ventures", "btn ghost", t("ven.link", lang)),
+    link("#/diary/team", "btn ghost", t("team.link", lang)),
     h("h2", {}, t("diary.modules", lang)),
     ...MODULES.filter((m) => m.tab === "diary").map((m) => moduleCard(m, lang)),
     disclaimers(lang));
@@ -872,12 +887,12 @@ function suggestPanel(f: FieldDef, lang: Locale, getInput: () => HTMLInputElemen
     out.replaceChildren(h("p", { class: "muted" }, t("suggest.loading", lang)));
     const wasSaved = savedSearchResults(store.demo, f.id, safe).length >= 2;
     const r = await research(safe, true, { provider: wikipedia(lang === "en" ? "en" : "bn"), online: () => navigator.onLine, cached: (qq) => savedSearchResults(store.demo, f.id, qq) });
+    // M11 (owner, 24 Oct): the first successful search is saved on this phone right away, so the same term works offline later.
+    if (r.status === "options" && !wasSaved) saveSearchResults(store.demo, f.id, safe, r.options, new Date());
     const cards = r.options.map((o) => h("div", { class: "card", "data-option": o.id },
       h("h2", { class: "card-h", }, o.title), h("p", { class: "muted" }, o.snippet),
       h("p", { class: "muted" }, t("suggest.source", lang, { s: o.sourceName, d: o.fetchedAt.slice(0, 10) })),
       h("button", { class: "btn", type: "button", onclick: () => {
-        // Keep the results the user tapped from, so the same term shows here offline next time.
-        if (r.status === "options") saveSearchResults(store.demo, f.id, safe, r.options, new Date());
         input.value = o.title; out.replaceChildren(); input.focus();
       } }, t("suggest.use", lang))));
     const note = wasSaved && r.status === "options" ? "suggest.savedNote" : r.status === "too_few" ? "suggest.none" : r.status === "offline" ? "suggest.offline" : r.status === "error" ? "suggest.error" : null;
@@ -937,6 +952,24 @@ function togglePrayerMark(day: string, k: PrayerKey) {
   const id = prayerLogId(day, k);
   if (store.demo.get(id)) store.demo.delete(id);
   else store.demo.put(prayerLogRecord(day, k, new Date().toISOString()));
+}
+
+function toggleFastMark(day: string) {
+  const id = fastLogId(day);
+  if (store.demo.get(id)) store.demo.delete(id);
+  else store.demo.put(fastLogRecord(day, new Date().toISOString()));
+}
+
+/** M13 fasting mark for today (Dhaka date). Only the date is kept; nothing is counted. */
+function fastCard(lang: Locale): HTMLElement {
+  const day = isoDate(dhakaNow(Date.now()).date);
+  const marked = isFastMarked(store.demo.list(), day);
+  return h("div", { class: "card", "data-fast": day },
+    h("h2", { class: "card-h" }, t("deen.fast.title", lang)),
+    h("p", { class: "muted" }, t("deen.fast.hint", lang)),
+    h("button", { class: marked ? "btn" : "btn ghost", type: "button", "data-act": "fast-mark", "aria-pressed": String(marked),
+      onclick: () => { toggleFastMark(day); rerender(); } }, marked ? t("deen.fast.marked", lang) : t("deen.fast.mark", lang)),
+    h("p", { class: "note" }, t("deen.fast.note", lang)));
 }
 
 function prayerTimesCard(lang: Locale): HTMLElement {
@@ -1008,6 +1041,7 @@ export function deen(): HTMLElement {
     h("h1", {}, t("deen.title", lang)),
     h("p", { class: "sub" }, t("deen.intro", lang)),
     h("p", { class: "muted" }, t("deen.control", lang)),
+    fastCard(lang),
     prayerTimesCard(lang),
     prayerSettingsCard(lang),
     ...ents.map((e) => {
