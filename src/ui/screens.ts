@@ -26,7 +26,8 @@ import { reviewSummary } from "../core/review";
 import { NEUTRAL_TITLE, NOTIFY_CATEGORIES, notifyText } from "../core/notify";
 import { stagesFor, TEMPLATE_IDS, TEMPLATES, type TemplateId } from "../core/stageTemplates";
 import { STAGE_CODES, StageError, conditions, currentIndex, passStage, stageStates, type StageCode } from "../core/stages";
-import { LAYERS, TOPICS, topicById, tipsOf, relatedTips, type Tip } from "../library/topics";
+import { LAYERS, TOPICS, topicById, relatedTips, type Tip } from "../library/topics";
+import { tipsFor } from "../library/packs";
 import { journeyArt } from "./rewardArt";
 import { messageIndex, milestoneAt } from "../core/reward";
 import { diagram } from "./diagram";
@@ -516,14 +517,14 @@ function tipCard(tp: Tip, lang: Locale): HTMLElement {
 export function topicsIndex(): HTMLElement {
   const lang = L();
   return h("main", {}, link("#/more", "crumb", `← ${t("more.title", lang)}`), h("h1", {}, t("topics.title", lang)), h("p", { class: "sub" }, t("topics.intro", lang)),
-    ...(Object.keys(LAYERS) as (keyof typeof LAYERS)[]).flatMap((ly) => [h("h2", {}, tb(LAYERS[ly], lang)), ...TOPICS.filter((x) => x.layer === ly).map((x) => link(`#/topic/${x.id}`, "card link", h("h2", { class: "card-h", }, tb(x.name, lang)), h("p", { class: "muted" }, `${num(tipsOf(x.id).length, lang)} ${t("topics.tips", lang)}`)))]),
+    ...(Object.keys(LAYERS) as (keyof typeof LAYERS)[]).flatMap((ly) => [h("h2", {}, tb(LAYERS[ly], lang)), ...TOPICS.filter((x) => x.layer === ly).map((x) => link(`#/topic/${x.id}`, "card link", h("h2", { class: "card-h", }, tb(x.name, lang)), h("p", { class: "muted" }, `${num(tipsFor(x.id).length, lang)} ${t("topics.tips", lang)}`)))]),
     disclaimers(lang));
 }
 
 export function topicScreen(id: string | undefined): HTMLElement {
   const lang = L(); const tp = id ? topicById(id) : undefined;
   if (!tp) return topicsIndex();
-  const mine = tipsOf(tp.id); const rel = relatedTips(tp.id);
+  const mine = tipsFor(tp.id); const rel = relatedTips(tp.id);
   return h("main", {}, link("#/topics", "crumb", `← ${t("topics.title", lang)}`), h("h1", {}, tb(tp.name, lang)),
     tp.sensitive ? h("div", { class: "note", role: "note", "data-safety": tp.sensitive }, h("p", {}, t(`topics.safety.${tp.sensitive}` as Key, lang))) : null,
     tp.appLink ? link(tp.appLink, "btn", t("topics.tryIt", lang)) : null,

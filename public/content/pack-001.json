@@ -1,0 +1,338 @@
+{
+  "schema": "tm-content-pack",
+  "schemaVersion": 1,
+  "packId": "pack-001",
+  "reviewStatus": "pending_reviewer",
+  "license": "original",
+  "description": "Original short tips (Bangla and English) for money, time, habits, learning, basic health and relationships. Drafts: shown as যাচাই হয়নি until a reviewer signs off.",
+  "tips": [
+    {
+      "id": "p1-mo3",
+      "topic": "money",
+      "tags": ["money", "budget", "planning"],
+      "title": { "bn": "খরচ তিন ভাগে ভাগ করুন", "en": "Sort spending into three groups" },
+      "how": { "bn": "প্রতিটি খরচ লিখুন: প্রয়োজন (থাকা, খাওয়া, যাতায়াত), চাওয়া (পছন্দের জিনিস), আর বাকি খরচ। তারপর দেখুন কোন ভাগ সবচেয়ে বড়।", "en": "Write every expense: needs (home, food, travel), wants (things you like), and other costs. Then see which group is the biggest." },
+      "diagram": { "type": "steps", "bn": "প্রয়োজন|চাওয়া|বাকি খরচ|কোনটা বড় দেখি", "en": "Needs|Wants|Other costs|See which is biggest" },
+      "appLink": "#/diary/money"
+    },
+    {
+      "id": "p1-mo4",
+      "topic": "money",
+      "tags": ["money", "records", "honesty"],
+      "title": { "bn": "জানা নেই মানে শূন্য নয়", "en": "Unknown is not zero" },
+      "how": { "bn": "যে খরচ বা আয়ের অংক জানেন না, সেটা শূন্য ধরবেন না। ‘জানি না’ লিখে রাখুন, পরে হিসাব করে বসিয়ে দিন।", "en": "If you do not know an expense or income amount, do not count it as zero. Write “don’t know” and fill it in later." },
+      "diagram": { "type": "steps", "bn": "জানা আছে|জানা নেই|‘জানি না’ লিখি|পরে বসাই", "en": "Known|Not known|Write “don’t know”|Fill in later" },
+      "appLink": "#/diary/money"
+    },
+    {
+      "id": "p1-mo5",
+      "topic": "money",
+      "tags": ["money", "spending", "focus"],
+      "title": { "bn": "২৪ ঘণ্টার বিরতি", "en": "The 24-hour pause" },
+      "how": { "bn": "বড় বা আগে থেকে ঠিক না করা কেনাকাটার আগে ২৪ ঘণ্টা অপেক্ষা করুন। তারপর দেখুন এটা প্রয়োজন, নাকি শুধু ইচ্ছা।", "en": "Before a big or unplanned purchase, wait 24 hours. Then check whether it is a need or just a wish." },
+      "diagram": { "type": "cycle", "bn": "ইচ্ছা জাগে|২৪ ঘণ্টা অপেক্ষা|প্রয়োজন না ইচ্ছা দেখি|সিদ্ধান্ত নিই", "en": "Urge comes|Wait 24 hours|Need or wish?|Decide" },
+      "appLink": "#/diary/money"
+    },
+    {
+      "id": "p1-mo6",
+      "topic": "money",
+      "tags": ["money", "savings", "emergency"],
+      "title": { "bn": "হঠাৎ খরচের জন্য আলাদা খাম", "en": "A separate place for surprise costs" },
+      "how": { "bn": "হঠাৎ খরচের জন্য আলাদা একটা জায়গা রাখুন, যেমন আলাদা হিসাব বা খাম। ছোট অংক দিয়ে শুরু করুন এবং নিয়মিত জমা দিন। এটা জরুরি খরচের জন্য, খেলার জন্য নয়।", "en": "Keep a separate place for sudden costs, such as a separate account or envelope. Start small and add regularly. It is for emergencies, not for fun." },
+      "diagram": { "type": "steps", "bn": "আলাদা জায়গা|ছোট শুরু|নিয়মিত জমা|শুধু জরুরি খরচে", "en": "Separate place|Start small|Add regularly|Only for emergencies" },
+      "appLink": "#/diary/money"
+    },
+    {
+      "id": "p1-mo7",
+      "topic": "money",
+      "tags": ["money", "bills", "review"],
+      "title": { "bn": "নিয়মিত বিল এক পাতায়", "en": "List your recurring bills on one page" },
+      "how": { "bn": "প্রতি মাসে যা নিয়মিত বের হয়, যেমন ভাড়া, মোবাইল, ইন্টারনেট, সদস্যতা, সব এক পাতায় লিখুন। যেটা আর দরকার নেই, সেটা বন্ধ করার তারিখ দিন।", "en": "Write every regular monthly payment, such as rent, mobile, internet and subscriptions, on one page. For anything you no longer need, set a date to stop it." },
+      "diagram": { "type": "steps", "bn": "সব নিয়মিত খরচ|এক পাতায়|দরকার আছে কি?|বন্ধের তারিখ", "en": "All regular costs|One page|Still needed?|Stop date" },
+      "appLink": "#/diary/money"
+    },
+    {
+      "id": "p1-mo8",
+      "topic": "money",
+      "tags": ["money", "budget", "fun"],
+      "title": { "bn": "খেলার টাকার নির্দিষ্ট সীমা", "en": "A fixed fun-money limit" },
+      "how": { "bn": "মাসে নিজের জন্য একটা নির্দিষ্ট ‘খেলার টাকা’ রাখুন। সীমা শেষ হলে সেটাই নিয়ম। প্রয়োজনের খরচ আগে মিটিয়ে নিন, তারপর বাকিটা খোলাখুলি রাখুন।", "en": "Keep one fixed monthly “fun money” amount. When the limit is reached, that is the rule. Pay needs first, then keep the rest open and visible." },
+      "diagram": { "type": "steps", "bn": "সীমা ঠিক করি|সীমা শেষ হলে থামি|আগে প্রয়োজনের খরচ|মাসে একবার দেখি", "en": "Set the limit|Stop when it is used up|Needs come first|Check monthly" },
+      "appLink": "#/diary/money"
+    },
+    {
+      "id": "p1-mo9",
+      "topic": "money",
+      "tags": ["money", "income", "planning"],
+      "title": { "bn": "নতুন আয়ের আগে সময়ের হিসাব", "en": "Count your hours before new income work" },
+      "how": { "bn": "নতুন কাজ বা আয়ের উৎস ভাবার আগে লিখুন: কত ঘণ্টা লাগবে, কোন কাজ সরে যাবে, আর টাকা কখন আসতে পারে। এগুলো অনুমান হিসেবে লিখুন, নিশ্চিত ধরবেন না।", "en": "Before taking on new work or a new income source, write how many hours it needs, what it will push aside, and when money might arrive. Write these as guesses, not promises." },
+      "diagram": { "type": "steps", "bn": "কত ঘণ্টা|কী সরবে|কখন আসতে পারে|অনুমান লিখি", "en": "How many hours|What it pushes aside|When money may come|Write it as a guess" },
+      "appLink": "#/diary/money"
+    },
+    {
+      "id": "p1-ti3",
+      "topic": "time",
+      "tags": ["time", "measurement"],
+      "title": { "bn": "একদিনের সময়-লগ", "en": "A one-day time log" },
+      "how": { "bn": "একদিন প্রতি ঘণ্টায় লিখুন কী করছিলেন। বিচার না করে শুধু লিখুন। পরে দেখবেন সময় সবচেয়ে বেশি কোথায় গেছে।", "en": "Write what you did each hour for one day. Do not judge, just record. Later you will see where most of the time went." },
+      "diagram": { "type": "steps", "bn": "প্রতি ঘণ্টায় লিখি|বিচার না করি|পরে দেখি|একটা বদল", "en": "Note each hour|Do not judge|Review later|Make one change" },
+      "appLink": "#/diary/plan"
+    },
+    {
+      "id": "p1-ti4",
+      "topic": "time",
+      "tags": ["time", "priorities", "focus"],
+      "title": { "bn": "সকালে তিনটি কাজ বাছুন", "en": "Pick three tasks each morning" },
+      "how": { "bn": "সকালে ভাবুন আজ কোন তিনটি কাজ সবচেয়ে বেশি কাজে লাগবে। বাকিগুলো পরে বা কালের জন্য রাখুন। তিনটি শেষ হলে দিন ভালোভাবে কাটল।", "en": "Each morning, pick the three tasks that matter most. Put the rest for later or tomorrow. Finishing three makes the day a good one." },
+      "diagram": { "type": "steps", "bn": "সকালে তিনটি বাছি|বাকিগুলো পরে|তিনটি শেষ করি", "en": "Pick three in the morning|The rest goes later|Finish the three" },
+      "appLink": "#/diary/plan"
+    },
+    {
+      "id": "p1-ti5",
+      "topic": "time",
+      "tags": ["time", "focus", "batching"],
+      "title": { "bn": "ছোট কাজ একসাথে করুন", "en": "Batch small tasks together" },
+      "how": { "bn": "ফোন কল, বার্তার উত্তর, ছোট হিসাব, এগুলো আলাদা আলাদা না করে একটা সময়ে একসাথে করুন। প্রসঙ্গ বদলালে যে সময় যায়, সেটা বাঁচবে।", "en": "Do calls, message replies and small admin in one block, not one by one. Switching topics wastes time; batching saves it." },
+      "diagram": { "type": "cycle", "bn": "একই ধরনের কাজ জমাই|একটা ব্লকে করি|ছোট বিরতি|পরের ব্লক", "en": "Collect similar tasks|Do them in one block|Short break|Next block" },
+      "appLink": "#/diary/plan"
+    },
+    {
+      "id": "p1-ti6",
+      "topic": "time",
+      "tags": ["time", "focus", "notifications"],
+      "title": { "bn": "বার্তা দেখুন দিনে দুবার", "en": "Check messages twice a day" },
+      "how": { "bn": "বার্তা আর ইমেইল দিনে দুবার দেখুন, যেমন দুপুরে আর বিকেলে। বাকি সময় নোটিফিকেশন বন্ধ রাখুন। জরুরি হলে সরাসরি ফোন আসবে, এই ব্যবস্থা ঠিক করে নিন।", "en": "Check messages and email twice a day, for example at noon and in the evening. Turn off other notifications. Set up a way for truly urgent matters to reach you directly, such as a phone call." },
+      "diagram": { "type": "steps", "bn": "দুপুরে একবার|বিকেলে একবার|নোটিফিকেশন বন্ধ|জরুরি হলে ফোন", "en": "Once at noon|Once in the evening|Notifications off|Urgent: phone call" },
+      "appLink": "#/today"
+    },
+    {
+      "id": "p1-ti7",
+      "topic": "time",
+      "tags": ["time", "priorities", "focus"],
+      "title": { "bn": "যা বন্ধ করব, তার তালিকা", "en": "A list of things to stop" },
+      "how": { "bn": "যে কাজ সময় খায় কিন্তু কম উপকার দেয়, সেগুলো একটা তালিকায় লিখুন। প্রতি সপ্তাহে একটা বাদ দিন, নয়তো তার জন্য সীমা বেঁধে দিন।", "en": "List the activities that eat time but give little value. Each week, drop one or set a limit on it." },
+      "diagram": { "type": "steps", "bn": "সময় খায় এমন কাজ|কম উপকার কী?|একটা বাদ|সীমা বাঁধি", "en": "Time-eating tasks|Little value?|Drop one|Set a limit" },
+      "appLink": "#/diary/plan"
+    },
+    {
+      "id": "p1-ti8",
+      "topic": "time",
+      "tags": ["time", "delegation", "people"],
+      "title": { "bn": "কাজ অন্যকে দিন", "en": "Hand off what others can do" },
+      "how": { "bn": "নিজে না করলেও চলে এমন কাজ কাউকে দিন, অথবা স্পষ্ট নির্দেশ লিখে দিন। কাজ দেওয়ার সময় বলুন কী, কখন, আর কেমন হলে ভালো হয়।", "en": "Give away tasks you do not need to do yourself, or write clear instructions. When delegating, say what, by when, and what good looks like." },
+      "diagram": { "type": "steps", "bn": "কাজ বাছি|কাকে দেব?|কী, কখন, কেমন|পরে খোঁজ নিই", "en": "Pick the task|Who can do it?|What, when, how good|Follow up" },
+      "appLink": "#/diary/plan"
+    },
+    {
+      "id": "p1-ti9",
+      "topic": "time",
+      "tags": ["time", "planning", "review"],
+      "title": { "bn": "সপ্তাহের শুরুতে ১০ মিনিট", "en": "Ten minutes to plan the week" },
+      "how": { "bn": "সপ্তাহের শুরুতে ১০ মিনিট বসুন। গত সপ্তাহের বড় কাজগুলো দেখুন, এই সপ্তাহের তিনটি লক্ষ্য লিখুন, আর সময়সূচিতে বসান।", "en": "Sit for 10 minutes at the start of the week. Look at last week’s big tasks, write three goals for this week, and place them in your schedule." },
+      "diagram": { "type": "steps", "bn": "গত সপ্তাহ দেখি|তিনটি লক্ষ্য|সময়সূচিতে বসাই", "en": "Look at last week|Three goals|Place them in the schedule" },
+      "appLink": "#/diary/plan"
+    },
+    {
+      "id": "p1-ha3",
+      "topic": "habits",
+      "tags": ["habits", "planning"],
+      "title": { "bn": "যদি-তাহলে পরিকল্পনা", "en": "An if-then plan" },
+      "how": { "bn": "‘যদি এই পরিস্থিতি হয়, তাহলে এই কাজ করব’ এই আকারে লিখুন। যেমন: যদি রাতে ফোন হাতে নিই, তাহলে বইটা খুলব।", "en": "Write it as “If this happens, then I will do that.” Example: if I reach for my phone at night, then I open my book." },
+      "diagram": { "type": "steps", "bn": "যদি সংকেত|তাহলে কাজ|রোজ একই", "en": "If a cue|Then the action|Same every day" },
+      "appLink": "#/habits"
+    },
+    {
+      "id": "p1-ha4",
+      "topic": "habits",
+      "tags": ["habits", "environment"],
+      "title": { "bn": "সংকেত একই রাখুন", "en": "Keep the cue the same" },
+      "how": { "bn": "অভ্যাস তৈরির সময় একই জায়গা, একই সময় বা একই আগের কাজ সংকেত হিসেবে রাখুন। সংকেত স্থির থাকলে কাজটা ধীরে ধীরে নিজে থেকে শুরু হয়।", "en": "While building a habit, keep the same place, time or earlier action as its cue. When the cue is steady, the action starts more and more on its own." },
+      "diagram": { "type": "cycle", "bn": "সংকেত|কাজ|ছোট পুরস্কার|আবার সংকেত", "en": "Cue|Action|Small reward|Cue again" },
+      "appLink": "#/habits"
+    },
+    {
+      "id": "p1-ha5",
+      "topic": "habits",
+      "tags": ["habits", "reward"],
+      "title": { "bn": "নিজের পছন্দের ছোট পুরস্কার", "en": "A small reward you actually like" },
+      "how": { "bn": "ছোট কাজের পরে নিজেকে এমন কিছু দিন যা সত্যিই ভালো লাগে, যেমন এক কাপ চা বা একটা প্রিয় গান। বড় পুরস্কার বা কেনাকাটা নয়।", "en": "After a small task, give yourself something you really enjoy, such as tea or a favourite song. Not a big reward or a purchase." },
+      "diagram": { "type": "steps", "bn": "কাজ শেষ|ছোট পুরস্কার|ভালো লাগে", "en": "Task done|Small reward|Feel good" },
+      "appLink": "#/habits"
+    },
+    {
+      "id": "p1-ha6",
+      "topic": "habits",
+      "tags": ["habits", "motivation"],
+      "title": { "bn": "অপছন্দের কাজের সাথে পছন্দের জিনিস", "en": "Pair a dull task with something you enjoy" },
+      "how": { "bn": "যে কাজ করতে ইচ্ছা করে না, শুধু সেই সময়েই পছন্দের জিনিস দিন, যেমন প্রিয় পডকাস্ট বা গান। এতে কাজের সময়টা শুধু কষ্টের থাকে না।", "en": "Only during a task you dislike, allow yourself something you enjoy, like a favourite podcast or song. The time then does not feel like effort alone." },
+      "diagram": { "type": "steps", "bn": "অপছন্দের কাজ|শুধু তখনই পছন্দের জিনিস|কাজ শেষ", "en": "A task you dislike|Enjoy only then|Finish the task" },
+      "appLink": "#/habits"
+    },
+    {
+      "id": "p1-ha7",
+      "topic": "habits",
+      "tags": ["habits", "review"],
+      "title": { "bn": "মাসে একবার অভ্যাস দেখা", "en": "Review your habits once a month" },
+      "how": { "bn": "মাসে একবার দেখুন কোন অভ্যাস টিকছে, কোনটা কঠিন, আর কোনটা ছোট করা দরকার। গোনা বা তুলনা নয়, কোনটা সহজ লাগছে সেটা দেখুন।", "en": "Once a month, see which habits are holding, which are hard, and which need to be smaller. Look at what feels easier, not at counts or comparisons." },
+      "diagram": { "type": "steps", "bn": "কোনটা টিকছে|কোনটা কঠিন|ছোট করি|একটা বদল", "en": "What holds|What is hard|Make it smaller|One change" },
+      "appLink": "#/habits"
+    },
+    {
+      "id": "p1-ha8",
+      "topic": "habits",
+      "tags": ["habits", "change"],
+      "title": { "bn": "পুরোনো অভ্যাসের জায়গায় বিকল্প", "en": "Replace an old habit, do not just remove it" },
+      "how": { "bn": "যে অভ্যাসটা ছাড়তে চান, তার জায়গায় একটা ভালো বিকল্প বসান। যেমন রাতে মিষ্টির বদলে ফল। একবারে একটাই বদল করুন।", "en": "For a habit you want to drop, put a better option in its place. For example, fruit instead of sweets at night. Change one thing at a time." },
+      "diagram": { "type": "steps", "bn": "পুরোনো অভ্যাস|একই সময়ে বিকল্প|একটাই বদল", "en": "Old habit|Same time, better option|One change only" },
+      "appLink": "#/habits"
+    },
+    {
+      "id": "p1-ha9",
+      "topic": "habits",
+      "tags": ["habits", "environment"],
+      "title": { "bn": "আগের রাতে সব সাজান", "en": "Set things out the night before" },
+      "how": { "bn": "রাতে পরদিনের যা লাগবে তা হাতের কাছে রাখুন: কাপড়, বই, খাতা, চার্জার। সকালে সিদ্ধান্ত কম থাকলে অভ্যাসটা তাড়াতাড়ি শুরু হয়।", "en": "The night before, set out what you need tomorrow: clothes, book, notebook, charger. With fewer decisions in the morning, the habit starts sooner." },
+      "diagram": { "type": "steps", "bn": "রাতে সাজাই|সকালে সিদ্ধান্ত কম|অভ্যাস শুরু", "en": "Set out at night|Fewer morning decisions|Habit starts" },
+      "appLink": "#/habits"
+    },
+    {
+      "id": "p1-kn3",
+      "topic": "knowledge",
+      "tags": ["learning", "memory"],
+      "title": { "bn": "ফাঁক রেখে মনে করা", "en": "Recall with gaps in between" },
+      "how": { "bn": "যা শিখেছেন তা ১ দিন, ৩ দিন, আর ১ সপ্তাহ পরে আবার মনে করার চেষ্টা করুন। প্রতিবার দুই-তিন মিনিট যথেষ্ট। কঠিন অংশ বেশি বার করুন।", "en": "Try to recall what you learned after 1 day, 3 days and 1 week. Two or three minutes each time is enough. Practise the hard parts more often." },
+      "diagram": { "type": "cycle", "bn": "শিখি|১ দিন পরে|৩ দিন পরে|১ সপ্তাহ পরে", "en": "Learn|After 1 day|After 3 days|After 1 week" },
+      "appLink": "#/cards"
+    },
+    {
+      "id": "p1-kn4",
+      "topic": "knowledge",
+      "tags": ["learning", "understanding"],
+      "title": { "bn": "সহজ ভাষায় বুঝিয়ে লেখা", "en": "Explain it in simple words" },
+      "how": { "bn": "একটা ধারণা এমনভাবে লিখুন যেন একজন ১২ বছরের শিশুকে বোঝাচ্ছেন। যেখানে আটকে যান, সেটাই ফাঁক। আবার সেই অংশটা পড়ুন।", "en": "Write an idea as if explaining it to a 12-year-old. Where you get stuck is the gap. Go back and read that part again." },
+      "diagram": { "type": "steps", "bn": "ধারণা লিখি|সহজ করে বলি|যেখানে আটকাই|ওই অংশ আবার পড়ি", "en": "Write the idea|Explain it simply|Where I get stuck|Read that part again" },
+      "appLink": "#/cards"
+    },
+    {
+      "id": "p1-kn5",
+      "topic": "knowledge",
+      "tags": ["learning", "reading"],
+      "title": { "bn": "প্রশ্ন নিয়ে পড়া", "en": "Read with questions in hand" },
+      "how": { "bn": "পড়ার আগে তিনটি প্রশ্ন লিখুন। পড়তে পড়তে উত্তর খুঁজুন। শেষে যা মনে আছে তা এক পাতায় লিখুন।", "en": "Before reading, write three questions. Look for the answers as you read. At the end, write what you remember on one page." },
+      "diagram": { "type": "steps", "bn": "প্রশ্ন লিখি|উত্তর খুঁজি|এক পাতায় সার", "en": "Write questions|Look for answers|One-page summary" },
+      "appLink": "#/cards"
+    },
+    {
+      "id": "p1-kn6",
+      "topic": "knowledge",
+      "tags": ["learning", "practice"],
+      "title": { "bn": "ছোট কাজ বানিয়ে শেখা", "en": "Learn by building something small" },
+      "how": { "bn": "শুধু পড়ার বদলে একটা ছোট কাজ বানান: একটা ছোট হিসাব, একটা ছোট লেখা, বা একটা ছোট পরীক্ষা। কাজ করতে যা লাগে, তা-ই শিখুন।", "en": "Instead of only reading, build something small: a short calculation, a short piece of writing, or a small test. Learn what the work needs." },
+      "diagram": { "type": "steps", "bn": "ছোট লক্ষ্য|কাজ করি|যা লাগে শিখি|আবার চেষ্টা", "en": "Small goal|Do the work|Learn what is needed|Try again" },
+      "appLink": "#/diary/intake/3"
+    },
+    {
+      "id": "p1-kn7",
+      "topic": "knowledge",
+      "tags": ["learning", "practice"],
+      "title": { "bn": "দুই ধরনের সমস্যা মিশিয়ে অনুশীলন", "en": "Mix two kinds of problems in practice" },
+      "how": { "bn": "একই বসায় দুই ধরনের সমস্যা মিশিয়ে অনুশীলন করুন। কোনটা কখন ব্যবহার করতে হয়, সেটা বুঝতে সাহায্য করে।", "en": "Practise two kinds of problems mixed in one session. It helps you see which method fits which problem." },
+      "diagram": { "type": "steps", "bn": "ধরন A|ধরন B|মিশিয়ে করি|কোনটা কখন বুঝি", "en": "Type A|Type B|Mix them|See which fits when" },
+      "appLink": "#/cards"
+    },
+    {
+      "id": "p1-kn8",
+      "topic": "knowledge",
+      "tags": ["learning", "measurement"],
+      "title": { "bn": "প্রতিদিনের শেখার খাতা", "en": "A daily learning log" },
+      "how": { "bn": "প্রতিদিন দুই লাইনে লিখুন: আজ কী শিখলাম, আর কাল কী জানতে চাই। মাসে একবার পড়ুন, তাতে নিজের এগোনো নিজের চোখে দেখা যায়।", "en": "Each day write two lines: what I learned today, and what I want to know tomorrow. Read it once a month to see your own progress." },
+      "diagram": { "type": "steps", "bn": "আজ যা শিখলাম|কাল কী জানব|মাসে একবার পড়ি", "en": "What I learned|What I'll learn next|Read it monthly" },
+      "appLink": "#/journey/log"
+    },
+    {
+      "id": "p1-he3",
+      "topic": "health",
+      "tags": ["energy", "sleep"],
+      "title": { "bn": "সকালের আলো ও একটু হাঁটা", "en": "Morning light and a short walk" },
+      "how": { "bn": "সকালে কিছুক্ষণ বাইরের আলোয় থাকুন, সম্ভব হলে ১০ মিনিট হাঁটুন। এতে ঘুম আর মেজাজ দুটোতেই সাহায্য হতে পারে।", "en": "Spend a few minutes in daylight in the morning and, if you can, walk for 10 minutes. This may help both sleep and mood. General tip, not medical advice." },
+      "diagram": { "type": "steps", "bn": "সকালের আলো|১০ মিনিট হাঁটা|দিনের কাজ শুরু", "en": "Morning light|10-minute walk|Start the day's work" },
+      "appLink": "#/today"
+    },
+    {
+      "id": "p1-he4",
+      "topic": "health",
+      "tags": ["energy", "habits"],
+      "title": { "bn": "পানি খাওয়ার সহজ নিয়ম", "en": "An easy water habit" },
+      "how": { "bn": "একটা বোতল কাছে রাখুন। প্রতিটি কাজের ব্লক শেষে কয়েক ঢোক পানি খান। কতটা খেলেন তা গুনবেন না, শুধু খেয়াল রাখুন।", "en": "Keep a bottle nearby. After each work block, take a few sips. Do not count; just notice." },
+      "diagram": { "type": "cycle", "bn": "বোতল কাছে|কাজ শেষে ঢোক|খেয়াল রাখি", "en": "Bottle nearby|Sip after work|Notice" },
+      "appLink": "#/habits"
+    },
+    {
+      "id": "p1-he5",
+      "topic": "health",
+      "tags": ["energy", "focus"],
+      "title": { "bn": "চোখের ছোট বিরতি", "en": "A short break for your eyes" },
+      "how": { "bn": "প্রায় এক ঘণ্টা স্ক্রিনে কাজ করার পর ২০ সেকেন্ড দূরের কিছুর দিকে তাকান। চোখ শুকনো বা ক্লান্ত লাগলে আরেকটু বিরতি নিন।", "en": "After about an hour of screen work, look at something far away for 20 seconds. Take a longer break when your eyes feel dry or tired." },
+      "diagram": { "type": "steps", "bn": "এক ঘণ্টা কাজ|২০ সেকেন্ড দূরে তাকাই|চোখ ক্লান্ত হলে বিরতি", "en": "One hour of work|Look far away for 20 seconds|Longer break when tired" },
+      "appLink": "#/today"
+    },
+    {
+      "id": "p1-he6",
+      "topic": "health",
+      "tags": ["sleep", "habits"],
+      "title": { "bn": "ঘুমের আগের ১০ মিনিটের ক্রম", "en": "A fixed ten minutes before bed" },
+      "how": { "bn": "ঘুমের আগে একই ক্রম রাখুন: আলো কমান, পরদিনের তালিকা এক লাইনে লিখুন, তারপর ফোন দূরে রাখুন। একই ক্রম শরীরকে জানায় ঘুমের সময় এসেছে।", "en": "Before bed, follow the same order: dim the lights, write tomorrow’s list in one line, then put the phone away. A fixed order tells the body that sleep is coming." },
+      "diagram": { "type": "steps", "bn": "আলো কমাই|এক লাইনে পরিকল্পনা|ফোন দূরে", "en": "Dim the lights|One-line plan|Phone away" },
+      "appLink": "#/diary/plan"
+    },
+    {
+      "id": "p1-he7",
+      "topic": "health",
+      "tags": ["energy", "measurement"],
+      "title": { "bn": "দিনে তিনবার শক্তির স্কেল", "en": "Rate your energy three times a day" },
+      "how": { "bn": "দিনে তিনবার ১ থেকে ৫ স্কেলে শক্তি লিখুন: সকালে, দুপুরে, রাতে। কোন সময় শক্তি বেশি থাকে দেখে কঠিন কাজ সেই সময়ে রাখুন। ব্যথা বা অসুস্থতা থাকলে ডাক্তারের পরামর্শ নিন।", "en": "Rate your energy from 1 to 5 three times a day: morning, noon and night. Put hard work in your higher-energy times. For pain or illness, see a doctor." },
+      "diagram": { "type": "steps", "bn": "সকাল|দুপুর|রাত|কাজ সাজাই", "en": "Morning|Noon|Night|Plan the work" },
+      "appLink": "#/journey/log"
+    },
+    {
+      "id": "p1-re3",
+      "topic": "relationships",
+      "tags": ["people", "gratitude"],
+      "title": { "bn": "একজনকে নির্দিষ্ট ধন্যবাদ", "en": "A specific thank-you" },
+      "how": { "bn": "সপ্তাহে একজনকে নির্দিষ্ট কারণে ধন্যবাদ দিন। ধন্যবাদের সাথে একটা ঘটনা লিখুন, যেমন ‘তোমার ওই পরামর্শে কাজটা সহজ হলো’।", "en": "Each week, thank one person for something specific. Add one detail, such as “your advice made that task easier.”" },
+      "diagram": { "type": "steps", "bn": "একজনকে বাছি|নির্দিষ্ট কারণ|এক লাইনে লিখি", "en": "Pick one person|A specific reason|Write one line" }
+    },
+    {
+      "id": "p1-re4",
+      "topic": "relationships",
+      "tags": ["communication", "listening"],
+      "title": { "bn": "মাঝখানে না থেমে শোনা", "en": "Listen without interrupting" },
+      "how": { "bn": "কারও কথা শেষ হওয়ার আগে নিজের উত্তর ভাবা থামান। আগে তাঁর কথাটা নিজের ভাষায় ফিরিয়ে বলুন: ‘তুমি বলছ যে...’। তারপর নিজের কথা বলুন।", "en": "Stop preparing your reply while the other person is still talking. First repeat their point in your own words: “You’re saying that…”. Then share yours." },
+      "diagram": { "type": "steps", "bn": "শেষ পর্যন্ত শুনি|নিজের ভাষায় ফিরিয়ে বলি|তারপর আমার কথা", "en": "Listen to the end|Repeat it in my words|Then my point" }
+    },
+    {
+      "id": "p1-re5",
+      "topic": "relationships",
+      "tags": ["communication", "calm"],
+      "title": { "bn": "রাগের মুহূর্তে উত্তর দেরিতে", "en": "Pause before a heated reply" },
+      "how": { "bn": "রেগে থাকলে উত্তর পাঠানোর আগে ১০ মিনিট দূরে যান। বার্তাটা খসড়ায় রাখুন। আবার পড়ে যা সত্য ও দরকারি, শুধু সেটুকু পাঠান।", "en": "When you are angry, step away for 10 minutes before replying. Keep the message as a draft. Read it again and send only what is true and needed." },
+      "diagram": { "type": "steps", "bn": "খসড়া লিখি|১০ মিনিট দূরে|আবার পড়ি|দরকারি অংশ পাঠাই", "en": "Write a draft|10 minutes away|Read it again|Send the needed part" }
+    },
+    {
+      "id": "p1-re6",
+      "topic": "relationships",
+      "tags": ["people", "network"],
+      "title": { "bn": "মাসে একবার ছোট খোঁজ", "en": "A short monthly check-in" },
+      "how": { "bn": "যাঁদের সাথে সম্পর্ক রাখতে চান, তাঁদের জন্য মাসে একবার ১০ মিনিটের কল বা দেখা ঠিক করুন। কোনো কারণ লাগবে না, শুধু খোঁজ নেওয়া।", "en": "For people you want to stay close to, plan a 10-minute call or meeting once a month. No special reason is needed, just a check-in." },
+      "diagram": { "type": "steps", "bn": "নাম লিখি|মাসে একবার ঠিক করি|খোঁজ নিই", "en": "Write the names|Set a monthly slot|Check in" }
+    },
+    {
+      "id": "p1-re7",
+      "topic": "relationships",
+      "tags": ["people", "communication", "planning"],
+      "title": { "bn": "আলোচনার পরে এক লাইনের সারাংশ", "en": "A one-line summary after a talk" },
+      "how": { "bn": "সভা বা আলাপের ২৪ ঘণ্টার মধ্যে এক লাইনে লিখুন: কী ঠিক হলো, কে কী করবে, আর কবে। এতে বোঝাবুঝি কমে।", "en": "Within 24 hours of a meeting, send one line: what was agreed, who does what, and by when. This prevents misunderstandings." },
+      "diagram": { "type": "steps", "bn": "কী ঠিক হলো|কে কী করবে|কবে", "en": "What was agreed|Who does what|By when" }
+    }
+  ]
+}

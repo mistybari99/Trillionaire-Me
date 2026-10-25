@@ -8,6 +8,10 @@ const g = (id: string, domain: GlossaryDomain, tb: string, te: string, mb: strin
   ({ id, domain, term: { bn: tb, en: te }, meaning: { bn: mb, en: me }, reviewed: false });
 
 export const GLOSSARY: Term[] = [
+  g("emergency_fund", "finance", "জরুরি তহবিল", "Emergency fund", "হঠাৎ খরচের জন্য আলাদা করে রাখা টাকা।", "Money set aside, kept apart, for sudden costs."),
+  g("debt", "finance", "ঋণ", "Debt", "যে টাকা ধার নেওয়া হয়েছে এবং ফেরত দিতে হবে।", "Money you borrowed and must pay back."),
+  g("fixed_cost", "finance", "স্থির খরচ", "Fixed cost", "যে খরচ প্রতি মাসে প্রায় একই থাকে, যেমন বাড়ি ভাড়া।", "A cost that stays about the same each month, such as rent."),
+  g("unknown_value", "finance", "জানা নেই", "Unknown value", "যে অংক এখনো জানা নেই। এটাকে শূন্য ধরা হয় না।", "A figure not known yet. It is never counted as zero."),
   g("net_worth", "finance", "নিট সম্পদ", "Net worth", "মোট সম্পদ থেকে মোট দায় বাদ দিলে যা থাকে।", "Everything you own minus everything you owe."),
   g("asset", "finance", "সম্পদ", "Asset", "যা আপনার মালিকানায় আছে এবং মূল্য আছে।", "Something you own that has value."),
   g("liability", "finance", "দায়", "Liability", "যা আপনাকে অন্যকে দিতে হবে।", "Something you owe to others."),
