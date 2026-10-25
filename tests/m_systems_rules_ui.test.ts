@@ -65,7 +65,7 @@ describe("M24 ready-system library screen", () => {
   });
 
   it("with consent the add goes to real data, labelled without DEMO, and nothing new appears in demo", () => {
-    grantConsent(consentKv, "2026-10-25T04:00:00.000Z");
+    grantConsent(consentKv, "2026-10-25T04:00:00.000Z"); localStorage.setItem("tm:ui:dataMode", "real");
     go("#/more/library");
     expect($("[data-library-where=real]")).not.toBeNull();
     $<HTMLButtonElement>("[data-system=study-block] [data-act=system-add]")!.click();

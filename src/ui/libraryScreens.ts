@@ -4,11 +4,10 @@ import { h } from "./dom";
 import { t, tb } from "../i18n/t";
 import type { Key } from "../i18n/packs";
 import type { Locale } from "../i18n/registry";
-import { consentKv, prefs, store } from "./state";
-import { readConsent } from "../core/consent";
+import { prefs, store } from "./state";
 import { disclaimers, num } from "./components";
 import { SYSTEMS } from "../library/systemList";
-import { allRecs } from "./entry";
+import { activeNs, allRecs } from "./entry";
 import { addSystem, isSystemAdded, removeSystem, systemText, type SystemTemplate } from "../core/systems";
 import { RULES, RULE_IDS, evaluateRules, ruleOn, type RuleInput, type Suggestion } from "../core/rules";
 import type { Habit, Log } from "../core/habits";
@@ -19,8 +18,8 @@ const L = () => prefs.lang;
 const rerender = () => window.dispatchEvent(new HashChangeEvent("hashchange"));
 const link = (href: string, cls: string, ...kids: Array<Node | string>) => h("a", { href, class: cls }, ...kids);
 
-/** Real data only when the user has given consent on More > Demo & real data. Otherwise everything goes to Demo. */
-export const targetNs = (): Namespace => (readConsent(consentKv) ? "real" : "demo");
+/** Systems go to the active mode: real mode writes real (needs the consent tick, else the store refuses), demo mode writes demo. */
+export const targetNs = (): Namespace => activeNs();
 
 /** One-line result shown on the next render of the library (cleared when shown). */
 let flash: { key: Key; n: number } | null = null;

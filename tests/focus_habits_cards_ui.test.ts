@@ -67,7 +67,7 @@ describe("TM-TST-148 habits screen", () => {
     expect(document.querySelector("[data-habit-card]")?.textContent ?? "".toLowerCase()).not.toMatch(/streak|fail|broken|lost|shame|best/);
   });
   it("a secret in the habit name is rejected; adding one habit works", () => {
-    grantConsent(consentKv, "2026-10-25T00:00:00.000Z");
+    grantConsent(consentKv, "2026-10-25T00:00:00.000Z"); localStorage.setItem("tm:ui:dataMode", "real");
     go("#/habits"); const f = document.querySelector("form[data-form=habit]")!;
     (document.getElementById("hb-name") as HTMLInputElement).value = "password: abc12345"; f.dispatchEvent(new Event("submit", { cancelable: true })); expect(store.real.list().some((r) => r.entity === "habit")).toBe(false);
     (document.getElementById("hb-name") as HTMLInputElement).value = "Walk 10 minutes"; f.dispatchEvent(new Event("submit", { cancelable: true })); expect(store.real.list().filter((r) => r.entity === "habit")).toHaveLength(1);

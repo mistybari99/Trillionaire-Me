@@ -55,7 +55,7 @@ describe("dependency: a task waits for its prerequisite", () => {
 });
 
 describe("dependency on the Plan screen", () => {
-  beforeEach(() => { localStorage.clear(); store.demo.clear(); store.real.clear(); document.body.innerHTML = '<div id="app"></div>'; localStorage.setItem("tm:ui:lang", "en"); grantConsent(consentKv, "2026-10-25T00:00:00.000Z"); });
+  beforeEach(() => { localStorage.clear(); store.demo.clear(); store.real.clear(); document.body.innerHTML = '<div id="app"></div>'; localStorage.setItem("tm:ui:lang", "en"); grantConsent(consentKv, "2026-10-25T00:00:00.000Z"); localStorage.setItem("tm:ui:dataMode", "real"); });
   it("saving a task with 'do this after' stores the link and shows it on the row", () => {
     location.hash = "#/diary/plan"; render();
     const setv = (id: string, v: string) => { (document.getElementById(id) as HTMLInputElement | HTMLSelectElement).value = v; };

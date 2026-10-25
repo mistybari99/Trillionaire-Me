@@ -23,7 +23,7 @@ describe("TM-TST-021/022/023 money inputs", () => {
 });
 
 describe("money screen", () => {
-  beforeEach(() => { localStorage.clear(); store.demo.clear(); store.real.clear(); document.body.innerHTML = '<div id="app"></div>'; localStorage.setItem("tm:ui:lang", "en"); grantConsent(consentKv, "2026-10-25T00:00:00.000Z"); });
+  beforeEach(() => { localStorage.clear(); store.demo.clear(); store.real.clear(); document.body.innerHTML = '<div id="app"></div>'; localStorage.setItem("tm:ui:lang", "en"); grantConsent(consentKv, "2026-10-25T00:00:00.000Z"); localStorage.setItem("tm:ui:dataMode", "real"); });
   const go = (h: string) => { location.hash = h; render(); };
   it("empty start shows nothing invented", () => {
     go("#/diary/money");
@@ -32,6 +32,7 @@ describe("money screen", () => {
     expect(document.querySelectorAll("[data-scope] [data-none]").length).toBe(6); // net worth, cash flow and 90-day cash flow, for two scopes
   });
   it("unknown amount shows 'not known yet', calculated values are labelled ESTIMATE", () => {
+    localStorage.setItem("tm:ui:dataMode", "demo");
     store.demo.put(fin("a", "asset", "personal", { state: "unknown" }, "once", "Savings"));
     store.demo.put(fin("b", "asset", "business", v(500), "once", "Stock"));
     go("#/diary/money");

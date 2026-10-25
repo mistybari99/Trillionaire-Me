@@ -19,7 +19,7 @@ const stepSix = () => {
 };
 
 describe("goal entry form (intake step 6)", () => {
-  beforeEach(() => { localStorage.clear(); localStorage.setItem("tm:ui:lang", "en"); store.demo.clear(); store.real.clear(); prefs.horizonView = "stack"; document.body.innerHTML = '<div id="app"></div>'; grantConsent(consentKv, "2026-10-25T00:00:00.000Z"); });
+  beforeEach(() => { localStorage.clear(); localStorage.setItem("tm:ui:lang", "en"); store.demo.clear(); store.real.clear(); prefs.horizonView = "stack"; document.body.innerHTML = '<div id="app"></div>'; grantConsent(consentKv, "2026-10-25T00:00:00.000Z"); localStorage.setItem("tm:ui:dataMode", "real"); });
   beforeEach(() => {
     localStorage.clear();
     localStorage.setItem("tm:ui:lang", "en");
@@ -27,7 +27,7 @@ describe("goal entry form (intake step 6)", () => {
     store.real.clear();
     prefs.horizonView = "stack";
     document.body.innerHTML = '<div id="app"></div>';
-    grantConsent(consentKv, "2026-10-25T00:00:00.000Z");
+    grantConsent(consentKv, "2026-10-25T00:00:00.000Z"); localStorage.setItem("tm:ui:dataMode", "real");
   });
 
   it("shows title, why, success and horizon fields from the catalog", () => {
@@ -71,7 +71,7 @@ describe("TM-TST-021 goal form: blank horizon is unset, never 0", () => {
     store.real.clear();
     prefs.horizonView = "stack";
     document.body.innerHTML = '<div id="app"></div>';
-    grantConsent(consentKv, "2026-10-25T00:00:00.000Z");
+    grantConsent(consentKv, "2026-10-25T00:00:00.000Z"); localStorage.setItem("tm:ui:dataMode", "real");
   });
 
   it("leaving horizon blank stores nothing (unset, not zero) and the goal lands in the unset section", () => {

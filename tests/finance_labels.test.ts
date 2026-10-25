@@ -33,7 +33,7 @@ describe("TM-TST-006 finance outputs carry a label", () => {
 });
 
 describe("finance screen labels (bn and en)", () => {
-  beforeEach(() => { localStorage.clear(); store.demo.clear(); store.real.clear(); document.body.innerHTML = '<div id="app"></div>'; grantConsent(consentKv, "2026-10-25T00:00:00.000Z"); });
+  beforeEach(() => { localStorage.clear(); store.demo.clear(); store.real.clear(); document.body.innerHTML = '<div id="app"></div>'; grantConsent(consentKv, "2026-10-25T00:00:00.000Z"); localStorage.setItem("tm:ui:dataMode", "real"); });
   const go = (h: string) => { location.hash = h; render(); };
   const addAmount = (name: string, amount: string) => {
     go("#/diary/money");

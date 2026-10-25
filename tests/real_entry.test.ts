@@ -17,9 +17,10 @@ const send = (sel: string) => document.querySelector(sel)!.dispatchEvent(new Eve
 const tap = (sel: string) => document.querySelector<HTMLButtonElement>(sel)!.click(); // no re-render: keeps the form state
 const setv = (id: string, value: string) => { (document.getElementById(id) as HTMLInputElement | HTMLSelectElement).value = value; };
 const allLabels = (ns: Namespace) => (ns === "real" ? store.real : store.demo).list().flatMap((r) => Object.values(r.values).filter((x) => x.state === "value").map((x) => (x as { label: string }).label));
-/** A free window and weekly hours, so the planner can place tasks today. Stored as demo answers (intake). */
+/** A free window and weekly hours, so the planner can place tasks today. Stored as real answers (intake). */
 const seedCapacity = () => {
-  store.demo.put(demoRec("intake-constraint", "constraint", { "constraint.weekly_free_hours": v(40), "constraint.free_from": v("06:00"), "constraint.free_to": v("22:00") }));
+  const f = (x: unknown): FieldValue => ({ state: "value", value: x, label: "FACT" });
+  store.real.put({ id: "intake-constraint", entity: "constraint", ns: "real", ownerId: "owner", schemaVersion: 1, createdAt: NOW, values: { "constraint.weekly_free_hours": f(40), "constraint.free_from": f("06:00"), "constraint.free_to": f("22:00") } });
 };
 
 beforeEach(() => {
@@ -29,6 +30,7 @@ beforeEach(() => {
   localStorage.setItem("tm:ui:lang", "en");
   prefs.horizonView = "stack";
   revokeConsent(consentKv);
+  localStorage.setItem("tm:ui:dataMode", "real");
 });
 
 describe("consent gate: no consent, no save", () => {
@@ -115,19 +117,18 @@ describe("consent on: real records", () => {
     expect(store.demo.list().filter((r) => r.entity === "habit_log")).toEqual([]);
   });
 
-  it("Habits and Plan show demo and real records together, each with its own tag", () => {
+  it("real mode shows only real records on Plan and Habits; demo records are hidden", () => {
     store.demo.put(demoRec("task-demo-1", "task", { "task.title": v("Demo task"), "task.minutes": v(15) }));
     store.demo.put(demoRec("habit-demo-1", "habit", { "habit.title": v("Demo habit"), "habit.days": v("0,1,2,3,4,5,6") }));
     go("#/diary/plan");
     setv("pt-title", "Real task"); setv("pt-min", "10"); submit("form[data-form=task]");
     go("#/diary/plan");
     const tags = [...document.querySelectorAll("[data-task] [data-ns]")].map((x) => x.getAttribute("data-ns"));
-    expect(tags.sort()).toEqual(["demo", "real"]);
-    expect(document.body.textContent).toMatch(/Demo task/);
+    expect(tags).toEqual(["real"]);
+    expect(document.body.textContent).not.toMatch(/Demo task/);
     expect(document.body.textContent).toMatch(/Real task/);
-
     go("#/habits");
-    expect(document.querySelector("[data-habit-card='habit-demo-1'] [data-ns=demo]")).not.toBeNull();
+    expect(document.querySelector("[data-habit-card='habit-demo-1']")).toBeNull();
   });
 
   it("demo and real stay in their own records: no record mixes DEMO and real labels", () => {
@@ -143,13 +144,15 @@ describe("consent on: real records", () => {
     for (const r of store.demo.list()) expect(r.ns).toBe("demo");
   });
 
-  it("the money total says demo and real lines are added together when both exist", () => {
+  it("the money total never adds demo and real lines: real mode counts the real line only", () => {
     store.demo.put(demoRec("fin-demo", "finance_item", { "finance.kind": v("asset"), "finance.scope": v("personal"), "finance.label": v("Demo cash"), "finance.amount": v(100), "finance.period": v("once") }));
     go("#/diary/money");
     (document.getElementById("mf-name") as HTMLInputElement).value = "Real cash"; (document.getElementById("mf-amount") as HTMLInputElement).value = "250";
     submit("form[data-form=money]");
-    expect(document.querySelector("[data-mix='1']")).not.toBeNull();
-    expect([...document.querySelectorAll("[data-fin] [data-ns]")].map((x) => x.getAttribute("data-ns")).sort()).toEqual(["demo", "real"]);
+    expect(document.querySelector("[data-mix='1']")).toBeNull();
+    expect([...document.querySelectorAll("[data-fin] [data-ns]")].map((x) => x.getAttribute("data-ns"))).toEqual(["real"]);
+    expect(document.body.textContent).toMatch(/250/);
+    expect(document.body.textContent).not.toMatch(/350/);
   });
 
   it("the real intake goal shows on the horizon with a Real tag, and a real answer overrides the demo one", () => {
@@ -161,6 +164,7 @@ describe("consent on: real records", () => {
     go("#/journey/horizon");
     expect(document.querySelector("[data-horizon='one_year'] [data-ns=real]")).not.toBeNull();
     expect(document.body.textContent).toMatch(/Real goal/);
+    expect(document.body.textContent).not.toMatch(/Demo goal/);
   });
 
   it("a demo answer is not copied into a real record: the form pre-fills from real answers only", () => {
@@ -190,11 +194,13 @@ describe("consent on: real records", () => {
     tap("[data-act=clear-real]"); render();
     tap("[data-act=clear-real-yes]"); render();
     expect(store.real.list()).toEqual([]);
-    expect(store.demo.list().map((r) => r.id).sort()).toEqual(["intake-constraint", "task-demo-3"]);
+    expect(store.demo.list().map((r) => r.id)).toEqual(["task-demo-3"]);
     expect(readConsent(consentKv)).toBe(false);
     go("#/diary/plan");
-    expect(document.body.textContent).toMatch(/Keep me/);
     expect(document.body.textContent).not.toMatch(/Remove me/);
     expect(document.querySelector("form[data-form=task] [data-consent-prompt]")).not.toBeNull();
+    localStorage.setItem("tm:ui:dataMode", "demo");
+    go("#/diary/plan");
+    expect(document.body.textContent).toMatch(/Keep me/);
   });
 });

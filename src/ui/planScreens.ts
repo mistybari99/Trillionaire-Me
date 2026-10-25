@@ -4,6 +4,7 @@ import { h } from "./dom";
 import { t, tb, fmtNumber } from "../i18n/t";
 import type { Key } from "../i18n/packs";
 import { prefs, store } from "./state";
+import { activeNs, allRecs, putMode } from "./entry";
 import { demoBadge, disclaimers, num } from "./components";
 import { checkFreeText } from "../core/safety";
 import { fieldById } from "../catalog/fields";
@@ -24,7 +25,7 @@ const UNKNOWN: FieldValue = { state: "unknown" };
 
 function putRecord(entity: string, prefix: string, values: Record<string, FieldValue>) {
   const id = `${prefix}-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`;
-  store.demo.put({ id, entity, ns: "demo", ownerId: "demo-user", schemaVersion: 1, createdAt: new Date().toISOString(), values });
+  putMode({ id, entity, ns: "demo", ownerId: "demo-user", schemaVersion: 1, createdAt: new Date().toISOString(), values });
 }
 
 /** Blank input = unknown; a number = value; anything else = invalid (null). Bangla digits accepted. */
@@ -47,7 +48,7 @@ function choiceSelect(id: string, fieldId: string, lang: Locale) {
 }
 
 function removeBtn(id: string, lang: Locale) {
-  return h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0;min-height:44px", "data-remove": id, onclick: () => { store.demo.delete(id); rerender(); } }, t("risk.remove", lang));
+  return h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0;min-height:44px", "data-remove": id, onclick: () => { store[activeNs()].delete(id); rerender(); } }, t("risk.remove", lang));
 }
 
 // ---- M15 risks & stop rules ----
@@ -77,7 +78,7 @@ export function riskScreen(): HTMLElement {
     putRecord("risk", "risk", values);
     rerender();
   });
-  const rows = riskRows(store.demo.list());
+  const rows = riskRows(allRecs());
   const list = rows.map((r) => h("div", { class: "card", "data-risk": r.id }, h("div", { class: "row" }, h("div", {},
     h("h2", { class: "card-h" }, r.text),
     h("p", { class: "muted" }, t("risk.likelihood", lang), ": ", r.likelihood ? choiceLabel("risk.likelihood", r.likelihood as Likelihood, lang) : t("unknown.unknown", lang)),
@@ -120,7 +121,7 @@ export function ventureScreen(): HTMLElement {
     putRecord("venture", "ven", values);
     rerender();
   });
-  const rows = ventureRows(store.demo.list());
+  const rows = ventureRows(allRecs());
   return h("main", { class: "scr scr-venture" },
     link("#/diary", "crumb", `← ${t("diary.title", lang)}`),
     h("h1", {}, t("ven.title", lang)), h("p", { class: "sub" }, t("ven.intro", lang)),
@@ -152,7 +153,7 @@ export function teamScreen(): HTMLElement {
     putRecord("team_role", "role", { "team_role.role": txt(v), "team_role.holder": holder.value ? txt(holder.value) : UNKNOWN });
     rerender();
   });
-  const all = store.demo.list();
+  const all = allRecs();
   const rows = roleRows(all);
   const s = roleSummary(rows);
   return h("main", { class: "scr scr-team" },
@@ -170,7 +171,7 @@ export function teamScreen(): HTMLElement {
 // ---- M12 plan history (read-only) ----
 export function planHistoryScreen(): HTMLElement {
   const lang = L();
-  const rows = planHistory(store.demo.list());
+  const rows = planHistory(allRecs());
   return h("main", { class: "scr scr-history" },
     link("#/journey", "crumb", `← ${t("journey.title", lang)}`),
     h("h1", {}, t("hist.title", lang)), h("p", { class: "sub" }, t("hist.intro", lang)),
@@ -207,7 +208,7 @@ export function northStarScreen(): HTMLElement {
     putRecord("north_star", "ns", values);
     rerender();
   });
-  const rows = starRows(store.demo.list());
+  const rows = starRows(allRecs());
   const cards = rows.map((r) => {
     const l = ladder(r.baseline, r.target);
     const steps = l.status === "ok"

@@ -16,10 +16,18 @@ const idb = (pg) => pg.evaluate(() => new Promise((res) => { const q = indexedDB
 const check = (id, name, pass, detail = "") => { results.push({ id, name, pass, detail }); console.log(pass ? "PASS" : "FAIL", id, name, detail); };
 
 await page.goto("http://localhost:4174/#/today");
-await page.waitForSelector("main");
+// First run: the choice comes before anything else. Explore with demo data first (empty start check below).
+await page.waitForSelector("[data-first=demo]");
+check("MODE-FIRST", "first run shows the demo / real choice and no tabs", (await page.locator("[data-first=real]").count()) === 1 && (await page.locator("nav").count()) === 0);
+await page.click("[data-act=first-demo]");
+await page.waitForSelector("[data-demo-banner]");
+check("MODE-DEMO", "exploring demo shows the Demo mode banner", /Demo mode|Demo মোড/.test(await page.textContent("[data-demo-banner]")));
 for (const r of ["today", "journey", "diary", "deen", "more", "more/status", "more/fields", "more/data"]) { await page.goto(`http://localhost:4174/#/${r}`); await page.waitForSelector("main"); }
 const keys = [...(await page.evaluate(() => Object.keys(localStorage).filter((k) => k.startsWith("tm:real:") || k.startsWith("tm:demo:")))), ...(await idb(page))];
 check("TM-TST-143", "empty start: no demo/real records after visiting every tab", keys.length === 0, JSON.stringify(keys));
+
+// Switch to real mode without consent (the state before the owner ticks), then run the entry checks as before.
+await page.evaluate(() => localStorage.setItem("tm:ui:dataMode", "real")); await page.reload(); await page.waitForSelector("main");
 
 // secret rejection in the real form (step 3: skill name is free text)
 await page.goto("http://localhost:4174/#/diary/intake/3");
@@ -138,8 +146,8 @@ const horizonSecs = await page.locator("[data-horizon]").evaluateAll((e) => e.ma
 const fiveKeys = ["five_year", "one_year", "month", "week", "today"];
 check("R2-HORIZON", "page renders the 5 horizon sections in order", JSON.stringify(horizonSecs.filter((s) => s !== "unset")) === JSON.stringify(fiveKeys), horizonSecs.join(","));
 check("R2-HORIZON", "goal with no horizon appears in the 'unset' section", (await page.locator("[data-horizon=unset]").innerText()).includes("Steady income"), horizonSecs.join(","));
-// seed one demo goal that has a horizon (no intake step asks for it yet), then reload the view
-await page.evaluate(() => new Promise((res, rej) => { const q = indexedDB.open("tm-db"); q.onerror = () => rej(q.error); q.onsuccess = () => { const db = q.result; const tx = db.transaction("records", "readwrite"); tx.objectStore("records").put({ id: "e2e-goal-horizon", entity: "goal", ns: "demo", ownerId: "demo-user", schemaVersion: 1, createdAt: new Date().toISOString(), values: { "goal.title": { state: "value", value: "Horizon check", label: "DEMO" }, "goal.horizon": { state: "value", value: "one_year", label: "DEMO" } } }); tx.oncomplete = () => { db.close(); res(); }; tx.onerror = () => rej(tx.error); }; }));
+// seed one real goal that has a horizon (no intake step asks for it yet), then reload the view
+await page.evaluate(() => new Promise((res, rej) => { const q = indexedDB.open("tm-db"); q.onerror = () => rej(q.error); q.onsuccess = () => { const db = q.result; const tx = db.transaction("records", "readwrite"); tx.objectStore("records").put({ id: "e2e-goal-horizon", entity: "goal", ns: "real", ownerId: "owner", schemaVersion: 1, createdAt: new Date().toISOString(), values: { "goal.title": { state: "value", value: "Horizon check", label: "FACT" }, "goal.horizon": { state: "value", value: "one_year", label: "FACT" } } }); tx.oncomplete = () => { db.close(); res(); }; tx.onerror = () => rej(tx.error); }; }));
 await page.goto("http://localhost:4174/#/journey/horizon"); await page.reload(); await page.waitForSelector("main h1");
 const oneYear = page.locator("[data-horizon=one_year]");
 check("R2-HORIZON", "goal with horizon one_year lands in the one_year section only", (await oneYear.locator("[data-goal]").count()) === 1 && (await oneYear.innerText()).includes("Horizon check") && !(await page.locator("[data-horizon=unset]").innerText()).includes("Horizon check"));
@@ -212,6 +220,18 @@ await ctx.setOffline(false);
 
 check("G1-NONET", "0 third-party/external requests during all of the above", external.length === 0, JSON.stringify(external));
 
+// Start for real from a fresh phone: one confirmation with the consent tick, then real mode with no demo banner.
+{
+  const ctx2 = await browser.newContext({ viewport: { width: 360, height: 740 } }); const p2 = await ctx2.newPage();
+  await p2.goto("http://localhost:4174/#/today"); await p2.waitForSelector("[data-first=real]");
+  await p2.click("[data-act=first-real]"); await p2.waitForSelector("#mode-tick");
+  await p2.click("[data-act=first-real-yes]"); await p2.waitForTimeout(100);
+  const stillFirst = (await p2.locator("[data-first]").count()) > 0;
+  await p2.check("#mode-tick"); await p2.click("[data-act=first-real-yes]"); await p2.waitForSelector("nav");
+  const st = await p2.evaluate(() => ({ mode: localStorage.getItem("tm:ui:dataMode"), consent: !!localStorage.getItem("tm:consent:real:v1") }));
+  check("MODE-REAL", "start for real needs the tick, then real mode with consent and no demo banner", stillFirst && st.mode === "real" && st.consent && (await p2.locator("[data-demo-banner]").count()) === 0);
+  await ctx2.close();
+}
 await browser.close(); await server.close();
 writeFileSync("evidence/e2e-report.json", JSON.stringify({ generated: new Date().toISOString(), results }, null, 2));
 process.exit(results.every((r) => r.pass) ? 0 : 1);

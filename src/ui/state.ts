@@ -7,6 +7,7 @@ import { DexieRepo } from "../adapters/dexie";
 import { parseNotifyPrefs, type NotifyPrefs } from "../core/notify";
 import { DHAKA_COORDS, validCoords, type Coords } from "../core/prayer";
 import { DEFAULT_ALERT_PREFS, parseAlertPrefs, type AlertPrefs } from "../core/prayerAlerts";
+import { isDataMode, type DataMode } from "../core/dataMode";
 import { parseRuleSwitches, type FocusEnd, type RuleSwitches } from "../core/rules";
 
 const legacy = new LocalKV();
@@ -57,6 +58,18 @@ export const prefs = {
   /** Automation rule switches (M19). Per device. A missing rule uses its default: calm rules on, the rest off. */
   get ruleSwitches(): RuleSwitches { try { return parseRuleSwitches(JSON.parse(get("tm:ui:rules") ?? "null")); } catch { return {}; } },
   set ruleSwitches(v: RuleSwitches) { set("tm:ui:rules", JSON.stringify(parseRuleSwitches(v))); },
+  /** Data mode (owner rule 25 Oct 2026). null = first run, the choice screen has not been answered yet. */
+  get dataModeChoice(): DataMode | null { const v = get("tm:ui:dataMode"); return isDataMode(v) ? v : null; },
+  set dataModeChoice(v: DataMode | null) { set("tm:ui:dataMode", v ?? ""); },
+  /** The mode screens and calculations use. Before the first choice it is demo, which is empty until used. */
+  get dataMode(): DataMode { return this.dataModeChoice ?? "demo"; },
+  set dataMode(v: DataMode) { set("tm:ui:dataMode", isDataMode(v) ? v : "demo"); },
+  /** Separate days the app was opened in demo mode (YYYY-MM-DD). */
+  get demoDays(): string[] { try { const v = JSON.parse(get("tm:ui:demoDays") ?? "[]"); return Array.isArray(v) ? v.filter((x): x is string => typeof x === "string") : []; } catch { return []; } },
+  set demoDays(v: string[]) { set("tm:ui:demoDays", JSON.stringify(v)); },
+  /** Day (YYYY-MM-DD) the user last said "not now" to deleting demo data. */
+  get demoAskedOn(): string { return get("tm:ui:demoAskedOn") ?? ""; },
+  set demoAskedOn(v: string) { set("tm:ui:demoAskedOn", v); },
   /** Last focus block that ended (M19). Per device, never sent. Missing or broken = none. */
   get lastFocusEnd(): FocusEnd | null { try { const v = JSON.parse(get("tm:ui:focusEnd") ?? "null") as Partial<FocusEnd> | null; return v && typeof v.at === "number" && typeof v.minutes === "number" && v.minutes > 0 ? { at: v.at, minutes: v.minutes } : null; } catch { return null; } },
   set lastFocusEnd(v: FocusEnd | null) { set("tm:ui:focusEnd", JSON.stringify(v)); },

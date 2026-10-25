@@ -50,22 +50,23 @@ import { markedOn, prayerLogId, prayerLogRecord } from "../core/prayerLog";
 import { fastLogId, fastLogRecord, isFastMarked } from "../core/fastLog";
 import { DEFAULT_ALERT_PREFS, parseAlertPrefs } from "../core/prayerAlerts";
 import { canNotify } from "./prayerAlerts";
-import { allRecs, asReal, consentOn, consentPrompt, findRec, inNs, labelFor, nsTag, ownerOf, saveBlockedText, saveTyped, storeOf, typed, valueLabel } from "./entry";
+import { modeSwitchCard } from "./modeUi";
+import { activeNs, allRecs, asReal, putMode, consentOn, consentPrompt, findRec, inNs, labelFor, nsTag, ownerOf, saveBlockedText, saveTyped, storeOf, typed, valueLabel } from "./entry";
 
 const L = () => prefs.lang;
 const link = (href: string, cls: string, ...kids: Array<Node | string>) => h("a", { href, class: cls }, ...kids);
 const rerender = () => window.dispatchEvent(new HashChangeEvent("hashchange"));
 
 // ---- demo answers persisted per entity in the demo namespace ----
-// Both namespaces by default (demo first, real on top: a real field wins). Pass "real" to read real answers only.
-export function loadAnswers(only: "both" | "real" = "both"): Answers {
+// Answers of the active mode only (demo mode reads demo, real mode reads real). The other mode is never read.
+export function loadAnswers(): Answers {
   const a: Answers = {};
-  if (only === "both") for (const r of store.demo.list()) if (r.id.startsWith("intake-")) Object.assign(a, r.values);
-  for (const r of store.real.list()) if (r.id.startsWith("intake-")) Object.assign(a, r.values);
+  for (const r of allRecs()) if (r.id.startsWith("intake-")) Object.assign(a, r.values);
   return a;
 }
 function saveAnswers(step: number, vals: Answers): boolean {
   if (!consentOn()) return false; // nothing is saved without consent (D-B)
+  const ns = activeNs();
   const byEntity = new Map<string, Answers>();
   for (const [fid, v] of Object.entries(vals)) {
     const f = fieldById(fid); if (!f) continue;
@@ -73,9 +74,9 @@ function saveAnswers(step: number, vals: Answers): boolean {
   }
   for (const [entity, values] of byEntity) {
     const id = `intake-${entity}`;
-    const prev = store.real.get(id);
-    const rec: TMRecord = { id, entity, ns: "real", ownerId: ownerOf("real"), schemaVersion: 1, createdAt: prev?.createdAt ?? new Date().toISOString(), values: { ...(prev?.values ?? {}), ...values } };
-    store.real.put(rec);
+    const prev = store[ns].get(id);
+    const rec: TMRecord = { id, entity, ns, ownerId: ownerOf(ns), schemaVersion: 1, createdAt: prev?.createdAt ?? new Date().toISOString(), values: { ...(prev?.values ?? {}), ...values } };
+    store[ns].put(rec);
   }
   void step;
   return true;
@@ -372,8 +373,8 @@ function stagePanel(lang: Locale): HTMLElement {
       const sd2 = stageData(); const rec = passStage(sd2.ctx, sd2.passed, code, ev.value);
       const before = lastProgress(sd2.recs); const d = (x: unknown): FieldValue => ({ state: "value", value: x, label: "DEMO" });
       const base = { entity: "", ns: "demo" as const, ownerId: "demo-user", schemaVersion: 1, createdAt: rec.at };
-      store.demo.put({ ...base, id: `stagepass-${code}`, entity: "stage_pass", values: { "stage_pass.stage_code": d(code), "stage_pass.evidence": d(rec.evidence || "—"), "stage_pass.progress_pct": d(rec.progressPct) } });
-      store.demo.put({ ...base, id: `log-${Date.now().toString(36)}`, entity: "journey_log", values: { "journey_log.entry": d(t("log.entry", lang, { code, before: num(before, lang), after: num(rec.progressPct, lang) })), "stage_pass.progress_pct": d(rec.progressPct) } });
+      putMode({ ...base, id: `stagepass-${code}`, entity: "stage_pass", values: { "stage_pass.stage_code": d(code), "stage_pass.evidence": d(rec.evidence || "—"), "stage_pass.progress_pct": d(rec.progressPct) } });
+      putMode({ ...base, id: `log-${Date.now().toString(36)}`, entity: "journey_log", values: { "journey_log.entry": d(t("log.entry", lang, { code, before: num(before, lang), after: num(rec.progressPct, lang) })), "stage_pass.progress_pct": d(rec.progressPct) } });
       sessionStorage.setItem("tm:passed", code); rerender();
     } catch (e) { err.textContent = e instanceof StageError ? "" : t("intake.invalidNumber", lang); }
   });
@@ -475,7 +476,7 @@ export function stuckScreen(): HTMLElement {
     const row = h("div", { class: "field", "data-q": q.id }, h("p", {}, tb(q.text, lang)), h("div", { class: "seg" }, mk("yes", t("stuck.yes", lang)), mk("no", t("stuck.no", lang)), mk("unknown", t("unknown.unknown", lang))));
     return row;
   });
-  const log = (d: ReturnType<typeof diagnose>, helper: Helper) => store.demo.put({ id: `stuck-${Date.now().toString(36)}`, entity: "stuck_log", ns: "demo", ownerId: "demo-user", schemaVersion: 1, createdAt: new Date().toISOString(),
+  const log = (d: ReturnType<typeof diagnose>, helper: Helper) => putMode({ id: `stuck-${Date.now().toString(36)}`, entity: "stuck_log", ns: "demo", ownerId: "demo-user", schemaVersion: 1, createdAt: new Date().toISOString(),
     values: { "stuck_log.causes": { state: "value", value: d.causes.join(",") || "none", label: "DEMO" }, "stuck_log.action": { state: "value", value: helper, label: "DEMO" } } });
   const show = h("button", { class: "btn", type: "button", "data-act": "stuck-show" }, t("stuck.show", lang));
   show.addEventListener("click", () => {
@@ -487,7 +488,7 @@ export function stuckScreen(): HTMLElement {
         const msg = h("p", { class: "err", role: "alert" });
         add.addEventListener("click", () => {
           const nm = name.value.trim(); if (!nm) return; if (!checkFreeText(nm).ok) { msg.textContent = t("intake.secretRejected", lang); return; }
-          store.demo.put({ id: `task-${Date.now().toString(36)}s`, entity: "task", ns: "demo", ownerId: "demo-user", schemaVersion: 1, createdAt: new Date().toISOString(),
+          putMode({ id: `task-${Date.now().toString(36)}s`, entity: "task", ns: "demo", ownerId: "demo-user", schemaVersion: 1, createdAt: new Date().toISOString(),
             values: { "task.title": { state: "value", value: nm, label: "DEMO" }, "task.minutes": { state: "value", value: 5, label: "DEMO" }, "task.priority": { state: "value", value: "high", label: "DEMO" } } });
           log(d, hp); out.replaceChildren(h("p", { class: "ok-msg", "data-done": hp }, t("stuck.done.tiny_step", lang)), link("#/diary/plan", "btn ghost", t("plan.title", lang)));
         });
@@ -586,7 +587,7 @@ const focusMinutesOf = (taskId: string) => allRecs().filter((r) => r.entity === 
 function recordFocus(taskId: string, minutes: number) {
   if (minutes < 1) return;
   // a focus session belongs to its task's namespace: real task, real session
-  const ns = findRec(taskId)?.ns ?? "demo"; const lb = labelFor(ns);
+  const ns = findRec(taskId)?.ns ?? activeNs(); const lb = labelFor(ns);
   store[ns].put({ id: `fs-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 4)}`, entity: "focus_session", ns, ownerId: ownerOf(ns), schemaVersion: 1, createdAt: new Date().toISOString(), links: { task: taskId },
     values: { "focus_session.minutes": { state: "value", value: minutes, label: lb }, "focus_session.date": { state: "value", value: todayIso(), label: lb } } });
 }
@@ -646,7 +647,7 @@ function habitsFromStore() {
 // A habit's log lives in the same namespace as its habit (real habit, real log).
 function setLog(h0: Habits.Habit, date: string, count: number) {
   const id = `hl-${h0.id}-${date}`;
-  const ns = findRec(h0.id)?.ns ?? "demo"; const lb = labelFor(ns);
+  const ns = findRec(h0.id)?.ns ?? activeNs(); const lb = labelFor(ns);
   if (count <= 0) { store[ns].delete(id); return; }
   if (ns === "real" && !consentOn()) return;
   store[ns].put({ id, entity: "habit_log", ns, ownerId: ownerOf(ns), schemaVersion: 1, createdAt: new Date().toISOString(), links: { habit: h0.id },
@@ -671,7 +672,7 @@ export function habitsScreen(): HTMLElement {
     }));
     const c = Habits.consistency(hb, logs, Habits.addDays(today, -27), today, today);
     return h("div", { class: "card", "data-habit-card": hb.id },
-      h("div", { class: "row" }, h("div", {}, nsTag(findRec(hb.id)?.ns ?? "demo", lang), h("h2", { class: "card-h", }, hb.title)), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0;min-height:44px", onclick: () => { removeHabit(hb.id); rerender(); } }, t("habits.remove", lang))),
+      h("div", { class: "row" }, h("div", {}, nsTag(findRec(hb.id)?.ns ?? activeNs(), lang), h("h2", { class: "card-h", }, hb.title)), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0;min-height:44px", onclick: () => { removeHabit(hb.id); rerender(); } }, t("habits.remove", lang))),
       main, dots,
       h("p", { class: "muted", "data-consistency": "1" }, c.planned ? valueEl(t("habits.month", lang, { d: num(c.done, lang), p: num(c.planned, lang) }), "INFERENCE", lang) : t("habits.noPlanned", lang)),
       Habits.restartPlan(hb, logs, today) === "smallest_version" ? h("p", { class: "note", "data-restart": "1" }, t("habits.restart", lang)) : null);
@@ -701,10 +702,10 @@ export function habitsScreen(): HTMLElement {
 // ---- flashcards ----
 function cardsFromStore(): Cards.Card[] {
   const g = (r: TMRecord, k: string) => (r.values[k] as { value?: unknown } | undefined)?.value;
-  return store.demo.list().filter((r) => r.entity === "card" && r.values["card.front"]?.state === "value").sort((a, b) => a.id.localeCompare(b.id))
+  return allRecs().filter((r) => r.entity === "card" && r.values["card.front"]?.state === "value").sort((a, b) => a.id.localeCompare(b.id))
     .map((r) => ({ id: r.id, front: String(g(r, "card.front")), back: String(g(r, "card.back") ?? ""), box: Number(g(r, "card.box") ?? 1), due: String(g(r, "card.due") ?? Habits.todayIso()) }));
 }
-const putCard = (c: Cards.Card) => store.demo.put({ id: c.id, entity: "card", ns: "demo", ownerId: "demo-user", schemaVersion: 1, createdAt: new Date().toISOString(),
+const putCard = (c: Cards.Card) => putMode({ id: c.id, entity: "card", ns: "demo", ownerId: "demo-user", schemaVersion: 1, createdAt: new Date().toISOString(),
   values: { "card.front": { state: "value", value: c.front, label: "DEMO" }, "card.back": { state: "value", value: c.back, label: "DEMO" }, "card.box": { state: "value", value: c.box, label: "DEMO" }, "card.due": { state: "value", value: c.due, label: "DEMO" } } });
 
 export function cardsScreen(): HTMLElement {
@@ -730,7 +731,7 @@ export function cardsScreen(): HTMLElement {
   return h("main", {}, link("#/more/topics", "crumb", `← ${t("topics.title", lang)}`), h("h1", {}, t("cards.title", lang)), h("p", { class: "sub" }, t("cards.intro", lang)),
     all.length ? h("div", {}, h("p", { "data-cards-due": String(queue.length) }, valueEl(queue.length ? t("cards.due", lang, { n: num(queue.length, lang) }) : t("cards.none", lang), "INFERENCE", lang)), ...(queue.length ? [go] : []), study,
       h("h2", { class: "card-h", }, t("cards.boxes", lang)), h("div", { class: "seg", role: "img", "aria-label": boxes.join(", ") }, ...boxes.map((n, i) => h("span", { class: "tag" }, `${num(i + 1, lang)}: ${num(n, lang)}`)))) : h("p", { class: "muted" }, t("cards.empty", lang)),
-    h("h2", {}, t("cards.add", lang)), form, ...all.map((c) => h("div", { class: "card", "data-card": c.id }, h("div", { class: "row" }, h("span", {}, c.front), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0;min-height:44px", onclick: () => { store.demo.delete(c.id); rerender(); } }, t("cards.remove", lang))))), disclaimers(lang));
+    h("h2", {}, t("cards.add", lang)), form, ...all.map((c) => h("div", { class: "card", "data-card": c.id }, h("div", { class: "row" }, h("span", {}, c.front), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0;min-height:44px", onclick: () => { store[activeNs()].delete(c.id); rerender(); } }, t("cards.remove", lang))))), disclaimers(lang));
 }
 
 // ---- screens ----
@@ -738,7 +739,7 @@ function todayFromPlan(cp: ReturnType<typeof currentPlan>, lang: Locale): HTMLEl
   const acts = todaysActions(cp.plan, new Date().getDay());
   if (!acts.length) return [h("p", { class: "muted", "data-today": "none" }, t("home.today.none", lang), " ", link("#/diary/plan", "crumb", t("home.today.open", lang)))];
   return acts.map((p, i) => h("div", { class: "task", "data-placement": p.taskId }, h("b", {}, num(i + 1, lang)),
-    h("div", {}, cp.titles.get(p.taskId) ?? "", h("p", {}, valueEl(`${fmtClock(p.start)}–${fmtClock(p.end)}`, labelFor(findRec(p.taskId)?.ns ?? "demo"), lang)), h("div", { class: "row" }, doneBtn(p.taskId, lang), focusBtn(p.taskId, lang)))));
+    h("div", {}, cp.titles.get(p.taskId) ?? "", h("p", {}, valueEl(`${fmtClock(p.start)}–${fmtClock(p.end)}`, labelFor(findRec(p.taskId)?.ns ?? activeNs()), lang)), h("div", { class: "row" }, doneBtn(p.taskId, lang), focusBtn(p.taskId, lang)))));
 }
 
 export function today(): HTMLElement {
@@ -750,18 +751,18 @@ export function today(): HTMLElement {
   const rungs = h("ul", { class: "rungs", role: "img", "aria-label": t("home.rungs", lang, { done: num(curStage, lang), total: num(STAGES.length, lang), now: num(curStage + 1, lang) }) },
     ...STAGES.map((_, i) => h("li", { class: i < curStage ? "done" : i === curStage ? "now" : "" })));
   return h("main", { class: "scr scr-today" },
-    h("p", { class: "muted" }, valueEl(tb(DEMO_DATE, lang), "DEMO", lang)),
+    h("p", { class: "muted" }, activeNs() === "real" ? todayIso() : valueEl(tb(DEMO_DATE, lang), "DEMO", lang)),
     h("h1", {}, t("home.title", lang)),
     h("aside", { class: `card inspire ${insp.theme}`, "aria-label": "Inspiration" },
       h("span", { class: "chip" }, `${THEME_LABEL[insp.theme].bn} · ${THEME_LABEL[insp.theme].en}`),
       h("p", { class: "inspire-bn" }, insp.bn), h("p", { class: "muted inspire-en" }, insp.en)),
-    h("p", { class: "sub" }, t("home.step", lang), " — ", valueEl(t("stage.progress", lang, { now: num(curStage + 1, lang), total: num(STAGES.length, lang) }), "DEMO", lang)),
+    h("p", { class: "sub" }, t("home.step", lang), " — ", valueEl(t("stage.progress", lang, { now: num(curStage + 1, lang), total: num(STAGES.length, lang) }), activeNs() === "real" ? "ESTIMATE" : "DEMO", lang)),
     h("section", { class: "stage", "aria-label": t("home.stage", lang) },
       h("small", {}, `${t("home.stage", lang)} · ${tb(stage.name, lang)}`),
       h("div", { class: "n" }, num(curStage + 1, lang), h("span", { style: "font-size:22px;color:var(--muted)" }, ` / ${num(STAGES.length, lang)}`)),
       rungs),
     h("h2", {}, t("home.tasks", lang)),
-    ...(cp.hasTasks ? todayFromPlan(cp, lang) : DEMO_TASKS.slice(0, 3).map((k, i) => h("div", { class: "task" }, h("b", {}, num(i + 1, lang)),
+    ...(cp.hasTasks ? todayFromPlan(cp, lang) : activeNs() === "real" ? [h("p", { class: "muted", "data-empty-real": "1" }, t("mode.today.empty", lang))] : DEMO_TASKS.slice(0, 3).map((k, i) => h("div", { class: "task" }, h("b", {}, num(i + 1, lang)),
       h("div", {}, tb(k.title, lang), h("p", {}, valueEl(t("task.minutes", lang, { n: num(k.minutes, lang) }), "DEMO", lang), " · ", tb(k.hint, lang)))))),
     h("div", { class: "actions" },
       link("#/diary/intake", "cta", t("home.start", lang)),
@@ -931,8 +932,8 @@ export function intake(stepParam: string | undefined): HTMLElement {
   const lang = L();
   const steps = intakeSteps();
   const a = loadAnswers();
-  // With consent, the form pre-fills from real answers only: a demo answer is never copied into a real record.
-  const prefill = loadAnswers(consentOn() ? "real" : "both");
+  // The form pre-fills from the active mode only: a demo answer is never copied into a real record.
+  const prefill = loadAnswers();
   const nxt = nextStep(a);
   const step = Number(stepParam) || nxt.step || steps[0]!;
   const idx = steps.indexOf(step);
@@ -967,8 +968,8 @@ export function intake(stepParam: string | undefined): HTMLElement {
   form.append(h("button", { class: "btn", type: "submit" }, idx === steps.length - 1 ? t("intake.finish", lang) : t("intake.next", lang)));
   return h("main", { class: "scr scr-intake" },
     link("#/diary", "crumb", `← ${t("intake.back", lang)}`), h("h1", { class: "sr-only" }, t("diary.title", lang)),
-    h("div", { class: "top", style: "margin-top:8px" }, h("span", {}, t("intake.step", lang, { n: num(idx + 1, lang), total: num(steps.length, lang) })), consentOn() ? nsTag("real", lang) : null),
-    consentOn() ? h("p", { class: "muted" }, t("entry.real.note", lang)) : gate,
+    h("div", { class: "top", style: "margin-top:8px" }, h("span", {}, t("intake.step", lang, { n: num(idx + 1, lang), total: num(steps.length, lang) })), consentOn() ? nsTag(activeNs(), lang) : null),
+    consentOn() ? (activeNs() === "real" ? h("p", { class: "muted" }, t("entry.real.note", lang)) : null) : gate,
     form, msg,
     h("p", { class: "muted" }, t("intake.skipHint", lang)),
     disclaimers(lang, ["noGuarantee"]));
@@ -977,20 +978,20 @@ export function intake(stepParam: string | undefined): HTMLElement {
 // ---- Prayer times, one-tap marks and alert settings (M13). Marks use the prayer_log entity, demo namespace (real stays closed, D-B). ----
 function togglePrayerMark(day: string, k: PrayerKey) {
   const id = prayerLogId(day, k);
-  if (store.demo.get(id)) store.demo.delete(id);
-  else store.demo.put(prayerLogRecord(day, k, new Date().toISOString()));
+  if (store[activeNs()].get(id)) store[activeNs()].delete(id);
+  else putMode(prayerLogRecord(day, k, new Date().toISOString()));
 }
 
 function toggleFastMark(day: string) {
   const id = fastLogId(day);
-  if (store.demo.get(id)) store.demo.delete(id);
-  else store.demo.put(fastLogRecord(day, new Date().toISOString()));
+  if (store[activeNs()].get(id)) store[activeNs()].delete(id);
+  else putMode(fastLogRecord(day, new Date().toISOString()));
 }
 
 /** M13 fasting mark for today (Dhaka date). Only the date is kept; nothing is counted. */
 function fastCard(lang: Locale): HTMLElement {
   const day = isoDate(dhakaNow(Date.now()).date);
-  const marked = isFastMarked(store.demo.list(), day);
+  const marked = isFastMarked(allRecs(), day);
   return h("div", { class: "card", "data-fast": day },
     h("h2", { class: "card-h" }, t("deen.fast.title", lang)),
     h("p", { class: "muted" }, t("deen.fast.hint", lang)),
@@ -1002,7 +1003,7 @@ function fastCard(lang: Locale): HTMLElement {
 function prayerTimesCard(lang: Locale): HTMLElement {
   const now = dhakaNow(Date.now()); const day = isoDate(now.date);
   const times = prayerTimes(now.date, prefs.prayerCoords);
-  const marked = markedOn(store.demo.list(), day);
+  const marked = markedOn(allRecs(), day);
   return h("div", { class: "card", "data-prayer-times": day },
     h("h2", { class: "card-h" }, t("deen.prayer.title", lang)),
     h("p", { class: "muted" }, day),
@@ -1190,18 +1191,28 @@ function clearRealCard(lang: Locale): HTMLElement {
   return h("div", { class: "card", "data-clear": "real" }, ...kids);
 }
 
+let demoClearAsk = false;
+/** Delete only the demo entries: two taps (ask, then confirm). Real data is never touched. */
+function clearDemoBlock(lang: Locale): HTMLElement {
+  if (!demoClearAsk) return h("button", { class: "btn ghost", type: "button", "data-act": "clear-demo", onclick: () => { demoClearAsk = true; rerender(); } }, t("data.clearDemo", lang));
+  return h("div", { class: "card", role: "alert", "data-clear": "demo" }, h("p", {}, t("data.clearDemo.ask", lang)),
+    h("button", { class: "btn", type: "button", "data-act": "clear-demo-yes", onclick: () => { store.demo.clear(); demoClearAsk = false; rerender(); } }, t("data.clearDemo.yes", lang)),
+    h("button", { class: "btn ghost", type: "button", "data-act": "clear-demo-no", onclick: () => { demoClearAsk = false; rerender(); } }, t("mode.del.cancel", lang)));
+}
+
 export function dataScreen(): HTMLElement {
   const lang = L();
   const realOn = readConsent(consentKv);
   return h("main", {},
     link("#/more", "crumb", `← ${t("more.title", lang)}`),
     h("h1", {}, t("data.title", lang)),
+    modeSwitchCard(),
     h("div", { class: "card", "data-ns": "real" }, h("h2", { class: "card-h", }, t("data.real", lang)), h("p", {}, t("data.real.count", lang, { n: num(store.real.list().length, lang) })), h("p", { class: "muted" }, t(realOn ? "data.real.on" : "data.real.locked", lang))),
     realOn ? null : consentCard(lang),
     clearRealCard(lang),
     h("div", { class: "card", "data-ns": "demo" }, h("h2", { class: "card-h", }, t("data.demo", lang), " ", demoBadge(lang)), h("p", {}, t("data.demo.count", lang, { n: num(store.demo.list().length, lang) }))),
     h("p", { class: "muted" }, t("data.nopromote", lang)),
-    h("button", { class: "btn ghost", type: "button", onclick: () => { store.demo.clear(); rerender(); } }, t("data.clearDemo", lang)),
+    clearDemoBlock(lang),
     h("h2", {}, t("backup.title", lang)),
     h("p", { class: "muted" }, t("backup.note", lang)),
     h("button", { class: "btn", type: "button", "data-act": "backup", onclick: async () => {

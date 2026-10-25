@@ -1,12 +1,12 @@
 import "./ui/styles.css";
-import { render } from "./app";
+import { render, renderApp } from "./app";
 import { initStorage } from "./ui/state";
 import { updateNetBadge } from "./ui/net";
 import { startPrayerAlerts } from "./ui/prayerAlerts";
 import { ensureContentPacks } from "./library/packs";
 
 const onRoute = () => {
-  render();
+  renderApp();
   // Content packs load the first time a topic page is opened (bundled files, no network).
   if (location.hash.startsWith("#/topic")) ensureContentPacks(() => { if (location.hash.startsWith("#/topic")) render(); });
 };

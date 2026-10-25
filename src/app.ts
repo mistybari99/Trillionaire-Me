@@ -6,6 +6,7 @@ import { demoBadge } from "./ui/components";
 import * as S from "./ui/screens";
 import * as P from "./ui/planScreens";
 import * as LS from "./ui/libraryScreens";
+import { demoPanels, firstRunScreen, trackDemoDay } from "./ui/modeUi";
 import { LAYERS, TOPICS } from "./library/topics";
 import { dismissReminder, inAppReminders } from "./ui/prayerAlerts";
 import { notifyText } from "./core/notify";
@@ -50,8 +51,16 @@ export const ROUTES: Array<[RegExp, (m: RegExpMatchArray) => HTMLElement, string
 
 function toggleDrawer(open: boolean) { const d = document.getElementById("drawer"); if (d) { d.classList.toggle("open", open); d.setAttribute("aria-hidden", String(!open)); } }
 
+/** Entry point for the browser: the first-run choice comes before anything else, once per device. */
+export function renderApp() {
+  if (prefs.dataModeChoice !== null) { render(); return; }
+  applyPrefs();
+  document.getElementById("app")!.replaceChildren(firstRunScreen());
+}
+
 export function render() {
   applyPrefs();
+  trackDemoDay();
   const lang = prefs.lang;
   const path = location.hash.replace(/^#/, "") || "/today";
   let body: HTMLElement | null = null, tab = "today";
@@ -80,7 +89,7 @@ export function render() {
   const savedY = window.scrollY;
   const routeChanged = path !== lastRenderedPath;
   lastRenderedPath = path;
-  app.replaceChildren(skip, top, ...reminders, body, nav, drawer);
+  app.replaceChildren(skip, top, ...demoPanels(), ...reminders, body, nav, drawer);
   window.scrollTo(0, routeChanged ? 0 : savedY);
 }
 
