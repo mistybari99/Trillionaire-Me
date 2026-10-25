@@ -1,0 +1,19 @@
+{
+  "schema": "tm-system-template",
+  "schemaVersion": 1,
+  "id": "weekly-money-check",
+  "reviewStatus": "pending_reviewer",
+  "name": { "en": "Weekly money check", "bn": "সাপ্তাহিক টাকার হিসাব" },
+  "summary": { "en": "Once a week: what came in, what went out, and what is still unknown. Blank means unknown, not zero.", "bn": "সপ্তাহে একবার: কী এসেছে, কী গেছে, আর কোনটা এখনো জানা নেই। ফাঁকা মানে জানা নেই, শূন্য নয়।" },
+  "goals": [
+    { "key": "g1", "title": { "en": "Weekly money check done", "bn": "সাপ্তাহিক টাকার হিসাব সম্পন্ন" }, "horizon": "week" }
+  ],
+  "tasks": [
+    { "key": "t1", "goal": "g1", "title": { "en": "Write this week's income (or 'unknown')", "bn": "এই সপ্তাহের আয় লিখুন (না জানলে 'জানা নেই')" }, "minutes": 15, "priority": "high" },
+    { "key": "t2", "goal": "g1", "title": { "en": "Write this week's spending", "bn": "এই সপ্তাহের খরচ লিখুন" }, "minutes": 15, "priority": "high" },
+    { "key": "t3", "goal": "g1", "title": { "en": "Pick one spending limit for next week", "bn": "পরের সপ্তাহের জন্য একটি খরচের সীমা ঠিক করুন" }, "minutes": 10, "priority": "normal" }
+  ],
+  "habits": [
+    { "key": "h1", "title": { "en": "Weekly money check", "bn": "সাপ্তাহিক টাকার হিসাব" }, "days": [5], "target": null, "unit": null }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "schema": "tm-system-template",
+  "schemaVersion": 1,
+  "id": "job-search-week",
+  "reviewStatus": "pending_reviewer",
+  "name": { "en": "Job-search week", "bn": "চাকরি খোঁজার সপ্তাহ" },
+  "summary": { "en": "One steady week: a list of roles, one CV update, two applications, one message to someone you know.", "bn": "এক সপ্তাহের নিয়মিত খোঁজ: পদের তালিকা, সিভি হালনাগাদ, দুইটি আবেদন, পরিচিত একজনকে একটি বার্তা।" },
+  "goals": [
+    { "key": "g1", "title": { "en": "Job search this week", "bn": "এই সপ্তাহে চাকরির খোঁজ" }, "horizon": "week" }
+  ],
+  "tasks": [
+    { "key": "t1", "goal": "g1", "title": { "en": "List roles that fit your skills", "bn": "আপনার দক্ষতার সঙ্গে মেলে এমন পদের তালিকা" }, "minutes": 30, "priority": "high" },
+    { "key": "t2", "goal": "g1", "title": { "en": "Update your CV once", "bn": "সিভি একবার হালনাগাদ করুন" }, "minutes": 45, "priority": "normal" },
+    { "key": "t3", "goal": "g1", "title": { "en": "Apply to two roles", "bn": "দুইটি পদে আবেদন করুন" }, "minutes": 60, "priority": "high" },
+    { "key": "t4", "goal": "g1", "title": { "en": "Message one person you know", "bn": "পরিচিত একজনকে একটি বার্তা পাঠান" }, "minutes": 15, "priority": "low" }
+  ],
+  "habits": [
+    { "key": "h1", "title": { "en": "One application a day", "bn": "দিনে একটি আবেদন" }, "days": [1, 2, 3, 4, 5], "target": 1, "unit": { "en": "application", "bn": "আবেদন" } }
+  ]
+}

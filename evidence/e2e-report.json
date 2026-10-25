@@ -1,0 +1,263 @@
+{
+  "generated": "2026-10-24T14:48:00.005Z",
+  "results": [
+    {
+      "id": "TM-TST-143",
+      "name": "empty start: no demo/real records after visiting every tab",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "id": "TM-TST-034",
+      "name": "secret typed into a free-text field is rejected and nothing saved",
+      "pass": true,
+      "detail": "এটি password, OTP, card বা ID নম্বরের মতো দেখাচ্ছে। এখানে দেবেন না। কিছুই সংরক্ষিত হয়নি।"
+    },
+    {
+      "id": "TM-TST-143",
+      "name": "saved intake is in demo namespace only, labelled DEMO",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "TM-TST-021",
+      "name": "blank skill level/evidence stay unanswered (not 0)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "TM-TST-021",
+      "name": "‘don't know’ hours saved as unknown state, not 0",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "TM-TST-143",
+      "name": "real namespace still empty after demo entry",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G4-SUGGEST",
+      "name": "0 Wikipedia requests before the user taps search",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G4-SUGGEST",
+      "name": "3 option cards with source, no raw HTML",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G4-SUGGEST",
+      "name": "tapping a card fills the field",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G4-SUGGEST",
+      "name": "secret-looking search is blocked before sending",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G3-PLAN",
+      "name": "without free hours nothing is planned and the user is asked",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G3-PLAN",
+      "name": "task is placed inside 20:00–22:00",
+      "pass": true,
+      "detail": "20:00–20:30 · Call supplier"
+    },
+    {
+      "id": "G3-PLAN",
+      "name": "Home shows the user's own planned task (today first)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G3-PLAN",
+      "name": "pause mode places nothing, no error text",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G3-MONEY",
+      "name": "blank liability makes personal net worth 'not known', not 0",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G3-MONEY",
+      "name": "business net worth is separate and computed (5,000)",
+      "pass": true,
+      "detail": "\"ব্যবসা\\n\\nনিট সম্পদ: ৫,০০০ টাকাযুক্তি থেকে\\n\\nমাসিক নগদ প্রবাহ: এখনো কিছু দেওয়া হয়নি\""
+    },
+    {
+      "id": "G3-MONEY",
+      "name": "secret-looking name rejected",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G3-STAGE",
+      "name": "Stage A pass button is disabled while conditions are open (no error colour copy)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G3-STAGE",
+      "name": "conditions met -> button enabled",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G3-STAGE",
+      "name": "Stage A passed, Stage B is now current, calm banner shown",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G3-STAGE",
+      "name": "journey log has the entry with before/after",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G3-STAGE",
+      "name": "Home shows 2 / 8 after passing Stage A",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "R2-HORIZON",
+      "name": "page renders the 5 horizon sections in order",
+      "pass": true,
+      "detail": "five_year,one_year,month,week,today,unset"
+    },
+    {
+      "id": "R2-HORIZON",
+      "name": "goal with no horizon appears in the 'unset' section",
+      "pass": true,
+      "detail": "five_year,one_year,month,week,today,unset"
+    },
+    {
+      "id": "R2-HORIZON",
+      "name": "goal with horizon one_year lands in the one_year section only",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "R2-HORIZON",
+      "name": "no red/shame words on the horizon page (EN and BN)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G3-CAPTURE",
+      "name": "finds amount, date and decision from a Bangla note",
+      "pass": true,
+      "detail": "amount,date,decision"
+    },
+    {
+      "id": "G3-CAPTURE",
+      "name": "report shows confirmed amount (৫,০০০) and decision; unconfirmed date is absent",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G3-CAPTURE",
+      "name": "secret in a note is rejected before anything is found",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G3-STUCK",
+      "name": "tired offers Minimum week/Pause only (no new task)",
+      "pass": true,
+      "detail": "minimum_week,pause"
+    },
+    {
+      "id": "G3-STUCK",
+      "name": "choosing it switches mode and adds 0 tasks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G3-STUCK",
+      "name": "plan screen shows Minimum week as active",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "R5-CARDS",
+      "name": "stuck page shows two paths, effort timing and where-time-goes cards",
+      "pass": true,
+      "detail": "two_paths,effort_timing,where_time_goes"
+    },
+    {
+      "id": "R5-CARDS",
+      "name": "reflection cards have no red error or alert element",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "R5-CHAIN",
+      "name": "journey log shows the what-I-learned card (empty hint or chain)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G3-TOPICS",
+      "name": "sidebar opens, topic page shows tips with a visual and an app link",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G3-REWARD",
+      "name": "finishing a task opens the picture and adds exactly one star",
+      "pass": true,
+      "detail": "0->1"
+    },
+    {
+      "id": "G2-PERSIST",
+      "name": "demo entries survive reload via IndexedDB",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G2-PERSIST",
+      "name": "records are not duplicated in localStorage",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G2-INSTALL",
+      "name": "manifest has 192 and 512 PNG icons, standalone",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G1-OFFLINE",
+      "name": "app shell loads and works with network off",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G1-OFFLINE",
+      "name": "status screen renders offline",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G1-NONET",
+      "name": "0 third-party/external requests during all of the above",
+      "pass": true,
+      "detail": "[]"
+    }
+  ]
+}

@@ -1,0 +1,237 @@
+# DECISIONS_LOG
+Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) are in CLAUDE.md §2.
+
+| # | Decision | Why | Alternatives | Undo |
+|---|---|---|---|---|
+| L-01 | G1 UI is vanilla TypeScript (no framework) | G1 has ~10 static screens; zero deps = smallest, fastest. Charter says "small UI framework" | Preact/Svelte now | Screens are pure fns returning DOM; port to Preact in G2/G3 when forms get complex |
+| L-02 | G1 storage = localStorage KV behind a `KV` interface; IndexedDB (Dexie) arrives in G2 | Brief puts local DB in G2 | Dexie now | Swap `KV` adapter; records unchanged |
+| L-03 | User-facing journey = Stage A–H; build = G0–G8 (renamed all UI/schema "gate" → "stage") | CLAUDE.md §2 | — | rename back (`stage_pass` → `gate_pass`) |
+| L-04 | Home shows Stage A = ১/৮ (preview's ২/৮ ignored) | CLAUDE.md §2 | 2/8 | `DEMO_CURRENT_STAGE` in `src/demo/seed.ts` |
+| L-05 | Fonts bundled via @fontsource (no Google Fonts) | CLAUDE.md §2 | system fonts | remove imports in `styles.css` |
+| L-06 | Glossary shown in-app, every term tagged "যাচাই হয়নি" | CLAUDE.md §2, TM-TST-161 | hide until reviewed | — |
+| L-07 | Demo answers live in the demo namespace; Home seed is constants (never stored) | TM-REQ-143 | seed into store | — |
+| L-08 | Register copy `…_v2_1_G1_evidence.xlsx` kept beside the original; original untouched | evidence-only updates | edit in place | delete the copy |
+| L-09 | G2 slice 1: `RecordRepo` contract + Dexie adapter + checksum backup/restore (not yet wired to UI) | charter stack; pure core + adapters | wire UI first | adapter is isolated in `src/adapters`; UI still uses G1 KV store |
+| L-10 | G2 slice 3: pure op-queue + deterministic field-level conflict rule (highest ts/device/opId wins, loser kept in `conflicts`) | no server exists yet; rules must be testable offline; never lose data silently | CRDT lib (more deps) | `src/core/sync.ts` is unused by UI until a sync target is approved |
+| L-11 | Bangla version keeps common English words (Demo, Backup, Online…); allowlist in tests | owner request: easier to read | full translation | edit `COMMON_ENGLISH_KEYS` + pack |
+| L-12 | Research = injected provider + consent contract now; engine choice deferred to G4 | Google API key cannot live in a browser; paid beyond free quota (§4.1) | wire Google now | swap provider |
+| L-13 | App storage = in-memory store mirrored write-through to IndexedDB; old localStorage records imported once | screens stay synchronous; durable data | rewrite screens async | `initStorage()` in `src/ui/state.ts`; remove MirrorKV |
+| L-14 | Notifications hide worship/health/money/third-party details by default | MR-14 | show details | `hideDetails:false` pref |
+| L-15 | In-app Suggest uses Wikipedia (free, no key) behind click-consent; sends only the typed search words; Wikipedia adapter is the only network file | owner asked for it (23 Oct); CLAUDE.md §4.2 satisfied by explicit request + per-click consent | Google via Supabase function (needs key/cap approval) | delete `src/adapters/wikipedia.ts` + `SUGGESTABLE` in screens.ts |
+| L-16 | Scheduler: deterministic first-fit by priority; minimum_week = max 3 tasks, 1/day; pause = none; unknown capacity or minutes → deferred with a reason code, never 0 | CLAUDE.md §6 (overload adds no tasks, unknown≠0) | optimiser/ILP | `src/core/planner.ts` |
+| L-17 | Deleting a goal-tree node re-attaches children to its parent, or refuses | no orphans (TM-TST-037) | cascade delete | `remove()` in goals.ts |
+| L-18 | Scheduler fills the week starting from TODAY, inside the daily free window the user sets (not blocked windows) | non-programmer-friendly: "when am I free?"; worship/family/rest are outside the window by construction | ask for each blocked window | `startDay`, `freeWindow()` |
+| L-19 | Capacity is "known" only if weekly hours AND daily window are both known; real 0 hours is respected as 0 | unknown≠0 | assume default window | `capacityState()` |
+| L-20 | Stage A auto-checks (required diary answered incl. "Later" + ≥1 goal); stages B–H need the user's own written evidence; stage order fixed; pass records are never deleted; unmet = calm "what is left" | Spec §3.4, DP-04, no shame copy | free pass / manual tick only | `src/core/stages.ts` |
+| L-21 | Owner's 20 categories become a knowledge library (+ Deen as 21st); navigation stays 5 phone tabs | Spec DP-03 one-focus; DP-12 Deen first-class | 9-item sidebar | `docs/design/life-system-integration.md` |
+| L-22 | No streak counters; habits use consistency trend + recovery plan | CLAUDE.md §2/§6 no streak-shame | streaks | n/a |
+| L-23 | Library content ships only with sources, date, evidence level and reviewed=true; emotional/health entries need human review | never invent facts; safety | ship drafts | `LibraryEntry` in `src/library/categories.ts` |
+| L-24 | First build slice = "I'm stuck" Obstacle Center (rule-based, no AI) | brief's signature feature; works offline | start with content library | phase P1 in the plan |
+| L-25 | Quick capture = rule-based finder + mandatory confirm step; bare numbers never guessed as money; "কাল" flagged low-confidence; raw note kept on device, reports use only confirmed items | owner request 24 Oct; no AI; unknown≠guess | auto-save extracted items | `src/core/capture.ts` |
+| L-26 | SUPERSEDES L-21, L-23, L-24: owner said do not apply the whole brief → removed `src/library` and 5 of 8 new requirements (173,176,177,179,180); adopt only features that fit the running app; first = "I'm stuck" | owner instruction 24 Oct | build the library | git history has the removed skeleton |
+| L-27 | SUPERSEDES L-26 partly: no topic is dropped. 21 topics × 2 short tips + visuals, tags link related tips, ☰ drawer for topics, reward picture (stars per finished task, garden layer per stage). Tips are practice-based drafts marked unreviewed | owner 24 Oct (second instruction) | full evidence database | `src/library/topics.ts`, `src/core/reward.ts` |
+
+## L-28 — Daily inspiration board (owner request, batch 7 follow-up)
+- What: Today screen shows one bilingual (Bangla + English) card per day from a bundled list of 15 neutral lines (motivation, discipline, patience, care). Changes at local midnight.
+- Why: owner wants motivation + discipline daily, both languages, no streak/shame copy.
+- Alternatives: fetch quotes from an online service. Not done: external integration needs owner approval (Charter §4.3/§8). Offline bundled list works without network.
+- How to undo: remove the `aside.inspire` block in `today()` in src/ui/screens.ts and delete src/library/inspiration.ts.
+- Open for owner: approve an online quote source (e.g. a free API) if the daily online change is wanted.
+
+## Language mode "Mix" (owner request)
+- What: third language mode "mix" next to English and Bangla. Mix = the Bangla pack with whole standalone words swapped for English (Stage, Goal, Journey, Diary, Demo, Backup, Online, Offline). Keys in COMMON_ENGLISH_KEYS show the English text. Switch on More shows English / বাংলা / Mix. Default stays Bangla.
+- Why: owner wants Bangla sentences that keep common English words readable.
+- Alternatives: a separate hand-written mix pack (more work, drifts from bn). Swapping inside suffixed words (e.g. "Offlineে") was rejected because it produces broken spelling.
+- How to undo: remove "mix" from Locale/LOCALES/LOCALE_ORDER in src/i18n/registry.ts and the mix pack in src/i18n/packs.ts; the switch falls back to Bangla for unknown values.
+- Also: fixed mixed-script strings in the Bangla pack (e.g. "Offlineে চলে", "এই deviceে") and plain-language wording of cap.intro and safety.demo (no internal "G1" name shown to users).
+
+## Plan flow diagram (R6, ROADMAP B9)
+- What: Plan screen shows an inline SVG flow: Time / Tools / Skills → Research → Plan → AI step (disabled, "later") → Your goal. Data model in src/core/planFlow.ts; SVG in planScreen (src/ui/screens.ts). Demo data only, same as the rest of the plan screen.
+- Why: owner wants to see how a plan is made, from his own inputs, with no AI.
+- Rules chosen: a missing value shows "unknown" (EN and BN), never 0. Tools/skills count = records entered, so zero records = unknown. Research = intake answers so far. Plan = placed open tasks, only when capacity is known. Goal = first goal title, shortened to 24 characters.
+- Reduced motion: the diagram has no animation at all. The AI step is dimmed (opacity), not dashed, because the R4 reduced-motion guard flags any stroke-dasharray outside the motion-allowed block.
+- Alternatives: HTML boxes (rejected: the roadmap asks for SVG). Dashed AI box (rejected, see above).
+- How to undo: remove `planFlow(cp, lang),` from planScreen, delete the `planFlow` and SVG helper functions in src/ui/screens.ts, the `plan.flow.*` keys in src/i18n/packs.ts, the `.flow` CSS block in src/ui/styles.css, and src/core/planFlow.ts plus tests/b9_plan_flow.test.ts.
+
+## O6 — reality-changed loop, 90-day review, stage templates (ROADMAP §2)
+- What: (a) a plan step can be marked "No longer true" from the Plan screen. The step stays on record, gets `task.not_true_on` (new optional date field, additive, schema version unchanged; absence = open), is dropped from the scheduler input (`isOpenTask` in `src/core/planInputs.ts`), and a new `journey_log` record is appended. Nothing is deleted. (b) New screen `#/journey/review` (pure rules in `src/core/review.ts`): finished tasks, focus minutes and stage passes in the last 90 calendar days. (c) Stage-name templates (`src/core/stageTemplates.ts`): default (the Spec journey), learning, business. Only names and exit text change; codes A–H, order and past passes stay.
+- Why: owner asked for the Spec §3.6 loop, a 90-day look back, and editable stage names. Scope kept to the three items.
+- Rules chosen: unknown ≠ 0. A measure with no record in the window shows "Not enough data yet". Focus sessions with no minutes are not summed and are counted in a separate note. The template choice is a per-viewer pref (`tm:ui:stageTemplate`), same pattern as the horizon view; unknown values fall back to default. Past journey-log text keeps its wording.
+- Bangla: the new strings and the learning/business template names are a draft pending native review (TM-TST-161).
+- Alternatives: a full plan-diff with PlanVersion and approval (Spec §3.6 steps 2–6) was not built; that needs the dependency graph, which is later work. A confirm dialog before "No longer true" was not added because the step is kept and nothing is lost.
+- Known gap: no undo for "No longer true" (the Remove button still deletes the step, as before). Add an undo that clears `task.not_true_on` and logs the reversal if the owner asks.
+- How to undo: remove the `journey/review` route in `src/app.ts`; delete `src/core/review.ts`, `src/core/reality.ts`, `src/core/stageTemplates.ts`; revert the `isOpenTask` filter in `src/core/planInputs.ts`; delete `task.not_true_on` from `src/catalog/fields.ts`; remove the `review.*`, `reality.*`, `stage.tpl.*` keys in `src/i18n/packs.ts`. Existing `task.not_true_on` values are then ignored, and `journey_log` entries stay (append-only).
+
+
+## O5 — assessment scoring + path fit (ROADMAP §2)
+- What: (a) `src/core/assessment.ts` reads interest, skill and strength answers from records and returns a 0–100 level per dimension (mean of the given 1–5 ratings / 5) and a count of dimensions with data. (b) `pathFit()` in the same file matches the user's items to `PATHS` in `src/library/paths.ts` by theme and returns up to 3 matches with a plain reason for each. (c) `src/ui/assessment.ts` renders both as simple cards at the top of the Plan screen.
+- Why: Spec §3.1 (Discover) and §3.3 (Path fit) need an assessment that works without AI and shows why each path was suggested.
+- Rules chosen: unknown ≠ 0. A missing rating stays null ("No rating given yet"); a dimension with no items is "Not enough data yet"; a user with no answers gets no paths, not a guess. Weights are fixed and visible in code: skill 3, interest 2, strength 1, one weight per theme (strongest source wins). Items no keyword can place are listed as "could not place yet", not dropped. Ties keep library order, and record order is by id, so the output is stable. No rank, grade or percentage of the person is shown; the 0–100 level is internal and the card shows the average out of 5.
+- Path library: 10 generic, neutral paths drafted by the builder. Each has what it needs, a first small test and, where relevant, a check before starting (privacy of client records, local food-sale rules, interest-based credit). No income, return or success figures. Marked as a draft that has not been reviewed (যাচাই হয়নি). Halal filter (Spec MR-31) is partly covered by the "avoid interest-based deals" caution only; a full filter needs a qualified reviewer (Owner, D-D/MR-31).
+- Matching: theme keywords in Bangla and English (English matches at word start). Matching is keyword-based, so it is rough; it can miss or mis-tag a phrase. The fix is to add keywords in `THEME_KEYWORDS`, not to add AI.
+- Bangla: new strings are a draft pending native review (TM-TST-161).
+- Alternatives: a numeric fit percentage (rejected: looks like a prediction and invites ranking); AI matching (rejected: D-C); keeping matches on a separate Journey page (rejected for now: Plan already has the answers and the cards are short).
+- How to undo: remove `assessmentSection(cp.recs, lang),` from planScreen in `src/ui/screens.ts`; delete `src/ui/assessment.ts`, `src/core/assessment.ts`, `src/library/paths.ts`, `tests/o5_assessment_fit.test.ts`; delete the `assess.*` and `fit.*` keys in `src/i18n/packs.ts`.
+
+## O7 — Own options, saved offline search list (G4)
+- What: (a) on the 5 search fields, the user can save what they typed ("Save what I typed") and it shows above the search button next time; (b) the 2–3 Wikipedia results the user taps from are saved per field and term. A saved term is read from the phone first, so no network call happens, online or offline. Caps: 20 entries per field, oldest removed first. Re-saving a term moves it to the top.
+- Where: `src/core/savedLists.ts` (pure), `src/core/research.ts` (saved-first read), `src/ui/screens.ts` (`suggestPanel`). Stored as `own_option` / `saved_search` records in the demo namespace (IndexedDB through the existing mirror).
+- Why: stays on the device, no new external call, no new table or schema version (reuses the record store).
+- Privacy: text that looks like a password, OTP, ID or card number is refused before it is stored (`detectSecret`).
+- Alternatives: a new Dexie table (rejected: schema change for no gain); localStorage (rejected: state should survive like other demo records); no cap (rejected: brief says 20).
+- How to undo: remove the `ownBox`/`saveOwn` lines and the `saveSearchResults` call in `suggestPanel`; drop the cached-first branch in `research()`; delete `src/core/savedLists.ts` and `tests/o7_own_saved_lists.test.ts`. Stored records can be cleared with the demo clear action.
+
+### O7 addendum — "more screens" check and traceability (2026-10-24)
+- What: checked every intake field. Only the 5 suggestable fields (`interest.topic`, `skill.name`, `strength.name`, `value.name`, `goal.title`) get a suggestion panel, and all 5 go through `suggestPanel`, which already has own options and the saved list. No intake screen was missing support, so no UI change was made.
+- Traceability: 3 test files mapped to TM-TST ids where the criterion really fits: `o7_own_saved_lists` to TM-TST-053, `wikipedia` to TM-TST-146, `o5_assessment_fit` to TM-TST-165. All are Partial. The 8 other unmapped files are listed in `docs/register/EVIDENCE_REFRESH.md`, with the reason for each.
+- Why: the evidence gate counts only tests whose describe title carries the id, so the describe titles were tagged (same convention as `tests/g1.test.ts`). Only the titles changed; no assertions.
+- How to undo: remove the three `TM-TST-` rows from `tools/traceability.json` and the prefixes from the describe titles.
+
+## A11y — contrast, focus, touch targets, headings, skip link (WCAG 2.2 AA-minded)
+- What: (a) token values only in `src/ui/styles.css`: light `--ember` #C8501C → #B0431A and `--demo` #8A6D1D → #73580F (text was 4.03 and 3.93 on paper/DEMO badge); `--rule` (UI borders) #D8D1C0 → #8A8470 light and #2A3040 → #626A7E dark (was 1.3–1.4:1). (b) `button:focus-visible` added to the focus ring rule; the file-picker label gets a focus ring too. (c) Touch targets: help summaries 32/40 → 44px, inline remove buttons and the checkbox row 40/24 → 44px. (d) Skip-to-content link (first Tab stop, EN/BN label). (e) Card titles on screens are `h2.card-h` (same look as h3) so headings never jump h1 → h3; intake gets a visually hidden h1.
+- Why: owner asked for WCAG 2.2 AA checks; automated check in `tests/a11y.test.ts` (contrast of every token pair in 3 theme blocks, focus/reduced-motion guards, every route rendered in BN and EN for labels, heading order, names and live regions).
+- Alternatives: a separate border token for components only (rejected: more tokens for the same look); keeping h3 and skipping the heading check (rejected: owner asked for heading order); changing the layout to add sections (rejected: owner said no layout changes).
+- Visual impact: dividers and card borders are darker than before (intended for 3:1). Text colours change only slightly (ember/demo, light theme).
+- How to undo: restore the old hex values in the three token blocks of `styles.css`; change `h2.card-h` back to `h3` in `screens.ts`; remove the `skip` element in `src/app.ts` and `tests/a11y.test.ts`.
+
+## O8 — Lock-screen privacy, per-category "show details" (ROADMAP §2)
+- What: lock-screen text stays neutral for worship, health, financial (money) and third-party items unless the user turns "Show details" on for that category in More → Lock-screen details. Default is hidden for all four. Neutral text: en "A reminder is waiting" / "Open the app to see it"; bn "একটি স্মরণ অপেক্ষা করছে" / "খুলে দেখুন". Mix text is derived from the Bangla text (same rule as the UI packs).
+- Where: `src/core/notify.ts` (pure: `buildNotification`, `parseNotifyPrefs`, `notifyText`), `src/ui/state.ts` (`prefs.notifyShow`, key `tm:ui:notifyShow`), `src/ui/screens.ts` (`more()` card `data-lock-settings`), `src/i18n/packs.ts` (`more.lock*` keys; `swapMixTerms` now exported). Tests: `tests/o8_notify_privacy.test.ts`, `tests/notify.test.ts`.
+- Why: the old single on/off switch (`hideDetails`) had no settings UI and could not be set per category. Per-category opt-in matches the ROADMAP wording. Settings are per device (localStorage, like other display prefs), so nothing leaves the phone.
+- Alternatives: one global switch (rejected: owner asked for per category); storing it in the record store (rejected: a device-level display choice, not user data); keeping `personal` hidden too (rejected: not in the ROADMAP list; general and personal reminders show their text).
+- Not done: no notification scheduler is wired yet, so `buildNotification` is not called by a real delivery path. Lock-screen behaviour on a phone is an Owner check (ROADMAP O8, TM-TST-155 device part).
+- How to undo: restore the old `NotifyPrefs = { hideDetails }` shape in `notify.ts`; remove the `notifyShow` getter/setter in `state.ts` and the `more()` card; the `more.lock*` keys can stay unused, or be deleted from en and bn together so parity holds.
+
+## L-digits — Latin digits everywhere, plain Bangla copy (owner phone feedback)
+- What: every number is shown with Latin 0–9 in Bangla and Mix (`latinDigits` in `src/i18n/digits.ts`, applied in `t()`, `tb()`, `h()` text, notifications and diagram labels; numbers formatted with `en-US`). Bangla pack rewritten in plain spoken Bangla, same keys, same meaning; a few English lines shortened. Input parsing still accepts Bangla digits.
+- Why: owner could not read Bangla digits on the phone. Plain copy reads faster for a non-programmer user.
+- Alternatives: wrap digits in a span with a Latin font (rejected: more DOM and CSS for the same result; Hind Siliguri already has Latin digits, and headings fall back to Fraunces); keep Bangla digits and only change the font (rejected: owner asked for 0–9).
+- Kept: reviewer-pending flags (`glossary.unreviewed`, `topics.draft`, `fit.draft`), key set, behaviour, banned-word guard.
+- How to undo: restore `intlLocale` number formatting in `src/i18n/t.ts` (`fmtNumber`) and remove the `latinDigits` calls; restore the old `bn` block in `src/i18n/packs.ts` from git history.
+
+## M-list — honest module status (আছে / আংশিক / নেই)
+- What: the "কী কী চলছে" list (`src/modules/capability.ts`) now uses three levels. "আছে" (`implemented`) = a screen or function is reachable in the app and has a test. "আংশিক" (`partial`, new status) = only part is reachable, or only rules or data exist. "নেই" (`not-built`) = nothing user-facing yet. Every item's evidence (route, function, file, test) is in `src/modules/evidence.ts`, checked by `tests/m_list_status.test.ts`. Full table: `docs/design/m-list-status.md`.
+- Why: the owner found items marked "not built" that exist, and items marked "built" or "G1" that only exist as rules or data. A status must point at evidence.
+- Result: 13 আছে, 8 আংশিক, 4 নেই (of 25). Gate tags ("পরিকল্পনা: G…") are hidden on built items.
+- Alternatives: keep the old two-level list and fix only the wording (rejected: it could not show data-only items honestly); remove the not-built items (rejected: they are the planned roadmap).
+- How to undo: remove the `partial` status and `src/modules/evidence.ts`, delete `tests/m_list_status.test.ts`, and restore the old `MODULES` statuses and `cap.*` labels in both packs from git history.
+
+## M13 — Prayer times, one-tap marks, alert settings (owner request)
+- What: (a) `src/core/prayer.ts` (pure): five daily times for a Dhaka calendar date and a place, from the standard solar-position formula (NOAA-style sunrise equation), in Asia/Dhaka clock (UTC+6, fixed). Method angles are named constants: Fajr 18°, Isha 17°, Maghrib −0.833° (sun's centre, with refraction and sun radius), Asr shadow factor 1 (standard; 2 = Hanafi). Dhuhr = solar noon. An event that does not happen that day is `null`, never 00:00. (b) Deen screen: today's five times, one tap to mark a prayer, second tap to undo (`src/core/prayerLog.ts`, entity `prayer_log`, link `prayer`). Passed and unmarked shows only "আজ এখনো লেখা হয়নি / Not marked yet today". No count, score or streak. (c) Settings on the Deen screen: place by typed latitude and longitude (default Dhaka 23.8103, 90.4125; stored on the phone only), "Pre-prayer alert" (minutes before, default 10) and "Azan alert at prayer time", both OFF by default. (d) Delivery (`src/ui/prayerAlerts.ts`): checks every 30 s while the app is open. Phone notification only when permission is already granted (permission is asked when the owner switches an alert ON, via the tap). Otherwise an in-app card at the top of every screen. Lock-screen text goes through the O8 rule (`buildNotification`, privacy "worship"): neutral unless "show details" is on for worship.
+- Verification: `tools/prayer_reference.py` (pyephem solar ephemeris, same angles, altitude-crossing search, nearest minute) gives the reference values in `tests/prayer.test.ts`. The formula matches them within 1 minute on the five test dates (tolerance ±2). The reference is an independent check of the arithmetic, not of the method choice.
+- **OWNER MUST CHECK:** the times must be checked against an official Bangladesh timetable (Islamic Foundation / government calendar) before anyone relies on them. The method angles and Asr factor are a standard choice, not verified against the official table. Official Bangladesh timetables may use different angles or Asr convention; if so, change the named constants in `src/core/prayer.ts` (one place) and update `REF` in the test with the same change in `tools/prayer_reference.py`.
+- Why: owner asked for on-device prayer times with a standard formula, no network, no licensed timetable, and a one-tap log that keeps no score.
+- Alternatives: fetch times from a prayer-time API (rejected: network and a third party; CLAUDE.md §2); Umm al-Qura or Karachi angles (rejected for now: the owner asked for a standard formula, and the official Bangladesh method is not in the repo); Asr factor 2 (Hanafi) (not chosen: the owner must confirm which school the local timetable uses); storing marks in the real namespace (rejected: real namespace stays closed until D-B).
+- Storage: prayer marks are written to the demo namespace with `DEMO` labels, the same way habit logs are stored. The real namespace stays closed (CLAUDE.md §2, D-B). When the owner approves D-B, these marks need a migration to the real namespace. Place and alert settings are per-device prefs in localStorage (`tm:ui:prayerCoords`, `tm:ui:prayerAlerts`, `tm:ui:prayerFired`), as other display prefs are.
+- Limit: times are shown in UTC+6 clock. If the place is outside Bangladesh the numbers are still the local clock times of that place, but shown in the Dhaka clock. Alerts only fire while the app is open (no background scheduler, no service-worker timer). No azan audio: the azan alert is a notification or in-app card only.
+- How to undo: delete `src/core/prayer.ts`, `src/core/prayerAlerts.ts`, `src/core/prayerLog.ts`, `src/ui/prayerAlerts.ts`, `tests/prayer.test.ts`, `tools/prayer_reference.py`; remove the prayer blocks in `src/ui/screens.ts` (`prayerTimesCard`, `prayerSettingsCard`, `togglePrayerMark`, and the two calls in `deen()`), the reminder block and imports in `src/app.ts`, the start line in `src/main.ts`, the `prayerCoords`/`prayerAlerts`/`prayerFired` getters in `src/ui/state.ts`, the `deen.prayer.*`, `deen.set.*`, `deen.alert.*` keys in `src/i18n/packs.ts` (both languages), and restore the M13 line in `src/modules/capability.ts` and `src/modules/evidence.ts`.
+## M11 — "Wikipedia (saved in background)" (owner, 24 Oct 2026)
+- What: the M11 status tag reads "Wikipedia (saved in background)" / "উইকিপিডিয়া (ব্যাকগ্রাউন্ডে সংরক্ষিত)". The first successful search result is saved on the phone when it arrives (`saveSearchResults` in the Suggest handler, `src/ui/screens.ts`), not only when a card is picked. The same term then shows from the phone, offline, with no request. No search runs at app start (only the tap calls `research()`). The consent line says results are saved on this phone. "internet needed" is removed from M11 and M23 (`src/modules/capability.ts`). Keys stay: module IDs and the `internet-needed` status key remain in the registry, but no module uses it.
+- Why: owner asked for this wording and for the cache to work on the first tap.
+- Alternatives: keep saving only on pick (rejected: owner asked for the first tap to be cached); a new "cache" table (rejected: the existing saved-list record is enough, no schema change).
+- How to undo: remove the `if (r.status === "options" && !wasSaved) saveSearchResults(...)` line in `suggestPanel` and restore the M11 status and note from git history.
+- Proof: `tests/m11_background_cache.test.ts`; `tools/e2e.mjs` check `M11-CACHE` (offline, same term, 3 cards, no new request).
+
+## Online / offline badge (bug found in the M11 check)
+- What: `main.ts` used to call a full `render()` on every online and offline event. That closed open panels and dropped text the user had typed but not saved (e.g. a search about to be sent). Now `updateNetBadge()` (`src/ui/net.ts`) updates only the status badge.
+- Why: a phone changes connection often; losing typed text is a real bug.
+- How to undo: restore `window.addEventListener("online", render)` and `("offline", render)` in `src/main.ts`.
+- Proof: `tests/net_badge.test.ts`.
+
+## G3 register screens: risks, ventures, team roles, plan history, North Star (M15, M09, M10, M12, M03)
+- What: five small screens on demo data, same pattern as the money screen: `#/journey/risks` (risk + stop rule + review date), `#/diary/ventures` (name, stage, ownership), `#/diary/team` (role + who covers it), `#/journey/history` (finished and no-longer-true steps, read-only), `#/journey/northstar` (measure, unit, start, target, step ladder). Pure rules in `src/core/risk.ts`, `src/core/ventures.ts`, `src/core/team.ts`, `src/core/planHistory.ts`, `src/core/northStar.ts`. Screens in `src/ui/planScreens.ts`.
+- Schema: three new entities (`risk`, `team_role`, `north_star`) and ten catalog fields. All additive and optional, so `SCHEMA_VERSION` stays 1 and no migration is needed. Records use the demo namespace and DEMO labels.
+- Rules chosen: unknown stays unknown (blank ownership or number = unknown, never 0; no equity value is derived). A ladder needs both start and target (otherwise "not known: …"). Start = target gives "same", not an empty ladder. Team roles store roles only: an email or phone-like text is refused. Risk likelihood unknown is stored as unknown, not guessed. Dates must be real calendar dates.
+- Alternatives: separate pages per module (rejected: one generic pattern is simpler to test); storing people's names for team (rejected: third-party data, TM-REQ-092).
+- How to undo: remove the five routes in `src/app.ts`, the links in `journey()` and `diary()`, delete the three `src/core/*` files, `src/ui/planScreens.ts`, the new catalog fields and entities, and the keys `risk.*`, `ven.*`, `team.*`, `hist.*`, `ns.*`.
+- Proof: `tests/m_registers.test.ts`, `tests/m_screens_ui.test.ts`; route list and hub links in `tests/g1.test.ts`.
+
+## M06 dependency: "do this after" (planner)
+- What: a task can be set to come after another open task (`links.after` on the task record, chosen in the Plan form). The planner places it later in the week than its prerequisite. If the prerequisite is not placed (no estimate, no room, or a cycle), the task waits with reason `waiting_for_prerequisite`. Tasks with no link are planned exactly as before.
+- Why: Spec M06 asks for dependency. This is the basic version: one prerequisite per task.
+- Alternatives: a full dependency graph with a graph view (later). A new schema field (rejected: uses the existing `links` structure).
+- How to undo: remove the `after` handling in `schedule()` (`src/core/planner.ts`), the select in `planScreen`, and `after` in `tasksFrom()`.
+- Proof: `tests/m_dependency.test.ts` (same plan for same input; no loop on cycles; unchanged plan with no link).
+
+## TM-REQ-023 90-day cash flow
+- What: `cashFlow90Days()` in `src/core/finance.ts` = three months of monthly income minus expense, shown on the Money screen as "90-day cash flow (3 × monthly)".
+- Why: TM-REQ-023 asks for a 90-day cash-flow review.
+- Rules chosen: one-off and yearly items have no known date, so they are counted in the existing "not monthly" note and never converted. Unknown amounts stay unknown.
+- How to undo: remove `cashFlow90Days` and the `data-cash90` line in `moneyScreen`, and the `money.cash90` keys.
+- Proof: `tests/m_registers.test.ts` (TM-REQ-023 block), `tests/money.test.ts` (empty-state count updated from 4 to 6 for the new line).
+
+## M13 fasting day mark (content-free)
+- What: a "I fasted today" toggle on the Deen screen, one record per Dhaka date in the existing `fast` entity. Tap to mark, tap again to undo. No count, streak or ranking. Demo namespace only.
+- Why: G3 says Deen tracking without content. Prayer marks already exist (another session, commit f60c8b7); this adds the same pattern for fasting.
+- Alternatives: a fasting counter (rejected: counts drift into streak-like pressure). Make-up fasts (later, with owner review of wording).
+- How to undo: remove `fastCard` and `toggleFastMark` in `src/ui/screens.ts`, `src/core/fastLog.ts`, the `deen.fast.*` keys and `tests/fast_log.test.ts`.
+- Proof: `tests/fast_log.test.ts`.
+
+## M-list status pass (24 Oct 2026)
+- Statuses now match the code: M15 built; M09, M10, M03, M12, M13 partial; M11 "saved in background"; M23 not built. M13's old note was out of date (prayer marks and prayer times exist); corrected with evidence.
+- Owner hosting steps added to `docs/design/in-app-search-and-hosting.md` (no account created).
+- Two parallel streams: the M13 prayer work (commit f60c8b7, pushed by another session on this branch) is in the same files. This pass's commit is rebased on top of it; its tests are included in the full run.
+- Proof: `docs/design/early-plan-status.md` (item-by-item evidence), `docs/design/m-list-status.md` (generated from `src/modules/capability.ts` and `evidence.ts`).
+
+## Content pack 001 and offline content reader (25 Oct 2026)
+- What: 37 new original tips in `public/content/pack-001.json` (money 7, time 7, habits 7, learning 6, basic health 5, relationships 5). Each tip is one JSON object: id, topic (existing topic only), tags, title, how, diagram, optional in-app appLink. Pack status is `pending_reviewer`, so Bangla shows as যাচাই হয়নি. Reader: `src/library/packs.ts` (validator + loader). Topic pages show pack tips next to bundled ones. Four new glossary terms in `src/catalog/glossary.ts` (emergency fund, debt, fixed cost, unknown value), unreviewed.
+- Why: the owner wants as much content as possible inside the app, with no server or key. A JSON pack lets future free content be added as data without new code.
+- Rules chosen: pack text follows the copy guard (no shame/rank/streak words), no money figures, percentages or return promises (CLAUDE §6), no scripture text (D-D), no URL or external address anywhere in the pack. A pack that fails validation is skipped and reported; the rest still load.
+- Reader: `import.meta.glob` on `public/content/*.json`. Vite bundles each pack as a lazy chunk, loaded the first time a topic page is opened. No `fetch`, so the network-guard tests (`tests/g1.test.ts`, `tests/m11_background_cache.test.ts`) still hold: only the Wikipedia adapter touches the network. Adding a pack = drop a `pack-*.json` file and rebuild.
+- Alternatives: runtime `fetch` of the JSON (rejected: breaks the no-network rule the owner set and the repo guard tests). Putting the new tips in TypeScript under `src/library` (rejected: the owner asked for them as a pack, and a pack keeps future content out of the code).
+- How to undo: delete `public/content/`, `src/library/packs.ts`, `tests/content_pack.test.ts`; revert the `packs` imports and `onRoute` in `src/main.ts`, `tipsFor` in `src/ui/screens.ts`, and the four glossary entries.
+- Proof: `tests/content_pack.test.ts` (24 tests: schema, copy guard, money and scripture guards, bn/en parity, no external address, loader, topic page shows pack tips). Full `npx vitest run` 526/526; `npx tsc --noEmit`; `npx vite build` (emits `pack-001` chunk); `node tools/e2e.mjs` 44 PASS, 0 FAIL, no external requests.
+- Not done: stage guides were not expanded in this block (the stage text lives in `src/core/stageTemplates.ts`, and changing it touches the stage-pass logic). Glossary added only four terms. Also the e2e "offline shell" check was run as-is; no new offline test for pack chunks was added beyond the loader tests.
+
+## Owner question: online search and key (for a later block)
+- Supabase, a Google search key, or any free server need owner account steps first: create the account, approve the cost (D-C), and decide what data may leave the device. No account has been created and no key or secret has been added in this block.
+- সিদ্ধান্ত লাগবে: Supabase বা Google key বা কোনো free server চালু করব? · আমার সুপারিশ: এখনই না; আগে in-app content pack দিয়েই চালাই। · না বললে আমি এটা বন্ধ রেখে বাকি content পাক দিয়ে এগোব।
+
+## Label and library pass (early-plan items 1–3)
+- What: (a) Money figures from `src/core/finance.ts` (net worth, monthly cash flow, 90-day cash flow, runway) now carry `label: "ESTIMATE"`, and the screen shows that label through `valueEl`. A report total built from typed amounts is ESTIMATE too. Unknown inputs still return no value and no label. (b) New pack `public/content/pack-002.json`: 14 original tips in focus, decisions, creativity, courage, procrastination, measurement, obstacles, time and execution, status `pending_reviewer` (shown as যাচাই হয়নি). No health, Deen, money-figure or external content.
+- Why FACT is not used yet for typed amounts: the demo store refuses any value not labelled DEMO (`src/core/store.ts`, guard while the real namespace is closed, D-B). So typed amounts stay DEMO. The FACT label applies once the owner opens real data. Calculations are ESTIMATE in demo too, because the guard checks stored values only.
+- Alternatives: force FACT on typed amounts in demo (rejected: breaks the store guard and would claim real facts on demo data). Keep INFERENCE for totals (rejected: the owner's rule is ESTIMATE for calculations).
+- How to undo: revert the `label` field in `src/core/finance.ts` (`CALC_LABEL`), the `show`/report labels in `src/ui/screens.ts`, and delete `public/content/pack-002.json` and `tests/finance_labels.test.ts`.
+- Proof: `tests/finance_labels.test.ts` (4), `tests/money.test.ts`, `tests/g3.test.ts`, `tests/m_registers.test.ts` (labels on every finance output; unknown stays unknown; bn chip "আন্দাজ"); `tests/content_pack.test.ts` 24/24 (loader count now sums all packs).
+- Register: `tools/update_register.py` output in `docs/register/Trillionaire_Me_Requirements_Register_v2_1_evidence_refresh.xlsx`. Counts in `docs/register/EVIDENCE_REFRESH.md`.
+
+## D-B approved: real personal data on this phone only (25 Oct 2026)
+- Owner decision: D-B approved. Real personal data may be stored ON THIS DEVICE ONLY (IndexedDB + per-device consent). Nothing is sent off the device.
+- What: `REAL_DATA_ENABLED = true` in `src/core/store.ts`. Real writes now need a consent record (`src/core/consent.ts`, key `tm:consent:real:v1`, stored in localStorage like the other per-device settings). Without consent the real namespace stays locked (fail closed). The IndexedDB adapter (`src/adapters/dexie.ts`) checks the same gate on every real write, so real records reach the phone's database.
+- Consent screen: More > Data (`#/more/data`, `src/ui/screens.ts`). Plain Bangla and English text says the data stays on this phone, can be deleted with one tap, and is not sent anywhere. The user must tick "I understand" before "Turn on real data". Real records are shown as "On" or "Off".
+- Clear all real data: two taps (ask, then "Yes, delete everything"). It deletes real records only (demo untouched) and removes the consent, so the next real entry needs a new tick.
+- Guards kept: DEMO label refused in the real namespace; non-DEMO label refused in the demo namespace; no promote/copy path; export guard for worship and health data unchanged.
+- Not enabled: AI, server sync, Google key, scripture, any paid service. No network call added (only the Wikipedia adapter touches the network, as before).
+- Not built yet: a form for entering real records. The gate is ready (`store.real.put` needs consent); the entry screens stay demo-only until a later block wires them.
+- Rules chosen: consent is versioned (`v: 1`); unknown or broken consent = no consent. Clear-all also revokes consent, so a wipe is not followed by silent real writes.
+- Alternatives: consent stored as a record in the real namespace (rejected: clear-all would have to special-case it, and it would sit beside real data). Native `confirm()` for clear-all (rejected: in-page two taps are clearer on a phone and easier to test).
+- How to undo: set `REAL_DATA_ENABLED = false` in `src/core/store.ts` (writes locked again). To remove consent completely: delete `src/core/consent.ts`, the consent card and clear-all card in `src/ui/screens.ts` (`consentCard`, `clearRealCard`), the `consentKv` export and the `DexieRepo` gate in `src/ui/state.ts`, the `data.consent.*`, `data.clearReal*` and `data.real.on` keys in `src/i18n/packs.ts`, and `tests/real_data.test.ts`. Existing real records (if any) stay on the phone until cleared with clear-all, which must run before undo.
+- Proof: `tests/real_data.test.ts` (15 tests: consent gate, DEMO/real separation, IndexedDB gate, consent record, data screen flow, clear-all after confirm only). `tests/g1.test.ts` updated: the old "unlocked" case now grants consent first. Full `npx vitest run` 546/546; `npx tsc --noEmit` clean; `npx vite build` OK; `node tools/e2e.mjs` 0 FAIL.
+
+## Owner request: ready-system library (M24) and automation rules (M19), on device (25 Oct 2026)
+- What: (a) Six ready systems as JSON templates in `src/library/systems/` (morning routine, weekly money check, study block, habit reset, job-search week, business starter). One tap on More > Ready systems adds their goals, tasks and habits through the store. Undo removes what the system added (and habit logs of a removed habit). (b) Four on-device rules in `src/core/rules.ts`, switchable on More > Automation rules: smaller step after two planned days (calm, on), next stage after a pass (calm, on), short break after a focus block (calm, on), another focus block (off by default). Suggestions show on Today only.
+- Why: owner asked for both now. Each record id is fixed (`sys-<system>-<g|t|h>-<key>`), so adding twice writes nothing new. Records carry `links.system`, which is how undo finds them.
+- Namespace: demo unless real-data consent is given (`readConsent`). Real writes use label EXTERNAL for text and ESTIMATE for minutes, never DEMO. Without consent the store refuses real writes and the screen shows a "not added" line.
+- Bangla: every template is marked `reviewStatus: "pending_reviewer"`. The library shows "বাংলা লেখা: যাচাই হয়নি" on every card in Bangla and Mix. Bangla uses Latin digits; the validator refuses Bangla digits, links and secret-looking text.
+- Rules: pure functions of an input object (no clock, storage or network inside). They never write records, never add a task and never send a notification. No notification API is used, so the lock-screen privacy rule has nothing to guard yet; a future notification must go through `notifyText`.
+- Per-device settings: `tm:ui:rules`, `tm:ui:focusEnd`, `tm:ui:restAt` (localStorage, like the other small settings).
+- Capability: M24 and M19 are "Built" (implemented, demo, works offline) because each has a screen route and a test. M23 (AI), M20 (sync) unchanged.
+- Alternatives: a `system_add` entity to record which systems were added (rejected: links on each record are enough and add no schema change). A notification for the calm rules (rejected: not requested, and the lock-screen rule would need checking first). Templates in TypeScript (rejected: the owner asked for JSON templates, so a new system is one file).
+- How to undo: delete `src/library/systems/`, `src/library/systemList.ts`, `src/core/systems.ts`, `src/core/rules.ts`, `src/ui/libraryScreens.ts`; remove the two routes in `src/app.ts`, the two More items and the `rulesTodayCard` line in `src/ui/screens.ts`, the focus hooks in `finish` and `stop` (same file), the prefs in `src/ui/state.ts`, and the new tests. Set M19 and M24 back in `src/modules/capability.ts` and `src/modules/evidence.ts`.
+- Proof: `tests/systems.test.ts` (validation, record counts, add once, undo, consent gate), `tests/rules.test.ts` (each rule pure and deterministic, switches, no-write, copy and no-notification guards), `tests/m_systems_rules_ui.test.ts` (screens, one-tap add/undo, consent, Today card, status matches evidence). Full `npx vitest run` 606/606; `npx tsc --noEmit` clean; `npx vite build` ok; `node tools/e2e.mjs` 44 PASS, 0 FAIL.
+- Not done: (1) Real records written after consent are not yet shown on Today, Habits or Plan, because those screens read Demo only (existing limit, see the Demo & real data entry above). (2) The Register xlsx was not refreshed in this block; it needs `tools/update_register.py` after review. (3) The Bangla text is a draft until a reviewer signs off (TM-TST-161).
+
+## Content-first design pass (Phase A–E) (25 Oct 2026)
+- What: `docs/design/content-first-design.md` (Phase A product understanding, B information architecture, C pattern per module, D prototype link, E validation + traceability). Four demo screens (Today, Journey, Gate passed, Reality changed) published as a private design canvas (link in the doc).
+- Why: owner brief asked for design from content, not trends. Documents conflicted in two places, so each conflict needed a recorded call.
+- Choices made:
+  1. UI names are **Stage A–H** (journey) and **G0–G8** (build) only. Spec §3.4 "G-A…G-H" treated as internal ids (CLAUDE §2 wins for UI copy).
+  2. Home start state = Stage A "১/৮" (CLAUDE §2). The preview's "GATE" word is not used in user copy.
+  3. Navigation = the 5 tabs already in `src/app.ts` (Today, Journey, Diary, Deen, More). No new tab added.
+  4. Theme = Ink & Paper, light default, dark via prefers-color-scheme (CLAUDE §2 D-E approved). Red is not used for missed goals.
+  5. Deen gets its own tab; no Deen content on Today, notifications or lock screen.
+  6. Prototype numbers are demo values, labelled "ডেমো উদাহরণ"; never used as app defaults.
+- Alternatives: one shared "progress" tab for Journey + Deen (rejected: would put worship inside progress views, against Spec §9). Radar chart for readiness (rejected: four-state list is clearer for TalkBack and needs no scale).
+- How to undo: delete `docs/design/content-first-design.md` and this entry; the canvas can be deleted from claude.ai by the owner. No code was changed.
+- Not verified: app not run, unit/e2e tests not re-run, Register xlsx not opened, Bangla copy not reviewed (TM-TST-161), no device test.
+- Gap found: M22 capability status (TM-REQ-144) not visible in code found in this pass.

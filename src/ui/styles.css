@@ -1,0 +1,279 @@
+@import "@fontsource/hind-siliguri/400.css";
+@import "@fontsource/hind-siliguri/500.css";
+@import "@fontsource/hind-siliguri/600.css";
+@import "@fontsource/noto-serif-bengali/500.css";
+@import "@fontsource/noto-serif-bengali/700.css";
+@import "@fontsource/fraunces/400.css";
+@import "@fontsource/fraunces/600.css";
+
+/* Theme tokens — "Ink and Paper" (D-E approved). Swap this block to change theme. */
+:root{
+  --paper:#F5F1E8; --card:#FBF8F1; --ink:#14181F; --muted:#5B6270; --rule:#8A8470;
+  --primary:#243B6B; --on-primary:#FBF8F1; --ember:#B0431A; --moss:#3F6B4A;
+  --demo:#73580F; --demo-bg:#F1E6C4; --danger:#A12A1B;
+}
+:root[data-theme="dark"]{
+  --paper:#0F1218; --card:#171B24; --ink:#EEE9DC; --muted:#9AA1AE; --rule:#626A7E;
+  --primary:#8FA8E6; --on-primary:#0F1218; --ember:#F08A56; --moss:#8BC49A;
+  --demo:#E3C566; --demo-bg:#2C2610; --danger:#F08A56;
+}
+@media (prefers-color-scheme:dark){:root[data-theme="auto"]{
+  --paper:#0F1218; --card:#171B24; --ink:#EEE9DC; --muted:#9AA1AE; --rule:#626A7E;
+  --primary:#8FA8E6; --on-primary:#0F1218; --ember:#F08A56; --moss:#8BC49A;
+  --demo:#E3C566; --demo-bg:#2C2610; --danger:#F08A56;}}
+
+*{box-sizing:border-box;margin:0}
+body{background:var(--paper);color:var(--ink);font:400 17px/1.7 "Hind Siliguri",system-ui,sans-serif;max-width:480px;margin:0 auto;padding:16px 16px 96px;overflow-wrap:anywhere}
+.top{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:14px;color:var(--muted);flex-wrap:wrap}
+.top .right{display:flex;gap:6px;align-items:center}
+.badge{font-size:12px;font-weight:600;padding:2px 10px;border:1px solid var(--demo);background:var(--demo-bg);color:var(--demo);border-radius:2px}
+.net{font-size:12px;border:1px solid var(--rule);padding:2px 8px}
+h1{font:700 28px/1.35 "Noto Serif Bengali","Fraunces",serif;margin:22px 0 4px;text-wrap:balance;hyphens:none}
+h2{font:700 20px/1.4 "Noto Serif Bengali","Fraunces",serif;margin:26px 0 8px}
+h3{font:600 17px/1.4 "Hind Siliguri",sans-serif;margin:0 0 2px}
+.sub,.muted{color:var(--muted);font-size:15px}
+.stage{margin:20px 0;border-top:2px solid var(--ink);border-bottom:1px solid var(--rule);padding:14px 0}
+.stage small{font:600 12px/1.6 "Hind Siliguri";color:var(--muted)}
+.stage .n{font:600 52px/1.25 "Fraunces",serif;color:var(--ember)}
+.rungs{display:flex;gap:4px;margin-top:10px;padding:0;list-style:none}
+.rungs li{flex:1;height:8px;background:var(--rule)}
+.rungs li.done{background:var(--moss)} .rungs li.now{background:var(--ember)}
+.ladder{list-style:none;padding:0}
+.ladder li{display:grid;grid-template-columns:36px 1fr auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--rule)}
+.ladder b{display:grid;place-items:center;width:36px;height:36px;border:1.5px solid var(--ink);font:600 16px "Fraunces",serif}
+.ladder li.now b{border-color:var(--ember);color:var(--ember)} .ladder li.done b{background:var(--moss);color:var(--paper);border-color:var(--moss)}
+.task{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:start;padding:14px 0;border-bottom:1px solid var(--rule)}
+.task b{display:grid;place-items:center;width:44px;height:44px;border:1.5px solid var(--ink);font:600 20px "Fraunces",serif}
+.task p{font-size:15px;color:var(--muted);line-height:1.5}
+.chip{font-size:11px;font-weight:600;color:var(--muted);border:1px solid var(--rule);padding:0 6px;margin-inline-start:6px;vertical-align:middle}
+.chip-DEMO{color:var(--demo);border-color:var(--demo);background:var(--demo-bg)}
+.cta,.btn{display:block;width:100%;min-height:52px;margin-top:20px;background:var(--primary);color:var(--on-primary);border:0;font:600 18px "Hind Siliguri",system-ui;cursor:pointer;text-align:center;text-decoration:none;padding:12px 16px}
+.btn.ghost{background:none;color:var(--ink);border:1.5px solid var(--ink)}
+.cta:focus-visible,.btn:focus-visible,.tab:focus-visible,button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--ember);outline-offset:2px}
+label.btn:focus-within{outline:3px solid var(--ember);outline-offset:2px}
+/* Skip link: hidden until focused, then the first Tab stop */
+.skip{position:absolute;inset-inline-start:16px;top:8px;z-index:50;padding:10px 14px;background:var(--primary);color:var(--on-primary);font:600 16px "Hind Siliguri",system-ui;transform:translateY(-200%)}
+.skip:focus{transform:none;outline:3px solid var(--ember);outline-offset:2px}
+.sr-only{position:absolute;width:1px;height:1px;min-height:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;margin:-1px;padding:0;border:0}
+nav{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--rule);display:flex;max-width:480px;margin:0 auto}
+.tab{flex:1;min-height:56px;display:grid;place-items:center;font:inherit;font-size:13px;color:var(--muted);background:none;border:0;text-decoration:none}
+.tab[aria-current]{color:var(--ink);font-weight:600;box-shadow:inset 0 3px var(--primary)}
+.card{background:var(--card);border:1px solid var(--rule);padding:12px 14px;margin:10px 0}
+.card.link{display:block;color:inherit;text-decoration:none}
+.row{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.tag{font-size:12px;border:1px solid var(--rule);padding:0 8px;white-space:nowrap}
+.tag.ok{border-color:var(--moss);color:var(--moss)} .tag.warn{border-color:var(--demo);color:var(--demo)} .tag.off{color:var(--muted)}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.note{border-inline-start:3px solid var(--rule);padding:4px 12px;margin:24px 0 0;font-size:13px;color:var(--muted);line-height:1.5}
+.field{margin:16px 0;padding-bottom:12px;border-bottom:1px solid var(--rule)}
+.field label{font-weight:600;display:block}
+input,select,textarea{width:100%;min-height:48px;font:inherit;padding:8px 10px;background:var(--card);color:var(--ink);border:1.5px solid var(--ink);border-radius:0;margin-top:6px}
+.unk{margin-top:6px}
+.err{color:var(--danger);font-size:14px;margin-top:6px;font-weight:600}
+.ok-msg{color:var(--moss);font-weight:600}
+.bar{height:10px;background:var(--rule);margin:8px 0}.bar>i{display:block;height:100%;background:var(--moss)}
+details.help{margin-top:6px;font-size:14px} details.help summary{cursor:pointer;color:var(--primary);min-height:44px;display:flex;align-items:center}
+dl{margin:6px 0} .hrow{display:grid;grid-template-columns:96px 1fr;gap:8px;padding:3px 0} dt{color:var(--muted)} dd{margin:0}
+.seg{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px} .seg button{min-height:44px;padding:4px 14px;font:inherit;background:var(--card);color:var(--ink);border:1.5px solid var(--ink)} .seg button[aria-pressed="true"]{background:var(--primary);color:var(--on-primary)}
+.crumb{display:inline-block;margin-top:8px;color:var(--primary)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* topic visuals */
+.dg{margin:10px 0}
+.dg-steps{display:flex;flex-direction:column;align-items:stretch;gap:2px}
+.dg-steps .node{display:grid;grid-template-columns:32px 1fr;gap:10px;align-items:center;border:1.5px solid var(--ink);background:var(--card);padding:8px 10px}
+.dg-steps .node b{display:grid;place-items:center;width:28px;height:28px;border:1.5px solid var(--primary);color:var(--primary);font:600 14px "Fraunces",serif}
+.dg-steps .arrow{text-align:center;color:var(--muted);line-height:1}
+.dg-cycle .arrow.back{color:var(--ember);font-size:22px}
+/* B9 plan flow (inline SVG). Static: no animation. */
+.flow{display:block;width:100%;height:auto;max-width:360px;margin:8px 0 0}
+.flow .fl-box{fill:var(--card);stroke:var(--ink);stroke-width:1.5}
+.flow .fl-box-ai{fill:none;stroke:var(--muted);opacity:.7}
+.flow .fl-label{font:600 14px "Hind Siliguri",system-ui,sans-serif;fill:var(--ink)}
+.flow .fl-val{font:500 15px "Hind Siliguri",system-ui,sans-serif;fill:var(--ink)}
+.flow .fl-unk{fill:var(--muted);font-style:italic}
+.flow .fl-muted{fill:var(--muted)}
+.flow .fl-note{font:400 12px "Hind Siliguri",system-ui,sans-serif;fill:var(--muted)}
+.flow .fl-arrow{stroke:var(--ink);stroke-width:1.5;fill:none}
+.flow .fl-arrow-ai{stroke:var(--muted);opacity:.7}
+.flow .fl-head{fill:var(--ink)}
+
+.dg-matrix{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.dg-matrix .cell{border:1.5px solid var(--ink);background:var(--card);padding:10px;font-size:14px;line-height:1.4}
+.dg-matrix .c0{border-color:var(--moss)} .dg-matrix .c1{border-color:var(--primary)} .dg-matrix .c2{border-color:var(--demo)} .dg-matrix .c3{border-color:var(--rule);color:var(--muted)}
+/* drawer */
+.menu-btn{min-height:44px;min-width:44px;background:none;border:1.5px solid var(--rule);color:var(--ink);font:600 18px system-ui;cursor:pointer}
+.drawer{position:fixed;inset:0;z-index:30;display:none}
+.drawer.open{display:block}
+.drawer .scrim{position:absolute;inset:0;background:rgba(0,0,0,.45)}
+.drawer .panel{position:absolute;inset-block:0;inset-inline-start:0;width:min(88%,360px);background:var(--paper);border-inline-end:1px solid var(--rule);overflow-y:auto;padding:16px}
+.drawer h2{margin-top:16px}
+.drawer a.item{display:block;padding:10px 0;border-bottom:1px solid var(--rule);color:var(--ink);text-decoration:none;min-height:44px}
+/* reward art */
+.reward{border:1px solid var(--rule);background:var(--card);padding:0;margin:12px 0}
+.reward svg{display:block;width:100%;height:auto}
+.star{animation:twinkle 3s ease-in-out infinite}
+.star.new{animation:pop 1.2s ease-out both,twinkle 3s 1.2s ease-in-out infinite}
+@keyframes twinkle{50%{opacity:.55}} @keyframes pop{0%{transform:scale(0);opacity:0}60%{transform:scale(2.2);opacity:1}100%{transform:scale(1)}}
+.star.new{transform-box:fill-box;transform-origin:center}
+.shoot{animation:shoot 1.6s ease-out both}
+@keyframes shoot{from{transform:translate(0,0);opacity:1}to{transform:translate(120px,70px);opacity:0}}
+@media (prefers-reduced-motion:reduce){.star,.star.new,.shoot,.arrow-draw,.step-lit{animation:none!important}.arrow-draw{stroke-dasharray:none!important;stroke-dashoffset:0!important}}
+/* R4 journey micro-animations: arrow draws, newest stair step lights. Hidden start state only exists when motion is allowed,
+   so with reduced motion the picture is simply shown in its final state (the text equivalent is always there). */
+@media (prefers-reduced-motion:no-preference){
+  .arrow-draw{stroke-dasharray:1;stroke-dashoffset:1;animation:arrowDraw 1.2s ease-out .5s forwards}
+  .step-lit{animation:stepLight .9s ease-out .3s both}
+}
+@keyframes arrowDraw{to{stroke-dashoffset:0}}
+@keyframes stepLight{from{opacity:.2}to{opacity:1}}
+
+/* Daily inspiration card (R1): calm fade-in, theme accent, reduced-motion safe */
+.inspire{position:relative;overflow:hidden;border-inline-start:3px solid var(--rule);animation:inspireIn .6s ease-out both}
+.inspire.motivation{border-inline-start-color:#C9A227}
+.inspire.discipline{border-inline-start-color:#3E6E8E}
+.inspire.patience{border-inline-start-color:#4F7A5A}
+.inspire.care{border-inline-start-color:#9A6B8E}
+.inspire-bn{font:600 18px/1.6 "Hind Siliguri",sans-serif;color:var(--ink);margin:6px 0 2px}
+.inspire-en{font-size:14px;margin:0}
+@keyframes inspireIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion: reduce){.inspire{animation:none}}
+
+/* Next step highlight (R1 / B6) */
+.next-step{border-inline-start:3px solid var(--ink);margin-top:12px}
+.next-step p{margin:4px 0 0;font-size:15px}
+
+/* Visual polish pass (Today + Journey). Layout and rhythm only; colours come from the tokens above, so dark mode follows them. */
+.scr-today h1,.scr-journey h1{margin-top:18px;margin-bottom:6px}
+.scr-today .stage{margin:20px 0 16px;padding:16px 0 14px}
+.scr-today .stage small{display:block;letter-spacing:.02em}
+.scr-today .stage .n{font-size:64px;line-height:1.1;margin-top:6px}
+.scr-today .rungs{margin-top:12px}
+.scr-today .rungs li{height:6px}
+.scr-today h2{margin:24px 0 2px}
+/* Daily inspiration card: its own surface, clear hierarchy (theme chip, Bangla line, English line) */
+.inspire{margin:14px 0 12px;padding:16px 18px 16px 16px;background:var(--card);border:1px solid var(--rule);border-inline-start-width:4px}
+.inspire .chip{margin:0 0 4px;display:inline-block}
+.inspire-bn{font-size:20px;line-height:1.55;margin:6px 0 4px}
+.inspire-en{font-size:14px;line-height:1.5}
+/* Next-step card: arrow sits beside the text, not on its own line */
+.next-step{display:flex;gap:10px;align-items:baseline;margin:16px 0 0;padding:14px 16px;background:var(--card)}
+.next-step small{flex:none;font-size:18px;font-weight:600;color:var(--ember)}
+.next-step p{flex:1;margin:0;font-size:15px}
+/* Action group: primary full width, secondary links in a 2-column grid, last one full width */
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.actions .cta,.actions .btn{margin:0;min-height:52px}
+.actions .cta,.actions .btn:last-child{grid-column:1/-1}
+.actions .btn.ghost{font-size:16px;padding:10px 8px}
+/* Journey: stage panel and picture get more air, the picture gets a framed caption area */
+.scr-journey .card[data-stage-panel]{padding:16px 16px 14px;margin:14px 0 12px}
+.reward{margin:14px 0 8px;box-shadow:0 2px 0 var(--rule)}
+.reward svg{border-bottom:1px solid var(--rule)}
+.reward+p{margin:0 4px}
+.scr-journey .actions{margin-bottom:8px}
+
+/* Visual polish pass 2 (Plan, Money, Deen, More). Rhythm, headings and card grouping only; colours come from the tokens above. */
+.scr-plan h1,.scr-money h1,.scr-deen h1,.scr-more h1{margin-top:18px;margin-bottom:6px}
+.scr-plan h2,.scr-money h2,.scr-deen h2,.scr-more h2{margin:26px 0 6px}
+.scr-plan .sub,.scr-money .sub,.scr-deen .sub{margin-bottom:4px}
+.scr-plan .card,.scr-money .card,.scr-deen .card,.scr-more .card{padding:14px 16px}
+.scr-plan .card h2.card-h,.scr-money .card h2.card-h,.scr-deen .card h2.card-h,.scr-more .card h2.card-h{margin-bottom:4px}
+/* Plan: flow and assessment cards get their own inner rhythm */
+.scr-plan [data-flow-card]{padding:16px 16px 14px;margin:14px 0 12px}
+.scr-plan [data-flow-card] .flow{margin:10px auto 0}
+.scr-plan [data-flow-card] .muted{margin-bottom:4px}
+.scr-plan section[data-assessment] .card{margin:8px 0}
+.scr-plan section[data-assessment] .card[data-fit-card]{margin-top:14px;padding:16px}
+.scr-plan section[data-assessment] .card[data-path]{margin:10px 0 0;background:var(--paper)}
+.scr-plan section[data-assessment] .card[data-path] p{margin-top:4px}
+.scr-plan .seg{margin-bottom:6px}
+.scr-plan form .field,.scr-plan form>label{margin-top:12px}
+.scr-plan form .btn{margin-top:14px}
+/* Money: summary cards read as figures, items as a list */
+.scr-money [data-scope]{padding:16px 16px 14px;margin:8px 0}
+.scr-money [data-scope] h2.card-h{margin-bottom:6px}
+.scr-money [data-scope] p{margin:4px 0;line-height:1.5}
+.scr-money [data-fin]{margin:8px 0}
+.scr-money [data-fin] .row{align-items:center}
+.scr-money [data-fin] button{flex:none}
+.scr-money form>label{margin-top:12px}
+.scr-money form .btn{margin-top:14px}
+/* Deen: one private group per card, help links tucked under the description */
+.scr-deen [data-entity]{padding:16px 16px 12px;margin:12px 0}
+.scr-deen [data-entity] .row{align-items:center;margin-bottom:4px}
+.scr-deen [data-entity] .row .tag{margin-top:0}
+.scr-deen [data-entity] p.muted{margin-bottom:6px}
+.scr-deen [data-entity] details.help{margin-top:2px;padding-top:6px;border-top:1px solid var(--rule)}
+.scr-deen [data-entity] details.help:last-of-type{margin-bottom:0}
+.scr-deen [data-entity] details.help summary{min-height:44px;display:flex;align-items:center}
+.scr-deen .card[data-module]{margin:12px 0}
+/* More: menu cards with clear title/description, settings grouped */
+.scr-more .card.link{padding:14px 16px;margin:10px 0}
+.scr-more .card.link h2.card-h{margin-bottom:2px}
+.scr-more .card.link p{line-height:1.5}
+.scr-more .card:not(.link){margin:10px 0}
+.scr-more .card:not(.link) .seg{margin-top:8px}
+.scr-more .seg{gap:8px}
+.scr-more .seg button{flex:1 1 0;min-width:0;padding-inline:8px}
+.scr-more .card .tags{margin-top:8px}
+/* Card titles are h2 for heading order (screens have no h3 directly under h1); they keep the h3 look. */
+h2.card-h{font:600 17px/1.4 "Hind Siliguri",sans-serif;margin:0 0 2px}
+
+/* Visual polish pass 3 (Focus, Reward/picture, Stuck, Diary, Intake). Rhythm, grouping and touch targets only; colours come from the tokens above. */
+.scr-diary h1,.scr-intake h1,.scr-stuck h1,.scr-reward h1,.scr-focus h1{margin-top:18px;margin-bottom:6px}
+.scr-diary h2,.scr-stuck h2,.scr-reward h2,.scr-focus h2{margin:26px 0 6px}
+.scr-diary .sub,.scr-stuck .sub,.scr-focus .sub,.scr-reward .sub{margin-bottom:4px}
+/* Diary: completeness and next-step cards, then action buttons with even gaps */
+.scr-diary .card{padding:16px 16px 14px;margin:12px 0}
+.scr-diary .card h2.card-h{margin-bottom:8px}
+.scr-diary .card .bar{margin:8px 0 10px}
+.scr-diary .card p{margin:0}
+.scr-diary [data-next] p{line-height:1.6}
+.scr-diary .cta,.scr-diary .btn{margin-top:12px}
+.scr-diary .btn.ghost{margin-top:10px}
+.scr-diary .card.link{margin:10px 0}
+.scr-diary .card.link h3{margin-bottom:4px}
+/* Intake: one question per field block, label and tag on one line, help tucked under */
+.scr-intake .top{margin:8px 0 4px}
+.scr-intake form .field{margin:14px 0;padding-bottom:14px}
+.scr-intake form .field label{margin-bottom:2px;display:flex;flex-wrap:wrap;align-items:center;gap:6px;line-height:1.5}
+.scr-intake form .field label .tag{margin-top:0;font-weight:400}
+.scr-intake form .field .unk{margin-top:8px}
+.scr-intake form .field .err{margin-top:6px}
+.scr-intake details.help{margin-top:8px;padding-top:6px;border-top:1px solid var(--rule)}
+.scr-intake details.help summary{min-height:44px;display:flex;align-items:center}
+.scr-intake form>.btn{margin-top:20px}
+.scr-intake>p.muted{margin:12px 0 0}
+/* Stuck: each question is a row with its three answers in equal columns */
+.scr-stuck .field{margin:12px 0;padding:0 0 14px}
+.scr-stuck .field p{margin:0 0 8px;font-weight:600;line-height:1.5}
+.scr-stuck .field .seg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:0}
+.scr-stuck .field .seg button{min-width:0;padding-inline:6px;font-size:16px}
+.scr-stuck .btn{margin-top:18px}
+.scr-stuck section.card,.scr-stuck .card{padding:16px 16px 14px;margin:12px 0}
+.scr-stuck section.card h2,.scr-stuck .card h2.card-h{font:600 18px/1.4 "Hind Siliguri",sans-serif;margin:0 0 6px}
+.scr-stuck section.card ul{margin:0 0 6px}
+.scr-stuck section.card p{margin:0}
+.scr-stuck [data-card] .muted{margin-top:8px}
+.scr-stuck .card+.card{margin-top:12px}
+.scr-stuck .note{margin-top:20px}
+/* Focus: the timer is the centre of the screen; adjust and pause/stop sit under it */
+.scr-focus .note{margin:12px 0}
+.scr-focus .stage{margin:16px 0 14px;text-align:center}
+.scr-focus .stage .n{font-variant-numeric:tabular-nums}
+.scr-focus .stage .bar{margin:10px auto 0;max-width:280px}
+.scr-focus .row{justify-content:center;gap:10px;margin-top:4px}
+.scr-focus .row .btn{flex:1 1 0;min-width:0;margin-top:0}
+.scr-focus .btn{margin-top:12px}
+.scr-focus .seg{margin-top:10px}
+.scr-focus .seg button{flex:1 1 calc(50% - 6px);min-width:0}
+/* Reward / picture: framed picture, message card above it, one clear action */
+.scr-reward .card{padding:16px 16px 14px;margin:12px 0}
+.scr-reward .card h2.card-h{margin-bottom:4px}
+.scr-reward .card p{margin:0}
+.scr-reward .reward{margin:12px 0 10px}
+.scr-reward .reward+p{margin:0 2px 6px;line-height:1.6}
+.scr-reward .reward+p+p{margin:0 2px}
+.scr-reward .cta{margin-top:16px}
+@media (prefers-reduced-motion:no-preference){.scr-reward [data-fresh]{animation:inspireIn .6s ease-out both}}
+@media (prefers-reduced-motion:reduce){.scr-reward [data-fresh]{animation:none!important}}
