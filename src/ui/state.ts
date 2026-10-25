@@ -7,6 +7,7 @@ import { DexieRepo } from "../adapters/dexie";
 import { parseNotifyPrefs, type NotifyPrefs } from "../core/notify";
 import { DHAKA_COORDS, validCoords, type Coords } from "../core/prayer";
 import { DEFAULT_ALERT_PREFS, parseAlertPrefs, type AlertPrefs } from "../core/prayerAlerts";
+import { parseRuleSwitches, type FocusEnd, type RuleSwitches } from "../core/rules";
 
 const legacy = new LocalKV();
 const mem = new MemoryKV();
@@ -53,6 +54,15 @@ export const prefs = {
   /** Alert slots already delivered for one Dhaka date, so each alert fires once. */
   get prayerFired(): { date: string; ids: string[] } { try { const v = JSON.parse(get("tm:ui:prayerFired") ?? "null") as { date?: unknown; ids?: unknown }; return typeof v?.date === "string" && Array.isArray(v.ids) ? { date: v.date, ids: v.ids.filter((x): x is string => typeof x === "string") } : { date: "", ids: [] }; } catch { return { date: "", ids: [] }; } },
   set prayerFired(v: { date: string; ids: string[] }) { set("tm:ui:prayerFired", JSON.stringify(v)); },
+  /** Automation rule switches (M19). Per device. A missing rule uses its default: calm rules on, the rest off. */
+  get ruleSwitches(): RuleSwitches { try { return parseRuleSwitches(JSON.parse(get("tm:ui:rules") ?? "null")); } catch { return {}; } },
+  set ruleSwitches(v: RuleSwitches) { set("tm:ui:rules", JSON.stringify(parseRuleSwitches(v))); },
+  /** Last focus block that ended (M19). Per device, never sent. Missing or broken = none. */
+  get lastFocusEnd(): FocusEnd | null { try { const v = JSON.parse(get("tm:ui:focusEnd") ?? "null") as Partial<FocusEnd> | null; return v && typeof v.at === "number" && typeof v.minutes === "number" && v.minutes > 0 ? { at: v.at, minutes: v.minutes } : null; } catch { return null; } },
+  set lastFocusEnd(v: FocusEnd | null) { set("tm:ui:focusEnd", JSON.stringify(v)); },
+  /** When the last rest ended (M19). Per device. Missing or broken = none. */
+  get lastRestAt(): number | null { const n = Number(get("tm:ui:restAt")); return get("tm:ui:restAt") && Number.isFinite(n) ? n : null; },
+  set lastRestAt(v: number | null) { set("tm:ui:restAt", v === null ? "" : String(v)); },
 };
 
 export function applyPrefs() {

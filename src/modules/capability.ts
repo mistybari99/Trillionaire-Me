@@ -14,9 +14,6 @@ export interface ModuleDef { id: string; name: Bi; tab: "journey" | "diary" | "d
 const m = (id: string, bn: string, en: string, tab: ModuleDef["tab"], statuses: CapStatus[], gate: string, nbn: string, nen: string): ModuleDef =>
   ({ id, name: { bn, en }, tab, statuses, gate, note: { bn: nbn, en: nen } });
 
-const NONE_BN = "এখনো কিছু বানানো হয়নি।";
-const NONE_EN = "Not built yet.";
-
 export const MODULES: ModuleDef[] = [
   m("M01", "Profile ও সম্মতি", "Profile & consent", "diary", ["implemented", "demo", "offline-ok"], "G1", "ধাপে ধাপে তথ্য লেখার পর্দা আছে। তথ্য শুধু Demo-তে যায়; আসল তথ্য বন্ধ।", "Step-by-step entry screen works. Data goes to Demo only; real data is locked."),
   m("M02", "নিজেকে চেনা (মূল্যায়ন)", "Discover (assessment)", "journey", ["implemented", "demo", "offline-ok"], "G3", "আগ্রহ, দক্ষতা ও শক্তি লিখলে পরিকল্পনা পাতায় মিলিয়ে কার্ড দেখায়।", "Enter interests, skills and strengths; the Plan screen shows matching cards."),
@@ -36,11 +33,11 @@ export const MODULES: ModuleDef[] = [
   m("M16", "রিভিউ ও KPI", "Reviews & KPIs", "journey", ["implemented", "demo", "offline-ok"], "G3", "৯০ দিনের রিভিউ ও রিপোর্ট পাতা আছে (গণনা, Demo data)। KPI লক্ষ্যমাত্রা এখনো নেই।", "90-day review and report screens exist (counts, Demo data). KPI targets are not built yet."),
   m("M17", "জ্ঞান ও সূত্র", "Knowledge & sources", "more", ["implemented", "demo", "offline-ok"], "G4", "ফ্ল্যাশকার্ড ও বিষয়-গাইড চলে। সূত্র (source) আলাদা করে রাখা হয় না।", "Flashcards and topic guides work. Sources are not tracked separately yet."),
   m("M18", "ভিজ্যুয়াল স্তর", "Visual layer", "more", ["partial", "demo", "offline-ok"], "G3", "ধাপের সিঁড়ি, যাত্রার ছবি ও টিপসের ছোট ডায়াগ্রাম আছে। বাকি চার্ট পরে; প্রতিটির লেখা বিকল্প থাকবে।", "Stage ladder, journey art and small tip diagrams exist. Other charts come later, each with a text version."),
-  m("M19", "অটোমেশন নিয়ম", "Automation rules", "more", ["not-built"], "G6", NONE_BN, NONE_EN),
+  m("M19", "অটোমেশন নিয়ম", "Automation rules", "more", ["implemented", "demo", "offline-ok"], "G6", "চারটি ছোট নিয়ম ফোনেই চলে: ছোট ধাপের পরামর্শ, পরের ধাপ, ফোকাসের পর বিরতি, আরেকটি ফোকাস (ডিফল্টে বন্ধ)। কোনো নোটিফিকেশন যায় না, নিয়ম নিজে কাজ যোগ করে না।", "Four small rules run on this phone: smaller step, next stage, break after focus, another focus block (off by default). No notifications are sent, and a rule never adds a task."),
   m("M20", "Sync, Backup ও export", "Sync, backup & export", "more", ["partial", "demo"], "G2", "Demo data-র ব্যাকআপ সেভ ও ফেরত আনা চলে ('আরও > Demo ও আসল তথ্য')। সিঙ্ক এখনো নেই; শুধু নিয়ম লেখা আছে।", "Demo backup save and restore work ('More > Demo & real data'). Sync is not built; only its rules exist."),
   m("M21", "নিরাপত্তা ও গোপনীয়তা", "Security & privacy", "more", ["implemented", "demo", "offline-ok"], "G7", "গোপন তথ্য (পাসওয়ার্ড, OTP ইত্যাদি) লিখতে দেয় না। লক-স্ক্রিন গোপন থাকে। পূর্ণ আইনি পর্যালোচনা G7-এ।", "Blocks secrets (passwords, OTP and similar). Lock screen stays private. Full legal review is at G7."),
   m("M22", "সক্ষমতার অবস্থা ও Demo", "Capability status & demo", "more", ["implemented", "offline-ok"], "G1", "এই পর্দা।", "This screen."),
   m("M23", "AI স্তর", "AI layer", "more", ["not-built"], "G6", "এখনো নেই। AI ছাড়াই সব চলে; G6-এ মালিকের অনুমতি নিয়ে যোগ হবে।", "Not built. Everything works without AI; it comes in G6 with owner approval."),
-  m("M24", "template লাইব্রেরি", "Template library", "more", ["partial", "offline-ok"], "G3", "৩টি ধাপ-টেমপ্লেট (সাধারণ, শেখা, ব্যবসা) বেছে নেওয়া যায়। বড় লাইব্রেরি এখনো নেই।", "Three stage templates (general, learning, business) can be chosen. A larger library is not built."),
+  m("M24", "template লাইব্রেরি", "Template library", "more", ["implemented", "demo", "offline-ok"], "G3", "তৈরি সিস্টেম: সকালের রুটিন, সাপ্তাহিক টাকার হিসাব, পড়ার ব্লক, অভ্যাস আবার শুরু, চাকরি খোঁজার সপ্তাহ, ব্যবসা শুরুর ধাপ। এক ট্যাপে লক্ষ্য, কাজ ও অভ্যাস যোগ হয়, আবার সরানো যায়। বাংলা লেখা এখনো যাচাই হয়নি।", "Ready systems: morning routine, weekly money check, study block, habit reset, job-search week, business starter. One tap adds goals, tasks and habits; remove takes them out. Bangla text is not reviewed yet."),
   m("M25", "আটকে গেলে", "When stuck", "journey", ["implemented", "demo", "offline-ok"], "G3", "৬টি ট্যাপে সম্ভাব্য কারণ ও ছোট সাহায্য; AI ছাড়া।", "Six taps → likely causes and small helpers; no AI."),
 ];

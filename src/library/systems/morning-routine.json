@@ -1,0 +1,19 @@
+{
+  "schema": "tm-system-template",
+  "schemaVersion": 1,
+  "id": "morning-routine",
+  "reviewStatus": "pending_reviewer",
+  "name": { "en": "Morning routine", "bn": "সকালের রুটিন" },
+  "summary": { "en": "A calm start: water, a plan for three things, and a short walk.", "bn": "শান্ত শুরু: পানি, তিনটি কাজের পরিকল্পনা আর ছোট হাঁটা।" },
+  "goals": [
+    { "key": "g1", "title": { "en": "Calm morning start", "bn": "শান্ত সকাল শুরু" }, "horizon": "week" }
+  ],
+  "tasks": [
+    { "key": "t1", "goal": "g1", "title": { "en": "Plan three things for today", "bn": "আজকের তিনটি কাজ লিখুন" }, "minutes": 10, "priority": "normal" },
+    { "key": "t2", "goal": "g1", "title": { "en": "Short walk or stretch", "bn": "ছোট হাঁটা বা হাত-পা খোলা" }, "minutes": 15, "priority": "low" }
+  ],
+  "habits": [
+    { "key": "h1", "title": { "en": "Drink water after waking up", "bn": "ঘুম থেকে উঠে পানি খাওয়া" }, "days": [0, 1, 2, 3, 4, 5, 6], "target": null, "unit": null },
+    { "key": "h2", "title": { "en": "Write today's plan", "bn": "দিনের পরিকল্পনা লেখা" }, "days": [0, 1, 2, 3, 4, 5, 6], "target": null, "unit": null }
+  ]
+}

@@ -32,6 +32,7 @@ import { tipsFor } from "../library/packs";
 import { journeyArt } from "./rewardArt";
 import { messageIndex, milestoneAt } from "../core/reward";
 import { diagram } from "./diagram";
+import { rulesTodayCard } from "./libraryScreens";
 import * as Focus from "../core/focus";
 import * as Habits from "../core/habits";
 import * as Cards from "../core/cards";
@@ -593,7 +594,7 @@ export function focusScreen(taskId: string | undefined): HTMLElement {
   };
   const finish = (s: Focus.Session) => {
     stopTimer(); saveFocus(null);
-    if (s.phase === "focus") recordFocus(task.id, s.minutes);
+    if (s.phase === "focus") { recordFocus(task.id, s.minutes); prefs.lastFocusEnd = { at: Date.now(), minutes: s.minutes }; } else prefs.lastRestAt = Date.now();
     refreshTotal();
     body.replaceChildren(h("p", { class: "ok-msg", role: "status", "data-focus-finished": s.phase }, t("focus.finished", lang)),
       ...(s.phase === "focus" ? [h("button", { class: "btn", type: "button", "data-act": "focus-done", onclick: () => markDone(task.id) }, t("focus.markDone", lang)), h("button", { class: "btn ghost", type: "button", onclick: () => begin("rest", Focus.REST_MINUTES) }, t("focus.rest", lang)), h("button", { class: "btn ghost", type: "button", onclick: picker }, t("focus.again", lang))]
@@ -607,7 +608,7 @@ export function focusScreen(taskId: string | undefined): HTMLElement {
     pauseBtn.addEventListener("click", () => { s = s.pausedAt === null ? Focus.pause(s, Date.now()) : Focus.resume(s, Date.now()); saveFocus({ taskId: task.id, session: s }); draw(); });
     const adj = (d: number) => h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0", "data-adj": String(d), onclick: () => { s = Focus.adjust(s, d, Date.now()); saveFocus({ taskId: task.id, session: s }); draw(); } }, t(d > 0 ? "focus.plus" : "focus.minus", lang));
     const stop = h("button", { class: "btn ghost", type: "button", "data-act": "focus-stop" }, t("focus.stop", lang));
-    stop.addEventListener("click", () => { const m = Focus.focusedMinutes(s, Date.now()); stopTimer(); saveFocus(null); if (s.phase === "focus") recordFocus(task.id, m); refreshTotal(); body.replaceChildren(h("p", { class: "ok-msg", role: "status", "data-focus-stopped": "1" }, t("focus.stopped", lang, { m: num(m, lang) })), h("button", { class: "btn", type: "button", onclick: picker }, t("focus.again", lang))); });
+    stop.addEventListener("click", () => { const m = Focus.focusedMinutes(s, Date.now()); stopTimer(); saveFocus(null); if (s.phase === "focus") { recordFocus(task.id, m); if (m >= 1) prefs.lastFocusEnd = { at: Date.now(), minutes: m }; } else prefs.lastRestAt = Date.now(); refreshTotal(); body.replaceChildren(h("p", { class: "ok-msg", role: "status", "data-focus-stopped": "1" }, t("focus.stopped", lang, { m: num(m, lang) })), h("button", { class: "btn", type: "button", onclick: picker }, t("focus.again", lang))); });
     body.replaceChildren(h("h2", {}, t(s.phase === "focus" ? "focus.title" : "focus.restOn", lang)), h("div", { class: "stage" }, time, ring), h("div", { class: "row" }, adj(-5), adj(5)), pauseBtn, stop);
     draw(); stopTimer();
     timer = setInterval(() => { if (!document.getElementById("focus-root")) { stopTimer(); return; } if (Focus.isFinished(s, Date.now())) finish(s); else draw(); }, 1000);
@@ -748,6 +749,7 @@ export function today(): HTMLElement {
       link("#/stuck", "btn ghost", t("stuck.link", lang)),
       link("#/capture", "btn ghost", t("capture.link", lang))),
     nxt.field ? h("aside", { class: "card next-step", "data-next-step": nxt.field.id }, h("small", {}, "→ "), h("p", {}, t("home.next", lang, { field: tb(nxt.field.label, lang) }))) : null,
+    rulesTodayCard(lang),
     disclaimers(lang));
 }
 
@@ -1060,7 +1062,7 @@ export function deen(): HTMLElement {
 export function more(): HTMLElement {
   const lang = L();
   const seg = (label: string, active: boolean, on: () => void) => h("button", { type: "button", "aria-pressed": String(active), onclick: on }, label);
-  const items: Array<[string, Key, Key]> = [["#/topics", "topics.title", "topics.intro"], ["#/more/status", "more.status", "more.status.desc"], ["#/more/fields", "more.fields", "more.fields.desc"], ["#/more/glossary", "more.glossary", "more.glossary.desc"], ["#/more/safety", "more.safety", "more.safety.desc"], ["#/more/data", "more.data", "more.data.desc"]];
+  const items: Array<[string, Key, Key]> = [["#/topics", "topics.title", "topics.intro"], ["#/more/status", "more.status", "more.status.desc"], ["#/more/fields", "more.fields", "more.fields.desc"], ["#/more/glossary", "more.glossary", "more.glossary.desc"], ["#/more/safety", "more.safety", "more.safety.desc"], ["#/more/data", "more.data", "more.data.desc"], ["#/more/library", "more.library", "more.library.desc"], ["#/more/rules", "more.rules", "more.rules.desc"]];
   return h("main", { class: "scr scr-more" },
     h("h1", {}, t("more.title", lang)),
     ...items.map(([href, k, d]) => link(href, "card link", h("h2", { class: "card-h", }, t(k, lang)), h("p", { class: "muted" }, t(d, lang)))),

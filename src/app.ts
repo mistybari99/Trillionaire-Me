@@ -5,6 +5,7 @@ import type { Key } from "./i18n/packs";
 import { demoBadge } from "./ui/components";
 import * as S from "./ui/screens";
 import * as P from "./ui/planScreens";
+import * as LS from "./ui/libraryScreens";
 import { LAYERS, TOPICS } from "./library/topics";
 import { dismissReminder, inAppReminders } from "./ui/prayerAlerts";
 import { notifyText } from "./core/notify";
@@ -43,6 +44,8 @@ export const ROUTES: Array<[RegExp, (m: RegExpMatchArray) => HTMLElement, string
   [/^\/more\/glossary$/, () => S.glossary(), "more"],
   [/^\/more\/safety$/, () => S.safety(), "more"],
   [/^\/more\/data$/, () => S.dataScreen(), "more"],
+  [/^\/more\/library$/, () => LS.systemsLibraryScreen(), "more"],
+  [/^\/more\/rules$/, () => LS.rulesScreen(), "more"],
 ];
 
 function toggleDrawer(open: boolean) { const d = document.getElementById("drawer"); if (d) { d.classList.toggle("open", open); d.setAttribute("aria-hidden", String(!open)); } }

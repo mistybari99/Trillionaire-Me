@@ -1,0 +1,20 @@
+{
+  "schema": "tm-system-template",
+  "schemaVersion": 1,
+  "id": "business-starter",
+  "reviewStatus": "pending_reviewer",
+  "name": { "en": "Business starter", "bn": "ব্যবসা শুরুর ধাপ" },
+  "summary": { "en": "Test a small idea before spending money: who buys, what you offer, five real conversations. No income is promised.", "bn": "টাকা খরচের আগে একটি ছোট ধারণা যাচাই করুন: কে কিনবে, আপনি কী দেবেন, পাঁচজনের সঙ্গে কথা। কোনো আয়ের নিশ্চয়তা নেই।" },
+  "goals": [
+    { "key": "g1", "title": { "en": "First small test", "bn": "প্রথম ছোট পরীক্ষা" }, "horizon": "month" }
+  ],
+  "tasks": [
+    { "key": "t1", "goal": "g1", "title": { "en": "Write who would buy, and why", "bn": "কে কিনবে ও কেন, লিখুন" }, "minutes": 20, "priority": "high" },
+    { "key": "t2", "goal": "g1", "title": { "en": "Describe your offer in one line", "bn": "আপনার প্রস্তাব এক লাইনে লিখুন" }, "minutes": 15, "priority": "high" },
+    { "key": "t3", "goal": "g1", "title": { "en": "Talk to five people about it", "bn": "এ নিয়ে পাঁচজনের সঙ্গে কথা বলুন" }, "minutes": 60, "priority": "normal" },
+    { "key": "t4", "goal": "g1", "title": { "en": "Write down what they said", "bn": "তাদের কথা লিখে রাখুন" }, "minutes": 15, "priority": "normal" }
+  ],
+  "habits": [
+    { "key": "h1", "title": { "en": "Talk to one possible buyer", "bn": "একজন সম্ভাব্য ক্রেতার সঙ্গে কথা" }, "days": [1, 2, 3, 4, 5], "target": 1, "unit": { "en": "person", "bn": "জন" } }
+  ]
+}

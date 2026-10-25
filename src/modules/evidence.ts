@@ -27,11 +27,11 @@ export const EVIDENCE: Record<string, Evidence> = {
   M16: ev(["#/journey/review", "#/journey/report"], ["src/core/review.ts#reviewSummary"], [], ["tests/o6_reality_review_templates.test.ts"]),
   M17: ev(["#/cards", "#/topics"], ["src/ui/screens.ts#cardsScreen", "src/core/cards.ts#dueCards"], ["src/library/topics.ts"], ["tests/focus_habits_cards.test.ts", "tests/topics_rewards.test.ts"]),
   M18: ev(["#/journey/art"], ["src/ui/rewardArt.ts#journeyArt", "src/ui/diagram.ts#diagram"], [], ["tests/r4_motion.test.ts"]),
-  M19: NONE,
+  M19: ev(["#/more/rules", "#/today"], ["src/core/rules.ts#evaluateRules"], [], ["tests/rules.test.ts", "tests/m_systems_rules_ui.test.ts"]),
   M20: ev(["#/more/data"], ["src/core/backup.ts#createBackup", "src/core/backup.ts#restoreBackup"], ["src/core/sync.ts"], ["tests/g2.test.ts", "tests/sync.test.ts"]),
   M21: ev(["#/more/safety", "#/more"], ["src/core/safety.ts#checkFreeText"], [], ["tests/g1.test.ts", "tests/o8_notify_privacy.test.ts"]),
   M22: ev(["#/more/status"], ["src/ui/screens.ts#status"], [], ["tests/g1.test.ts"]),
   M23: NONE,
-  M24: ev(["#/journey"], ["src/core/stageTemplates.ts#stagesFor"], [], ["tests/o6_reality_review_templates.test.ts"]),
+  M24: ev(["#/more/library", "#/journey"], ["src/core/systems.ts#addSystem", "src/core/systems.ts#planSystem", "src/core/stageTemplates.ts#stagesFor"], ["src/library/systemList.ts"], ["tests/systems.test.ts", "tests/m_systems_rules_ui.test.ts", "tests/o6_reality_review_templates.test.ts"]),
   M25: ev(["#/stuck"], ["src/ui/screens.ts#stuckScreen", "src/core/stuck.ts#diagnose"], [], ["tests/stuck.test.ts"]),
 };
