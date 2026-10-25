@@ -4,7 +4,8 @@ import { h } from "./dom";
 import { t, tb, fmtNumber } from "../i18n/t";
 import type { Key } from "../i18n/packs";
 import { LOCALES, LOCALE_ORDER, intlLocale, type Locale } from "../i18n/registry";
-import { applyPrefs, prefs, store, type HorizonView, type PlanMode } from "./state";
+import { applyPrefs, consentKv, prefs, store, type HorizonView, type PlanMode } from "./state";
+import { grantConsent, readConsent, revokeConsent } from "../core/consent";
 import { demoBadge, disclaimers, fieldHelp, num, valueEl } from "./components";
 import { STAGES, DEMO_DATE, DEMO_TASKS } from "../demo/seed";
 import { MODULES, CAP_STATUSES, type ModuleDef } from "../modules/capability";
@@ -1123,12 +1124,56 @@ export function safety(): HTMLElement {
     disclaimers(lang, ["noGuarantee", "advice", "noFatwa"]));
 }
 
+// Data screen state. Clear-all is two taps (ask, then confirm); the flags live only for this page view.
+let realClearAsk = false;
+let realClearDone = false;
+let consentMissingTick = false;
+
+function consentCard(lang: Locale): HTMLElement {
+  return h("div", { class: "card", "data-consent": "real" },
+    h("h2", { class: "card-h" }, t("data.consent.title", lang)),
+    h("p", {}, t("data.consent.p1", lang)),
+    h("p", {}, t("data.consent.p2", lang)),
+    h("p", {}, t("data.consent.p3", lang)),
+    h("p", {}, t("data.consent.p4", lang)),
+    h("label", { style: "display:flex;gap:8px;align-items:center;margin:8px 0" },
+      h("input", { type: "checkbox", id: "consent-tick", style: "width:24px;margin:0" }), t("data.consent.tick", lang)),
+    h("button", { class: "btn", type: "button", "data-act": "consent", onclick: () => {
+      const tick = document.getElementById("consent-tick") as HTMLInputElement | null;
+      if (!tick?.checked) { consentMissingTick = true; rerender(); return; }
+      consentMissingTick = false;
+      grantConsent(consentKv, new Date().toISOString());
+      rerender();
+    } }, t("data.consent.btn", lang)),
+    consentMissingTick ? h("p", { class: "err", role: "alert" }, t("data.consent.needTick", lang)) : null);
+}
+
+function clearRealCard(lang: Locale): HTMLElement {
+  const kids: Array<Node | string> = [h("h2", { class: "card-h" }, t("data.clearReal", lang))];
+  if (!realClearAsk) {
+    kids.push(h("button", { class: "btn ghost", type: "button", "data-act": "clear-real", onclick: () => { realClearAsk = true; realClearDone = false; rerender(); } }, t("data.clearReal", lang)));
+  } else {
+    kids.push(h("p", { role: "alert" }, t("data.clearReal.ask", lang)), h("p", { class: "muted" }, t("data.clearReal.note", lang)),
+      h("button", { class: "btn", type: "button", "data-act": "clear-real-yes", onclick: () => {
+        store.real.clear();            // real records only; demo is untouched
+        revokeConsent(consentKv);      // next real entry needs a new tick
+        realClearAsk = false; realClearDone = true; rerender();
+      } }, t("data.clearReal.yes", lang)),
+      h("button", { class: "btn ghost", type: "button", "data-act": "clear-real-no", onclick: () => { realClearAsk = false; rerender(); } }, t("data.clearReal.no", lang)));
+  }
+  if (realClearDone && !realClearAsk) kids.push(h("p", { role: "status" }, t("data.clearReal.done", lang)));
+  return h("div", { class: "card", "data-clear": "real" }, ...kids);
+}
+
 export function dataScreen(): HTMLElement {
   const lang = L();
+  const realOn = readConsent(consentKv);
   return h("main", {},
     link("#/more", "crumb", `← ${t("more.title", lang)}`),
     h("h1", {}, t("data.title", lang)),
-    h("div", { class: "card", "data-ns": "real" }, h("h2", { class: "card-h", }, t("data.real", lang)), h("p", {}, t("data.real.count", lang, { n: num(store.real.list().length, lang) })), h("p", { class: "muted" }, t("data.real.locked", lang))),
+    h("div", { class: "card", "data-ns": "real" }, h("h2", { class: "card-h", }, t("data.real", lang)), h("p", {}, t("data.real.count", lang, { n: num(store.real.list().length, lang) })), h("p", { class: "muted" }, t(realOn ? "data.real.on" : "data.real.locked", lang))),
+    realOn ? null : consentCard(lang),
+    clearRealCard(lang),
     h("div", { class: "card", "data-ns": "demo" }, h("h2", { class: "card-h", }, t("data.demo", lang), " ", demoBadge(lang)), h("p", {}, t("data.demo.count", lang, { n: num(store.demo.list().length, lang) }))),
     h("p", { class: "muted" }, t("data.nopromote", lang)),
     h("button", { class: "btn ghost", type: "button", onclick: () => { store.demo.clear(); rerender(); } }, t("data.clearDemo", lang)),

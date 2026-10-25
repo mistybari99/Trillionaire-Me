@@ -13,10 +13,11 @@ class TMDb extends Dexie {
 
 export class DexieRepo implements RecordRepo {
   private db: TMDb;
-  constructor(name = "tm-db", private realEnabled = false) { this.db = new TMDb(name); }
+  /** realEnabled is checked on every write: real records need the store's gate (flag + consent). */
+  constructor(name = "tm-db", private realEnabled: boolean | (() => boolean) = false) { this.db = new TMDb(name); }
   list(ns: Namespace) { return this.db.records.where("ns").equals(ns).toArray(); }
   async get(ns: Namespace, id: string) { return (await this.db.records.get([ns, id])) ?? null; }
-  async put(rec: TMRecord) { guardWrite(rec, this.realEnabled); await this.db.records.put(rec); }
+  async put(rec: TMRecord) { guardWrite(rec, typeof this.realEnabled === "function" ? this.realEnabled() : this.realEnabled); await this.db.records.put(rec); }
   async delete(ns: Namespace, id: string) { await this.db.records.delete([ns, id]); }
   async clear(ns: Namespace) { await this.db.records.where("ns").equals(ns).delete(); }
   close() { this.db.close(); }

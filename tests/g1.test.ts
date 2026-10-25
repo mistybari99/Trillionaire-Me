@@ -16,6 +16,7 @@ import { srcFiles, read } from "./helpers";
 import { t, setStrict } from "../src/i18n/t";
 import { ROUTES, render } from "../src/app";
 import type { Key } from "../src/i18n/packs";
+import { grantConsent } from "../src/core/consent";
 
 const rec = (over: Partial<TMRecord> & { ns: "demo" | "real" }): TMRecord => ({ id: "r1", entity: "profile", ownerId: "u", schemaVersion: 1, createdAt: "2026-10-22T00:00:00Z", values: {}, ...over });
 const demoVal = (value: unknown): FieldValue => ({ state: "value", value, label: "DEMO" });
@@ -73,9 +74,10 @@ describe("TM-TST-143 demo/real isolation", () => {
   let kv: MemoryKV, store: Store;
   beforeEach(() => { kv = new MemoryKV(); store = new Store(kv); });
   it("fresh install is empty in both namespaces", () => { expect(store.real.list()).toEqual([]); expect(store.demo.list()).toEqual([]); expect(kv.keys()).toEqual([]); });
-  it("real namespace is locked", () => { expect(() => store.real.put(rec({ ns: "real" }))).toThrow(StoreError); });
+  it("real namespace is locked until consent is given (D-B, 25 Oct 2026)", () => { expect(() => store.real.put(rec({ ns: "real" }))).toThrow(StoreError); });
   it("even when unlocked, DEMO values and wrong-ns records are refused", () => {
-    const open = new Store(kv, { realEnabled: true });
+    const consentKv = new MemoryKV(); grantConsent(consentKv, "2026-10-25T00:00:00Z");
+    const open = new Store(kv, { realEnabled: true, consentKv });
     expect(() => open.real.put(rec({ ns: "real", values: { x: demoVal("a") } }))).toThrow(/DEMO/);
     expect(() => open.real.put(rec({ ns: "demo" }))).toThrow(/cannot be written/);
     expect(() => open.demo.put(rec({ ns: "real" }))).toThrow(/cannot be written/);

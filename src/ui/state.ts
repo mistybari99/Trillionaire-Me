@@ -1,5 +1,6 @@
 import { DEFAULT_LOCALE, LOCALES, isLocale, type Locale } from "../i18n/registry";
-import { LocalKV, MemoryKV, Store } from "../core/store";
+import { LocalKV, MemoryKV, REAL_DATA_ENABLED, Store } from "../core/store";
+import { readConsent } from "../core/consent";
 import { isTemplateId, type TemplateId } from "../core/stageTemplates";
 import { MirrorKV, hydrate, mirrorToRepo } from "../core/persist";
 import { DexieRepo } from "../adapters/dexie";
@@ -9,10 +10,13 @@ import { DEFAULT_ALERT_PREFS, parseAlertPrefs, type AlertPrefs } from "../core/p
 
 const legacy = new LocalKV();
 const mem = new MemoryKV();
-const repo = typeof indexedDB !== "undefined" ? new DexieRepo() : null;
+// Consent lives in the per-device store (localStorage). Real writes to IndexedDB need the same gate as memory.
+const repo = typeof indexedDB !== "undefined" ? new DexieRepo("tm-db", () => REAL_DATA_ENABLED && readConsent(legacy)) : null;
 // With IndexedDB: memory is mirrored to it. Without (private mode/old browser): fall back to the old localStorage store.
 const kv = repo ? new MirrorKV(mem, mirrorToRepo(repo)) : legacy;
-export const store = new Store(kv);
+export const store = new Store(kv, { consentKv: legacy });
+/** Per-device consent record (src/core/consent.ts). Same place as the other small per-device settings. */
+export const consentKv = legacy;
 /** Call once before the first render. */
 export async function initStorage(): Promise<void> { if (repo) { try { await hydrate(mem, repo, legacy); } catch { /* start empty rather than crash */ } } }
 

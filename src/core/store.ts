@@ -1,5 +1,6 @@
 // Namespaced store. Demo and real data live under different key prefixes and there is no promote path (TM-REQ-143).
 import type { Namespace, TMRecord } from "./types";
+import { readConsent } from "./consent";
 
 export interface KV { get(k: string): string | null; set(k: string, v: string): void; remove(k: string): void; keys(): string[] }
 
@@ -18,8 +19,8 @@ export class LocalKV implements KV {
   keys() { try { return Object.keys(localStorage); } catch { return []; } }
 }
 
-/** Real personal data stays locked until the owner approves D-B / G7. */
-export const REAL_DATA_ENABLED = false as boolean;
+/** Real personal data is open on this phone (owner approved D-B, 25 Oct 2026). Writes still need the user's consent (src/core/consent.ts). */
+export const REAL_DATA_ENABLED = true as boolean;
 
 export class StoreError extends Error {}
 
@@ -34,7 +35,7 @@ class NsStore {
     return raw ? (JSON.parse(raw) as TMRecord) : null;
   }
   put(rec: TMRecord): void {
-    if (!this.writable()) throw new StoreError(`namespace "${this.ns}" is locked`);
+    if (!this.writable()) throw new StoreError(`namespace "${this.ns}" is locked until you give consent`);
     if (rec.ns !== this.ns) throw new StoreError(`record ns "${rec.ns}" cannot be written to "${this.ns}"`);
     const hasDemo = Object.values(rec.values).some((v) => v.state === "value" && v.label === "DEMO");
     if (this.ns === "real" && hasDemo) throw new StoreError("DEMO-labelled values can never enter the real namespace");
@@ -48,9 +49,11 @@ class NsStore {
 export class Store {
   readonly demo: NsStore;
   readonly real: NsStore;
-  constructor(kv: KV, opts: { realEnabled?: boolean } = {}) {
+  /** consentKv holds the consent record. Without it, real writes stay locked (fail closed). */
+  constructor(kv: KV, opts: { realEnabled?: boolean; consentKv?: KV } = {}) {
+    const consentKv = opts.consentKv ?? new MemoryKV();
     this.demo = new NsStore(kv, "demo", () => true);
-    this.real = new NsStore(kv, "real", () => opts.realEnabled ?? REAL_DATA_ENABLED);
+    this.real = new NsStore(kv, "real", () => (opts.realEnabled ?? REAL_DATA_ENABLED) && readConsent(consentKv));
   }
   // Intentionally no promote()/copy-to-real method exists.
 }
