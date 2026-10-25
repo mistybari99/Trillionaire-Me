@@ -76,7 +76,13 @@ export function render() {
   const reminders = inAppReminders().map((r) => h("div", { class: "card", role: "status", "data-inapp-reminder": r.id },
     h("h2", { class: "card-h" }, t("deen.alert.title", lang)), h("p", {}, notifyText(r.text, lang)),
     h("button", { class: "btn ghost", type: "button", "data-act": "reminder-dismiss", style: "width:auto;margin:0;min-height:44px", onclick: () => { dismissReminder(r.id); render(); } }, t("deen.alert.dismiss", lang))));
+  // Keep the reader's place on taps inside the same screen; jump to top only when the screen changes.
+  const savedY = window.scrollY;
+  const routeChanged = path !== lastRenderedPath;
+  lastRenderedPath = path;
   app.replaceChildren(skip, top, ...reminders, body, nav, drawer);
-  window.scrollTo(0, 0);
+  window.scrollTo(0, routeChanged ? 0 : savedY);
 }
+
+let lastRenderedPath: string | null = null;
 

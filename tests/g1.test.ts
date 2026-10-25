@@ -258,3 +258,10 @@ describe("TM-TST-130 process: no rule derives from image text", () => {
     expect(existsSync("docs/process/TM-TST-130-checklist.md")).toBe(true);
   });
 });
+
+describe("scroll position on re-render (taps inside a screen must not jump to top)", () => {
+  it("app.ts keeps scrollY when the route did not change", () => {
+    const src = require("node:fs").readFileSync(new URL("../src/app.ts", import.meta.url), "utf-8");
+    expect(src).toMatch(/routeChanged \? 0 : savedY/);
+  });
+});
