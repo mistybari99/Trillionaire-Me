@@ -97,9 +97,9 @@ describe("TM-TST-021/022/023 finance never treats unknown as 0", () => {
     { kind: "asset", scope: "business", amount: v(5000) }, { kind: "income", scope: "personal", amount: v(50) }, { kind: "expense", scope: "personal", amount: v(80) },
   ];
   it("net worth and flow are computed per scope, personal and business never mixed", () => {
-    expect(netWorth(items, "personal")).toEqual({ ok: true, value: 70 });
-    expect(netWorth(items, "business")).toEqual({ ok: true, value: 5000 });
-    expect(monthlyCashFlow(items, "personal")).toEqual({ ok: true, value: -30 });
+    expect(netWorth(items, "personal")).toEqual({ ok: true, value: 70, label: "ESTIMATE" });
+    expect(netWorth(items, "business")).toEqual({ ok: true, value: 5000, label: "ESTIMATE" });
+    expect(monthlyCashFlow(items, "personal")).toEqual({ ok: true, value: -30, label: "ESTIMATE" });
   });
   it("any unknown input makes the result unknown (1000 random cases)", () => {
     const r = rng(22);
@@ -111,10 +111,10 @@ describe("TM-TST-021/022/023 finance never treats unknown as 0", () => {
     }
   });
   it("runway: unknown cash/flow → unknown; non-negative flow → no end date, not 'infinite'; real zero stays zero", () => {
-    expect(runwayMonths({ state: "unknown" }, { ok: true, value: -10 }).ok).toBe(false);
+    expect(runwayMonths({ state: "unknown" }, { ok: true, value: -10, label: "ESTIMATE" }).ok).toBe(false);
     expect(runwayMonths(v(100), { ok: false, reason: "unknown_inputs", missing: 1 }).ok).toBe(false);
-    expect(runwayMonths(v(100), { ok: true, value: 5 })).toEqual({ ok: true, value: null });
-    expect(runwayMonths(v(300), { ok: true, value: -100 })).toEqual({ ok: true, value: 3 });
-    expect(runwayMonths(v(0), { ok: true, value: -100 })).toEqual({ ok: true, value: 0 });
+    expect(runwayMonths(v(100), { ok: true, value: 5, label: "ESTIMATE" })).toEqual({ ok: true, value: null, label: "ESTIMATE" });
+    expect(runwayMonths(v(300), { ok: true, value: -100, label: "ESTIMATE" })).toEqual({ ok: true, value: 3, label: "ESTIMATE" });
+    expect(runwayMonths(v(0), { ok: true, value: -100, label: "ESTIMATE" })).toEqual({ ok: true, value: 0, label: "ESTIMATE" });
   });
 });

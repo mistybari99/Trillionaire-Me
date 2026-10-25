@@ -57,3 +57,18 @@ Browser e2e checks for R2, R4, R5, G3 and the others are in `tools/e2e.mjs` and 
 - Partial rows stay Partial until their human or device gates are done. These are Owner-only: O1 real-phone airplane test, O2 Bangla reviewer, O3 usability sessions, O8 lock-screen check on a phone, and the TalkBack / 200% device run (TM-TST-117).
 - The 8 appended requirement rows (from `docs/register/new-requirements.json`) have no tests and no build. They are not verified.
 - The original v2.0 Register was not edited.
+
+## Run 2 (labels and Bangla library pass, 25 Oct 2026)
+Source is still the original v2_0 xlsx (read only, sha256 `a65616a8…1e71` before and after).
+
+| Item | Count / result |
+|---|---|
+| `node tools/evidence.mjs` | vitest 531/531 (40 files), 32 TM-TST rows with evidence, 0 failing |
+| `python3 tools/update_register.py <v2_0> <v2_1_evidence_refresh>` | "updated 32 requirement rows" |
+| Requirements v2 sheet | 180 rows (172 + 8 appended, not verified) |
+| Evidence status of the 32 linked rows | Pass 11, Partial 21, Fail 0 |
+| Requirements with no evidence | 148 (includes the 8 appended rows) |
+| `node tools/e2e.mjs` | 44 PASS, 0 FAIL |
+| `npx tsc --noEmit` / `npx vite build` | clean |
+
+Changes in this run: finance outputs carry an ESTIMATE label (`tests/finance_labels.test.ts`); the Bangla library gained `public/content/pack-002.json` (14 tips, pending reviewer). Typed amounts stay DEMO until real data opens (D-B). See DECISIONS_LOG.md.

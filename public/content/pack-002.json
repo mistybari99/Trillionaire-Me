@@ -1,0 +1,310 @@
+{
+  "schema": "tm-content-pack",
+  "schemaVersion": 1,
+  "packId": "pack-002",
+  "reviewStatus": "pending_reviewer",
+  "license": "original",
+  "description": "Original short tips (Bangla and English) for focus, decisions, creativity, courage, procrastination, measurement, obstacles, time and execution. Drafts: shown as যাচাই হয়নি until a reviewer signs off.",
+  "tips": [
+    {
+      "id": "p2-fo3",
+      "topic": "focus",
+      "tags": [
+        "focus",
+        "planning"
+      ],
+      "title": {
+        "bn": "কাজের আগে এক লাইন",
+        "en": "One line before work"
+      },
+      "how": {
+        "bn": "কাজ শুরুর আগে লিখুন, এই সেশনে ঠিক কোন একটি কাজ হবে। এক লাইনের বেশি লিখবেন না।",
+        "en": "Before you start, write the one task for this session. Keep it to one line."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "কাজ লিখি|এক লাইনে|শুরু করি",
+        "en": "Write the task|In one line|Start"
+      },
+      "appLink": "#/today"
+    },
+    {
+      "id": "p2-fo4",
+      "topic": "focus",
+      "tags": [
+        "focus",
+        "environment"
+      ],
+      "title": {
+        "bn": "কাজের সময় ফোন দূরে",
+        "en": "Phone away during work"
+      },
+      "how": {
+        "bn": "কাজের সময় ফোন অন্য ঘরে রাখুন। দরকার হলে ঠিক করা সময়ে একবার দেখুন।",
+        "en": "Keep the phone in another room during work. If you need it, check once at a set time."
+      },
+      "diagram": {
+        "type": "cycle",
+        "bn": "ফোন দূরে|কাজ|ঠিক সময়ে দেখি",
+        "en": "Phone away|Work|Check at a set time"
+      }
+    },
+    {
+      "id": "p2-de3",
+      "topic": "decisions",
+      "tags": [
+        "decision",
+        "risk"
+      ],
+      "title": {
+        "bn": "তিনটি বিকল্প লিখুন",
+        "en": "Write three options"
+      },
+      "how": {
+        "bn": "একটি সিদ্ধান্তের জন্য তিনটি বিকল্প লিখুন। প্রতিটির একটি সুবিধা আর একটি ঝুঁকি লিখুন।",
+        "en": "For one decision, write three options. Note one benefit and one risk for each."
+      },
+      "diagram": {
+        "type": "matrix",
+        "bn": "বিকল্প ১|বিকল্প ২|বিকল্প ৩|তুলনা করি",
+        "en": "Option 1|Option 2|Option 3|Compare"
+      },
+      "appLink": "#/capture"
+    },
+    {
+      "id": "p2-de4",
+      "topic": "decisions",
+      "tags": [
+        "decision",
+        "review"
+      ],
+      "title": {
+        "bn": "বড় সিদ্ধান্তে দশ মিনিট",
+        "en": "Ten minutes for a big decision"
+      },
+      "how": {
+        "bn": "বড় সিদ্ধান্তে তাড়াহুড়ো না করে দশ মিনিট অপেক্ষা করুন। তারপর আবার ভাবুন।",
+        "en": "For a big decision, wait ten minutes before you act. Then think again."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "প্রশ্ন লিখি|দশ মিনিট|আবার ভাবি",
+        "en": "Write the question|Ten minutes|Think again"
+      }
+    },
+    {
+      "id": "p2-cr3",
+      "topic": "creativity",
+      "tags": [
+        "ideas"
+      ],
+      "title": {
+        "bn": "একটা অংশ উল্টে দেখুন",
+        "en": "Flip one part"
+      },
+      "how": {
+        "bn": "একটি চেনা কাজের একটি অংশ উল্টে ভাবুন। নতুন একটি চেষ্টা লিখে রাখুন।",
+        "en": "Turn one part of a familiar task upside down. Write down one new try."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "চেনা কাজ|একটি অংশ উল্টাই|একটি চেষ্টা",
+        "en": "Familiar task|Flip one part|One try"
+      }
+    },
+    {
+      "id": "p2-cr4",
+      "topic": "creativity",
+      "tags": [
+        "ideas",
+        "experiment"
+      ],
+      "title": {
+        "bn": "তিনটি এলোমেলো শব্দ",
+        "en": "Three random words"
+      },
+      "how": {
+        "bn": "একজন বন্ধুর কাছ থেকে তিনটি এলোমেলো শব্দ নিন। সেগুলো দিয়ে একটি ছোট আইডিয়া লিখুন।",
+        "en": "Ask a friend for three random words. Write one small idea using them."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "তিনটি শব্দ|একটি আইডিয়া|ছোট চেষ্টা",
+        "en": "Three words|One idea|One small try"
+      }
+    },
+    {
+      "id": "p2-co3",
+      "topic": "courage",
+      "tags": [
+        "confidence",
+        "people"
+      ],
+      "title": {
+        "bn": "একটি ছোট প্রশ্ন করুন",
+        "en": "Ask one small question"
+      },
+      "how": {
+        "bn": "যে বিষয় জানেন না, সেখানে একটি ছোট প্রশ্ন করুন। উত্তর যাই হোক, ধন্যবাদ দিন।",
+        "en": "Ask one small question about something you do not know. Thank the person, whatever the answer."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "একটি প্রশ্ন|উত্তর শুনি|ধন্যবাদ",
+        "en": "One question|Listen to the answer|Thank them"
+      }
+    },
+    {
+      "id": "p2-co4",
+      "topic": "courage",
+      "tags": [
+        "confidence",
+        "feedback"
+      ],
+      "title": {
+        "bn": "নিজের কাজ একজনকে দেখান",
+        "en": "Show one piece of your work"
+      },
+      "how": {
+        "bn": "নিজের একটি কাজের ছোট অংশ একজনকে দেখান। তিনি কী দেখলেন তা লিখে রাখুন।",
+        "en": "Show one small part of your work to one person. Write down what they saw."
+      },
+      "diagram": {
+        "type": "cycle",
+        "bn": "দেখাই|শুনি|লিখে রাখি",
+        "en": "Show|Listen|Write it down"
+      }
+    },
+    {
+      "id": "p2-pr3",
+      "topic": "procrastination",
+      "tags": [
+        "procrastination",
+        "planning"
+      ],
+      "title": {
+        "bn": "কাজটা তিন ভাগে ভাগ করুন",
+        "en": "Cut the task into three parts"
+      },
+      "how": {
+        "bn": "যে কাজ এড়িয়ে যাচ্ছেন, তাকে তিন ভাগে ভাগ করুন। আজ শুধু প্রথম ভাগটি করুন।",
+        "en": "Split the task you are avoiding into three parts. Today, do only the first part."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "কাজ ভাগ করি|প্রথম ভাগ|আজকের জন্য এটুকুই",
+        "en": "Split the task|First part|That is enough for today"
+      },
+      "appLink": "#/stuck"
+    },
+    {
+      "id": "p2-pr4",
+      "topic": "procrastination",
+      "tags": [
+        "starting",
+        "focus"
+      ],
+      "title": {
+        "bn": "টাইমার দিয়ে শুরু",
+        "en": "Start with a timer"
+      },
+      "how": {
+        "bn": "পাঁচ মিনিটের টাইমার দিন। টাইমার চললে কাজ চালান, বাজলে থামুন।",
+        "en": "Set a five-minute timer. Keep working while it runs. Stop when it rings."
+      },
+      "diagram": {
+        "type": "cycle",
+        "bn": "টাইমার দিই|কাজ শুরু|বাজলে থামি",
+        "en": "Set timer|Start work|Stop when it rings"
+      },
+      "appLink": "#/stuck"
+    },
+    {
+      "id": "p2-me3",
+      "topic": "measurement",
+      "tags": [
+        "review",
+        "measurement"
+      ],
+      "title": {
+        "bn": "সপ্তাহে এক পাতা",
+        "en": "One page per week"
+      },
+      "how": {
+        "bn": "সপ্তাহের শেষে এক পাতায় তিনটি কথা লিখুন: কী ভালো গেল, কী আটকাল, পরের সপ্তাহে কী বদলাব।",
+        "en": "At week end, write three things on one page: what went well, what got stuck, what you will change next week."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "কী ভালো গেল|কী আটকাল|পরের বদল",
+        "en": "What went well|What got stuck|Next change"
+      },
+      "appLink": "#/journey/log"
+    },
+    {
+      "id": "p2-ob3",
+      "topic": "obstacles",
+      "tags": [
+        "obstacles",
+        "planning"
+      ],
+      "title": {
+        "bn": "বাধার তালিকা",
+        "en": "List the blockers"
+      },
+      "how": {
+        "bn": "যা আটকে আছে তার পাঁচটি কারণ লিখুন। প্রতিটির পাশে একটি ছোট সমাধান লিখুন।",
+        "en": "Write five reasons something is stuck. Next to each, write one small fix."
+      },
+      "diagram": {
+        "type": "matrix",
+        "bn": "কারণ ১|কারণ ২|সমাধান ১|সমাধান ২",
+        "en": "Reason 1|Reason 2|Fix 1|Fix 2"
+      },
+      "appLink": "#/stuck"
+    },
+    {
+      "id": "p2-ti3",
+      "topic": "time",
+      "tags": [
+        "time",
+        "planning"
+      ],
+      "title": {
+        "bn": "আজকের তিনটি কাজ",
+        "en": "Three tasks for today"
+      },
+      "how": {
+        "bn": "সকালে তিনটির বেশি কাজ লিখবেন না। প্রথমটি শেষ হলে তবেই পরেরটি ধরুন।",
+        "en": "Write no more than three tasks in the morning. Start the next only after the first is done."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "তিনটি লিখি|প্রথমটি শেষ|তারপর পরেরটি",
+        "en": "Write three|Finish the first|Then the next"
+      },
+      "appLink": "#/diary/plan"
+    },
+    {
+      "id": "p2-ex3",
+      "topic": "execution",
+      "tags": [
+        "execution",
+        "review"
+      ],
+      "title": {
+        "bn": "কী হলো, কী ছিল ভাবা",
+        "en": "What happened, what was planned"
+      },
+      "how": {
+        "bn": "আজকের পরিকল্পনা আর আসল কাজ পাশাপাশি লিখুন। পার্থক্যের একটি কারণ লিখুন।",
+        "en": "Write today's plan and what really happened side by side. Note one reason for the gap."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "পরিকল্পনা লিখি|আসল কাজ লিখি|একটি কারণ",
+        "en": "Write the plan|Write what happened|One reason"
+      }
+    }
+  ]
+}

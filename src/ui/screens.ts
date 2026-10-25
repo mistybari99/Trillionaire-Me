@@ -276,7 +276,7 @@ export function moneyScreen(): HTMLElement {
       values: { "finance.kind": d(kind.value), "finance.scope": d(scope.value), "finance.label": d(nm), "finance.amount": amt, "finance.period": d(period.value) } });
     rerender();
   });
-  const show = (c: Calc) => c.ok ? valueEl(t("money.bdt", lang, { v: fmtNum(c.value, lang) }), "INFERENCE", lang) : h("span", { class: "muted", "data-unknown": "1" }, t("money.unknown", lang, { n: num(c.missing, lang) }));
+  const show = (c: Calc) => c.ok ? valueEl(t("money.bdt", lang, { v: fmtNum(c.value, lang) }), c.label, lang) : h("span", { class: "muted", "data-unknown": "1" }, t("money.unknown", lang, { n: num(c.missing, lang) }));
   // nothing entered is "nothing yet", not a computed 0
   const has = (sc: "personal" | "business", kinds: string[]) => fv.items.some((i) => i.scope === sc && kinds.includes(i.kind));
   const sum = (sc: "personal" | "business") => h("div", { class: "card", "data-scope": sc }, h("h2", { class: "card-h", }, t(`money.${sc}` as Key, lang)),
@@ -287,7 +287,7 @@ export function moneyScreen(): HTMLElement {
     const a = r.values["finance.amount"]!;
     return h("div", { class: "card", "data-fin": r.id }, h("div", { class: "row" }, h("div", {},
       h("h2", { class: "card-h", }, fv.labels.get(r.id) ?? String((r.values["finance.label"] as { value?: unknown })?.value ?? "")),
-      h("p", { class: "muted" }, a.state === "value" ? valueEl(t("money.bdt", lang, { v: fmtNum(Number(a.value), lang) }), "DEMO", lang) : t(`unknown.${a.state}` as Key, lang))),
+      h("p", { class: "muted" }, a.state === "value" ? valueEl(t("money.bdt", lang, { v: fmtNum(Number(a.value), lang) }), a.label, lang) : t(`unknown.${a.state}` as Key, lang))),
       h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0;min-height:44px", onclick: () => { store.demo.delete(r.id); rerender(); } }, t("money.remove", lang))));
   });
   return h("main", { class: "scr scr-money" },
@@ -445,7 +445,7 @@ export function reportScreen(): HTMLElement {
   return h("main", {}, link("#/journey", "crumb", `← ${t("journey.title", lang)}`), h("h1", {}, t("report.title", lang)), h("p", { class: "sub" }, t("report.intro", lang)),
     items.length ? h("div", {},
       sec("report.decisions", s.decisions.length ? h("ul", { style: "padding-inline-start:20px" }, ...s.decisions.map((x) => h("li", { "data-decision": "1" }, x))) : h("p", { class: "muted" }, t("report.empty", lang))),
-      sec("report.amounts", s.amountCount ? valueEl(t("report.amountTotal", lang, { n: num(s.amountCount, lang), v: t("money.bdt", lang, { v: fmtNum(s.amountTotal, lang) }) }), "INFERENCE", lang) : h("p", { class: "muted" }, t("report.empty", lang))),
+      sec("report.amounts", s.amountCount ? valueEl(t("report.amountTotal", lang, { n: num(s.amountCount, lang), v: t("money.bdt", lang, { v: fmtNum(s.amountTotal, lang) }) }), "ESTIMATE", lang) : h("p", { class: "muted" }, t("report.empty", lang))),
       sec("report.durations", s.durationMinutes ? valueEl(t("report.minutes", lang, { m: fmtNum(s.durationMinutes, lang) }), "INFERENCE", lang) : h("p", { class: "muted" }, t("report.empty", lang))),
       sec("report.dates", s.dates.length ? h("div", {}, ...s.dates.map((d) => h("p", {}, valueEl(d, "DEMO", lang)))) : h("p", { class: "muted" }, t("report.empty", lang)))) : h("p", { class: "muted" }, t("report.empty", lang)),
     disclaimers(lang));

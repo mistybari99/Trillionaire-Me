@@ -156,7 +156,8 @@ describe("content pack loader (bundled files, on demand, never throws)", () => {
   it("loads every shipped pack tip with no errors", async () => {
     const r = await loadContentPacks(fromDisk);
     expect(r.errors).toEqual([]);
-    expect(r.tips.length).toBe(pack.tips.length);
+    const all = readdirSync(DIR).filter((f) => f.endsWith(".json")).reduce((n, f) => n + readPack(f).tips.length, 0);
+    expect(r.tips.length).toBe(all);
   });
   it("a loader that throws becomes an error entry, not a throw", async () => {
     const r = await loadContentPacks({ "../../public/content/pack-x.json": async () => { throw new TypeError("gone"); } });

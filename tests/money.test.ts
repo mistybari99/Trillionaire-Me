@@ -12,12 +12,12 @@ const fin = (id: string, kind: string, scope: string, amount: FieldValue, period
 describe("TM-TST-021/022/023 money inputs", () => {
   it("one-off and yearly income/expense are counted aside, never silently converted", () => {
     const fv = financeFrom([fin("a", "income", "personal", v(100)), fin("b", "expense", "personal", v(500), "yearly"), fin("c", "income", "personal", v(40), "once")]);
-    expect(fv.notMonthly).toBe(2); expect(monthlyCashFlow(fv.items, "personal")).toEqual({ ok: true, value: 100 });
+    expect(fv.notMonthly).toBe(2); expect(monthlyCashFlow(fv.items, "personal")).toEqual({ ok: true, value: 100, label: "ESTIMATE" });
   });
   it("assets/liabilities ignore period; scopes stay apart; unknown amount → unknown result", () => {
     const fv = financeFrom([fin("a", "asset", "personal", v(100), "once"), fin("b", "liability", "personal", { state: "unknown" }), fin("c", "asset", "business", v(9000))]);
     expect(netWorth(fv.items, "personal")).toEqual({ ok: false, reason: "unknown_inputs", missing: 1 });
-    expect(netWorth(fv.items, "business")).toEqual({ ok: true, value: 9000 });
+    expect(netWorth(fv.items, "business")).toEqual({ ok: true, value: 9000, label: "ESTIMATE" });
   });
 });
 
@@ -30,13 +30,13 @@ describe("money screen", () => {
     expect(document.querySelectorAll("[data-scope] [data-value]").length).toBe(0); // no computed numbers from nothing
     expect(document.querySelectorAll("[data-scope] [data-none]").length).toBe(6); // net worth, cash flow and 90-day cash flow, for two scopes
   });
-  it("unknown amount shows 'not known yet', all computed values are labelled INFERENCE", () => {
+  it("unknown amount shows 'not known yet', calculated values are labelled ESTIMATE", () => {
     store.demo.put(fin("a", "asset", "personal", { state: "unknown" }, "once", "Savings"));
     store.demo.put(fin("b", "asset", "business", v(500), "once", "Stock"));
     go("#/diary/money");
     expect(document.querySelector("[data-scope=personal] [data-unknown]")!.textContent).toMatch(/1 amount/);
-    const biz = document.querySelector("[data-scope=business] [data-value]")!; expect(biz.getAttribute("data-label")).toBe("INFERENCE");
-    for (const el of document.querySelectorAll("[data-value]")) expect(["DEMO", "INFERENCE"]).toContain(el.getAttribute("data-label"));
+    const biz = document.querySelector("[data-scope=business] [data-value]")!; expect(biz.getAttribute("data-label")).toBe("ESTIMATE");
+    for (const el of document.querySelectorAll("[data-value]")) expect(["DEMO", "FACT", "ESTIMATE"]).toContain(el.getAttribute("data-label"));
   });
   it("account-number style names are rejected and not saved", () => {
     go("#/diary/money");

@@ -131,14 +131,14 @@ describe("TM-REQ-023 90-day cash flow", () => {
   const item = (kind: FinItem["kind"], amount: FieldValue, scope: FinItem["scope"] = "personal"): FinItem => ({ kind, scope, amount });
   it("is three months of monthly flows; unknown amounts stay unknown", () => {
     const items = [item("income", dv(1000)), item("expense", dv(400))];
-    expect(monthlyCashFlow(items, "personal")).toEqual({ ok: true, value: 600 });
-    expect(cashFlow90Days(items, "personal")).toEqual({ ok: true, value: 1800 });
+    expect(monthlyCashFlow(items, "personal")).toEqual({ ok: true, value: 600, label: "ESTIMATE" });
+    expect(cashFlow90Days(items, "personal")).toEqual({ ok: true, value: 1800, label: "ESTIMATE" });
     const withUnknown = [...items, item("expense", { state: "unknown" })];
     expect(cashFlow90Days(withUnknown, "personal")).toEqual({ ok: false, reason: "unknown_inputs", missing: 1 });
   });
   it("keeps personal and business apart", () => {
     const items = [item("income", dv(500), "business"), item("expense", dv(100), "personal")];
-    expect(cashFlow90Days(items, "business")).toEqual({ ok: true, value: 1500 });
-    expect(cashFlow90Days(items, "personal")).toEqual({ ok: true, value: -300 });
+    expect(cashFlow90Days(items, "business")).toEqual({ ok: true, value: 1500, label: "ESTIMATE" });
+    expect(cashFlow90Days(items, "personal")).toEqual({ ok: true, value: -300, label: "ESTIMATE" });
   });
 });
