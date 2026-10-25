@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { beforeEach, describe, expect, it } from "vitest";
 import { writeFileSync, existsSync, mkdirSync } from "node:fs";
 import { FIELDS, intakeSteps } from "../src/catalog/fields";
@@ -261,7 +262,7 @@ describe("TM-TST-130 process: no rule derives from image text", () => {
 
 describe("scroll position on re-render (taps inside a screen must not jump to top)", () => {
   it("app.ts keeps scrollY when the route did not change", () => {
-    const src = require("node:fs").readFileSync(new URL("../src/app.ts", import.meta.url), "utf-8");
+    const src = readFileSync("src/app.ts", "utf-8");
     expect(src).toMatch(/routeChanged \? 0 : savedY/);
   });
 });
