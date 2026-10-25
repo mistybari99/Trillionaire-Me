@@ -220,3 +220,18 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 - How to undo: delete `src/library/systems/`, `src/library/systemList.ts`, `src/core/systems.ts`, `src/core/rules.ts`, `src/ui/libraryScreens.ts`; remove the two routes in `src/app.ts`, the two More items and the `rulesTodayCard` line in `src/ui/screens.ts`, the focus hooks in `finish` and `stop` (same file), the prefs in `src/ui/state.ts`, and the new tests. Set M19 and M24 back in `src/modules/capability.ts` and `src/modules/evidence.ts`.
 - Proof: `tests/systems.test.ts` (validation, record counts, add once, undo, consent gate), `tests/rules.test.ts` (each rule pure and deterministic, switches, no-write, copy and no-notification guards), `tests/m_systems_rules_ui.test.ts` (screens, one-tap add/undo, consent, Today card, status matches evidence). Full `npx vitest run` 606/606; `npx tsc --noEmit` clean; `npx vite build` ok; `node tools/e2e.mjs` 44 PASS, 0 FAIL.
 - Not done: (1) Real records written after consent are not yet shown on Today, Habits or Plan, because those screens read Demo only (existing limit, see the Demo & real data entry above). (2) The Register xlsx was not refreshed in this block; it needs `tools/update_register.py` after review. (3) The Bangla text is a draft until a reviewer signs off (TM-TST-161).
+
+## Content-first design pass (Phase A–E) (25 Oct 2026)
+- What: `docs/design/content-first-design.md` (Phase A product understanding, B information architecture, C pattern per module, D prototype link, E validation + traceability). Four demo screens (Today, Journey, Gate passed, Reality changed) published as a private design canvas (link in the doc).
+- Why: owner brief asked for design from content, not trends. Documents conflicted in two places, so each conflict needed a recorded call.
+- Choices made:
+  1. UI names are **Stage A–H** (journey) and **G0–G8** (build) only. Spec §3.4 "G-A…G-H" treated as internal ids (CLAUDE §2 wins for UI copy).
+  2. Home start state = Stage A "১/৮" (CLAUDE §2). The preview's "GATE" word is not used in user copy.
+  3. Navigation = the 5 tabs already in `src/app.ts` (Today, Journey, Diary, Deen, More). No new tab added.
+  4. Theme = Ink & Paper, light default, dark via prefers-color-scheme (CLAUDE §2 D-E approved). Red is not used for missed goals.
+  5. Deen gets its own tab; no Deen content on Today, notifications or lock screen.
+  6. Prototype numbers are demo values, labelled "ডেমো উদাহরণ"; never used as app defaults.
+- Alternatives: one shared "progress" tab for Journey + Deen (rejected: would put worship inside progress views, against Spec §9). Radar chart for readiness (rejected: four-state list is clearer for TalkBack and needs no scale).
+- How to undo: delete `docs/design/content-first-design.md` and this entry; the canvas can be deleted from claude.ai by the owner. No code was changed.
+- Not verified: app not run, unit/e2e tests not re-run, Register xlsx not opened, Bangla copy not reviewed (TM-TST-161), no device test.
+- Gap found: M22 capability status (TM-REQ-144) not visible in code found in this pass.
