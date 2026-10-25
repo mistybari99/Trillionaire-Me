@@ -50,30 +50,35 @@ import { markedOn, prayerLogId, prayerLogRecord } from "../core/prayerLog";
 import { fastLogId, fastLogRecord, isFastMarked } from "../core/fastLog";
 import { DEFAULT_ALERT_PREFS, parseAlertPrefs } from "../core/prayerAlerts";
 import { canNotify } from "./prayerAlerts";
+import { allRecs, asReal, consentOn, consentPrompt, findRec, inNs, labelFor, nsTag, ownerOf, saveBlockedText, saveTyped, storeOf, typed, valueLabel } from "./entry";
 
 const L = () => prefs.lang;
 const link = (href: string, cls: string, ...kids: Array<Node | string>) => h("a", { href, class: cls }, ...kids);
 const rerender = () => window.dispatchEvent(new HashChangeEvent("hashchange"));
 
 // ---- demo answers persisted per entity in the demo namespace ----
-export function loadAnswers(): Answers {
+// Both namespaces by default (demo first, real on top: a real field wins). Pass "real" to read real answers only.
+export function loadAnswers(only: "both" | "real" = "both"): Answers {
   const a: Answers = {};
-  for (const r of store.demo.list()) if (r.id.startsWith("intake-")) Object.assign(a, r.values);
+  if (only === "both") for (const r of store.demo.list()) if (r.id.startsWith("intake-")) Object.assign(a, r.values);
+  for (const r of store.real.list()) if (r.id.startsWith("intake-")) Object.assign(a, r.values);
   return a;
 }
-function saveAnswers(step: number, vals: Answers) {
+function saveAnswers(step: number, vals: Answers): boolean {
+  if (!consentOn()) return false; // nothing is saved without consent (D-B)
   const byEntity = new Map<string, Answers>();
   for (const [fid, v] of Object.entries(vals)) {
     const f = fieldById(fid); if (!f) continue;
-    byEntity.set(f.entity, { ...(byEntity.get(f.entity) ?? {}), [fid]: v });
+    byEntity.set(f.entity, { ...(byEntity.get(f.entity) ?? {}), [fid]: asReal(v) });
   }
   for (const [entity, values] of byEntity) {
     const id = `intake-${entity}`;
-    const prev = store.demo.get(id);
-    const rec: TMRecord = { id, entity, ns: "demo", ownerId: "demo-user", schemaVersion: 1, createdAt: prev?.createdAt ?? new Date().toISOString(), values: { ...(prev?.values ?? {}), ...values } };
-    store.demo.put(rec);
+    const prev = store.real.get(id);
+    const rec: TMRecord = { id, entity, ns: "real", ownerId: ownerOf("real"), schemaVersion: 1, createdAt: prev?.createdAt ?? new Date().toISOString(), values: { ...(prev?.values ?? {}), ...values } };
+    store.real.put(rec);
   }
   void step;
+  return true;
 }
 
 // ---- shared bits ----
@@ -103,17 +108,17 @@ function moduleCard(m: ModuleDef, lang: Locale) {
 // ---- plan (G3 core wired to the UI) ----
 // O6: "reality changed". The step stays on record, is no longer scheduled, and the change is appended to the journey log.
 function markRealityChanged(taskId: string, lang: Locale) {
-  const r = store.demo.get(taskId); if (!r) return;
+  const r = findRec(taskId); if (!r) return;
   const day = new Date(); const iso = `${day.getFullYear()}-${String(day.getMonth() + 1).padStart(2, "0")}-${String(day.getDate()).padStart(2, "0")}`;
   try {
     const title = String((r.values["task.title"] as { value?: unknown } | undefined)?.value ?? "");
-    store.demo.put(markNotTrue(r, iso));
-    store.demo.put(realityLogRecord({ id: `reality-${taskId}-${Date.now().toString(36)}`, taskId, text: t("reality.logged", lang, { title, date: iso }), createdAt: day.toISOString() }));
+    storeOf(r).put(inNs(markNotTrue(r, iso), r.ns));
+    storeOf(r).put(inNs(realityLogRecord({ id: `reality-${taskId}-${Date.now().toString(36)}`, taskId, text: t("reality.logged", lang, { title, date: iso }), createdAt: day.toISOString() }), r.ns));
     rerender();
   } catch (e) { if (!(e instanceof RealityError)) throw e; }
 }
 function currentPlan() {
-  const a = loadAnswers(); const recs = store.demo.list();
+  const a = loadAnswers(); const recs = allRecs();
   const input = buildPlanInput(a, recs, prefs.mode, new Date().getDay());
   const titles = new Map(recs.filter((r) => r.entity === "task").map((r) => [r.id, String((r.values["task.title"] as { value?: unknown })?.value ?? "")]));
   return { a, recs, input, plan: schedule(input), state: capacityState(a), titles, hasTasks: titles.size > 0 };
@@ -186,7 +191,7 @@ export function planScreen(): HTMLElement {
   const lang = L(); const cp = currentPlan();
   const w = freeWindow(cp.a);
   const free = cp.state === "ok"
-    ? valueEl(t("plan.hours", lang, { h: num(Number((cp.a["constraint.weekly_free_hours"] as { value: number }).value), lang), from: fmtClock(w!.from), to: fmtClock(w!.to) }), "DEMO", lang)
+    ? valueEl(t("plan.hours", lang, { h: num(Number((cp.a["constraint.weekly_free_hours"] as { value: number }).value), lang), from: fmtClock(w!.from), to: fmtClock(w!.to) }), valueLabel(cp.a["constraint.weekly_free_hours"]), lang)
     : h("span", {}, t(cp.state === "need_hours" ? "plan.need_hours" : "plan.need_window", lang), " ", link("#/diary/intake/4", "crumb", t("plan.setup", lang)));
   const seg = (m: PlanMode) => h("button", { type: "button", "data-mode": m, "aria-pressed": String(prefs.mode === m), onclick: () => { prefs.mode = m; rerender(); } }, t(`plan.mode.${m}` as Key, lang));
   const title = h("input", { id: "pt-title", type: "text", maxlength: "120", autocomplete: "off" });
@@ -197,7 +202,8 @@ export function planScreen(): HTMLElement {
   const afterSel = h("select", { id: "pt-after" }, h("option", { value: "" }, t("plan.after.none", lang)),
     ...openTasks.map((r) => h("option", { value: r.id }, cp.titles.get(r.id) ?? r.id)));
   const err = h("p", { class: "err", role: "alert" });
-  const form = h("form", { novalidate: true, "data-form": "task" },
+  const gate = consentOn() ? null : consentPrompt(lang);
+  const form = h("form", { novalidate: true, "data-form": "task" }, gate,
     h("label", { for: "pt-title" }, t("plan.task.title", lang)), title,
     h("label", { for: "pt-min" }, t("plan.task.minutes", lang)), mins,
     h("label", { for: "pt-prio" }, t("plan.task.priority", lang)), prio,
@@ -209,22 +215,22 @@ export function planScreen(): HTMLElement {
     if (!checkFreeText(name).ok) { err.textContent = t("intake.secretRejected", lang); return; }
     const raw = mins.value.trim().replace(/[০-৯]/g, (c) => String(c.charCodeAt(0) - 0x09e6)); let m: FieldValue;
     if (raw === "") m = { state: "later" };
-    else { const n = Number(raw); if (!Number.isFinite(n) || n <= 0 || n > 1440) { err.textContent = t("intake.invalidNumber", lang); return; } m = { state: "value", value: Math.round(n), label: "DEMO" }; }
+    else { const n = Number(raw); if (!Number.isFinite(n) || n <= 0 || n > 1440) { err.textContent = t("intake.invalidNumber", lang); return; } m = typed(Math.round(n)); }
     const id = `task-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`;
-    store.demo.put({ id, entity: "task", ns: "demo", ownerId: "demo-user", schemaVersion: 1, createdAt: new Date().toISOString(),
-      values: { "task.title": { state: "value", value: name, label: "DEMO" }, "task.minutes": m, "task.priority": { state: "value", value: prio.value, label: "DEMO" } },
-      ...(afterSel.value ? { links: { after: afterSel.value } } : {}) });
+    if (!saveTyped({ id, entity: "task", createdAt: new Date().toISOString(),
+      values: { "task.title": typed(name), "task.minutes": m, "task.priority": typed(prio.value) },
+      ...(afterSel.value ? { links: { after: afterSel.value } } : {}) })) { err.textContent = saveBlockedText(lang); return; }
     rerender();
   });
   const afterTitle = (id: string) => cp.titles.get(id) || "";
   const taskRows = cp.recs.filter((r) => r.entity === "task").sort((a, b) => a.id.localeCompare(b.id)).map((r) => {
     const mv = r.values["task.minutes"];
     return h("div", { class: "card", "data-task": r.id }, h("div", { class: "row" },
-      h("div", {}, h("h2", { class: "card-h", }, cp.titles.get(r.id) ?? ""), h("p", { class: "muted" }, mv && mv.state === "value" ? valueEl(t("task.minutes", lang, { n: num(Number(mv.value), lang) }), "DEMO", lang) : t("plan.task.minutes.later", lang)),
+      h("div", {}, nsTag(r.ns, lang), h("h2", { class: "card-h", }, cp.titles.get(r.id) ?? ""), h("p", { class: "muted" }, mv && mv.state === "value" ? valueEl(t("task.minutes", lang, { n: num(Number(mv.value), lang) }), mv.label, lang) : t("plan.task.minutes.later", lang)),
         r.links?.after ? h("p", { class: "muted", "data-after": r.links.after }, t("plan.after.shown", lang, { title: afterTitle(r.links.after) })) : null),
       r.values["task.done_on"]?.state === "value" ? h("span", { class: "tag ok" }, t("reward.done", lang))
-        : r.values["task.not_true_on"]?.state === "value" ? h("div", {}, h("span", { class: "tag off" }, t("reality.tag", lang, { date: String((r.values["task.not_true_on"] as { value?: unknown }).value) })), h("p", { class: "muted" }, t("reality.note", lang)), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => { store.demo.delete(r.id); rerender(); } }, t("plan.task.remove", lang)))
-        : h("div", {}, doneBtn(r.id, lang), focusBtn(r.id, lang), h("button", { class: "btn ghost", type: "button", "data-act": "reality-changed", "data-task-id": r.id, style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => markRealityChanged(r.id, lang) }, t("reality.btn", lang)), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => { store.demo.delete(r.id); rerender(); } }, t("plan.task.remove", lang)))));
+        : r.values["task.not_true_on"]?.state === "value" ? h("div", {}, h("span", { class: "tag off" }, t("reality.tag", lang, { date: String((r.values["task.not_true_on"] as { value?: unknown }).value) })), h("p", { class: "muted" }, t("reality.note", lang)), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => { storeOf(r).delete(r.id); rerender(); } }, t("plan.task.remove", lang)))
+        : h("div", {}, doneBtn(r.id, lang), focusBtn(r.id, lang), h("button", { class: "btn ghost", type: "button", "data-act": "reality-changed", "data-task-id": r.id, style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => markRealityChanged(r.id, lang) }, t("reality.btn", lang)), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => { storeOf(r).delete(r.id); rerender(); } }, t("plan.task.remove", lang)))));
   });
   const byDay = (d: number) => cp.plan.placements.filter((p) => p.day === d).sort((a, b) => a.start - b.start);
   const week = [0, 1, 2, 3, 4, 5, 6].map((i) => (new Date().getDay() + i) % 7).filter((d) => byDay(d).length).map((d) => h("div", { class: "card", "data-day": String(d) }, h("h2", { class: "card-h", }, weekday(d, lang)),
@@ -248,14 +254,16 @@ export function planScreen(): HTMLElement {
 
 // ---- money (finance maths wired to the UI) ----
 export function moneyScreen(): HTMLElement {
-  const lang = L(); const recs = store.demo.list(); const fv = financeFrom(recs);
+  const lang = L(); const recs = allRecs(); const fv = financeFrom(recs);
+  const mixed = new Set(recs.filter((r) => r.entity === "finance_item").map((r) => r.ns)).size > 1;
   const sel = (id: string, f: string) => h("select", { id }, ...fieldById(f)!.options!.map((o) => h("option", { value: o.code }, tb(o.label, lang))));
   const kind = sel("mf-kind", "finance.kind"), scope = sel("mf-scope", "finance.scope"), period = sel("mf-period", "finance.period");
   const name = h("input", { id: "mf-name", type: "text", maxlength: "80", autocomplete: "off" });
   const amount = h("input", { id: "mf-amount", type: "text", inputmode: "decimal" });
   const unk = h("select", { id: "mf-state", "aria-label": t("intake.valueFor", lang) }, h("option", { value: "value" }, t("intake.valueFor", lang)), ...(["unknown", "later", "prefer_not"] as const).map((u) => h("option", { value: u }, t(`unknown.${u}` as Key, lang))));
   const err = h("p", { class: "err", role: "alert" });
-  const form = h("form", { novalidate: true, "data-form": "money" },
+  const gate = consentOn() ? null : consentPrompt(lang);
+  const form = h("form", { novalidate: true, "data-form": "money" }, gate,
     h("label", { for: "mf-kind" }, t("money.kind", lang)), kind, h("label", { for: "mf-scope" }, t("money.scope", lang)), scope,
     h("label", { for: "mf-name" }, t("money.name", lang)), name, h("p", { class: "muted" }, t("money.nameHint", lang)),
     h("label", { for: "mf-amount" }, t("money.amount", lang)), amount, unk,
@@ -270,12 +278,12 @@ export function moneyScreen(): HTMLElement {
     else {
       const raw = amount.value.trim().replace(/,/g, "").replace(/[০-৯]/g, (c) => String(c.charCodeAt(0) - 0x09e6));
       if (raw === "") amt = { state: "unknown" };
-      else { const n = Number(raw); if (!Number.isFinite(n) || n < 0) { err.textContent = t("intake.invalidNumber", lang); return; } amt = { state: "value", value: n, label: "DEMO" }; }
+      else { const n = Number(raw); if (!Number.isFinite(n) || n < 0) { err.textContent = t("intake.invalidNumber", lang); return; } amt = typed(n); }
     }
-    const d = (x: string): FieldValue => ({ state: "value", value: x, label: "DEMO" });
+    const d = (x: string): FieldValue => typed(x);
     const id = `fin-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`;
-    store.demo.put({ id, entity: "finance_item", ns: "demo", ownerId: "demo-user", schemaVersion: 1, createdAt: new Date().toISOString(),
-      values: { "finance.kind": d(kind.value), "finance.scope": d(scope.value), "finance.label": d(nm), "finance.amount": amt, "finance.period": d(period.value) } });
+    if (!saveTyped({ id, entity: "finance_item", createdAt: new Date().toISOString(),
+      values: { "finance.kind": d(kind.value), "finance.scope": d(scope.value), "finance.label": d(nm), "finance.amount": amt, "finance.period": d(period.value) } })) { err.textContent = saveBlockedText(lang); return; }
     rerender();
   });
   const show = (c: Calc) => c.ok ? valueEl(t("money.bdt", lang, { v: fmtNum(c.value, lang) }), c.label, lang) : h("span", { class: "muted", "data-unknown": "1" }, t("money.unknown", lang, { n: num(c.missing, lang) }));
@@ -287,15 +295,16 @@ export function moneyScreen(): HTMLElement {
     h("p", { "data-cash90": sc }, t("money.cash90", lang), ": ", has(sc, ["income", "expense"]) ? show(cashFlow90Days(fv.items, sc)) : h("span", { class: "muted", "data-none": "1" }, t("money.none", lang))));
   const rows = recs.filter((r) => r.entity === "finance_item").sort((a, b) => a.id.localeCompare(b.id)).map((r) => {
     const a = r.values["finance.amount"]!;
-    return h("div", { class: "card", "data-fin": r.id }, h("div", { class: "row" }, h("div", {},
+    return h("div", { class: "card", "data-fin": r.id }, h("div", { class: "row" }, h("div", {}, nsTag(r.ns, lang),
       h("h2", { class: "card-h", }, fv.labels.get(r.id) ?? String((r.values["finance.label"] as { value?: unknown })?.value ?? "")),
       h("p", { class: "muted" }, a.state === "value" ? valueEl(t("money.bdt", lang, { v: fmtNum(Number(a.value), lang) }), a.label, lang) : t(`unknown.${a.state}` as Key, lang))),
-      h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0;min-height:44px", onclick: () => { store.demo.delete(r.id); rerender(); } }, t("money.remove", lang))));
+      h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0;min-height:44px", onclick: () => { storeOf(r).delete(r.id); rerender(); } }, t("money.remove", lang))));
   });
   return h("main", { class: "scr scr-money" },
     link("#/diary", "crumb", `← ${t("diary.title", lang)}`), h("h1", {}, t("money.title", lang)), h("p", { class: "sub" }, t("money.intro", lang)),
     h("h2", {}, t("money.summary", lang)), sum("personal"), sum("business"),
     fv.notMonthly ? h("p", { class: "muted" }, t("money.notMonthly", lang, { n: num(fv.notMonthly, lang) })) : null,
+    mixed ? h("p", { class: "muted", "data-mix": "1" }, t("entry.mixNote", lang)) : null,
     h("h2", {}, t("money.add", lang)), form,
     rows.length ? h("div", {}, ...rows) : h("p", { class: "muted" }, t("money.empty", lang)),
     h("p", { class: "muted" }, t("money.note", lang)), disclaimers(lang));
@@ -306,14 +315,15 @@ export function moneyScreen(): HTMLElement {
 // ---- horizon view (R2) ----
 export function horizonScreen(): HTMLElement {
   const lang = L();
-  const goals: HorizonGoal[] = store.demo.list().filter((r) => r.entity === "goal" && r.values["goal.title"]?.state === "value").map((r) => ({
+  const nsById = new Map(allRecs().map((r) => [r.id, r.ns] as const));
+  const goals: HorizonGoal[] = allRecs().filter((r) => r.entity === "goal" && r.values["goal.title"]?.state === "value").map((r) => ({
     id: r.id,
     title: String((r.values["goal.title"] as { value?: unknown }).value ?? ""),
     why: r.values["goal.why"]?.state === "value" ? String((r.values["goal.why"] as { value?: unknown }).value) : undefined,
     horizon: r.values["goal.horizon"]?.state === "value" ? String((r.values["goal.horizon"] as { value?: unknown }).value) : undefined,
   }));
   const g = groupByHorizon(goals);
-  const card = (x: HorizonGoal) => h("article", { class: "card", "data-goal": x.id }, h("strong", {}, x.title),
+  const card = (x: HorizonGoal) => h("article", { class: "card", "data-goal": x.id }, nsTag(nsById.get(x.id) ?? "demo", lang), h("strong", {}, x.title),
     x.why ? h("p", { class: "muted" }, `${t("horizon.why", lang)}: ${x.why}`) : null);
   const section = (key: string, list: HorizonGoal[]) => h("section", { "data-horizon": key },
     h("h2", {}, t(`horizon.${key}` as Key, lang)),
@@ -339,7 +349,7 @@ export function horizonScreen(): HTMLElement {
 
 // ---- stages + journey log ----
 function stageData() {
-  const recs = store.demo.list();
+  const recs = allRecs();
   const passed = recs.filter((r) => r.entity === "stage_pass").map((r) => String((r.values["stage_pass.stage_code"] as { value?: unknown })?.value ?? ""));
   const goalCount = recs.filter((r) => r.entity === "goal" && r.values["goal.title"]?.state === "value").length;
   return { recs, passed, ctx: { answers: loadAnswers(), goalCount } };
@@ -383,8 +393,8 @@ function passedBanner(lang: Locale): HTMLElement | null {
 }
 
 export function journeyLog(): HTMLElement {
-  const lang = L(); const logs = store.demo.list().filter((r) => r.entity === "journey_log").sort((a, b) => b.createdAt.localeCompare(a.createdAt));
-  const passes = store.demo.list().filter((r) => r.entity === "stage_pass").sort((a, b) => a.createdAt.localeCompare(b.createdAt))
+  const lang = L(); const logs = allRecs().filter((r) => r.entity === "journey_log").sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+  const passes = allRecs().filter((r) => r.entity === "stage_pass").sort((a, b) => a.createdAt.localeCompare(b.createdAt))
     .map((r) => ({ code: String((r.values["stage_pass.stage_code"] as { value?: unknown } | undefined)?.value ?? ""), note: String((r.values["stage_pass.evidence"] as { value?: unknown } | undefined)?.value ?? "") }));
   const chain = wordChain(passes, 5);
   const learn = h("section", { class: "card", "data-card": "learn_chain" }, h("h2", {}, t("log.learn.h", lang)),
@@ -405,16 +415,16 @@ export function captureScreen(): HTMLElement {
   const out = h("div", { role: "status" }); const err = h("p", { class: "err", role: "alert" });
   const stamp = () => Date.now().toString(36);
   const saveAll = (picked: Candidate[], edits: Map<string, string>) => {
-    const d = (x: unknown): FieldValue => ({ state: "value", value: x, label: "DEMO" }); const id = `cap-${stamp()}`;
-    const base = { ns: "demo" as const, ownerId: "demo-user", schemaVersion: 1, createdAt: new Date().toISOString() };
-    store.demo.put({ ...base, id, entity: "capture", values: { "capture.note": d(ta.value.trim()) } });
+    const d = (x: unknown): FieldValue => typed(x); const id = `cap-${stamp()}`;
+    const base = { createdAt: new Date().toISOString() };
+    if (!saveTyped({ ...base, id, entity: "capture", values: { "capture.note": d(ta.value.trim()) } })) { out.replaceChildren(h("p", { class: "err", role: "alert" }, saveBlockedText(lang))); return; }
     picked.forEach((c, i) => {
       const v: Record<string, FieldValue> = { "capture_item.kind": d(c.kind) };
       const ed = edits.get(c.id);
       if (c.kind === "decision") v["capture_item.text"] = d((ed ?? c.text ?? "").slice(0, 140));
       else if (c.kind === "date") v["capture_item.date"] = d(ed ?? c.date);
       else { const n = ed !== undefined ? Number(ed.replace(/,/g, "")) : c.number; v["capture_item.number"] = Number.isFinite(n) ? d(n) : { state: "unknown" }; if (c.unit) v["capture_item.unit"] = d(c.unit); }
-      store.demo.put({ ...base, id: `${id}-i${i}`, entity: "capture_item", links: { note: id }, values: v });
+      saveTyped({ ...base, id: `${id}-i${i}`, entity: "capture_item", links: { note: id }, values: v });
     });
     out.replaceChildren(h("p", { class: "ok-msg", "data-saved": "1" }, t("capture.saved", lang))); ta.value = "";
   };
@@ -438,11 +448,12 @@ export function captureScreen(): HTMLElement {
     out.replaceChildren(cands.length ? h("p", {}, t("capture.found", lang)) : h("p", { class: "muted" }, t("capture.none", lang)), ...rows, ...(cands.length ? [saveSel] : []), saveNote);
   });
   return h("main", {}, link("#/today", "crumb", `← ${t("nav.today", lang)}`), h("h1", {}, t("capture.title", lang)), h("p", { class: "sub" }, t("capture.intro", lang)),
+    consentOn() ? null : consentPrompt(lang),
     h("label", { for: "cap-note" }, tb(fieldById("capture.note")!.label, lang)), ta, err, understand, out, fieldHelp(fieldById("capture.note")!, lang), disclaimers(lang));
 }
 
 export function reportScreen(): HTMLElement {
-  const lang = L(); const items = store.demo.list().filter((r) => r.entity === "capture_item").map(itemOf); const s = summarize(items);
+  const lang = L(); const items = allRecs().filter((r) => r.entity === "capture_item").map(itemOf); const s = summarize(items);
   const sec = (title: Key, ...kids: Array<Node | string | null>) => h("div", { class: "card" }, h("h2", { class: "card-h", }, t(title, lang)), ...kids);
   return h("main", {}, link("#/journey", "crumb", `← ${t("journey.title", lang)}`), h("h1", {}, t("report.title", lang)), h("p", { class: "sub" }, t("report.intro", lang)),
     items.length ? h("div", {},
@@ -536,11 +547,11 @@ export function topicScreen(id: string | undefined): HTMLElement {
 
 
 // ---- finishing tasks + the journey picture ----
-const completedCount = () => store.demo.list().filter((r) => r.entity === "task" && r.values["task.done_on"]?.state === "value").length;
+const completedCount = () => allRecs().filter((r) => r.entity === "task" && r.values["task.done_on"]?.state === "value").length;
 const todayIso = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; };
 function markDone(taskId: string) {
-  const r = store.demo.get(taskId); if (!r || r.values["task.done_on"]?.state === "value") return;
-  store.demo.put({ ...r, values: { ...r.values, "task.done_on": { state: "value", value: todayIso(), label: "DEMO" } } });
+  const r = findRec(taskId); if (!r || r.values["task.done_on"]?.state === "value") return;
+  storeOf(r).put({ ...r, values: { ...r.values, "task.done_on": { state: "value", value: todayIso(), label: labelFor(r.ns) } } });
   try { sessionStorage.setItem("tm:newStar", "1"); } catch { /* ignore */ }
   const was = location.hash; location.hash = "#/reward"; if (was === "#/reward") rerender(); // a changed hash re-renders by itself; a second render would eat the one-time "new star" flag
 }
@@ -571,15 +582,17 @@ const FOCUS_KEY = "tm:ui:focus";
 type Saved = { taskId: string; session: Focus.Session } | null;
 const loadFocus = (): Saved => { try { return JSON.parse(localStorage.getItem(FOCUS_KEY) ?? "null") as Saved; } catch { return null; } };
 const saveFocus = (v: Saved) => { try { if (v) localStorage.setItem(FOCUS_KEY, JSON.stringify(v)); else localStorage.removeItem(FOCUS_KEY); } catch { /* ignore */ } };
-const focusMinutesOf = (taskId: string) => store.demo.list().filter((r) => r.entity === "focus_session" && r.links?.task === taskId).reduce((a, r) => a + Number((r.values["focus_session.minutes"] as { value?: unknown })?.value ?? 0), 0);
+const focusMinutesOf = (taskId: string) => allRecs().filter((r) => r.entity === "focus_session" && r.links?.task === taskId).reduce((a, r) => a + Number((r.values["focus_session.minutes"] as { value?: unknown })?.value ?? 0), 0);
 function recordFocus(taskId: string, minutes: number) {
   if (minutes < 1) return;
-  store.demo.put({ id: `fs-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 4)}`, entity: "focus_session", ns: "demo", ownerId: "demo-user", schemaVersion: 1, createdAt: new Date().toISOString(), links: { task: taskId },
-    values: { "focus_session.minutes": { state: "value", value: minutes, label: "DEMO" }, "focus_session.date": { state: "value", value: todayIso(), label: "DEMO" } } });
+  // a focus session belongs to its task's namespace: real task, real session
+  const ns = findRec(taskId)?.ns ?? "demo"; const lb = labelFor(ns);
+  store[ns].put({ id: `fs-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 4)}`, entity: "focus_session", ns, ownerId: ownerOf(ns), schemaVersion: 1, createdAt: new Date().toISOString(), links: { task: taskId },
+    values: { "focus_session.minutes": { state: "value", value: minutes, label: lb }, "focus_session.date": { state: "value", value: todayIso(), label: lb } } });
 }
 
 export function focusScreen(taskId: string | undefined): HTMLElement {
-  const lang = L(); const task = taskId ? store.demo.get(taskId) : null;
+  const lang = L(); const task = taskId ? findRec(taskId) : null;
   if (!task || task.entity !== "task") return h("main", {}, link("#/today", "crumb", `← ${t("nav.today", lang)}`), h("h1", {}, t("focus.title", lang)), h("p", { class: "muted" }, t("focus.none", lang)));
   const title = String((task.values["task.title"] as { value?: unknown })?.value ?? "");
   const root = h("main", { id: "focus-root", "data-task": task.id, class: "scr scr-focus" });
@@ -623,18 +636,25 @@ const focusBtn = (taskId: string, lang: Locale) => link(`#/focus/${taskId}`, "bt
 
 // ---- habits ----
 function habitsFromStore() {
-  const recs = store.demo.list(); const g = (r: TMRecord, k: string) => (r.values[k] as { value?: unknown } | undefined)?.value;
+  const recs = allRecs(); const g = (r: TMRecord, k: string) => (r.values[k] as { value?: unknown } | undefined)?.value;
   const habits: Habits.Habit[] = recs.filter((r) => r.entity === "habit" && r.values["habit.title"]?.state === "value").sort((a, b) => a.id.localeCompare(b.id)).map((r) => ({
     id: r.id, title: String(g(r, "habit.title")), days: String(g(r, "habit.days") ?? "0,1,2,3,4,5,6").split(",").filter((x) => x !== "").map(Number),
     target: typeof g(r, "habit.target") === "number" && (g(r, "habit.target") as number) > 0 ? (g(r, "habit.target") as number) : null, unit: String(g(r, "habit.unit") ?? "") }));
   const logs: Habits.Log[] = recs.filter((r) => r.entity === "habit_log").map((r) => ({ habitId: r.links?.habit ?? "", date: String(g(r, "habit_log.date")), count: Number(g(r, "habit_log.count") ?? 0) }));
   return { habits, logs };
 }
+// A habit's log lives in the same namespace as its habit (real habit, real log).
 function setLog(h0: Habits.Habit, date: string, count: number) {
   const id = `hl-${h0.id}-${date}`;
-  if (count <= 0) { store.demo.delete(id); return; }
-  store.demo.put({ id, entity: "habit_log", ns: "demo", ownerId: "demo-user", schemaVersion: 1, createdAt: new Date().toISOString(), links: { habit: h0.id },
-    values: { "habit_log.date": { state: "value", value: date, label: "DEMO" }, "habit_log.count": { state: "value", value: count, label: "DEMO" } } });
+  const ns = findRec(h0.id)?.ns ?? "demo"; const lb = labelFor(ns);
+  if (count <= 0) { store[ns].delete(id); return; }
+  if (ns === "real" && !consentOn()) return;
+  store[ns].put({ id, entity: "habit_log", ns, ownerId: ownerOf(ns), schemaVersion: 1, createdAt: new Date().toISOString(), links: { habit: h0.id },
+    values: { "habit_log.date": { state: "value", value: date, label: lb }, "habit_log.count": { state: "value", value: count, label: lb } } });
+}
+function removeHabit(id: string) {
+  const hr = findRec(id); if (hr) storeOf(hr).delete(id);
+  for (const r of allRecs()) if (r.entity === "habit_log" && r.links?.habit === id) storeOf(r).delete(r.id);
 }
 
 export function habitsScreen(): HTMLElement {
@@ -651,7 +671,7 @@ export function habitsScreen(): HTMLElement {
     }));
     const c = Habits.consistency(hb, logs, Habits.addDays(today, -27), today, today);
     return h("div", { class: "card", "data-habit-card": hb.id },
-      h("div", { class: "row" }, h("h2", { class: "card-h", }, hb.title), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0;min-height:44px", onclick: () => { store.demo.delete(hb.id); for (const r of store.demo.list()) if (r.entity === "habit_log" && r.links?.habit === hb.id) store.demo.delete(r.id); rerender(); } }, t("habits.remove", lang))),
+      h("div", { class: "row" }, h("div", {}, nsTag(findRec(hb.id)?.ns ?? "demo", lang), h("h2", { class: "card-h", }, hb.title)), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0;min-height:44px", onclick: () => { removeHabit(hb.id); rerender(); } }, t("habits.remove", lang))),
       main, dots,
       h("p", { class: "muted", "data-consistency": "1" }, c.planned ? valueEl(t("habits.month", lang, { d: num(c.done, lang), p: num(c.planned, lang) }), "INFERENCE", lang) : t("habits.noPlanned", lang)),
       Habits.restartPlan(hb, logs, today) === "smallest_version" ? h("p", { class: "note", "data-restart": "1" }, t("habits.restart", lang)) : null);
@@ -662,16 +682,16 @@ export function habitsScreen(): HTMLElement {
   const chips = h("div", { class: "seg", role: "group" }, ...Array.from({ length: 7 }, (_, i) => h("button", { type: "button", "data-wd": String(i), "aria-pressed": "true", onclick: (e: Event) => { const b = e.currentTarget as HTMLElement; if (chosen.has(i)) chosen.delete(i); else chosen.add(i); b.setAttribute("aria-pressed", String(chosen.has(i))); } }, wd(i))));
   const target = h("input", { id: "hb-target", type: "text", inputmode: "numeric" }) as HTMLInputElement; const unit = h("input", { id: "hb-unit", type: "text", maxlength: "20" }) as HTMLInputElement;
   const err = h("p", { class: "err", role: "alert" });
-  const form = h("form", { novalidate: true, "data-form": "habit" }, h("label", { for: "hb-name" }, t("habits.name", lang)), name, h("label", {}, t("habits.days", lang)), chips,
+  const gate = consentOn() ? null : consentPrompt(lang);
+  const form = h("form", { novalidate: true, "data-form": "habit" }, gate, h("label", { for: "hb-name" }, t("habits.name", lang)), name, h("label", {}, t("habits.days", lang)), chips,
     h("label", { for: "hb-target" }, t("habits.target", lang)), target, h("label", { for: "hb-unit" }, t("habits.unit", lang)), unit, err, h("button", { class: "btn", type: "submit" }, t("habits.save", lang)));
   form.addEventListener("submit", (ev) => {
     ev.preventDefault(); err.textContent = ""; const nm = name.value.trim(); if (!nm) return;
     if (!checkFreeText(nm).ok || !checkFreeText(unit.value).ok) { err.textContent = t("intake.secretRejected", lang); return; }
     const raw = target.value.trim().replace(/[০-৯]/g, (c) => String(c.charCodeAt(0) - 0x09e6)); let tv: FieldValue | null = null;
-    if (raw !== "") { const n = Number(raw); if (!Number.isFinite(n) || n <= 0 || n > 1000) { err.textContent = t("intake.invalidNumber", lang); return; } tv = { state: "value", value: Math.round(n), label: "DEMO" }; }
-    const d = (x: unknown): FieldValue => ({ state: "value", value: x, label: "DEMO" });
-    store.demo.put({ id: `habit-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 4)}`, entity: "habit", ns: "demo", ownerId: "demo-user", schemaVersion: 1, createdAt: new Date().toISOString(),
-      values: { "habit.title": d(nm), "habit.days": d([...chosen].sort().join(",")), ...(tv ? { "habit.target": tv, "habit.unit": d(unit.value.trim()) } : {}) } });
+    if (raw !== "") { const n = Number(raw); if (!Number.isFinite(n) || n <= 0 || n > 1000) { err.textContent = t("intake.invalidNumber", lang); return; } tv = typed(Math.round(n)); }
+    if (!saveTyped({ id: `habit-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 4)}`, entity: "habit", createdAt: new Date().toISOString(),
+      values: { "habit.title": typed(nm), "habit.days": typed([...chosen].sort().join(",")), ...(tv ? { "habit.target": tv, "habit.unit": typed(unit.value.trim()) } : {}) } })) { err.textContent = saveBlockedText(lang); return; }
     rerender();
   });
   return h("main", {}, link("#/today", "crumb", `← ${t("nav.today", lang)}`), h("h1", {}, t("habits.title", lang)), h("p", { class: "sub" }, t("habits.intro", lang)),
@@ -718,7 +738,7 @@ function todayFromPlan(cp: ReturnType<typeof currentPlan>, lang: Locale): HTMLEl
   const acts = todaysActions(cp.plan, new Date().getDay());
   if (!acts.length) return [h("p", { class: "muted", "data-today": "none" }, t("home.today.none", lang), " ", link("#/diary/plan", "crumb", t("home.today.open", lang)))];
   return acts.map((p, i) => h("div", { class: "task", "data-placement": p.taskId }, h("b", {}, num(i + 1, lang)),
-    h("div", {}, cp.titles.get(p.taskId) ?? "", h("p", {}, valueEl(`${fmtClock(p.start)}–${fmtClock(p.end)}`, "DEMO", lang)), h("div", { class: "row" }, doneBtn(p.taskId, lang), focusBtn(p.taskId, lang)))));
+    h("div", {}, cp.titles.get(p.taskId) ?? "", h("p", {}, valueEl(`${fmtClock(p.start)}–${fmtClock(p.end)}`, labelFor(findRec(p.taskId)?.ns ?? "demo"), lang)), h("div", { class: "row" }, doneBtn(p.taskId, lang), focusBtn(p.taskId, lang)))));
 }
 
 export function today(): HTMLElement {
@@ -764,7 +784,7 @@ function templatePicker(lang: Locale): HTMLElement {
 
 // O6: 90-day review. Counts only; a measure with no record in the window reads "not enough data", never 0.
 export function reviewScreen(): HTMLElement {
-  const lang = L(); const recs = store.demo.list();
+  const lang = L(); const recs = allRecs();
   const s = reviewSummary(recs, todayIso());
   const card = (id: string, title: Key, value: string | null) => h("section", { class: "card", "data-review": id },
     h("h2", { class: "card-h", }, t(title, lang)),
@@ -911,15 +931,18 @@ export function intake(stepParam: string | undefined): HTMLElement {
   const lang = L();
   const steps = intakeSteps();
   const a = loadAnswers();
+  // With consent, the form pre-fills from real answers only: a demo answer is never copied into a real record.
+  const prefill = loadAnswers(consentOn() ? "real" : "both");
   const nxt = nextStep(a);
   const step = Number(stepParam) || nxt.step || steps[0]!;
   const idx = steps.indexOf(step);
   const fields = stepFields(step);
   const readers: Array<{ f: FieldDef; read: ReturnType<typeof inputFor>["read"]; err: HTMLElement }> = [];
+  const gate = consentOn() ? null : consentPrompt(lang);
   const form = h("form", { novalidate: true });
-  const msg = h("p", { class: "ok-msg", role: "status" });
+  const msg = h("p", { class: "err", role: "alert" });
   for (const f of fields) {
-    const ip = inputFor(f, lang, a[f.id]);
+    const ip = inputFor(f, lang, prefill[f.id]);
     const err = h("p", { class: "err", role: "alert" });
     readers.push({ f, read: ip.read, err });
     form.append(h("div", { class: "field", "data-field": f.id },
@@ -937,15 +960,15 @@ export function intake(stepParam: string | undefined): HTMLElement {
       else if (v) out[r.f.id] = v;
     }
     if (bad) return; // nothing is saved when any field is rejected
-    saveAnswers(step, out);
+    if (!saveAnswers(step, out)) { msg.textContent = saveBlockedText(lang); return; } // no consent: nothing saved
     const nextIdx = idx + 1;
     location.hash = nextIdx < steps.length ? `#/diary/intake/${steps[nextIdx]}` : "#/diary";
   });
   form.append(h("button", { class: "btn", type: "submit" }, idx === steps.length - 1 ? t("intake.finish", lang) : t("intake.next", lang)));
   return h("main", { class: "scr scr-intake" },
     link("#/diary", "crumb", `← ${t("intake.back", lang)}`), h("h1", { class: "sr-only" }, t("diary.title", lang)),
-    h("div", { class: "top", style: "margin-top:8px" }, h("span", {}, t("intake.step", lang, { n: num(idx + 1, lang), total: num(steps.length, lang) })), demoBadge(lang)),
-    h("p", { class: "muted" }, t("intake.demoNote", lang)),
+    h("div", { class: "top", style: "margin-top:8px" }, h("span", {}, t("intake.step", lang, { n: num(idx + 1, lang), total: num(steps.length, lang) })), consentOn() ? nsTag("real", lang) : null),
+    consentOn() ? h("p", { class: "muted" }, t("entry.real.note", lang)) : gate,
     form, msg,
     h("p", { class: "muted" }, t("intake.skipHint", lang)),
     disclaimers(lang, ["noGuarantee"]));

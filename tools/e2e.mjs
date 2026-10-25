@@ -29,14 +29,22 @@ const err = await page.textContent("[data-field='skill.name'] .err");
 const saved = await idb(page);
 check("TM-TST-034", "secret typed into a free-text field is rejected and nothing saved", !!err && saved.length === 0, err ?? "");
 
-// valid save lands only in demo namespace, blank stays blank (never zero)
+// D-B: without consent a valid entry saves nothing and shows the consent prompt
+await page.fill("#f-skill\\.name", "Bookkeeping");
+await page.click("button[type=submit]"); await page.waitForTimeout(200);
+const noConsent = await idb(page);
+check("TM-TST-143", "without consent a valid entry saves nothing and shows the prompt", noConsent.length === 0 && (await page.locator("[data-consent-prompt]").count()) === 1);
+// the owner ticks 'I understand' on More > Demo & real data, then the same entry saves as real
+await page.goto("http://localhost:4174/#/more/data"); await page.waitForSelector("#consent-tick");
+await page.check("#consent-tick"); await page.click("[data-act=consent]"); await page.waitForTimeout(150);
+await page.goto("http://localhost:4174/#/diary/intake/3"); await page.waitForSelector("main");
 await page.fill("#f-skill\\.name", "Bookkeeping");
 await page.click("button[type=submit]");
 await page.waitForFunction(() => location.hash.includes("/intake/4"));
 await page.waitForTimeout(300);
 const rows = await idb(page);
 const vals = rows.length ? rows[0].values : {};
-check("TM-TST-143", "saved intake is in demo namespace only, labelled DEMO", rows.length === 1 && rows.every((r) => r.ns === "demo") && vals["skill.name"]?.label === "DEMO");
+check("TM-TST-143", "after consent the saved intake is in real namespace only, labelled FACT", rows.length === 1 && rows.every((r) => r.ns === "real") && vals["skill.name"]?.label === "FACT");
 check("TM-TST-021", "blank skill level/evidence stay unanswered (not 0)", vals["skill.level"] === undefined && vals["skill.evidence"] === undefined);
 
 // unknown number stays an unknown state
@@ -48,9 +56,9 @@ await page.waitForTimeout(300);
 const unk = (await idb(page)).find((r) => r.id === "intake-constraint").values["constraint.hours_per_week"];
 check("TM-TST-021", "‘don't know’ hours saved as unknown state, not 0", unk.state === "unknown" && unk.value === undefined);
 
-// real namespace untouched
-const realKeys = (await idb(page)).filter((r) => r.ns === "real");
-check("TM-TST-143", "real namespace still empty after demo entry", realKeys.length === 0);
+// demo namespace untouched by entry forms
+const demoKeys = (await idb(page)).filter((r) => r.ns === "demo");
+check("TM-TST-143", "demo namespace stays empty: entries go to real after consent", demoKeys.length === 0);
 
 // in-app suggestions (G4 preview): nothing leaves before the click; cards fill the field
 await page.evaluate(() => localStorage.setItem("tm:ui:lang", "en"));
@@ -183,7 +191,7 @@ check("G3-REWARD", "finishing a task opens the picture and adds exactly one star
 // data survives a full reload (IndexedDB)
 await page.reload(); await page.waitForSelector("main");
 const afterReload = await idb(page);
-check("G2-PERSIST", "demo entries survive reload via IndexedDB", afterReload.some((r) => r.id === "intake-skill"));
+check("G2-PERSIST", "real entries survive reload via IndexedDB", afterReload.some((r) => r.id === "intake-skill" && r.ns === "real"));
 const ls = await page.evaluate(() => Object.keys(localStorage).filter((k) => k.startsWith("tm:demo:") || k.startsWith("tm:real:")));
 check("G2-PERSIST", "records are not duplicated in localStorage", ls.length === 0);
 // install readiness

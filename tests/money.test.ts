@@ -2,7 +2,8 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { financeFrom } from "../src/core/financeInputs";
 import { netWorth, monthlyCashFlow } from "../src/core/finance";
 import { render } from "../src/app";
-import { store } from "../src/ui/state";
+import { consentKv, store } from "../src/ui/state";
+import { grantConsent } from "../src/core/consent";
 import type { FieldValue, TMRecord } from "../src/core/types";
 
 const v = (x: unknown): FieldValue => ({ state: "value", value: x, label: "DEMO" });
@@ -22,7 +23,7 @@ describe("TM-TST-021/022/023 money inputs", () => {
 });
 
 describe("money screen", () => {
-  beforeEach(() => { localStorage.clear(); store.demo.clear(); document.body.innerHTML = '<div id="app"></div>'; localStorage.setItem("tm:ui:lang", "en"); });
+  beforeEach(() => { localStorage.clear(); store.demo.clear(); store.real.clear(); document.body.innerHTML = '<div id="app"></div>'; localStorage.setItem("tm:ui:lang", "en"); grantConsent(consentKv, "2026-10-25T00:00:00.000Z"); });
   const go = (h: string) => { location.hash = h; render(); };
   it("empty start shows nothing invented", () => {
     go("#/diary/money");
@@ -49,6 +50,6 @@ describe("money screen", () => {
     go("#/diary/money");
     (document.getElementById("mf-name") as HTMLInputElement).value = "Rent";
     document.querySelector("form[data-form=money]")!.dispatchEvent(new Event("submit", { cancelable: true }));
-    const r = store.demo.list().find((x) => x.entity === "finance_item")!; expect(r.values["finance.amount"]).toEqual({ state: "unknown" });
+    const r = store.real.list().find((x) => x.entity === "finance_item")!; expect(r.values["finance.amount"]).toEqual({ state: "unknown" });
   });
 });

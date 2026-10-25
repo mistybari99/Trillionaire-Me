@@ -8,6 +8,7 @@ import { consentKv, prefs, store } from "./state";
 import { readConsent } from "../core/consent";
 import { disclaimers, num } from "./components";
 import { SYSTEMS } from "../library/systemList";
+import { allRecs } from "./entry";
 import { addSystem, isSystemAdded, removeSystem, systemText, type SystemTemplate } from "../core/systems";
 import { RULES, RULE_IDS, evaluateRules, ruleOn, type RuleInput, type Suggestion } from "../core/rules";
 import type { Habit, Log } from "../core/habits";
@@ -72,9 +73,9 @@ export function systemsLibraryScreen(): HTMLElement {
     disclaimers(lang, ["noGuarantee"]));
 }
 
-/** Rule inputs read from the Demo records the rest of the app reads. Nothing here is written. */
+/** Rule inputs read from the Demo and real records the rest of the app reads. Nothing here is written. */
 export function ruleInput(now = Date.now()): RuleInput {
-  const recs = store.demo.list();
+  const recs = allRecs(); // demo and real together; rules only read, never write
   const g = (r: TMRecord, k: string) => (r.values[k] as { value?: unknown } | undefined)?.value;
   const habits: Habit[] = recs.filter((r) => r.entity === "habit" && r.values["habit.title"]?.state === "value").sort((a, b) => a.id.localeCompare(b.id)).map((r) => ({
     id: r.id, title: String(g(r, "habit.title")), days: String(g(r, "habit.days") ?? "0,1,2,3,4,5,6").split(",").filter((x) => x !== "").map(Number),

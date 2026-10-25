@@ -1,6 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { render } from "../src/app";
-import { store } from "../src/ui/state";
+import { consentKv, store } from "../src/ui/state";
+import { grantConsent } from "../src/core/consent";
 import type { FieldValue, TMRecord } from "../src/core/types";
 
 const v = (x: unknown): FieldValue => ({ state: "value", value: x, label: "DEMO" });
@@ -66,9 +67,10 @@ describe("TM-TST-148 habits screen", () => {
     expect(document.querySelector("[data-habit-card]")?.textContent ?? "".toLowerCase()).not.toMatch(/streak|fail|broken|lost|shame|best/);
   });
   it("a secret in the habit name is rejected; adding one habit works", () => {
+    grantConsent(consentKv, "2026-10-25T00:00:00.000Z");
     go("#/habits"); const f = document.querySelector("form[data-form=habit]")!;
-    (document.getElementById("hb-name") as HTMLInputElement).value = "password: abc12345"; f.dispatchEvent(new Event("submit", { cancelable: true })); expect(store.demo.list().some((r) => r.entity === "habit")).toBe(false);
-    (document.getElementById("hb-name") as HTMLInputElement).value = "Walk 10 minutes"; f.dispatchEvent(new Event("submit", { cancelable: true })); expect(store.demo.list().filter((r) => r.entity === "habit")).toHaveLength(1);
+    (document.getElementById("hb-name") as HTMLInputElement).value = "password: abc12345"; f.dispatchEvent(new Event("submit", { cancelable: true })); expect(store.real.list().some((r) => r.entity === "habit")).toBe(false);
+    (document.getElementById("hb-name") as HTMLInputElement).value = "Walk 10 minutes"; f.dispatchEvent(new Event("submit", { cancelable: true })); expect(store.real.list().filter((r) => r.entity === "habit")).toHaveLength(1);
   });
 });
 

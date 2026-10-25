@@ -1,7 +1,8 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { netWorth, monthlyCashFlow, cashFlow90Days, runwayMonths, type FinItem } from "../src/core/finance";
 import { render } from "../src/app";
-import { store } from "../src/ui/state";
+import { consentKv, store } from "../src/ui/state";
+import { grantConsent } from "../src/core/consent";
 import type { FieldValue } from "../src/core/types";
 
 const v = (x: number): FieldValue => ({ state: "value", value: x, label: "DEMO" });
@@ -32,7 +33,7 @@ describe("TM-TST-006 finance outputs carry a label", () => {
 });
 
 describe("finance screen labels (bn and en)", () => {
-  beforeEach(() => { localStorage.clear(); store.demo.clear(); document.body.innerHTML = '<div id="app"></div>'; });
+  beforeEach(() => { localStorage.clear(); store.demo.clear(); store.real.clear(); document.body.innerHTML = '<div id="app"></div>'; grantConsent(consentKv, "2026-10-25T00:00:00.000Z"); });
   const go = (h: string) => { location.hash = h; render(); };
   const addAmount = (name: string, amount: string) => {
     go("#/diary/money");
@@ -40,13 +41,13 @@ describe("finance screen labels (bn and en)", () => {
     (document.getElementById("mf-amount") as HTMLInputElement).value = amount;
     document.querySelector("form[data-form=money]")!.dispatchEvent(new Event("submit", { cancelable: true }));
   };
-  it("demo amounts stay DEMO (FACT waits for real data, D-B); totals are ESTIMATE, each with a visible chip", () => {
+  it("typed amounts are real and FACT after consent (D-B); totals are ESTIMATE, each with a visible chip", () => {
     localStorage.setItem("tm:ui:lang", "en");
     addAmount("Savings", "5000");
     go("#/diary/money");
     const row = document.querySelector("[data-fin] [data-value]")!;
-    expect(row.getAttribute("data-label")).toBe("DEMO");
-    expect(row.querySelector(".chip")!.textContent).toBe("Demo");
+    expect(row.getAttribute("data-label")).toBe("FACT");
+    expect(row.querySelector(".chip")!.textContent).toBe("Fact");
     const total = document.querySelector("[data-scope=personal] [data-value]")!;
     expect(total.getAttribute("data-label")).toBe("ESTIMATE");
     expect(total.querySelector(".chip")!.textContent).toBe("Estimate");

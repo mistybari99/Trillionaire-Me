@@ -2,7 +2,8 @@
 import { beforeEach, describe, expect, it } from "vitest";
 import { schedule, type PlanInput } from "../src/core/planner";
 import { render } from "../src/app";
-import { store } from "../src/ui/state";
+import { consentKv, store } from "../src/ui/state";
+import { grantConsent } from "../src/core/consent";
 
 const base = (over: Partial<PlanInput>): PlanInput => ({ weeklyFreeMinutes: 600, blocked: [], tasks: [], mode: "normal", startDay: 0, ...over });
 const abs = (p: { day: number; start: number }) => p.day * 1440 + p.start;
@@ -54,17 +55,17 @@ describe("dependency: a task waits for its prerequisite", () => {
 });
 
 describe("dependency on the Plan screen", () => {
-  beforeEach(() => { localStorage.clear(); store.demo.clear(); document.body.innerHTML = '<div id="app"></div>'; localStorage.setItem("tm:ui:lang", "en"); });
+  beforeEach(() => { localStorage.clear(); store.demo.clear(); store.real.clear(); document.body.innerHTML = '<div id="app"></div>'; localStorage.setItem("tm:ui:lang", "en"); grantConsent(consentKv, "2026-10-25T00:00:00.000Z"); });
   it("saving a task with 'do this after' stores the link and shows it on the row", () => {
     location.hash = "#/diary/plan"; render();
     const setv = (id: string, v: string) => { (document.getElementById(id) as HTMLInputElement | HTMLSelectElement).value = v; };
     setv("pt-title", "Buy stock"); setv("pt-min", "30");
     document.querySelector<HTMLFormElement>("form[data-form=task]")!.dispatchEvent(new Event("submit", { cancelable: true }));
-    const first = store.demo.list().find((r) => r.entity === "task")!;
+    const first = store.real.list().find((r) => r.entity === "task")!;
     location.hash = "#/diary/plan"; render();
     setv("pt-title", "Sell stock"); setv("pt-min", "20"); setv("pt-after", first.id);
     document.querySelector<HTMLFormElement>("form[data-form=task]")!.dispatchEvent(new Event("submit", { cancelable: true }));
-    const second = store.demo.list().filter((r) => r.entity === "task").find((r) => r.id !== first.id)!;
+    const second = store.real.list().filter((r) => r.entity === "task").find((r) => r.id !== first.id)!;
     expect(second.links).toEqual({ after: first.id });
     render();
     expect(document.querySelector(`[data-after="${first.id}"]`)!.textContent).toMatch(/After: Buy stock/);
