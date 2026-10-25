@@ -10,11 +10,11 @@ If two files conflict: Spec > Register > Brief > Preview. Fix the lower one and 
 
 ## 2. Decisions already made (do NOT ask again)
 - Stack: PWA-first, strict TypeScript, pure core library (no UI/network imports) + adapters; IndexedDB (Dexie); small UI framework + CSS variables. Switch to native/Capacitor only if G2 device tests fail; record why. (D-A approved)
-- Look: "Ink & Paper", tokens in the Preview. Phone first (360 px), Bangla-first, dark mode follows phone. (D-E approved)
+- Look (D-E, owner update 25 Oct 2026): default is **Light / Colorful / Futuristic**. Earlier "Ink & Paper" is superseded for the default look; the token set in the Preview is a reference only. Phone first (360 px), Bangla-first, dark mode follows phone. Owner approved this change in the Claude Code session; see DECISIONS_LOG.md.
 - Fonts bundled on device, zero network calls (Google Fonts only in the preview file).
 - User-facing journey stages are named **Stage A–H**; build gates are **G0–G8**. Never mix the two names. Home shows Stage A as "১/৮" at start.
 - Bangla glossary: ship the draft marked "যাচাই হয়নি" (unreviewed) in-app. Reviewer sign-off is a later owner task (TM-TST-161).
-- Real-data namespace stays closed until owner approves D-B. Demo data only, clearly labelled.
+- Real-data namespace: D-B APPROVED by owner (25 Oct 2026). Real data stays on the device only, behind a per-device consent tick; nothing leaves the device. Demo data stays clearly labelled DEMO. See DECISIONS_LOG.md (D-B entry) for scope and undo steps.
 - No AI, no paid service, no external integration, no cloud until the gate that needs it AND owner approves cost (D-C). No purchases, ever, without asking.
 - Do not touch any existing business system/ERP/credentials of the owner.
 - Deen: no piety score/rank/streak-shame, no fatwa, private by default, no scripture text until D-D resolved.

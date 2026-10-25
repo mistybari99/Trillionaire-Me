@@ -231,3 +231,9 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 - Not changed (still demo-only, next step or later): risk, venture, team, north star (Plan screens), flashcards, prayer-place, stuck-helper tasks, stage pass evidence, prayer and fast marks. Their reads stay demo-only too. The ready-system library already writes real after consent (unchanged).
 - How to undo: in `src/ui/screens.ts` replace `saveTyped(...)` with `store.demo.put(...)` at each form and drop the `consentOn()` gate lines; `allRecs()` can go back to `store.demo.list()`. Delete `src/ui/entry.ts`.
 - Proof: `tests/real_entry.test.ts` (12 tests: no-consent blocks each form, real task on Plan and Today, real habit and tick, Habits and Plan show both tags, no record mixes DEMO and real, money mix note, real goal on horizon, demo answer not pre-filled, real journey note, clear-all removes only real). Updated existing tests to grant consent first (goal form, money, finance labels, habit, dependency). `tools/e2e.mjs`: 45 checks, 0 FAIL; the intake flow now ticks consent first, and checks no-consent save and real labels. Full `npx vitest run` 619/619 in 45 files; `npx tsc --noEmit` clean; `npx vite build` ok.
+
+## D-E update and D-B approval (owner, 25 Oct 2026, Claude Code session)
+- CLAUDE.md §2 now records: look default = Light / Colorful / Futuristic (replaces Ink & Paper as default; Preview tokens are reference only).
+- D-B approved: real personal data on device only, per-device consent tick, nothing sent off device.
+- Scope of this entry: documentation of the owner's instruction. Visual default change itself is NOT yet applied to the app; it needs its own build step (owner to confirm the direction before code changes).
+- Undo: restore the two lines in CLAUDE.md §2 from git history (commit before this entry).
