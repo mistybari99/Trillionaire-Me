@@ -770,8 +770,9 @@ function cardsFromStore(): Cards.Card[] {
   return allRecs().filter((r) => r.entity === "card" && r.values["card.front"]?.state === "value").sort((a, b) => a.id.localeCompare(b.id))
     .map((r) => ({ id: r.id, front: String(g(r, "card.front")), back: String(g(r, "card.back") ?? ""), box: Number(g(r, "card.box") ?? 1), due: String(g(r, "card.due") ?? Habits.todayIso()) }));
 }
-const putCard = (c: Cards.Card) => putMode({ id: c.id, entity: "card", ns: "demo", ownerId: "demo-user", schemaVersion: 1, createdAt: new Date().toISOString(),
-  values: { "card.front": { state: "value", value: c.front, label: "DEMO" }, "card.back": { state: "value", value: c.back, label: "DEMO" }, "card.box": { state: "value", value: c.box, label: "DEMO" }, "card.due": { state: "value", value: c.due, label: "DEMO" } } });
+/** Saves a card in the active mode (DEMO or FACT). False, and nothing saved, while real mode has no consent tick. */
+const putCard = (c: Cards.Card): boolean => saveTyped({ id: c.id, entity: "card", createdAt: new Date().toISOString(),
+  values: { "card.front": typed(c.front), "card.back": typed(c.back), "card.box": typed(c.box), "card.due": typed(c.due) } });
 
 export function cardsScreen(): HTMLElement {
   const lang = L(); const today = Habits.todayIso(); const all = cardsFromStore(); const queue = Cards.dueCards(all, today);
@@ -780,7 +781,7 @@ export function cardsScreen(): HTMLElement {
     if (i >= queue.length) { study.replaceChildren(h("p", { class: "ok-msg", "data-cards-done": "1" }, t("cards.done", lang))); return; }
     const c = queue[i]!; const ans = h("div", { class: "card", hidden: true, "data-answer": "1" }, h("p", {}, c.back));
     const reveal = h("button", { class: "btn", type: "button", "data-act": "card-show" }, t("cards.show", lang));
-    const grade = (knew: boolean) => h("button", { class: knew ? "btn" : "btn ghost", type: "button", "data-act": knew ? "card-knew" : "card-not", onclick: () => { putCard(Cards.review(c, knew, today)); showCard(i + 1); } }, t(knew ? "cards.knew" : "cards.notyet", lang));
+    const grade = (knew: boolean) => h("button", { class: knew ? "btn" : "btn ghost", type: "button", "data-act": knew ? "card-knew" : "card-not", onclick: () => { if (!putCard(Cards.review(c, knew, today))) { study.replaceChildren(h("p", { class: "err", role: "alert" }, saveBlockedText(lang))); return; } showCard(i + 1); } }, t(knew ? "cards.knew" : "cards.notyet", lang));
     const row = h("div", { hidden: true, "data-grade": "1" }, grade(true), grade(false));
     reveal.addEventListener("click", () => { ans.hidden = false; row.hidden = false; reveal.hidden = true; });
     study.replaceChildren(h("div", { class: "card", "data-card-front": c.id }, h("h2", { class: "card-h", }, c.front)), ans, reveal, row);
@@ -788,15 +789,16 @@ export function cardsScreen(): HTMLElement {
   const go = h("button", { class: "btn", type: "button", "data-act": "cards-study", onclick: () => showCard(0) }, t("cards.study", lang));
   const front = h("input", { id: "cd-front", type: "text", maxlength: "120", autocomplete: "off" }) as HTMLInputElement; const back = h("input", { id: "cd-back", type: "text", maxlength: "200", autocomplete: "off" }) as HTMLInputElement;
   const err = h("p", { class: "err", role: "alert" });
-  const form = h("form", { novalidate: true, "data-form": "card" }, h("label", { for: "cd-front" }, t("cards.front", lang)), front, h("label", { for: "cd-back" }, t("cards.back", lang)), back, err, h("button", { class: "btn", type: "submit" }, t("cards.save", lang)));
+  const form = h("form", { novalidate: true, "data-form": "card" }, consentOn() ? null : consentPrompt(lang), h("label", { for: "cd-front" }, t("cards.front", lang)), front, h("label", { for: "cd-back" }, t("cards.back", lang)), back, err, h("button", { class: "btn", type: "submit" }, t("cards.save", lang)));
   form.addEventListener("submit", (ev) => { ev.preventDefault(); err.textContent = ""; const f1 = front.value.trim(), b1 = back.value.trim(); if (!f1 || !b1) return;
     if (!checkFreeText(f1).ok || !checkFreeText(b1).ok) { err.textContent = t("intake.secretRejected", lang); return; }
-    putCard(Cards.newCard(`card-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 4)}`, f1, b1, today)); rerender(); });
+    if (!putCard(Cards.newCard(`card-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 4)}`, f1, b1, today))) { err.textContent = saveBlockedText(lang); return; }
+    rerender(); });
   const boxes = Cards.byBox(all);
   return h("main", {}, link("#/more/topics", "crumb", `← ${t("topics.title", lang)}`), h("h1", {}, t("cards.title", lang)), h("p", { class: "sub" }, t("cards.intro", lang)),
     all.length ? h("div", {}, h("p", { "data-cards-due": String(queue.length) }, valueEl(queue.length ? t("cards.due", lang, { n: num(queue.length, lang) }) : t("cards.none", lang), "INFERENCE", lang)), ...(queue.length ? [go] : []), study,
       h("h2", { class: "card-h", }, t("cards.boxes", lang)), h("div", { class: "seg", role: "img", "aria-label": boxes.join(", ") }, ...boxes.map((n, i) => h("span", { class: "tag" }, `${num(i + 1, lang)}: ${num(n, lang)}`)))) : h("p", { class: "muted" }, t("cards.empty", lang)),
-    h("h2", {}, t("cards.add", lang)), form, ...all.map((c) => h("div", { class: "card", "data-card": c.id }, h("div", { class: "row" }, h("span", {}, c.front), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0;min-height:44px", onclick: () => { store[activeNs()].delete(c.id); rerender(); } }, t("cards.remove", lang))))), disclaimers(lang));
+    h("h2", {}, t("cards.add", lang)), form, ...all.map((c) => h("div", { class: "card", "data-card": c.id }, h("div", { class: "row" }, h("span", {}, nsTag(activeNs(), lang), " ", c.front), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0;min-height:44px", onclick: () => { store[activeNs()].delete(c.id); rerender(); } }, t("cards.remove", lang))))), disclaimers(lang));
 }
 
 // ---- screens ----

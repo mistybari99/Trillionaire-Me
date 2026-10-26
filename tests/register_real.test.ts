@@ -219,4 +219,62 @@ describe("North Star (real data)", () => {
   });
 });
 
+describe("flashcards (real data)", () => {
+  it("no consent: prompt shown, nothing saved", () => {
+    go("#/cards");
+    expect(document.querySelector("form[data-form=card] [data-consent-prompt]")).not.toBeNull();
+    setv("cd-front", "Q"); setv("cd-back", "A"); send("form[data-form=card]");
+    expect(document.querySelector("form[data-form=card] .err")!.textContent).toMatch(/Nothing saved/);
+    expect(store.real.list()).toEqual([]); expect(store.demo.list()).toEqual([]);
+  });
+
+  describe("with consent", () => {
+    beforeEach(() => grantConsent(consentKv, NOW));
+
+    it("saves a real card (FACT, Real tag); a review updates the same real card and writes nothing to demo", () => {
+      go("#/cards");
+      setv("cd-front", "Question"); setv("cd-back", "Answer"); submit("form[data-form=card]");
+      const c = store.real.list().find((x) => x.entity === "card")!;
+      expect(c.ownerId).toBe("owner");
+      expect(c.values["card.front"]).toMatchObject({ value: "Question", label: "FACT" });
+      expect(document.querySelector(`[data-card='${c.id}'] [data-ns=real]`)).not.toBeNull();
+      tap("[data-act=cards-study]"); tap("[data-act=card-show]"); tap("[data-act=card-knew]");
+      const after = store.real.get(c.id)!;
+      expect(after.values["card.box"]).toMatchObject({ value: 2, label: "FACT" });
+      expect(store.real.list().filter((x) => x.entity === "card")).toHaveLength(1);
+      expect(store.demo.list()).toEqual([]);
+    });
+
+    it("demo cards are hidden in real mode and never counted with real ones", () => {
+      store.demo.put(demoRec("card-d1", "card", { "card.front": v("Demo Q"), "card.back": v("Demo A"), "card.box": v(1), "card.due": v("2020-01-01") }));
+      go("#/cards");
+      expect(document.body.textContent).not.toMatch(/Demo Q/);
+      expect(document.querySelector("[data-cards-due]")).toBeNull();
+      setv("cd-front", "Real Q"); setv("cd-back", "Real A"); submit("form[data-form=card]");
+      expect(document.querySelector("[data-cards-due]")!.getAttribute("data-cards-due")).toBe("1");
+      expect(labels(store.demo.list()).every((l) => l === "DEMO")).toBe(true);
+      expect(labels(store.real.list()).every((l) => l === "FACT")).toBe(true);
+    });
+
+    it("a review after the consent was withdrawn saves nothing and says so", () => {
+      go("#/cards");
+      setv("cd-front", "Question"); setv("cd-back", "Answer"); submit("form[data-form=card]");
+      const c = store.real.list().find((x) => x.entity === "card")!;
+      tap("[data-act=cards-study]"); tap("[data-act=card-show]");
+      revokeConsent(consentKv);
+      tap("[data-act=card-knew]");
+      expect(document.body.textContent).toMatch(/Nothing saved/);
+      expect(store.real.get(c.id)!.values["card.box"]).toMatchObject({ value: 1 });
+    });
+
+    it("clear-all removes the real cards and keeps demo", () => {
+      store.demo.put(demoRec("card-d2", "card", { "card.front": v("Keep"), "card.back": v("demo") }));
+      go("#/cards"); setv("cd-front", "Remove"); setv("cd-back", "me"); submit("form[data-form=card]");
+      clearAll();
+      expect(store.real.list()).toEqual([]);
+      expect(store.demo.list().map((r) => r.id)).toEqual(["card-d2"]);
+    });
+  });
+});
+
 void prefs;

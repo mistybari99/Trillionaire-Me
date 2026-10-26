@@ -13,7 +13,7 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 ### Block 2 — Real-data ready forms (D-B approved, device only)
 - [x] Risk register form (real namespace, consent tick, clear-all covers it).
 - [x] Venture form, Team form, North Star form.
-- [ ] Flashcards and prayer-place forms.
+- [ ] Flashcards [x] and prayer-place forms.
 - [ ] Each: demo/real guards, Unknown not 0, no mixing in totals, tests.
 
 ### Block 3 — Deen features (private, no score, no scripture text)
