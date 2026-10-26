@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Trillionaire Me — 3D Emblems</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.184.0/build/three.module.js",
+    "three/addons/controls/OrbitControls.js": "https://unpkg.com/three@0.184.0/examples/jsm/controls/OrbitControls.js",
+    "three/addons/exporters/OBJExporter.js": "https://unpkg.com/three@0.184.0/examples/jsm/exporters/OBJExporter.js",
+    "three/addons/exporters/GLTFExporter.js": "https://unpkg.com/three@0.184.0/examples/jsm/exporters/GLTFExporter.js"
+  },
+  "integrity": {
+    "https://unpkg.com/three@0.184.0/build/three.module.js": "sha384-8FCZ1eVO6it4+pbec2aDtnTrwjWXZLJRC+MAGCIPDgsYnUrl/E0A2YlF8ioMKI/J",
+    "https://unpkg.com/three@0.184.0/build/three.core.js": "sha384-dw2ooPewaEIrAgl6oFDBmmBWCE9oW9LxRGcfwZ0hLvEprzo202wXl7vCYHRlSnOT",
+    "https://unpkg.com/three@0.184.0/examples/jsm/controls/OrbitControls.js": "sha384-4rziNxOBZKQ69i+w+f89KJ55TCYquwchVbByQwmaOeIOXdOU2PLDn3kOfXHwIJC9",
+    "https://unpkg.com/three@0.184.0/examples/jsm/exporters/OBJExporter.js": "sha384-nbwtoZENJD3Vq+ACK0CuGQdPMuDWHkamC2KJD70EV5nfg6jQjfppKOea07YJN+N3",
+    "https://unpkg.com/three@0.184.0/examples/jsm/exporters/GLTFExporter.js": "sha384-VofkvpG6HERhFCYbsUOHeNXBCqID2nfqkQqnVzE1jc/oPcz+qJ13ADdXH08hE+cQ"
+  }
+}
+</script>
+<style>
+  html,body{margin:0;height:100%;background:#05070b;font-family:'Jost',sans-serif;color:#F6F1E7}
+  three-d-stage:not(:defined){visibility:hidden}
+  #ui{position:fixed;left:32px;top:28px;z-index:5;display:flex;flex-direction:column;gap:14px;width:260px;max-height:calc(100vh - 56px);overflow-y:auto;overflow-x:hidden;scrollbar-width:thin}
+  #ui h1{margin:0;font-weight:300;font-size:13px;letter-spacing:.32em;text-transform:uppercase;color:#C9A961}
+  #ui p{margin:0;font-size:13px;line-height:1.5;color:#F6F1E7;opacity:.72;min-height:60px}
+  .row{display:flex;flex-direction:column;gap:6px}
+  button.b{all:unset;box-sizing:border-box;cursor:pointer;padding:9px 12px;font-size:13px;letter-spacing:.04em;border:1px solid rgba(201,169,97,.28);color:#F6F1E7;display:flex;gap:10px}
+  button.b span{color:#C9A961;width:14px}
+  button.b:hover{border-color:#C9A961;background:rgba(201,169,97,.08)}
+  button.b.on{border-color:#C9A961;background:rgba(201,169,97,.16)}
+  .seg{display:flex;gap:6px}
+  .seg button.b{flex:1 1 0;min-width:0;justify-content:center;white-space:nowrap;padding:9px 6px}
+  #mat{display:none}
+  .tw{display:flex;flex-direction:column;gap:12px;border-top:1px solid rgba(201,169,97,.2);padding-top:16px}
+  .tw label{display:flex;flex-direction:column;gap:6px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#C9A961}
+  .tw input[type=range]{accent-color:#C9A961;width:100%}
+  .tw select{all:unset;box-sizing:border-box;padding:8px 10px;border:1px solid rgba(201,169,97,.28);color:#F6F1E7;font-size:13px;letter-spacing:.04em}
+  .tw select option{background:#0E1420}
+</style>
+</head>
+<body>
+<div id="ui">
+  <h1>Trillionaire Me</h1>
+  <div class="row" id="list"></div>
+  <p id="desc"></p>
+  <div class="seg"><button class="b on" data-v="front">Hero</button><button class="b" data-v="tq">Three-quarter</button></div>
+  <div class="seg" id="mat"><button class="b on" data-m="gold">Gold</button><button class="b" data-m="obs">Obsidian</button></div>
+  <div class="tw">
+    <label>Gold tone<select id="tone"><option value="#d2b06a">Champagne</option><option value="#e8d49a">Pale gold</option><option value="#b38f4a">Deep gold</option></select></label>
+    <label>Exposure<input type="range" id="exp" min="0.6" max="1.6" step="0.05" value="1.05"></label>
+    <label>Emerald glow<input type="range" id="glow" min="0" max="3" step="0.1" value="1.1"></label>
+    <label>Ground shadow<input type="range" id="shd" min="0" max="1" step="0.05" value="0.6"></label>
+  </div>
+</div>
+<three-d-stage name="trillionaire-me-emblem" background="radial-gradient(ellipse at 50% 38%, #1d2331 0%, #0E1420 42%, #05070b 100%)"></three-d-stage>
+<script src="./three-d-stage.js"></script>
+<script type="module">
+const stage = document.querySelector('three-d-stage');
+const { THREE } = await stage.ready;
+const PI = Math.PI;
+
+/* ---------- studio environment (procedural softboxes) ---------- */
+{
+  const c = document.createElement('canvas'); c.width = 2048; c.height = 1024;
+  const g = c.getContext('2d');
+  const grd = g.createLinearGradient(0, 0, 0, 1024);
+  grd.addColorStop(0, '#14171d'); grd.addColorStop(.5, '#0a0c10'); grd.addColorStop(1, '#030405');
+  g.fillStyle = grd; g.fillRect(0, 0, 2048, 1024);
+  const box = (x, y, w, h, col) => { g.fillStyle = col; g.fillRect(x, y, w, h); };
+  box(250, 150, 360, 260, '#fff6e6');      // key
+  box(1450, 120, 90, 520, '#ffe9c2');      // warm strip
+  box(900, 40, 420, 90, '#ffffff');        // overhead
+  box(1750, 220, 60, 400, '#cfd9ff');      // cool rim
+  box(40, 300, 50, 360, '#fff0d6');
+  box(1000, 700, 500, 40, '#3a2f1c');      // floor bounce
+  const t = new THREE.CanvasTexture(c); t.mapping = THREE.EquirectangularReflectionMapping; t.colorSpace = THREE.SRGBColorSpace;
+  const pm = new THREE.PMREMGenerator(stage._renderer);
+  stage._scene.environment = pm.fromEquirectangular(t).texture;
+  stage._scene.environmentIntensity = 1.5;
+  stage._renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  stage._renderer.toneMappingExposure = 1.05;
+  stage._scene.traverse(o => {
+    if (o.isHemisphereLight) o.intensity = .12;
+    if (o.isDirectionalLight && o.castShadow) { o.intensity = 2.0; o.color.set(0xfff0d8); }
+    else if (o.isDirectionalLight) o.intensity = .25;
+  });
+  stage._ground.material.opacity = .6;
+}
+
+/* ---------- materials ---------- */
+const mk = (name, color, metalness, roughness, extra = {}) => new THREE.MeshStandardMaterial({ name, color, metalness, roughness, ...extra });
+const gold = mk('brushed_champagne_gold', 0xd2b06a, 1, .36);
+const satin = mk('satin_champagne_gold', 0xb89a58, 1, .5);
+const obsidian = mk('polished_obsidian', 0x07080b, .25, .07);
+const titanium = mk('dark_titanium', 0x2a2d33, 1, .38);
+const emerald = mk('emerald', 0x0a5a42, .5, .28);
+const glow = mk('emerald_glow', 0x0b5d44, .3, .4, { emissive: 0x16b583, emissiveIntensity: 1.1 });
+const matteObs = mk('matte_obsidian', 0x0c0d10, .1, .55);
+
+/* ---------- helpers ---------- */
+const place = (m, name, x = 0, y = 0, z = 0) => { m.name = name; m.position.set(x, y, z); return m; };
+function slab(w, h, d, b, mat, name, x, y, z) {
+  const s = new THREE.Shape(); const hw = w / 2 - b, hh = h / 2 - b;
+  s.moveTo(-hw, -hh); s.lineTo(hw, -hh); s.lineTo(hw, hh); s.lineTo(-hw, hh); s.closePath();
+  const g = new THREE.ExtrudeGeometry(s, { depth: d - 2 * b, bevelEnabled: true, bevelSize: b, bevelThickness: b, bevelSegments: 2, curveSegments: 8 });
+  g.translate(0, 0, -(d - 2 * b) / 2);
+  return place(new THREE.Mesh(g, mat), name, x, y, z);
+}
+function poly(pts, d, b, mat, name, x = 0, y = 0, z = 0, holes = []) {
+  const s = new THREE.Shape(pts.map(p => new THREE.Vector2(p[0], p[1])));
+  holes.forEach(h => s.holes.push(new THREE.Path(h.map(p => new THREE.Vector2(p[0], p[1])))));
+  const g = new THREE.ExtrudeGeometry(s, { depth: d - 2 * b, bevelEnabled: true, bevelSize: b, bevelThickness: b, bevelSegments: 2 });
+  g.translate(0, 0, -(d - 2 * b) / 2);
+  return place(new THREE.Mesh(g, mat), name, x, y, z);
+}
+const rect = (x0, y0, x1, y1) => [[x0, y0], [x1, y0], [x1, y1], [x0, y1]];
+function blade(x1, y1, x2, y2, w, d, b, mat, name) {
+  const L = Math.hypot(x2 - x1, y2 - y1), m = slab(w, L, d, b, mat, name, (x1 + x2) / 2, (y1 + y2) / 2, 0);
+  m.rotation.z = Math.atan2(-(x2 - x1), y2 - y1); return m;
+}
+function band(R, t, phi, mat, name) {
+  const pts = [], n = 24;
+  for (let i = 0; i <= n; i++) { const a = -phi + 2 * phi * i / n; pts.push(new THREE.Vector2(R * Math.cos(a), R * Math.sin(a))); }
+  for (let i = n; i >= 0; i--) { const a = -phi + 2 * phi * i / n; pts.push(new THREE.Vector2((R - t) * Math.cos(a), (R - t) * Math.sin(a))); }
+  pts.push(pts[0].clone());
+  return place(new THREE.Mesh(new THREE.LatheGeometry(pts, 128), mat), name);
+}
+const group = n => { const g = new THREE.Group(); g.name = n; return g; };
+
+/* ---------- 1  Monolith ---------- */
+function emblem1() {
+  const g = group('monolith');
+  g.add(slab(1.9, .14, 1.2, .02, obsidian, 'foundation_lower', 0, .07, 0));
+  g.add(slab(1.4, .1, .9, .02, obsidian, 'foundation_upper', 0, .19, 0));
+  const y0 = .24;
+  g.add(slab(.2, 1.35, .3, .015, gold, 'M_stem_left', -.58, y0 + .675, 0));
+  g.add(slab(.2, 1.35, .3, .015, gold, 'M_stem_right', .58, y0 + .675, 0));
+  g.add(blade(-.58, y0 + 1.35, -.04, y0 + .6, .17, .3, .015, gold, 'M_diagonal_left'));
+  g.add(blade(.58, y0 + 1.35, .04, y0 + .6, .17, .3, .015, gold, 'M_diagonal_right'));
+  g.add(slab(.3, 1.95, .38, .02, obsidian, 'monolith_pillar', 0, y0 + .975, 0));
+  g.add(slab(1.36, .12, .3, .015, gold, 'T_bar', 0, y0 + 1.95 + .08, 0));
+  g.add(slab(.3, .02, .38, .005, gold, 'pillar_inlay', 0, y0 + 1.95 + .001, 0));
+  return g;
+}
+
+/* ---------- 2  Interlocking system ---------- */
+function emblem2() {
+  const g = group('system'); const cy = .86;
+  g.add(place(new THREE.Mesh(new THREE.CylinderGeometry(.62, .68, .1, 96), obsidian), 'base', 0, .05, 0));
+  g.add(place(new THREE.Mesh(new THREE.CylinderGeometry(.5, .5, .04, 96), titanium), 'base_inlay', 0, .11, 0));
+  const ring = (r, t, mat, name, rx, ry, rz) => {
+    const m = place(new THREE.Mesh(new THREE.TorusGeometry(r, t, 4, 128), mat), name, 0, cy, 0);
+    m.rotation.set(rx, ry, rz); return m;
+  };
+  const geo = r => new THREE.OctahedronGeometry(r);
+  g.add(ring(.56, .055, gold, 'ring_goals_gold', 0, 0, 0));
+  g.add(ring(.46, .055, titanium, 'ring_finance_titanium', 0, PI / 2, 0));
+  g.add(ring(.36, .05, gold, 'ring_time_gold', PI / 2, 0, 0));
+  g.add(place(new THREE.Mesh(geo(.17), glow), 'core', 0, cy, 0));
+  [[.56, 0, 0], [-.56, 0, 0], [0, 0, .46], [0, 0, -.46], [0, .36, 0], [0, -.36, 0]].forEach((p, i) =>
+    g.add(place(new THREE.Mesh(geo(.045), emerald), 'node_' + i, p[0], cy + p[1], p[2])));
+  return g;
+}
+
+/* ---------- 3  Gateway ---------- */
+function emblem3() {
+  const g = group('gateway');
+  g.add(slab(2.0, .1, .95, .02, obsidian, 'plinth', 0, .05, 0));
+  const y0 = .1;
+  g.add(poly(rect(-.78, 0, .78, 2.1), .52, .02, obsidian, 'portal_frame', 0, y0, 0, [rect(-.27, .5, .27, 1.72).reverse()]));
+  g.add(poly(rect(-.29, .48, .29, 1.74), .3, .01, gold, 'portal_liner', 0, y0, -.1, [rect(-.21, .56, .21, 1.66).reverse()]));
+  g.add(slab(1.56, .035, .535, .008, gold, 'lintel_inlay', 0, y0 + 1.9, 0));
+  g.add(slab(1.56, .035, .535, .008, gold, 'sill_inlay', 0, y0 + .3, 0));
+  const c = document.createElement('canvas'); c.width = 64; c.height = 256;
+  const x = c.getContext('2d'), gr = x.createLinearGradient(0, 0, 0, 256);
+  gr.addColorStop(0, '#07090d'); gr.addColorStop(.35, '#2a2418'); gr.addColorStop(.58, '#f3dca0'); gr.addColorStop(.6, '#fff3d0');
+  gr.addColorStop(.62, '#6e5a30'); gr.addColorStop(.7, '#0c0c0d'); gr.addColorStop(1, '#030405');
+  x.fillStyle = gr; x.fillRect(0, 0, 64, 256);
+  const tx = new THREE.CanvasTexture(c); tx.colorSpace = THREE.SRGBColorSpace;
+  const hz = new THREE.MeshBasicMaterial({ name: 'luminous_horizon', map: tx, toneMapped: false, side: THREE.DoubleSide });
+  g.add(place(new THREE.Mesh(new THREE.PlaneGeometry(.44, 1.1), hz), 'horizon', 0, y0 + 1.11, -.22));
+  return g;
+}
+
+/* ---------- 4  Banded sphere ---------- */
+function emblem4() {
+  const g = group('sphere'); const cy = .78;
+  g.add(place(new THREE.Mesh(new THREE.CylinderGeometry(.34, .4, .06, 96), obsidian), 'base', 0, .03, 0));
+  g.add(place(new THREE.Mesh(new THREE.CylinderGeometry(.03, .045, .24, 32), titanium), 'stem', 0, .18, 0));
+  const s = new THREE.Group(); s.name = 'sphere_bands'; s.position.y = cy; g.add(s);
+  const defs = [
+    [.54, emerald, 'band_responsibility_emerald', [0, 0, 0]],
+    [.495, gold, 'band_business_gold', [PI / 2, 0, 0]],
+    [.45, titanium, 'band_discipline_metal', [0, 0, PI / 2]],
+    [.405, gold, 'band_purpose_gold', [PI / 4, 0, PI / 4]],
+  ];
+  defs.forEach(([R, m, n, r]) => { const b = band(R, .035, .4, m, n); b.rotation.set(...r); s.add(b); });
+  s.add(place(new THREE.Mesh(new THREE.SphereGeometry(.1, 48, 32), glow), 'core', 0, 0, 0));
+  return g;
+}
+
+/* ---------- 5  Strategic axis ---------- */
+function emblem5() {
+  const g = group('axis'); const cy = .98;
+  g.add(slab(1.3, .12, .6, .02, obsidian, 'plinth', 0, .06, 0));
+  const disc = new THREE.Mesh(new THREE.CylinderGeometry(.85, .85, .12, 128), mk('black_titanium', 0x14161a, 1, .3));
+  disc.rotation.x = PI / 2; g.add(place(disc, 'disc', 0, cy, 0));
+  const rim = new THREE.Mesh(new THREE.TorusGeometry(.77, .02, 12, 160), satin);
+  g.add(place(rim, 'ring', 0, cy, .062));
+  for (let i = 0; i < 8; i++) {
+    if (i % 2 === 0) continue;
+    const a = i * PI / 4, t = slab(.025, .1, .02, .004, satin, 'tick_' + i, Math.sin(a) * .64, cy + Math.cos(a) * .64, .065);
+    t.rotation.z = -a; g.add(t);
+  }
+  const spike = (len, w, mat, name, rot) => {
+    const m = poly([[0, len], [w, 0], [0, -.07], [-w, 0]], .09, .012, mat, name, 0, cy, .09);
+    m.rotation.z = rot; return m;
+  };
+  g.add(spike(.72, .15, gold, 'up_axis', 0));
+  g.add(spike(.4, .1, satin, 'east', -PI / 2));
+  g.add(spike(.4, .1, satin, 'south', PI));
+  g.add(spike(.4, .1, satin, 'west', PI / 2));
+  const cap = new THREE.Mesh(new THREE.CylinderGeometry(.075, .075, .08, 48), glow); cap.rotation.x = PI / 2;
+  g.add(place(cap, 'axis_cap', 0, cy, .16));
+  const pin = new THREE.Mesh(new THREE.CylinderGeometry(.03, .03, .08, 32), gold); pin.rotation.x = PI / 2;
+  g.add(place(pin, 'axis_pin', 0, cy, .2));
+  return g;
+}
+
+/* ---------- 6  TM monogram ---------- */
+let mono = [];
+function emblem6() {
+  const g = group('monogram'); mono = [];
+  const M = [[0, 0], [0, 1], [.22, 1], [.6, .42], [.98, 1], [1.2, 1], [1.2, 0], [1.0, 0], [1.0, .62], [.6, .06], [.2, .62], [.2, 0]];
+  const T = [[-.18, 1.3], [1.38, 1.3], [1.38, 1.1], [.7, 1.1], [.7, .36], [.5, .36], [.5, 1.1], [-.18, 1.1]];
+  const s = .95;
+  const m = poly(M, .26, .015, gold, 'M_form', -.6 * s, .0, 0); const t = poly(T, .32, .015, gold, 'T_form', -.6 * s, 0, 0);
+  [m, t].forEach(o => { o.scale.setScalar(s); mono.push(o); });
+  g.add(m, t); g.position.y = 0;
+  return g;
+}
+
+/* ---------- UI ---------- */
+const E = [
+  ['The Monolith', emblem1, 'Obsidian foundation, a polished pillar capped by a gold T-bar, flanked by gold M stems and diagonals.'],
+  ['Integrated System', emblem2, 'Three nested machined rings lock around one emerald core: goals, finance, time, with nodes for skills, opportunity and execution.'],
+  ['Gateway to Potential', emblem3, 'An obsidian portal with a gold liner and a controlled opening onto a luminous horizon.'],
+  ['Unified Life Sphere', emblem4, 'Four nested architectural bands, emerald, gold and metal, around a single quiet core.'],
+  ['Strategic Axis', emblem5, 'A black titanium disc with a bold gold upward axis and three subordinate bearings.'],
+  ['TM Monogram', emblem6, 'A T slotted into the V of an M, one sculptural form. Switch between gold and matte obsidian.'],
+];
+const list = document.getElementById('list'), desc = document.getElementById('desc'), mat = document.getElementById('mat');
+let cur = 0, view = 'front', variant = 'gold';
+E.forEach(([n], i) => {
+  const b = document.createElement('button'); b.className = 'b'; b.innerHTML = `<span>${i + 1}</span>${n}`;
+  b.onclick = () => show(i); list.appendChild(b);
+});
+function frame() {
+  const o = stage._object, box = new THREE.Box3().setFromObject(o), sp = box.getBoundingSphere(new THREE.Sphere());
+  const d = sp.radius / Math.tan(PI * 45 / 360) * 1.5;
+  const dir = view === 'front' ? new THREE.Vector3(0, .08, 1) : new THREE.Vector3(.75, .3, .9);
+  stage._camera.position.copy(sp.center).add(dir.normalize().multiplyScalar(d));
+  stage._controls.target.copy(sp.center); stage._controls.update();
+}
+function applyVariant() {
+  mono.forEach(o => o.material = variant === 'gold' ? gold : matteObs);
+}
+function show(i) {
+  cur = i; stage.setAttribute('name', 'trillionaire-me-' + (i + 1));
+  stage.setObject(E[i][1]());
+  if (i === 5) applyVariant();
+  [...list.children].forEach((b, k) => b.classList.toggle('on', k === i));
+  desc.textContent = E[i][2]; mat.style.display = i === 5 ? 'flex' : 'none';
+  frame();
+}
+document.querySelectorAll('[data-v]').forEach(b => b.onclick = () => {
+  view = b.dataset.v; document.querySelectorAll('[data-v]').forEach(x => x.classList.toggle('on', x === b)); frame();
+});
+document.querySelectorAll('[data-m]').forEach(b => b.onclick = () => {
+  variant = b.dataset.m === 'gold' ? 'gold' : 'obs'; document.querySelectorAll('[data-m]').forEach(x => x.classList.toggle('on', x === b)); applyVariant();
+});
+const refit = () => {
+  const w = stage.clientWidth || innerWidth, h = stage.clientHeight || innerHeight;
+  stage._renderer.setSize(w, h); stage._camera.aspect = w / h; stage._camera.updateProjectionMatrix();
+};
+document.getElementById('tone').onchange = e => { gold.color.set(e.target.value); satin.color.set(e.target.value); };
+document.getElementById('exp').oninput = e => stage._renderer.toneMappingExposure = +e.target.value;
+document.getElementById('glow').oninput = e => glow.emissiveIntensity = +e.target.value;
+document.getElementById('shd').oninput = e => stage._ground.material.opacity = +e.target.value;
+show(0); refit(); setTimeout(refit, 300);
+new ResizeObserver(refit).observe(stage); addEventListener('resize', refit);
+</script>
+</body>
+</html>
