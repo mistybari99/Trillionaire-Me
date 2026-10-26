@@ -18,3 +18,11 @@ Rules for every step:
 
 ## Owner decisions still open (not in this plan)
 - AI (D-C), server sync, Google key, Supabase account, scripture (D-D).
+
+## Owner decisions of 26 Oct 2026 (added to plan; nothing built yet)
+1. **Overall progress (one %).** Calculated only from the user's entered tasks. Rises on completion; falls when tasks or plan are added or changed; recalculated on plan change. No tasks = Unknown, not 0%. Neutral wording, never red. Prompt: "Are there more tasks to add?" At goal creation: manual % or automatic. Automatic: equal weight or task-size weight. Per-goal progress stays.
+2. **Advice cards.** Rule-based, with a reason, no invented amounts. Built-in knowledge base for general suggestions. Online suggestions inside the app only after owner approves cost and provider (D-C); until then offline and rule-based.
+3. **Cloud.** Free-cloud port option only (ports/Connections), off until approved. Text: "Saved on this device".
+4. **Deen.** Plans and reminders only; no scripture text until D-D. Build exact prayer times (verify method with owner), notifications, azan, one-tap mark.
+5. **3D.** Only if bundled locally; no runtime internet.
+6. **Design model.** Owner to choose the main model (recommend 1 Light Futuristic main, 3 Ink and Paper option). Build starts only after owner approves.

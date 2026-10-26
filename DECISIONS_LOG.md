@@ -313,3 +313,14 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 - Recommendation: model 1 as main, model 3 kept as an option. Nothing is built or live until the owner approves.
 - Excluded (see batch-1/2 notes): invented numbers, "reinvest 20%" advice, AI chat (D-C), cloud sync, scripture text (D-D), single overall score, runtime internet 3D.
 - Undo: delete this entry; the Artifact is private and can be deleted. No app code changed.
+
+## Owner decisions of 26 Oct 2026 (builder record)
+- Language: professional, polite, simple wording only (see CLAUDE.md 2b).
+- (1) Overall progress: ONE overall % IS wanted. This replaces the earlier default "no single overall %". Rules: calculated by a calculation system from the user's entered tasks only; rises when tasks complete, falls when tasks or the plan are added or changed, and is recalculated on every plan change; with no tasks it shows Unknown, never 0%; neutral wording, never red; the app prompts the user to think whether more tasks remain. At goal creation the user chooses manual % or automatic. Automatic supports two modes: equal weight, or task-size weight (tasks differ in size). Per-goal progress stays.
+- (2) Advice cards: rule-based, each with a reason, no invented amounts. A built-in knowledge base gives general suggestions. When internet is available the app may fetch suggestions from the web inside the app (user does not leave TM). This online part needs owner approval of cost and provider (D-C); until then advice stays rule-based and offline.
+- (3) Cloud: only a free-cloud port option (ports/Connections), OFF until approved. App text says "Saved on this device".
+- (4) Deen: plans and reminders only; no scripture text until D-D. Build exact prayer times (method and location to be verified with owner), notifications, azan and one-tap mark. No score, rank or streak-shame.
+- (5) 3D is allowed only if bundled locally; no runtime internet.
+- (6) Main design model: awaiting owner choice (recommend 1 Light Futuristic as main, 3 Ink and Paper as option). Build starts only after owner approves.
+- Alternatives: keep "no single %" (superseded by owner); online advice now (blocked by D-C).
+- Undo: delete this entry and the matching section in docs/design/build-plan-next.md. Docs only; no app code changed.
