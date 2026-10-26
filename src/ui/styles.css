@@ -400,3 +400,13 @@ textarea[data-swot]{width:100%;box-sizing:border-box;font:inherit;padding:8px}
 .next-action .next-why{margin:4px 0 10px}
 .chart .univ-svg text.chart-s{font-size:15px;fill:var(--ink)}
 .chart .univ-svg text.chart-t{font-size:18px}
+
+/* local snapshots (More > Data): 44 px targets, tokens only */
+.snap-check{display:flex;align-items:center;gap:10px;min-height:44px}
+.snap-check input[type=checkbox]{width:24px;height:24px;flex:none;accent-color:var(--primary)}
+.snap-list{list-style:none;margin:8px 0;padding:0}
+.snap-list li{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;padding:8px 0;border-bottom:1px solid var(--rule)}
+.snap-when{flex:1 1 220px}
+.snap-btns{display:flex;gap:6px;flex-wrap:wrap}
+.snap-btns .btn{width:auto;margin:0;min-height:44px}
+#snap-keep{min-height:44px}

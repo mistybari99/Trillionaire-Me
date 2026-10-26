@@ -4,7 +4,7 @@ import { h } from "./dom";
 import { t, tb, fmtNumber } from "../i18n/t";
 import type { Key } from "../i18n/packs";
 import { LOCALES, LOCALE_ORDER, intlLocale, type Locale } from "../i18n/registry";
-import { applyPrefs, consentKv, prefs, screenView, setScreenView, store, type HorizonView, type PlanMode, type ViewScreen } from "./state";
+import { applyPrefs, consentKv, prefs, screenView, setScreenView, snapshotRepo, store, type HorizonView, type PlanMode, type ViewScreen } from "./state";
 import { DESIGNS } from "./themes";
 import { grantConsent, readConsent, revokeConsent } from "../core/consent";
 import { demoBadge, disclaimers, fieldHelp, num, valueEl } from "./components";
@@ -40,6 +40,8 @@ import { celebrate, journeyGoalsCard, overallProgressCard } from "./lifeUi";
 import { homeSummaryCards, nextActionCard } from "./homeUi";
 import { progressRing, isMilestone } from "./ring";
 import { logo3d } from "./logo";
+import { backupReminderCard, snapshotsCard } from "./snapshotsUi";
+import { scrubRealParts } from "../core/snapshots";
 import { overallProgress } from "../core/overallProgress";
 import * as Focus from "../core/focus";
 import * as Habits from "../core/habits";
@@ -829,6 +831,7 @@ export function today(): HTMLElement {
     overallProgressCard(lang, "today"),
     homeSummaryCards(lang),
     nextActionCard(lang),
+    backupReminderCard(lang),
     h("h2", {}, t("home.tasks", lang)),
     viewBar("today", lang),
     ...(cp.hasTasks ? todayFromPlan(cp, lang) : activeNs() === "real" ? [h("p", { class: "muted", "data-empty-real": "1" }, t("mode.today.empty", lang))] : screenView("today") === "compact" ? [h("ul", { class: "list-compact", "data-view": "compact" }, ...DEMO_TASKS.slice(0, 3).map((k) => h("li", {}, h("strong", {}, tb(k.title, lang)), " · ", valueEl(t("task.minutes", lang, { n: num(k.minutes, lang) }), "DEMO", lang))))] : DEMO_TASKS.slice(0, 3).map((k, i) => h("div", { class: "task" }, h("b", {}, num(i + 1, lang)),
@@ -1277,6 +1280,7 @@ function clearRealCard(lang: Locale): HTMLElement {
     kids.push(h("p", { role: "alert" }, t("data.clearReal.ask", lang)), h("p", { class: "muted" }, t("data.clearReal.note", lang)),
       h("button", { class: "btn", type: "button", "data-act": "clear-real-yes", onclick: () => {
         store.real.clear();            // real records only; demo is untouched
+        if (snapshotRepo) void scrubRealParts(snapshotRepo).catch(() => { /* nothing to scrub */ }); // no snapshot may keep a copy of real data
         revokeConsent(consentKv);      // next real entry needs a new tick
         realClearAsk = false; realClearDone = true; rerender();
       } }, t("data.clearReal.yes", lang)),
@@ -1324,6 +1328,7 @@ export function dataScreen(): HTMLElement {
       } })),
     h("p", { id: "backup-msg", role: "status" }),
     encBackupCard(lang),
+    snapshotsCard(lang),
     disclaimers(lang));
 }
 

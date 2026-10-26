@@ -4,6 +4,7 @@ import { readConsent } from "../core/consent";
 import { isTemplateId, type TemplateId } from "../core/stageTemplates";
 import { MirrorKV, hydrate, mirrorToRepo } from "../core/persist";
 import { DexieRepo } from "../adapters/dexie";
+import { DEFAULT_KEEP, isKeep, type SnapshotRepo } from "../core/snapshots";
 import { parseNotifyPrefs, type NotifyPrefs } from "../core/notify";
 import { DHAKA_COORDS, validCoords, type Coords } from "../core/prayer";
 import { DEFAULT_ALERT_PREFS, parseAlertPrefs, type AlertPrefs } from "../core/prayerAlerts";
@@ -19,6 +20,8 @@ const repo = typeof indexedDB !== "undefined" ? new DexieRepo("tm-db", () => REA
 // With IndexedDB: memory is mirrored to it. Without (private mode/old browser): fall back to the old localStorage store.
 const kv = repo ? new MirrorKV(mem, mirrorToRepo(repo)) : legacy;
 export const store = new Store(kv, { consentKv: legacy });
+/** Local snapshot storage (same IndexedDB). null when IndexedDB is not available (private mode, old browser). */
+export const snapshotRepo: SnapshotRepo | null = repo ? repo.snapshots() : null;
 /** Per-device consent record (src/core/consent.ts). Same place as the other small per-device settings. */
 export const consentKv = legacy;
 /** Call once before the first render. */
@@ -50,6 +53,21 @@ export const prefs = {
   /** Goal Universe view: "map" (default) or "list". Unknown or missing value = map. */
   get universeView(): "map" | "list" { return get("tm:ui:universeView") === "list" ? "list" : "map"; },
   set universeView(v: "map" | "list") { set("tm:ui:universeView", v === "list" ? "list" : "map"); },
+  /** Automatic local snapshot when the app opens (about once a day). On by default; the owner asked for it. */
+  get snapAuto(): boolean { return get("tm:ui:snapAuto") !== "off"; },
+  set snapAuto(v: boolean) { set("tm:ui:snapAuto", v ? "on" : "off"); },
+  /** How many snapshots to keep: 3, 5 or 10. Unknown or missing value = 5. */
+  get snapKeep(): number { const n = Number(get("tm:ui:snapKeep")); return isKeep(n) ? n : DEFAULT_KEEP; },
+  set snapKeep(v: number) { set("tm:ui:snapKeep", String(isKeep(v) ? v : DEFAULT_KEEP)); },
+  /** Backup reminder inside the app. OFF by default. */
+  get backupRemind(): boolean { return get("tm:ui:backupRemind") === "on"; },
+  set backupRemind(v: boolean) { set("tm:ui:backupRemind", v ? "on" : "off"); },
+  /** When a backup file was last saved on this device (ISO), or "" for never. */
+  get fileBackupAt(): string { return get("tm:ui:fileBackupAt") ?? ""; },
+  set fileBackupAt(v: string) { set("tm:ui:fileBackupAt", v); },
+  /** Day (YYYY-MM-DD) the user chose "remind me tomorrow". */
+  get remindSnoozedOn(): string { return get("tm:ui:remindSnoozedOn") ?? ""; },
+  set remindSnoozedOn(v: string) { set("tm:ui:remindSnoozedOn", v); },
   get scale(): number { const n = Number(get("tm:ui:scale")); return [100, 125, 150, 200].includes(n) ? n : 100; },
   set scale(v: number) { set("tm:ui:scale", String(v)); },
   get mode(): PlanMode { const v = get("tm:ui:mode"); return v === "minimum_week" || v === "pause" ? v : "normal"; },
