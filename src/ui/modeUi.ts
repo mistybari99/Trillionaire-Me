@@ -1,5 +1,6 @@
 // First-run choice, demo banner, "delete demo?" ask and the Only demo / Only real switch (owner rule 25 Oct 2026).
 // DEMO data is not permanent. Nothing is deleted without an explicit confirm, and real data is never touched.
+import { logo3d } from "./logo";
 import { h } from "./dom";
 import { t } from "../i18n/t";
 import { LOCALES, type Locale } from "../i18n/registry";
@@ -79,7 +80,7 @@ export function firstRunScreen(): HTMLElement {
           h("button", { class: "btn ghost", type: "button", "data-act": "first-demo", onclick: () => { prefs.dataMode = "demo"; location.hash = "#/today"; rerender(); } }, t("mode.first.demo", lang))),
         h("div", { class: "card", "data-first": "real" }, h("h2", { class: "card-h" }, t("mode.first.real", lang)), h("p", { class: "muted" }, t("mode.first.real.note", lang)),
           h("button", { class: "btn", type: "button", "data-act": "first-real", onclick: () => { firstRealStep = true; needTick = false; rerender(); } }, t("mode.first.real", lang))));
-  return h("main", { class: "scr scr-first", id: "content" }, h("div", { class: "top" }, h("span", {}, t("app.title", lang)), h("span", { class: "right" }, langMenu(lang))), langButtons(), h("h1", {}, t("mode.first.title", lang)), h("p", { class: "sub" }, t("mode.first.intro", lang)), body);
+  return h("main", { class: "scr scr-first", id: "content" }, h("div", { class: "top" }, h("span", {}, t("app.title", lang)), h("span", { class: "right" }, langMenu(lang))), langButtons(), logo3d(112, lang, { animate: true }), h("h1", {}, t("mode.first.title", lang)), h("p", { class: "sub" }, t("mode.first.intro", lang)), body);
 }
 
 function confirmCard(lang: Locale): HTMLElement {

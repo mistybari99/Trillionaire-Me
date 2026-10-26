@@ -560,6 +560,7 @@ const en = {
   "next.btn.plan": "View Plan",
   "next.btn.money": "Open Money",
   "next.btn.wheel": "Open life wheel",
+  "logo.alt": "Trillionaire Me logo: a T-bar above an M, in champagne gold on obsidian",
 } as const;
 
 export type Key = keyof typeof en;
@@ -1408,6 +1409,7 @@ const bn: Record<Key, string> = {
   "next.btn.plan": "পরিকল্পনা দেখুন",
   "next.btn.money": "টাকা পাতা খুলুন",
   "next.btn.wheel": "জীবনের চক্র খুলুন",
+  "logo.alt": "ট্রিলিয়নেয়ার মি-এর প্রতীক: অবসিডিয়ান জমিতে শ্যাম্পেন সোনালি T-বার ও তার নিচে M",
 };
 
 // Mix mode: Bangla sentences with common English words kept (owner request, decision L-11).

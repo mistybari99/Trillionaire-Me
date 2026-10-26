@@ -39,6 +39,7 @@ import { rulesTodayCard } from "./libraryScreens";
 import { celebrate, journeyGoalsCard, overallProgressCard } from "./lifeUi";
 import { homeSummaryCards, nextActionCard } from "./homeUi";
 import { progressRing, isMilestone } from "./ring";
+import { logo3d } from "./logo";
 import { overallProgress } from "../core/overallProgress";
 import * as Focus from "../core/focus";
 import * as Habits from "../core/habits";
@@ -625,7 +626,7 @@ function rewardRing(lang: Locale): HTMLElement | null {
 export function rewardScreen(): HTMLElement {
   const lang = L(); let fresh = false; try { fresh = sessionStorage.getItem("tm:newStar") === "1"; sessionStorage.removeItem("tm:newStar"); } catch { /* ignore */ }
   const n = completedCount(); const ms = fresh ? milestoneAt(n) : null;
-  return h("main", { class: "scr scr-reward" }, h("h1", {}, t("reward.title", lang)),
+  return h("main", { class: "scr scr-reward" }, h("div", { class: "logo-row" }, logo3d(48, lang), h("h1", {}, t("reward.title", lang))),
     fresh && n ? h("div", { class: "card", role: "status", "data-fresh": "1" }, celebrate("step", lang), ms ? h("h2", { class: "card-h",  "data-milestone": String(ms) }, t(`reward.ms${ms}` as Key, lang)) : null, h("p", { class: "ok-msg" }, t(`reward.m${messageIndex(n, 6)}` as Key, lang)), rewardRing(lang)) : null,
     pictureBlock(lang, { newest: fresh && n > 0, milestone: !!ms }), link("#/today", "cta", t("reward.back", lang)), disclaimers(lang, ["noGuarantee"]));
 }
@@ -882,7 +883,7 @@ export function reviewScreen(): HTMLElement {
 export function journey(): HTMLElement {
   const lang = L();
   return h("main", { class: "scr scr-journey" },
-    h("h1", {}, t("journey.title", lang)),
+    h("div", { class: "logo-row" }, logo3d(48, lang), h("h1", {}, t("journey.title", lang))),
     passedBanner(lang),
     stagePanel(lang),
     h("div", { class: "actions" },

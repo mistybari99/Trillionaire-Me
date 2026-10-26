@@ -340,6 +340,15 @@ textarea[data-swot]{width:100%;box-sizing:border-box;font:inherit;padding:8px}
   .pr.pr-ms .pr-glow{animation:prGlow 1s ease-out .7s both}
 }
 @media (prefers-reduced-motion:reduce){.pr .pr-arc,.pr.pr-ms .pr-num,.pr.pr-ms .pr-glow{animation:none!important;transition:none!important}}
+/* 3D-style logo: still by default; one short shine pass only when motion is allowed */
+.logo3d{display:block;margin:8px auto;max-width:100%;height:auto}
+.logo-row{display:flex;align-items:center;gap:12px}
+.logo-row .logo3d{margin:0;flex:none}
+@keyframes logoShine{from{transform:translateX(0) skewX(-20deg)}to{transform:translateX(190px) skewX(-20deg)}}
+@media (prefers-reduced-motion:no-preference){
+  .logo-anim .logo-shine{animation:logoShine 1.2s ease-out .4s 1 both}
+}
+@media (prefers-reduced-motion:reduce){.logo-anim .logo-shine{animation:none!important;transition:none!important;display:none}}
 /* language icon menu (top bar) */
 .lang-wrap{position:relative;display:inline-flex}
 .lang-btn{min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center;background:none;border:1.5px solid var(--rule);color:var(--ink);cursor:pointer;padding:0}
@@ -389,3 +398,5 @@ textarea[data-swot]{width:100%;box-sizing:border-box;font:inherit;padding:8px}
 .home-val{margin:4px 0;overflow-wrap:anywhere}
 .next-action .next-title{font-weight:700;margin:4px 0}
 .next-action .next-why{margin:4px 0 10px}
+.chart .univ-svg text.chart-s{font-size:15px;fill:var(--ink)}
+.chart .univ-svg text.chart-t{font-size:18px}
