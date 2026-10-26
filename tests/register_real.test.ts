@@ -81,4 +81,50 @@ describe("risk register (real data)", () => {
   });
 });
 
+describe("venture list (real data)", () => {
+  it("no consent: prompt shown, nothing saved", () => {
+    go("#/diary/ventures");
+    expect(document.querySelector("form[data-form=venture] [data-consent-prompt]")).not.toBeNull();
+    setv("vn-name", "Shop"); send("form[data-form=venture]");
+    expect(document.querySelector("form[data-form=venture] .err")!.textContent).toMatch(/Nothing saved/);
+    expect(store.real.list()).toEqual([]); expect(store.demo.list()).toEqual([]);
+  });
+
+  describe("with consent", () => {
+    beforeEach(() => grantConsent(consentKv, NOW));
+
+    it("saves a real venture; blank ownership stays Unknown, never 0", () => {
+      go("#/diary/ventures");
+      setv("vn-name", "Shop"); submit("form[data-form=venture]");
+      const r = store.real.list().find((x) => x.entity === "venture")!;
+      expect(r.values["venture.name"]).toMatchObject({ label: "FACT" });
+      expect(r.values["venture.ownership_pct"]).toEqual({ state: "unknown" });
+      expect(r.values["venture.stage"]).toEqual({ state: "unknown" });
+      expect(store.demo.list()).toEqual([]);
+      const card = document.querySelector(`[data-venture='${r.id}']`)!;
+      expect(card.querySelector("[data-ns=real]")).not.toBeNull();
+      expect(card.textContent).not.toMatch(/\b0%/);
+    });
+
+    it("a typed ownership is saved as a real number; demo ventures are hidden and not mixed", () => {
+      store.demo.put(demoRec("ven-d1", "venture", { "venture.name": v("Demo venture"), "venture.ownership_pct": v(40) }));
+      go("#/diary/ventures");
+      setv("vn-name", "Shop"); setv("vn-own", "60"); submit("form[data-form=venture]");
+      const r = store.real.list().find((x) => x.entity === "venture")!;
+      expect(r.values["venture.ownership_pct"]).toMatchObject({ value: 60, label: "FACT" });
+      expect(document.body.textContent).not.toMatch(/Demo venture/);
+      expect(labels(store.demo.list()).every((l) => l === "DEMO")).toBe(true);
+      expect(labels(store.real.list()).every((l) => l === "FACT")).toBe(true);
+    });
+
+    it("clear-all removes the real venture and keeps demo", () => {
+      store.demo.put(demoRec("ven-d2", "venture", { "venture.name": v("Keep demo") }));
+      go("#/diary/ventures"); setv("vn-name", "Remove me"); submit("form[data-form=venture]");
+      clearAll();
+      expect(store.real.list()).toEqual([]);
+      expect(store.demo.list().map((r) => r.id)).toEqual(["ven-d2"]);
+    });
+  });
+});
+
 void prefs;

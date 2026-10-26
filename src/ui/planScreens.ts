@@ -107,7 +107,7 @@ export function ventureScreen(): HTMLElement {
   const stage = choiceSelect("vn-stage", "venture.stage", lang);
   const own = h("input", { id: "vn-own", type: "text", inputmode: "decimal", autocomplete: "off" });
   const err = h("p", { class: "err", role: "alert" });
-  const form = h("form", { novalidate: true, "data-form": "venture" },
+  const form = h("form", { novalidate: true, "data-form": "venture" }, gateFor(lang),
     h("label", { for: "vn-name" }, t("ven.name", lang)), name,
     h("label", { for: "vn-stage" }, t("ven.stage", lang)), stage,
     h("label", { for: "vn-own" }, t("ven.ownership", lang)), own, err,
@@ -124,7 +124,7 @@ export function ventureScreen(): HTMLElement {
       "venture.stage": stage.value ? txt(stage.value) : UNKNOWN,
       "venture.ownership_pct": o.state === "value" ? num_(o.value) : UNKNOWN,
     };
-    putRecord("venture", "ven", values);
+    if (!putRecord("venture", "ven", values)) { err.textContent = saveBlockedText(lang); return; }
     rerender();
   });
   const rows = ventureRows(allRecs());
@@ -133,7 +133,7 @@ export function ventureScreen(): HTMLElement {
     h("h1", {}, t("ven.title", lang)), h("p", { class: "sub" }, t("ven.intro", lang)),
     form,
     rows.length ? h("div", {}, ...rows.map((r) => h("div", { class: "card", "data-venture": r.id }, h("div", { class: "row" }, h("div", {},
-      h("h2", { class: "card-h" }, r.name),
+      modeMark(lang), h("h2", { class: "card-h" }, r.name),
       h("p", { class: "muted" }, r.stage ? choiceLabel("venture.stage", r.stage, lang) : t("unknown.unknown", lang)),
       h("p", { class: "muted" }, r.ownership === null ? t("ven.ownUnknown", lang) : `${fmtNumber(r.ownership, lang)}%`)),
       removeBtn(r.id, lang))))) : h("p", { class: "muted" }, t("ven.empty", lang)),
