@@ -85,7 +85,7 @@ describe("language switch on More persists the choice", () => {
 
   it("renders three options and saving Mix keeps it after a fresh render", () => {
     location.hash = "#/more"; render();
-    const buttons = [...document.querySelectorAll(".seg button")].filter((b) => ["English", "বাংলা", "Mix"].includes(b.textContent ?? ""));
+    const buttons = [...document.querySelectorAll(".seg button")].filter((b): b is HTMLButtonElement => b instanceof HTMLButtonElement &&  ["English", "বাংলা", "Mix"].includes(b.textContent ?? ""));
     expect(buttons.map((b) => b.textContent)).toEqual(["English", "বাংলা", "Mix"]);
     buttons.find((b) => b.textContent === "Mix")!.click();
     expect(localStorage.getItem("tm:ui:lang")).toBe("mix");
