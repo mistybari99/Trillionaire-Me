@@ -322,6 +322,24 @@ textarea[data-swot]{width:100%;box-sizing:border-box;font:inherit;padding:8px}
   .mm .mm-star{animation:mmPulse .9s ease-out .1s both}
 }
 @media (prefers-reduced-motion:reduce){.mm .mm-tick,.mm .mm-ring,.mm .mm-star{animation:none!important;transition:none!important}.mm .mm-tick{stroke-dasharray:none!important;stroke-dashoffset:0!important}}
+/* progress ring: draw-in, pop and soft glow at a milestone (motion only without reduced-motion; final picture is still) */
+.pr{width:64px;height:64px;flex:none;overflow:visible}
+.pr .pr-track{fill:none;stroke:var(--rule);stroke-width:6}
+.pr .pr-arc{fill:none;stroke:var(--primary);stroke-width:6;stroke-linecap:round}
+.pr .pr-unk{stroke:var(--muted);stroke-width:4}
+.pr .pr-num{font:700 14px/1 "Hind Siliguri",sans-serif;fill:var(--ink);text-anchor:middle}
+.pr .pr-glow{fill:none;stroke:var(--primary);stroke-width:12;opacity:0}
+.pr.pr-ms .pr-glow{opacity:.22}
+.pr-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+@keyframes prDraw{from{stroke-dashoffset:100}}
+@keyframes prPop{0%{transform:scale(.7);opacity:0}70%{transform:scale(1.12);opacity:1}100%{transform:scale(1);opacity:1}}
+@keyframes prGlow{0%{opacity:0}50%{opacity:.5}100%{opacity:.22}}
+@media (prefers-reduced-motion:no-preference){
+  .pr .pr-arc{animation:prDraw .8s ease-out both}
+  .pr.pr-ms .pr-num{transform-box:fill-box;transform-origin:center;animation:prPop .5s ease-out .7s both}
+  .pr.pr-ms .pr-glow{animation:prGlow 1s ease-out .7s both}
+}
+@media (prefers-reduced-motion:reduce){.pr .pr-arc,.pr.pr-ms .pr-num,.pr.pr-ms .pr-glow{animation:none!important;transition:none!important}}
 /* language icon menu (top bar) */
 .lang-wrap{position:relative;display:inline-flex}
 .lang-btn{min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center;background:none;border:1.5px solid var(--rule);color:var(--ink);cursor:pointer;padding:0}

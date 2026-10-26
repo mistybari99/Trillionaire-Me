@@ -12,6 +12,7 @@ import { SMART_PARTS, SWOT_KEYS, goalProgress, listValue, milestoneOf, parseList
 import { overallProgress, nextProgressMemory, progressTrend, PROGRESS_MODES } from "../core/overallProgress";
 import { checkFreeText } from "../core/safety";
 import { goalAreaCard } from "./universeUi";
+import { progressRing } from "./ring";
 import { HORIZONS } from "../core/horizon";
 import type { FieldValue, TMRecord } from "../core/types";
 
@@ -113,7 +114,8 @@ export function goalScreen(id: string): HTMLElement {
   const gate = consentOn() ? null : consentPrompt(lang);
   const progress = h("section", { class: "card", "data-goal-progress": gp.percent === null ? "unknown" : String(gp.percent) }, nsTag(rec.ns, lang), h("h2", { class: "card-h" }, t("goal.progress", lang)),
     gp.percent === null ? h("p", { class: "muted" }, t("goal.progress.unknown", lang))
-      : h("div", {}, h("p", {}, t("goal.progress.known", lang, { p: num(gp.percent, lang), d: num(gp.done, lang), n: num(gp.total, lang) })),
+      : h("div", {}, h("div", { class: "pr-row" }, progressRing(gp.percent, t("goal.progress.known", lang, { p: num(gp.percent, lang), d: num(gp.done, lang), n: num(gp.total, lang) }), ms !== null),
+          h("p", {}, t("goal.progress.known", lang, { p: num(gp.percent, lang), d: num(gp.done, lang), n: num(gp.total, lang) }))),
         h("div", { class: "bar", role: "img", "aria-label": t("goal.progress.known", lang, { p: num(gp.percent, lang), d: num(gp.done, lang), n: num(gp.total, lang) }) }, h("i", { style: `width:${gp.percent}%` }))),
     ms ? h("p", { class: "ok-msg", role: "status", "data-milestone": String(ms) }, celebrate("milestone", lang), " ", t(`goal.ms.${ms}` as Key, lang)) : null);
 
@@ -181,7 +183,7 @@ export function overallProgressCard(lang: Locale, where: "today" | "journey"): H
     h("i", { style: `width:${o.percent ?? 0}%`, class: o.percent === null ? "ov-unk" : "" }));
   return h("section", { class: "card", "data-overall": where, "data-percent": o.percent === null ? "unknown" : String(o.percent), "data-trend": trend },
     h("h2", { class: "card-h" }, t("overall.title", lang)),
-    h("p", { class: "ov-big", "data-overall-text": "1" }, text), bar,
+    h("div", { class: "pr-row" }, progressRing(o.percent, text, o.percent === 100), h("p", { class: "ov-big", "data-overall-text": "1" }, text)), bar,
     mode === "size" && o.withoutSize > 0 ? h("p", { class: "muted" }, t("overall.nosize", lang, { n: num(o.withoutSize, lang) })) : null,
     trend === "down" ? h("p", { class: "muted", "data-overall-fall": "1" }, t("overall.fall", lang)) : null,
     o.percent === null ? h("p", { class: "muted" }, link("#/diary/plan", "crumb", t("overall.add", lang)))

@@ -38,6 +38,8 @@ import { encBackupCard } from "./encBackup";
 import { rulesTodayCard } from "./libraryScreens";
 import { celebrate, journeyGoalsCard, overallProgressCard } from "./lifeUi";
 import { homeSummaryCards, nextActionCard } from "./homeUi";
+import { progressRing, isMilestone } from "./ring";
+import { overallProgress } from "../core/overallProgress";
 import * as Focus from "../core/focus";
 import * as Habits from "../core/habits";
 import * as Cards from "../core/cards";
@@ -613,11 +615,18 @@ function pictureBlock(lang: Locale, opts: { newest?: boolean; milestone?: boolea
     h("p", { class: "muted", "data-reward-text": "1" }, n ? t("reward.completed", lang, { n: num(n, lang), k: num(k, lang) }) : t("reward.empty", lang)), h("p", { class: "muted" }, t("reward.next", lang)));
 }
 
+/** Overall progress ring on the "step done" card. Same sentence as the overall card; nothing when no percent is known. */
+function rewardRing(lang: Locale): HTMLElement | null {
+  const o = overallProgress(allRecs(), prefs.progressMode); if (o.percent === null) return null;
+  const text = t("overall.text", lang, { p: num(o.percent, lang), d: num(o.done, lang), n: num(o.total, lang), how: t(prefs.progressMode === "size" ? "overall.how.size" : "overall.how.equal", lang) });
+  return h("div", { class: "pr-row", "data-reward-ring": String(o.percent) }, progressRing(o.percent, text, isMilestone(o.percent)), h("p", {}, text));
+}
+
 export function rewardScreen(): HTMLElement {
   const lang = L(); let fresh = false; try { fresh = sessionStorage.getItem("tm:newStar") === "1"; sessionStorage.removeItem("tm:newStar"); } catch { /* ignore */ }
   const n = completedCount(); const ms = fresh ? milestoneAt(n) : null;
   return h("main", { class: "scr scr-reward" }, h("h1", {}, t("reward.title", lang)),
-    fresh && n ? h("div", { class: "card", role: "status", "data-fresh": "1" }, celebrate("step", lang), ms ? h("h2", { class: "card-h",  "data-milestone": String(ms) }, t(`reward.ms${ms}` as Key, lang)) : null, h("p", { class: "ok-msg" }, t(`reward.m${messageIndex(n, 6)}` as Key, lang))) : null,
+    fresh && n ? h("div", { class: "card", role: "status", "data-fresh": "1" }, celebrate("step", lang), ms ? h("h2", { class: "card-h",  "data-milestone": String(ms) }, t(`reward.ms${ms}` as Key, lang)) : null, h("p", { class: "ok-msg" }, t(`reward.m${messageIndex(n, 6)}` as Key, lang)), rewardRing(lang)) : null,
     pictureBlock(lang, { newest: fresh && n > 0, milestone: !!ms }), link("#/today", "cta", t("reward.back", lang)), disclaimers(lang, ["noGuarantee"]));
 }
 
