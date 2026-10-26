@@ -19,6 +19,9 @@ If two files conflict: Spec > Register > Brief > Preview. Fix the lower one and 
 - Do not touch any existing business system/ERP/credentials of the owner.
 - Deen: no piety score/rank/streak-shame, no fatwa, private by default, no scripture text until D-D resolved.
 
+## 2b. Language rule (owner, 26 Oct 2026)
+Whatever style the owner writes in, every reply and every in-app text stays professional, polite and simple. No slang or imitation of the owner's casual wording. Bangla is plain standard Bangla; English is plain and short.
+
 ## 3. Work style (autonomous)
 - Work gate by gate: G1 → G2 → … Finish a gate only with evidence (tests, screenshots, logs). Never mark a requirement Verified without a linked test artifact.
 - Choose the best option yourself when the Spec/Register/Decisions do not specify. Pick the safest reversible option, record it in `DECISIONS_LOG.md` (what, why, alternatives, how to undo) and keep going.
