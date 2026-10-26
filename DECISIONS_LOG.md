@@ -306,3 +306,10 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 - Alternatives: separate CSS file per version (rejected: more files, contrast tests could not read tokens); replacing classic as default (rejected: owner asked classic stays default).
 - Undo: delete `src/ui/themes.ts`, `tests/design_version.test.ts`, `docs/design/claude-design/`; remove the `design` pref and `applyDesign` line in `src/ui/state.ts`, `designCard` and its call in `src/ui/screens.ts`, the `more.design*`/`design.*` keys, the `.design-*` CSS block and the DESIGN-VER e2e block.
 - Proof: tests 763/763, tsc clean, build ok, e2e 0 FAIL (DESIGN-VER x2). Visual check on a real phone is a later owner task.
+
+## Design models proposal and owner decisions (builder, 26 Oct 2026)
+- Owner decisions recorded: (1) 3D logo is allowed if it is bundled locally and cached for offline use; no runtime internet 3D. (2) Automatic local snapshot backups are wanted; backup reminders are OFF by default.
+- What: a private Artifact compares four design models on real app screens (Today, Journey, Goal Universe with list view, Money, Deen, reward animation, 3D-style logo): 1 Light Futuristic, 2 Emerald Obsidian, 3 Ink and Paper, 4 Broadsheet. All figures are DEMO in BDT or Unknown.
+- Recommendation: model 1 as main, model 3 kept as an option. Nothing is built or live until the owner approves.
+- Excluded (see batch-1/2 notes): invented numbers, "reinvest 20%" advice, AI chat (D-C), cloud sync, scripture text (D-D), single overall score, runtime internet 3D.
+- Undo: delete this entry; the Artifact is private and can be deleted. No app code changed.
