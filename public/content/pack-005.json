@@ -1,0 +1,599 @@
+{
+  "schema": "tm-content-pack",
+  "schemaVersion": 1,
+  "packId": "pack-005",
+  "reviewStatus": "pending_reviewer",
+  "license": "original",
+  "description": "Original, practical entries (Bangla and English) with a short explanation, steps, a realistic example without invented figures, common slips to avoid, and a where-to-learn-more note naming the kind of source. Health basics (non-clinical), relationships and communication, career and skills, workspace systems and digital safety. Drafts: shown as যাচাই হয়নি until a reviewer signs off.",
+  "tips": [
+    {
+      "id": "p3-he-1",
+      "topic": "health",
+      "tags": [
+        "health",
+        "energy"
+      ],
+      "title": {
+        "bn": "শক্তির চার ভিত্তি",
+        "en": "Four bases of daily energy"
+      },
+      "how": {
+        "bn": "দিনের শক্তি সাধারণত ঘুম, খাবার, পানি আর একটু নড়াচড়ার ওপর নির্ভর করে। এগুলো স্থির থাকলে কাজ ও মেজাজ দুটোই সহজ হয়। এটা সাধারণ অভ্যাসের কথা, চিকিৎসা নয়।",
+        "en": "Daily energy usually rests on sleep, food, water and a little movement. When these are steady, work and mood both feel easier. This is about general habits, not treatment."
+      },
+      "diagram": {
+        "type": "cycle",
+        "bn": "ঘুম|খাবার|পানি|নড়াচড়া",
+        "en": "Sleep|Food|Water|Movement"
+      },
+      "kind": "explain",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-he-2",
+      "topic": "health",
+      "tags": [
+        "health",
+        "sleep"
+      ],
+      "title": {
+        "bn": "ঘুমের আগের 10 মিনিট",
+        "en": "The 10 minutes before sleep"
+      },
+      "how": {
+        "bn": "1) কালকের একটা কাজ লিখে রাখুন। 2) স্ক্রিন বন্ধ করুন। 3) আলো কমান। 4) ধীরে কয়েকবার শ্বাস নিন। রোজ একই ক্রমে করুন, তাতে মন বুঝে যায় ঘুমের সময়।",
+        "en": "1) Write down one task for tomorrow. 2) Switch off screens. 3) Dim the lights. 4) Take a few slow breaths. Repeat in the same order daily so your mind learns it is sleep time."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "কালকের কাজ লিখি|স্ক্রিন বন্ধ|আলো কমাই|ধীর শ্বাস",
+        "en": "Note tomorrow's task|Screens off|Dim lights|Slow breaths"
+      },
+      "kind": "steps",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-he-3",
+      "topic": "health",
+      "tags": [
+        "health",
+        "energy"
+      ],
+      "title": {
+        "bn": "উদাহরণ: দুপুরের ঝিমুনি",
+        "en": "Example: the afternoon slump"
+      },
+      "how": {
+        "bn": "ইমরান লক্ষ করল দুপুরে মাথা ভার লাগে। সে এক সপ্তাহ লিখে রাখল কখন কী খেল, কত পানি খেল। শেষে বুঝল পানি কম খায়, তাই একটা বোতল ডেস্কে রাখল।",
+        "en": "Imran noticed heavy-headedness at noon. For a week he noted what he ate and how much water he drank. He saw he drank little water, so he kept a bottle on his desk."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "খেয়াল করি|এক সপ্তাহ লিখি|ধরন দেখি|ছোট বদল",
+        "en": "Notice|Note for a week|See the pattern|Small change"
+      },
+      "kind": "example",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-he-4",
+      "topic": "health",
+      "tags": [
+        "health",
+        "energy"
+      ],
+      "title": {
+        "bn": "স্বাস্থ্যের অভ্যাসে যা এড়াবেন",
+        "en": "Health-habit slips to avoid"
+      },
+      "how": {
+        "bn": "একসঙ্গে সব বদলাবেন না। অন্যের শরীরের সঙ্গে নিজের তুলনা করবেন না। ব্যথা, অস্বস্তি বা ঘন ঘন সমস্যা হলে নিজে নিজে সিদ্ধান্ত নেবেন না, ডাক্তার দেখান।",
+        "en": "Do not change everything at once. Do not compare your body with others. If you have pain, discomfort or a repeated problem, do not decide alone. See a doctor."
+      },
+      "diagram": {
+        "type": "matrix",
+        "bn": "সব একসাথে: একটা বদলাই|তুলনা: নিজের গতি|ব্যথা বা অস্বস্তি: ডাক্তার|অতিরিক্ত চাপ: বিশ্রাম রাখি",
+        "en": "All at once: change one|Comparing: own pace|Pain or discomfort: see a doctor|Pushing hard: keep rest"
+      },
+      "kind": "watchout",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-he-5",
+      "topic": "health",
+      "tags": [
+        "health",
+        "learning"
+      ],
+      "title": {
+        "bn": "স্বাস্থ্য নিয়ে আরও শিখতে",
+        "en": "Learn more about daily health"
+      },
+      "how": {
+        "bn": "সাধারণ স্বাস্থ্য-অভ্যাস নিয়ে সরকারি স্বাস্থ্য কেন্দ্র বা নিবন্ধিত ডাক্তারের কথা শুনুন। আমাদের লেখা শুধু সাধারণ জ্ঞান ও যাচাইকারীর অপেক্ষায়; চিকিৎসা-সংক্রান্ত সিদ্ধান্তের জন্য নয়।",
+        "en": "For daily health habits, listen to a public health centre or a registered doctor. Our text is only general knowledge and pending a reviewer. It is not meant for medical decisions."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "সাধারণ লেখা পড়ি|ডাক্তারকে জিজ্ঞাসা|নিজের নোট রাখি",
+        "en": "Read general explainers|Ask a doctor|Keep my own note"
+      },
+      "kind": "learn",
+      "source": "reviewer",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-re-1",
+      "topic": "relationships",
+      "tags": [
+        "people",
+        "communication"
+      ],
+      "title": {
+        "bn": "স্পষ্ট যোগাযোগ মানে কী",
+        "en": "What clear communication means"
+      },
+      "how": {
+        "bn": "স্পষ্ট যোগাযোগ মানে নিজের কথা সরল ভাষায় বলা আর অন্যের কথা শোনা। আগে বুঝে নিন অন্যজন কী বলতে চাইছে, তারপর নিজের কথা বলুন। এটা সাধারণ দক্ষতা, থেরাপি নয়।",
+        "en": "Clear communication means saying your point simply and listening to the other person. First make sure you understand what they mean, then say yours. This is a general skill, not therapy."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "শুনি|বুঝেছি কিনা মিলাই|নিজের কথা বলি",
+        "en": "Listen|Check I understood|Say mine"
+      },
+      "kind": "explain",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-re-2",
+      "topic": "relationships",
+      "tags": [
+        "people",
+        "communication"
+      ],
+      "title": {
+        "bn": "কঠিন কথা বলার ধাপ",
+        "en": "Steps for a difficult conversation"
+      },
+      "how": {
+        "bn": "1) সময় ও জায়গা ঠিক করুন। 2) কী ঘটেছে বলুন, দোষ দেবেন না। 3) আপনার কেমন লেগেছে বলুন। 4) কী চান বলুন। 5) অন্যজনের উত্তর মন দিয়ে শুনুন।",
+        "en": "1) Pick a time and place. 2) Say what happened, without blame. 3) Say how it felt to you. 4) Say what you would like. 5) Listen to their reply."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "সময় ঠিক করি|ঘটনা বলি|অনুভূতি বলি|চাওয়া বলি",
+        "en": "Pick a time|Say what happened|Say how it felt|Say what I'd like"
+      },
+      "kind": "steps",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-re-3",
+      "topic": "relationships",
+      "tags": [
+        "people",
+        "communication"
+      ],
+      "title": {
+        "bn": "উদাহরণ: দেরিতে আসা সহকর্মী",
+        "en": "Example: a colleague who arrives late"
+      },
+      "how": {
+        "bn": "শিউলি সহকর্মীকে বলল, ‘গত দুই সভায় তুমি দেরিতে এসেছ, আমার কাজ আটকে যাচ্ছিল। সভা কি একটু পরে করলে সুবিধা হবে?’ সে দোষ না দিয়ে প্রশ্ন করল।",
+        "en": "Shiuli told a colleague, “You joined the last two meetings late and my work was held up. Would a slightly later start suit you?” She asked a question without blaming."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "ঘটনা বলি|প্রভাব বলি|প্রশ্ন করি",
+        "en": "State what happened|State the effect|Ask a question"
+      },
+      "kind": "example",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-re-4",
+      "topic": "relationships",
+      "tags": [
+        "people",
+        "communication"
+      ],
+      "title": {
+        "bn": "যোগাযোগে যা এড়িয়ে চলবেন",
+        "en": "Communication slips to avoid"
+      },
+      "how": {
+        "bn": "মাঝপথে থামিয়ে দেবেন না। ‘তুমি সবসময়’ বা ‘তুমি কখনো না’ বলবেন না। বার্তায় আবেগের কথা না লিখে সামনাসামনি বা ফোনে বলা ভালো। রাগে থাকলে কিছুক্ষণ পরে বলুন।",
+        "en": "Do not interrupt. Avoid “you always” or “you never”. For emotional topics, speak in person or by phone rather than message. If you are upset, wait a little before you speak."
+      },
+      "diagram": {
+        "type": "matrix",
+        "bn": "থামিয়ে দেওয়া: আগে শুনি|‘সবসময়’ ‘কখনো না’: নির্দিষ্ট ঘটনা|বার্তায় আবেগ: সামনাসামনি|রাগে বলা: একটু অপেক্ষা",
+        "en": "Interrupting: listen first|“Always/never”: name the event|Feelings by message: talk live|Speaking upset: wait a little"
+      },
+      "kind": "watchout",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-re-5",
+      "topic": "relationships",
+      "tags": [
+        "people",
+        "learning"
+      ],
+      "title": {
+        "bn": "সম্পর্ক ও যোগাযোগ নিয়ে আরও শিখতে",
+        "en": "Learn more about relationships and communication"
+      },
+      "how": {
+        "bn": "‘সক্রিয় শোনা’ ও ‘যোগাযোগ দক্ষতা’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অ্যাপে উইকিপিডিয়া খুঁজলে পরিচিতি সংরক্ষিত হয়। গভীর সমস্যায় যোগ্য কাউন্সেলরের সঙ্গে কথা বলুন।",
+        "en": "Read general explainers on “active listening” and “communication skills”. A Wikipedia search in the app saves an overview. For deep difficulties, talk to a qualified counsellor."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "সাধারণ লেখা পড়ি|একটা অনুশীলন করি|প্রয়োজনে কাউন্সেলর",
+        "en": "Read general explainers|Practise one skill|Counsellor if needed"
+      },
+      "appLink": "#/cards",
+      "kind": "learn",
+      "source": "wikipedia",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-sk-1",
+      "topic": "skills",
+      "tags": [
+        "skills",
+        "career"
+      ],
+      "title": {
+        "bn": "ক্যারিয়ারের জন্য দক্ষতা কীভাবে ভাবব",
+        "en": "How to think about career skills"
+      },
+      "how": {
+        "bn": "দক্ষতা তিন ধরনের হতে পারে: কাজের নির্দিষ্ট দক্ষতা, মানুষের সঙ্গে কাজের দক্ষতা, আর নিজেকে সামলানোর দক্ষতা। নিজের ক্ষেত্রে কোনটা দুর্বল তা লিখে দেখুন, কিন্তু নিজেকে নম্বর দেবেন না।",
+        "en": "Skills can be work-specific, people skills, and self-management skills. Note which is thin for you, but do not give yourself a number."
+      },
+      "diagram": {
+        "type": "matrix",
+        "bn": "কাজের দক্ষতা: নির্দিষ্ট কাজ|মানুষের দক্ষতা: সহযোগিতা|নিজেকে সামলানো: গুছিয়ে চলা|নতুন শেখা: খোলা মন",
+        "en": "Work skills: the craft|People skills: working together|Self-management: staying organised|Learning: staying open"
+      },
+      "appLink": "#/diary/intake/3",
+      "kind": "explain",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-sk-2",
+      "topic": "skills",
+      "tags": [
+        "skills",
+        "career",
+        "practice"
+      ],
+      "title": {
+        "bn": "একটা দক্ষতা গড়ার ধাপ",
+        "en": "Steps to build one skill"
+      },
+      "how": {
+        "bn": "1) একটা দক্ষতা বাছুন। 2) এই মাসে একটা ছোট কাজ ঠিক করুন যাতে সেটা লাগে। 3) সপ্তাহে 2–3 বার 15 মিনিট অনুশীলন করুন। 4) কাউকে দেখিয়ে মতামত নিন।",
+        "en": "1) Pick one skill. 2) Choose a small piece of work this month that uses it. 3) Practise 15 minutes, 2–3 times a week. 4) Show someone and ask for feedback."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "একটা দক্ষতা বাছি|ছোট কাজ ঠিক|15 মিনিট অনুশীলন|মতামত নিই",
+        "en": "Pick one skill|Choose a small task|Practise 15 min|Ask feedback"
+      },
+      "appLink": "#/diary/intake/3",
+      "kind": "steps",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-sk-3",
+      "topic": "skills",
+      "tags": [
+        "skills",
+        "career"
+      ],
+      "title": {
+        "bn": "উদাহরণ: লেখার দক্ষতা",
+        "en": "Example: building writing skill"
+      },
+      "how": {
+        "bn": "জুলেখা কাজের ইমেইল আরও পরিষ্কার করতে চাইল। প্রতিদিন একটা ইমেইল তিন লাইনে লেখা অনুশীলন করল, এক সহকর্মীকে দেখাল, আর তাঁর পরামর্শে ‘কী চাই’ লাইনটা প্রথমে আনল।",
+        "en": "Julekha wanted clearer work emails. She practised one email a day in three lines, showed a colleague, and on their suggestion moved the “what I need” line to the top."
+      },
+      "diagram": {
+        "type": "cycle",
+        "bn": "তিন লাইনে লিখি|সহকর্মীকে দেখাই|পরামর্শ নিই|আবার লিখি",
+        "en": "Write in 3 lines|Show a colleague|Take suggestion|Write again"
+      },
+      "appLink": "#/diary/intake/3",
+      "kind": "example",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-sk-4",
+      "topic": "skills",
+      "tags": [
+        "skills",
+        "career"
+      ],
+      "title": {
+        "bn": "দক্ষতা গড়ায় যা এড়াবেন",
+        "en": "Skill-building slips to avoid"
+      },
+      "how": {
+        "bn": "একসঙ্গে অনেক কোর্স ধরবেন না। শুধু সার্টিফিকেট পেলেই কাজে লাগবে ভাববেন না; ছোট কাজে ব্যবহার করে দেখান। অন্যের সঙ্গে নিজের তুলনা বাদ দিন, নিজের গতি দেখুন।",
+        "en": "Do not enrol in many courses at once. A certificate alone does not prove use; show the skill in a small piece of work. Skip comparing with others and watch your own pace."
+      },
+      "diagram": {
+        "type": "matrix",
+        "bn": "অনেক কোর্স: একটা বাছি|শুধু সার্টিফিকেট: কাজে দেখাই|তুলনা: নিজের গতি|মতামত নেই: একজনকে জিজ্ঞাসা",
+        "en": "Many courses: pick one|Certificate only: show in work|Comparing: own pace|No feedback: ask one person"
+      },
+      "appLink": "#/diary/intake/3",
+      "kind": "watchout",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-sk-5",
+      "topic": "skills",
+      "tags": [
+        "skills",
+        "career",
+        "learning"
+      ],
+      "title": {
+        "bn": "ক্যারিয়ার ও দক্ষতা নিয়ে আরও শিখতে",
+        "en": "Learn more about career and skills"
+      },
+      "how": {
+        "bn": "নিজের ক্ষেত্রের কাজের বিবরণ, চাকরির বিজ্ঞপ্তি আর অভিজ্ঞ কারও সঙ্গে কথা থেকে জানুন কোন দক্ষতা লাগে। সাধারণ জ্ঞানের লেখাও পড়তে পারেন। যাচাইকারীর অপেক্ষায়।",
+        "en": "Learn which skills matter from job descriptions in your field, job notices and a chat with an experienced person. General explainers help too. Reviewer pending."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "কাজের বিবরণ দেখি|অভিজ্ঞের সঙ্গে কথা|দক্ষতার তালিকা বানাই",
+        "en": "Read job descriptions|Talk to someone experienced|Make a skill list"
+      },
+      "appLink": "#/diary/intake/3",
+      "kind": "learn",
+      "source": "reviewer",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-en-1",
+      "topic": "environment",
+      "tags": [
+        "environment",
+        "systems"
+      ],
+      "title": {
+        "bn": "পরিবেশ আচরণকে কীভাবে টানে",
+        "en": "How surroundings pull behaviour"
+      },
+      "how": {
+        "bn": "আমরা যেটা সামনে দেখি সেটাই বেশি করি। ফোন হাতের কাছে থাকলে দেখব, বই টেবিলে থাকলে পড়ব। তাই ইচ্ছাশক্তির চেয়ে সাজানো ব্যবস্থা বেশি কাজ করে।",
+        "en": "We tend to do what is in front of us. A phone within reach gets picked up, a book on the table gets read. So how you arrange things often works better than willpower."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "পরিবেশ সাজাই|সহজ পথ বানাই|কঠিন পথ বাড়াই",
+        "en": "Arrange surroundings|Make the good path easy|Make the other path harder"
+      },
+      "kind": "explain",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-en-2",
+      "topic": "environment",
+      "tags": [
+        "environment",
+        "focus"
+      ],
+      "title": {
+        "bn": "কাজের টেবিল গোছানোর ধাপ",
+        "en": "Steps to set up a work desk"
+      },
+      "how": {
+        "bn": "1) টেবিল থেকে যা আজকের কাজে লাগে না, সরান। 2) দরকারি জিনিস হাতের নাগালে রাখুন। 3) ফোন অন্যদিকে রাখুন। 4) কাজ শেষে 2 মিনিটে আবার গুছিয়ে যান।",
+        "en": "1) Remove what today's work does not need. 2) Keep needed items within reach. 3) Put the phone elsewhere. 4) After work, spend 2 minutes resetting."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "অপ্রয়োজনীয় সরাই|দরকারি কাছে রাখি|ফোন দূরে|শেষে গুছিয়ে যাই",
+        "en": "Clear extras|Keep needed items close|Phone away|Reset after work"
+      },
+      "kind": "steps",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-en-3",
+      "topic": "environment",
+      "tags": [
+        "environment",
+        "habits"
+      ],
+      "title": {
+        "bn": "উদাহরণ: বই চোখের সামনে",
+        "en": "Example: the book in plain sight"
+      },
+      "how": {
+        "bn": "রুমা রাতে পড়ার অভ্যাস চায়। সে ফোনের চার্জার ঘরের বাইরে রাখল আর বইটা বালিশের পাশে রাখল। দুই সপ্তাহে ঘুমের আগে বই খোলা স্বাভাবিক হয়ে গেল।",
+        "en": "Ruma wanted to read at night. She moved the phone charger outside the bedroom and put the book by the pillow. Within two weeks opening the book before sleep felt natural."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "চার্জার বাইরে|বই বালিশের পাশে|ঘুমের আগে বই খুলি",
+        "en": "Charger outside|Book by pillow|Open book before sleep"
+      },
+      "kind": "example",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-en-4",
+      "topic": "environment",
+      "tags": [
+        "environment",
+        "systems"
+      ],
+      "title": {
+        "bn": "পরিবেশ সাজানোয় যা এড়াবেন",
+        "en": "Setup slips to avoid"
+      },
+      "how": {
+        "bn": "একসঙ্গে পুরো ঘর সাজাতে বসবেন না। দামি জিনিস কেনার আগে বিনা খরচের বদল চেষ্টা করুন। অন্যের সঙ্গে এক ঘরে থাকলে তাদের সঙ্গে আগে কথা বলুন।",
+        "en": "Do not try to redo a whole room at once. Try free changes before buying anything. If you share the space, talk to the others first."
+      },
+      "diagram": {
+        "type": "matrix",
+        "bn": "পুরো ঘর একসাথে: এক কোণ|কিনে সমাধান: আগে বিনা খরচের বদল|অন্যের জায়গা: আগে কথা বলি|একবারে স্থায়ী: এক সপ্তাহ চালাই",
+        "en": "Whole room: one corner|Buying a fix: free change first|Shared space: talk first|Permanent at once: trial week"
+      },
+      "kind": "watchout",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-en-5",
+      "topic": "environment",
+      "tags": [
+        "environment",
+        "learning"
+      ],
+      "title": {
+        "bn": "পরিবেশ ও ব্যবস্থা নিয়ে আরও শিখতে",
+        "en": "Learn more about environment and systems"
+      },
+      "how": {
+        "bn": "‘পরিবেশ আচরণকে প্রভাবিত করে’ বিষয়ে সাধারণ জ্ঞানের লেখা পড়ুন। নিজের কাজের জায়গার ছবি তুলে আগে-পরে মিলিয়ে দেখুন। আমাদের লেখা যাচাইকারীর অপেক্ষায়।",
+        "en": "Read general explainers on how surroundings shape behaviour. Take before-and-after photos of your workspace to compare. Our text is waiting for a reviewer."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "সাধারণ লেখা পড়ি|আগে-পরে ছবি|কী কাজ করল লিখি",
+        "en": "Read general explainers|Before-and-after photo|Note what worked"
+      },
+      "kind": "learn",
+      "source": "reviewer",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-ds-1",
+      "topic": "environment",
+      "tags": [
+        "digital-safety",
+        "privacy"
+      ],
+      "title": {
+        "bn": "ডিজিটাল নিরাপত্তার মূল কথা",
+        "en": "The basics of digital safety"
+      },
+      "how": {
+        "bn": "ডিজিটাল নিরাপত্তা মানে নিজের তথ্য, অ্যাকাউন্ট আর ডিভাইস অন্যের হাতে যাওয়া থেকে বাঁচানো। কয়েকটা সরল অভ্যাস, যেমন আলাদা পাসওয়ার্ড আর সতর্কতা, অনেক বিপদ কমায়।",
+        "en": "Digital safety means keeping your information, accounts and devices out of the wrong hands. A few simple habits, such as separate passcodes and caution, remove many risks."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "অ্যাকাউন্ট চিনি|দুর্বল জায়গা দেখি|সহজ অভ্যাস বানাই",
+        "en": "Know my accounts|Spot weak points|Build simple habits"
+      },
+      "kind": "explain",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-ds-2",
+      "topic": "environment",
+      "tags": [
+        "digital-safety",
+        "privacy"
+      ],
+      "title": {
+        "bn": "নিজের অ্যাকাউন্ট সুরক্ষিত করার ধাপ",
+        "en": "Steps to secure your accounts"
+      },
+      "how": {
+        "bn": "1) গুরুত্বপূর্ণ অ্যাকাউন্ট (ইমেইল, ব্যাংক) আগে ঠিক করুন। 2) প্রতিটির আলাদা ও লম্বা পাসওয়ার্ড দিন। 3) দ্বিতীয় ধাপের যাচাই চালু করুন। 4) ফোনে স্ক্রিন-লক রাখুন।",
+        "en": "1) Start with key accounts (email, bank). 2) Give each a different, long password. 3) Turn on two-step verification. 4) Keep a screen lock on your phone."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "ইমেইল ও ব্যাংক আগে|আলাদা লম্বা পাসওয়ার্ড|দুই ধাপের যাচাই|ফোনে লক",
+        "en": "Email and bank first|Different long passwords|Two-step check|Phone lock"
+      },
+      "kind": "steps",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-ds-3",
+      "topic": "environment",
+      "tags": [
+        "digital-safety",
+        "privacy"
+      ],
+      "title": {
+        "bn": "উদাহরণ: সন্দেহজনক বার্তা",
+        "en": "Example: a suspicious message"
+      },
+      "how": {
+        "bn": "ফারজানার কাছে ব্যাংকের নামে একটা বার্তা এল, ‘এখনই লিঙ্কে ক্লিক করুন’। সে ক্লিক না করে নিজে ব্যাংকের অ্যাপ খুলে দেখল, আর বার্তাটা মুছে দিল। ওটিপি সে কাউকে বলে না।",
+        "en": "Farzana got a message in a bank's name saying “click now”. She did not click. She opened the bank's own app to check, and deleted the message. She never tells anyone her one-time codes."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "বার্তা পাই|ক্লিক করি না|নিজে অ্যাপ খুলে দেখি|মুছে দিই",
+        "en": "Receive message|Do not click|Check in the real app|Delete it"
+      },
+      "kind": "example",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-ds-4",
+      "topic": "environment",
+      "tags": [
+        "digital-safety",
+        "privacy"
+      ],
+      "title": {
+        "bn": "অনলাইনে যা এড়িয়ে চলবেন",
+        "en": "Online slips to avoid"
+      },
+      "how": {
+        "bn": "পাসওয়ার্ড, পিন বা এককালীন কোড কাউকে বলবেন না, এমনকি ‘ব্যাংক’ বা ‘সহায়তা’ দাবি করলেও। এক পাসওয়ার্ড সব জায়গায় দেবেন না। জনসমক্ষে ওয়াইফাইতে ব্যাংকের কাজ করবেন না।",
+        "en": "Never share passwords, PINs or one-time codes, even with someone claiming to be the bank or support. Do not reuse one password everywhere. Avoid banking on public Wi-Fi."
+      },
+      "diagram": {
+        "type": "matrix",
+        "bn": "কোড বলা: কাউকে নয়|এক পাসওয়ার্ড সব জায়গায়: আলাদা রাখি|খোলা ওয়াইফাইয়ে ব্যাংক: এড়াই|তাড়া দেওয়া বার্তা: থেমে দেখি",
+        "en": "Sharing codes: never|One password everywhere: use different|Banking on open Wi-Fi: avoid|Rushing message: pause and check"
+      },
+      "kind": "watchout",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-ds-5",
+      "topic": "environment",
+      "tags": [
+        "digital-safety",
+        "learning"
+      ],
+      "title": {
+        "bn": "ডিজিটাল নিরাপত্তা নিয়ে আরও শিখতে",
+        "en": "Learn more about digital safety"
+      },
+      "how": {
+        "bn": "‘ফিশিং’, ‘পাসওয়ার্ড ম্যানেজার’ ও ‘দুই ধাপের যাচাই’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অ্যাপে উইকিপিডিয়া খুঁজলে পরিচিতি সংরক্ষিত হয়। নিজের ব্যাংকের নিরাপত্তা নির্দেশনাও দেখুন।",
+        "en": "Read general explainers on “phishing”, “password managers” and “two-step verification”. A Wikipedia search in the app saves an overview. Also read your own bank's safety guidance."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "সাধারণ লেখা পড়ি|উইকিপিডিয়া খুঁজি|ব্যাংকের নির্দেশনা দেখি",
+        "en": "Read general explainers|Search Wikipedia|Read bank guidance"
+      },
+      "appLink": "#/cards",
+      "kind": "learn",
+      "source": "wikipedia",
+      "reviewer": "pending"
+    }
+  ]
+}

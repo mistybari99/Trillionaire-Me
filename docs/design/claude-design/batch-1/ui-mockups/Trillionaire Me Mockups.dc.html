@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600&family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Serif+Bengali:wght@500;700&display=swap" rel="stylesheet">
+<style>body{margin:0;background:#E9E4D8;font-family:"Hind Siliguri",system-ui,sans-serif}button{font:inherit;cursor:pointer}*{box-sizing:border-box}</style>
+</helmet>
+<div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;gap:16px;padding:20px 12px 40px;color:#14181F">
+  <div style="width:100%;max-width:1040px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+    <div>
+      <div style="font:600 13px 'Hind Siliguri';color:#5B6270">Trillionaire Me · prototype</div>
+      <div style="font:600 22px/1.3 'Noto Serif Bengali',serif">Screen <span style="color:#B0431A">{{ screenName }}</span></div>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <div style="display:flex;gap:6px" role="group" aria-label="Language"><button data-v="en" onclick="{{ onLang }}" style="min-height:44px;padding:4px 14px;background:{{ lenBg }};color:{{ lenFg }};border:1.5px solid #14181F">English</button><button data-v="bn" onclick="{{ onLang }}" style="min-height:44px;padding:4px 14px;background:{{ lbnBg }};color:{{ lbnFg }};border:1.5px solid #14181F">বাংলা</button></div><div style="display:flex;gap:6px" role="group" aria-label="Option">
+        <button data-v="A" onclick="{{ onOpt }}" style="min-height:44px;padding:4px 14px;background:{{ optAbg }};color:{{ optAfg }};border:1.5px solid #14181F">Option A</button>
+        <button data-v="B" onclick="{{ onOpt }}" style="min-height:44px;padding:4px 14px;background:{{ optBbg }};color:{{ optBfg }};border:1.5px solid #14181F">Option B</button>
+      </div>
+      <div style="display:flex;gap:6px" role="group" aria-label="Format">
+        <button data-v="m" onclick="{{ onFmt }}" style="min-height:44px;padding:4px 14px;background:{{ fmM }};color:{{ fmMfg }};border:1.5px solid #14181F">Phone 360</button>
+        <button data-v="d" onclick="{{ onFmt }}" style="min-height:44px;padding:4px 14px;background:{{ fmD }};color:{{ fmDfg }};border:1.5px solid #14181F">Desktop</button>
+      </div>
+    </div>
+  </div>
+
+  <div style="width:{{ frameW }};max-width:100%;background:#F5F1E8;border:1px solid #8A8470;position:relative;min-height:760px;display:flex;flex-direction:column;overflow:hidden">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 16px;font:500 13px 'Hind Siliguri';color:#5B6270;border-bottom:1px solid #8A8470">
+      <span>9:41</span><span style="font:600 12px 'Hind Siliguri';padding:2px 10px;border:1px solid #73580F;background:#F1E6C4;color:#73580F">DEMO DATA</span>
+    </div>
+
+    <div style="flex:1;padding:16px 18px 96px;overflow:auto">
+
+      <sc-if value="{{ todayA }}">
+        <h1 style="font:700 28px/1.35 'Noto Serif Bengali',serif;margin:10px 0 4px">{{ tx.today }}</h1>
+        <p style="margin:0;color:#5B6270;font-size:15px">Thursday, 25 October</p>
+        <div style="border-top:2px solid #14181F;border-bottom:1px solid #8A8470;padding:14px 0;margin:18px 0">
+          <small style="font:600 12px 'Hind Siliguri';color:#5B6270">Current stage</small>
+          <div style="font:600 56px/1.1 'Fraunces',serif;color:#B0431A">A</div>
+          <div style="font:600 16px 'Hind Siliguri'">Stage A · 1 of 8</div>
+          <div style="display:flex;gap:4px;margin-top:10px"><i style="flex:1;height:6px;background:#B0431A"></i><i style="flex:1;height:6px;background:#8A8470"></i><i style="flex:1;height:6px;background:#8A8470"></i><i style="flex:1;height:6px;background:#8A8470"></i><i style="flex:1;height:6px;background:#8A8470"></i><i style="flex:1;height:6px;background:#8A8470"></i><i style="flex:1;height:6px;background:#8A8470"></i><i style="flex:1;height:6px;background:#8A8470"></i></div>
+        </div>
+        <div style="border:1px solid #8A8470;border-left:4px solid #C9A227;background:#FBF8F1;padding:14px 16px;margin:14px 0">
+          <span style="font-size:12px;border:1px solid #8A8470;padding:0 6px">{{ insp.theme }}</span>
+          <p style="font:600 18px/1.6 'Noto Serif Bengali',serif;margin:6px 0 2px">{{ insp.bn }}</p>
+          <p style="margin:0;font-size:14px;color:#5B6270">{{ insp.en }}</p>
+        </div>
+        <div style="background:#FBF8F1;border:1px solid #8A8470;padding:14px 16px;margin:14px 0;display:flex;gap:10px"><b style="font:600 18px 'Fraunces',serif;color:#B0431A">1</b><div><div style="font-weight:600">Next step</div><div style="font-size:15px;color:#5B6270">Add one task to your plan.</div></div></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px">
+          <button style="grid-column:1/-1;min-height:52px;background:#243B6B;color:#FBF8F1;border:0;font:600 18px 'Hind Siliguri'">Start focus</button>
+          <button style="min-height:48px;background:none;border:1.5px solid #14181F;font:600 16px 'Hind Siliguri'">Capture</button>
+          <button style="min-height:48px;background:none;border:1.5px solid #14181F;font:600 16px 'Hind Siliguri'">I'm stuck</button><button data-s="deen" onclick="{{ onNav }}" style="min-height:48px;background:none;border:1.5px solid #14181F;font:600 16px 'Hind Siliguri'">{{ tx.deen }}</button><button data-s="money" onclick="{{ onNav }}" style="min-height:48px;background:none;border:1.5px solid #14181F;font:600 16px 'Hind Siliguri'">{{ tx.money }}</button>
+        </div>
+      </sc-if>
+      <sc-if value="{{ todayB }}">
+        <h1 style="font:700 28px/1.35 'Noto Serif Bengali',serif;margin:10px 0 4px">{{ tx.today }}</h1>
+        <p style="margin:0 0 14px;color:#5B6270;font-size:15px">Thursday, 25 October</p>
+        <div style="background:#243B6B;color:#FBF8F1;padding:18px;display:grid;gap:6px">
+          <small style="font-size:12px;opacity:.85">Current stage · 1 of 8</small>
+          <div style="font:600 64px/1 'Fraunces',serif">A</div>
+          <div style="font-size:15px">Your first stage is open.</div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px">
+          <div style="background:#FBF8F1;border:1px solid #8A8470;padding:14px"><small style="color:#5B6270">Focus</small><div style="font:600 20px 'Fraunces',serif">Start</div></div>
+          <div style="background:#FBF8F1;border:1px solid #8A8470;padding:14px"><small style="color:#5B6270">Plan</small><div style="font:600 20px 'Fraunces',serif">Unknown</div></div>
+        </div>
+        <div style="background:#FBF8F1;border:1px solid #8A8470;padding:16px;margin-top:12px;font-size:15px"><div style="font-size:12px;border:1px solid #73580F;background:#F1E6C4;color:#73580F;display:inline-block;padding:0 6px">{{ insp.theme }}</div><p style="font:600 18px/1.6 'Noto Serif Bengali',serif;margin:6px 0 2px">{{ insp.bn }}</p><p style="margin:0;color:#5B6270">{{ insp.en }}</p></div>
+        <div style="margin-top:14px;display:flex;gap:10px;align-items:center;border-top:1px solid #8A8470;padding-top:14px"><span style="color:#B0431A;font-weight:600;font-size:18px">→</span><span>Add one task to your plan.</span></div>
+        <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap"><span style="font-size:13px;border:1px solid #8A8470;padding:6px 12px">Capture</span><span style="font-size:13px;border:1px solid #8A8470;padding:6px 12px">I'm stuck</span></div>
+      </sc-if>
+
+      <sc-if value="{{ diaryA }}">
+        <h1 style="font:700 28px/1.35 'Noto Serif Bengali',serif;margin:10px 0 4px">{{ tx.diary }}</h1>
+        <p style="margin:0 0 12px;color:#5B6270;font-size:15px">Answer at your pace. Skip what you do not know.</p>
+        <div style="background:#FBF8F1;border:1px solid #8A8470;padding:14px 16px;margin:12px 0"><b>Profile completeness</b><div style="height:10px;background:#8A8470;margin:8px 0"><i style="display:block;width:30%;height:100%;background:#3F6B4A"></i></div><small style="color:#5B6270">3 of 10 answered · 2 unknown</small></div>
+        <div style="border-bottom:1px solid #8A8470;padding:14px 0"><label style="font-weight:600;display:flex;gap:6px;align-items:center">Weekly free hours <span style="font-size:11px;border:1px solid #73580F;color:#73580F;padding:0 6px">DEMO</span></label><div style="border:1.5px solid #14181F;background:#FBF8F1;padding:10px;margin-top:6px;min-height:48px">6</div></div>
+        <div style="border-bottom:1px solid #8A8470;padding:14px 0"><label style="font-weight:600">Monthly income</label><div style="border:1.5px dashed #8A8470;background:#FBF8F1;padding:10px;margin-top:6px;color:#5B6270;min-height:48px">Unknown — not 0</div></div>
+        <h2 style="font:700 20px 'Noto Serif Bengali',serif;margin:22px 0 6px">Plan</h2>
+        <div style="background:#FBF8F1;border:1px solid #8A8470;padding:12px 14px;margin:8px 0"><b>Write the outline</b><div style="font-size:14px;color:#5B6270">25 min · Fri 09:00</div></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px"><button style="min-height:48px;background:#243B6B;color:#FBF8F1;border:0;font:600 16px 'Hind Siliguri';grid-column:1/-1">Add task</button><button style="min-height:44px;background:none;border:1.5px solid #14181F;font:600 15px 'Hind Siliguri'" data-s="money" onclick="{{ onNav }}">{{ tx.money }}</button><button style="min-height:44px;background:none;border:1.5px solid #14181F;font:600 15px 'Hind Siliguri'" data-s="deen" onclick="{{ onNav }}">{{ tx.deen }}</button></div>
+      </sc-if>
+      <sc-if value="{{ diaryB }}">
+        <h1 style="font:700 28px/1.35 'Noto Serif Bengali',serif;margin:10px 0 12px">{{ tx.diary }}</h1>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+          <div style="background:#FBF8F1;border:1px solid #8A8470;padding:12px 8px;text-align:center"><div style="font:600 26px 'Fraunces',serif;color:#243B6B">3</div><small style="color:#5B6270">answered</small></div>
+          <div style="background:#FBF8F1;border:1px solid #8A8470;padding:12px 8px;text-align:center"><div style="font:600 26px 'Fraunces',serif;color:#73580F">2</div><small style="color:#5B6270">unknown</small></div>
+          <div style="background:#FBF8F1;border:1px solid #8A8470;padding:12px 8px;text-align:center"><div style="font:600 26px 'Fraunces',serif;color:#3F6B4A">1</div><small style="color:#5B6270">task</small></div>
+        </div>
+        <div style="display:grid;gap:10px;margin-top:14px">
+          <div style="background:#FBF8F1;border:1px solid #8A8470;padding:14px"><small style="color:#5B6270">Next question</small><div style="font-weight:600;margin-top:2px">Weekly free hours</div><div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap"><span style="border:1.5px solid #14181F;padding:6px 12px">Value</span><span style="border:1.5px solid #14181F;padding:6px 12px">Later</span><span style="border:1.5px solid #14181F;padding:6px 12px">Prefer not</span></div></div>
+          <div style="background:#FBF8F1;border:1px solid #8A8470;padding:14px"><b>Write the outline</b><div style="font-size:14px;color:#5B6270">25 min · Fri 09:00</div></div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:14px"><button style="flex:1;min-height:48px;background:#243B6B;color:#FBF8F1;border:0;font:600 16px 'Hind Siliguri'">Add task</button><button style="flex:1;min-height:48px;background:none;border:1.5px solid #14181F;font:600 16px 'Hind Siliguri'">Money</button></div>
+      </sc-if>
+
+      <sc-if value="{{ habitsA }}">
+        <h1 style="font:700 28px/1.35 'Noto Serif Bengali',serif;margin:10px 0 4px">{{ tx.habits }}</h1>
+        <p style="margin:0 0 12px;color:#5B6270;font-size:15px">Small repeats. A missed day is only a missed day.</p>
+        <div style="display:flex;flex-direction:column">
+          <div style="display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid #8A8470"><span style="width:36px;height:36px;border:1.5px solid #3F6B4A;background:#3F6B4A"></span><div><b>Read 10 pages</b><div style="font-size:14px;color:#5B6270">Mon–Fri</div></div><span style="font-size:12px;border:1px solid #3F6B4A;color:#3F6B4A;padding:0 8px">Done</span></div>
+          <div style="display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid #8A8470"><span style="width:36px;height:36px;border:1.5px solid #14181F"></span><div><b>Walk 20 minutes</b><div style="font-size:14px;color:#5B6270">Daily</div></div><span style="font-size:12px;color:#5B6270">Not yet</span></div>
+          <div style="display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid #8A8470"><span style="width:36px;height:36px;border:1.5px solid #14181F"></span><div><b>Save 100 BDT</b><div style="font-size:14px;color:#5B6270">Weekly</div></div><span style="font-size:12px;color:#5B6270">Not yet</span></div>
+        </div>
+        <button style="width:100%;min-height:52px;margin-top:18px;background:#243B6B;color:#FBF8F1;border:0;font:600 18px 'Hind Siliguri'">{{ tx.addHabit }}</button>
+      </sc-if>
+      <sc-if value="{{ habitsB }}">
+        <h1 style="font:700 28px/1.35 'Noto Serif Bengali',serif;margin:10px 0 12px">{{ tx.habits }}</h1>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div style="background:#FBF8F1;border:1px solid #8A8470;padding:14px;min-height:120px;display:flex;flex-direction:column;justify-content:space-between"><span style="width:32px;height:32px;background:#3F6B4A"></span><div><b>Read 10 pages</b><div style="font-size:13px;color:#5B6270">Done today</div></div></div>
+          <div style="background:#FBF8F1;border:1px solid #8A8470;padding:14px;min-height:120px;display:flex;flex-direction:column;justify-content:space-between"><span style="width:32px;height:32px;border:1.5px solid #14181F"></span><div><b>Walk 20 min</b><div style="font-size:13px;color:#5B6270">Not yet</div></div></div>
+          <div style="background:#FBF8F1;border:1px solid #8A8470;padding:14px;min-height:120px;display:flex;flex-direction:column;justify-content:space-between"><span style="width:32px;height:32px;border:1.5px solid #14181F"></span><div><b>Save 100 BDT</b><div style="font-size:13px;color:#5B6270">Not yet</div></div></div>
+          <div style="border:1.5px dashed #8A8470;padding:14px;min-height:120px;display:flex;align-items:center;justify-content:center;color:#5B6270">+ Add habit</div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ journeyA }}">
+        <h1 style="font:700 28px/1.35 'Noto Serif Bengali',serif;margin:10px 0 4px">{{ tx.journey }}</h1>
+        <ol style="list-style:none;padding:0;margin:14px 0">
+          <li style="display:grid;grid-template-columns:36px 1fr auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid #8A8470"><b style="display:grid;place-items:center;width:36px;height:36px;border:1.5px solid #B0431A;color:#B0431A;font:600 16px 'Fraunces',serif">A</b><div>Stage A name<div style="font-size:14px;color:#5B6270">Exit condition</div></div><span style="font-size:12px;border:1px solid #B0431A;color:#B0431A;padding:0 8px">Now</span></li>
+          <li style="display:grid;grid-template-columns:36px 1fr auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid #8A8470"><b style="display:grid;place-items:center;width:36px;height:36px;border:1.5px solid #14181F;font:600 16px 'Fraunces',serif">B</b><div>Stage B name<div style="font-size:14px;color:#5B6270">Exit condition</div></div><span style="font-size:12px;color:#5B6270">Later</span></li>
+        </ol>
+        <div style="border:1px dashed #8A8470;height:160px;display:grid;place-items:center;color:#5B6270;background:#FBF8F1">Journey picture (placeholder)</div>
+        <div style="margin-top:14px;font-size:15px;color:#5B6270">Last entry · 22 Oct · Stage A opened</div>
+      </sc-if>
+      <sc-if value="{{ journeyB }}">
+        <h1 style="font:700 28px/1.35 'Noto Serif Bengali',serif;margin:10px 0 12px">{{ tx.journey }}</h1>
+        <div style="background:#FBF8F1;border:1px solid #8A8470;padding:16px;display:grid;gap:4px"><small style="color:#5B6270">Stage A of 8</small><div style="font:600 40px 'Fraunces',serif;color:#B0431A">A</div><div style="height:6px;background:#8A8470"><i style="display:block;width:12%;height:100%;background:#B0431A"></i></div></div>
+        <div style="border:1px dashed #8A8470;height:180px;display:grid;place-items:center;color:#5B6270;margin-top:12px">Journey picture (placeholder)</div>
+        <div style="display:grid;grid-template-columns:repeat(8,1fr);gap:4px;margin-top:14px">
+          <span style="height:32px;display:grid;place-items:center;border:1.5px solid #B0431A;color:#B0431A;font:600 14px 'Fraunces',serif">A</span><span style="height:32px;display:grid;place-items:center;border:1.5px solid #8A8470;color:#5B6270;font:600 14px 'Fraunces',serif">B</span><span style="height:32px;display:grid;place-items:center;border:1.5px solid #8A8470;color:#5B6270;font:600 14px 'Fraunces',serif">C</span><span style="height:32px;display:grid;place-items:center;border:1.5px solid #8A8470;color:#5B6270;font:600 14px 'Fraunces',serif">D</span><span style="height:32px;display:grid;place-items:center;border:1.5px solid #8A8470;color:#5B6270;font:600 14px 'Fraunces',serif">E</span><span style="height:32px;display:grid;place-items:center;border:1.5px solid #8A8470;color:#5B6270;font:600 14px 'Fraunces',serif">F</span><span style="height:32px;display:grid;place-items:center;border:1.5px solid #8A8470;color:#5B6270;font:600 14px 'Fraunces',serif">G</span><span style="height:32px;display:grid;place-items:center;border:1.5px solid #8A8470;color:#5B6270;font:600 14px 'Fraunces',serif">H</span>
+        </div>
+        <div style="margin-top:14px;font-size:15px;color:#5B6270">Last entry · 22 Oct · Stage A opened</div>
+      </sc-if>
+
+      <sc-if value="{{ deenA }}">
+        <h1 style="font:700 28px/1.35 'Noto Serif Bengali',serif;margin:10px 0 4px">{{ tx.deen }}</h1>
+        <p style="margin:0 0 12px;color:#5B6270;font-size:15px">Private by default. Nothing here is scored.</p>
+        <div style="font-size:13px;color:#5B6270;margin-bottom:6px">Prayer times · Dhaka <span style="font-size:11px;border:1px solid #73580F;color:#73580F;background:#F1E6C4;padding:0 6px">DEMO</span></div>
+        <div style="display:flex;flex-direction:column;gap:0">
+          <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #8A8470"><span>Fajr</span><span>—</span></div>
+          <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #8A8470"><span>Dhuhr</span><span>—</span></div>
+          <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #8A8470"><span>Asr</span><span>—</span></div>
+        </div>
+        <p style="font-size:13px;color:#5B6270;margin-top:10px">Times are unknown until a location is set. Unknown is not zero.</p>
+        <div style="background:#FBF8F1;border:1px solid #8A8470;padding:14px;margin-top:14px"><b>Prayer log</b><div style="display:flex;gap:6px;margin-top:8px"><span style="flex:1;min-height:44px;display:grid;place-items:center;border:1.5px solid #14181F">Marked</span><span style="flex:1;min-height:44px;display:grid;place-items:center;border:1.5px solid #14181F">Not marked</span></div></div>
+      </sc-if>
+      <sc-if value="{{ deenB }}">
+        <h1 style="font:700 28px/1.35 'Noto Serif Bengali',serif;margin:10px 0 12px">{{ tx.deen }}</h1>
+        <div style="background:#243B6B;color:#FBF8F1;padding:18px"><small style="opacity:.85">Next prayer</small><div style="font:600 30px 'Fraunces',serif">—</div><small style="opacity:.85">Set a location to see times</small></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px"><div style="background:#FBF8F1;border:1px solid #8A8470;padding:12px;text-align:center">Fajr<br><span style="color:#5B6270">—</span></div><div style="background:#FBF8F1;border:1px solid #8A8470;padding:12px;text-align:center">Dhuhr<br><span style="color:#5B6270">—</span></div><div style="background:#FBF8F1;border:1px solid #8A8470;padding:12px;text-align:center">Asr<br><span style="color:#5B6270">—</span></div><div style="background:#FBF8F1;border:1px solid #8A8470;padding:12px;text-align:center">Maghrib<br><span style="color:#5B6270">—</span></div></div>
+        <p style="font-size:13px;color:#5B6270;margin-top:12px">Private. No score, no streak.</p>
+      </sc-if>
+
+      <sc-if value="{{ moneyA }}">
+        <h1 style="font:700 28px/1.35 'Noto Serif Bengali',serif;margin:10px 0 4px">{{ tx.money }}</h1>
+        <p style="margin:0 0 12px;color:#5B6270;font-size:15px">Unknown stays unknown. Nothing is treated as zero.</p>
+        <div style="background:#FBF8F1;border:1px solid #8A8470;padding:14px 16px;margin:10px 0"><b>{{ tx.personal }}</b><p style="margin:6px 0 2px">Net worth: <span style="color:#5B6270">Unknown</span></p><p style="margin:2px 0">Monthly cash flow: <span style="color:#5B6270">Unknown</span></p></div>
+        <div style="background:#FBF8F1;border:1px solid #8A8470;padding:14px 16px;margin:10px 0"><b>{{ tx.business }}</b><p style="margin:6px 0 2px">Net worth: <span style="color:#5B6270">Not entered yet</span></p></div>
+        <div style="background:#FBF8F1;border:1px solid #8A8470;padding:12px 14px;margin:10px 0;display:flex;justify-content:space-between;align-items:center"><div><b>Salary</b><div style="font-size:13px;color:#5B6270">Income · monthly</div></div><span style="font-size:11px;border:1px solid #73580F;color:#73580F;background:#F1E6C4;padding:0 6px">DEMO</span></div>
+        <div style="background:#FBF8F1;border:1px solid #8A8470;padding:12px 14px;margin:10px 0;display:flex;justify-content:space-between;align-items:center"><div><b>Rent</b><div style="font-size:13px;color:#5B6270">Expense · amount unknown</div></div><span style="font-size:13px;color:#5B6270">Unknown</span></div>
+        <button style="width:100%;min-height:52px;margin-top:14px;background:#243B6B;color:#FBF8F1;border:0;font:600 18px 'Hind Siliguri'">{{ tx.addItem }}</button>
+      </sc-if>
+      <sc-if value="{{ moneyB }}">
+        <h1 style="font:700 28px/1.35 'Noto Serif Bengali',serif;margin:10px 0 12px">{{ tx.money }}</h1>
+        <div style="display:flex;gap:6px" role="group"><span style="flex:1;min-height:44px;display:grid;place-items:center;background:#243B6B;color:#FBF8F1">{{ tx.personal }}</span><span style="flex:1;min-height:44px;display:grid;place-items:center;border:1.5px solid #14181F">{{ tx.business }}</span></div>
+        <div style="background:#FBF8F1;border:1px solid #8A8470;padding:18px;margin-top:12px"><small style="color:#5B6270">Net worth</small><div style="font:600 36px 'Fraunces',serif;color:#5B6270">Unknown</div><small style="color:#5B6270">Add an asset or liability to start</small></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px"><div style="background:#FBF8F1;border:1px solid #8A8470;padding:12px"><small style="color:#5B6270">Cash flow / month</small><div style="font-weight:600">Unknown</div></div><div style="background:#FBF8F1;border:1px solid #8A8470;padding:12px"><small style="color:#5B6270">Cash flow 90 days</small><div style="font-weight:600">Unknown</div></div></div>
+        <button style="width:100%;min-height:52px;margin-top:14px;background:#243B6B;color:#FBF8F1;border:0;font:600 18px 'Hind Siliguri'">{{ tx.addItem }}</button>
+      </sc-if>
+
+      <sc-if value="{{ moreA }}">
+        <h1 style="font:700 28px/1.35 'Noto Serif Bengali',serif;margin:10px 0 12px">{{ tx.more }}</h1>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="background:#FBF8F1;border:1px solid #8A8470;padding:14px 16px"><b>Topics</b><div style="font-size:14px;color:#5B6270">Short learning notes</div></div>
+          <div style="background:#FBF8F1;border:1px solid #8A8470;padding:14px 16px"><b>Journey log</b><div style="font-size:14px;color:#5B6270">Your entries over time</div></div>
+          <div style="background:#FBF8F1;border:1px solid #8A8470;padding:14px 16px"><b>Data and backup</b><div style="font-size:14px;color:#5B6270">Export on this device</div></div>
+          <div data-s="money" onclick="{{ onNav }}" style="background:#FBF8F1;border:1px solid #8A8470;padding:14px 16px;cursor:pointer"><b>{{ tx.money }}</b><div style="font-size:14px;color:#5B6270">Personal and business amounts</div></div><div data-s="deen" onclick="{{ onNav }}" style="background:#FBF8F1;border:1px solid #8A8470;padding:14px 16px;cursor:pointer"><b>{{ tx.deen }}</b><div style="font-size:14px;color:#5B6270">Private prayer times and log</div></div><div data-s="onboarding" onclick="{{ onNav }}" style="background:#FBF8F1;border:1px solid #8A8470;padding:14px 16px;cursor:pointer"><b>{{ tx.onboarding }}</b><div style="font-size:14px;color:#5B6270">First-run questions</div></div><div style="background:#FBF8F1;border:1px solid #8A8470;padding:14px 16px"><b>Glossary</b><div style="font-size:14px;color:#5B6270">Terms, draft review pending</div></div>
+        </div>
+        <div style="margin-top:18px;font-size:14px;color:#5B6270">Theme</div>
+        <div style="display:flex;gap:6px;margin-top:6px"><span style="flex:1;min-height:44px;display:grid;place-items:center;background:#243B6B;color:#FBF8F1">Auto</span><span style="flex:1;min-height:44px;display:grid;place-items:center;border:1.5px solid #14181F">Light</span><span style="flex:1;min-height:44px;display:grid;place-items:center;border:1.5px solid #14181F">Dark</span></div>
+      </sc-if>
+      <sc-if value="{{ moreB }}">
+        <h1 style="font:700 28px/1.35 'Noto Serif Bengali',serif;margin:10px 0 12px">{{ tx.more }}</h1>
+        <div style="background:#FBF8F1;border:1px solid #8A8470;padding:16px;display:grid;gap:12px">
+          <div style="display:flex;justify-content:space-between;align-items:center"><span>Topics</span><span style="color:#5B6270">→</span></div>
+          <div style="height:1px;background:#8A8470"></div>
+          <div style="display:flex;justify-content:space-between;align-items:center"><span>Journey log</span><span style="color:#5B6270">→</span></div>
+          <div style="height:1px;background:#8A8470"></div>
+          <div style="display:flex;justify-content:space-between;align-items:center"><span>Backup</span><span style="color:#5B6270">→</span></div>
+        </div>
+        <div style="margin-top:14px;background:#FBF8F1;border:1px solid #8A8470;padding:14px 16px"><small style="color:#5B6270">Appearance</small><div style="display:flex;gap:8px;margin-top:8px"><span style="flex:1;min-height:44px;display:grid;place-items:center;border:1.5px solid #14181F">Auto</span><span style="flex:1;min-height:44px;display:grid;place-items:center;border:1.5px solid #14181F">Light</span><span style="flex:1;min-height:44px;display:grid;place-items:center;border:1.5px solid #14181F">Dark</span></div></div>
+      </sc-if>
+
+      <sc-if value="{{ onboardingA }}">
+        <h1 style="font:700 28px/1.35 'Noto Serif Bengali',serif;margin:40px 0 6px">Welcome</h1>
+        <p style="margin:0;color:#5B6270">A personal system for your goals, habits and money. Demo data only.</p>
+        <div style="margin-top:28px;display:grid;gap:10px">
+          <div style="background:#FBF8F1;border:1px solid #8A8470;padding:14px 16px"><b>1 · Know where you are</b></div>
+          <div style="background:#FBF8F1;border:1px solid #8A8470;padding:14px 16px"><b>2 · Set one goal</b></div>
+          <div style="background:#FBF8F1;border:1px solid #8A8470;padding:14px 16px"><b>3 · Make a plan</b></div>
+        </div>
+        <div style="margin-top:24px;font-size:13px;color:#5B6270">You can skip any question. Unknown is kept as unknown.</div>
+        <button style="width:100%;min-height:52px;margin-top:20px;background:#243B6B;color:#FBF8F1;border:0;font:600 18px 'Hind Siliguri'">Start</button>
+      </sc-if>
+      <sc-if value="{{ onboardingB }}">
+        <div style="font:600 13px 'Hind Siliguri';color:#5B6270;margin-top:10px">Step 1 of 3</div>
+        <div style="display:flex;gap:4px;margin:8px 0 22px"><i style="flex:1;height:6px;background:#B0431A"></i><i style="flex:1;height:6px;background:#8A8470"></i><i style="flex:1;height:6px;background:#8A8470"></i></div>
+        <h1 style="font:700 26px/1.35 'Noto Serif Bengali',serif;margin:0 0 6px">Know where you are</h1>
+        <p style="margin:0;color:#5B6270">One question at a time. Every answer is optional.</p>
+        <div style="border:1px solid #8A8470;background:#FBF8F1;padding:16px;margin-top:18px"><label style="font-weight:600">Weekly free hours</label><div style="border:1.5px solid #14181F;padding:10px;margin-top:6px;min-height:48px;background:#F5F1E8">6</div></div>
+        <div style="display:flex;gap:8px;margin-top:18px"><button style="flex:1;min-height:52px;background:none;border:1.5px solid #14181F;font:600 16px 'Hind Siliguri'">Not sure</button><button style="flex:1;min-height:52px;background:#243B6B;color:#FBF8F1;border:0;font:600 16px 'Hind Siliguri'">Next</button></div>
+      </sc-if>
+
+    </div>
+
+    <nav style="position:absolute;bottom:0;left:0;right:0;background:#FBF8F1;border-top:1px solid #8A8470;display:flex">
+      <button data-s="today" onclick="{{ onNav }}" style="flex:1;min-height:56px;background:none;border:0;font:{{ tabWeightToday }};color:{{ tabToday }}">{{ tx.today }}</button>
+      <button data-s="diary" onclick="{{ onNav }}" style="flex:1;min-height:56px;background:none;border:0;font:{{ tabWeightDiary }};color:{{ tabDiary }}">{{ tx.diary }}</button>
+      <button data-s="habits" onclick="{{ onNav }}" style="flex:1;min-height:56px;background:none;border:0;font:{{ tabWeightHabits }};color:{{ tabHabits }}">{{ tx.habits }}</button>
+      <button data-s="journey" onclick="{{ onNav }}" style="flex:1;min-height:56px;background:none;border:0;font:{{ tabWeightJourney }};color:{{ tabJourney }}">{{ tx.journey }}</button>
+      <button data-s="more" onclick="{{ onNav }}" style="flex:1;min-height:56px;background:none;border:0;font:{{ tabWeightMore }};color:{{ tabMore }}">{{ tx.more }}</button>
+    </nav>
+  </div>
+
+  <div style="width:100%;max-width:1040px;display:flex;gap:8px;flex-wrap:wrap;margin-top:4px" role="group" aria-label="Jump to screen">
+    <button data-s="today" onclick="{{ onNav }}" style="min-height:40px;padding:4px 12px;background:{{ jumpBg }}">{{ tx.today }}</button>
+    <button data-s="diary" onclick="{{ onNav }}" style="min-height:40px;padding:4px 12px;background:{{ jumpBg }}">{{ tx.diary }}</button>
+    <button data-s="habits" onclick="{{ onNav }}" style="min-height:40px;padding:4px 12px;background:{{ jumpBg }}">{{ tx.habits }}</button>
+    <button data-s="journey" onclick="{{ onNav }}" style="min-height:40px;padding:4px 12px;background:{{ jumpBg }}">{{ tx.journey }}</button>
+    <button data-s="deen" onclick="{{ onNav }}" style="min-height:40px;padding:4px 12px;background:{{ jumpBg }}">{{ tx.deen }}</button>
+    <button data-s="money" onclick="{{ onNav }}" style="min-height:40px;padding:4px 12px;background:{{ jumpBg }}">{{ tx.money }}</button>
+    <button data-s="more" onclick="{{ onNav }}" style="min-height:40px;padding:4px 12px;background:{{ jumpBg }}">{{ tx.more }}</button>
+    <button data-s="onboarding" onclick="{{ onNav }}" style="min-height:40px;padding:4px 12px;background:{{ jumpBg }}">Onboarding</button>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { screen: 'today', opt: 'A', fmt: 'm', lang: 'en' };
+  renderVals() {
+    const s = this.state;
+    const is = (x) => s.screen === x;
+    const on = (c) => (c ? 'page' : 'false');
+    const names = { today: 'Today', diary: 'Diary', habits: 'Habits', journey: 'Journey', deen: 'Deen', money: 'Money', more: 'More', onboarding: 'Onboarding' };
+    const act = (c) => (c ? '#243B6B' : 'none');
+    const actF = (c) => (c ? '#FBF8F1' : '#14181F');
+    const tab = (x) => (is(x) ? "600 13px 'Hind Siliguri'" : "400 13px 'Hind Siliguri'");
+    const tabC = (x) => (is(x) ? '#14181F' : '#5B6270');
+    const ab = (x) => ({ [`${x}A`]: is(x) && s.opt === 'A', [`${x}B`]: is(x) && s.opt === 'B' });
+    const EN = { today: 'Today', diary: 'Diary', habits: 'Habits', journey: 'Journey', deen: 'Deen', money: 'Money', more: 'More', onboarding: 'Onboarding', addItem: 'Add item', addHabit: 'Add habit', personal: 'Personal', business: 'Business' };
+    const BN = { today: 'আজ', diary: 'ডায়েরি', habits: 'অভ্যাস', journey: 'যাত্রা', deen: 'দ্বীন', money: 'টাকা', more: 'আরও', onboarding: 'Onboarding', addItem: 'নতুন আইটেম যোগ করুন', addHabit: 'Add habit', personal: 'ব্যক্তিগত', business: 'ব্যবসা' };
+    const insp = { bn: 'ছোট একটা পদক্ষেপও আজকের জন্য যথেষ্ট।', en: 'One small step is enough for today.', theme: s.lang === 'bn' ? 'অনুপ্রেরণা' : 'Motivation' };
+    const flags = {};
+    ['today', 'diary', 'habits', 'journey', 'deen', 'money', 'more', 'onboarding'].forEach((x) => Object.assign(flags, ab(x)));
+    return {
+      tx: s.lang === 'bn' ? BN : EN, insp,
+      lenBg: s.lang === 'en' ? '#243B6B' : 'none', lenFg: s.lang === 'en' ? '#FBF8F1' : '#14181F',
+      lbnBg: s.lang === 'bn' ? '#243B6B' : 'none', lbnFg: s.lang === 'bn' ? '#FBF8F1' : '#14181F',
+      ...flags,
+      screenName: names[s.screen],
+      frameW: s.fmt === 'm' ? '360px' : '960px',
+      optAbg: act(s.opt === 'A'), optAfg: actF(s.opt === 'A'),
+      optBbg: act(s.opt === 'B'), optBfg: actF(s.opt === 'B'),
+      fmM: act(s.fmt === 'm'), fmMfg: actF(s.fmt === 'm'),
+      fmD: act(s.fmt === 'd'), fmDfg: actF(s.fmt === 'd'),
+      jumpBg: '#FBF8F1',
+      tabToday: tabC('today'), tabWeightToday: tab('today'),
+      tabDiary: tabC('diary'), tabWeightDiary: tab('diary'),
+      tabHabits: tabC('habits'), tabWeightHabits: tab('habits'),
+      tabJourney: tabC('journey'), tabWeightJourney: tab('journey'),
+      tabMore: tabC('more'), tabWeightMore: tab('more'),
+      onNav: (e) => this.setState({ screen: e.currentTarget.dataset.s }),
+      onOpt: (e) => this.setState({ opt: e.currentTarget.dataset.v }),
+      onFmt: (e) => this.setState({ fmt: e.currentTarget.dataset.v }),
+      onLang: (e) => this.setState({ lang: e.currentTarget.dataset.v }),
+    };
+  }
+}
+
+</script>
+</body>
+</html>
