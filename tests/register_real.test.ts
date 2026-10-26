@@ -127,4 +127,49 @@ describe("venture list (real data)", () => {
   });
 });
 
+describe("team roles (real data)", () => {
+  it("no consent: prompt shown, nothing saved", () => {
+    go("#/diary/team");
+    expect(document.querySelector("form[data-form=team] [data-consent-prompt]")).not.toBeNull();
+    setv("tm-role", "Sales lead"); send("form[data-form=team]");
+    expect(document.querySelector("form[data-form=team] .err")!.textContent).toMatch(/Nothing saved/);
+    expect(store.real.list()).toEqual([]); expect(store.demo.list()).toEqual([]);
+  });
+
+  describe("with consent", () => {
+    beforeEach(() => grantConsent(consentKv, NOW));
+
+    it("saves a real role; unanswered holder stays Unknown and is counted as unknown, not open", () => {
+      go("#/diary/team");
+      setv("tm-role", "Sales lead"); submit("form[data-form=team]");
+      const r = store.real.list().find((x) => x.entity === "team_role")!;
+      expect(r.values["team_role.role"]).toMatchObject({ label: "FACT" });
+      expect(r.values["team_role.holder"]).toEqual({ state: "unknown" });
+      const card = document.querySelector(`[data-role='${r.id}']`)!;
+      expect(card.querySelector("[data-ns=real]")).not.toBeNull();
+      expect(document.querySelector("[data-team-summary]")!.textContent).toMatch(/1.*0.*1/);
+    });
+
+    it("still refuses a phone number or email, and never counts demo roles", () => {
+      store.demo.put(demoRec("role-d1", "team_role", { "team_role.role": v("Demo role"), "team_role.holder": v("open") }));
+      go("#/diary/team");
+      setv("tm-role", "Call 01712345678"); send("form[data-form=team]");
+      expect(document.querySelector("form[data-form=team] .err")!.textContent).toBeTruthy();
+      expect(store.real.list()).toEqual([]);
+      setv("tm-role", "Operations"); submit("form[data-form=team]");
+      expect(document.body.textContent).not.toMatch(/Demo role/);
+      expect(labels(store.demo.list()).every((l) => l === "DEMO")).toBe(true);
+      expect(labels(store.real.list()).every((l) => l === "FACT")).toBe(true);
+    });
+
+    it("clear-all removes the real role and keeps demo", () => {
+      store.demo.put(demoRec("role-d2", "team_role", { "team_role.role": v("Keep demo") }));
+      go("#/diary/team"); setv("tm-role", "Remove me"); submit("form[data-form=team]");
+      clearAll();
+      expect(store.real.list()).toEqual([]);
+      expect(store.demo.list().map((r) => r.id)).toEqual(["role-d2"]);
+    });
+  });
+});
+
 void prefs;

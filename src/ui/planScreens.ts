@@ -146,7 +146,7 @@ export function teamScreen(): HTMLElement {
   const role = h("input", { id: "tm-role", type: "text", maxlength: "80", autocomplete: "off" });
   const holder = choiceSelect("tm-holder", "team_role.holder", lang);
   const err = h("p", { class: "err", role: "alert" });
-  const form = h("form", { novalidate: true, "data-form": "team" },
+  const form = h("form", { novalidate: true, "data-form": "team" }, gateFor(lang),
     h("label", { for: "tm-role" }, t("team.role", lang)), role,
     h("label", { for: "tm-holder" }, t("team.holder", lang)), holder, err,
     h("button", { class: "btn", type: "submit" }, t("team.add", lang)));
@@ -156,7 +156,7 @@ export function teamScreen(): HTMLElement {
     if (!v) { err.textContent = t("team.err.role", lang); return; }
     if (looksLikePersonContact(v)) { err.textContent = t("team.err.contact", lang); return; }
     if (!checkFreeText(v).ok) { err.textContent = t("intake.secretRejected", lang); return; }
-    putRecord("team_role", "role", { "team_role.role": txt(v), "team_role.holder": holder.value ? txt(holder.value) : UNKNOWN });
+    if (!putRecord("team_role", "role", { "team_role.role": txt(v), "team_role.holder": holder.value ? txt(holder.value) : UNKNOWN })) { err.textContent = saveBlockedText(lang); return; }
     rerender();
   });
   const all = allRecs();
@@ -168,7 +168,7 @@ export function teamScreen(): HTMLElement {
     h("p", { class: "muted", "data-team-summary": "1" }, t("team.summary", lang, { total: num(s.total, lang), open: num(s.open, lang), unknown: num(s.unknown, lang) })),
     form,
     rows.length ? h("div", {}, ...rows.map((r) => h("div", { class: "card", "data-role": r.id }, h("div", { class: "row" }, h("div", {},
-      h("h2", { class: "card-h" }, r.role),
+      modeMark(lang), h("h2", { class: "card-h" }, r.role),
       h("p", { class: "muted" }, r.holder ? choiceLabel("team_role.holder", r.holder as Holder, lang) : t("unknown.unknown", lang))),
       removeBtn(r.id, lang))))) : h("p", { class: "muted" }, t("team.empty", lang)),
     h("p", { class: "muted" }, t("team.note", lang)), modeMark(lang), disclaimers(lang, ["advice"]));
