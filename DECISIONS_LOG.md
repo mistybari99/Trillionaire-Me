@@ -282,3 +282,10 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 - Undo: delete `src/ui/lifeUi.ts`, `src/core/lifeWheel.ts`, `src/core/goalPlan.ts`, `tests/life_goal_step5.test.ts`; remove the 3 routes in `src/app.ts`, the `celebrate` and `journeyGoalsCard` lines in `src/ui/screens.ts`, the `/* step 5` CSS block, the `wheel.*`, `goals.*`, `goal.*`, `smart.*`, `swot.*`, `mm.*` keys, the `life_area` entity and the 8 fields; restore `goalRings` in `src/core/chartData.ts`.
 - Proof: `tests/life_goal_step5.test.ts` (23: catalog, wheel data/partial/none/text equivalent/mode isolation/consent/Bangla digits, progress data/partial/none on Report and Journey, SMART save and refusal, SWOT save/partial/isolation, reduced-motion CSS guard). Full run 712/712; tsc clean; vite build ok; e2e 0 FAIL.
 - Not done: the Plan form still links a task to a goal one at a time (unchanged); the Bangla text is a draft until reviewer sign-off (TM-TST-161); visual check on a real phone is a later owner task.
+
+## Connections ports (builder decision, 26 Oct 2026)
+- What: ports for AI, cloud sync, web search and licensed content, each with a null adapter (default); More > Connections lists status. All OFF, no network call while off, no provider, no dependency, no account.
+- Why: owner wants to connect facilities later in one step without rewriting the app.
+- Safety: Enable needs a per-facility approval confirm (cost, data leaving device). Keys stay on the device only, masked, excluded from backups and exports.
+- Alternatives: wiring one provider now (rejected: needs owner approval of cost and account).
+- Undo: remove the Connections route and src/adapters registry; docs in docs/design/connections.md.
