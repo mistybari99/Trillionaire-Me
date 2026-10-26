@@ -377,3 +377,17 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 - Alternatives: Workbox (rejected: dependency); precache by hand-written list (rejected: goes stale).
 - Undo: restore the old `public/sw.js` (one `CACHE` name, fetch handler only), remove `precachePlugin` from `vite.config.ts`, delete `tools/precache.ts`, `tests/precache.test.ts` and the PRECACHE block in `tools/e2e.mjs`.
 - Not done: the Register xlsx is not updated (binary, and Verified needs an owner-visible device test); visual check on a real phone is a later owner task; Bangla text of the new keys is a draft until reviewer sign-off (TM-TST-161).
+
+## Language icon in the top bar (builder decision, 26 Oct 2026)
+- What: a globe button at the right of the top bar on every screen (`src/ui/langMenu.ts`). It opens a small menu with English, বাংলা and Mix. It sets the same preference as More > Language, so the two always agree. The menu closes on outside tap, on Escape (focus returns to the button) and after a choice. Screens re-render in place, so the screen and scroll position stay.
+- Why: the owner asked for a quick language switch without going to More. Mix mode was added the same day (see "Language mode Mix").
+- Accessibility: the button is at least 44 x 44 px, has a text label (`lang.menu`) and `aria-expanded`; each choice is a button with `aria-pressed` and a visible check; no animation. Latin digits in every mode.
+- Alternatives: a switch only in More (kept as well); a full-width language bar (rejected: uses space on 360 px).
+- Undo: delete `src/ui/langMenu.ts` and `tests/lang_menu.test.ts`; remove the call in the top bar, the `lang.menu` key and the `.lang-*` CSS. More > Language still works.
+- Proof: `tests/lang_menu.test.ts`; `tools/screenshots.mjs` reports whether the icon is 44 px and inside the screen on every route.
+
+## Block 1 small items (builder decision, 26 Oct 2026)
+- SMART funnel: `src/ui/smartFunnel.ts`, inline SVG with five narrowing bands (Specific, Measurable, Achievable, Relevant, Time-bound) and a "Committed goal" pill. Filled parts are solid, empty parts are outlined (a fill-in guide, not a grade). Colours are tokens only, so all four Design versions and dark mode follow. Text equivalent: aria-label, a hidden list and a visible "n of 5" line. Fade-in only when motion is allowed. It sits above the SMART form and updates after saving. Undo: delete the file and `tests/smart_funnel.test.ts`; remove `funnelHost` in `lifeUi.ts`, the `smart.f.*` keys and the `/* SMART funnel` CSS.
+- Home count cards: `src/core/homeCounts.ts` + `homeCountCards` on Today. Tasks = done of total from the user's own tasks; Goal steps = tasks linked to an existing goal. Nothing entered shows Unknown, never 0. DEMO or Real tag follows the active mode. Undo: remove the call in `today()`, the file, `tests/home_counts.test.ts`, the `home.cnt.*` keys.
+- Deen wording: every Deen item (`purpose: deen_tracking`) now ends its "why" text with "Plans and reminders only. No scripture text; nothing is counted or compared." (`DEEN_NOTE` in `fields.ts`), and the Deen intro says the same. The words score and rank are avoided on purpose (the copy review bans them). Test: `tests/deen_wording.test.ts`. D-D stays open.
+- Docs: `docs/design/m-list-status.md` regenerated from the code (M19 and M24 are built; 16 built, 8 partly, 1 not built).

@@ -7,13 +7,15 @@ Rules:
 - **আংশিক** (partly): only part is reachable, or only rules or data exist (no main screen or no entry).
 - **নেই** (not built): nothing user-facing yet.
 
+Last synced with `src/modules/capability.ts` and `src/modules/evidence.ts` on 26 Oct 2026 (M19 Automation rules and M24 Template library are now built; counts match the code).
+
 ## Summary
 
 | Status | Count | Modules |
 |---|---|---|
-| আছে | 14 | M01, M02, M04, M05, M06, M07, M08, M11, M15, M16, M17, M21, M22, M25 |
-| আংশিক | 9 | M03, M09, M10, M12, M13, M14, M18, M20, M24 |
-| নেই | 2 | M19, M23 |
+| আছে | 16 | M01, M02, M04, M05, M06, M07, M08, M11, M15, M16, M17, M19, M21, M22, M24, M25 |
+| আংশিক | 8 | M03, M09, M10, M12, M13, M14, M18, M20 |
+| নেই | 1 | M23 |
 
 ## Full table
 
@@ -31,18 +33,18 @@ Rules:
 | M10 | Team & delegation | আংশিক | `#/diary/team` | `src/core/team.ts (`roleSummary`)` | `tests/m_registers.test.ts` |
 | M11 | Research & options | আছে | `#/diary/intake` | `src/ui/screens.ts (`intake`)`; `src/core/research.ts (`research`)`; `src/adapters/wikipedia.ts (`wikipedia`)` | `tests/research.test.ts`, `tests/wikipedia.test.ts`, `tests/m11_background_cache.test.ts` |
 | M12 | Reality-changed & plan history | আংশিক | `#/diary/plan`, `#/journey/history` | `src/core/reality.ts (`markNotTrue`)`; `src/core/planHistory.ts (`planHistory`)` | `tests/o6_reality_review_templates.test.ts`, `tests/m_registers.test.ts` |
-| M13 | Deen, ibadah & akhirah | আংশিক | `#/deen` | `src/core/prayerLog.ts (`markedOn`)`; `src/core/fastLog.ts (`isFastMarked`)`; `src/core/prayer.ts (`prayerTimes`)`; `src/schema/entities.ts` | `tests/prayer.test.ts`, `tests/g1.test.ts`, `tests/fast_log.test.ts` |
+| M13 | Deen, ibadah & akhirah | আংশিক | `#/deen` | `src/core/prayerLog.ts (`markedOn`)`; `src/core/fastLog.ts (`isFastMarked`)`; `src/core/prayer.ts (`prayerTimes`)`; `src/core/prayerAlerts.ts (`alertSlots`)`; `src/schema/entities.ts` | `tests/prayer.test.ts`, `tests/g1.test.ts`, `tests/fast_log.test.ts` |
 | M14 | Health & family | আংশিক | — | `src/catalog/fields.ts` | `tests/g1.test.ts` |
 | M15 | Risk & stop criteria | আছে | `#/journey/risks` | `src/core/risk.ts (`riskRows`)` | `tests/m_registers.test.ts` |
 | M16 | Reviews & KPIs | আছে | `#/journey/review`, `#/journey/report` | `src/core/review.ts (`reviewSummary`)` | `tests/o6_reality_review_templates.test.ts` |
 | M17 | Knowledge & sources | আছে | `#/cards`, `#/topics` | `src/ui/screens.ts (`cardsScreen`)`; `src/core/cards.ts (`dueCards`)`; `src/library/topics.ts` | `tests/focus_habits_cards.test.ts`, `tests/topics_rewards.test.ts` |
 | M18 | Visual layer | আংশিক | `#/journey/art` | `src/ui/rewardArt.ts (`journeyArt`)`; `src/ui/diagram.ts (`diagram`)` | `tests/r4_motion.test.ts` |
-| M19 | Automation rules | নেই | — | — | — |
+| M19 | Automation rules | আছে | `#/more/rules`, `#/today` | `src/core/rules.ts (`evaluateRules`)` | `tests/rules.test.ts`, `tests/m_systems_rules_ui.test.ts` |
 | M20 | Sync, backup & export | আংশিক | `#/more/data` | `src/core/backup.ts (`createBackup`)`; `src/core/backup.ts (`restoreBackup`)`; `src/core/sync.ts` | `tests/g2.test.ts`, `tests/sync.test.ts` |
 | M21 | Security & privacy | আছে | `#/more/safety`, `#/more` | `src/core/safety.ts (`checkFreeText`)` | `tests/g1.test.ts`, `tests/o8_notify_privacy.test.ts` |
 | M22 | Capability status & demo | আছে | `#/more/status` | `src/ui/screens.ts (`status`)` | `tests/g1.test.ts` |
 | M23 | AI layer | নেই | — | — | — |
-| M24 | Template library | আংশিক | `#/journey` | `src/core/stageTemplates.ts (`stagesFor`)` | `tests/o6_reality_review_templates.test.ts` |
+| M24 | Template library | আছে | `#/more/library`, `#/journey` | `src/core/systems.ts (`addSystem`)`; `src/core/systems.ts (`planSystem`)`; `src/core/stageTemplates.ts (`stagesFor`)`; `src/library/systemList.ts` | `tests/systems.test.ts`, `tests/m_systems_rules_ui.test.ts`, `tests/o6_reality_review_templates.test.ts` |
 | M25 | When stuck | আছে | `#/stuck` | `src/ui/screens.ts (`stuckScreen`)`; `src/core/stuck.ts (`diagnose`)` | `tests/stuck.test.ts` |
 
 ## The "অন্যান্য অংশ" (More) list
@@ -54,11 +56,11 @@ Items shown in More → আরও অংশ (M22 is the status screen itself and
 | M11 | আছে | Tap 'Suggest options' in an input to get 2-3 Wikipedia options. The first search is saved on this phone, so the same search shows here later. No search runs when the app opens. |
 | M17 | আছে | Flashcards and topic guides work. Sources are not tracked separately yet. |
 | M18 | আংশিক | Stage ladder, journey art and small tip diagrams exist. Other charts come later, each with a text version. |
-| M19 | নেই | Not built yet. |
+| M19 | আছে | Four small rules run on this phone: smaller step, next stage, break after focus, another focus block (off by default). No notifications are sent, and a rule never adds a task. |
 | M20 | আংশিক | Demo backup save and restore work ('More > Demo & real data'). Sync is not built; only its rules exist. |
 | M21 | আছে | Blocks secrets (passwords, OTP and similar). Lock screen stays private. Full legal review is at G7. |
 | M23 | নেই | Not built. Everything works without AI; it comes in G6 with owner approval. |
-| M24 | আংশিক | Three stage templates (general, learning, business) can be chosen. A larger library is not built. |
+| M24 | আছে | Ready systems: morning routine, weekly money check, study block, habit reset, job-search week, business starter. One tap adds goals, tasks and habits; remove takes them out. Bangla text is not reviewed yet. |
 
 ## Changes in the 24 Oct 2026 pass
 
@@ -72,3 +74,4 @@ Items shown in More → আরও অংশ (M22 is the status screen itself and
 - **M06 (goals, tasks & habits):** a task can be set to come after another task (one link; the planner waits for it).
 - **M07 (finance):** adds the 90-day cash flow (three months of monthly flows; one-off and yearly items are counted, not converted).
 - **M13 (deen):** the status was out of date (prayer marks and prayer times are built). Fasting day marks added; nothing is counted or ranked.
+- **26 Oct 2026 sync:** M19 (automation rules: four small rules, none adds tasks) and M24 (template library: six ready systems) changed from not built / partly to built. The table above is regenerated from the code.
