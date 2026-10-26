@@ -15,7 +15,11 @@ interface Spec {
   step?: number; affects?: string; unknown?: readonly UnknownState[];
 }
 
+/** Added to every Deen item: these are your own plans and reminders only (no scripture text, nothing counted or compared). D-D stays open. */
+export const DEEN_NOTE: Bi = bi("শুধু আপনার পরিকল্পনা ও স্মারক। কোনো ধর্মগ্রন্থের লেখা নেই; কিছু গোনা বা তুলনা করা হয় না।", "Plans and reminders only. No scripture text; nothing is counted or compared.");
+
 function f(s: Spec): FieldDef {
+  if (s.purpose === "deen_tracking") s = { ...s, why: bi(`${s.why.bn} ${DEEN_NOTE.bn}`, `${s.why.en} ${DEEN_NOTE.en}`) };
   const privacy = s.privacy ?? "personal";
   const access: AccessRule = privacy === "worship" || privacy === "health" ? "device_only_per_item_authorisation" : "device_only";
   return {
