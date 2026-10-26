@@ -8,6 +8,7 @@ import { activeNs, allRecs, nsTag } from "./entry";
 import { valueEl } from "./components";
 import { financeFrom } from "../core/financeInputs";
 import { moneySummary, type Metric, type ScopeSummary } from "../core/homeSummary";
+import { goalStepCount, taskCount, type Count } from "../core/homeCounts";
 import { nextBestAction, type NextAction } from "../core/nextAction";
 
 const METRICS = [["networth", "netWorth", "home.sum.networth"], ["income", "income", "home.sum.income"], ["expenses", "expenses", "home.sum.expenses"]] as const;
@@ -23,6 +24,24 @@ function metricCard(id: string, key: Key, pick: "netWorth" | "income" | "expense
     h("h3", { class: "card-h" }, t(key, lang)),
     ...scopes.map((sc) => { const m = sc[pick]; return h("p", { class: "home-val", "data-scope": sc.scope, "data-state": m.state },
       multi ? h("small", {}, `${t(`money.${sc.scope}` as Key, lang)}: `) : null, metricText(m, lang)); }));
+}
+
+function countCard(id: string, key: Key, c: Count, href: string, lang: Locale): HTMLElement {
+  const known = c.state === "value";
+  return h("article", { class: "card home-card", "data-home-card": id },
+    h("h3", { class: "card-h" }, t(key, lang)),
+    h("p", { class: "home-val", "data-state": known ? "value" : "unknown" },
+      known ? t("home.cnt.of", lang, { d: fmtNumber(c.done, lang), n: fmtNumber(c.total, lang) }) : h("span", { class: "muted", "data-unknown": "1" }, t("home.cnt.unknown", lang))),
+    h("a", { href, class: "crumb" }, t(known ? "home.cnt.open" : "home.cnt.add", lang)));
+}
+
+/** Two count cards from the user's own entries: Tasks (done of total) and Goal steps (tasks linked to a goal). Unknown when none. */
+export function homeCountCards(lang: Locale): HTMLElement {
+  const recs = allRecs();
+  return h("section", { class: "home-sum", "data-home-counts": activeNs(), "aria-label": t("home.cnt.title", lang) },
+    h("div", { class: "row" }, h("h2", {}, t("home.cnt.title", lang)), nsTag(activeNs(), lang)),
+    h("div", { class: "home-grid" }, countCard("tasks", "home.cnt.tasks", taskCount(recs), "#/diary/plan", lang), countCard("steps", "home.cnt.steps", goalStepCount(recs), "#/journey/goals", lang)),
+    h("p", { class: "muted" }, t("home.cnt.note", lang)));
 }
 
 /** Three summary cards. Personal and business are never added together; business shows only when the user entered business items. */

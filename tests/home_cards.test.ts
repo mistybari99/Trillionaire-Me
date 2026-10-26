@@ -50,7 +50,7 @@ describe("Home cards", () => {
   it("empty start: three cards, all Unknown, no digit 0 as a value, DEMO tag, Saved on this device", () => {
     go("#/today");
     for (const id of ["networth", "income", "expenses"]) expect(card(id).textContent).toMatch(/Unknown/);
-    expect(app().querySelectorAll("[data-home-card]").length).toBe(3);
+    expect(app().querySelectorAll("[data-home-summary] [data-home-card]").length).toBe(3);
     const sec = app().querySelector("[data-home-summary]")!; expect(sec.getAttribute("data-home-summary")).toBe("demo");
     expect(sec.querySelector(".badge")!.textContent).toMatch(/Demo/i);
     expect(sec.textContent).toMatch(/Saved on this device/); expect(sec.textContent).not.toMatch(/BDT/);
