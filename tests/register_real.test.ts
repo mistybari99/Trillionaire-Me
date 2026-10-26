@@ -277,4 +277,57 @@ describe("flashcards (real data)", () => {
   });
 });
 
+describe("prayer place (real data)", () => {
+  const CTG = { lat: 22.3569, lon: 91.7832 };
+  const DHAKA = { lat: 23.8103, lon: 90.4125 };
+  it("no consent: prompt shown, a typed place is not saved", () => {
+    go("#/deen");
+    expect(document.querySelector("form[data-form=prayer-place] [data-consent-prompt]")).not.toBeNull();
+    setv("pr-lat", "22.3569"); setv("pr-lon", "91.7832"); send("form[data-form=prayer-place]");
+    expect(document.querySelector("form[data-form=prayer-place] .err")!.textContent).toMatch(/Nothing saved/);
+    expect(localStorage.getItem("tm:ui:prayerCoords:real")).toBeNull();
+    expect(prefs.prayerCoords).toEqual(DHAKA);
+  });
+
+  describe("with consent", () => {
+    beforeEach(() => grantConsent(consentKv, NOW));
+
+    it("saves the real place on this device only, with a Real tag and a device-only note", () => {
+      go("#/deen");
+      expect(document.querySelector("form[data-form=prayer-place] [data-consent-prompt]")).toBeNull();
+      expect(document.querySelector("[data-prayer-settings] [data-ns=real]")).not.toBeNull();
+      expect(document.querySelector("[data-place-note]")).not.toBeNull();
+      setv("pr-lat", "22.3569"); setv("pr-lon", "91.7832"); submit("form[data-form=prayer-place]");
+      expect(prefs.prayerCoords).toEqual(CTG);
+      expect(localStorage.getItem("tm:ui:prayerCoords")).toBeNull(); // the demo place is not written
+    });
+
+    it("demo and real places are separate", () => {
+      localStorage.setItem("tm:ui:dataMode", "demo");
+      prefs.prayerCoords = { lat: 1, lon: 2 };
+      localStorage.setItem("tm:ui:dataMode", "real");
+      expect(prefs.prayerCoords).toEqual(DHAKA);
+      prefs.prayerCoords = CTG;
+      localStorage.setItem("tm:ui:dataMode", "demo");
+      expect(prefs.prayerCoords).toEqual({ lat: 1, lon: 2 });
+    });
+
+    it("clear-all forgets the real place and keeps the demo place", () => {
+      localStorage.setItem("tm:ui:dataMode", "demo"); prefs.prayerCoords = { lat: 1, lon: 2 };
+      localStorage.setItem("tm:ui:dataMode", "real"); prefs.prayerCoords = CTG;
+      clearAll();
+      expect(prefs.prayerCoords).toEqual(DHAKA);
+      localStorage.setItem("tm:ui:dataMode", "demo");
+      expect(prefs.prayerCoords).toEqual({ lat: 1, lon: 2 });
+    });
+
+    it("an invalid place is refused and nothing changes", () => {
+      go("#/deen");
+      setv("pr-lat", "99"); setv("pr-lon", "91"); send("form[data-form=prayer-place]");
+      expect(document.querySelector("form[data-form=prayer-place] .err")!.textContent).toMatch(/Latitude/);
+      expect(prefs.prayerCoords).toEqual(DHAKA);
+    });
+  });
+});
+
 void prefs;

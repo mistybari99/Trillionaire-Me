@@ -81,9 +81,11 @@ export const prefs = {
   /** Lock-screen "show details" per category (O8). Per-device only; missing or broken value = everything hidden. */
   get notifyShow(): NotifyPrefs { try { return parseNotifyPrefs(JSON.parse(get("tm:ui:notifyShow") ?? "null")); } catch { return {}; } },
   set notifyShow(v: NotifyPrefs) { set("tm:ui:notifyShow", JSON.stringify(parseNotifyPrefs(v))); },
-  /** Prayer-time place (M13). Per device, never sent anywhere. Missing or broken value = Dhaka. */
-  get prayerCoords(): Coords { try { const v = JSON.parse(get("tm:ui:prayerCoords") ?? "null"); return validCoords(v) ? { lat: v.lat, lon: v.lon } : { ...DHAKA_COORDS }; } catch { return { ...DHAKA_COORDS }; } },
-  set prayerCoords(v: Coords) { set("tm:ui:prayerCoords", JSON.stringify(validCoords(v) ? { lat: v.lat, lon: v.lon } : DHAKA_COORDS)); },
+  /** Prayer-time place (M13). Per device, never sent anywhere. Demo and real keep separate places (D-B), so a demo place never shows in real mode. Missing or broken value = Dhaka. */
+  get prayerCoords(): Coords { try { const v = JSON.parse(get(this.dataMode === "real" ? "tm:ui:prayerCoords:real" : "tm:ui:prayerCoords") ?? "null"); return validCoords(v) ? { lat: v.lat, lon: v.lon } : { ...DHAKA_COORDS }; } catch { return { ...DHAKA_COORDS }; } },
+  set prayerCoords(v: Coords) { set(this.dataMode === "real" ? "tm:ui:prayerCoords:real" : "tm:ui:prayerCoords", JSON.stringify(validCoords(v) ? { lat: v.lat, lon: v.lon } : DHAKA_COORDS)); },
+  /** Forgets the real prayer place (back to Dhaka). Used by "Delete all real data". The demo place is untouched. */
+  clearRealPrayerPlace(): void { try { localStorage.removeItem("tm:ui:prayerCoords:real"); } catch { /* storage unavailable */ } },
   /** Pre-prayer and azan alerts (M13). Both off by default. */
   get prayerAlerts(): AlertPrefs { try { return parseAlertPrefs(JSON.parse(get("tm:ui:prayerAlerts") ?? "null")); } catch { return { ...DEFAULT_ALERT_PREFS }; } },
   set prayerAlerts(v: AlertPrefs) { set("tm:ui:prayerAlerts", JSON.stringify(parseAlertPrefs(v))); },

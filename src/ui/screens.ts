@@ -1114,7 +1114,7 @@ function prayerSettingsCard(lang: Locale): HTMLElement {
   const lat = h("input", { id: "pr-lat", type: "text", inputmode: "decimal", autocomplete: "off", value: String(coords.lat) }) as HTMLInputElement;
   const lon = h("input", { id: "pr-lon", type: "text", inputmode: "decimal", autocomplete: "off", value: String(coords.lon) }) as HTMLInputElement;
   const save = (c: { lat: number; lon: number }) => { prefs.prayerCoords = c; rerender(); };
-  const form = h("form", { novalidate: true, "data-form": "prayer-place" },
+  const form = h("form", { novalidate: true, "data-form": "prayer-place" }, consentOn() ? null : consentPrompt(lang),
     h("label", { for: "pr-lat" }, t("deen.set.lat", lang)), lat,
     h("label", { for: "pr-lon" }, t("deen.set.lon", lang)), lon, err,
     h("button", { class: "btn", type: "submit" }, t("deen.set.save", lang)));
@@ -1122,6 +1122,7 @@ function prayerSettingsCard(lang: Locale): HTMLElement {
     ev.preventDefault();
     const la = parseCoord(lat.value, 90), lo = parseCoord(lon.value, 180);
     if (la === null || lo === null) { err.textContent = t("deen.set.locErr", lang); return; }
+    if (!consentOn()) { err.textContent = saveBlockedText(lang); return; } // a typed place is personal data: real mode needs the tick
     save({ lat: la, lon: lo });
   });
   const dhaka = h("button", { class: "btn ghost", type: "button", "data-act": "prayer-dhaka", style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => save({ ...DHAKA_COORDS }) }, t("deen.set.dhaka", lang));
@@ -1138,7 +1139,8 @@ function prayerSettingsCard(lang: Locale): HTMLElement {
   const perm = typeof Notification === "undefined" ? t("deen.set.permNo", lang) : canNotify() ? t("deen.set.permOk", lang) : Notification.permission === "denied" ? t("deen.set.permNo", lang) : t("deen.set.permAsk", lang);
   return h("div", { class: "card", "data-prayer-settings": "1" },
     h("h2", { class: "card-h" }, t("deen.set.title", lang)),
-    h("h3", {}, t("deen.set.place", lang)),
+    h("h3", {}, t("deen.set.place", lang), " ", nsTag(activeNs(), lang)),
+    activeNs() === "real" ? h("p", { class: "muted", "data-place-note": "1" }, t("entry.real.note", lang)) : null,
     form, dhaka,
     h("h3", {}, t("deen.set.pre", lang)),
     h("div", { class: "row" }, h("div", { class: "seg", "data-pre-alert": String(alerts.preAlert) }, onOff("deen.set.off", !alerts.preAlert, () => setAlerts({ ...alerts, preAlert: false })), onOff("deen.set.on", alerts.preAlert, () => toggle("preAlert")(true)))),
@@ -1283,6 +1285,7 @@ function clearRealCard(lang: Locale): HTMLElement {
     kids.push(h("p", { role: "alert" }, t("data.clearReal.ask", lang)), h("p", { class: "muted" }, t("data.clearReal.note", lang)),
       h("button", { class: "btn", type: "button", "data-act": "clear-real-yes", onclick: () => {
         store.real.clear();            // real records only; demo is untouched
+        prefs.clearRealPrayerPlace();  // the real prayer place is a personal location: forget it too
         if (snapshotRepo) void scrubRealParts(snapshotRepo).catch(() => { /* nothing to scrub */ }); // no snapshot may keep a copy of real data
         revokeConsent(consentKv);      // next real entry needs a new tick
         realClearAsk = false; realClearDone = true; rerender();
