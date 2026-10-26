@@ -253,3 +253,13 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 - Alternatives: one global view pref (rejected: owner asked per screen). A new view per entity type (rejected: two views are enough for now; charts come in step 3).
 - Undo: remove `viewBar`, `screenView` use and compact branches in `src/ui/screens.ts`, the `ScreenView` block in `src/ui/state.ts`, the `.list-compact`/`.table-compact` CSS, the keys above, and `tests/screen_views.test.ts`.
 - Proof: `tests/screen_views.test.ts` (19: default/fallback, per-screen persistence, same ids in both views for 7 screens in demo and real mode, hidden namespace absent, bn labels).
+
+## Build step 3: simple SVG charts with text versions (26 Oct 2026)
+- What: Money (monthly income vs spending bars per scope), Report (progress ring per goal), Review (90-day activity, 13 weekly bars), Habits (14-day grid, planned days only). Inline SVG, no library, no network, static (no animation, so reduced motion holds), colours from CSS variables only (dark mode follows tokens). Each chart has a title, a visually hidden summary and a visible "Show as text" list from the same data.
+- Unknown: an unknown amount draws a dashed "?" mark and the word "unknown"; a week with no record draws a dash and "no record"; a goal with no linked task draws a dashed ring with "?". Review shows "Not enough data" instead of an empty chart. No streak count; habit cells are Marked / Not marked / Not planned.
+- Goal progress: there is no numeric goal progress field, so the ring uses tasks that carry `links.goal = <goal id>` (done = task.done_on set). No schema change. Goals with no linked task show unknown until the Plan form can link tasks to goals (next step, not built here).
+- Mode: charts take `allRecs()` (active mode only).
+- Files: `src/core/chartData.ts` (pure), `src/ui/charts.ts`, CSS block at the end of `styles.css`, `chart.*` keys (en, bn). Habit grid shows in the Detailed view only.
+- Alternatives: chart library (rejected: owner rule, size); zero bars for empty weeks (rejected: unknown is not 0).
+- Undo: remove the four chart calls in `src/ui/screens.ts`, delete `charts.ts`, `chartData.ts`, `tests/charts.test.ts`, the CSS block and `chart.*` keys.
+- Proof: `tests/charts.test.ts` (data, partial, none, text equals data, no invented zero, mode isolation, Bangla); a11y token and reduced-motion tests green.

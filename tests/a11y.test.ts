@@ -6,7 +6,7 @@ import { TOPICS } from "../src/library/topics";
 import { PACKS } from "../src/i18n/packs";
 
 const CSS = readFileSync("src/ui/styles.css", "utf8");
-const TS_UI = ["assessment", "components", "diagram", "dom", "rewardArt", "screens", "state"].map((f) => readFileSync(`src/ui/${f}.ts`, "utf8")).join("\n");
+const TS_UI = ["assessment", "components", "charts", "diagram", "dom", "rewardArt", "screens", "state"].map((f) => readFileSync(`src/ui/${f}.ts`, "utf8")).join("\n");
 
 // ---------- contrast ----------
 const lum = (hex: string) => {

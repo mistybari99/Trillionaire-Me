@@ -278,3 +278,19 @@ h2.card-h{font:600 17px/1.4 "Hind Siliguri",sans-serif;margin:0 0 2px}
 @media (prefers-reduced-motion:no-preference){.scr-reward [data-fresh]{animation:inspireIn .6s ease-out both}}
 @media (prefers-reduced-motion:reduce){.scr-reward [data-fresh]{animation:none!important}}
 .list-compact{list-style:none;padding:0;margin:8px 0} .list-compact li{padding:8px 0;border-bottom:1px solid var(--line,#ddd)} .table-compact{width:100%;border-collapse:collapse;margin:8px 0} .table-compact td,.table-compact th{padding:8px 4px;text-align:start;border-bottom:1px solid var(--line,#ddd)} .ladder-compact li{padding:6px 0}
+
+/* step 3 charts (inline SVG, static; colours from tokens only) */
+.chart-svg{display:block;width:100%;height:auto;max-width:360px;margin:6px 0}
+.chart .chart-t{font:500 13px "Hind Siliguri",system-ui,sans-serif;fill:var(--ink)}
+.chart .chart-h{font:600 14px "Hind Siliguri",system-ui,sans-serif;fill:var(--ink)}
+.chart .chart-s{font:400 11px "Hind Siliguri",system-ui,sans-serif;fill:var(--muted)}
+.chart .chart-mid{text-anchor:middle}.chart .chart-end{text-anchor:end}
+.chart .chart-in{fill:var(--primary)}.chart .chart-out{fill:var(--ember)}
+.chart .chart-axis{stroke:var(--rule);stroke-width:1.5}
+.chart .chart-unk{fill:none;stroke:var(--muted);stroke-width:1.5}
+.chart .ring-track{stroke:var(--rule);stroke-width:8}.chart .ring-unk{stroke:var(--muted);stroke-width:3}
+.chart .ring-arc{stroke:var(--moss);stroke-width:8}
+.chart .cell-done{fill:var(--moss)}.chart .cell-tick{stroke:var(--card);stroke-width:2.2}
+.chart .cell-open{stroke:var(--ink);stroke-width:1.5}.chart .cell-rest{stroke:var(--muted);stroke-width:1.5}
+.rings{display:flex;flex-wrap:wrap;gap:12px}.ring{margin:0;width:96px;text-align:center}.ring .chart-svg{width:64px;margin:0 auto}.ring figcaption{font-size:13px;word-break:break-word}
+.chart-lines{padding-inline-start:20px;margin:6px 0}

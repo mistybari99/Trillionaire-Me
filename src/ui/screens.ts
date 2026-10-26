@@ -32,6 +32,7 @@ import { tipsFor } from "../library/packs";
 import { journeyArt } from "./rewardArt";
 import { messageIndex, milestoneAt } from "../core/reward";
 import { diagram } from "./diagram";
+import { activityChart, goalRingsChart, habitChart, moneyChart } from "./charts";
 import { rulesTodayCard } from "./libraryScreens";
 import * as Focus from "../core/focus";
 import * as Habits from "../core/habits";
@@ -331,6 +332,7 @@ export function moneyScreen(): HTMLElement {
     fv.notMonthly ? h("p", { class: "muted" }, t("money.notMonthly", lang, { n: num(fv.notMonthly, lang) })) : null,
     mixed ? h("p", { class: "muted", "data-mix": "1" }, t("entry.mixNote", lang)) : null,
     h("h2", {}, t("money.add", lang)), form,
+    moneyChart(recs, lang),
     viewBar("money", lang),
     rows.length ? (moneyCompact ? moneyTable : h("div", { "data-view": "full" }, ...rows)) : h("p", { class: "muted" }, t("money.empty", lang)),
     h("p", { class: "muted" }, t("money.note", lang)), disclaimers(lang));
@@ -489,6 +491,7 @@ export function reportScreen(): HTMLElement {
   const sec = (title: Key, ...kids: Array<Node | string | null>) => h("div", { class: "card" }, h("h2", { class: "card-h", }, t(title, lang)), ...kids);
   return h("main", {}, link("#/journey", "crumb", `← ${t("journey.title", lang)}`), h("h1", {}, t("report.title", lang)), h("p", { class: "sub" }, t("report.intro", lang)),
     viewBar("report", lang),
+    goalRingsChart(allRecs(), lang),
     items.length && repCompact ? compactBody : items.length ? h("div", { "data-view": "full" },
       sec("report.decisions", s.decisions.length ? h("ul", { style: "padding-inline-start:20px" }, ...s.decisions.map((x) => h("li", { "data-decision": "1" }, x))) : h("p", { class: "muted" }, t("report.empty", lang))),
       sec("report.amounts", s.amountCount ? valueEl(t("report.amountTotal", lang, { n: num(s.amountCount, lang), v: t("money.bdt", lang, { v: fmtNum(s.amountTotal, lang) }) }), "ESTIMATE", lang) : h("p", { class: "muted" }, t("report.empty", lang))),
@@ -709,7 +712,7 @@ export function habitsScreen(): HTMLElement {
       h("span", { class: "muted", "data-consistency": "1" }, c.planned ? valueEl(t("habits.month", lang, { d: num(c.done, lang), p: num(c.planned, lang) }), "INFERENCE", lang) : t("habits.noPlanned", lang)));
     return h("div", { class: "card", "data-habit-card": hb.id },
       h("div", { class: "row" }, h("div", {}, nsTag(findRec(hb.id)?.ns ?? activeNs(), lang), h("h2", { class: "card-h", }, hb.title)), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0;min-height:44px", onclick: () => { removeHabit(hb.id); rerender(); } }, t("habits.remove", lang))),
-      main, dots,
+      main, dots, habitChart(hb, logs, today, lang),
       h("p", { class: "muted", "data-consistency": "1" }, c.planned ? valueEl(t("habits.month", lang, { d: num(c.done, lang), p: num(c.planned, lang) }), "INFERENCE", lang) : t("habits.noPlanned", lang)),
       Habits.restartPlan(hb, logs, today) === "smallest_version" ? h("p", { class: "note", "data-restart": "1" }, t("habits.restart", lang)) : null);
   });
@@ -844,6 +847,7 @@ export function reviewScreen(): HTMLElement {
     h("p", { class: "sub" }, t("review.intro", lang)),
     h("p", { class: "muted", "data-review-period": "1" }, valueEl(t("review.period", lang, { from: s.from, to: s.to }), "DEMO", lang)),
     viewBar("review", lang),
+    activityChart(recs, todayIso(), lang),
     ...revBody,
     s.focusUnknown > 0 ? h("p", { class: "muted" }, t("review.unknownFocus", lang, { n: num(s.focusUnknown, lang) })) : null,
     h("p", { class: "muted" }, t("review.quiet", lang)),
