@@ -1148,7 +1148,7 @@ export function deen(): HTMLElement {
 export function more(): HTMLElement {
   const lang = L();
   const seg = (label: string, active: boolean, on: () => void) => h("button", { type: "button", "aria-pressed": String(active), onclick: on }, label);
-  const items: Array<[string, Key, Key]> = [["#/topics", "topics.title", "topics.intro"], ["#/more/status", "more.status", "more.status.desc"], ["#/more/fields", "more.fields", "more.fields.desc"], ["#/more/glossary", "more.glossary", "more.glossary.desc"], ["#/more/safety", "more.safety", "more.safety.desc"], ["#/more/data", "more.data", "more.data.desc"], ["#/more/library", "more.library", "more.library.desc"], ["#/more/rules", "more.rules", "more.rules.desc"]];
+  const items: Array<[string, Key, Key]> = [["#/topics", "topics.title", "topics.intro"], ["#/more/status", "more.status", "more.status.desc"], ["#/more/fields", "more.fields", "more.fields.desc"], ["#/more/glossary", "more.glossary", "more.glossary.desc"], ["#/more/safety", "more.safety", "more.safety.desc"], ["#/more/data", "more.data", "more.data.desc"], ["#/more/connections", "more.connections", "more.connections.desc"], ["#/more/library", "more.library", "more.library.desc"], ["#/more/rules", "more.rules", "more.rules.desc"]];
   return h("main", { class: "scr scr-more" },
     h("h1", {}, t("more.title", lang)),
     ...items.map(([href, k, d]) => link(href, "card link", h("h2", { class: "card-h", }, t(k, lang)), h("p", { class: "muted" }, t(d, lang)))),

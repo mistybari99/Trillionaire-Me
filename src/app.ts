@@ -8,6 +8,7 @@ import * as S from "./ui/screens";
 import * as P from "./ui/planScreens";
 import * as LS from "./ui/libraryScreens";
 import * as LF from "./ui/lifeUi";
+import * as CN from "./ui/connectionsUi";
 import { demoPanels, firstRunScreen, trackDemoDay } from "./ui/modeUi";
 import { LAYERS, TOPICS } from "./library/topics";
 import { dismissReminder, inAppReminders } from "./ui/prayerAlerts";
@@ -50,6 +51,7 @@ export const ROUTES: Array<[RegExp, (m: RegExpMatchArray) => HTMLElement, string
   [/^\/more\/glossary$/, () => S.glossary(), "more"],
   [/^\/more\/safety$/, () => S.safety(), "more"],
   [/^\/more\/data$/, () => S.dataScreen(), "more"],
+  [/^\/more\/connections$/, () => CN.connectionsScreen(prefs.lang), "more"],
   [/^\/more\/library$/, () => LS.systemsLibraryScreen(), "more"],
   [/^\/more\/rules$/, () => LS.rulesScreen(), "more"],
 ];
