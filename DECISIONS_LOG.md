@@ -331,3 +331,49 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 - Alternatives: stored overall % (rejected: goes stale); counting manual goal percents in overall (rejected: owner said tasks only); treating unsized tasks as 0 weight (rejected: unknown is not 0).
 - Undo: delete `src/core/overallProgress.ts`, `tests/overall_progress*.test.ts`; remove `overallProgressCard` (lifeUi, 2 lines in screens), the `.ov-*` CSS, `overall.*` / `plan.size.*` / `goals.progressManual*` keys, the 3 catalog fields, `prefs.progressMode` and the progress-memory helpers in state.ts, the manual branch in `goalProgress`; in themes.ts restore id `classic`, `DEFAULT_DESIGN = "classic"`, drop the two new versions and `migrateDesignId`.
 - Proof: tsc clean; vitest 794/794 (new: 15 pure + 5 UI tests, design tests updated); build ok; e2e all PASS incl. DESIGN-VER (default, switch, reload, migration, 2 new versions, no external requests).
+
+## Build step 7: Goal Universe (builder decision, 26 Oct 2026)
+- What: `#/journey/universe` (Journey > Goal Universe). Seven life areas (Business, Career, Health, Family, Travel, Personal, Deen) around one centre goal, drawn as inline SVG with a Map / List toggle (`tm:ui:universeView`, default map). Both views use the same sentences (`universeLines`), and the SVG `desc` repeats them. Pure data in `src/core/goalUniverse.ts`.
+- Data: only the user's own goals and linked tasks of the active mode. New optional goal field `goal.area` (catalog 3 to 4, no schema migration; a missing value reads as Unknown). Chosen on the goal page ("Life area"); an empty choice stores Unknown, never a default area. Centre goal = the goal with the longest horizon, ties by id; none = "Unknown". An area with no goal shows "?" and "Unknown", never 0. Goals with no area are counted in a note so nothing is hidden. No total.
+- Deen: drawn as a private node (lock, name only). Its goals are not counted, their titles never appear, and a Deen goal is never the centre. No figure, no score.
+- Alternatives: a single overall Universe percent (rejected: owner wants per-area facts only); guessing an area from goal text (rejected: invented data); making `goal.area` an intake field (rejected: intake screens are capped at 7 fields).
+- Undo: delete `src/core/goalUniverse.ts`, `src/ui/universeUi.ts`, `src/ui/svg.ts` (if unused), `tests/goal_universe.test.ts`; remove the route in `src/app.ts`, the Journey link, `goalAreaCard` in `lifeUi.ts`, `prefs.universeView`, the `univ.*` keys, the `/* Goal Universe` CSS and the `goal.area` field (catalog back to 3).
+- Proof: `tests/goal_universe.test.ts` (12: unknown, per-area counts, Deen private, centre rule, map = list lines, mode isolation, Bangla digits, area save, CSS); screenshot checked at 360 px.
+
+## Build step 8: Home summary cards and Next best action (builder decision, 26 Oct 2026)
+- What: on Today, three cards (Net worth, Monthly income, Monthly expenses) from the user's own Money entries, then a rule-based "Next best action" card. `src/core/homeSummary.ts`, `src/core/nextAction.ts`, `src/ui/homeUi.ts`; `finance.ts` gains `monthlyIncome` / `monthlyExpenses`.
+- Cards: nothing entered shows "Unknown. Add it in Money."; an entry without an amount shows "Unknown. n amount(s) missing."; BDT with the ESTIMATE chip when known. Personal first; a Business line appears only when business items exist, never added together. DEMO badge in demo mode, Real badge in real mode. Text "Saved on this device" replaces the board's "Sync: Online" (D4). One-off and yearly items are not counted (same rule as Money).
+- Action rules, fixed order, first match wins: no goal; goal with no linked task; no task; first open task; no money entry; empty life wheel; review plan. Every card shows "Why:" with the rule's reason and a button (View Plan / Open Diary / Open Money / Open life wheel). Text uses only the user's own words; no amount, no percent, no forecast (D2).
+- Alternatives: "reinvest 20%" style advice (rejected: invented number); AI-written suggestions (blocked by D-C).
+- Undo: delete `src/core/homeSummary.ts`, `src/core/nextAction.ts`, `src/ui/homeUi.ts`, `tests/home_cards.test.ts`; remove the two lines in `today()`, the two `finance.ts` exports, the `home.sum.*`, `home.saved`, `next.*` keys and the `/* Home summary cards` CSS.
+- Proof: `tests/home_cards.test.ts` (11).
+
+## Build step 9: progress ring animation (builder decision, 26 Oct 2026)
+- What: `src/ui/ring.ts` progress ring (arc length = percent). Used on the Overall progress card, the goal page and the "step done" reward card. At a milestone (25, 50, 75, 100) the number pops and a soft glow pulses once. Total motion at most 1.7 s, not looping. Unknown shows a dashed ring with "?".
+- Safety: all animation sits inside `prefers-reduced-motion: no-preference`; under `reduce` the animations are off and the still ring shows the final value (arc length is an SVG attribute, not CSS). The same sentence is the ring's label and the visible text. Colours are tokens only; no red.
+- Undo: delete `src/ui/ring.ts`, `tests/progress_ring.test.ts`; remove the `progressRing` calls (lifeUi 2, screens `rewardRing`) and the `/* progress ring` CSS block.
+- Proof: `tests/progress_ring.test.ts` (11) plus the existing r4/a11y motion tests.
+
+## Build step 10: 3D-style logo (builder decision, 26 Oct 2026)
+- What: `src/ui/logo.ts`, inline SVG: champagne T-bar and M on an obsidian tile (#C9A96E on #0B1216), stepped back copies and gradients for depth. Used on the welcome screen (splash), Journey and Reward. Bundled in the JS, no file, no network, no three.js (D9, owner decision 5).
+- Motion: still by default; only the welcome copy has one 1.2 s shine pass, inside no-preference, hidden under reduce.
+- Alternatives: the Claude Design GLB/three.js viewer (rejected: runtime engine, network); a pre-rendered PNG (rejected: larger, does not follow theme).
+- Undo: delete `src/ui/logo.ts`, `tests/logo3d.test.ts`; remove the three `logo3d` uses, the `logo.alt` key and the `/* 3D-style logo` CSS.
+- Proof: `tests/logo3d.test.ts` (7); visual check of the welcome screen at 360 px.
+
+## Build step 11: local snapshots and backup reminder (builder decision, 26 Oct 2026)
+- What: More > Demo & real data > "Local snapshots". Automatic snapshot when the app opens, at most about once a day (newest older than 20 hours, and the content changed). Keeps the last N (3, 5 or 10; default 5). Manual "Take a snapshot now", "Save to file", "Open a snapshot file". Restore always shows a confirm first, saves today's data as a "before a restore" snapshot, checks every record before changing anything (checksums, namespace, same write guards) and then replaces.
+- Storage: IndexedDB table `snapshots` in the existing `tm-db` (Dexie version 2; the `records` table is unchanged, so old data is untouched). Without IndexedDB the card says snapshots are not available.
+- Exclusions (same as the encrypted backup): records only. Connection keys (`tm:secret:*`), approvals, consent and settings are never copied. The real part is included only while the real-data tick is on, and restored only while it is on. Deleting real data also removes the real part from every snapshot (`scrubRealParts`). Snapshots are not encrypted (the records in IndexedDB are not either); the file button says the file is not locked and points to the encrypted backup.
+- Reminder: OFF by default (`tm:ui:backupRemind`). When on, Today shows a card if no backup file was saved in 7 days; "Remind me tomorrow" snoozes it. In-app only, no notification, no cloud.
+- Alternatives: auto-restore (rejected: can overwrite data); encrypting snapshots with a stored key (rejected: a stored key defeats the lock); cloud copy (D-C, off).
+- Undo: delete `src/core/snapshots.ts`, `src/ui/snapshotsUi.ts`, `tests/snapshots.test.ts`; remove `snapshots()` and the v2 table in `src/adapters/dexie.ts` (the browser keeps the empty table, harmless), `snapshotRepo` and the 5 prefs in `state.ts`, the card and reminder lines in `screens.ts`, `runAutoSnapshot` in `main.ts`, the `snap.*` keys and CSS.
+- Proof: `tests/snapshots.test.ts` (20: keep N, dedupe, real needs tick, no secrets, restore guards, damaged file, file round trip, upgrade from a version-1 database, screen flow, reminder default off).
+
+## Build step 12: service worker precache + offline check (builder decision, 26 Oct 2026)
+- Finding: the old worker cached only files the user had already opened, so a first visit followed by going offline could miss screens, content packs or fonts that had not been opened yet.
+- What: `tools/precache.ts` (Vite build plugin) lists every built file, hashes them into a version and stamps both into `dist/sw.js`; it also writes `dist/precache.json` for checks. Install saves the full list (`Promise.allSettled`, so one failure does not block the rest). Old caches are deleted on activate. Fetch is unchanged in spirit: network first, then the saved copy, then the page. Old-format `.woff` fonts are left out when `.woff2` exists. Same-origin GET only.
+- E2E (`tools/e2e.mjs`, PRECACHE): all files of the build are in the cache, only the current caches remain, a cold start with the network off opens Goal Universe, Journey logo, snapshots, Home cards, goals and a topic page, and every saved file can be fetched offline. 0 third-party requests.
+- Alternatives: Workbox (rejected: dependency); precache by hand-written list (rejected: goes stale).
+- Undo: restore the old `public/sw.js` (one `CACHE` name, fetch handler only), remove `precachePlugin` from `vite.config.ts`, delete `tools/precache.ts`, `tests/precache.test.ts` and the PRECACHE block in `tools/e2e.mjs`.
+- Not done: the Register xlsx is not updated (binary, and Verified needs an owner-visible device test); visual check on a real phone is a later owner task; Bangla text of the new keys is a draft until reviewer sign-off (TM-TST-161).
