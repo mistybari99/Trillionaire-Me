@@ -37,6 +37,7 @@ import { activityChart, goalRingsChart, habitChart, moneyChart } from "./charts"
 import { encBackupCard } from "./encBackup";
 import { rulesTodayCard } from "./libraryScreens";
 import { celebrate, journeyGoalsCard, overallProgressCard } from "./lifeUi";
+import { homeSummaryCards, nextActionCard } from "./homeUi";
 import * as Focus from "../core/focus";
 import * as Habits from "../core/habits";
 import * as Cards from "../core/cards";
@@ -816,6 +817,8 @@ export function today(): HTMLElement {
       h("div", { class: "n" }, num(curStage + 1, lang), h("span", { style: "font-size:22px;color:var(--muted)" }, ` / ${num(STAGES.length, lang)}`)),
       rungs),
     overallProgressCard(lang, "today"),
+    homeSummaryCards(lang),
+    nextActionCard(lang),
     h("h2", {}, t("home.tasks", lang)),
     viewBar("today", lang),
     ...(cp.hasTasks ? todayFromPlan(cp, lang) : activeNs() === "real" ? [h("p", { class: "muted", "data-empty-real": "1" }, t("mode.today.empty", lang))] : screenView("today") === "compact" ? [h("ul", { class: "list-compact", "data-view": "compact" }, ...DEMO_TASKS.slice(0, 3).map((k) => h("li", {}, h("strong", {}, tb(k.title, lang)), " · ", valueEl(t("task.minutes", lang, { n: num(k.minutes, lang) }), "DEMO", lang))))] : DEMO_TASKS.slice(0, 3).map((k, i) => h("div", { class: "task" }, h("b", {}, num(i + 1, lang)),

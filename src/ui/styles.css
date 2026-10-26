@@ -362,3 +362,12 @@ textarea[data-swot]{width:100%;box-sizing:border-box;font:inherit;padding:8px}
 .univ-list li{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;min-height:44px;padding:8px 0;border-bottom:1px solid var(--rule)}
 .univ-line{flex:1 1 220px}
 .univ-list a.crumb{display:inline-flex;align-items:center;min-height:44px}
+
+/* Home summary cards and next best action: tokens only, no motion */
+.home-grid{display:grid;grid-template-columns:1fr;gap:10px;margin:8px 0}
+@media (min-width:480px){.home-grid{grid-template-columns:repeat(3,1fr)}}
+.home-card{margin:0}
+.home-card .card-h{margin:0 0 6px;font-size:1rem}
+.home-val{margin:4px 0;overflow-wrap:anywhere}
+.next-action .next-title{font-weight:700;margin:4px 0}
+.next-action .next-why{margin:4px 0 10px}

@@ -34,3 +34,7 @@ export function runwayMonths(cash: FieldValue, monthlyFlow: Calc): Calc | { ok: 
   if (monthlyFlow.value >= 0) return { ok: true, value: null, label: CALC_LABEL };
   return { ok: true, value: c / -monthlyFlow.value, label: CALC_LABEL };
 }
+
+/** Totals of the monthly income and expense entries of one scope. Unknown amounts make the total unknown (never 0). */
+export const monthlyIncome = (items: FinItem[], scope: FinItem["scope"]): Calc => total(items, "income", scope);
+export const monthlyExpenses = (items: FinItem[], scope: FinItem["scope"]): Calc => total(items, "expense", scope);
