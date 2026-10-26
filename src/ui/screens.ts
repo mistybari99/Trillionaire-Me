@@ -33,6 +33,7 @@ import { journeyArt } from "./rewardArt";
 import { messageIndex, milestoneAt } from "../core/reward";
 import { diagram } from "./diagram";
 import { activityChart, goalRingsChart, habitChart, moneyChart } from "./charts";
+import { encBackupCard } from "./encBackup";
 import { rulesTodayCard } from "./libraryScreens";
 import * as Focus from "../core/focus";
 import * as Habits from "../core/habits";
@@ -212,13 +213,18 @@ export function planScreen(): HTMLElement {
   const openTasks = cp.recs.filter(isOpenTask).sort((a, b) => a.id.localeCompare(b.id));
   const afterSel = h("select", { id: "pt-after" }, h("option", { value: "" }, t("plan.after.none", lang)),
     ...openTasks.map((r) => h("option", { value: r.id }, cp.titles.get(r.id) ?? r.id)));
+  // Optional link to a goal of the active mode (goal rings on Report read links.goal).
+  const goalRecs = cp.recs.filter((r) => r.entity === "goal" && r.values["goal.title"]?.state === "value").sort((a, b) => a.id.localeCompare(b.id));
+  const goalTitle = (r: TMRecord) => String((r.values["goal.title"] as { value?: unknown }).value ?? "");
+  const goalSel = h("select", { id: "pt-goal" }, h("option", { value: "" }, t("plan.goal.none", lang)), ...goalRecs.map((r) => h("option", { value: r.id }, goalTitle(r))));
   const err = h("p", { class: "err", role: "alert" });
   const gate = consentOn() ? null : consentPrompt(lang);
   const form = h("form", { novalidate: true, "data-form": "task" }, gate,
     h("label", { for: "pt-title" }, t("plan.task.title", lang)), title,
     h("label", { for: "pt-min" }, t("plan.task.minutes", lang)), mins,
     h("label", { for: "pt-prio" }, t("plan.task.priority", lang)), prio,
-    ...(openTasks.length ? [h("label", { for: "pt-after" }, t("plan.after.label", lang)), afterSel] : []), err,
+    ...(openTasks.length ? [h("label", { for: "pt-after" }, t("plan.after.label", lang)), afterSel] : []),
+    ...(goalRecs.length ? [h("label", { for: "pt-goal" }, t("plan.goal.label", lang)), goalSel] : []), err,
     h("button", { class: "btn", type: "submit" }, t("plan.task.save", lang)));
   form.addEventListener("submit", (ev) => {
     ev.preventDefault(); err.textContent = "";
@@ -230,7 +236,7 @@ export function planScreen(): HTMLElement {
     const id = `task-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`;
     if (!saveTyped({ id, entity: "task", createdAt: new Date().toISOString(),
       values: { "task.title": typed(name), "task.minutes": m, "task.priority": typed(prio.value) },
-      ...(afterSel.value ? { links: { after: afterSel.value } } : {}) })) { err.textContent = saveBlockedText(lang); return; }
+      ...(afterSel.value || goalSel.value ? { links: { ...(afterSel.value ? { after: afterSel.value } : {}), ...(goalSel.value ? { goal: goalSel.value } : {}) } } : {}) })) { err.textContent = saveBlockedText(lang); return; }
     rerender();
   });
   const afterTitle = (id: string) => cp.titles.get(id) || "";
@@ -246,7 +252,8 @@ export function planScreen(): HTMLElement {
     const mv = r.values["task.minutes"];
     return h("div", { class: "card", "data-task": r.id }, h("div", { class: "row" },
       h("div", {}, nsTag(r.ns, lang), h("h2", { class: "card-h", }, cp.titles.get(r.id) ?? ""), h("p", { class: "muted" }, mv && mv.state === "value" ? valueEl(t("task.minutes", lang, { n: num(Number(mv.value), lang) }), mv.label, lang) : t("plan.task.minutes.later", lang)),
-        r.links?.after ? h("p", { class: "muted", "data-after": r.links.after }, t("plan.after.shown", lang, { title: afterTitle(r.links.after) })) : null),
+        r.links?.after ? h("p", { class: "muted", "data-after": r.links.after }, t("plan.after.shown", lang, { title: afterTitle(r.links.after) })) : null,
+        r.links?.goal && goalRecs.some((g) => g.id === r.links!.goal) ? h("p", { class: "muted", "data-goal": r.links.goal }, t("plan.goal.shown", lang, { title: goalTitle(goalRecs.find((g) => g.id === r.links!.goal)!) })) : null),
       r.values["task.done_on"]?.state === "value" ? h("span", { class: "tag ok" }, t("reward.done", lang))
         : r.values["task.not_true_on"]?.state === "value" ? h("div", {}, h("span", { class: "tag off" }, t("reality.tag", lang, { date: String((r.values["task.not_true_on"] as { value?: unknown }).value) })), h("p", { class: "muted" }, t("reality.note", lang)), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => { storeOf(r).delete(r.id); rerender(); } }, t("plan.task.remove", lang)))
         : h("div", {}, doneBtn(r.id, lang), focusBtn(r.id, lang), h("button", { class: "btn ghost", type: "button", "data-act": "reality-changed", "data-task-id": r.id, style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => markRealityChanged(r.id, lang) }, t("reality.btn", lang)), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => { storeOf(r).delete(r.id); rerender(); } }, t("plan.task.remove", lang)))));
@@ -1281,6 +1288,7 @@ export function dataScreen(): HTMLElement {
         catch (err) { out.className = "err"; out.textContent = t("backup.bad", lang, { why: (err as Error).message }); }
       } })),
     h("p", { id: "backup-msg", role: "status" }),
+    encBackupCard(lang),
     disclaimers(lang));
 }
 

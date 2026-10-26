@@ -263,3 +263,11 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 - Alternatives: chart library (rejected: owner rule, size); zero bars for empty weeks (rejected: unknown is not 0).
 - Undo: remove the four chart calls in `src/ui/screens.ts`, delete `charts.ts`, `chartData.ts`, `tests/charts.test.ts`, the CSS block and `chart.*` keys.
 - Proof: `tests/charts.test.ts` (data, partial, none, text equals data, no invented zero, mode isolation, Bangla); a11y token and reduced-motion tests green.
+
+## Build step 4: encrypted backup + task-to-goal link (26 Oct 2026)
+- What: More > Data gets "Save encrypted backup" and "Restore from encrypted backup". WebCrypto only: PBKDF2-SHA256 (600000 iterations, random 16-byte salt) -> AES-GCM-256 (random 12-byte IV, fixed AAD). One file holds a `demo` part and a `real` part, each with its own namespace label; restore puts each back into its own namespace only (a part in the wrong namespace is refused). Passphrase must be 8+ characters, is never stored or logged, and is cleared from the fields after use. Wrong passphrase, tampered file and damaged file give a plain error and change nothing. Restore decrypts first, shows counts, and writes only after the explicit "Replace and restore" tap; real part is skipped (with a message) when the real-data tick is off. The old plain demo-only backup is unchanged. No network call.
+- Follow-up: the Plan task form has an optional "Link to goal" choice (active mode's goals only). It saves `links.goal`, so Report goal rings can count linked tasks instead of showing unknown.
+- Alternatives: external crypto library (rejected: owner rule, size); storing a key or hint for the passphrase (rejected: a stored secret defeats the lock); auto-restore without confirm (rejected: could overwrite data).
+- Limit: a forgotten passphrase cannot be recovered. The backup file is a user-made copy; keep it somewhere private.
+- Undo: delete `src/core/cryptoBackup.ts`, `src/ui/encBackup.ts`, the `encBackupCard` line in `dataScreen`, the `enc.*` and `plan.goal.*` keys, the `pt-goal` select in `planScreen`, and `tests/crypto_backup.test.ts`, `tests/enc_backup_ui.test.ts`.
+- Proof: 7 pure tests (round trip, wrong passphrase, tamper, salt/IV differ, short passphrase, forged namespace) + 8 UI tests; full suite 689/689.
