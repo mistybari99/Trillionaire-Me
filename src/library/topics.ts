@@ -11,7 +11,13 @@ export const LAYERS: Record<Layer, Bi> = {
 export type Sensitive = "health" | "mental_health" | "money" | "worship";
 export interface Topic { id: string; name: Bi; layer: Layer; sensitive?: Sensitive; appLink?: string }
 export type DiagramType = "steps" | "cycle" | "matrix";
-export interface Tip { id: string; topic: string; tags: string[]; title: Bi; how: Bi; diagram: { type: DiagramType; bn: string; en: string }; appLink?: string }
+/** Optional card kind (packs 003+): explain, steps, example, watchout (common slips), learn (where to learn more). */
+export type TipKind = "explain" | "steps" | "example" | "watchout" | "learn";
+export const TIP_KINDS: readonly TipKind[] = ["explain", "steps", "example", "watchout", "learn"];
+/** Kind of source named on a "learn" card. Never a link, never copied text. */
+export type TipSource = "general" | "wikipedia" | "reviewer";
+export const TIP_SOURCES: readonly TipSource[] = ["general", "wikipedia", "reviewer"];
+export interface Tip { id: string; topic: string; tags: string[]; title: Bi; how: Bi; diagram: { type: DiagramType; bn: string; en: string }; appLink?: string; kind?: TipKind; source?: TipSource; reviewer?: "pending" }
 
 const T = (id: string, bn: string, en: string, layer: Layer, sensitive?: Sensitive, appLink?: string): Topic => ({ id, name: { bn, en }, layer, sensitive, appLink });
 export const TOPICS: Topic[] = [

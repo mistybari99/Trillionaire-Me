@@ -1,0 +1,615 @@
+{
+  "schema": "tm-content-pack",
+  "schemaVersion": 1,
+  "packId": "pack-004",
+  "reviewStatus": "pending_reviewer",
+  "license": "original",
+  "description": "Original, practical entries (Bangla and English) with a short explanation, steps, a realistic example without invented figures, common slips to avoid, and a where-to-learn-more note naming the kind of source. Time and planning, habits, learning how to learn, goal setting and decision making. Drafts: shown as যাচাই হয়নি until a reviewer signs off.",
+  "tips": [
+    {
+      "id": "p3-ti-1",
+      "topic": "time",
+      "tags": [
+        "time",
+        "planning"
+      ],
+      "title": {
+        "bn": "সময় পরিকল্পনার মূল কথা",
+        "en": "The core of time planning"
+      },
+      "how": {
+        "bn": "সময় বাড়ানো যায় না, শুধু কীভাবে বসাবেন তা ঠিক করা যায়। আগে স্থির কাজ (ঘুম, খাওয়া, পরিবার) বসান, তারপর বাকি ফাঁকা সময়ে নিজের গুরুত্বপূর্ণ কাজ।",
+        "en": "You cannot make more time, only choose where it goes. Place the fixed things first (sleep, meals, family), then put your important work in the free time that remains."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "স্থির কাজ বসাই|ফাঁকা সময় দেখি|গুরুত্বপূর্ণ কাজ বসাই",
+        "en": "Place fixed things|See free time|Place important work"
+      },
+      "appLink": "#/diary/plan",
+      "kind": "explain",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-ti-2",
+      "topic": "time",
+      "tags": [
+        "time",
+        "planning"
+      ],
+      "title": {
+        "bn": "সপ্তাহের পরিকল্পনা 10 মিনিটে",
+        "en": "Plan the week in 10 minutes"
+      },
+      "how": {
+        "bn": "1) আগামী সপ্তাহের স্থির কাজ লিখুন। 2) গুরুত্বপূর্ণ 3টি কাজ বাছুন। 3) প্রতিটির জন্য একটা সময় ঠিক করুন। 4) প্রতিটির পাশে খালি জায়গা রাখুন।",
+        "en": "1) Write next week's fixed commitments. 2) Choose 3 important tasks. 3) Give each one a time slot. 4) Leave spare room around each."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "স্থির কাজ লিখি|3টি কাজ বাছি|সময় দিই|খালি জায়গা রাখি",
+        "en": "Fixed commitments|Choose 3 tasks|Give a time|Leave spare room"
+      },
+      "appLink": "#/diary/plan",
+      "kind": "steps",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-ti-3",
+      "topic": "time",
+      "tags": [
+        "time",
+        "planning"
+      ],
+      "title": {
+        "bn": "উদাহরণ: কাজের দিনের ছক",
+        "en": "Example: a working-day layout"
+      },
+      "how": {
+        "bn": "হাসান সকালের প্রথম ঘণ্টা সবচেয়ে কঠিন কাজের জন্য রাখল। দুপুরে ছোট ফোন-ইমেইল, বিকালে হালকা কাজ। প্রতিদিন দুটো ফাঁকা ঘণ্টা রাখল, যাতে হঠাৎ কাজ এলেও পরিকল্পনা না ভাঙে।",
+        "en": "Hasan kept the first morning hour for his hardest task, short calls and email at noon, light work in the afternoon, and two spare hours so sudden jobs did not break the plan."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "সকালে কঠিন কাজ|দুপুরে ছোট কাজ|বিকালে হালকা|দুই ঘণ্টা ফাঁকা",
+        "en": "Hard task in the morning|Short jobs at noon|Light in the afternoon|Two spare hours"
+      },
+      "appLink": "#/diary/plan",
+      "kind": "example",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-ti-4",
+      "topic": "time",
+      "tags": [
+        "time",
+        "planning"
+      ],
+      "title": {
+        "bn": "সময়ের হিসাবে যা এড়াবেন",
+        "en": "Time-planning slips to avoid"
+      },
+      "how": {
+        "bn": "একদিনে অনেক কাজ ঠাসবেন না। কাজের সময় বেশি কম ধরবেন না; অনুমানে বাড়তি সময় রাখুন। ‘না’ বলার সময় না রাখলে অন্যের কাজেই দিন শেষ হয়ে যায়।",
+        "en": "Do not pack a day full. Do not underestimate how long things take; add extra time. If you keep no room to say no, the day fills with other people's tasks."
+      },
+      "diagram": {
+        "type": "matrix",
+        "bn": "ঠাসা দিন: কম কাজ বাছি|কম সময় ধরা: বাফার রাখি|সব হ্যাঁ বলা: ‘না’ শিখি|হিসাব নেই: সপ্তাহে একবার দেখি",
+        "en": "Packed day: choose fewer|Underestimating: add buffer|Saying yes to all: learn no|No record: weekly look"
+      },
+      "appLink": "#/diary/plan",
+      "kind": "watchout",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-ti-5",
+      "topic": "time",
+      "tags": [
+        "time",
+        "learning"
+      ],
+      "title": {
+        "bn": "সময় ব্যবস্থাপনা নিয়ে আরও শিখতে",
+        "en": "Learn more about time management"
+      },
+      "how": {
+        "bn": "‘সময় ব্যবস্থাপনা’ ও ‘অগ্রাধিকার’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। কয়েকটা পদ্ধতি পড়ে একটাই এক সপ্তাহ চালিয়ে দেখুন। উইকিপিডিয়ার পরিচিতি অ্যাপের ব্যাকগ্রাউন্ডে সংরক্ষিত হয়।",
+        "en": "Read general explainers on “time management” and “prioritisation”. Read a few methods, then try just one for a week. Wikipedia overviews are saved in the app background."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "কয়েকটা পদ্ধতি পড়ি|একটা বাছি|এক সপ্তাহ চালাই",
+        "en": "Read a few methods|Pick one|Try for a week"
+      },
+      "appLink": "#/cards",
+      "kind": "learn",
+      "source": "wikipedia",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-ha-1",
+      "topic": "habits",
+      "tags": [
+        "habits",
+        "consistency"
+      ],
+      "title": {
+        "bn": "অভ্যাস কীভাবে তৈরি হয়",
+        "en": "How a habit forms"
+      },
+      "how": {
+        "bn": "অভ্যাস তৈরি হয় একই কাজ একই পরিস্থিতিতে বারবার করলে। শুরুতে ইচ্ছাশক্তি লাগে, পরে কাজটা সহজ হয়ে আসে। তাই ছোট আর সহজ দিয়ে শুরু করাই ভালো।",
+        "en": "A habit forms when you repeat the same action in the same situation. At first it takes effort, later it gets easier. So starting small and easy works best."
+      },
+      "diagram": {
+        "type": "cycle",
+        "bn": "সংকেত|ছোট কাজ|ছোট পুরস্কার|আবার",
+        "en": "Cue|Tiny action|Small reward|Again"
+      },
+      "appLink": "#/habits",
+      "kind": "explain",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-ha-2",
+      "topic": "habits",
+      "tags": [
+        "habits",
+        "starting"
+      ],
+      "title": {
+        "bn": "নতুন অভ্যাস চালুর ধাপ",
+        "en": "Steps to start a new habit"
+      },
+      "how": {
+        "bn": "1) একটাই অভ্যাস বাছুন। 2) এমন ছোট করুন যা 2 মিনিটে হয়। 3) আগের একটা অভ্যাসের পরে বসান। 4) করা হলে একটা টিক দিন, ব্যস।",
+        "en": "1) Choose just one habit. 2) Shrink it to 2 minutes. 3) Attach it after an existing habit. 4) Tick it when done, nothing more."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "একটা বাছি|2 মিনিটে নামাই|আগের অভ্যাসের পরে|টিক দিই",
+        "en": "Choose one|Shrink to 2 min|After an old habit|Tick it"
+      },
+      "appLink": "#/habits",
+      "kind": "steps",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-ha-3",
+      "topic": "habits",
+      "tags": [
+        "habits",
+        "starting"
+      ],
+      "title": {
+        "bn": "উদাহরণ: সকালে পানি ও পড়া",
+        "en": "Example: water and reading in the morning"
+      },
+      "how": {
+        "bn": "তানভীর ঘুম থেকে উঠে এক গ্লাস পানি খাওয়ার পর একটা পাতা পড়ে। যেদিন সময় থাকে না, সে শুধু বই খুলে রাখে। পরদিন আবার স্বাভাবিকভাবে শুরু করে।",
+        "en": "After waking and drinking a glass of water, Tanvir reads one page. On busy days he just opens the book. The next day he carries on as normal."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "উঠে পানি খাই|একটা পাতা পড়ি|ব্যস্ত দিনে বই খুলি",
+        "en": "Wake and drink water|Read one page|Busy day: open the book"
+      },
+      "appLink": "#/habits",
+      "kind": "example",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-ha-4",
+      "topic": "habits",
+      "tags": [
+        "habits",
+        "recovery"
+      ],
+      "title": {
+        "bn": "অভ্যাসে যা এড়িয়ে চলবেন",
+        "en": "Habit slips to avoid"
+      },
+      "how": {
+        "bn": "একসঙ্গে অনেক অভ্যাস শুরু করবেন না। একদিন বাদ গেলে ‘সব শেষ’ ভাববেন না; পরদিন সবচেয়ে ছোট ধাপ করুন। অন্যের অভ্যাসের সঙ্গে তুলনা করবেন না।",
+        "en": "Do not start many habits at once. If a day is missed, do not think “all is gone”; do the smallest step the next day. Do not compare with other people's habits."
+      },
+      "diagram": {
+        "type": "matrix",
+        "bn": "অনেকগুলো একসাথে: একটা করি|একদিন বাদ: কাল ছোট ধাপ|তুলনা: নিজের গতি|কঠিন লক্ষ্য: ছোট করি",
+        "en": "Many at once: do one|Missed day: small step tomorrow|Comparing: own pace|Hard target: shrink it"
+      },
+      "appLink": "#/habits",
+      "kind": "watchout",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-ha-5",
+      "topic": "habits",
+      "tags": [
+        "habits",
+        "learning"
+      ],
+      "title": {
+        "bn": "অভ্যাস নিয়ে আরও শিখতে",
+        "en": "Learn more about habits"
+      },
+      "how": {
+        "bn": "‘অভ্যাস গঠন’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অ্যাপে উইকিপিডিয়া খুঁজলে পরিচিতি সংরক্ষিত হয়। আমাদের লেখা যাচাইকারীর অপেক্ষায়, তাই নিজের অভিজ্ঞতা দিয়েও মিলিয়ে দেখুন।",
+        "en": "Read general explainers on “habit formation”. A Wikipedia search in the app saves an overview. Our text is waiting for a reviewer, so check it against your own experience too."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "সাধারণ লেখা পড়ি|উইকিপিডিয়া খুঁজি|নিজের অভিজ্ঞতার সঙ্গে মেলাই",
+        "en": "Read general explainers|Search Wikipedia|Match with my experience"
+      },
+      "appLink": "#/cards",
+      "kind": "learn",
+      "source": "wikipedia",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-kn-1",
+      "topic": "knowledge",
+      "tags": [
+        "learning",
+        "memory"
+      ],
+      "title": {
+        "bn": "শেখার সবচেয়ে কার্যকর কথা",
+        "en": "What makes learning stick"
+      },
+      "how": {
+        "bn": "শুধু পড়ে গেলে মনে থাকে কম। মনে করার চেষ্টা, নিজের ভাষায় বলা আর কিছুদিন পরপর ফিরে দেখা শেখাকে পাকা করে। শেখাকে ছোট ছোট অংশে ভাগ করুন।",
+        "en": "Just reading again and again leaves less in memory. Trying to recall, explaining in your own words and revisiting after a gap make learning stick. Split it into small parts."
+      },
+      "diagram": {
+        "type": "cycle",
+        "bn": "শিখি|না দেখে মনে করি|নিজের ভাষায় বলি|কিছুদিন পরে ফিরি",
+        "en": "Learn|Recall unseen|Say it in own words|Revisit later"
+      },
+      "appLink": "#/cards",
+      "kind": "explain",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-kn-2",
+      "topic": "knowledge",
+      "tags": [
+        "learning",
+        "study"
+      ],
+      "title": {
+        "bn": "নতুন বিষয় শেখার ধাপ",
+        "en": "Steps to learn a new subject"
+      },
+      "how": {
+        "bn": "1) কেন শিখছেন এক লাইনে লিখুন। 2) বিষয়টা 5–7টা ছোট অংশে ভাগ করুন। 3) একেকটা অংশ শিখে নিজের ভাষায় লিখুন। 4) একটা ছোট কাজে ব্যবহার করুন।",
+        "en": "1) Write why you are learning in one line. 2) Split the subject into 5–7 parts. 3) Learn one part, then write it in your own words. 4) Use it in one small task."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "কারণ লিখি|ছোট অংশে ভাগ|নিজের ভাষায় লিখি|ছোট কাজে লাগাই",
+        "en": "Write why|Split into parts|Own words|Use in a small task"
+      },
+      "appLink": "#/cards",
+      "kind": "steps",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-kn-3",
+      "topic": "knowledge",
+      "tags": [
+        "learning",
+        "study"
+      ],
+      "title": {
+        "bn": "উদাহরণ: স্প্রেডশিট শেখা",
+        "en": "Example: learning spreadsheets"
+      },
+      "how": {
+        "bn": "মিতা স্প্রেডশিট শিখতে চাইল নিজের মাসের খরচ লেখার জন্য। প্রথম দিন শুধু ঘর ও যোগ শিখল, পরের দিন সাজানো। প্রতিবার শেখার পর নিজের খরচের তালিকায় ব্যবহার করল।",
+        "en": "Mita wanted spreadsheets to track her monthly costs. Day one she learned only cells and adding, the next day sorting. After each lesson she used it on her own list."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "উদ্দেশ্য ঠিক|ঘর ও যোগ|সাজানো|নিজের তালিকায় ব্যবহার",
+        "en": "Set the purpose|Cells and adding|Sorting|Use on own list"
+      },
+      "appLink": "#/cards",
+      "kind": "example",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-kn-4",
+      "topic": "knowledge",
+      "tags": [
+        "learning",
+        "study"
+      ],
+      "title": {
+        "bn": "শেখায় যা এড়িয়ে চলবেন",
+        "en": "Learning slips to avoid"
+      },
+      "how": {
+        "bn": "শুধু ভিডিও দেখে গেলে শেখা হয়েছে মনে হয়, কিন্তু কাজে লাগে না। একসঙ্গে অনেক বিষয় ধরবেন না। না বুঝলে লুকাবেন না; প্রশ্নটা লিখে রাখুন।",
+        "en": "Watching video after video can feel like learning but may not help in practice. Do not take on many subjects at once. If you do not understand, write the question down instead of hiding it."
+      },
+      "diagram": {
+        "type": "matrix",
+        "bn": "শুধু দেখা: নিজে করি|অনেক বিষয়: একটা বাছি|না বুঝে এগোনো: প্রশ্ন লিখি|নোট নেই: সারাংশ লিখি",
+        "en": "Only watching: practise|Many subjects: pick one|Moving on unsure: write the question|No notes: write a summary"
+      },
+      "appLink": "#/cards",
+      "kind": "watchout",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-kn-5",
+      "topic": "knowledge",
+      "tags": [
+        "learning",
+        "research"
+      ],
+      "title": {
+        "bn": "শেখার উৎস কীভাবে বাছবেন",
+        "en": "How to choose learning sources"
+      },
+      "how": {
+        "bn": "একটা বিষয়ে দুই-তিন ধরনের উৎস দেখুন: সাধারণ জ্ঞানের লেখা, উইকিপিডিয়ার পরিচিতি, আর বিষয়টা জানা কারও কথা। যেখানে মিল নেই, সেটা ‘যাচাই বাকি’ লিখে রাখুন।",
+        "en": "On one subject, check two or three kinds of source: general explainers, a Wikipedia overview, and a person who knows it. Where they differ, note it as “to be checked”."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "তিন ধরনের উৎস|মিলাই|অমিল চিহ্নিত করি",
+        "en": "Three kinds of source|Compare|Mark differences"
+      },
+      "appLink": "#/cards",
+      "kind": "learn",
+      "source": "wikipedia",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-gs-1",
+      "topic": "goal-strategy",
+      "tags": [
+        "goal",
+        "planning"
+      ],
+      "title": {
+        "bn": "ভালো লক্ষ্য কেমন হয়",
+        "en": "What a workable goal looks like"
+      },
+      "how": {
+        "bn": "ভালো লক্ষ্য নির্দিষ্ট, নিজের হাতে করা যায় এবং তারিখসহ। ‘ভালো থাকতে চাই’ না লিখে লিখুন ‘এই মাসে সপ্তাহে 3 দিন 20 মিনিট হাঁটব’। জানা না থাকলে ‘জানি না’ রাখুন।",
+        "en": "A workable goal is specific, within your control, and has a date. Instead of “be well”, write “walk 20 minutes, 3 days a week this month”. Keep unknowns as “don't know”."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "নির্দিষ্ট|নিজের হাতে|তারিখসহ",
+        "en": "Specific|In my control|With a date"
+      },
+      "appLink": "#/journey",
+      "kind": "explain",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-gs-2",
+      "topic": "goal-strategy",
+      "tags": [
+        "goal",
+        "planning"
+      ],
+      "title": {
+        "bn": "লক্ষ্য ঠিক করার ধাপ",
+        "en": "Steps to set a goal"
+      },
+      "how": {
+        "bn": "1) কেন চান এক লাইনে লিখুন। 2) 3 মাসের জন্য একটা ফলাফল ঠিক করুন। 3) এই মাসের একটা ধাপ বাছুন। 4) আজকের একটা ছোট কাজ ঠিক করুন।",
+        "en": "1) Write why you want it in one line. 2) Pick one result for 3 months. 3) Choose one step for this month. 4) Decide one small task for today."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "কেন লিখি|3 মাসের ফল|এই মাসের ধাপ|আজকের কাজ",
+        "en": "Why|3-month result|This month's step|Today's task"
+      },
+      "appLink": "#/diary/plan",
+      "kind": "steps",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-gs-3",
+      "topic": "goal-strategy",
+      "tags": [
+        "goal",
+        "planning"
+      ],
+      "title": {
+        "bn": "উদাহরণ: ইংরেজি বলার লক্ষ্য",
+        "en": "Example: a spoken-English goal"
+      },
+      "how": {
+        "bn": "সাবিনা লিখল: ‘3 মাসে কাজের ফোনে দুই মিনিট ইংরেজিতে কথা বলব’। প্রথম মাসে প্রতিদিন 10টা বাক্য বলা, এই সপ্তাহে প্রতিদিন 5টা, আজ একটা বাক্য রেকর্ড করা।",
+        "en": "Sabina wrote: “In 3 months I will talk for two minutes in English on a work call.” Month one: 10 sentences a day; this week: 5 a day; today: record one sentence."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "3 মাসের লক্ষ্য|এই মাসের ধাপ|এই সপ্তাহের কাজ|আজকের কাজ",
+        "en": "3-month goal|This month|This week|Today"
+      },
+      "appLink": "#/diary/plan",
+      "kind": "example",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-gs-4",
+      "topic": "goal-strategy",
+      "tags": [
+        "goal",
+        "planning"
+      ],
+      "title": {
+        "bn": "লক্ষ্যে যা এড়িয়ে চলবেন",
+        "en": "Goal-setting slips to avoid"
+      },
+      "how": {
+        "bn": "একসঙ্গে অনেক লক্ষ্য রাখবেন না। অস্পষ্ট শব্দ (ভালো, বেশি) এড়ান। লক্ষ্য এমন রাখবেন না যা অন্যের হাতে। পরিস্থিতি বদলালে লক্ষ্য শোধরানো ঠিক আছে।",
+        "en": "Do not hold too many goals at once. Avoid vague words (better, more). Do not set goals that depend on others. Adjusting a goal when life changes is normal."
+      },
+      "diagram": {
+        "type": "matrix",
+        "bn": "অনেক লক্ষ্য: 2–3টা রাখি|অস্পষ্ট শব্দ: সংখ্যা ও তারিখ|অন্যের হাতে: নিজের কাজ বাছি|পরিস্থিতি বদলেছে: শোধরাই",
+        "en": "Many goals: keep 2–3|Vague words: number and date|Depends on others: choose own action|Life changed: adjust"
+      },
+      "appLink": "#/journey",
+      "kind": "watchout",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-gs-5",
+      "topic": "goal-strategy",
+      "tags": [
+        "goal",
+        "learning"
+      ],
+      "title": {
+        "bn": "লক্ষ্য নিয়ে আরও শিখতে",
+        "en": "Learn more about goal setting"
+      },
+      "how": {
+        "bn": "‘লক্ষ্য নির্ধারণ’ ও ‘স্মার্ট লক্ষ্য’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অ্যাপের Plan পাতায় নিজের লক্ষ্য লিখে দেখুন। যাচাইকারীর অপেক্ষায়।",
+        "en": "Read general explainers on “goal setting” and “SMART goals”. Try writing your own goal on the app's Plan page. Reviewer pending."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "সাধারণ লেখা পড়ি|Plan পাতায় লিখি|এক সপ্তাহ পরে দেখি",
+        "en": "Read general explainers|Write on Plan page|Review after a week"
+      },
+      "appLink": "#/diary/plan",
+      "kind": "learn",
+      "source": "reviewer",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-de-1",
+      "topic": "decisions",
+      "tags": [
+        "decision",
+        "risk"
+      ],
+      "title": {
+        "bn": "ভালো সিদ্ধান্তের মানে",
+        "en": "What a good decision means"
+      },
+      "how": {
+        "bn": "ভালো সিদ্ধান্ত মানে সবসময় ভালো ফল নয়। মানে, তখন যা জানতাম তা দিয়ে ভেবেচিন্তে নেওয়া। অজানা তথ্য থাকলে সেটা খোলাখুলি লিখুন, শূন্য ধরবেন না।",
+        "en": "A good decision does not always bring a good result. It means thinking it through with what you knew then. If facts are unknown, write them down openly instead of treating them as zero."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "যা জানি|যা জানি না|সিদ্ধান্ত|পরে মিলাই",
+        "en": "What I know|What I don't|Decide|Review later"
+      },
+      "appLink": "#/capture",
+      "kind": "explain",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-de-2",
+      "topic": "decisions",
+      "tags": [
+        "decision",
+        "planning"
+      ],
+      "title": {
+        "bn": "কঠিন সিদ্ধান্তের ধাপ",
+        "en": "Steps for a hard decision"
+      },
+      "how": {
+        "bn": "1) সিদ্ধান্তটা এক লাইনে লিখুন। 2) 2–3টা বিকল্প লিখুন। 3) প্রতিটির সুবিধা, ঝুঁকি আর জানা-নেই লিখুন। 4) একটা ছোট পরীক্ষা করা যায় কিনা দেখুন। 5) দিন ঠিক করে সিদ্ধান্ত নিন।",
+        "en": "1) Write the decision in one line. 2) List 2–3 options. 3) For each: benefits, risks, unknowns. 4) See if a small test is possible. 5) Set a day and decide."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "এক লাইনে লিখি|বিকল্প লিখি|সুবিধা ও ঝুঁকি|দিন ঠিক করে নিই",
+        "en": "Write it|List options|Benefits and risks|Set a day, decide"
+      },
+      "appLink": "#/capture",
+      "kind": "steps",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-de-3",
+      "topic": "decisions",
+      "tags": [
+        "decision",
+        "risk"
+      ],
+      "title": {
+        "bn": "উদাহরণ: নতুন কাজের প্রস্তাব",
+        "en": "Example: a new job offer"
+      },
+      "how": {
+        "bn": "রফিক নতুন কাজের প্রস্তাব পেল। সে দুটো বিকল্প লিখল, যা জানে না (কাজের সময়) তা জিজ্ঞাসা করল, আর তিন দিন সময় চাইল। এরপর কারণসহ সিদ্ধান্ত লিখে রাখল।",
+        "en": "Rafiq got a new job offer. He listed two options, asked about what he did not know (working hours), and asked for three days. Then he wrote down his decision with reasons."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "বিকল্প লিখি|অজানা জিজ্ঞাসা করি|সময় চাই|কারণসহ লিখি",
+        "en": "List options|Ask unknowns|Ask for time|Write reasons"
+      },
+      "appLink": "#/capture",
+      "kind": "example",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-de-4",
+      "topic": "decisions",
+      "tags": [
+        "decision",
+        "risk"
+      ],
+      "title": {
+        "bn": "সিদ্ধান্তে যা এড়িয়ে চলবেন",
+        "en": "Decision slips to avoid"
+      },
+      "how": {
+        "bn": "ক্লান্ত বা রাগের সময় বড় সিদ্ধান্ত নেবেন না। শুধু একটা বিকল্প দেখে থামবেন না। সবার মত পাওয়ার অপেক্ষায় অনন্তকাল বসে থাকবেন না; শেষ তারিখ রাখুন।",
+        "en": "Do not make big decisions when tired or angry. Do not stop after seeing only one option. Do not wait forever for everyone's agreement; set a deadline."
+      },
+      "diagram": {
+        "type": "matrix",
+        "bn": "ক্লান্ত বা রাগান্বিত: পরে নিই|একটাই বিকল্প: আরও একটা খুঁজি|সবার মতের অপেক্ষা: শেষ তারিখ|কারণ লেখা নেই: লিখে রাখি",
+        "en": "Tired or angry: wait|Only one option: find another|Waiting for all: set a deadline|No reasons noted: write them"
+      },
+      "appLink": "#/capture",
+      "kind": "watchout",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-de-5",
+      "topic": "decisions",
+      "tags": [
+        "decision",
+        "learning"
+      ],
+      "title": {
+        "bn": "সিদ্ধান্ত নিয়ে আরও শিখতে",
+        "en": "Learn more about decision making"
+      },
+      "how": {
+        "bn": "‘সিদ্ধান্ত গ্রহণ’ ও ‘সমস্যা সমাধান’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। উইকিপিডিয়ার পরিচিতি অ্যাপে সংরক্ষিত হয়। পুরোনো সিদ্ধান্তের খাতা ঘেঁটে নিজের ধরন দেখুন।",
+        "en": "Read general explainers on “decision making” and “problem solving”. Wikipedia overviews are saved in the app. Review your own past decision notes to see your patterns."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "সাধারণ লেখা পড়ি|পুরোনো নোট দেখি|ধরন লিখি",
+        "en": "Read general explainers|Review old notes|Write patterns"
+      },
+      "appLink": "#/capture",
+      "kind": "learn",
+      "source": "wikipedia",
+      "reviewer": "pending"
+    }
+  ]
+}

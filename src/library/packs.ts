@@ -2,7 +2,7 @@
 // the first time a topic page is opened. No fetch, no external host, no key, no account. Adding a pack file = data only.
 // A pack that fails validation is skipped and its errors are kept for tests. Tips are drafts until a reviewer signs off.
 import type { Bi } from "../i18n/registry";
-import { TIPS, TOPICS, tipsOf, type DiagramType, type Tip } from "./topics";
+import { TIPS, TIP_KINDS, TIP_SOURCES, TOPICS, tipsOf, type DiagramType, type Tip, type TipKind, type TipSource } from "./topics";
 
 export const PACK_SCHEMA = "tm-content-pack";
 export const PACK_SCHEMA_VERSION = 1;
@@ -11,7 +11,7 @@ export interface ContentPack { packId: string; description: string; tips: Tip[] 
 export type PackResult = { ok: true; pack: ContentPack } | { ok: false; errors: string[] };
 
 const DIAGRAMS: readonly DiagramType[] = ["steps", "cycle", "matrix"];
-const TIP_KEYS = new Set(["id", "topic", "tags", "title", "how", "diagram", "appLink"]);
+const TIP_KEYS = new Set(["id", "topic", "tags", "title", "how", "diagram", "appLink", "kind", "source", "reviewer"]);
 const PACK_KEYS = new Set(["schema", "schemaVersion", "packId", "reviewStatus", "license", "description", "tips"]);
 const BN_SCRIPT = /[ঀ-৿]/;
 const URL_LIKE = /https?:|\bwww\.|\/\/|ftp:/i;
@@ -67,12 +67,17 @@ export function validatePack(raw: unknown, reservedTipIds: ReadonlySet<string> =
       if (d.type === "matrix" && nb !== 4) errors.push(`${at}: matrix diagram needs exactly 4 labels`);
     }
     if (r.appLink !== undefined && (typeof r.appLink !== "string" || !/^#\/[a-z0-9/-]*$/.test(r.appLink))) errors.push(`${at}: appLink must be an in-app route like #/diary/money`);
+    if (r.kind !== undefined && !TIP_KINDS.includes(r.kind as TipKind)) errors.push(`${at}: kind must be one of ${TIP_KINDS.join(", ")}`);
+    if (r.source !== undefined && !TIP_SOURCES.includes(r.source as TipSource)) errors.push(`${at}: source must be one of ${TIP_SOURCES.join(", ")}`);
+    if (r.source !== undefined && r.kind !== "learn") errors.push(`${at}: source is only for kind learn`);
+    if (r.reviewer !== undefined && r.reviewer !== "pending") errors.push(`${at}: reviewer must be pending until a reviewer signs off`);
     if (JSON.stringify(r).match(URL_LIKE)) errors.push(`${at}: external address or URL-like text is not allowed`);
     if (errors.some((e) => e.startsWith(at))) return;
     tips.push({
       id: r.id as string, topic: r.topic as string, tags: r.tags as string[], title: r.title as Bi, how: r.how as Bi,
       diagram: { type: (d as Obj).type as DiagramType, bn: ((d as Obj).bn as string), en: ((d as Obj).en as string) },
       appLink: r.appLink as string | undefined,
+      ...(r.kind ? { kind: r.kind as TipKind } : {}), ...(r.source ? { source: r.source as TipSource } : {}), ...(r.reviewer ? { reviewer: "pending" as const } : {}),
     });
   });
   if (URL_LIKE.test(JSON.stringify(raw))) errors.push("pack contains an external address or URL-like text");

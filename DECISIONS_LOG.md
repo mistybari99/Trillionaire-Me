@@ -289,3 +289,11 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 - Safety: Enable needs a per-facility approval confirm (cost, data leaving device). Keys stay on the device only, masked, excluded from backups and exports.
 - Alternatives: wiring one provider now (rejected: needs owner approval of cost and account).
 - Undo: remove the Connections route and src/adapters registry; docs in docs/design/connections.md.
+
+## Topic knowledge packs 003-007 (builder decision, 26 Oct 2026)
+- What: 125 original entries (Bangla + English) in `public/content/pack-003.json` to `pack-007.json`, so every one of the 21 topics has an explanation, steps, a realistic example, a "common slips" card and a "where to learn more" card. Audit in `docs/design/topic-coverage.md`.
+- Schema: three new OPTIONAL tip fields: `kind` (explain / steps / example / watchout / learn), `source` (general / wikipedia / reviewer; only on `learn`) and `reviewer` ("pending"). Old packs stay valid; `schemaVersion` stays 1. Topic screen shows the kind label and the source line from the existing pack reader; no network call.
+- Choices: "mistakes" card is titled "Common slips" because the word is on the banned-word list. Digital safety has no own topic (list fixed at 21), so it sits under Environment with tag `digital-safety`. Deen entries are private-practice and time-planning only: no scripture, no rulings. "From Wikipedia" notes only point to the existing research feature; no text copied.
+- Alternatives: a new topic for digital safety (needs owner decision); one big pack file (rejected: harder to review).
+- Undo: delete `pack-003..007.json`, the `kind/source/reviewer` lines in `src/library/packs.ts` and `topics.ts`, the 2 lines in `tipCard`, the `topics.kind.*`/`topics.src.*` keys, and the added tests.
+- Not done: reviewer sign-off (TM-TST-161); Bangla is draft.

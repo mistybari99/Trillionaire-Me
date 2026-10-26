@@ -567,8 +567,9 @@ function reflectionCards(lang: Locale): HTMLElement[] {
 // ---- topics (library) ----
 function tipCard(tp: Tip, lang: Locale): HTMLElement {
   return h("div", { class: "card", "data-tip": tp.id },
+    tp.kind ? h("p", { class: "muted", "data-kind": tp.kind }, t(`topics.kind.${tp.kind}` as Key, lang)) : null,
     h("div", { class: "row" }, h("h2", { class: "card-h", }, tb(tp.title, lang)), h("span", { class: "tag warn" }, t("topics.draft", lang))),
-    h("p", {}, tb(tp.how, lang)), diagram(tp, lang),
+    h("p", {}, tb(tp.how, lang)), tp.source ? h("p", { class: "muted", "data-source": tp.source }, t(`topics.src.${tp.source}` as Key, lang)) : null, diagram(tp, lang),
     tp.appLink ? link(tp.appLink, "btn ghost", t("topics.tryIt", lang)) : null);
 }
 

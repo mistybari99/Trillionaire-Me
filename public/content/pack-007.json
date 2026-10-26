@@ -1,0 +1,489 @@
+{
+  "schema": "tm-content-pack",
+  "schemaVersion": 1,
+  "packId": "pack-007",
+  "reviewStatus": "pending_reviewer",
+  "license": "original",
+  "description": "Original, practical entries (Bangla and English) with a short explanation, steps, a realistic example without invented figures, common slips to avoid, and a where-to-learn-more note naming the kind of source. Measurement and review, confidence, life balance and a private, ruling-free note for the faith topic. Drafts: shown as যাচাই হয়নি until a reviewer signs off.",
+  "tips": [
+    {
+      "id": "p3-me-1",
+      "topic": "measurement",
+      "tags": [
+        "measurement",
+        "review"
+      ],
+      "title": {
+        "bn": "মাপা মানে বিচার নয়",
+        "en": "Measuring is not judging"
+      },
+      "how": {
+        "bn": "মাপার উদ্দেশ্য শেখা, নম্বর দেওয়া নয়। একটা-দুটো সহজ বিষয় দেখুন, যেমন কতদিন কাজ হলো বা কী আটকাল। যা মাপা যায়নি তা ‘জানি না’ রাখুন।",
+        "en": "The aim of measuring is to learn, not to give marks. Watch one or two simple things, such as which days work happened or what got in the way. Keep unmeasured things as “don't know”."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "একটা বিষয় বাছি|লিখি|শিখি",
+        "en": "Pick one thing|Record it|Learn"
+      },
+      "appLink": "#/journey/log",
+      "kind": "explain",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-me-2",
+      "topic": "measurement",
+      "tags": [
+        "measurement",
+        "review"
+      ],
+      "title": {
+        "bn": "সপ্তাহের পর্যালোচনা ধাপে ধাপে",
+        "en": "A weekly review, step by step"
+      },
+      "how": {
+        "bn": "1) এই সপ্তাহে যা করলেন তা দেখুন। 2) কী কাজ করেছে লিখুন। 3) কী আটকেছে লিখুন। 4) কারণ খুঁজুন, দোষ নয়। 5) পরের সপ্তাহের জন্য একটা বদল ঠিক করুন।",
+        "en": "1) Look at what you did this week. 2) Write what worked. 3) Write what got in the way. 4) Look for causes, not blame. 5) Choose one change for next week."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "যা করলাম দেখি|কী কাজ করল|কী আটকাল|একটা বদল",
+        "en": "See what I did|What worked|What got in the way|One change"
+      },
+      "appLink": "#/journey/log",
+      "kind": "steps",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-me-3",
+      "topic": "measurement",
+      "tags": [
+        "measurement",
+        "goal"
+      ],
+      "title": {
+        "bn": "উদাহরণ: হাঁটার লক্ষ্য",
+        "en": "Example: a walking goal"
+      },
+      "how": {
+        "bn": "ইকবাল সপ্তাহে 3 দিন হাঁটার লক্ষ্য রেখেছিল। এক সপ্তাহে 2 দিন হলো। সে লিখল, বৃষ্টির দিনে আটকেছে। পরের সপ্তাহে বৃষ্টির দিনের জন্য ঘরের ভেতরে 10 মিনিটের বিকল্প রাখল।",
+        "en": "Iqbal aimed to walk 3 days a week. One week it was 2 days. He noted that rainy days got in the way. Next week he added a 10-minute indoor option for rain."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "লক্ষ্য 3 দিন|হলো 2 দিন|কারণ: বৃষ্টি|ঘরের ভেতরে বিকল্প",
+        "en": "Goal: 3 days|Did 2 days|Reason: rain|Indoor backup"
+      },
+      "appLink": "#/journey/log",
+      "kind": "example",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-me-4",
+      "topic": "measurement",
+      "tags": [
+        "measurement",
+        "review"
+      ],
+      "title": {
+        "bn": "মাপায় যা এড়িয়ে চলবেন",
+        "en": "Measurement slips to avoid"
+      },
+      "how": {
+        "bn": "অনেক কিছু একসঙ্গে মাপবেন না। অজানা সংখ্যাকে শূন্য ধরবেন না। কম হলে নিজেকে নিয়ে কড়া কথা লিখবেন না; কারণ দেখুন। অন্যের সঙ্গে নিজের সংখ্যা মেলাবেন না।",
+        "en": "Do not measure many things at once. Do not treat unknown numbers as zero. If the number is low, do not write harsh words about yourself; look at causes. Do not compare numbers with others."
+      },
+      "diagram": {
+        "type": "matrix",
+        "bn": "অনেক কিছু মাপা: একটা-দুটো|অজানা শূন্য: ‘জানি না’|কম হলে নিজেকে দোষ: কারণ দেখি|অন্যের সঙ্গে তুলনা: নিজের আগে-পরে",
+        "en": "Measuring too much: one or two|Unknown as zero: “don't know”|Low number, self-blame: see causes|Comparing with others: own before-after"
+      },
+      "appLink": "#/journey/log",
+      "kind": "watchout",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-me-5",
+      "topic": "measurement",
+      "tags": [
+        "measurement",
+        "learning"
+      ],
+      "title": {
+        "bn": "মাপা ও পর্যালোচনা নিয়ে আরও শিখতে",
+        "en": "Learn more about measuring and reviewing"
+      },
+      "how": {
+        "bn": "‘আত্ম-পর্যালোচনা’ ও ‘ফিডব্যাক লুপ’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অ্যাপের জার্নি লগে সপ্তাহের শেষে 3 লাইন লিখে দেখুন। যাচাইকারীর অপেক্ষায়।",
+        "en": "Read general explainers on “self-reflection” and “feedback loops”. Try writing 3 lines at week's end in the app's journey log. Reviewer pending."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "সাধারণ লেখা পড়ি|জার্নি লগে 3 লাইন|মাসে একবার ফিরে দেখি",
+        "en": "Read general explainers|3 lines in the log|Look back monthly"
+      },
+      "appLink": "#/journey/log",
+      "kind": "learn",
+      "source": "reviewer",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-co-1",
+      "topic": "courage",
+      "tags": [
+        "confidence",
+        "beliefs"
+      ],
+      "title": {
+        "bn": "আত্মবিশ্বাস কীভাবে বাড়ে",
+        "en": "How confidence grows"
+      },
+      "how": {
+        "bn": "আত্মবিশ্বাস আসে ছোট ছোট কাজ করে দেখার পর, ভাবনা থেকে নয়। ভয় থাকা স্বাভাবিক; ভয় নিয়েও ছোট একটা ধাপ নিলে ধীরে ধীরে সাহস বাড়ে।",
+        "en": "Confidence comes from doing small things, not just from thinking. Fear is normal. Taking one small step even with fear slowly builds courage."
+      },
+      "diagram": {
+        "type": "cycle",
+        "bn": "ছোট ধাপ|করে দেখি|কী হলো লিখি|আরেকটু বড় ধাপ",
+        "en": "Small step|Do it|Note what happened|Slightly bigger step"
+      },
+      "kind": "explain",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-co-2",
+      "topic": "courage",
+      "tags": [
+        "confidence",
+        "people"
+      ],
+      "title": {
+        "bn": "ভয়ের কাজ ছোট করে করা",
+        "en": "Doing a scary task in small steps"
+      },
+      "how": {
+        "bn": "1) ভয়ের কাজটা লিখুন। 2) সবচেয়ে ছোট সংস্করণ ঠিক করুন। 3) কবে করবেন ঠিক করুন। 4) করুন। 5) কী ঘটল আর কেমন লাগল লিখুন।",
+        "en": "1) Write the scary task. 2) Decide its smallest version. 3) Choose when. 4) Do it. 5) Note what happened and how it felt."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "কাজটা লিখি|সবচেয়ে ছোট সংস্করণ|সময় ঠিক|করে লিখি",
+        "en": "Write the task|Smallest version|Choose a time|Do it, then note"
+      },
+      "kind": "steps",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-co-3",
+      "topic": "courage",
+      "tags": [
+        "confidence",
+        "people"
+      ],
+      "title": {
+        "bn": "উদাহরণ: সভায় প্রথমবার কথা বলা",
+        "en": "Example: speaking up in a meeting"
+      },
+      "how": {
+        "bn": "সাইফুল সভায় কথা বলতে ভয় পেত। প্রথমে সে শুধু একটা প্রশ্ন আগে লিখে নিয়ে গেল, পরের সভায় সেটা পড়ে শোনাল। কয়েক সভা পর নিজের মত বলা সহজ হয়ে এল।",
+        "en": "Saiful was afraid of speaking in meetings. First he took one written question and read it out. A few meetings later, giving his own view felt easier."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "প্রশ্ন লিখে যাই|সভায় পড়ি|পরেরবার নিজের মত",
+        "en": "Write a question|Read it in the meeting|Next time own view"
+      },
+      "kind": "example",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-co-4",
+      "topic": "courage",
+      "tags": [
+        "confidence",
+        "beliefs"
+      ],
+      "title": {
+        "bn": "সাহস বাড়াতে যা এড়াবেন",
+        "en": "Courage-building slips to avoid"
+      },
+      "how": {
+        "bn": "একবারেই বড় লাফ দেবেন না। ভয় নেই এমন ভান করবেন না। একবার ভালো না হলে নিজের সম্পর্কে রায় দেবেন না; কী শিখলেন লিখুন। সাহায্য চাওয়া দুর্বলতা নয়।",
+        "en": "Do not take one huge leap. Do not pretend there is no fear. If one try goes poorly, do not pass a verdict on yourself; write what you learned. Asking for help is not weakness."
+      },
+      "diagram": {
+        "type": "matrix",
+        "bn": "বড় লাফ: একটু বাড়াই|ভান করা: ভয় মানি|একবারে রায়: কী শিখলাম|একা চেষ্টা: সাহায্য চাই",
+        "en": "Huge leap: stretch a little|Pretending: admit fear|One-try verdict: note the lesson|Going alone: ask for help"
+      },
+      "kind": "watchout",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-co-5",
+      "topic": "courage",
+      "tags": [
+        "confidence",
+        "learning"
+      ],
+      "title": {
+        "bn": "আত্মবিশ্বাস নিয়ে আরও শিখতে",
+        "en": "Learn more about confidence"
+      },
+      "how": {
+        "bn": "‘আত্মবিশ্বাস’ ও ‘ক্রমে সংস্পর্শ’ (ধাপে ধাপে ভয়ের মুখোমুখি হওয়া) নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অতিরিক্ত ভয় বা দুশ্চিন্তা হলে যোগ্য কাউন্সেলরের কাছে যান। যাচাইকারীর অপেক্ষায়।",
+        "en": "Read general explainers on “self-confidence” and “gradual exposure” (facing fears step by step). For overwhelming fear or worry, see a qualified counsellor. Reviewer pending."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "সাধারণ লেখা পড়ি|একটা ছোট ধাপ|প্রয়োজনে কাউন্সেলর",
+        "en": "Read general explainers|One small step|Counsellor if needed"
+      },
+      "kind": "learn",
+      "source": "reviewer",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-ba-1",
+      "topic": "balance",
+      "tags": [
+        "balance",
+        "priorities"
+      ],
+      "title": {
+        "bn": "জীবনের ভারসাম্য মানে কী",
+        "en": "What life balance means"
+      },
+      "how": {
+        "bn": "ভারসাম্য মানে সব ক্ষেত্রে সমান সময় নয়। মানে, যা আপনার কাছে গুরুত্বপূর্ণ তার জন্য জায়গা রাখা। কোনো সময় কাজ বেশি, কোনো সময় পরিবার বেশি, তাতে সমস্যা নেই।",
+        "en": "Balance does not mean equal time everywhere. It means making room for what matters to you. Some seasons need more work, others more family, and that is fine."
+      },
+      "diagram": {
+        "type": "matrix",
+        "bn": "কাজ|পরিবার|বিশ্রাম|নিজের বিকাশ",
+        "en": "Work|Family|Rest|Own growth"
+      },
+      "appLink": "#/diary/plan",
+      "kind": "explain",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-ba-2",
+      "topic": "balance",
+      "tags": [
+        "balance",
+        "priorities"
+      ],
+      "title": {
+        "bn": "জীবনের চাকা দেখার ধাপ",
+        "en": "Steps to look at your life areas"
+      },
+      "how": {
+        "bn": "1) জীবনের 5–7টা ক্ষেত্র লিখুন। 2) প্রতিটিতে এখন কেমন লাগছে এক শব্দে লিখুন। 3) এই মাসে একটা ক্ষেত্রে ছোট একটা কাজ বাছুন। 4) জানা না থাকলে ফাঁকা রাখুন।",
+        "en": "1) List 5–7 life areas. 2) Write how each feels now in one word. 3) Pick one small action in one area this month. 4) Leave blank what you do not know."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "ক্ষেত্রগুলো লিখি|এক শব্দে লিখি|একটা ক্ষেত্রে ছোট কাজ|অজানা ফাঁকা",
+        "en": "List areas|One word each|One small action|Leave unknown blank"
+      },
+      "appLink": "#/diary/plan",
+      "kind": "steps",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-ba-3",
+      "topic": "balance",
+      "tags": [
+        "balance",
+        "time"
+      ],
+      "title": {
+        "bn": "উদাহরণ: ব্যস্ত মৌসুমে",
+        "en": "Example: during a busy season"
+      },
+      "how": {
+        "bn": "ব্যবসার ব্যস্ত মৌসুমে নাদিম ঠিক করল সপ্তাহে একটা সন্ধ্যা পরিবারের জন্য ফাঁকা থাকবে। বাকি দিনগুলো ব্যস্ত হলেও ওই সন্ধ্যায় সে কাজ বসাল না। মৌসুম শেষে সে সময় আবার ভাগ করল।",
+        "en": "In a busy business season Nadim kept one evening a week free for family. Other days were full, but nothing went into that evening. When the season ended he re-shared his time."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "একটা সন্ধ্যা বাছি|কাজ বসাই না|মৌসুম শেষে ভাগ করি",
+        "en": "Choose one evening|No tasks in it|Re-share after the season"
+      },
+      "appLink": "#/diary/plan",
+      "kind": "example",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-ba-4",
+      "topic": "balance",
+      "tags": [
+        "balance",
+        "energy"
+      ],
+      "title": {
+        "bn": "ভারসাম্যে যা এড়িয়ে চলবেন",
+        "en": "Balance slips to avoid"
+      },
+      "how": {
+        "bn": "নিখুঁত ভারসাম্য খুঁজবেন না। বিশ্রামকে সবার শেষে রাখবেন না। অন্যের জীবনের সঙ্গে নিজেরটা মেলাবেন না। সবকিছুতে হ্যাঁ বললে নিজের জন্য সময় থাকে না।",
+        "en": "Do not chase perfect balance. Do not put rest last. Do not compare your life with others'. Saying yes to everything leaves no time for yourself."
+      },
+      "diagram": {
+        "type": "matrix",
+        "bn": "নিখুঁত ভারসাম্য: এই মাসে একটা|বিশ্রাম সবার শেষে: আগে বসাই|তুলনা: নিজের মূল্য দেখি|সবকিছুতে হ্যাঁ: ‘না’ বলি",
+        "en": "Perfect balance: one thing this month|Rest last: place it early|Comparing: own values|Yes to all: say no"
+      },
+      "appLink": "#/diary/plan",
+      "kind": "watchout",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-ba-5",
+      "topic": "balance",
+      "tags": [
+        "balance",
+        "learning"
+      ],
+      "title": {
+        "bn": "ভারসাম্য নিয়ে আরও শিখতে",
+        "en": "Learn more about balance"
+      },
+      "how": {
+        "bn": "‘কাজ-জীবনের ভারসাম্য’ ও ‘জীবনের অর্থ’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। নিজের মূল্যবোধ ও পরিবারের সঙ্গে আলোচনা করুন। এটা পরামর্শ নয়; যাচাইকারীর অপেক্ষায়।",
+        "en": "Read general explainers on “work-life balance” and “meaning in life”. Talk about your own values with family. This is not advice; reviewer pending."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "সাধারণ লেখা পড়ি|নিজের মূল্যবোধ লিখি|পরিবারের সঙ্গে কথা",
+        "en": "Read general explainers|Write my values|Talk with family"
+      },
+      "appLink": "#/diary/plan",
+      "kind": "learn",
+      "source": "reviewer",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-dn-1",
+      "topic": "deen",
+      "tags": [
+        "worship",
+        "balance"
+      ],
+      "title": {
+        "bn": "ব্যক্তিগত চর্চাকে সহজ রাখা",
+        "en": "Keeping a personal practice simple"
+      },
+      "how": {
+        "bn": "এখানে ইবাদত সম্পূর্ণ ব্যক্তিগত। অ্যাপ কিছু মাপে না, তুলনা করে না, ফতোয়া দেয় না। শুধু আপনার সময়-পরিকল্পনায় নিজের চর্চার জন্য জায়গা রাখতে সাহায্য করে।",
+        "en": "Worship here is entirely private. The app measures nothing, compares nothing and gives no rulings. It only helps you keep room for your own practice in your schedule."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "ব্যক্তিগত রাখি|সময়ে জায়গা রাখি|নিজের মতো চলি",
+        "en": "Keep it private|Make room in the day|Go at my own pace"
+      },
+      "appLink": "#/deen",
+      "kind": "explain",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-dn-2",
+      "topic": "deen",
+      "tags": [
+        "worship",
+        "time"
+      ],
+      "title": {
+        "bn": "দিনের পরিকল্পনায় চর্চার জায়গা",
+        "en": "Making room for practice in the day"
+      },
+      "how": {
+        "bn": "1) আপনার জন্য স্থির সময়গুলো আগে লিখুন। 2) তার আশপাশে কাজ বসান। 3) ভ্রমণ বা ব্যস্ত দিনের জন্য ছোট বিকল্প ঠিক করুন। 4) কিছু জানার থাকলে যোগ্য ব্যক্তিকে জিজ্ঞাসা করুন।",
+        "en": "1) Write your fixed times first. 2) Place tasks around them. 3) Plan a smaller option for travel or busy days. 4) Ask a qualified person if you need to know something."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "স্থির সময় আগে|কাজ আশপাশে|ছোট বিকল্প|জানার থাকলে জিজ্ঞাসা",
+        "en": "Fixed times first|Tasks around them|Smaller option|Ask if unsure"
+      },
+      "appLink": "#/deen",
+      "kind": "steps",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-dn-3",
+      "topic": "deen",
+      "tags": [
+        "worship",
+        "time"
+      ],
+      "title": {
+        "bn": "উদাহরণ: কাজের দিনে সময় সাজানো",
+        "en": "Example: arranging a working day"
+      },
+      "how": {
+        "bn": "আনোয়ার আগে নিজের স্থির সময়গুলো ক্যালেন্ডারে বসাল। তারপর সভার সময় তার চারপাশে রাখল। এক ব্যস্ত সপ্তাহে সে সময় বদলাতে হলে শান্তভাবে ঠিক করে নিল, নিজেকে কিছু বলল না।",
+        "en": "Anwar first placed his fixed times on the calendar and set meetings around them. In one busy week he had to shift a time, did so calmly and did not scold himself."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "স্থির সময় বসাই|সভা চারপাশে|বদলাতে হলে শান্তভাবে",
+        "en": "Place fixed times|Meetings around|If it shifts, calmly"
+      },
+      "appLink": "#/deen",
+      "kind": "example",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-dn-4",
+      "topic": "deen",
+      "tags": [
+        "worship",
+        "balance"
+      ],
+      "title": {
+        "bn": "এই বিষয়ে যা এড়িয়ে চলবেন",
+        "en": "Slips to avoid in this area"
+      },
+      "how": {
+        "bn": "নিজের চর্চাকে সংখ্যা বা তালিকায় মাপবেন না, অন্যের সঙ্গে তুলনাও নয়। অ্যাপের লেখাকে বিধান ভাববেন না। বিধান বা প্রশ্নের জন্য যোগ্য আলেমকে জিজ্ঞাসা করুন। তথ্য ব্যক্তিগত রাখুন।",
+        "en": "Do not measure your practice with numbers or lists, and do not compare it with others. Do not take the app's text as a ruling. For rulings or questions, ask a qualified scholar. Keep it private."
+      },
+      "diagram": {
+        "type": "matrix",
+        "bn": "মাপা: মাপি না|তুলনা: করি না|অ্যাপের লেখা বিধান: নয়|প্রশ্ন: যোগ্য আলেম",
+        "en": "Measuring: no|Comparing: no|App text as ruling: no|Questions: qualified scholar"
+      },
+      "appLink": "#/deen",
+      "kind": "watchout",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-dn-5",
+      "topic": "deen",
+      "tags": [
+        "worship",
+        "learning"
+      ],
+      "title": {
+        "bn": "শেখার জন্য সঠিক জায়গা",
+        "en": "The right place to learn"
+      },
+      "how": {
+        "bn": "ধর্মীয় জ্ঞানের জন্য নির্ভরযোগ্য আলেম, স্থানীয় প্রতিষ্ঠান বা পরিবারের অভিজ্ঞদের কাছে যান। এই অ্যাপে কোনো ধর্মগ্রন্থের পাঠ নেই। পরে অনুমোদিত উৎস যোগ হলে মালিক সিদ্ধান্ত নেবেন।",
+        "en": "For religious knowledge, go to trusted scholars, local institutions or experienced family members. This app holds no scripture text. If approved sources are added later, the owner will decide."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "নির্ভরযোগ্য ব্যক্তিকে জিজ্ঞাসা|নিজের প্রশ্ন লিখি|ব্যক্তিগত রাখি",
+        "en": "Ask a trusted person|Write my questions|Keep it private"
+      },
+      "appLink": "#/deen",
+      "kind": "learn",
+      "source": "reviewer",
+      "reviewer": "pending"
+    }
+  ]
+}

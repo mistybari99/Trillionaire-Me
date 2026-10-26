@@ -1,0 +1,505 @@
+{
+  "schema": "tm-content-pack",
+  "schemaVersion": 1,
+  "packId": "pack-003",
+  "reviewStatus": "pending_reviewer",
+  "license": "original",
+  "description": "Original, practical entries (Bangla and English) with a short explanation, steps, a realistic example without invented figures, common slips to avoid, and a where-to-learn-more note naming the kind of source. Money basics: budgeting, saving and emergency fund, debt, income and small business. Drafts: shown as যাচাই হয়নি until a reviewer signs off.",
+  "tips": [
+    {
+      "id": "p3-mo-bud-1",
+      "topic": "money",
+      "tags": [
+        "money",
+        "budget"
+      ],
+      "title": {
+        "bn": "বাজেট আসলে কী",
+        "en": "What a budget really is"
+      },
+      "how": {
+        "bn": "বাজেট হলো আগে থেকে ঠিক করা একটা পরিকল্পনা: আয়ের টাকা কোন কাজে যাবে। এটা নিজেকে আটকানোর খাঁচা নয়, বরং টাকাকে দিক দেখানোর নকশা।",
+        "en": "A budget is a plan made in advance for where your income will go. It is not a cage. It is a map that gives your money a direction."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "আয় জানি|খরচের ভাগ ঠিক করি|মাস শেষে মিলাই",
+        "en": "Know income|Decide spending groups|Compare at month end"
+      },
+      "appLink": "#/diary/money",
+      "kind": "explain",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-mo-bud-2",
+      "topic": "money",
+      "tags": [
+        "money",
+        "budget",
+        "planning"
+      ],
+      "title": {
+        "bn": "প্রথম বাজেট বানানোর ধাপ",
+        "en": "Steps to make your first budget"
+      },
+      "how": {
+        "bn": "1) গত মাসের আয় লিখুন। 2) নিয়মিত খরচ লিখুন। 3) বাকিটা কোথায় যাবে ঠিক করুন। 4) মাস শেষে মিলান। না জানা অংক ‘জানি না’ রাখুন।",
+        "en": "1) Write last month's income. 2) List regular costs. 3) Decide where the rest goes. 4) Compare at month end. Keep unknown amounts as “don't know”."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "আয় লিখি|নিয়মিত খরচ|বাকিটা ভাগ করি|মাস শেষে মিলাই",
+        "en": "Write income|Regular costs|Split the rest|Compare at month end"
+      },
+      "appLink": "#/diary/money",
+      "kind": "steps",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-mo-bud-3",
+      "topic": "money",
+      "tags": [
+        "money",
+        "budget"
+      ],
+      "title": {
+        "bn": "উদাহরণ: রিনার মাসের হিসাব",
+        "en": "Example: Rina's month"
+      },
+      "how": {
+        "bn": "রিনা বেতন পেয়ে আগে ভাড়া, বাজার আর যাতায়াত আলাদা করল। বাকিটা সে ‘চাওয়া’ আর ‘জমা’ ভাগে রাখল। বিদ্যুৎ বিলের অংক জানা ছিল না, তাই ‘জানি না’ লিখে রাখল।",
+        "en": "Rina set aside rent, groceries and travel first when her pay came. She split what was left into “wants” and “saving”. She did not know the power bill, so she wrote “don't know”."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "বেতন এল|প্রয়োজন আলাদা|চাওয়া ও জমা|অজানা চিহ্নিত",
+        "en": "Pay arrives|Needs first|Wants and saving|Mark unknowns"
+      },
+      "appLink": "#/diary/money",
+      "kind": "example",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-mo-bud-4",
+      "topic": "money",
+      "tags": [
+        "money",
+        "budget"
+      ],
+      "title": {
+        "bn": "বাজেটে যা এড়িয়ে চলবেন",
+        "en": "Budget slips to avoid"
+      },
+      "how": {
+        "bn": "খুব কড়া বাজেট বানাবেন না, তাতে দুই সপ্তাহেই ছেড়ে দিতে ইচ্ছা করে। ছোট খরচ বাদ দেবেন না। অজানা অংককে শূন্য ধরবেন না। মাসে একবার ঠিক করে নেওয়া ঠিক আছে।",
+        "en": "Do not make a budget so tight you want to quit in two weeks. Do not skip small costs. Do not treat unknown amounts as zero. Adjusting it once a month is normal."
+      },
+      "diagram": {
+        "type": "matrix",
+        "bn": "খুব কড়া: নরম করি|ছোট খরচ বাদ: লিখি|অজানা শূন্য: ‘জানি না’|মাসে একবার ঠিক করি",
+        "en": "Too tight: loosen it|Skipped small costs: write them|Unknown as zero: “don't know”|Adjust monthly"
+      },
+      "appLink": "#/diary/money",
+      "kind": "watchout",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-mo-bud-5",
+      "topic": "money",
+      "tags": [
+        "money",
+        "budget",
+        "learning"
+      ],
+      "title": {
+        "bn": "বাজেট নিয়ে আরও শিখতে",
+        "en": "Learn more about budgeting"
+      },
+      "how": {
+        "bn": "‘বাজেট’ ও ‘ব্যক্তিগত আর্থিক পরিকল্পনা’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অ্যাপে উইকিপিডিয়া খুঁজলে সংক্ষিপ্ত পরিচিতি ব্যাকগ্রাউন্ডে সংরক্ষিত থাকে। যাচাইকারীর অনুমোদন বাকি।",
+        "en": "Read general explainers on “budget” and “personal financial planning”. A Wikipedia search in the app saves a short overview in the background. Reviewer sign-off is pending."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "সাধারণ লেখা পড়ি|উইকিপিডিয়া খুঁজি|নিজের মতো করে লিখি",
+        "en": "Read general explainers|Search Wikipedia|Rewrite in my words"
+      },
+      "appLink": "#/cards",
+      "kind": "learn",
+      "source": "wikipedia",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-mo-sav-1",
+      "topic": "money",
+      "tags": [
+        "money",
+        "savings",
+        "emergency"
+      ],
+      "title": {
+        "bn": "জরুরি তহবিল কী",
+        "en": "What an emergency fund is"
+      },
+      "how": {
+        "bn": "জরুরি তহবিল হলো হঠাৎ খরচের জন্য আলাদা করে রাখা টাকা, যেমন অসুখ বা মেরামত। এটা শখ বা বড় কেনাকাটার জন্য নয়। অংকটা নিজের খরচ দেখে ঠিক করতে হয়।",
+        "en": "An emergency fund is money set apart for sudden costs such as illness or repairs. It is not for hobbies or big purchases. Its size depends on your own costs."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "হঠাৎ খরচ আসে|আলাদা টাকা আছে|শান্তভাবে সামলাই",
+        "en": "Surprise cost|Separate money exists|Handle it calmly"
+      },
+      "appLink": "#/diary/money",
+      "kind": "explain",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-mo-sav-2",
+      "topic": "money",
+      "tags": [
+        "money",
+        "savings",
+        "emergency"
+      ],
+      "title": {
+        "bn": "ছোট করে জমানো শুরু করুন",
+        "en": "Start saving small"
+      },
+      "how": {
+        "bn": "1) এক মাসের জরুরি খরচ আন্দাজ করুন, না জানলে ‘জানি না’ লিখুন। 2) এমন একটা ছোট অংক ঠিক করুন যা মাসে সহজে সম্ভব। 3) বেতনের দিনই সরিয়ে রাখুন।",
+        "en": "1) Estimate one month of essential costs, or write “don't know”. 2) Pick a small amount that is easy each month. 3) Move it aside on payday."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "মাসের জরুরি খরচ|ছোট অংক ঠিক|বেতনের দিনেই সরাই",
+        "en": "Month of essentials|Pick a small amount|Move it on payday"
+      },
+      "appLink": "#/diary/money",
+      "kind": "steps",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-mo-sav-3",
+      "topic": "money",
+      "tags": [
+        "money",
+        "savings",
+        "emergency"
+      ],
+      "title": {
+        "bn": "উদাহরণ: ফোন নষ্ট হলে",
+        "en": "Example: when a phone breaks"
+      },
+      "how": {
+        "bn": "করিমের ফোন হঠাৎ নষ্ট হলো। কিছু টাকা আলাদা রাখা ছিল বলে সে ধার না করেই মেরামত করাতে পারল। পরে সে ওই খামে আবার ধীরে ধীরে টাকা ভরল।",
+        "en": "Karim's phone broke without warning. Because some money was set apart, he repaired it without borrowing. Afterwards he slowly refilled that envelope."
+      },
+      "diagram": {
+        "type": "cycle",
+        "bn": "আলাদা টাকা|হঠাৎ খরচ|মেরামত|ধীরে আবার ভরি",
+        "en": "Set-aside money|Surprise cost|Repair|Refill slowly"
+      },
+      "appLink": "#/diary/money",
+      "kind": "example",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-mo-sav-4",
+      "topic": "money",
+      "tags": [
+        "money",
+        "savings"
+      ],
+      "title": {
+        "bn": "জমানোর সময় যা এড়াবেন",
+        "en": "Saving slips to avoid"
+      },
+      "how": {
+        "bn": "জমা টাকা সাধারণ খরচের সঙ্গে মেশাবেন না। একসঙ্গে বড় অংক ধরলে অনেকে শুরুই করেন না। অন্যের সঙ্গে নিজের জমার তুলনা করবেন না।",
+        "en": "Do not mix saved money with everyday money. Setting a large target often stops people from starting. Do not compare your savings with anyone else's."
+      },
+      "diagram": {
+        "type": "matrix",
+        "bn": "মেশানো: আলাদা রাখি|বড় লক্ষ্য: ছোট থেকে শুরু|তুলনা: নিজের গতি|ব্যবহারের নিয়ম: লিখে রাখি",
+        "en": "Mixing: keep it apart|Big target: start small|Comparing: own pace|Use rule: write it down"
+      },
+      "appLink": "#/diary/money",
+      "kind": "watchout",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-mo-sav-5",
+      "topic": "money",
+      "tags": [
+        "money",
+        "savings",
+        "learning"
+      ],
+      "title": {
+        "bn": "জমানো নিয়ে আরও শিখতে",
+        "en": "Learn more about saving"
+      },
+      "how": {
+        "bn": "‘জরুরি তহবিল’ ও ‘সঞ্চয়’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। দেশের নিয়ম বা ব্যাংকের শর্ত নিজের ব্যাংকের কাছ থেকে জেনে নিন। আমাদের লেখা যাচাইকারীর অপেক্ষায়।",
+        "en": "Read general explainers on “emergency fund” and “saving”. Ask your own bank about local rules and conditions. Our text is waiting for a reviewer."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "সাধারণ লেখা পড়ি|ব্যাংকে জিজ্ঞাসা|নিজের নোট লিখি",
+        "en": "Read general explainers|Ask my bank|Write my own note"
+      },
+      "kind": "learn",
+      "source": "reviewer",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-mo-debt-1",
+      "topic": "money",
+      "tags": [
+        "money",
+        "debt"
+      ],
+      "title": {
+        "bn": "ঋণ কী, সহজ ভাষায়",
+        "en": "Debt in plain words"
+      },
+      "how": {
+        "bn": "ঋণ মানে অন্যের টাকা নিয়ে ব্যবহার করা এবং পরে ফেরত দেওয়ার কথা। ফেরত দেওয়ার সময় অনেক ক্ষেত্রে মূল টাকার সঙ্গে বাড়তি খরচও দিতে হয়। তাই শর্ত আগে বুঝে নিন।",
+        "en": "Debt means using someone else's money and agreeing to pay it back. Often you pay an extra cost on top of the amount borrowed. So understand the terms first."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "টাকা নিই|শর্ত বুঝি|ফেরতের পরিকল্পনা",
+        "en": "Borrow|Understand the terms|Plan repayment"
+      },
+      "appLink": "#/diary/money",
+      "kind": "explain",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-mo-debt-2",
+      "topic": "money",
+      "tags": [
+        "money",
+        "debt",
+        "planning"
+      ],
+      "title": {
+        "bn": "ঋণের তালিকা বানান",
+        "en": "Make a list of what you owe"
+      },
+      "how": {
+        "bn": "1) প্রতিটি ঋণ লিখুন: কার কাছে, কত বাকি, কবে দিতে হবে। 2) জানা নেই এমন অংক ‘জানি না’ রাখুন। 3) মাসে কত দেওয়া সম্ভব দেখুন। 4) একটা ঋণ বেছে আগে মেটানোর পরিকল্পনা করুন।",
+        "en": "1) Write each debt: to whom, how much is left, when due. 2) Mark unknown amounts “don't know”. 3) See what you can pay monthly. 4) Pick one debt to finish first."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "সব ঋণ লিখি|অজানা চিহ্নিত|মাসের সামর্থ্য দেখি|একটা বেছে নিই",
+        "en": "List all debts|Mark unknowns|Check monthly room|Pick one"
+      },
+      "appLink": "#/diary/money",
+      "kind": "steps",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-mo-debt-3",
+      "topic": "money",
+      "tags": [
+        "money",
+        "debt"
+      ],
+      "title": {
+        "bn": "উদাহরণ: দুটো ঋণ, একটা পরিকল্পনা",
+        "en": "Example: two debts, one plan"
+      },
+      "how": {
+        "bn": "সুমনের দুজনের কাছে বাকি ছিল। সে দুটোই খাতায় লিখল, একজনের সঙ্গে কথা বলে কিস্তি ছোট করল, আর অন্যটার জন্য প্রতি মাসে একটা ছোট অংক আলাদা রাখল।",
+        "en": "Suman owed two people. He wrote both in his notebook, talked to one about smaller instalments, and set aside a small monthly amount for the other."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "দুটো লিখি|একজনের সঙ্গে কথা|ছোট কিস্তি|মাসে আলাদা অংক",
+        "en": "Write both|Talk to one lender|Smaller instalments|Monthly amount set"
+      },
+      "appLink": "#/diary/money",
+      "kind": "example",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-mo-debt-4",
+      "topic": "money",
+      "tags": [
+        "money",
+        "debt"
+      ],
+      "title": {
+        "bn": "ঋণে যা এড়িয়ে চলবেন",
+        "en": "Debt slips to avoid"
+      },
+      "how": {
+        "bn": "শর্ত না বুঝে সই করবেন না। এক ঋণ মেটাতে অন্য ঋণ নেওয়ার আগে ভালো করে ভাবুন। দেরি হলে চুপ থাকবেন না, আগে ভাগেই জানিয়ে নতুন সময় চান।",
+        "en": "Do not sign without understanding the terms. Think hard before borrowing to pay another debt. If a payment will be late, say so early and ask for a new date."
+      },
+      "diagram": {
+        "type": "matrix",
+        "bn": "শর্ত না বুঝে সই: আগে বুঝি|ঋণ দিয়ে ঋণ: থামি ও ভাবি|চুপ থাকা: আগে জানাই|হিসাব নেই: তালিকা করি",
+        "en": "Signing unseen: understand first|Debt for debt: pause and think|Staying silent: tell early|No record: make a list"
+      },
+      "appLink": "#/diary/money",
+      "kind": "watchout",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-mo-debt-5",
+      "topic": "money",
+      "tags": [
+        "money",
+        "debt",
+        "learning"
+      ],
+      "title": {
+        "bn": "ঋণ নিয়ে আরও শিখতে",
+        "en": "Learn more about debt"
+      },
+      "how": {
+        "bn": "‘ঋণ’ ও ‘কিস্তি’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। বড় ঋণের আগে নিবন্ধিত প্রতিষ্ঠান বা আর্থিক পরামর্শদাতার সঙ্গে কথা বলুন। এটা পরামর্শ নয়; যাচাইকারীর অপেক্ষায়।",
+        "en": "Read general explainers on “debt” and “instalments”. Before a large loan, talk to a registered lender or a financial adviser. This is not advice; reviewer pending."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "সাধারণ লেখা পড়ি|প্রশ্ন লিখে নিই|যোগ্য কারও সঙ্গে কথা",
+        "en": "Read general explainers|Write questions|Talk to a qualified person"
+      },
+      "kind": "learn",
+      "source": "reviewer",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-mo-inc-1",
+      "topic": "money",
+      "tags": [
+        "money",
+        "income",
+        "business"
+      ],
+      "title": {
+        "bn": "আয়ের উৎস কয় রকম",
+        "en": "Kinds of income"
+      },
+      "how": {
+        "bn": "আয় আসতে পারে চাকরি, ব্যবসা, কাজ-ভিত্তিক সেবা বা অন্য উৎস থেকে। একটাই উৎসে নির্ভর করলে সেটা বন্ধ হলে চাপ বাড়ে। তাই দ্বিতীয় একটা ছোট উৎস ভাবা ভালো।",
+        "en": "Income can come from a job, a business, paid services or other sources. Relying on one source means pressure if it stops. A second small source is worth thinking about."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "বর্তমান উৎস লিখি|ছোট দ্বিতীয় উৎস ভাবি|একটা পরীক্ষা করি",
+        "en": "List current sources|Think of a small second one|Run one test"
+      },
+      "appLink": "#/diary/money",
+      "kind": "explain",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-mo-inc-2",
+      "topic": "money",
+      "tags": [
+        "money",
+        "business",
+        "income"
+      ],
+      "title": {
+        "bn": "ছোট ব্যবসা শুরুর ধাপ",
+        "en": "Steps to start a small business"
+      },
+      "how": {
+        "bn": "1) কার কোন সমস্যা মেটাবেন লিখুন। 2) 3–5 জন সম্ভাব্য ক্রেতার সঙ্গে কথা বলুন। 3) সবচেয়ে ছোট সংস্করণে বিক্রি করে দেখুন। 4) খরচ ও আয় আলাদা খাতায় লিখুন।",
+        "en": "1) Write whose problem you solve. 2) Talk to 3–5 possible customers. 3) Sell the smallest version to test. 4) Record costs and income in a separate notebook."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "সমস্যা লিখি|ক্রেতার সঙ্গে কথা|ছোট করে বিক্রি|আলাদা খাতা",
+        "en": "Name the problem|Talk to customers|Sell small|Separate notebook"
+      },
+      "appLink": "#/diary/ventures",
+      "kind": "steps",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-mo-inc-3",
+      "topic": "money",
+      "tags": [
+        "money",
+        "business",
+        "income"
+      ],
+      "title": {
+        "bn": "উদাহরণ: বাড়ির রান্না থেকে শুরু",
+        "en": "Example: starting from home cooking"
+      },
+      "how": {
+        "bn": "নাসরিন প্রতিবেশীদের জিজ্ঞাসা করল কে সপ্তাহে দুদিন টিফিন নিতে চায়। প্রথমে পাঁচজনকে দিল, কত খরচ হলো লিখে রাখল, আর কারা আবার চাইল তা দেখে পরের ধাপ ঠিক করল।",
+        "en": "Nasrin asked neighbours who wanted a tiffin twice a week. She served five people first, wrote down what it cost, and saw who asked again before choosing her next step."
+      },
+      "diagram": {
+        "type": "cycle",
+        "bn": "প্রশ্ন করি|ছোট করে দিই|খরচ লিখি|কে আবার চাইল দেখি",
+        "en": "Ask first|Serve a few|Write the cost|See who asks again"
+      },
+      "appLink": "#/diary/ventures",
+      "kind": "example",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-mo-inc-4",
+      "topic": "money",
+      "tags": [
+        "money",
+        "business",
+        "income"
+      ],
+      "title": {
+        "bn": "ব্যবসার শুরুতে যা এড়াবেন",
+        "en": "Business-start slips to avoid"
+      },
+      "how": {
+        "bn": "ব্যবসা ও ব্যক্তিগত টাকা মেশাবেন না। বিক্রির আগে বড় কেনাকাটা করবেন না। খরচের অংক না জানলে আয় বেশি ভাববেন না; আগে সব খরচ গুনুন।",
+        "en": "Do not mix business and personal money. Do not make big purchases before selling. If you do not know your costs, do not assume income is high. Count all costs first."
+      },
+      "diagram": {
+        "type": "matrix",
+        "bn": "টাকা মেশানো: দুই খাতা|আগেই বড় কেনা: আগে বিক্রি|খরচ অজানা: আগে গুনি|একা সব: সাহায্য চাই",
+        "en": "Mixed money: two notebooks|Big buy first: sell first|Costs unknown: count first|Doing all alone: ask for help"
+      },
+      "appLink": "#/diary/ventures",
+      "kind": "watchout",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-mo-inc-5",
+      "topic": "money",
+      "tags": [
+        "money",
+        "business",
+        "learning"
+      ],
+      "title": {
+        "bn": "ছোট ব্যবসা নিয়ে আরও শিখতে",
+        "en": "Learn more about small business"
+      },
+      "how": {
+        "bn": "‘ছোট ব্যবসা’ ও ‘গ্রাহকের সমস্যা’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অ্যাপে উইকিপিডিয়া খুঁজলে পরিচিতি ব্যাকগ্রাউন্ডে সংরক্ষিত হয়। স্থানীয় নিয়ম ও লাইসেন্স স্থানীয় অফিসে জিজ্ঞাসা করুন।",
+        "en": "Read general explainers on “small business” and “customer problems”. A Wikipedia search in the app saves an overview in the background. Ask the local office about rules and licences."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "সাধারণ লেখা পড়ি|উইকিপিডিয়া খুঁজি|স্থানীয় নিয়ম জানি",
+        "en": "Read general explainers|Search Wikipedia|Ask local rules"
+      },
+      "appLink": "#/cards",
+      "kind": "learn",
+      "source": "wikipedia",
+      "reviewer": "pending"
+    }
+  ]
+}

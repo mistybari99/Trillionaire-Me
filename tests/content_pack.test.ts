@@ -3,7 +3,7 @@ import { readdirSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { beforeEach, describe, expect, it } from "vitest";
 import { validatePack, loadContentPacks, ensureContentPacks, tipsFor, resetContentPacksForTest, packTipsOf, type PackFiles } from "../src/library/packs";
-import { TIPS, TOPICS, tipsOf } from "../src/library/topics";
+import { TIPS, TOPICS, TIP_KINDS, tipsOf } from "../src/library/topics";
 import { GLOSSARY } from "../src/catalog/glossary";
 
 const DIR = resolve(process.cwd(), "public/content"); // vitest runs from the repo root
@@ -198,6 +198,104 @@ describe("pack tips in the app", () => {
     render();
     expect(document.body.textContent).toContain("Sort spending into three groups");
     expect(document.body.textContent).toContain("Unknown is not zero");
+    resetContentPacksForTest();
+  });
+});
+
+
+// ---- knowledge packs 003+ : every topic filled, kinds, reviewer flag, guards on EVERY pack ----
+describe("knowledge packs (003 and later)", () => {
+  const names = readdirSync(DIR).filter((f) => /^pack-\d+\.json$/.test(f) && Number(f.slice(5, 8)) >= 3).sort();
+  const packs = names.map((n) => ({ name: n, p: readPack(n) }));
+  const tips = packs.flatMap((x) => x.p.tips as any[]);
+  const every = (f: (s: string, id: string) => void) => { for (const t of tips) for (const s of [t.title.bn, t.title.en, t.how.bn, t.how.en, t.diagram.bn, t.diagram.en]) f(s, t.id); };
+
+  it("has at least 120 new entries and all packs are pending reviewer", () => {
+    expect(names.length).toBeGreaterThanOrEqual(5);
+    expect(tips.length).toBeGreaterThanOrEqual(120);
+    for (const x of packs) expect(x.p.reviewStatus, x.name).toBe("pending_reviewer");
+    expect(new Set(tips.map((t) => t.id)).size).toBe(tips.length);
+  });
+  it("every entry has kind and reviewer=pending; learn entries name a source kind; other kinds have none", () => {
+    for (const t of tips) {
+      expect(TIP_KINDS, t.id).toContain(t.kind);
+      expect(t.reviewer, t.id).toBe("pending");
+      if (t.kind === "learn") expect(["general", "wikipedia", "reviewer"], t.id).toContain(t.source); else expect(t.source, t.id).toBeUndefined();
+    }
+  });
+  it("every one of the 21 topics has explain, steps, example, watchout and learn entries", () => {
+    for (const tp of TOPICS) for (const k of TIP_KINDS) expect(tips.some((t) => t.topic === tp.id && t.kind === k), `${tp.id}/${k}`).toBe(true);
+  });
+  it("every topic opens with at least 4 tips (bundled + packs)", () => {
+    for (const tp of TOPICS) expect(tipsOf(tp.id).length + tips.filter((t) => t.topic === tp.id).length, tp.id).toBeGreaterThanOrEqual(4);
+  });
+  it("requested areas are covered: money (budget, saving, debt, income), digital safety, goals, decisions, time, habits, learning, health, relationships, career", () => {
+    const tagged = (topic: string, tag: string) => tips.filter((t) => t.topic === topic && t.tags.includes(tag)).length;
+    for (const tag of ["budget", "savings", "debt", "income"]) expect(tagged("money", tag), tag).toBeGreaterThanOrEqual(3);
+    expect(tagged("environment", "digital-safety")).toBeGreaterThanOrEqual(5);
+    expect(tagged("skills", "career")).toBeGreaterThanOrEqual(4);
+    for (const topic of ["goal-strategy", "decisions", "time", "habits", "knowledge", "health", "relationships"]) expect(tips.filter((t) => t.topic === topic).length, topic).toBeGreaterThanOrEqual(5);
+  });
+  it("no banned shame / grade / streak words, in English or Bangla, in any new pack", () => {
+    every((s, id) => {
+      expect(BANNED_EN.exec(s)?.[0], id + ": " + s).toBeUndefined();
+      const plain = s.replace(/[‌‍]/g, "");
+      expect(BANNED_BN.find((w) => letterWord(w).test(plain)), id + ": " + s).toBeUndefined();
+    });
+  });
+  it("no returns, interest, profit, percentages, currency or guarantees in any new pack", () => {
+    every((s, id) => { expect(MONEY_EN.exec(s)?.[0], id + ": " + s).toBeUndefined(); expect(MONEY_BN.exec(s)?.[0], id + ": " + s).toBeUndefined(); });
+  });
+  it("no scripture or hadith names, no clinical or investment-advice wording, no invented statistics", () => {
+    const CLINICAL = /\b(diagnos(e|es|ed|ing)|prescri\w*|dosage|therapy for|cures?|cured)\b|রোগ নির্ণয় করুন/i;
+    const STATS = /\b\d+(\.\d+)?\s*(percent|per cent|times more|x faster)\b|studies show|research shows|according to/i;
+    every((s, id) => { expect(SCRIPTURE.exec(s)?.[0], id).toBeUndefined(); expect(CLINICAL.exec(s)?.[0], id + ": " + s).toBeUndefined(); expect(STATS.exec(s)?.[0], id + ": " + s).toBeUndefined(); });
+  });
+  it("Bangla uses Latin digits only (no Bangla digits) and English text has no Bangla letters", () => {
+    for (const t of tips) {
+      for (const s of [t.title.bn, t.how.bn, t.diagram.bn]) expect(/[০-৯]/.test(s), t.id + ": " + s).toBe(false);
+      for (const s of [t.title.en, t.how.en, t.diagram.en]) expect(BN.test(s), t.id).toBe(false);
+      expect(t.how.bn.length, t.id).toBeLessThan(260);
+    }
+  });
+  it("health, emotions and money entries carry a non-clinical / not-advice stance somewhere in their topic", () => {
+    expect(tips.some((t) => t.topic === "health" && /not (for )?diagnos|not treatment|doctor/i.test(t.how.en))).toBe(true);
+    expect(tips.some((t) => t.topic === "emotions" && /not treatment|not diagnosis|counsellor/i.test(t.how.en))).toBe(true);
+    expect(tips.some((t) => t.topic === "deen" && /no rulings|qualified scholar/i.test(t.how.en))).toBe(true);
+  });
+});
+
+describe("pack validator: new optional fields", () => {
+  const base = () => ({ schema: "tm-content-pack", schemaVersion: 1, packId: "test-pack", reviewStatus: "pending_reviewer", license: "original", description: "d",
+    tips: [{ id: "x-new", topic: "money", tags: ["money"], title: { bn: "শিরোনাম", en: "Title" }, how: { bn: "একটা ছোট কাজ।", en: "A short task." }, diagram: { type: "steps", bn: "এক|দুই", en: "One|Two" }, kind: "learn", source: "general", reviewer: "pending" }] });
+  const bad = (mut: (p: any) => void) => { const p = base(); mut(p); return validatePack(p, new Set()); };
+  it("accepts kind, source and reviewer", () => { expect(validatePack(base(), new Set()).ok).toBe(true); });
+  it("rejects an unknown kind, an unknown source, a source on a non-learn entry, and reviewer other than pending", () => {
+    expect(bad((p) => { p.tips[0].kind = "essay"; }).ok).toBe(false);
+    expect(bad((p) => { p.tips[0].source = "scripture"; }).ok).toBe(false);
+    expect(bad((p) => { p.tips[0].kind = "steps"; }).ok).toBe(false);
+    expect(bad((p) => { p.tips[0].reviewer = "approved"; }).ok).toBe(false);
+  });
+  it("the pack reader keeps kind, source and reviewer on the loaded tip", () => {
+    const r = validatePack(base(), new Set());
+    expect(r.ok && r.pack.tips[0]).toMatchObject({ kind: "learn", source: "general", reviewer: "pending" });
+  });
+});
+
+describe("new entries on the topic screen", () => {
+  it("a thin topic (Deen) shows pack entries with kind labels; Bangla view shows the Bangla kind label", async () => {
+    const { render } = await import("../src/app");
+    const fromDisk: PackFiles = Object.fromEntries(readdirSync(DIR).map((f) => [`../../public/content/${f}`, async () => readPack(f)]));
+    resetContentPacksForTest();
+    await new Promise<void>((done) => ensureContentPacks(done, fromDisk));
+    document.body.innerHTML = '<div id="app"></div>';
+    localStorage.clear(); localStorage.setItem("tm:ui:lang", "en"); location.hash = "#/topic/debt-none"; // unknown id falls back to the index
+    location.hash = "#/topic/environment"; render();
+    expect(document.querySelectorAll("[data-tip]").length).toBeGreaterThanOrEqual(10);
+    expect(document.querySelector('[data-kind="watchout"]')?.textContent).toBe("Common slips");
+    expect(document.querySelector('[data-source="reviewer"]')?.textContent).toContain("reviewer pending");
+    localStorage.setItem("tm:ui:lang", "bn"); render();
+    expect(document.querySelector('[data-kind="example"]')?.textContent).toBe("উদাহরণ");
     resetContentPacksForTest();
   });
 });

@@ -292,6 +292,8 @@ const en = {
   "topics.safety.health": "General habits only, not medical advice. For health problems please see a doctor.",
   "topics.safety.money": "Simple budgeting ideas only, not financial advice.", "topics.safety.worship": "Private. Nothing here is judged or compared. For rulings, ask a qualified scholar.",
   "topics.empty": "No tips here yet.",
+  "topics.kind.explain": "What it is", "topics.kind.steps": "Steps", "topics.kind.example": "Example", "topics.kind.watchout": "Common slips", "topics.kind.learn": "Where to learn more",
+  "topics.src.general": "Source: general knowledge", "topics.src.wikipedia": "Source: from Wikipedia (saved in background)", "topics.src.reviewer": "Source: reviewer pending",
 
   "stuck.title": "Feeling stuck?", "stuck.intro": "Six quick taps. No typing. Nothing here is a judgement. It only helps you find a small next step.", "stuck.show": "Show what may help",
   "stuck.causes": "What may be in the way", "stuck.noCause": "Nothing clear came up. That is fine — the smallest step is still safe.", "stuck.unanswered": "{n} question(s) left as 'don't know' — they are not counted.",
@@ -934,6 +936,8 @@ const bn: Record<Key, string> = {
   "topics.safety.money": "সহজ বাজেটের ধারণা মাত্র, আর্থিক পরামর্শ নয়।",
   "topics.safety.worship": "ব্যক্তিগত। এখানে কিছুই বিচার বা তুলনা করা হয় না। মাসআলার জন্য যোগ্য আলেমকে জিজ্ঞাসা করুন।",
   "topics.empty": "এখানে এখনো কোনো টিপস নেই।",
+  "topics.kind.explain": "এটা কী", "topics.kind.steps": "ধাপগুলো", "topics.kind.example": "উদাহরণ", "topics.kind.watchout": "যেদিকে খেয়াল রাখবেন", "topics.kind.learn": "আরও কোথায় শিখবেন",
+  "topics.src.general": "উৎস: সাধারণ জ্ঞান", "topics.src.wikipedia": "উৎস: উইকিপিডিয়া থেকে (ব্যাকগ্রাউন্ডে সংরক্ষিত)", "topics.src.reviewer": "উৎস: যাচাইকারীর অপেক্ষায়",
   "stuck.title": "আটকে গেছেন?",
   "stuck.intro": "ছয়টা দ্রুত ট্যাপ। লেখার দরকার নেই। এখানে কারও দোষ ধরা হচ্ছে না — শুধু একটা ছোট পরের ধাপ খুঁজে পেতে সাহায্য।",
   "stuck.show": "কী সাহায্য করতে পারে দেখুন",

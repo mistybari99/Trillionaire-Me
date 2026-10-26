@@ -1,0 +1,847 @@
+{
+  "schema": "tm-content-pack",
+  "schemaVersion": 1,
+  "packId": "pack-006",
+  "reviewStatus": "pending_reviewer",
+  "license": "original",
+  "description": "Original, practical entries (Bangla and English) with a short explanation, steps, a realistic example without invented figures, common slips to avoid, and a where-to-learn-more note naming the kind of source. Self-awareness, focus, starting, emotions (non-clinical), execution and obstacles, creativity. Drafts: shown as যাচাই হয়নি until a reviewer signs off.",
+  "tips": [
+    {
+      "id": "p3-sa-1",
+      "topic": "self-awareness",
+      "tags": [
+        "strengths",
+        "assessment"
+      ],
+      "title": {
+        "bn": "নিজেকে জানা কেন কাজে লাগে",
+        "en": "Why knowing yourself helps"
+      },
+      "how": {
+        "bn": "নিজের শক্তি, পছন্দ আর সীমা জানলে সিদ্ধান্ত নেওয়া সহজ হয়। এটা নিজেকে বিচার করা নয়, শুধু দেখা। যা এখনো জানেন না তা ‘জানি না’ রাখুন।",
+        "en": "Knowing your strengths, preferences and limits makes decisions easier. This is not judging yourself, only observing. Keep what you don't yet know as “don't know”."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "খেয়াল করি|লিখি|ধরন দেখি",
+        "en": "Observe|Write|See the pattern"
+      },
+      "appLink": "#/diary/intake/2",
+      "kind": "explain",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-sa-2",
+      "topic": "self-awareness",
+      "tags": [
+        "strengths",
+        "reflection"
+      ],
+      "title": {
+        "bn": "সপ্তাহে 5 মিনিটের আত্ম-পর্যবেক্ষণ",
+        "en": "A 5-minute weekly self-check"
+      },
+      "how": {
+        "bn": "1) এই সপ্তাহে কোন কাজে ভালো লেগেছে লিখুন। 2) কোন কাজে শক্তি কমেছে লিখুন। 3) একটা ধরন চোখে পড়লে লিখে রাখুন। 4) পরের সপ্তাহে একটা ছোট বদল ভাবুন।",
+        "en": "1) Write what felt good this week. 2) Write what drained energy. 3) Note one pattern you see. 4) Think of one small change for next week."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "যা ভালো লেগেছে|যা শক্তি কমিয়েছে|একটা ধরন|একটা ছোট বদল",
+        "en": "What felt good|What drained me|One pattern|One small change"
+      },
+      "appLink": "#/diary/intake/2",
+      "kind": "steps",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-sa-3",
+      "topic": "self-awareness",
+      "tags": [
+        "strengths",
+        "reflection"
+      ],
+      "title": {
+        "bn": "উদাহরণ: কাজ বদলের আগে",
+        "en": "Example: before a role change"
+      },
+      "how": {
+        "bn": "আরিফ তিন সপ্তাহ লিখে দেখল সে মানুষের সঙ্গে সমস্যা মেটানোর কাজে সবচেয়ে সতেজ থাকে। তাই সে নতুন ভূমিকা বাছার সময় এ ধরনের কাজ থাকা কিনা জিজ্ঞাসা করল।",
+        "en": "For three weeks Arif noted that he felt freshest when solving problems with people. So when choosing a new role he asked whether that kind of work was included."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "তিন সপ্তাহ লিখি|ধরন দেখি|প্রশ্ন তৈরি করি|ভূমিকায় জিজ্ঞাসা",
+        "en": "Note for 3 weeks|See pattern|Form a question|Ask about the role"
+      },
+      "appLink": "#/diary/intake/2",
+      "kind": "example",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-sa-4",
+      "topic": "self-awareness",
+      "tags": [
+        "strengths",
+        "beliefs"
+      ],
+      "title": {
+        "bn": "আত্ম-সচেতনতায় যা এড়াবেন",
+        "en": "Self-awareness slips to avoid"
+      },
+      "how": {
+        "bn": "একদিনের অনুভূতি দিয়ে নিজের পরিচয় ঠিক করবেন না। নিজের সম্পর্কে কড়া বিশেষণ (অযোগ্য, বেকার) লিখবেন না; ঘটনা লিখুন। অন্যের মন্তব্য এক-দুটো ধরনের সঙ্গে মিলিয়ে দেখুন।",
+        "en": "Do not define yourself from one day's feeling. Avoid harsh labels for yourself; write the facts instead. Check others' remarks against a pattern before you accept them."
+      },
+      "diagram": {
+        "type": "matrix",
+        "bn": "একদিনের মেজাজ: কয়েক সপ্তাহ দেখি|কড়া বিশেষণ: ঘটনা লিখি|একজনের মন্তব্য: ধরন মেলাই|জানা নেই: ‘জানি না’",
+        "en": "One day's mood: look over weeks|Harsh label: write facts|One remark: match patterns|Don't know: say so"
+      },
+      "appLink": "#/diary/intake/2",
+      "kind": "watchout",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-sa-5",
+      "topic": "self-awareness",
+      "tags": [
+        "strengths",
+        "learning"
+      ],
+      "title": {
+        "bn": "নিজেকে জানা নিয়ে আরও শিখতে",
+        "en": "Learn more about self-awareness"
+      },
+      "how": {
+        "bn": "‘আত্ম-সচেতনতা’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। বিশ্বস্ত দুজনকে জিজ্ঞাসা করুন তাঁরা আপনার কোন শক্তি দেখেন। এটা কোনো পরীক্ষা বা রায় নয়; যাচাইকারীর অপেক্ষায়।",
+        "en": "Read general explainers on “self-awareness”. Ask two trusted people which strengths they see in you. This is not a test or a verdict. Reviewer pending."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "সাধারণ লেখা পড়ি|দুজনকে জিজ্ঞাসা|নিজের নোটের সঙ্গে মেলাই",
+        "en": "Read general explainers|Ask two people|Compare with my notes"
+      },
+      "appLink": "#/diary/intake/2",
+      "kind": "learn",
+      "source": "reviewer",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-fo-1",
+      "topic": "focus",
+      "tags": [
+        "focus",
+        "time"
+      ],
+      "title": {
+        "bn": "গভীর কাজ কী",
+        "en": "What deep work is"
+      },
+      "how": {
+        "bn": "গভীর কাজ মানে বিঘ্ন ছাড়া একটা কঠিন কাজে মন দেওয়া। এটা ঘণ্টার পর ঘণ্টা হতে হবে না; 25–50 মিনিট একটাই কাজই অনেক। মন সরে গেলে ফিরে আসাই আসল দক্ষতা।",
+        "en": "Deep work means giving full attention to one demanding task without interruption. It need not last hours; 25–50 minutes on one task is plenty. Coming back when attention drifts is the real skill."
+      },
+      "diagram": {
+        "type": "cycle",
+        "bn": "একটা কাজ|বিঘ্ন ছাড়া মন|মন সরলে ফিরি|ছোট বিরতি",
+        "en": "One task|Uninterrupted attention|Drift, then come back|Short rest"
+      },
+      "appLink": "#/today",
+      "kind": "explain",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-fo-2",
+      "topic": "focus",
+      "tags": [
+        "focus",
+        "planning"
+      ],
+      "title": {
+        "bn": "গভীর কাজের সেশন সাজানো",
+        "en": "Setting up a deep-work session"
+      },
+      "how": {
+        "bn": "1) সেশনের কাজ এক লাইনে লিখুন। 2) টাইমার 25 মিনিটে দিন। 3) বিজ্ঞপ্তি বন্ধ করুন। 4) মনে আসা অন্য কথা কাগজে লিখুন। 5) শেষে কী হলো এক লাইনে লিখুন।",
+        "en": "1) Write the session's task in one line. 2) Set a 25-minute timer. 3) Turn off notifications. 4) Jot stray thoughts on paper. 5) Note what happened in one line."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "কাজ লিখি|টাইমার দিই|বিজ্ঞপ্তি বন্ধ|শেষে এক লাইন",
+        "en": "Write the task|Set timer|Notifications off|One line after"
+      },
+      "appLink": "#/today",
+      "kind": "steps",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-fo-3",
+      "topic": "focus",
+      "tags": [
+        "focus",
+        "environment"
+      ],
+      "title": {
+        "bn": "উদাহরণ: প্রতিবেদন লেখা",
+        "en": "Example: writing a report"
+      },
+      "how": {
+        "bn": "লিপি সকালে 25 মিনিট শুধু প্রতিবেদনের প্রথম অংশ লিখল। ফোন অন্য ঘরে, ট্যাব একটা। মাঝে একটা ইমেইলের কথা মনে এলে সে কাগজে লিখে রাখল এবং কাজে ফিরল।",
+        "en": "Lipi spent 25 morning minutes on just the first section of a report. Phone in another room, one tab open. When an email crossed her mind she jotted it on paper and went back."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "একটা অংশ বাছি|ফোন দূরে|কাগজে লিখে রাখি|কাজে ফিরি",
+        "en": "Pick one section|Phone away|Jot it on paper|Back to work"
+      },
+      "appLink": "#/today",
+      "kind": "example",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-fo-4",
+      "topic": "focus",
+      "tags": [
+        "focus",
+        "environment"
+      ],
+      "title": {
+        "bn": "ফোকাসে যা এড়িয়ে চলবেন",
+        "en": "Focus slips to avoid"
+      },
+      "how": {
+        "bn": "একসঙ্গে দুটো কাজ চালাবেন না। প্রতি 10 মিনিটে ফোন দেখবেন না। বিরতিতে আবার স্ক্রল করলে মন ফিরতে সময় লাগে; উঠে পানি খান বা হাঁটুন।",
+        "en": "Do not run two tasks at once. Do not check the phone every 10 minutes. Scrolling during breaks makes returning harder; stand, drink water or walk."
+      },
+      "diagram": {
+        "type": "matrix",
+        "bn": "দুই কাজ একসাথে: একটা|ঘন ঘন ফোন: ঠিক সময়ে একবার|বিরতিতে স্ক্রল: উঠে হাঁটি|কাজ অস্পষ্ট: এক লাইনে লিখি",
+        "en": "Two tasks: do one|Frequent phone: one set check|Scrolling breaks: stand and walk|Vague task: write one line"
+      },
+      "appLink": "#/today",
+      "kind": "watchout",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-fo-5",
+      "topic": "focus",
+      "tags": [
+        "focus",
+        "learning"
+      ],
+      "title": {
+        "bn": "ফোকাস নিয়ে আরও শিখতে",
+        "en": "Learn more about focus"
+      },
+      "how": {
+        "bn": "‘মনোযোগ’ ও ‘টাইম বক্সিং’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। উইকিপিডিয়ার পরিচিতি অ্যাপে সংরক্ষিত হয়। অ্যাপের ফোকাস টাইমার একবার চালিয়ে নিজের জন্য কোন দৈর্ঘ্য ভালো দেখুন।",
+        "en": "Read general explainers on “attention” and “time boxing”. Wikipedia overviews are saved in the app. Try the app's focus timer to see which length suits you."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "সাধারণ লেখা পড়ি|ফোকাস টাইমার চালাই|নিজের দৈর্ঘ্য বাছি",
+        "en": "Read general explainers|Run focus timer|Choose my length"
+      },
+      "appLink": "#/today",
+      "kind": "learn",
+      "source": "wikipedia",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-pr-1",
+      "topic": "procrastination",
+      "tags": [
+        "starting",
+        "procrastination"
+      ],
+      "title": {
+        "bn": "কাজ ফেলে রাখার কারণ",
+        "en": "Why we put things off"
+      },
+      "how": {
+        "bn": "কাজ ফেলে রাখা অলসতা নয়। প্রায়ই কাজটা অস্পষ্ট, বড় বা অস্বস্তিকর লাগে বলে মন সরে যায়। কারণটা ধরতে পারলে সমাধানও ছোট হয়ে আসে।",
+        "en": "Putting things off is not a flaw of character. Often the task feels vague, big or uncomfortable, so the mind turns away. Once you see the reason, the fix gets smaller."
+      },
+      "diagram": {
+        "type": "matrix",
+        "bn": "অস্পষ্ট: প্রথম ধাপ লিখি|বড়: ছোট করি|অস্বস্তিকর: 2 মিনিট|ক্লান্ত: বিশ্রাম",
+        "en": "Vague: write step one|Big: shrink it|Uncomfortable: 2 minutes|Tired: rest"
+      },
+      "appLink": "#/stuck",
+      "kind": "explain",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-pr-2",
+      "topic": "procrastination",
+      "tags": [
+        "starting",
+        "procrastination"
+      ],
+      "title": {
+        "bn": "আটকে গেলে শুরুর ধাপ",
+        "en": "Steps to start when stuck"
+      },
+      "how": {
+        "bn": "1) কাজটার প্রথম শারীরিক কাজ কী লিখুন (যেমন ফাইল খোলা)। 2) শুধু সেটা করুন। 3) 2 মিনিট টাইমার দিন। 4) পরে থামুন বা চালান, দুটোই ঠিক।",
+        "en": "1) Write the first physical action (for example open the file). 2) Do just that. 3) Set a 2-minute timer. 4) Then stop or continue, both are fine."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "প্রথম শারীরিক কাজ লিখি|শুধু সেটা করি|2 মিনিট টাইমার|থামি বা চালাই",
+        "en": "Write first action|Do only that|2-minute timer|Stop or continue"
+      },
+      "appLink": "#/stuck",
+      "kind": "steps",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-pr-3",
+      "topic": "procrastination",
+      "tags": [
+        "starting",
+        "procrastination"
+      ],
+      "title": {
+        "bn": "উদাহরণ: ফেলে রাখা ফর্ম",
+        "en": "Example: a form left unfilled"
+      },
+      "how": {
+        "bn": "নাজমা এক সপ্তাহ ধরে একটা ফর্ম ফেলে রেখেছিল। সে কেবল কলম আর ফর্ম টেবিলে রাখল, নিজের নামটা লিখল। তারপর দেখল বাকিটা আজই করে ফেলা যায়।",
+        "en": "Najma had left a form for a week. She only put the pen and form on the table and wrote her name. After that she found she could finish the rest that day."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "ফর্ম টেবিলে রাখি|শুধু নাম লিখি|বাকিটা দেখি",
+        "en": "Put form on table|Write name only|See about the rest"
+      },
+      "appLink": "#/stuck",
+      "kind": "example",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-pr-4",
+      "topic": "procrastination",
+      "tags": [
+        "starting",
+        "procrastination"
+      ],
+      "title": {
+        "bn": "শুরু করতে যা এড়িয়ে চলবেন",
+        "en": "Starting slips to avoid"
+      },
+      "how": {
+        "bn": "নিজেকে দোষারোপ করবেন না, তাতে কাজ আরও ভারী লাগে। ‘সব একসঙ্গে শেষ করব’ ভাববেন না। সবচেয়ে ভালো মুহূর্তের অপেক্ষায় বসে থাকবেন না; ছোট করে আজই শুরু করুন।",
+        "en": "Do not blame yourself; it makes the task feel heavier. Do not plan to finish everything at once. Do not wait for the perfect moment; start small today."
+      },
+      "diagram": {
+        "type": "matrix",
+        "bn": "নিজেকে দোষ: শান্ত থাকি|সব একসাথে: প্রথম ধাপ|পারফেক্ট মুহূর্ত: আজই ছোট করে|অস্পষ্ট কাজ: ভেঙে লিখি",
+        "en": "Blaming yourself: stay calm|All at once: first step|Perfect moment: start small now|Vague task: break it down"
+      },
+      "appLink": "#/stuck",
+      "kind": "watchout",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-pr-5",
+      "topic": "procrastination",
+      "tags": [
+        "starting",
+        "learning"
+      ],
+      "title": {
+        "bn": "ফেলে রাখা নিয়ে আরও শিখতে",
+        "en": "Learn more about putting things off"
+      },
+      "how": {
+        "bn": "‘দীর্ঘসূত্রতা’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অ্যাপের ‘আটকে গেছি’ পাতায় নিজের কারণ বেছে দেখুন। অনেকদিন ধরে ভারী লাগলে যোগ্য কারও সঙ্গে কথা বলুন।",
+        "en": "Read general explainers on “procrastination”. Try the app's “I'm stuck” page and pick your reason. If it feels heavy for a long time, talk to a qualified person."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "সাধারণ লেখা পড়ি|‘আটকে গেছি’ পাতা দেখি|প্রয়োজনে কথা বলি",
+        "en": "Read general explainers|Open the stuck page|Talk if needed"
+      },
+      "appLink": "#/stuck",
+      "kind": "learn",
+      "source": "reviewer",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-em-1",
+      "topic": "emotions",
+      "tags": [
+        "emotions",
+        "calm"
+      ],
+      "title": {
+        "bn": "আবেগ কেন আসে",
+        "en": "Why emotions show up"
+      },
+      "how": {
+        "bn": "আবেগ আমাদের জানায় কী গুরুত্বপূর্ণ বা কী ঠিক লাগছে না। তা ঠিক বা অন্যায় নয়, শুধু তথ্য। নাম দিয়ে বললে অনেক সময় একটু শান্ত লাগে। এটা সাধারণ কথা, চিকিৎসা নয়।",
+        "en": "Emotions tell us what matters or what feels off. They are neither right nor wrong, just information. Naming one often brings a little calm. This is general talk, not treatment."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "অনুভব করি|নাম দিই|একটু সময় নিই",
+        "en": "Feel it|Name it|Take a moment"
+      },
+      "kind": "explain",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-em-2",
+      "topic": "emotions",
+      "tags": [
+        "emotions",
+        "calm"
+      ],
+      "title": {
+        "bn": "চাপের মুহূর্তে ছোট ধাপ",
+        "en": "Small steps in a stressful moment"
+      },
+      "how": {
+        "bn": "1) থামুন। 2) ধীরে ছয়বার শ্বাস নিন। 3) অনুভূতির নাম দিন। 4) এখন এক মিনিটে করা যায় এমন ছোট একটা কাজ বাছুন। 5) দরকার হলে কাউকে জানান।",
+        "en": "1) Pause. 2) Take six slow breaths. 3) Name the feeling. 4) Pick one small thing you can do in a minute. 5) Tell someone if you need to."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "থামি|ধীর শ্বাস|নাম দিই|ছোট কাজ বাছি",
+        "en": "Pause|Slow breaths|Name it|Pick a small action"
+      },
+      "kind": "steps",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-em-3",
+      "topic": "emotions",
+      "tags": [
+        "emotions",
+        "calm"
+      ],
+      "title": {
+        "bn": "উদাহরণ: কড়া মন্তব্যের পর",
+        "en": "Example: after a sharp remark"
+      },
+      "how": {
+        "bn": "কেউ কাজ নিয়ে কড়া কথা বলায় মিনা রেগে গিয়েছিল। সে উত্তর দেওয়ার আগে বাইরে গিয়ে কয়েক মিনিট হাঁটল। ফিরে এসে শান্ত গলায় প্রশ্ন করল, ‘কোন অংশটা বদলাতে চান?’",
+        "en": "Meena was upset by a sharp remark about her work. Before replying she walked outside for a few minutes. Back inside, she calmly asked, “Which part would you like changed?”"
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "রাগ টের পাই|কয়েক মিনিট হাঁটি|শান্ত প্রশ্ন করি",
+        "en": "Notice the upset|Walk a few minutes|Ask calmly"
+      },
+      "kind": "example",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-em-4",
+      "topic": "emotions",
+      "tags": [
+        "emotions",
+        "calm"
+      ],
+      "title": {
+        "bn": "আবেগে যা এড়িয়ে চলবেন",
+        "en": "Emotion slips to avoid"
+      },
+      "how": {
+        "bn": "আবেগ চেপে রাখবেন না, আবার তার ঝোঁকে বড় সিদ্ধান্তও নেবেন না। নিজেকে ‘এমন হওয়া উচিত নয়’ বলবেন না। মন অনেকদিন ভারী থাকলে ডাক্তার বা কাউন্সেলরের সঙ্গে কথা বলুন।",
+        "en": "Do not bottle emotions up, and do not make big decisions in their grip. Do not tell yourself you “should not” feel something. If you feel heavy for long, talk to a doctor or counsellor."
+      },
+      "diagram": {
+        "type": "matrix",
+        "bn": "চেপে রাখা: নাম দিই|ঝোঁকে সিদ্ধান্ত: পরে নিই|‘হওয়া উচিত নয়’: যা আছে মানি|অনেকদিন ভারী: কথা বলি",
+        "en": "Bottling up: name it|Deciding in the moment: wait|“Should not feel”: accept what is|Heavy for long: talk to someone"
+      },
+      "kind": "watchout",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-em-5",
+      "topic": "emotions",
+      "tags": [
+        "emotions",
+        "learning"
+      ],
+      "title": {
+        "bn": "আবেগ নিয়ে আরও শিখতে",
+        "en": "Learn more about emotions"
+      },
+      "how": {
+        "bn": "‘আবেগ’ ও ‘চাপ সামলানো’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। এগুলো সাধারণ কথা, রোগ নির্ণয় বা চিকিৎসা নয়। কষ্ট বেশি হলে যোগ্য স্বাস্থ্যকর্মীর সাহায্য নিন। যাচাইকারীর অপেক্ষায়।",
+        "en": "Read general explainers on “emotions” and “coping with stress”. These are general words, not diagnosis or treatment. If it is hard, seek a qualified health worker. Reviewer pending."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "সাধারণ লেখা পড়ি|নিজের অনুভূতির নোট|প্রয়োজনে সাহায্য নিই",
+        "en": "Read general explainers|Note my feelings|Get help if needed"
+      },
+      "kind": "learn",
+      "source": "reviewer",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-ex-1",
+      "topic": "execution",
+      "tags": [
+        "execution",
+        "planning"
+      ],
+      "title": {
+        "bn": "পরিকল্পনা থেকে কাজে যাওয়া",
+        "en": "From plan to doing"
+      },
+      "how": {
+        "bn": "পরিকল্পনা ভালো হলেও কাজ না হলে ফল আসে না। কাজে নামতে দরকার ছোট পরের ধাপ, নির্দিষ্ট সময় আর সপ্তাহে একবার পর্যালোচনা। পরিকল্পনা বদলানো স্বাভাবিক।",
+        "en": "A good plan brings nothing without action. To act you need a small next step, a set time and a weekly look back. Changing the plan is normal."
+      },
+      "diagram": {
+        "type": "cycle",
+        "bn": "পরিকল্পনা|ছোট ধাপ|কাজ|পর্যালোচনা",
+        "en": "Plan|Small step|Do|Review"
+      },
+      "appLink": "#/diary/plan",
+      "kind": "explain",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-ex-2",
+      "topic": "execution",
+      "tags": [
+        "execution",
+        "planning"
+      ],
+      "title": {
+        "bn": "প্রকল্প ভেঙে কাজে বসানো",
+        "en": "Breaking a project into tasks"
+      },
+      "how": {
+        "bn": "1) প্রকল্পের শেষ ফল লিখুন। 2) 5–8টা ধাপে ভাঙুন। 3) প্রতিটি ধাপে ছোট কাজ লিখুন। 4) এই সপ্তাহের 3টি কাজ প্ল্যানে বসান। 5) বাকিগুলো পরে।",
+        "en": "1) Write the project's end result. 2) Break it into 5–8 stages. 3) Write small tasks under each. 4) Place this week's 3 tasks in the plan. 5) Leave the rest for later."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "শেষ ফল লিখি|ধাপে ভাঙি|ছোট কাজ লিখি|3টি বসাই",
+        "en": "Write the end result|Break into stages|Small tasks|Place 3"
+      },
+      "appLink": "#/diary/plan",
+      "kind": "steps",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-ex-3",
+      "topic": "execution",
+      "tags": [
+        "execution",
+        "planning"
+      ],
+      "title": {
+        "bn": "উদাহরণ: ছোট দোকানের পাতা",
+        "en": "Example: a small shop page"
+      },
+      "how": {
+        "bn": "পলাশ নিজের ছোট দোকানের জন্য একটা অনলাইন পাতা চাইল। সে ধাপ করল: নাম ঠিক, পণ্যের ছবি, দাম লেখা, বন্ধুকে দেখানো। এই সপ্তাহে শুধু ছবি তোলা বসাল।",
+        "en": "Palash wanted an online page for his small shop. He made stages: name, product photos, prices, show a friend. This week he scheduled only taking photos."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "নাম ঠিক|পণ্যের ছবি|দাম লেখা|বন্ধুকে দেখানো",
+        "en": "Decide name|Product photos|Write prices|Show a friend"
+      },
+      "appLink": "#/diary/plan",
+      "kind": "example",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-ex-4",
+      "topic": "execution",
+      "tags": [
+        "execution",
+        "review"
+      ],
+      "title": {
+        "bn": "বাস্তবায়নে যা এড়িয়ে চলবেন",
+        "en": "Execution slips to avoid"
+      },
+      "how": {
+        "bn": "একসঙ্গে অনেক প্রকল্প খুলবেন না। নিখুঁত পরিকল্পনার জন্য শুরু পিছাবেন না। যা হয়নি তা মুছবেন না, পরের সপ্তাহে সরিয়ে দিন। আর অজানা সময়কে শূন্য ধরবেন না।",
+        "en": "Do not open many projects at once. Do not delay starting for a perfect plan. Do not delete what did not happen; move it to next week. Do not count unknown time as zero."
+      },
+      "diagram": {
+        "type": "matrix",
+        "bn": "অনেক প্রকল্প: দুটোর বেশি নয়|নিখুঁত পরিকল্পনা: ছোট শুরু|যা হয়নি: সরিয়ে দিই|সময় অজানা: ‘জানি না’",
+        "en": "Many projects: max two|Perfect plan: start small|Undone task: move it|Unknown time: “don't know”"
+      },
+      "appLink": "#/diary/plan",
+      "kind": "watchout",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-ex-5",
+      "topic": "execution",
+      "tags": [
+        "execution",
+        "learning"
+      ],
+      "title": {
+        "bn": "প্রকল্প পরিচালনা নিয়ে আরও শিখতে",
+        "en": "Learn more about running projects"
+      },
+      "how": {
+        "bn": "‘প্রকল্প ব্যবস্থাপনা’ ও ‘কাজের তালিকা’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অ্যাপে উইকিপিডিয়া খুঁজলে পরিচিতি সংরক্ষিত হয়। নিজের একটা প্রকল্পে এক সপ্তাহ এসব চেষ্টা করুন।",
+        "en": "Read general explainers on “project management” and “task lists”. A Wikipedia search in the app saves an overview. Try these on one of your own projects for a week."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "সাধারণ লেখা পড়ি|উইকিপিডিয়া খুঁজি|এক প্রকল্পে চেষ্টা",
+        "en": "Read general explainers|Search Wikipedia|Try on one project"
+      },
+      "appLink": "#/cards",
+      "kind": "learn",
+      "source": "wikipedia",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-ob-1",
+      "topic": "obstacles",
+      "tags": [
+        "obstacles",
+        "review"
+      ],
+      "title": {
+        "bn": "বাধা মানে থেমে যাওয়া নয়",
+        "en": "An obstacle is not the end"
+      },
+      "how": {
+        "bn": "বাধা আসা স্বাভাবিক। দরকার হলে পথ বদলান, লক্ষ্য নয়। বাধাকে ছোট প্রশ্নে বদলান: কোনটা আমার হাতে, কোনটা নয়? অনিশ্চয়তা থাকলে তা লিখে রাখুন।",
+        "en": "Obstacles are normal. Change the route, not the goal, when needed. Turn the obstacle into a small question: what is in my hands and what is not? Write down uncertainty."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "কী আটকাল লিখি|আমার হাতে কী|ছোট পরের ধাপ",
+        "en": "What blocked me|What is in my hands|Small next step"
+      },
+      "appLink": "#/stuck",
+      "kind": "explain",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-ob-2",
+      "topic": "obstacles",
+      "tags": [
+        "obstacles",
+        "planning"
+      ],
+      "title": {
+        "bn": "বাধা এলে 5 ধাপ",
+        "en": "Five steps when blocked"
+      },
+      "how": {
+        "bn": "1) কী আটকাচ্ছে এক লাইনে লিখুন। 2) আমার হাতে কী আছে লিখুন। 3) তিনটি ছোট উপায় লিখুন। 4) একটা বেছে আজই করুন। 5) পরদিন ফল দেখুন।",
+        "en": "1) Write what is blocking you in one line. 2) Write what is in your control. 3) List three small ways forward. 4) Pick one and do it today. 5) Check the result tomorrow."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "আটকানো লিখি|আমার হাতে কী|তিনটি উপায়|একটা আজই",
+        "en": "Write the block|In my control|Three ways|One today"
+      },
+      "appLink": "#/stuck",
+      "kind": "steps",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-ob-3",
+      "topic": "obstacles",
+      "tags": [
+        "obstacles",
+        "planning"
+      ],
+      "title": {
+        "bn": "উদাহরণ: যোগানদার দেরি করলে",
+        "en": "Example: a supplier is late"
+      },
+      "how": {
+        "bn": "শামীম জানল তার যোগানদার এক সপ্তাহ দেরি করবে। সে ক্রেতাদের আগে জানাল, একটা বিকল্প যোগানদারের সঙ্গে ছোট অর্ডার দিয়ে পরীক্ষা করল, আর পরে কী শিখল লিখে রাখল।",
+        "en": "Shamim learned his supplier would be a week late. He told customers early, tested a small order with an alternative supplier, and later noted what he learned."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "ক্রেতাদের জানাই|বিকল্প পরীক্ষা|শিক্ষা লিখি",
+        "en": "Tell customers|Test an alternative|Note the lesson"
+      },
+      "kind": "example",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-ob-4",
+      "topic": "obstacles",
+      "tags": [
+        "obstacles",
+        "review"
+      ],
+      "title": {
+        "bn": "বাধায় যা এড়িয়ে চলবেন",
+        "en": "Setback slips to avoid"
+      },
+      "how": {
+        "bn": "নিজেকে দোষ দেবেন না, আবার অন্যকেও না; কী হয়েছে দেখুন। বাধা লুকাবেন না। যে পথ কাজ করছে না, সেটাতেই জোর বাড়াবেন না। প্রয়োজনে সাহায্য চান।",
+        "en": "Do not blame yourself or others; look at what happened. Do not hide a setback. Do not push harder on a route that is not working. Ask for help if needed."
+      },
+      "diagram": {
+        "type": "matrix",
+        "bn": "দোষারোপ: ঘটনা দেখি|লুকানো: জানাই|একই পথে জোর: বিকল্প ভাবি|একা সামলানো: সাহায্য চাই",
+        "en": "Blaming: look at facts|Hiding: tell someone|Pushing same route: find alternatives|Handling alone: ask for help"
+      },
+      "appLink": "#/stuck",
+      "kind": "watchout",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-ob-5",
+      "topic": "obstacles",
+      "tags": [
+        "obstacles",
+        "learning"
+      ],
+      "title": {
+        "bn": "বাধা ও অনিশ্চয়তা নিয়ে আরও শিখতে",
+        "en": "Learn more about setbacks and uncertainty"
+      },
+      "how": {
+        "bn": "‘সহনশীলতা’ ও ‘অনিশ্চয়তা’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। নিজের পুরোনো কঠিন সময় থেকে কী কাজে লেগেছিল লিখে রাখুন। যাচাইকারীর অপেক্ষায়।",
+        "en": "Read general explainers on “resilience” and “uncertainty”. Write down what helped in your own past hard times. Reviewer pending."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "সাধারণ লেখা পড়ি|পুরোনো সময় ভাবি|কী কাজে লেগেছিল লিখি",
+        "en": "Read general explainers|Reflect on past times|Note what helped"
+      },
+      "appLink": "#/stuck",
+      "kind": "learn",
+      "source": "reviewer",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-cr-1",
+      "topic": "creativity",
+      "tags": [
+        "ideas",
+        "experiment"
+      ],
+      "title": {
+        "bn": "সৃজনশীলতা অভ্যাসে বাড়ে",
+        "en": "Creativity grows with practice"
+      },
+      "how": {
+        "bn": "সৃজনশীলতা শুধু প্রতিভা নয়, অভ্যাসও। অনেক আইডিয়া লিখলে ভালো আইডিয়ার সুযোগ বাড়ে। আগে সংখ্যা, পরে বাছাই। ছোট পরীক্ষা করে দেখলে আইডিয়া কাজের হয়ে ওঠে।",
+        "en": "Creativity is not only talent but also practice. Writing many ideas raises the chance of a good one. Quantity first, selection later. Small tests turn ideas into something useful."
+      },
+      "diagram": {
+        "type": "cycle",
+        "bn": "অনেক আইডিয়া|একটা বাছি|ছোট পরীক্ষা|শিখি",
+        "en": "Many ideas|Pick one|Small test|Learn"
+      },
+      "kind": "explain",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-cr-2",
+      "topic": "creativity",
+      "tags": [
+        "ideas",
+        "experiment"
+      ],
+      "title": {
+        "bn": "আইডিয়া থেকে পরীক্ষায়",
+        "en": "From idea to test"
+      },
+      "how": {
+        "bn": "1) সমস্যাটা এক লাইনে লিখুন। 2) 10টা সমাধান লিখুন, ভালো-মন্দ বিচার ছাড়া। 3) একটা বাছুন। 4) এই সপ্তাহে সবচেয়ে সস্তা পরীক্ষা করুন। 5) ফল দেখুন।",
+        "en": "1) Write the problem in one line. 2) List 10 solutions without judging. 3) Pick one. 4) Run the cheapest test this week. 5) Look at the result."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "সমস্যা লিখি|10টা সমাধান|একটা বাছি|সস্তা পরীক্ষা",
+        "en": "Write the problem|10 solutions|Pick one|Cheap test"
+      },
+      "kind": "steps",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-cr-3",
+      "topic": "creativity",
+      "tags": [
+        "ideas",
+        "experiment"
+      ],
+      "title": {
+        "bn": "উদাহরণ: দোকানের অপেক্ষার সমস্যা",
+        "en": "Example: a waiting-time problem"
+      },
+      "how": {
+        "bn": "ফাতেমার দোকানে ক্রেতারা অপেক্ষা করে বিরক্ত হত। সে 10টা উপায় লিখল, তার মধ্যে ‘নম্বর দিয়ে ডাকা’ বেছে নিল। এক শনিবার কাগজের টোকেন দিয়ে পরীক্ষা করে দেখল ক্রেতারা কেমন বলে।",
+        "en": "Customers got restless waiting at Fatema's shop. She listed 10 ideas and chose “call by number”. One Saturday she tested it with paper tokens and asked customers what they thought."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "10টা উপায়|একটা বাছি|কাগজের টোকেনে পরীক্ষা|ক্রেতাকে জিজ্ঞাসা",
+        "en": "10 ideas|Pick one|Test with paper tokens|Ask customers"
+      },
+      "kind": "example",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-cr-4",
+      "topic": "creativity",
+      "tags": [
+        "ideas",
+        "experiment"
+      ],
+      "title": {
+        "bn": "সৃজনশীলতায় যা এড়িয়ে চলবেন",
+        "en": "Creativity slips to avoid"
+      },
+      "how": {
+        "bn": "আইডিয়া লেখার সময় বিচার করবেন না। নিখুঁত না হলে লুকিয়ে রাখবেন না। অন্যের কাজ হুবহু নকল করবেন না, তা থেকে শিখে নিজের মতো করুন। বড় খরচের আগে ছোট পরীক্ষা করুন।",
+        "en": "Do not judge ideas while listing them. Do not hide work because it is not perfect. Do not copy others exactly; learn from them and make it your own. Test small before spending big."
+      },
+      "diagram": {
+        "type": "matrix",
+        "bn": "লেখার সময় বিচার: পরে বাছি|নিখুঁত না: দেখাই|হুবহু নকল: নিজের মতো|বড় খরচ আগে: ছোট পরীক্ষা",
+        "en": "Judging while listing: select later|Not perfect: show it|Exact copying: make it yours|Big spend first: test small"
+      },
+      "kind": "watchout",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p3-cr-5",
+      "topic": "creativity",
+      "tags": [
+        "ideas",
+        "learning"
+      ],
+      "title": {
+        "bn": "সৃজনশীলতা নিয়ে আরও শিখতে",
+        "en": "Learn more about creativity"
+      },
+      "how": {
+        "bn": "‘সৃজনশীল চিন্তা’ ও ‘ব্রেনস্টর্মিং’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অ্যাপে উইকিপিডিয়া খুঁজলে পরিচিতি সংরক্ষিত হয়। পড়া কোনো পদ্ধতি নিজের ভাষায় লিখে ছোট করে চেষ্টা করুন।",
+        "en": "Read general explainers on “creative thinking” and “brainstorming”. A Wikipedia search in the app saves an overview. Rewrite one method in your own words and try it small."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "সাধারণ লেখা পড়ি|উইকিপিডিয়া খুঁজি|ছোট করে চেষ্টা",
+        "en": "Read general explainers|Search Wikipedia|Try small"
+      },
+      "appLink": "#/cards",
+      "kind": "learn",
+      "source": "wikipedia",
+      "reviewer": "pending"
+    }
+  ]
+}
