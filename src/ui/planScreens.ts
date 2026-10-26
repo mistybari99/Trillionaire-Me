@@ -196,7 +196,7 @@ export function northStarScreen(): HTMLElement {
   const base = h("input", { id: "ns-base", type: "text", inputmode: "decimal", autocomplete: "off" });
   const target = h("input", { id: "ns-target", type: "text", inputmode: "decimal", autocomplete: "off" });
   const err = h("p", { class: "err", role: "alert" });
-  const form = h("form", { novalidate: true, "data-form": "north-star" },
+  const form = h("form", { novalidate: true, "data-form": "north-star" }, gateFor(lang),
     h("label", { for: "ns-metric" }, t("ns.metric", lang)), metric,
     h("label", { for: "ns-unit" }, t("ns.unit", lang)), unit,
     h("label", { for: "ns-base" }, t("ns.baseline", lang)), base,
@@ -211,7 +211,7 @@ export function northStarScreen(): HTMLElement {
     if (b === null || g === null) { err.textContent = t("ns.err.number", lang); return; }
     const values: Record<string, FieldValue> = { "north_star.metric": txt(m), "north_star.baseline": b, "north_star.target": g };
     if (unit.value.trim()) values["north_star.unit"] = txt(unit.value.trim());
-    putRecord("north_star", "ns", values);
+    if (!putRecord("north_star", "ns", values)) { err.textContent = saveBlockedText(lang); return; }
     rerender();
   });
   const rows = starRows(allRecs());
@@ -223,7 +223,7 @@ export function northStarScreen(): HTMLElement {
         ? h("p", { class: "muted", "data-ladder": "same" }, t("ns.same", lang))
         : h("p", { class: "muted", "data-ladder": "unknown" }, t("ns.unknown", lang, { what: l.missing.map((k) => t(`ns.missing.${k}` as Key, lang)).join(", ") }));
     return h("div", { class: "card", "data-north-star": r.id }, h("div", { class: "row" }, h("div", {},
-      h("h2", { class: "card-h" }, r.metric, r.unit ? ` (${r.unit})` : ""),
+      modeMark(lang), h("h2", { class: "card-h" }, r.metric, r.unit ? ` (${r.unit})` : ""),
       h("p", { class: "muted" }, `${t("ns.baseline", lang)}: ${r.baseline === null ? t("unknown.unknown", lang) : numText(r.baseline, lang)} · ${t("ns.target", lang)}: ${r.target === null ? t("unknown.unknown", lang) : numText(r.target, lang)}`),
       steps), removeBtn(r.id, lang)));
   });

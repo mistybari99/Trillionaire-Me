@@ -172,4 +172,51 @@ describe("team roles (real data)", () => {
   });
 });
 
+describe("North Star (real data)", () => {
+  it("no consent: prompt shown, nothing saved", () => {
+    go("#/journey/northstar");
+    expect(document.querySelector("form[data-form=north-star] [data-consent-prompt]")).not.toBeNull();
+    setv("ns-metric", "Customers"); send("form[data-form=north-star]");
+    expect(document.querySelector("form[data-form=north-star] .err")!.textContent).toMatch(/Nothing saved/);
+    expect(store.real.list()).toEqual([]); expect(store.demo.list()).toEqual([]);
+  });
+
+  describe("with consent", () => {
+    beforeEach(() => grantConsent(consentKv, NOW));
+
+    it("blank start and target are saved as Unknown and give no ladder (never 0)", () => {
+      go("#/journey/northstar");
+      setv("ns-metric", "Customers"); submit("form[data-form=north-star]");
+      const r = store.real.list().find((x) => x.entity === "north_star")!;
+      expect(r.values["north_star.metric"]).toMatchObject({ label: "FACT" });
+      expect(r.values["north_star.baseline"]).toEqual({ state: "unknown" });
+      expect(r.values["north_star.target"]).toEqual({ state: "unknown" });
+      const card = document.querySelector(`[data-north-star='${r.id}']`)!;
+      expect(card.querySelector("[data-ns=real]")).not.toBeNull();
+      expect(card.querySelector("[data-ladder=unknown]")).not.toBeNull();
+      expect(card.querySelector("[data-ladder=ok]")).toBeNull();
+    });
+
+    it("typed numbers are real (FACT) and give a ladder; demo measures are hidden and never mixed", () => {
+      store.demo.put(demoRec("ns-d1", "north_star", { "north_star.metric": v("Demo measure"), "north_star.baseline": v(1), "north_star.target": v(9) }));
+      go("#/journey/northstar");
+      setv("ns-metric", "Customers"); setv("ns-base", "10"); setv("ns-target", "50"); submit("form[data-form=north-star]");
+      const r = store.real.list().find((x) => x.entity === "north_star")!;
+      expect(r.values["north_star.baseline"]).toMatchObject({ value: 10, label: "FACT" });
+      expect(document.querySelector(`[data-north-star='${r.id}'] [data-ladder=ok]`)).not.toBeNull();
+      expect(document.body.textContent).not.toMatch(/Demo measure/);
+      expect(labels(store.demo.list()).every((l) => l === "DEMO")).toBe(true);
+      expect(labels(store.real.list()).every((l) => l === "FACT")).toBe(true);
+    });
+
+    it("clear-all removes the real measure and keeps demo", () => {
+      store.demo.put(demoRec("ns-d2", "north_star", { "north_star.metric": v("Keep demo") }));
+      go("#/journey/northstar"); setv("ns-metric", "Remove me"); submit("form[data-form=north-star]");
+      clearAll();
+      expect(store.real.list()).toEqual([]);
+      expect(store.demo.list().map((r) => r.id)).toEqual(["ns-d2"]);
+    });
+  });
+});
+
 void prefs;
