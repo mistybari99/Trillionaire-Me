@@ -25,10 +25,12 @@ for (const lang of ["bn", "en"]) {
     const file = `${out}/${lang}-${r.replace(/\//g, "_")}.png`;
     await page.screenshot({ path: file, fullPage: true });
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth);
-    report.push({ lang, route: r, file, horizontalOverflow: overflow });
+    const langBtn = await page.evaluate(() => { const b = document.querySelector('[data-act="lang-open"]'); if (!b) return null; const r = b.getBoundingClientRect(); return { w: r.width, h: r.height, inView: r.right <= window.innerWidth }; });
+    report.push({ lang, route: r, file, horizontalOverflow: overflow, langIcon: !!langBtn && langBtn.w >= 44 && langBtn.h >= 44 && langBtn.inView });
   }
   await ctx.close();
 }
 await browser.close(); await server.close();
 writeFileSync("evidence/screenshot-report.json", JSON.stringify({ viewport: "360x740", generated: new Date().toISOString(), screens: report }, null, 2));
+console.log(report.filter((x) => !x.langIcon).length, "screens without a 44px language icon;");
 console.log(report.length, "screens;", report.filter((x) => x.horizontalOverflow).length, "with horizontal overflow");

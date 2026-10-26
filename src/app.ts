@@ -3,6 +3,7 @@ import { applyPrefs, prefs } from "./ui/state";
 import { t, tb } from "./i18n/t";
 import type { Key } from "./i18n/packs";
 import { demoBadge } from "./ui/components";
+import { langMenu } from "./ui/langMenu";
 import * as S from "./ui/screens";
 import * as P from "./ui/planScreens";
 import * as LS from "./ui/libraryScreens";
@@ -77,7 +78,7 @@ export function render() {
       ...(Object.keys(LAYERS) as (keyof typeof LAYERS)[]).flatMap((ly) => [h("h2", {}, tb(LAYERS[ly], lang)), ...TOPICS.filter((x) => x.layer === ly).map((x) => h("a", { class: "item", href: `#/topic/${x.id}`, "data-topic": x.id, onclick: () => toggleDrawer(false) }, tb(x.name, lang)))])));
   const menuBtn = h("button", { class: "menu-btn", type: "button", "data-act": "drawer-open", "aria-label": t("topics.open", lang), "aria-controls": "drawer", onclick: () => toggleDrawer(true) }, "☰");
   const top = h("div", { class: "top" }, h("span", {}, menuBtn, " ", t("app.title", lang)),
-    h("span", { class: "right" }, h("span", { class: "net", "data-net": online ? "online" : "offline" }, t(online ? "status.online" : "status.offline", lang)), demoBadge(lang)));
+    h("span", { class: "right" }, h("span", { class: "net", "data-net": online ? "online" : "offline" }, t(online ? "status.online" : "status.offline", lang)), demoBadge(lang), langMenu(lang)));
   const nav = h("nav", { "aria-label": t("nav.aria", lang) }, ...TABS.map(([r, k]) => h("a", { class: "tab", href: `#/${r}`, ...(tab === r ? { "aria-current": "page" } : {}) }, t(k, lang))));
   const app = document.getElementById("app")!;
   // Skip link (first Tab stop) jumps past the top bar to the screen content.

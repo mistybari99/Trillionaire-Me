@@ -85,14 +85,14 @@ describe("language switch on More persists the choice", () => {
 
   it("renders three options and saving Mix keeps it after a fresh render", () => {
     location.hash = "#/more"; render();
-    const buttons = [...document.querySelectorAll("button")].filter((b) => ["English", "বাংলা", "Mix"].includes(b.textContent ?? ""));
+    const buttons = [...document.querySelectorAll(".seg button")].filter((b) => ["English", "বাংলা", "Mix"].includes(b.textContent ?? ""));
     expect(buttons.map((b) => b.textContent)).toEqual(["English", "বাংলা", "Mix"]);
     buttons.find((b) => b.textContent === "Mix")!.click();
     expect(localStorage.getItem("tm:ui:lang")).toBe("mix");
     expect(document.documentElement.lang).toBe("bn");
     // a fresh render (as after a reload) still shows Mix as the selected option
     document.body.innerHTML = '<div id="app"></div>'; location.hash = "#/more"; render();
-    const pressed = [...document.querySelectorAll("button[aria-pressed='true']")].map((b) => b.textContent).filter((x) => ["English", "বাংলা", "Mix"].includes(x ?? ""));
+    const pressed = [...document.querySelectorAll(".seg button[aria-pressed='true']")].map((b) => b.textContent).filter((x) => ["English", "বাংলা", "Mix"].includes(x ?? ""));
     expect(pressed).toEqual(["Mix"]);
   });
 });
