@@ -51,22 +51,22 @@ describe("rewards + topics in the app", () => {
   const go = (h: string) => { location.hash = h; render(); };
   const setup = () => { store.demo.put({ id: "intake-c", entity: "constraint", ns: "demo", ownerId: "u", schemaVersion: 1, createdAt: "2026-10-24T00:00:00Z", values: { "constraint.weekly_free_hours": v(40), "constraint.free_from": v("06:00"), "constraint.free_to": v("22:00") } }); };
   it("empty start: picture shows no stars and invites the first task", () => {
-    go("#/reward"); expect(document.querySelector("svg")!.getAttribute("data-stars")).toBe("0"); expect(document.querySelector("[data-reward-text]")!.textContent).toMatch(/first star/);
+    go("#/reward"); expect(document.querySelector("svg[data-stars]")!.getAttribute("data-stars")).toBe("0"); expect(document.querySelector("[data-reward-text]")!.textContent).toMatch(/first star/);
   });
   it("tapping Done adds a star, shows a milestone for the first one, and removes the task from the plan", () => {
     setup(); store.demo.put(task("task-1")); go("#/diary/plan");
     (document.querySelector("[data-act=task-done]") as HTMLButtonElement).click(); render();
     expect(location.hash).toBe("#/reward");
     expect(store.demo.get("task-1")!.values["task.done_on"]?.state).toBe("value");
-    expect(document.querySelector("svg")!.getAttribute("data-stars")).toBe("1");
+    expect(document.querySelector("svg[data-stars]")!.getAttribute("data-stars")).toBe("1");
     expect(document.querySelector("[data-milestone='1']")).not.toBeNull();
     go("#/diary/plan"); expect(document.querySelectorAll("[data-placement]").length).toBe(0); // no longer scheduled
   });
   it("a second finished task adds a second star without a milestone; picture text equivalent exists", () => {
     setup(); store.demo.put(task("task-1", { "task.done_on": v("2026-10-23") })); store.demo.put(task("task-2")); go("#/diary/plan");
     (document.querySelector("[data-task-id='task-2']") as HTMLButtonElement).click(); render();
-    expect(document.querySelector("svg")!.getAttribute("data-stars")).toBe("2"); expect(document.querySelector("[data-milestone]")).toBeNull();
-    expect(document.querySelector("svg")!.getAttribute("aria-label")).toMatch(/2 stars/);
+    expect(document.querySelector("svg[data-stars]")!.getAttribute("data-stars")).toBe("2"); expect(document.querySelector("[data-milestone]")).toBeNull();
+    expect(document.querySelector("svg[data-stars]")!.getAttribute("aria-label")).toMatch(/2 stars/);
   });
   it("the picture never shows points, ranks or comparisons", () => {
     setup(); store.demo.put(task("task-1", { "task.done_on": v("2026-10-23") })); go("#/journey/art");

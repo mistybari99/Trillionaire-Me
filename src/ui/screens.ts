@@ -35,6 +35,7 @@ import { diagram } from "./diagram";
 import { activityChart, goalRingsChart, habitChart, moneyChart } from "./charts";
 import { encBackupCard } from "./encBackup";
 import { rulesTodayCard } from "./libraryScreens";
+import { celebrate, journeyGoalsCard } from "./lifeUi";
 import * as Focus from "../core/focus";
 import * as Habits from "../core/habits";
 import * as Cards from "../core/cards";
@@ -611,7 +612,7 @@ export function rewardScreen(): HTMLElement {
   const lang = L(); let fresh = false; try { fresh = sessionStorage.getItem("tm:newStar") === "1"; sessionStorage.removeItem("tm:newStar"); } catch { /* ignore */ }
   const n = completedCount(); const ms = fresh ? milestoneAt(n) : null;
   return h("main", { class: "scr scr-reward" }, h("h1", {}, t("reward.title", lang)),
-    fresh && n ? h("div", { class: "card", role: "status", "data-fresh": "1" }, ms ? h("h2", { class: "card-h",  "data-milestone": String(ms) }, t(`reward.ms${ms}` as Key, lang)) : null, h("p", { class: "ok-msg" }, t(`reward.m${messageIndex(n, 6)}` as Key, lang))) : null,
+    fresh && n ? h("div", { class: "card", role: "status", "data-fresh": "1" }, celebrate("step", lang), ms ? h("h2", { class: "card-h",  "data-milestone": String(ms) }, t(`reward.ms${ms}` as Key, lang)) : null, h("p", { class: "ok-msg" }, t(`reward.m${messageIndex(n, 6)}` as Key, lang))) : null,
     pictureBlock(lang, { newest: fresh && n > 0, milestone: !!ms }), link("#/today", "cta", t("reward.back", lang)), disclaimers(lang, ["noGuarantee"]));
 }
 
@@ -876,6 +877,7 @@ export function journey(): HTMLElement {
       link("#/journey/risks", "btn ghost", t("risk.link", lang)),
       link("#/journey/history", "btn ghost", t("hist.link", lang)),
       link("#/journey/northstar", "btn ghost", t("ns.link", lang))),
+    journeyGoalsCard(lang),
     templatePicker(lang),
     viewBar("journey", lang),
     stageLadder(lang),

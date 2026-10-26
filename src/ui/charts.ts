@@ -70,14 +70,14 @@ export function goalRingsChart(recs: readonly TMRecord[], lang: Locale): HTMLEle
   if (!rings.length) return empty("goals", title, t("chart.goal.none", lang));
   const R = 26, C = 2 * Math.PI * R; const lines: string[] = [];
   const figs = rings.map((g) => {
-    const line = g.fraction === null ? t("chart.goal.unknownLine", lang, { title: g.title }) : t("chart.goal.line", lang, { title: g.title, d: num(g.done, lang), n: num(g.total, lang) });
+    const line = g.fraction === null ? t("chart.goal.unknownLine", lang, { title: g.title }) : t("chart.goal.line", lang, { title: g.title, d: num(g.done, lang), n: num(g.total, lang), p: num(g.percent ?? 0, lang) });
     lines.push(line);
     const svg = svgRoot(64, 64, g.title, line);
     svg.append(s("circle", { cx: 32, cy: 32, r: R, class: g.fraction === null ? "ring-track ring-unk" : "ring-track", fill: "none", ...(g.fraction === null ? { "stroke-dasharray": "4 4" } : {}) }));
     if (g.fraction === null) svg.append(s("text", { x: 32, y: 38, class: "chart-t chart-mid", "data-unknown": "1" }, "?"));
     else {
       if (g.fraction > 0) svg.append(s("circle", { cx: 32, cy: 32, r: R, fill: "none", class: "ring-arc", "data-ring": g.id, "stroke-dasharray": `${(C * g.fraction).toFixed(2)} ${C.toFixed(2)}`, transform: "rotate(-90 32 32)" }));
-      svg.append(s("text", { x: 32, y: 37, class: "chart-t chart-mid" }, `${g.done}/${g.total}`));
+      svg.append(s("text", { x: 32, y: 37, class: "chart-t chart-mid", "data-percent": g.percent ?? "" }, `${g.percent}%`));
     }
     return h("figure", { class: "ring", "data-goal-ring": g.id }, svg, h("figcaption", { class: "muted" }, g.title, g.fraction === null ? ` · ${t("chart.unknown", lang)}` : ""));
   });

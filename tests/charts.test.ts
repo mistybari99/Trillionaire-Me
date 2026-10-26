@@ -81,7 +81,7 @@ describe("Report goal rings", () => {
     go("#/journey/report");
     expect(chart("goals")!.querySelectorAll("[data-ring]")).toHaveLength(1);
     expect(app().querySelector("[data-goal-ring=g2] [data-unknown]")).not.toBeNull();
-    expect(lines("goals")).toEqual(["Save: 1 of 2 linked tasks done.", "Learn: no linked tasks yet, so progress is unknown."]);
+    expect(lines("goals")).toEqual(["Save: 1 of 2 linked tasks done (50%).", "Learn: no linked tasks yet, so progress is unknown."]);
     expect(chart("goals")!.querySelector(".sr-only")!.textContent).toContain("Save: 1 of 2");
   });
   it("mode isolation", () => {

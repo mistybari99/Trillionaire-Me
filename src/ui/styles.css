@@ -294,3 +294,31 @@ h2.card-h{font:600 17px/1.4 "Hind Siliguri",sans-serif;margin:0 0 2px}
 .chart .cell-open{stroke:var(--ink);stroke-width:1.5}.chart .cell-rest{stroke:var(--muted);stroke-width:1.5}
 .rings{display:flex;flex-wrap:wrap;gap:12px}.ring{margin:0;width:96px;text-align:center}.ring .chart-svg{width:64px;margin:0 auto}.ring figcaption{font-size:13px;word-break:break-word}
 .chart-lines{padding-inline-start:20px;margin:6px 0}
+
+/* step 5: life wheel, goal pages, micro-animations (motion only without reduced-motion) */
+.wheel-svg{max-width:360px;overflow:visible}
+.chart .wheel-guide{stroke:var(--rule);stroke-width:1}
+.chart .wheel-w{fill:var(--primary);fill-opacity:.55;stroke:var(--primary);stroke-width:1.5}
+.chart .wheel-unk{fill:none;stroke:var(--muted);stroke-width:1.5}
+.wheel-row{padding:8px 0;border-bottom:1px solid var(--rule)}
+.wheel-name{margin:0 0 6px;font-weight:600}
+.wheel-row .seg button{min-height:44px;min-width:44px;flex:1 1 auto}
+.swot-grid{display:grid;grid-template-columns:1fr;gap:12px}
+@media (min-width:480px){.swot-grid{grid-template-columns:1fr 1fr}}
+.swot-grid h3{margin:0 0 4px;font-size:1rem}
+.swot-grid ul{margin:0;padding-inline-start:20px}
+textarea[data-swot]{width:100%;box-sizing:border-box;font:inherit;padding:8px}
+.mm-wrap{display:inline-block;vertical-align:middle}
+.mm{width:32px;height:32px}
+.mm .mm-ring{stroke:var(--moss);stroke-width:2.5}
+.mm .mm-tick{stroke:var(--moss);stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round}
+.mm .mm-star{fill:var(--moss);transform-box:fill-box;transform-origin:center}
+@keyframes mmDraw{to{stroke-dashoffset:0}}
+@keyframes mmPop{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes mmPulse{0%{transform:scale(.4);opacity:0}60%{transform:scale(1.2);opacity:1}100%{transform:scale(1);opacity:1}}
+@media (prefers-reduced-motion:no-preference){
+  .mm .mm-tick{stroke-dasharray:1;stroke-dashoffset:1;animation:mmDraw .7s ease-out .1s forwards}
+  .mm .mm-ring{transform-box:fill-box;transform-origin:center;animation:mmPop .5s ease-out both}
+  .mm .mm-star{animation:mmPulse .9s ease-out .1s both}
+}
+@media (prefers-reduced-motion:reduce){.mm .mm-tick,.mm .mm-ring,.mm .mm-star{animation:none!important;transition:none!important}.mm .mm-tick{stroke-dasharray:none!important;stroke-dashoffset:0!important}}

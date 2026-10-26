@@ -2,7 +2,7 @@ import type { Bi } from "../i18n/registry";
 import { UNKNOWN_STATES, type UnknownState } from "../core/types";
 import type { AccessRule, ChoiceOption, FieldDef, FieldType, Importance, PrivacyClass, Purpose, Requirement } from "./types";
 
-export const CATALOG_VERSION = 1;
+export const CATALOG_VERSION = 2;
 
 const bi = (bn: string, en: string): Bi => ({ bn, en });
 const opt = (code: string, bn: string, en: string): ChoiceOption => ({ code, label: bi(bn, en) });
@@ -171,6 +171,48 @@ export const FIELDS: FieldDef[] = [
     what: bi("কবে নাগাদ চান।", "When you would like it done."),
     why: bi("তারিখ বদলানো যায়; লক্ষ্য একই থাকে।", "The date can move; the goal stays."),
     example: bi("২০২৭-১২-৩১", "2027-12-31"), format: bi("বছর-মাস-দিন", "YYYY-MM-DD") }),
+  f({ id: "goal.smart_specific", entity: "goal", family: "FAM-03", type: "text", purpose: "planning", importance: "optional",
+    label: bi("স্পষ্ট করে লিখুন (SMART: নির্দিষ্ট)", "In specific words (SMART: Specific)"),
+    what: bi("লক্ষ্যে ঠিক কী করবেন বা কী পাবেন, সহজ বাক্যে।", "Exactly what you will do or get, in plain words."),
+    why: bi("নির্দিষ্ট লক্ষ্যে প্রথম কাজটা বেছে নেওয়া সহজ হয়।", "A specific goal makes the first task easy to choose."),
+    example: bi("প্রতি মাসে দুইজন নতুন গ্রাহকের সঙ্গে কথা বলা", "Talk to two new customers every month"), format: bi("এক লাইন", "One line") }),
+  f({ id: "goal.smart_achievable", entity: "goal", family: "FAM-03", type: "text", purpose: "planning", importance: "optional",
+    label: bi("সাধ্যের মধ্যে কেন (SMART: অর্জনযোগ্য)", "Why it is within reach (SMART: Achievable)"),
+    what: bi("আপনার সময়, সম্পদ ও দক্ষতা দিয়ে কেন এটা সম্ভব।", "Why it is possible with your time, resources and skills."),
+    why: bi("বাস্তব সীমা মাথায় রাখলে পরিকল্পনা ভেঙে পড়ে কম।", "Keeping real limits in mind makes the plan hold up."),
+    example: bi("সপ্তাহে তিন ঘণ্টা ফাঁকা আছে", "I have three free hours a week"), format: bi("এক লাইন", "One line") }),
+  f({ id: "goal.swot_strengths", entity: "goal", family: "FAM-03", type: "list", purpose: "planning", importance: "optional",
+    label: bi("শক্তি (SWOT)", "Strengths (SWOT)"),
+    what: bi("এই লক্ষ্যে আপনার নিজের সুবিধা। সর্বোচ্চ ৫টি ছোট লাইন।", "Your own advantages for this goal. Up to 5 short lines."),
+    why: bi("কী কাজে লাগানো যাবে তা এক নজরে দেখতে।", "To see at a glance what you can use."),
+    example: bi("হিসাব রাখতে পারি", "I can keep accounts"), format: bi("প্রতি লাইনে একটি", "One item per line") }),
+  f({ id: "goal.swot_weaknesses", entity: "goal", family: "FAM-03", type: "list", purpose: "planning", importance: "optional",
+    label: bi("দুর্বলতা (SWOT)", "Weaknesses (SWOT)"),
+    what: bi("এই লক্ষ্যে আপনার নিজের সীমাবদ্ধতা। সর্বোচ্চ ৫টি ছোট লাইন।", "Your own limits for this goal. Up to 5 short lines."),
+    why: bi("আগে থেকে জানলে সাহায্য বা বিকল্প ঠিক করা যায়।", "Knowing early lets you plan help or a different route."),
+    example: bi("সন্ধ্যার আগে সময় কম", "Little time before evening"), format: bi("প্রতি লাইনে একটি", "One item per line") }),
+  f({ id: "goal.swot_opportunities", entity: "goal", family: "FAM-03", type: "list", purpose: "planning", importance: "optional",
+    label: bi("সুযোগ (SWOT)", "Opportunities (SWOT)"),
+    what: bi("বাইরে থেকে যা সাহায্য করতে পারে। সর্বোচ্চ ৫টি ছোট লাইন।", "What outside you could help. Up to 5 short lines."),
+    why: bi("সুযোগ চোখে পড়লে কাজে লাগানো সহজ।", "An opportunity you can see is easier to use."),
+    example: bi("পাড়ায় নতুন বাজার চালু হচ্ছে", "A new market is opening nearby"), format: bi("প্রতি লাইনে একটি", "One item per line") }),
+  f({ id: "goal.swot_threats", entity: "goal", family: "FAM-03", type: "list", purpose: "planning", importance: "optional",
+    label: bi("ঝুঁকি (SWOT)", "Threats (SWOT)"),
+    what: bi("বাইরে থেকে যা বাধা দিতে পারে। সর্বোচ্চ ৫টি ছোট লাইন।", "What outside you could get in the way. Up to 5 short lines."),
+    why: bi("আগে থেকে ভাবলে ঝুঁকি সামলানো সহজ।", "Thinking ahead makes a risk easier to handle."),
+    example: bi("কাঁচামালের দাম বাড়তে পারে", "Material prices may rise"), format: bi("প্রতি লাইনে একটি", "One item per line") }),
+  // ── life wheel (FAM-35): one record per area, rating 1-5 or unknown ──
+  f({ id: "life_area.key", entity: "life_area", family: "FAM-35", type: "choice", purpose: "assessment", importance: "useful",
+    options: [opt("health", "স্বাস্থ্য", "Health"), opt("money", "অর্থ", "Money"), opt("family", "পরিবার", "Family"), opt("work", "কাজ", "Work"), opt("learning", "শেখা", "Learning"), opt("faith", "বিশ্বাস ও ইবাদত", "Faith"), opt("rest", "বিশ্রাম", "Rest")],
+    label: bi("জীবনের ক্ষেত্র", "Life area"),
+    what: bi("জীবনের সাতটি ক্ষেত্রের একটি।", "One of seven areas of life."),
+    why: bi("কোন ক্ষেত্রে মনোযোগ দরকার তা নিজে দেখতে।", "To see for yourself where attention is needed."),
+    example: bi("স্বাস্থ্য", "Health") }),
+  f({ id: "life_area.rating", entity: "life_area", family: "FAM-35", type: "scale", purpose: "assessment", options: lvl, importance: "useful",
+    label: bi("আজকের নিজের মূল্যায়ন (১ থেকে ৫)", "Your own view today (1 to 5)"),
+    what: bi("এই ক্ষেত্রটি এখন আপনার কাছে কেমন লাগছে। না জানলে ফাঁকা রাখুন।", "How this area feels to you now. Leave it unknown if you are not sure."),
+    why: bi("এটি গ্রেড নয়, শুধু আপনার নিজের দেখার জন্য। অজানা মানে শূন্য নয়।", "This is not a grade, only for your own view. Unknown does not mean zero."),
+    example: bi("৩", "3"), format: bi("১ থেকে ৫", "1 to 5") }),
   f({ id: "task.title", entity: "task", family: "FAM-03", type: "text", purpose: "planning", importance: "core",
     label: bi("কাজের নাম", "Task title"),
     what: bi("আজ বা এই সপ্তাহে যে একটি ছোট কাজ।", "One small action for today or this week."),

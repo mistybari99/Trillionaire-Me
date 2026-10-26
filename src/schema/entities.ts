@@ -25,6 +25,7 @@ export const ENTITIES: EntityDef[] = [
   e("resource", "FAM-35", "সম্পদ/সুবিধা", "Resource", "M02", "personal"),
   e("constraint", "FAM-35", "সীমাবদ্ধতা", "Constraint", "M08", "personal"),
   e("goal", "FAM-03", "লক্ষ্য/কাজ", "Goal / task", "M06", "personal", "goal"),
+  e("life_area", "FAM-35", "জীবনের ক্ষেত্র", "Life area", "M02", "personal"),
   e("task", "FAM-03", "কাজ", "Task", "M06", "personal", "goal"),
   e("venture", "FAM-36", "উদ্যোগ/সম্পদ", "Venture / asset", "M09", "financial"),
   e("habit", "FAM-06", "অভ্যাস", "Habit", "M06", "personal"),

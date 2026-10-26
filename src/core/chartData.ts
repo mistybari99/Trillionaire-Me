@@ -1,5 +1,6 @@
 // Chart data (step 3). Pure: records and "today" go in, plain numbers or null come out. Unknown is null, never 0.
 // Callers pass only the active mode's records (allRecs()), so demo and real never mix here.
+import { goalProgress } from "./goalPlan";
 import { financeFrom } from "./financeInputs";
 import { reviewWindow } from "./review";
 import { addDays, isDone, isPlanned, parseIso, type Habit, type Log } from "./habits";
@@ -28,14 +29,9 @@ export function flowBars(recs: readonly TMRecord[]): FlowScope[] {
 }
 
 // ---- Report: one ring per goal; progress = known linked tasks done / linked tasks ----
-export interface GoalRing { id: string; title: string; done: number; total: number; /** 0..1, or null when no task is linked yet */ fraction: number | null }
+export interface GoalRing { id: string; title: string; done: number; total: number; /** 0..1, or null when no task is linked yet */ fraction: number | null; /** whole percent, or null (unknown) */ percent: number | null }
 export function goalRings(recs: readonly TMRecord[]): GoalRing[] {
-  const tasks = recs.filter((r) => r.entity === "task" && r.links?.goal);
-  return recs.filter((r) => r.entity === "goal" && typeof val(r.values["goal.title"]) === "string").sort((a, b) => a.id.localeCompare(b.id)).map((g) => {
-    const mine = tasks.filter((x) => x.links!.goal === g.id);
-    const done = mine.filter((x) => typeof val(x.values["task.done_on"]) === "string").length;
-    return { id: g.id, title: String(val(g.values["goal.title"])), done, total: mine.length, fraction: mine.length ? done / mine.length : null };
-  });
+  return goalProgress(recs).map((g) => ({ ...g, fraction: g.total ? g.done / g.total : null }));
 }
 
 // ---- Review: 90-day activity in 13 weekly buckets; a week with no record is "no record", not 0 ----

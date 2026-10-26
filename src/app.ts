@@ -6,6 +6,7 @@ import { demoBadge } from "./ui/components";
 import * as S from "./ui/screens";
 import * as P from "./ui/planScreens";
 import * as LS from "./ui/libraryScreens";
+import * as LF from "./ui/lifeUi";
 import { demoPanels, firstRunScreen, trackDemoDay } from "./ui/modeUi";
 import { LAYERS, TOPICS } from "./library/topics";
 import { dismissReminder, inAppReminders } from "./ui/prayerAlerts";
@@ -17,6 +18,9 @@ export const ROUTES: Array<[RegExp, (m: RegExpMatchArray) => HTMLElement, string
   [/^\/today$/, () => S.today(), "today"],
   [/^\/journey$/, () => S.journey(), "journey"],
   [/^\/journey\/log$/, () => S.journeyLog(), "journey"],
+  [/^\/journey\/wheel$/, () => LF.wheelScreen(), "journey"],
+  [/^\/journey\/goals$/, () => LF.goalsScreen(), "journey"],
+  [/^\/journey\/goal\/([\w-]+)$/, (m) => LF.goalScreen(m[1]!), "journey"],
   [/^\/journey\/horizon$/, () => S.horizonScreen(), "journey"],
   [/^\/diary$/, () => S.diary(), "diary"],
   [/^\/diary\/intake(?:\/(\d+))?$/, (m) => S.intake(m[1]), "diary"],
