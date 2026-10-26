@@ -26,3 +26,22 @@ Rules for every step:
 4. **Deen.** Plans and reminders only; no scripture text until D-D. Build exact prayer times (verify method with owner), notifications, azan, one-tap mark.
 5. **3D.** Only if bundled locally; no runtime internet.
 6. **Design model.** Owner to choose the main model (recommend 1 Light Futuristic main, 3 Ink and Paper option). Build starts only after owner approves.
+
+## Owner list "What is possible / what we can add" — status (26 Oct 2026)
+Owner asked to keep this in the build plan and to wait for the next usage-limit reset before more building.
+
+| Item | Status |
+|---|---|
+| Offline PWA, data on device | Built; full-file offline cache added (0a63104). Real-phone airplane test = owner |
+| Four looks in one app (Design version) | Built (28adce2): Light Futuristic default, Ink & Paper, Emerald Obsidian, Classic |
+| English / Bangla / Mix | Built; Bangla text still draft until TM-TST-161 |
+| 3D logo bundled locally | Built (inline SVG, 0a63104) |
+| Reward animations | Built (ring draw, pop, glow; reduced-motion safe) |
+| Rule-based advice with reason | Built (Next best action card) |
+| Goal Universe with list view | Built (#/journey/universe) |
+| Home summary cards | PARTIAL: built net worth, income, expenses. TODO: tasks and goal-steps cards; saving card only from the user's own entries |
+| SMART funnel visual | TODO: draw funnel (S-M-A-R-T -> committed goal) to replace text-only guide |
+| Local auto-snapshot backups | Built (reminder OFF by default) |
+| Overall progress % | Built (28adce2) |
+
+Next block after limit reset: SMART funnel visual, tasks and goal-steps home cards, then prayer-time/azan/notification verification and risk, venture, team, North Star forms (real-data ready).
