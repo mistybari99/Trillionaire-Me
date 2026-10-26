@@ -7,7 +7,7 @@ import { render } from "../src/app";
 import { prefs } from "../src/ui/state";
 
 const BN_DIGIT = /[০-৯]/;
-const ROUTES = ["#/today", "#/journey", "#/diary", "#/diary/plan", "#/diary/money", "#/capture", "#/stuck", "#/topics", "#/topic/he1", "#/reward", "#/habits", "#/focus/t1", "#/deen", "#/more", "#/more/status", "#/more/fields", "#/more/glossary", "#/more/safety", "#/more/data", "#/journey/review", "#/journey/report", "#/journey/art"];
+const ROUTES = ["#/today", "#/journey", "#/journey/universe", "#/diary", "#/diary/plan", "#/diary/money", "#/capture", "#/stuck", "#/topics", "#/topic/he1", "#/reward", "#/habits", "#/focus/t1", "#/deen", "#/more", "#/more/status", "#/more/fields", "#/more/glossary", "#/more/safety", "#/more/data", "#/journey/review", "#/journey/report", "#/journey/art"];
 
 describe("Latin digits in Bangla and Mix", () => {
   beforeEach(() => { localStorage.clear(); document.body.innerHTML = '<div id="app"></div>'; });

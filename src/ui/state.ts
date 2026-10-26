@@ -47,6 +47,9 @@ export const prefs = {
   /** Overall progress weighting. Unknown or missing value = "equal". */
   get progressMode(): ProgressMode { const v = get("tm:ui:progressMode"); return isProgressMode(v) ? v : "equal"; },
   set progressMode(v: ProgressMode) { set("tm:ui:progressMode", isProgressMode(v) ? v : "equal"); },
+  /** Goal Universe view: "map" (default) or "list". Unknown or missing value = map. */
+  get universeView(): "map" | "list" { return get("tm:ui:universeView") === "list" ? "list" : "map"; },
+  set universeView(v: "map" | "list") { set("tm:ui:universeView", v === "list" ? "list" : "map"); },
   get scale(): number { const n = Number(get("tm:ui:scale")); return [100, 125, 150, 200].includes(n) ? n : 100; },
   set scale(v: number) { set("tm:ui:scale", String(v)); },
   get mode(): PlanMode { const v = get("tm:ui:mode"); return v === "minimum_week" || v === "pause" ? v : "normal"; },

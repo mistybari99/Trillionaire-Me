@@ -11,6 +11,7 @@ import { AREAS, MAX_RATING, lifeAreaRecord, wedgePath, wheelData, type Area } fr
 import { SMART_PARTS, SWOT_KEYS, goalProgress, listValue, milestoneOf, parseList, readList, smartFilled, swotField, type GoalProgress, type SwotKey } from "../core/goalPlan";
 import { overallProgress, nextProgressMemory, progressTrend, PROGRESS_MODES } from "../core/overallProgress";
 import { checkFreeText } from "../core/safety";
+import { goalAreaCard } from "./universeUi";
 import { HORIZONS } from "../core/horizon";
 import type { FieldValue, TMRecord } from "../core/types";
 
@@ -164,7 +165,7 @@ export function goalScreen(id: string): HTMLElement {
   // Read-only SWOT summary so the four lists are visible as text; unknown lists say so.
   const swotView = h("section", { class: "card", "data-swot-view": "1" }, h("h2", { class: "card-h" }, t("swot.title", lang)),
     h("div", { class: "swot-grid" }, ...SWOT_KEYS.map((k) => { const items = readList(rec.values[swotField(k)]); return h("div", { "data-swot-box": k }, h("h3", {}, t(`swot.${k}` as Key, lang)), items ? h("ul", {}, ...items.map((i) => h("li", {}, i))) : h("p", { class: "muted", "data-swot-empty": k }, t("swot.empty", lang))); })));
-  return h("main", {}, back, h("h1", {}, textOf(rec, "goal.title")), progress, smartForm, swotView, swotForm);
+  return h("main", {}, back, h("h1", {}, textOf(rec, "goal.title")), progress, goalAreaCard(rec, lang), smartForm, swotView, swotForm);
 }
 
 // ---- Overall progress card (Today and Journey) ----

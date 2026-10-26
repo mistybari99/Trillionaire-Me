@@ -347,3 +347,18 @@ textarea[data-swot]{width:100%;box-sizing:border-box;font:inherit;padding:8px}
 .ov-bar{height:12px;background:var(--paper);border:1px solid var(--rule);margin:8px 0;overflow:hidden}
 .ov-bar i{display:block;height:100%;background:var(--primary)} .ov-bar i.ov-unk{background:repeating-linear-gradient(45deg,var(--rule) 0 4px,transparent 4px 8px)}
 @media (prefers-reduced-motion:no-preference){.ov-bar i{transition:width .4s ease}}
+
+/* Goal Universe: map and list of the same lines. Colours from tokens only; no motion. */
+.univ-svg{max-width:360px;margin:8px auto;display:block}
+.chart .univ-link{stroke:var(--rule);stroke-width:1.5}
+.chart .univ-centre{fill:var(--card);stroke:var(--primary);stroke-width:2.5}
+.chart .univ-node{fill:var(--card);stroke:var(--primary);stroke-width:2}
+.chart .univ-unk{stroke:var(--muted)}
+.chart .univ-private{stroke:var(--muted);fill:var(--paper)}
+.chart .univ-arc{fill:none;stroke:var(--moss);stroke-width:4;stroke-linecap:round}
+.chart .univ-lock{fill:none;stroke:var(--muted);stroke-width:2;stroke-linejoin:round}
+.univ-centre-line{font-weight:600;margin:0 0 8px}
+.univ-list{list-style:none;margin:8px 0;padding:0}
+.univ-list li{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;min-height:44px;padding:8px 0;border-bottom:1px solid var(--rule)}
+.univ-line{flex:1 1 220px}
+.univ-list a.crumb{display:inline-flex;align-items:center;min-height:44px}

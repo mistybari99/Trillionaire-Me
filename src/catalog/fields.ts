@@ -2,7 +2,7 @@ import type { Bi } from "../i18n/registry";
 import { UNKNOWN_STATES, type UnknownState } from "../core/types";
 import type { AccessRule, ChoiceOption, FieldDef, FieldType, Importance, PrivacyClass, Purpose, Requirement } from "./types";
 
-export const CATALOG_VERSION = 3;
+export const CATALOG_VERSION = 4;
 
 const bi = (bn: string, en: string): Bi => ({ bn, en });
 const opt = (code: string, bn: string, en: string): ChoiceOption => ({ code, label: bi(bn, en) });
@@ -155,6 +155,12 @@ export const FIELDS: FieldDef[] = [
     what: bi("লক্ষ্যটি কোন সময়সীমার জন্য।", "Which time frame this goal belongs to."),
     why: bi("বড় লক্ষ্য থেকে আজকের কাজ পর্যন্ত একই পথে দেখাতে।", "To link big goals to today's work on one path."),
     example: bi("১ বছর", "1 year") }),
+  f({ id: "goal.area", entity: "goal", family: "FAM-03", type: "choice", purpose: "planning", importance: "optional",
+    options: [opt("business", "ব্যবসা", "Business"), opt("career", "পেশা", "Career"), opt("health", "স্বাস্থ্য", "Health"), opt("family", "পরিবার", "Family"), opt("travel", "ভ্রমণ", "Travel"), opt("personal", "ব্যক্তিগত", "Personal"), opt("deen", "দ্বীন", "Deen")],
+    label: bi("জীবনের ক্ষেত্র (ঐচ্ছিক)", "Life area (optional)"),
+    what: bi("লক্ষ্যটি জীবনের কোন ক্ষেত্রের।", "Which part of life this goal belongs to."),
+    why: bi("লক্ষ্যের জগৎ ছবিতে ক্ষেত্র অনুযায়ী সাজাতে। না বাছলে অজানা থাকে।", "Lets the Goal Universe group goals by area. If you do not choose, it stays unknown."),
+    example: bi("স্বাস্থ্য", "Health") }),
   f({ id: "goal.kind", entity: "goal", family: "FAM-03", type: "choice", purpose: "planning", importance: "useful",
     options: [opt("goal", "লক্ষ্য", "Goal"), opt("subgoal", "উপ-লক্ষ্য", "Subgoal"), opt("project", "প্রকল্প", "Project"), opt("task", "কাজ", "Task")],
     label: bi("স্তর", "Level"),
