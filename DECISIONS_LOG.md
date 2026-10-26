@@ -297,3 +297,12 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 - Alternatives: a new topic for digital safety (needs owner decision); one big pack file (rejected: harder to review).
 - Undo: delete `pack-003..007.json`, the `kind/source/reviewer` lines in `src/library/packs.ts` and `topics.ts`, the 2 lines in `tipCard`, the `topics.kind.*`/`topics.src.*` keys, and the added tests.
 - Not done: reviewer sign-off (TM-TST-161); Bangla is draft.
+
+## Design version chooser (builder decision, 26 Oct 2026)
+- What: More > Display > "Design version" radio cards with swatches (EN/BN/mix labels, Latin digits). Registry `src/ui/themes.ts`: one entry per version = id, label keys, swatch, light and dark token sets, optional extra CSS. Applied as `<html data-design="...">`; the CSS for non-classic versions is generated from the registry and injected once. Pref `tm:ui:design`; unknown or missing value = `classic`.
+- Versions: `classic` (DEFAULT, the current Ink and Paper look; no tokens, so zero visual change) and `light-futuristic` (first Light/Colorful/Futuristic set: indigo and magenta accents, soft gradients, glass cards). Dark still follows the phone / Theme choice; each version has its own dark tokens.
+- Safety: tokens checked in `tests/design_version.test.ts` (text 4.5:1, UI 3:1, both modes); chooser rows are 56 px high; the only motion sits inside `prefers-reduced-motion: no-preference`. No network, no new dependency.
+- Add a version later: add one entry to `DESIGNS` and two label keys in `src/i18n/packs.ts`. Design files from Claude Design go to `docs/design/claude-design/`.
+- Alternatives: separate CSS file per version (rejected: more files, contrast tests could not read tokens); replacing classic as default (rejected: owner asked classic stays default).
+- Undo: delete `src/ui/themes.ts`, `tests/design_version.test.ts`, `docs/design/claude-design/`; remove the `design` pref and `applyDesign` line in `src/ui/state.ts`, `designCard` and its call in `src/ui/screens.ts`, the `more.design*`/`design.*` keys, the `.design-*` CSS block and the DESIGN-VER e2e block.
+- Proof: tests 763/763, tsc clean, build ok, e2e 0 FAIL (DESIGN-VER x2). Visual check on a real phone is a later owner task.

@@ -5,6 +5,7 @@ import { t, tb, fmtNumber } from "../i18n/t";
 import type { Key } from "../i18n/packs";
 import { LOCALES, LOCALE_ORDER, intlLocale, type Locale } from "../i18n/registry";
 import { applyPrefs, consentKv, prefs, screenView, setScreenView, store, type HorizonView, type PlanMode, type ViewScreen } from "./state";
+import { DESIGNS } from "./themes";
 import { grantConsent, readConsent, revokeConsent } from "../core/consent";
 import { demoBadge, disclaimers, fieldHelp, num, valueEl } from "./components";
 import { STAGES, DEMO_DATE, DEMO_TASKS } from "../demo/seed";
@@ -1146,6 +1147,18 @@ export function deen(): HTMLElement {
     disclaimers(lang, ["noFatwa", "noGuarantee"]));
 }
 
+/** Design version chooser: radio cards with a small swatch. Adding a version in themes.ts adds a card here. */
+function designCard(lang: Locale): HTMLElement {
+  return h("fieldset", { class: "card design-pick", "data-design-pick": "" },
+    h("legend", { class: "card-h" }, t("more.design", lang)),
+    h("p", { class: "muted" }, t("more.design.desc", lang)),
+    ...DESIGNS.map((d) => h("label", { class: "design-opt", "data-design-opt": d.id },
+      h("input", { type: "radio", name: "design", value: d.id, checked: prefs.design === d.id, onchange: () => { prefs.design = d.id; applyPrefs(); rerender(); } }),
+      h("span", { class: "design-sw", "aria-hidden": "true" }, ...d.swatch.map((c) => h("i", { style: `background:${c}` }))),
+      h("span", { class: "design-txt" }, h("strong", {}, t(d.label, lang)), h("span", { class: "muted" }, t(d.desc, lang))))),
+    h("p", { class: "muted" }, t("more.design.note", lang)));
+}
+
 export function more(): HTMLElement {
   const lang = L();
   const seg = (label: string, active: boolean, on: () => void) => h("button", { type: "button", "aria-pressed": String(active), onclick: on }, label);
@@ -1158,6 +1171,7 @@ export function more(): HTMLElement {
       h("div", { class: "seg" }, ...LOCALE_ORDER.map((c) => seg(LOCALES[c].endonym, prefs.lang === c, () => { prefs.lang = c; applyPrefs(); rerender(); })))),
     h("div", { class: "card" }, h("h2", { class: "card-h", }, t("more.theme", lang)),
       h("div", { class: "seg" }, ...(["auto", "light", "dark"] as const).map((c) => seg(t(`more.theme.${c}` as Key, lang), prefs.theme === c, () => { prefs.theme = c; applyPrefs(); rerender(); })))),
+    designCard(lang),
     h("div", { class: "card" }, h("h2", { class: "card-h", }, t("more.textsize", lang)),
       h("div", { class: "seg" }, ...[100, 125, 150, 200].map((c) => seg(`${num(c, lang)}%`, prefs.scale === c, () => { prefs.scale = c; applyPrefs(); rerender(); })))),
     h("div", { class: "card", "data-lock-settings": "" }, h("h2", { class: "card-h", }, t("more.lock", lang)),

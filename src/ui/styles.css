@@ -331,3 +331,13 @@ textarea[data-swot]{width:100%;box-sizing:border-box;font:inherit;padding:8px}
 .lang-item:last-child{border-bottom:0}
 .lang-item[aria-pressed="true"]{font-weight:700}
 .lang-check{display:inline-block;width:1.2em;color:var(--primary)}
+
+/* Design version chooser (More > Design version) */
+.design-pick{border:1px solid var(--rule);min-width:0}
+.design-pick legend{padding:0 4px;font:700 20px/1.4 "Noto Serif Bengali","Fraunces",serif}
+.design-opt{display:flex;align-items:center;gap:12px;min-height:56px;margin:8px 0;padding:8px 10px;border:1.5px solid var(--ink);background:var(--card);cursor:pointer}
+.design-opt:has(input:checked){border-color:var(--primary);outline:2px solid var(--primary)}
+.design-opt:has(input:focus-visible){outline:3px solid var(--ember);outline-offset:2px}
+.design-opt input{width:24px;height:24px;flex:none;accent-color:var(--primary)}
+.design-sw{display:flex;flex:none;border:1px solid var(--rule)} .design-sw i{display:block;width:16px;height:32px}
+.design-txt{display:flex;flex-direction:column;min-width:0}

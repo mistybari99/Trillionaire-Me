@@ -8,6 +8,7 @@ import { parseNotifyPrefs, type NotifyPrefs } from "../core/notify";
 import { DHAKA_COORDS, validCoords, type Coords } from "../core/prayer";
 import { DEFAULT_ALERT_PREFS, parseAlertPrefs, type AlertPrefs } from "../core/prayerAlerts";
 import { isDataMode, type DataMode } from "../core/dataMode";
+import { DEFAULT_DESIGN, applyDesign, isDesignId } from "./themes";
 import { parseRuleSwitches, type FocusEnd, type RuleSwitches } from "../core/rules";
 
 const legacy = new LocalKV();
@@ -39,6 +40,9 @@ export const prefs = {
   set lang(v: Locale) { set("tm:ui:lang", v); },
   get theme(): "auto" | "light" | "dark" { const v = get("tm:ui:theme"); return v === "light" || v === "dark" ? v : "auto"; },
   set theme(v: "auto" | "light" | "dark") { set("tm:ui:theme", v); },
+  /** Design version (src/ui/themes.ts). Unknown, missing or blocked value falls back to "classic" (the current look). */
+  get design(): string { const v = get("tm:ui:design"); return isDesignId(v) ? v : DEFAULT_DESIGN; },
+  set design(v: string) { set("tm:ui:design", isDesignId(v) ? v : DEFAULT_DESIGN); },
   get scale(): number { const n = Number(get("tm:ui:scale")); return [100, 125, 150, 200].includes(n) ? n : 100; },
   set scale(v: number) { set("tm:ui:scale", String(v)); },
   get mode(): PlanMode { const v = get("tm:ui:mode"); return v === "minimum_week" || v === "pause" ? v : "normal"; },
@@ -88,6 +92,7 @@ export function applyPrefs() {
   const r = document.documentElement;
   r.lang = prefs.lang === "en" ? "en" : "bn"; r.dir = LOCALES[prefs.lang].dir; // mix is Bangla-script, so html lang is bn
   r.dataset.theme = prefs.theme;
+  applyDesign(prefs.design, r);
   r.style.fontSize = `${prefs.scale}%`;
   document.title = prefs.lang === "en" ? "Trillionaire Me" : "ট্রিলিয়নেয়ার মি";
 }
