@@ -218,6 +218,31 @@ await page.waitForSelector("[data-module]", { timeout: 5000 }).catch(() => {});
 check("G1-OFFLINE", "status screen renders offline", (await page.locator("[data-module]").count()) === 25);
 await ctx.setOffline(false);
 
+// Precache: the service worker saves every file of the build on the first visit, so a cold start with the network off still opens
+// every new screen (Goal Universe, snapshots, logo, topics with content packs) and every saved file can be read offline.
+{
+  const base = "http://localhost:4174/";
+  const pre = await (await page.request.get(`${base}precache.json`)).json();
+  await page.evaluate(() => navigator.serviceWorker.ready);
+  const saved = () => page.evaluate(async (v) => { const c = await caches.open(`tm-shell-${v}`); return (await c.keys()).map((r) => new URL(r.url).pathname); }, pre.version);
+  let have = []; for (let i = 0; i < 60; i++) { have = await saved(); if (have.length >= pre.files.length) break; await page.waitForTimeout(250); }
+  const missing = pre.files.map((f) => new URL(f, base).pathname).filter((w) => !have.includes(w));
+  check("PRECACHE", `service worker saved all ${pre.files.length} files of the build (shell, fonts, content packs, page)`, pre.files.length > 20 && missing.length === 0, missing.slice(0, 5).join(","));
+  const names = await page.evaluate(async () => (await caches.keys()).sort());
+  check("PRECACHE", "only the current shell cache and the small runtime cache exist (old ones are deleted)", names.every((n) => n === `tm-shell-${pre.version}` || n === "tm-runtime-v1"), names.join(","));
+  await ctx.setOffline(true);
+  await page.goto(base); await page.waitForSelector("main", { timeout: 8000 }).catch(() => {});
+  const seen = {};
+  for (const [name, hash, sel] of [["universe", "#/journey/universe", "svg[data-universe-map]"], ["journey logo", "#/journey", "svg.logo3d"], ["snapshots", "#/more/data", "[data-card=snapshots]"], ["home cards", "#/today", "[data-home-summary]"], ["goals", "#/journey/goals", "main h1"], ["topic with content packs", "#/topic/procrastination", "main h1"]]) {
+    await page.evaluate((h) => { location.hash = h; }, hash);
+    seen[name] = await page.waitForSelector(sel, { timeout: 5000 }).then(() => true).catch(() => false);
+  }
+  check("PRECACHE", "cold start offline opens the new screens", Object.values(seen).every(Boolean) && (await page.evaluate(() => document.querySelector("[data-net]")?.getAttribute("data-net"))) === "offline", JSON.stringify(seen));
+  const bad = await page.evaluate(async (files) => { const out = []; for (const f of files) { try { const r = await fetch(f, { cache: "no-store" }); if (!r.ok) out.push(f); } catch { out.push(f); } } return out; }, pre.files);
+  check("PRECACHE", "every saved file can be read with the network off", bad.length === 0, bad.slice(0, 5).join(","));
+  await ctx.setOffline(false);
+}
+
 // Design version: default light-futuristic, switch to ink-paper and back, persists across reload, dark follows phone; old "classic" saved value migrates
 {
   await page.goto("http://localhost:4174/#/more"); await page.waitForSelector("[data-design-pick]");
