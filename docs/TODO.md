@@ -5,9 +5,9 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 ## Part A — Builder tasks (in order)
 
 ### Block 1 — Finish design items
-- [ ] SMART funnel visual (S-M-A-R-T -> committed goal), replaces text-only guide; text equivalent; EN/BN/mix.
-- [ ] Home cards: add Tasks and Goal-steps cards; Saving card only from the user's own entries; Unknown when empty.
-- [ ] Check new looks at 360px, dark mode, reduced motion; run tools/screenshots.mjs and fix layout faults (all 4 Design versions: Light Futuristic, Ink & Paper, Emerald Obsidian, Classic).
+- [x] SMART funnel visual (S-M-A-R-T -> committed goal), replaces text-only guide; text equivalent; EN/BN/mix.
+- [x] Home cards: add Tasks and Goal-steps cards; Saving card only from the user's own entries; Unknown when empty.
+- [x] Check new looks at 360px, dark mode, reduced motion; run tools/screenshots.mjs and fix layout faults (all 4 Design versions: Light Futuristic, Ink & Paper, Emerald Obsidian, Classic).
 - [ ] Check Goal Universe, overall progress card, language icon in rendered UI.
 
 ### Block 2 — Real-data ready forms (D-B approved, device only)
@@ -19,7 +19,7 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 ### Block 3 — Deen features (private, no score, no scripture text)
 - [ ] Verify exact Bangladesh prayer times logic (Asia/Dhaka) and add method/adjustment setting; owner checks against official timetable (Part B).
 - [ ] Notifications + azan (alerts OFF by default); one-tap prayer mark; lock-screen privacy text neutral.
-- [ ] Deen items = plans and reminders only (D-D open).
+- [x] Deen items = plans and reminders only (D-D open).
 
 ### Block 4 — Overall progress polish (owner rules, 26 Oct)
 - [ ] Goal creation: manual % or auto; auto = equal or by task size.
@@ -33,10 +33,10 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 - [ ] Free-cloud sync port option only (off; text stays "Saved on this device").
 
 ### Block 6 — Docs, evidence, quality
-- [ ] Fix docs/design/m-list-status.md (M19 etc.).
+- [x] Fix docs/design/m-list-status.md (M19 etc.).
 - [ ] Refresh Register evidence (v2_1 copy; never edit original v2_0) and traceability.
 - [ ] Re-run owner-demand audit (docs/design/owner-demand-audit.md) and update counts.
-- [ ] DECISIONS_LOG: add language-icon entry.
+- [x] DECISIONS_LOG: add language-icon entry.
 - [ ] Accessibility pass (contrast, focus, 44px, reduced motion) over all 4 looks.
 - [ ] Security review (secrets excluded from backups/exports; keys device-only).
 
