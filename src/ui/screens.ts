@@ -36,7 +36,7 @@ import { diagram } from "./diagram";
 import { activityChart, goalRingsChart, habitChart, moneyChart } from "./charts";
 import { encBackupCard } from "./encBackup";
 import { rulesTodayCard } from "./libraryScreens";
-import { celebrate, journeyGoalsCard } from "./lifeUi";
+import { celebrate, journeyGoalsCard, overallProgressCard } from "./lifeUi";
 import * as Focus from "../core/focus";
 import * as Habits from "../core/habits";
 import * as Cards from "../core/cards";
@@ -213,6 +213,7 @@ export function planScreen(): HTMLElement {
   const prio = h("select", { id: "pt-prio" }, ...fieldById("task.priority")!.options!.map((o) => h("option", { value: o.code, ...(o.code === "normal" ? { selected: true } : {}) }, tb(o.label, lang))));
   // M06 dependency: "do this after" lists open tasks only; nothing is chosen by default.
   const openTasks = cp.recs.filter(isOpenTask).sort((a, b) => a.id.localeCompare(b.id));
+  const sizeSel = h("select", { id: "pt-size" }, h("option", { value: "" }, t("plan.size.none", lang)), ...fieldById("task.size")!.options!.map((o) => h("option", { value: o.code }, tb(o.label, lang))));
   const afterSel = h("select", { id: "pt-after" }, h("option", { value: "" }, t("plan.after.none", lang)),
     ...openTasks.map((r) => h("option", { value: r.id }, cp.titles.get(r.id) ?? r.id)));
   // Optional link to a goal of the active mode (goal rings on Report read links.goal).
@@ -225,6 +226,7 @@ export function planScreen(): HTMLElement {
     h("label", { for: "pt-title" }, t("plan.task.title", lang)), title,
     h("label", { for: "pt-min" }, t("plan.task.minutes", lang)), mins,
     h("label", { for: "pt-prio" }, t("plan.task.priority", lang)), prio,
+    h("label", { for: "pt-size" }, t("plan.size.label", lang)), sizeSel,
     ...(openTasks.length ? [h("label", { for: "pt-after" }, t("plan.after.label", lang)), afterSel] : []),
     ...(goalRecs.length ? [h("label", { for: "pt-goal" }, t("plan.goal.label", lang)), goalSel] : []), err,
     h("button", { class: "btn", type: "submit" }, t("plan.task.save", lang)));
@@ -237,7 +239,7 @@ export function planScreen(): HTMLElement {
     else { const n = Number(raw); if (!Number.isFinite(n) || n <= 0 || n > 1440) { err.textContent = t("intake.invalidNumber", lang); return; } m = typed(Math.round(n)); }
     const id = `task-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`;
     if (!saveTyped({ id, entity: "task", createdAt: new Date().toISOString(),
-      values: { "task.title": typed(name), "task.minutes": m, "task.priority": typed(prio.value) },
+      values: { "task.title": typed(name), "task.minutes": m, "task.priority": typed(prio.value), ...(sizeSel.value ? { "task.size": typed(sizeSel.value) } : {}) },
       ...(afterSel.value || goalSel.value ? { links: { ...(afterSel.value ? { after: afterSel.value } : {}), ...(goalSel.value ? { goal: goalSel.value } : {}) } } : {}) })) { err.textContent = saveBlockedText(lang); return; }
     rerender();
   });
@@ -813,6 +815,7 @@ export function today(): HTMLElement {
       h("small", {}, `${t("home.stage", lang)} · ${tb(stage.name, lang)}`),
       h("div", { class: "n" }, num(curStage + 1, lang), h("span", { style: "font-size:22px;color:var(--muted)" }, ` / ${num(STAGES.length, lang)}`)),
       rungs),
+    overallProgressCard(lang, "today"),
     h("h2", {}, t("home.tasks", lang)),
     viewBar("today", lang),
     ...(cp.hasTasks ? todayFromPlan(cp, lang) : activeNs() === "real" ? [h("p", { class: "muted", "data-empty-real": "1" }, t("mode.today.empty", lang))] : screenView("today") === "compact" ? [h("ul", { class: "list-compact", "data-view": "compact" }, ...DEMO_TASKS.slice(0, 3).map((k) => h("li", {}, h("strong", {}, tb(k.title, lang)), " · ", valueEl(t("task.minutes", lang, { n: num(k.minutes, lang) }), "DEMO", lang))))] : DEMO_TASKS.slice(0, 3).map((k, i) => h("div", { class: "task" }, h("b", {}, num(i + 1, lang)),
@@ -879,6 +882,7 @@ export function journey(): HTMLElement {
       link("#/journey/risks", "btn ghost", t("risk.link", lang)),
       link("#/journey/history", "btn ghost", t("hist.link", lang)),
       link("#/journey/northstar", "btn ghost", t("ns.link", lang))),
+    overallProgressCard(lang, "journey"),
     journeyGoalsCard(lang),
     templatePicker(lang),
     viewBar("journey", lang),

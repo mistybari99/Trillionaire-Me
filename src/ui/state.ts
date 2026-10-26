@@ -8,7 +8,8 @@ import { parseNotifyPrefs, type NotifyPrefs } from "../core/notify";
 import { DHAKA_COORDS, validCoords, type Coords } from "../core/prayer";
 import { DEFAULT_ALERT_PREFS, parseAlertPrefs, type AlertPrefs } from "../core/prayerAlerts";
 import { isDataMode, type DataMode } from "../core/dataMode";
-import { DEFAULT_DESIGN, applyDesign, isDesignId } from "./themes";
+import { applyDesign, migrateDesignId } from "./themes";
+import { isProgressMode, type ProgressMemory, type ProgressMode } from "../core/overallProgress";
 import { parseRuleSwitches, type FocusEnd, type RuleSwitches } from "../core/rules";
 
 const legacy = new LocalKV();
@@ -40,9 +41,12 @@ export const prefs = {
   set lang(v: Locale) { set("tm:ui:lang", v); },
   get theme(): "auto" | "light" | "dark" { const v = get("tm:ui:theme"); return v === "light" || v === "dark" ? v : "auto"; },
   set theme(v: "auto" | "light" | "dark") { set("tm:ui:theme", v); },
-  /** Design version (src/ui/themes.ts). Unknown, missing or blocked value falls back to "classic" (the current look). */
-  get design(): string { const v = get("tm:ui:design"); return isDesignId(v) ? v : DEFAULT_DESIGN; },
-  set design(v: string) { set("tm:ui:design", isDesignId(v) ? v : DEFAULT_DESIGN); },
+  /** Design version (src/ui/themes.ts). Unknown, missing or blocked value falls back to the default (light-futuristic). The old saved value "classic" is migrated to "ink-paper". */
+  get design(): string { const v = get("tm:ui:design"); const m = migrateDesignId(v); if (v === "classic") set("tm:ui:design", m); return m; },
+  set design(v: string) { set("tm:ui:design", migrateDesignId(v)); },
+  /** Overall progress weighting. Unknown or missing value = "equal". */
+  get progressMode(): ProgressMode { const v = get("tm:ui:progressMode"); return isProgressMode(v) ? v : "equal"; },
+  set progressMode(v: ProgressMode) { set("tm:ui:progressMode", isProgressMode(v) ? v : "equal"); },
   get scale(): number { const n = Number(get("tm:ui:scale")); return [100, 125, 150, 200].includes(n) ? n : 100; },
   set scale(v: number) { set("tm:ui:scale", String(v)); },
   get mode(): PlanMode { const v = get("tm:ui:mode"); return v === "minimum_week" || v === "pause" ? v : "normal"; },
@@ -96,3 +100,9 @@ export function applyPrefs() {
   r.style.fontSize = `${prefs.scale}%`;
   document.title = prefs.lang === "en" ? "Trillionaire Me" : "ট্রিলিয়নেয়ার মি";
 }
+
+/** Per-device memory of the last overall percent (per mode namespace and weighting), to explain a fall in plain words. */
+export function readProgressMemory(key: string): ProgressMemory | null {
+  try { const o = JSON.parse(get(`tm:ui:overallMem:${key}`) ?? "null"); const ok = (x: unknown) => x === null || (typeof x === "number" && Number.isFinite(x)); return o && ok(o.last) && ok(o.from) ? { last: o.last, from: o.from } : null; } catch { return null; }
+}
+export function writeProgressMemory(key: string, m: ProgressMemory): void { set(`tm:ui:overallMem:${key}`, JSON.stringify(m)); }

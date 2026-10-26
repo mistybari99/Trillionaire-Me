@@ -2,7 +2,7 @@ import type { Bi } from "../i18n/registry";
 import { UNKNOWN_STATES, type UnknownState } from "../core/types";
 import type { AccessRule, ChoiceOption, FieldDef, FieldType, Importance, PrivacyClass, Purpose, Requirement } from "./types";
 
-export const CATALOG_VERSION = 2;
+export const CATALOG_VERSION = 3;
 
 const bi = (bn: string, en: string): Bi => ({ bn, en });
 const opt = (code: string, bn: string, en: string): ChoiceOption => ({ code, label: bi(bn, en) });
@@ -171,6 +171,17 @@ export const FIELDS: FieldDef[] = [
     what: bi("কবে নাগাদ চান।", "When you would like it done."),
     why: bi("তারিখ বদলানো যায়; লক্ষ্য একই থাকে।", "The date can move; the goal stays."),
     example: bi("২০২৭-১২-৩১", "2027-12-31"), format: bi("বছর-মাস-দিন", "YYYY-MM-DD") }),
+  f({ id: "goal.progress_mode", entity: "goal", family: "FAM-03", type: "choice", purpose: "planning", step: 6, importance: "optional",
+    options: [opt("auto", "কাজ থেকে নিজে গোনা", "Counted from tasks"), opt("manual", "আমি নিজে দেব", "I will enter it myself")],
+    label: bi("অগ্রগতি কীভাবে দেখাবেন", "How to show progress"),
+    what: bi("এই লক্ষ্যের অগ্রগতি যুক্ত কাজ থেকে গোনা হবে, নাকি আপনি নিজে শতাংশ দেবেন।", "Whether progress is counted from linked tasks or you enter the percent yourself."),
+    why: bi("কিছু লক্ষ্য কাজের তালিকায় মাপা যায় না। না বাছলে কাজ থেকে গোনা হয়।", "Some goals cannot be measured by tasks. If you do not choose, it is counted from tasks."),
+    example: bi("কাজ থেকে নিজে গোনা", "Counted from tasks") }),
+  f({ id: "goal.manual_percent", entity: "goal", family: "FAM-03", type: "number", unit: "percent", purpose: "planning", step: 6, importance: "optional",
+    label: bi("নিজের দেওয়া শতাংশ (০ থেকে ১০০)", "Your own percent (0 to 100)"),
+    what: bi("শুধু “আমি নিজে দেব” বাছলে কাজে লাগে। না জানলে ফাঁকা রাখুন।", "Used only if you chose “I will enter it myself”. Leave it empty if unknown."),
+    why: bi("ফাঁকা মানে অজানা, শূন্য নয়।", "Empty means unknown, not zero."),
+    example: bi("৪০", "40"), format: bi("পূর্ণসংখ্যা", "Whole number") }),
   f({ id: "goal.smart_specific", entity: "goal", family: "FAM-03", type: "text", purpose: "planning", importance: "optional",
     label: bi("স্পষ্ট করে লিখুন (SMART: নির্দিষ্ট)", "In specific words (SMART: Specific)"),
     what: bi("লক্ষ্যে ঠিক কী করবেন বা কী পাবেন, সহজ বাক্যে।", "Exactly what you will do or get, in plain words."),
@@ -235,6 +246,13 @@ export const FIELDS: FieldDef[] = [
     what: bi("কাজটিতে কত মিনিট লাগতে পারে।", "About how many minutes it takes."),
     why: bi("ফাঁকা সময়ের মধ্যে বসাতে। এটি অনুমান।", "To fit it in your free time. It is an estimate."),
     example: bi("১০", "10"), format: bi("পূর্ণসংখ্যা", "Whole number") }),
+
+  f({ id: "task.size", entity: "task", family: "FAM-03", type: "choice", purpose: "planning", importance: "optional",
+    options: [opt("S", "ছোট", "Small"), opt("M", "মাঝারি", "Medium"), opt("L", "বড়", "Large")],
+    label: bi("কাজের আকার", "Task size"),
+    what: bi("কাজটি ছোট, মাঝারি না বড়। মিনিট দিলে মিনিটই ধরা হয়।", "Whether the task is small, medium or large. If you enter minutes, minutes are used."),
+    why: bi("“আকার অনুযায়ী” অগ্রগতিতে বড় কাজের ওজন বেশি।", "In “by size” progress, a larger task weighs more."),
+    example: bi("মাঝারি", "Medium") }),
 
   // ── venture / asset registry (FAM-36) — business-neutral ──
   f({ id: "venture.name", entity: "venture", family: "FAM-36", type: "text", purpose: "venture_registry", importance: "core",

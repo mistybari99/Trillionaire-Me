@@ -341,3 +341,9 @@ textarea[data-swot]{width:100%;box-sizing:border-box;font:inherit;padding:8px}
 .design-opt input{width:24px;height:24px;flex:none;accent-color:var(--primary)}
 .design-sw{display:flex;flex:none;border:1px solid var(--rule)} .design-sw i{display:block;width:16px;height:32px}
 .design-txt{display:flex;flex-direction:column;min-width:0}
+
+/* overall progress card: text always beside the bar; colours from tokens only; no red */
+.ov-big{font:600 18px/1.5 "Hind Siliguri",sans-serif}
+.ov-bar{height:12px;background:var(--paper);border:1px solid var(--rule);margin:8px 0;overflow:hidden}
+.ov-bar i{display:block;height:100%;background:var(--primary)} .ov-bar i.ov-unk{background:repeating-linear-gradient(45deg,var(--rule) 0 4px,transparent 4px 8px)}
+@media (prefers-reduced-motion:no-preference){.ov-bar i{transition:width .4s ease}}

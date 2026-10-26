@@ -1,5 +1,6 @@
 // Goal helpers (pure): SMART parts, SWOT lists, progress and milestones. Unknown is never 0.
 import type { FieldValue, TMRecord } from "./types";
+import { goalProgressMode, manualPercent } from "./overallProgress";
 
 export const SWOT_KEYS = ["strengths", "weaknesses", "opportunities", "threats"] as const;
 export type SwotKey = (typeof SWOT_KEYS)[number];
@@ -30,7 +31,7 @@ const hasValue = (r: TMRecord, f: string): boolean => { const v = r.values[f]; r
 export const smartFilled = (g: TMRecord): Record<SmartPart, boolean> =>
   Object.fromEntries(SMART_PARTS.map((p) => [p, SMART_FIELDS[p].some((f) => hasValue(g, f))])) as Record<SmartPart, boolean>;
 
-export interface GoalProgress { id: string; title: string; done: number; total: number; /** whole percent 0..100, or null when no task is linked */ percent: number | null }
+export interface GoalProgress { id: string; title: string; done: number; total: number; /** whole percent 0..100, or null when no task is linked */ percent: number | null; /** "manual": the percent was typed by the user, not counted */ mode?: "auto" | "manual" }
 const strVal = (v: FieldValue | undefined): string | null => (v && v.state === "value" && typeof v.value === "string" ? v.value : null);
 
 /** Progress = linked tasks done / linked tasks. Null (unknown) when no task is linked. A task counts as done only with a done date. */
@@ -39,7 +40,9 @@ export function goalProgress(recs: readonly TMRecord[]): GoalProgress[] {
   return recs.filter((r) => r.entity === "goal" && strVal(r.values["goal.title"]) !== null).sort((a, b) => a.id.localeCompare(b.id)).map((g) => {
     const mine = tasks.filter((x) => x.links!.goal === g.id);
     const done = mine.filter((x) => strVal(x.values["task.done_on"]) !== null).length;
-    return { id: g.id, title: strVal(g.values["goal.title"])!, done, total: mine.length, percent: mine.length ? Math.round((done / mine.length) * 100) : null };
+    const title = strVal(g.values["goal.title"])!;
+    if (goalProgressMode(g) === "manual") return { id: g.id, title, done, total: mine.length, percent: manualPercent(g), mode: "manual" as const };
+    return { id: g.id, title, done, total: mine.length, percent: mine.length ? Math.round((done / mine.length) * 100) : null };
   });
 }
 

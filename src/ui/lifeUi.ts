@@ -4,11 +4,12 @@ import { h } from "./dom";
 import { t } from "../i18n/t";
 import type { Key } from "../i18n/packs";
 import type { Locale } from "../i18n/registry";
-import { prefs } from "./state";
+import { prefs, readProgressMemory, writeProgressMemory } from "./state";
 import { num } from "./components";
 import { allRecs, consentOn, consentPrompt, findRec, labelFor, nsTag, saveBlockedText, saveTyped, storeOf } from "./entry";
 import { AREAS, MAX_RATING, lifeAreaRecord, wedgePath, wheelData, type Area } from "../core/lifeWheel";
 import { SMART_PARTS, SWOT_KEYS, goalProgress, listValue, milestoneOf, parseList, readList, smartFilled, swotField, type GoalProgress, type SwotKey } from "../core/goalPlan";
+import { overallProgress, nextProgressMemory, progressTrend, PROGRESS_MODES } from "../core/overallProgress";
 import { checkFreeText } from "../core/safety";
 import { HORIZONS } from "../core/horizon";
 import type { FieldValue, TMRecord } from "../core/types";
@@ -76,7 +77,8 @@ export function wheelScreen(): HTMLElement {
 
 // ---- Goal progress text (Journey, goal list, goal page) ----
 export const progressLine = (g: GoalProgress, lang: Locale): string =>
-  g.percent === null ? t("goals.progressUnknown", lang, { title: g.title }) : t("goals.progress", lang, { title: g.title, p: num(g.percent, lang), d: num(g.done, lang), n: num(g.total, lang) });
+  g.mode === "manual" ? (g.percent === null ? t("goals.progressUnknownManual", lang, { title: g.title }) : t("goals.progressManual", lang, { title: g.title, p: num(g.percent, lang) }))
+  : g.percent === null ? t("goals.progressUnknown", lang, { title: g.title }) : t("goals.progress", lang, { title: g.title, p: num(g.percent, lang), d: num(g.done, lang), n: num(g.total, lang) });
 
 /** Journey card: one line per goal of the active mode with its progress (unknown when no task is linked). */
 export function journeyGoalsCard(lang: Locale): HTMLElement {
@@ -163,4 +165,27 @@ export function goalScreen(id: string): HTMLElement {
   const swotView = h("section", { class: "card", "data-swot-view": "1" }, h("h2", { class: "card-h" }, t("swot.title", lang)),
     h("div", { class: "swot-grid" }, ...SWOT_KEYS.map((k) => { const items = readList(rec.values[swotField(k)]); return h("div", { "data-swot-box": k }, h("h3", {}, t(`swot.${k}` as Key, lang)), items ? h("ul", {}, ...items.map((i) => h("li", {}, i))) : h("p", { class: "muted", "data-swot-empty": k }, t("swot.empty", lang))); })));
   return h("main", {}, back, h("h1", {}, textOf(rec, "goal.title")), progress, smartForm, swotView, swotForm);
+}
+
+// ---- Overall progress card (Today and Journey) ----
+/** One overall percent from the user's own tasks in the active mode. Unknown when there is no task. Never red, never a grade. */
+export function overallProgressCard(lang: Locale, where: "today" | "journey"): HTMLElement {
+  const recs = allRecs(); const mode = prefs.progressMode; const o = overallProgress(recs, mode);
+  const key = `${recs.find((r) => r.entity === "task")?.ns ?? "none"}:${mode}`;
+  const mem = nextProgressMemory(readProgressMemory(key), o.percent); writeProgressMemory(key, mem);
+  const trend = progressTrend(mem.from, o.percent);
+  const text = o.percent === null ? t("overall.unknown", lang)
+    : t("overall.text", lang, { p: num(o.percent, lang), d: num(o.done, lang), n: num(o.total, lang), how: t(mode === "size" ? "overall.how.size" : "overall.how.equal", lang) });
+  const bar = h("div", { class: "ov-bar", role: "img", "aria-label": text, "data-ov-bar": o.percent === null ? "unknown" : String(o.percent) },
+    h("i", { style: `width:${o.percent ?? 0}%`, class: o.percent === null ? "ov-unk" : "" }));
+  return h("section", { class: "card", "data-overall": where, "data-percent": o.percent === null ? "unknown" : String(o.percent), "data-trend": trend },
+    h("h2", { class: "card-h" }, t("overall.title", lang)),
+    h("p", { class: "ov-big", "data-overall-text": "1" }, text), bar,
+    mode === "size" && o.withoutSize > 0 ? h("p", { class: "muted" }, t("overall.nosize", lang, { n: num(o.withoutSize, lang) })) : null,
+    trend === "down" ? h("p", { class: "muted", "data-overall-fall": "1" }, t("overall.fall", lang)) : null,
+    o.percent === null ? h("p", { class: "muted" }, link("#/diary/plan", "crumb", t("overall.add", lang)))
+      : h("p", { class: "muted", "data-overall-prompt": "1" }, t("overall.more", lang), " ", link("#/diary/plan", "crumb", t("overall.addMore", lang))),
+    h("div", { class: "seg", role: "group", "aria-label": t("overall.weight", lang) },
+      ...PROGRESS_MODES.map((m) => h("button", { type: "button", "data-ov-mode": m, "aria-pressed": String(mode === m), onclick: () => { prefs.progressMode = m; rerender(); } }, t(m === "size" ? "overall.mode.size" : "overall.mode.equal", lang)))),
+    h("p", { class: "muted" }, t("overall.note", lang)));
 }

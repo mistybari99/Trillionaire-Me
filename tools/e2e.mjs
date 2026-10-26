@@ -218,22 +218,25 @@ await page.waitForSelector("[data-module]", { timeout: 5000 }).catch(() => {});
 check("G1-OFFLINE", "status screen renders offline", (await page.locator("[data-module]").count()) === 25);
 await ctx.setOffline(false);
 
-// Design version: default classic (no data-design change in look), switch to light-futuristic, persists across reload, dark follows phone
+// Design version: default light-futuristic, switch to ink-paper and back, persists across reload, dark follows phone; old "classic" saved value migrates
 {
   await page.goto("http://localhost:4174/#/more"); await page.waitForSelector("[data-design-pick]");
-  const bgClassic = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);
-  const d0 = await page.evaluate(() => ({ d: document.documentElement.dataset.design, v: localStorage.getItem("tm:ui:design") }));
-  await page.click("[data-design-opt=light-futuristic]"); await page.waitForTimeout(100);
-  const d1 = await page.evaluate(() => ({ d: document.documentElement.dataset.design, v: localStorage.getItem("tm:ui:design"), cardBlur: getComputedStyle(document.querySelector(".card")).backdropFilter }));
+  const d0 = await page.evaluate(() => ({ d: document.documentElement.dataset.design, v: localStorage.getItem("tm:ui:design"), cardBlur: getComputedStyle(document.querySelector(".card")).backdropFilter }));
+  await page.click("[data-design-opt=ink-paper]"); await page.waitForTimeout(100);
+  const bgInk = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);
   await page.reload(); await page.waitForSelector("[data-design-pick]");
-  const d2 = await page.evaluate(() => ({ d: document.documentElement.dataset.design, checked: document.querySelector("[data-design-opt=light-futuristic] input").checked, primary: getComputedStyle(document.documentElement).getPropertyValue("--primary").trim() }));
+  const d1 = await page.evaluate(() => ({ d: document.documentElement.dataset.design, v: localStorage.getItem("tm:ui:design"), checked: document.querySelector("[data-design-opt=ink-paper] input").checked }));
+  await page.click("[data-design-opt=light-futuristic]"); await page.waitForTimeout(100);
+  const d2 = await page.evaluate(() => ({ d: document.documentElement.dataset.design, primary: getComputedStyle(document.documentElement).getPropertyValue("--primary").trim() }));
   await page.emulateMedia({ colorScheme: "dark" });
   const dark = await page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue("--paper").trim());
   await page.emulateMedia({ colorScheme: "light" });
-  check("DESIGN-VER", "classic is the default; light-futuristic applies, persists after reload, dark follows the phone", d0.d === "classic" && d0.v === null && d1.d === "light-futuristic" && d1.v === "light-futuristic" && d1.cardBlur.includes("blur") && d2.d === "light-futuristic" && d2.checked && d2.primary === "#4B3FD8" && dark === "#0B0E1F" && bgClassic.length > 0, JSON.stringify({ d0, d1, d2, dark }));
-  await page.click("[data-design-opt=classic]"); await page.waitForTimeout(100);
-  const back = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);
-  check("DESIGN-VER", "switching back to classic restores the original look", back === bgClassic, `${back} vs ${bgClassic}`);
+  check("DESIGN-VER", "light-futuristic is the default; ink-paper applies and persists after reload; switching back works; dark follows the phone", d0.d === "light-futuristic" && d0.v === null && d0.cardBlur.includes("blur") && d1.d === "ink-paper" && d1.v === "ink-paper" && d1.checked && bgInk === "rgb(245, 241, 232)" && d2.d === "light-futuristic" && d2.primary === "#4B3FD8" && dark === "#0B0E1F", JSON.stringify({ d0, d1, d2, dark, bgInk }));
+  await page.evaluate(() => localStorage.setItem("tm:ui:design", "classic")); await page.reload(); await page.waitForSelector("[data-design-pick]");
+  const mig = await page.evaluate(() => ({ d: document.documentElement.dataset.design, v: localStorage.getItem("tm:ui:design") }));
+  check("DESIGN-VER", "old saved value classic migrates to ink-paper", mig.d === "ink-paper" && mig.v === "ink-paper", JSON.stringify(mig));
+  for (const id of ["emerald-obsidian", "broadsheet"]) { await page.click(`[data-design-opt=${id}]`); await page.waitForTimeout(100); const dd = await page.evaluate(() => document.documentElement.dataset.design); check("DESIGN-VER", `${id} applies`, dd === id, dd); }
+  await page.click("[data-design-opt=light-futuristic]"); await page.waitForTimeout(100);
 }
 check("G1-NONET", "0 third-party/external requests during all of the above", external.length === 0, JSON.stringify(external));
 

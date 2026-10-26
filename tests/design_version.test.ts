@@ -1,7 +1,7 @@
 // Design version chooser: registry, persistence, default unchanged, token contrast, chooser UI.
 import { readFileSync } from "node:fs";
 import { beforeEach, describe, expect, it } from "vitest";
-import { DEFAULT_DESIGN, DESIGNS, applyDesign, designCss, designOf, isDesignId, type Design } from "../src/ui/themes";
+import { DEFAULT_DESIGN, DESIGNS, applyDesign, designCss, designOf, isDesignId, migrateDesignId, type Design } from "../src/ui/themes";
 import { PACKS } from "../src/i18n/packs";
 import { applyPrefs, prefs } from "../src/ui/state";
 import { render } from "../src/app";
@@ -14,32 +14,40 @@ const CSS = readFileSync("src/ui/styles.css", "utf8");
 beforeEach(() => { localStorage.clear(); document.documentElement.removeAttribute("data-design"); document.getElementById("tm-design-css")?.remove(); });
 
 describe("registry", () => {
-  it("has classic (default) and light-futuristic with unique ids", () => {
-    expect(DESIGNS.map((d) => d.id)).toEqual(["classic", "light-futuristic"]);
+  it("has light-futuristic (default), ink-paper, emerald-obsidian and broadsheet with unique ids", () => {
+    expect(DESIGNS.map((d) => d.id)).toEqual(["light-futuristic", "ink-paper", "emerald-obsidian", "broadsheet"]);
     expect(new Set(DESIGNS.map((d) => d.id)).size).toBe(DESIGNS.length);
-    expect(DEFAULT_DESIGN).toBe("classic");
+    expect(DEFAULT_DESIGN).toBe("light-futuristic");
+  });
+  it("broadsheet is shown as Classic in every language mode", () => {
+    const bs = DESIGNS.find((d) => d.id === "broadsheet")!;
+    expect(PACKS.en[bs.label]).toBe("Classic"); expect(PACKS.bn[bs.label]).toBe("ক্লাসিক"); expect(PACKS.mix[bs.label]).toBeTruthy();
   });
   it("every entry has labels in en, bn and mix with no digits", () => {
     for (const d of DESIGNS) for (const l of ["en", "bn", "mix"] as const) for (const k of [d.label, d.desc]) { expect(PACKS[l][k], `${l} ${k}`).toBeTruthy(); expect(PACKS[l][k]).not.toMatch(/[0-9০-৯]/); }
   });
   it("adding a version is adding one entry: a new entry yields its own CSS", () => {
-    const extra: Design = { ...DESIGNS[1]!, id: "demo-x" };
+    const extra: Design = { ...DESIGNS[0]!, id: "demo-x" };
     const css = designCss([...DESIGNS, extra]);
     expect(css).toContain('data-design="demo-x"'); expect(css).toContain('data-design="light-futuristic"');
   });
-  it("classic adds no CSS (zero visual change)", () => { expect(designCss([DESIGNS[0]!])).toBe(""); expect(designCss()).not.toContain('"classic"'); });
-  it("unknown ids fall back to classic", () => { expect(isDesignId("nope")).toBe(false); expect(designOf("nope").id).toBe("classic"); });
+  it("ink-paper adds no CSS (it is the base look)", () => { expect(designCss([DESIGNS.find((d) => d.id === "ink-paper")!])).toBe(""); expect(designCss()).not.toContain('"ink-paper"'); });
+  it("unknown ids fall back to the default; old 'classic' migrates to ink-paper", () => { expect(isDesignId("nope")).toBe(false); expect(designOf("nope").id).toBe("light-futuristic"); expect(migrateDesignId("classic")).toBe("ink-paper"); expect(migrateDesignId("nope")).toBe("light-futuristic"); expect(migrateDesignId(null)).toBe("light-futuristic"); });
+  it("every tokened version has bundled fonts only (no network url) and 44px targets from base CSS", () => { for (const d of DESIGNS) expect(d.extraCss ?? "").not.toMatch(/https?:|@import|url\(/); expect(CSS).toMatch(/\.seg button\{min-height:44px/); expect(CSS).toMatch(/\.cta,\.btn\{[^}]*min-height:(4[4-9]|[5-9]\d)px/); });
 });
 
 describe("persistence and apply", () => {
-  it("default is classic; classic base tokens in styles.css are unchanged", () => {
-    expect(prefs.design).toBe("classic");
+  it("default is light-futuristic; ink-paper base tokens in styles.css are unchanged", () => {
+    expect(prefs.design).toBe("light-futuristic");
     expect(CSS).toContain("--paper:#F5F1E8; --card:#FBF8F1; --ink:#14181F;");
   });
   it("saves under tm:ui:design and ignores bad values", () => {
-    prefs.design = "light-futuristic"; expect(localStorage.getItem("tm:ui:design")).toBe("light-futuristic"); expect(prefs.design).toBe("light-futuristic");
-    localStorage.setItem("tm:ui:design", "junk"); expect(prefs.design).toBe("classic");
-    prefs.design = "junk"; expect(prefs.design).toBe("classic");
+    prefs.design = "emerald-obsidian"; expect(localStorage.getItem("tm:ui:design")).toBe("emerald-obsidian"); expect(prefs.design).toBe("emerald-obsidian");
+    localStorage.setItem("tm:ui:design", "junk"); expect(prefs.design).toBe("light-futuristic");
+    prefs.design = "junk"; expect(prefs.design).toBe("light-futuristic");
+  });
+  it("migrates the saved value 'classic' to 'ink-paper' and writes it back", () => {
+    localStorage.setItem("tm:ui:design", "classic"); expect(prefs.design).toBe("ink-paper"); expect(localStorage.getItem("tm:ui:design")).toBe("ink-paper");
   });
   it("applyPrefs sets data-design and injects the CSS once, dark follows phone", () => {
     prefs.design = "light-futuristic"; applyPrefs(); applyPrefs();
@@ -48,7 +56,7 @@ describe("persistence and apply", () => {
     const css = document.getElementById("tm-design-css")!.textContent!;
     expect(css).toMatch(/prefers-color-scheme:dark\)\{:root\[data-design="light-futuristic"\]\[data-theme="auto"\]/);
     expect(document.documentElement.dataset.theme).toBe("auto");
-    applyDesign("classic"); expect(document.documentElement.dataset.design).toBe("classic");
+    applyDesign("ink-paper"); expect(document.documentElement.dataset.design).toBe("ink-paper");
   });
   it("extra CSS keeps motion behind no-preference", () => {
     for (const d of DESIGNS) { const x = (d.extraCss ?? "").replace(/@media \(prefers-reduced-motion:no-preference\)\{[\s\S]*\}$/, ""); expect(x).not.toMatch(/animation:|transition:/); }
@@ -68,15 +76,15 @@ describe("token contrast (AA)", () => {
 
 describe("chooser UI (More)", () => {
   const boot = () => { document.body.innerHTML = '<div id="app"></div>'; location.hash = "#/more"; render(); };
-  it("shows one radio card per version, classic checked, 44px-class rule, switch persists", () => {
+  it("shows one radio card per version, default checked, 44px-class rule, switch persists", () => {
     boot();
     const radios = [...document.querySelectorAll<HTMLInputElement>('[data-design-pick] input[type=radio]')];
     expect(radios.map((r) => r.value)).toEqual(DESIGNS.map((d) => d.id));
-    expect(radios[0]!.checked).toBe(true);
+    expect(radios[0]!.checked).toBe(true); expect(radios[0]!.value).toBe("light-futuristic");
     expect(CSS).toMatch(/\.design-opt\{[^}]*min-height:56px/);
-    radios[1]!.checked = true; radios[1]!.dispatchEvent(new Event("change"));
-    expect(prefs.design).toBe("light-futuristic");
-    expect(document.documentElement.dataset.design).toBe("light-futuristic");
-    expect(document.querySelector<HTMLInputElement>('[data-design-opt="light-futuristic"] input')!.checked).toBe(true);
+    radios[2]!.checked = true; radios[2]!.dispatchEvent(new Event("change"));
+    expect(prefs.design).toBe("emerald-obsidian");
+    expect(document.documentElement.dataset.design).toBe("emerald-obsidian");
+    expect(document.querySelector<HTMLInputElement>('[data-design-opt="emerald-obsidian"] input')!.checked).toBe(true);
   });
 });

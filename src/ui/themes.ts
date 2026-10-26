@@ -1,6 +1,7 @@
 // Design versions registry. A version is a set of CSS-variable tokens applied through <html data-design="...">.
 // To add a version: add ONE entry to DESIGNS below (plus its 2 label keys in src/i18n/packs.ts). Nothing else changes.
-// "classic" has no tokens: it is the base block in styles.css, so choosing it changes nothing.
+// "ink-paper" has no tokens: it is the base block in styles.css, so choosing it changes nothing.
+// Default (D-E, owner 26 Oct 2026) is "light-futuristic". "broadsheet" is shown to the user as "Classic".
 import type { Key } from "../i18n/packs";
 
 export type Tokens = Record<"paper" | "card" | "ink" | "muted" | "rule" | "primary" | "on-primary" | "ember" | "moss" | "demo" | "demo-bg" | "danger", string>;
@@ -15,10 +16,13 @@ export interface Design {
   swatch: [string, string, string];
 }
 
-export const DEFAULT_DESIGN = "classic";
+export const DEFAULT_DESIGN = "light-futuristic";
+
+/** Saved value from before the rename: "classic" meant Ink & Paper. Any other unknown value gives the default. */
+export const LEGACY_DESIGN_IDS: Record<string, string> = { classic: "ink-paper" };
+export const migrateDesignId = (v: unknown): string => (typeof v === "string" && LEGACY_DESIGN_IDS[v]) || (isDesignId(v) ? v : DEFAULT_DESIGN);
 
 export const DESIGNS: Design[] = [
-  { id: "classic", label: "design.classic", desc: "design.classic.desc", swatch: ["#F5F1E8", "#243B6B", "#B0431A"] },
   {
     id: "light-futuristic", label: "design.lf", desc: "design.lf.desc",
     swatch: ["#EEF2FF", "#4B3FD8", "#C2185B"],
@@ -32,13 +36,35 @@ export const DESIGNS: Design[] = [
 :root[data-design="light-futuristic"] .seg button{border-radius:12px}
 @media (prefers-reduced-motion:no-preference){:root[data-design="light-futuristic"] .card,:root[data-design="light-futuristic"] .cta{transition:box-shadow .2s ease}}`,
   },
+  { id: "ink-paper", label: "design.ip", desc: "design.ip.desc", swatch: ["#F5F1E8", "#243B6B", "#B0431A"] },
+  {
+    id: "emerald-obsidian", label: "design.eo", desc: "design.eo.desc",
+    swatch: ["#0B1216", "#1B6F57", "#C9A96E"],
+    light: { paper: "#F6F3EA", card: "#FFFFFF", ink: "#0B1216", muted: "#4A5654", rule: "#6D7B77", primary: "#1B6F57", "on-primary": "#FFFFFF", ember: "#7A5C1E", moss: "#1B6F57", demo: "#7A4B00", "demo-bg": "#FFEFC7", danger: "#B3261E" },
+    dark: { paper: "#0B1216", card: "#121D22", ink: "#F2EBDD", muted: "#A9B3B0", rule: "#7C8F8A", primary: "#C9A96E", "on-primary": "#0B1216", ember: "#E3C98F", moss: "#5FCFA5", demo: "#FFD27A", "demo-bg": "#2E2410", danger: "#FF9A8F" },
+    extraCss: `
+:root[data-design="emerald-obsidian"] .card{border-radius:12px;border-color:color-mix(in srgb,var(--ember) 45%,var(--rule))}
+:root[data-design="emerald-obsidian"] .cta,:root[data-design="emerald-obsidian"] .btn{border-radius:10px}
+:root[data-design="emerald-obsidian"] h1,:root[data-design="emerald-obsidian"] h2{letter-spacing:.01em}
+@media (prefers-reduced-motion:no-preference){:root[data-design="emerald-obsidian"] .card,:root[data-design="emerald-obsidian"] .cta{transition:border-color .2s ease}}`,
+  },
+  {
+    id: "broadsheet", label: "design.bs", desc: "design.bs.desc",
+    swatch: ["#F3F2F2", "#00698A", "#A8135C"],
+    light: { paper: "#F3F2F2", card: "#FAFAFA", ink: "#201E1D", muted: "#55514E", rule: "#77726E", primary: "#00698A", "on-primary": "#FFFFFF", ember: "#A8135C", moss: "#1F6B4A", demo: "#7A4B00", "demo-bg": "#FFEFC7", danger: "#B3261E" },
+    dark: { paper: "#1A1817", card: "#242120", ink: "#F1EFEE", muted: "#B5B0AC", rule: "#8A8480", primary: "#5CC8E8", "on-primary": "#11181B", ember: "#FF8FBF", moss: "#7AD6A6", demo: "#FFD27A", "demo-bg": "#2E2410", danger: "#FF9A8F" },
+    extraCss: `
+:root[data-design="broadsheet"] body{font-family:"Noto Serif Bengali","Fraunces",Georgia,serif}
+:root[data-design="broadsheet"] .card{border-width:1px 0 0;border-radius:0;border-top:2px solid var(--ink)}
+:root[data-design="broadsheet"] .cta,:root[data-design="broadsheet"] .btn{border-radius:0}`,
+  },
 ];
 
 export const isDesignId = (v: unknown): v is string => typeof v === "string" && DESIGNS.some((d) => d.id === v);
 export const designOf = (id: string): Design => DESIGNS.find((d) => d.id === id) ?? DESIGNS[0]!;
 
 const block = (t: Tokens) => Object.entries(t).map(([k, v]) => `--${k}:${v}`).join(";");
-/** CSS for every non-classic version. Light first, then dark (explicit dark, then phone dark in auto). */
+/** CSS for every version that has tokens. Light first, then dark (explicit dark, then phone dark in auto). */
 export function designCss(list: Design[] = DESIGNS): string {
   return list.filter((d) => d.light && d.dark).map((d) => {
     const s = `:root[data-design="${d.id}"]`;
