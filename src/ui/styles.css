@@ -295,6 +295,18 @@ h2.card-h{font:600 17px/1.4 "Hind Siliguri",sans-serif;margin:0 0 2px}
 .rings{display:flex;flex-wrap:wrap;gap:12px}.ring{margin:0;width:96px;text-align:center}.ring .chart-svg{width:64px;margin:0 auto}.ring figcaption{font-size:13px;word-break:break-word}
 .chart-lines{padding-inline-start:20px;margin:6px 0}
 
+/* SMART funnel: tokens only, so every Design version and dark mode follow. Still by default; a soft fade-in only when motion is allowed. */
+.sfun-wrap{margin:8px 0}
+.sfun{display:block;width:100%;max-width:360px;height:auto;margin:0 auto;overflow:visible}
+.sfun .sfun-band path{fill:none;stroke:var(--primary);stroke-width:1.5}
+.sfun .sfun-band.on path{fill:var(--primary)}
+.sfun .sfun-t{font:600 14px/1 "Hind Siliguri",system-ui,sans-serif;fill:var(--ink);text-anchor:middle}
+.sfun .sfun-band.on .sfun-t,.sfun .sfun-goal.on .sfun-t{fill:var(--on-primary)}
+.sfun .sfun-goal rect{fill:none;stroke:var(--primary);stroke-width:1.5}
+.sfun .sfun-goal.on rect{fill:var(--primary)}
+@keyframes sfunIn{from{opacity:0}to{opacity:1}}
+@media (prefers-reduced-motion:no-preference){.sfun .sfun-band,.sfun .sfun-goal{animation:sfunIn .4s ease-out both;animation-delay:calc(var(--i) * 90ms)}}
+@media (prefers-reduced-motion:reduce){.sfun .sfun-band,.sfun .sfun-goal{animation:none!important}}
 /* step 5: life wheel, goal pages, micro-animations (motion only without reduced-motion) */
 .wheel-svg{max-width:360px;overflow:visible}
 .chart .wheel-guide{stroke:var(--rule);stroke-width:1}

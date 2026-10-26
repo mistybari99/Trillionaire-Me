@@ -8,6 +8,7 @@ import { prefs, readProgressMemory, writeProgressMemory } from "./state";
 import { num } from "./components";
 import { allRecs, consentOn, consentPrompt, findRec, labelFor, nsTag, saveBlockedText, saveTyped, storeOf } from "./entry";
 import { AREAS, MAX_RATING, lifeAreaRecord, wedgePath, wheelData, type Area } from "../core/lifeWheel";
+import { smartFunnel } from "./smartFunnel";
 import { SMART_PARTS, SWOT_KEYS, goalProgress, listValue, milestoneOf, parseList, readList, smartFilled, swotField, type GoalProgress, type SwotKey } from "../core/goalPlan";
 import { overallProgress, nextProgressMemory, progressTrend, PROGRESS_MODES } from "../core/overallProgress";
 import { checkFreeText } from "../core/safety";
@@ -126,9 +127,10 @@ export function goalScreen(id: string): HTMLElement {
   const dt = h("input", { id: "sm-d", type: "date", value: textOf(rec, "goal.target_date") });
   const smartErr = h("p", { class: "err", role: "alert" }), smartOk = h("p", { class: "ok-msg", role: "status", "data-saved": "smart" });
   const filledEl = h("p", { class: "muted", "data-smart-filled": "1" });
-  const paintFilled = (r: TMRecord) => { const f = smartFilled(r); filledEl.textContent = t("smart.filled", lang, { n: num(SMART_PARTS.filter((p) => f[p]).length, lang) }); };
+  const funnelHost = h("div", { "data-smart-funnel-host": "1" });
+  const paintFilled = (r: TMRecord) => { const f = smartFilled(r); funnelHost.replaceChildren(smartFunnel(f, lang)); filledEl.textContent = t("smart.filled", lang, { n: num(SMART_PARTS.filter((p) => f[p]).length, lang) }); };
   paintFilled(rec);
-  const smartForm = h("form", { class: "card", novalidate: true, "data-form": "smart" }, h("h2", { class: "card-h" }, t("smart.title", lang)), h("p", { class: "muted" }, t("smart.intro", lang)), gate,
+  const smartForm = h("form", { class: "card", novalidate: true, "data-form": "smart" }, h("h2", { class: "card-h" }, t("smart.title", lang)), h("p", { class: "muted" }, t("smart.intro", lang)), funnelHost, gate,
     h("label", { for: "sm-s" }, t("smart.s", lang)), sp, h("label", { for: "sm-m" }, t("smart.m", lang)), me, h("label", { for: "sm-a" }, t("smart.a", lang)), ac,
     h("label", { for: "sm-r" }, t("smart.r", lang)), re, h("label", { for: "sm-h" }, `${t("smart.t", lang)} ${t("smart.horizon", lang)}`), hz, h("label", { for: "sm-d" }, t("smart.date", lang)), dt,
     filledEl, smartErr, smartOk, h("button", { class: "btn", type: "submit" }, t("smart.save", lang)));
