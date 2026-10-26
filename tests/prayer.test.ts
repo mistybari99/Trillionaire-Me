@@ -2,6 +2,7 @@
 // Reference values come from tools/prayer_reference.py (pyephem ephemeris, same method angles), not from this code.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { DHAKA_COORDS, DHAKA_UTC_OFFSET_MIN, PRAYER_KEYS, dhakaNow, parseCoord, prayerClock, prayerTimes, validCoords, type PrayerKey } from "../src/core/prayer";
+import { DEFAULT_PRAYER_SETTINGS, parsePrayerSettings } from "../src/core/prayerMethod";
 import { DEFAULT_ALERT_PREFS, alertSlots, dueSlots, parseAlertPrefs } from "../src/core/prayerAlerts";
 import { markedOn, prayerLogId, prayerLogRecord } from "../src/core/prayerLog";
 import { Store, MemoryKV } from "../src/core/store";
@@ -14,7 +15,7 @@ import { checkPrayerAlerts, inAppReminders } from "../src/ui/prayerAlerts";
 const toMin = (hhmm: string) => { const [h, m] = hhmm.split(":").map(Number); return h! * 60 + m!; };
 const dhaka = (y: number, m: number, d: number) => ({ y, m, d });
 
-// Reference table: tools/prayer_reference.py, Dhaka 23.8103 N 90.4125 E, Fajr 18, Isha 17, Maghrib -0.833, Asr factor 1.
+// Reference table: tools/prayer_reference.py (method "mwl" here), Dhaka 23.8103 N 90.4125 E, Fajr 18, Isha 17, Maghrib -0.833, Asr factor 1.
 const REF: Array<[string, Record<PrayerKey, string>]> = [
   ["2026-01-15", { fajr: "05:23", dhuhr: "12:08", asr: "15:12", maghrib: "17:33", isha: "18:47" }],
   ["2026-03-20", { fajr: "04:47", dhuhr: "12:06", asr: "15:32", maghrib: "18:09", isha: "19:20" }],
@@ -36,11 +37,42 @@ describe("M13 prayer times: Dhaka clock", () => {
   });
 });
 
+describe("M13 prayer-time settings: method, Asr rule, offsets, no location", () => {
+  const d = dhaka(2026, 10, 24);
+  it("default is Karachi (18/18), standard Asr, no offsets; Fajr equals MWL, Isha is a few minutes later", () => {
+    expect(DEFAULT_PRAYER_SETTINGS).toEqual({ method: "karachi", asr: "standard", offsets: { fajr: 0, dhuhr: 0, asr: 0, maghrib: 0, isha: 0 } });
+    const k = prayerTimes(d, DHAKA_COORDS), m = prayerTimes(d, DHAKA_COORDS, { ...DEFAULT_PRAYER_SETTINGS, method: "mwl" });
+    expect(k.fajr).toBe(m.fajr); expect(k.isha! - m.isha!).toBeGreaterThanOrEqual(2); expect(k.isha! - m.isha!).toBeLessThanOrEqual(6);
+  });
+  it("Hanafi Asr is later than standard Asr; other prayers do not move", () => {
+    const s = prayerTimes(d, DHAKA_COORDS), h = prayerTimes(d, DHAKA_COORDS, { ...DEFAULT_PRAYER_SETTINGS, asr: "hanafi" });
+    expect(h.asr! - s.asr!).toBeGreaterThan(30); expect(h.fajr).toBe(s.fajr); expect(h.isha).toBe(s.isha);
+  });
+  it("each method changes the twilight prayers in the expected direction", () => {
+    const at = (method: "karachi" | "mwl" | "egypt" | "isna") => prayerTimes(d, DHAKA_COORDS, { ...DEFAULT_PRAYER_SETTINGS, method });
+    expect(at("isna").fajr!).toBeGreaterThan(at("karachi").fajr!); expect(at("egypt").fajr!).toBeLessThan(at("karachi").fajr!);
+  });
+  it("per-prayer minute offset moves only that prayer; null stays null", () => {
+    const base = prayerTimes(d, DHAKA_COORDS), o = prayerTimes(d, DHAKA_COORDS, { ...DEFAULT_PRAYER_SETTINGS, offsets: { ...DEFAULT_PRAYER_SETTINGS.offsets, maghrib: 3, fajr: -2 } });
+    expect(o.maghrib).toBe(base.maghrib! + 3); expect(o.fajr).toBe(base.fajr! - 2); expect(o.dhuhr).toBe(base.dhuhr);
+    const polar = prayerTimes(dhaka(2026, 6, 21), { lat: 80, lon: 90 }, { ...DEFAULT_PRAYER_SETTINGS, offsets: { ...DEFAULT_PRAYER_SETTINGS.offsets, isha: 5 } });
+    expect(polar.isha).toBeNull();
+  });
+  it("no usable location gives Unknown (null) for every prayer, never a guessed time", () => {
+    for (const bad of [{ lat: NaN, lon: 90 }, { lat: 95, lon: 0 }, null, undefined] as never[]) expect(Object.values(prayerTimes(d, bad))).toEqual([null, null, null, null, null]);
+  });
+  it("stored settings are read safely: junk falls back to the default, offsets stay within 30 minutes", () => {
+    expect(parsePrayerSettings(null)).toEqual(DEFAULT_PRAYER_SETTINGS);
+    expect(parsePrayerSettings({ method: "x", asr: "y", offsets: { fajr: 99, isha: 1.5, asr: "3", dhuhr: -30, maghrib: 7 } })).toEqual({ method: "karachi", asr: "standard", offsets: { fajr: 0, dhuhr: -30, asr: 0, maghrib: 7, isha: 0 } });
+    expect(parsePrayerSettings({ method: "mwl", asr: "hanafi" })).toMatchObject({ method: "mwl", asr: "hanafi" });
+  });
+});
+
 describe("M13 prayer times: formula against reference values (±2 minutes)", () => {
   for (const [date, want] of REF) {
     it(`Dhaka ${date} matches the reference within 2 minutes`, () => {
       const [y, m, d] = date.split("-").map(Number) as [number, number, number];
-      const got = prayerTimes(dhaka(y, m, d), DHAKA_COORDS);
+      const got = prayerTimes(dhaka(y, m, d), DHAKA_COORDS, { ...DEFAULT_PRAYER_SETTINGS, method: "mwl" });
       for (const k of PRAYER_KEYS) {
         expect(got[k], `${date} ${k}`).not.toBeNull();
         expect(Math.abs(got[k]! - toMin(want[k])), `${date} ${k}: got ${prayerClock(got[k])} want ${want[k]}`).toBeLessThanOrEqual(2);
@@ -170,6 +202,26 @@ describe("M13 Deen screen and alerts (UI)", () => {
     expect(text).not.toMatch(/streak|score|rank|missed|shame|points/i);
   });
 
+  it("method card: shows the verify note, saves method, Hanafi Asr and an offset, and the times change", () => {
+    location.hash = "#/deen"; render();
+    expect(document.querySelector("[data-prayer-verify]")!.textContent).toMatch(/Verify with your local timetable/);
+    expect(document.querySelector("[data-prayer-method]")!.textContent).toMatch(/Karachi/);
+    const asrBefore = document.querySelector("[data-prayer-time=asr]")!.textContent;
+    const sel = document.querySelector("[data-prayer-asr-select]") as HTMLSelectElement; sel.value = "hanafi"; sel.dispatchEvent(new Event("change"));
+    expect(prefs.prayerSettings.asr).toBe("hanafi");
+    expect(document.querySelector("[data-prayer-time=asr]")!.textContent).not.toBe(asrBefore);
+    const fajrBefore = prayerTimes({ y: 2026, m: 10, d: 24 }, DHAKA_COORDS).fajr!;
+    const off = document.querySelector("[data-prayer-offset=fajr]") as HTMLInputElement; off.value = "4"; off.dispatchEvent(new Event("change"));
+    expect(document.querySelector("[data-prayer-time=fajr]")!.textContent).toBe(prayerClock(fajrBefore + 4));
+    const m = document.querySelector("[data-prayer-method-select]") as HTMLSelectElement; m.value = "mwl"; m.dispatchEvent(new Event("change"));
+    expect(prefs.prayerSettings.method).toBe("mwl");
+    (document.querySelector("[data-act=prayer-method-reset]") as HTMLButtonElement).click();
+    expect(prefs.prayerSettings).toEqual(DEFAULT_PRAYER_SETTINGS);
+  });
+  it("method settings are not personal data: no consent prompt is needed to change them", () => {
+    location.hash = "#/deen"; render();
+    expect(document.querySelector("[data-prayer-method-card] [data-consent]")).toBeNull();
+  });
   it("a passed prayer that is not marked shows neutral text only", () => {
     vi.setSystemTime(new Date("2026-10-24T08:00:00Z")); // 14:00 Dhaka: Fajr, Dhuhr passed
     location.hash = "#/deen"; render();

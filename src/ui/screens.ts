@@ -56,6 +56,7 @@ import { ownOptions, saveOwnOption, saveSearchResults, savedSearchResults } from
 import { wikipedia } from "../adapters/wikipedia";
 import { GLOSSARY } from "../catalog/glossary";
 import { DHAKA_COORDS, PRAYER_KEYS, dhakaNow, prayerClock, isoDate, parseCoord, prayerTimes, type PrayerKey } from "../core/prayer";
+import { METHOD_IDS, MAX_OFFSET_MIN, parsePrayerSettings, type PrayerSettings } from "../core/prayerMethod";
 import { markedOn, prayerLogId, prayerLogRecord } from "../core/prayerLog";
 import { fastLogId, fastLogRecord, isFastMarked } from "../core/fastLog";
 import { DEFAULT_ALERT_PREFS, parseAlertPrefs } from "../core/prayerAlerts";
@@ -1090,11 +1091,12 @@ function fastCard(lang: Locale): HTMLElement {
 
 function prayerTimesCard(lang: Locale): HTMLElement {
   const now = dhakaNow(Date.now()); const day = isoDate(now.date);
-  const times = prayerTimes(now.date, prefs.prayerCoords);
+  const ps = prefs.prayerSettings; const times = prayerTimes(now.date, prefs.prayerCoords, ps);
   const marked = markedOn(allRecs(), day);
   return h("div", { class: "card", "data-prayer-times": day },
     h("h2", { class: "card-h" }, t("deen.prayer.title", lang)),
     h("p", { class: "muted" }, day),
+    h("p", { class: "muted", "data-prayer-method": "1" }, t("deen.set.methodLine", lang, { m: t(`deen.method.${ps.method}` as Key, lang), a: t(ps.asr === "hanafi" ? "deen.asr.hanafi" : "deen.asr.standard", lang) })),
     h("p", { class: "muted" }, t("deen.prayer.hint", lang)),
     ...PRAYER_KEYS.map((k) => {
       const at = times[k]; const isMarked = marked.has(k);
@@ -1105,7 +1107,32 @@ function prayerTimesCard(lang: Locale): HTMLElement {
         h("button", { class: isMarked ? "btn" : "btn ghost", type: "button", "data-act": "prayer-mark", "data-prayer": k, "aria-pressed": String(isMarked), style: "width:auto;margin:0;min-height:44px",
           ...(at === null ? { disabled: true } : {}), onclick: () => { togglePrayerMark(day, k); rerender(); } }, isMarked ? t("deen.prayer.marked", lang) : t("deen.prayer.mark", lang)));
     }),
-    h("p", { class: "note", "data-prayer-note": "1" }, t("deen.prayer.note", lang)));
+    h("p", { class: "note", "data-prayer-note": "1" }, t("deen.prayer.note", lang), " ", t("deen.set.verify", lang)));
+}
+
+/** Method, Asr rule and per-prayer minute offsets. Saved on change. A calculation setting only; no consent needed. */
+function prayerMethodCard(lang: Locale): HTMLElement {
+  const cur = parsePrayerSettings(prefs.prayerSettings);
+  const save = (next: PrayerSettings) => { prefs.prayerSettings = next; rerender(); };
+  const opt = (v: string, label: string, on: boolean) => h("option", { value: v, ...(on ? { selected: true } : {}) }, label);
+  const method = h("select", { id: "pm-method", "data-prayer-method-select": "1", style: "min-height:44px" },
+    ...METHOD_IDS.map((m) => opt(m, t(`deen.method.${m}` as Key, lang), cur.method === m))) as HTMLSelectElement;
+  method.addEventListener("change", () => save({ ...cur, method: parsePrayerSettings({ method: method.value }).method }));
+  const asr = h("select", { id: "pm-asr", "data-prayer-asr-select": "1", style: "min-height:44px" },
+    opt("standard", t("deen.asr.standard", lang), cur.asr === "standard"), opt("hanafi", t("deen.asr.hanafi", lang), cur.asr === "hanafi")) as HTMLSelectElement;
+  asr.addEventListener("change", () => save({ ...cur, asr: asr.value === "hanafi" ? "hanafi" : "standard" }));
+  const offs = PRAYER_KEYS.map((k) => {
+    const inp = h("input", { id: `pm-off-${k}`, type: "number", min: String(-MAX_OFFSET_MIN), max: String(MAX_OFFSET_MIN), step: "1", inputmode: "numeric", value: String(cur.offsets[k]), "data-prayer-offset": k, style: "width:5em;min-height:44px" }) as HTMLInputElement;
+    inp.addEventListener("change", () => { const n = Number(inp.value); save({ ...cur, offsets: { ...cur.offsets, [k]: Number.isInteger(n) && Math.abs(n) <= MAX_OFFSET_MIN ? n : 0 } }); });
+    return h("div", { class: "row" }, h("label", { for: `pm-off-${k}` }, t(`deen.prayer.name.${k}` as Key, lang)), inp);
+  });
+  const reset = h("button", { class: "btn ghost", type: "button", "data-act": "prayer-method-reset", style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => save(parsePrayerSettings(null)) }, t("deen.set.methodReset", lang));
+  return h("div", { class: "card", "data-prayer-method-card": "1" },
+    h("h2", { class: "card-h" }, t("deen.set.methodTitle", lang)),
+    h("p", { class: "note", "data-prayer-verify": "1" }, t("deen.set.verify", lang)),
+    h("label", { for: "pm-method" }, t("deen.set.method", lang)), method,
+    h("label", { for: "pm-asr" }, t("deen.set.asr", lang)), asr,
+    h("h3", {}, t("deen.set.offsets", lang)), h("p", { class: "muted" }, t("deen.set.offsetsHint", lang, { n: num(MAX_OFFSET_MIN, lang) })), ...offs, reset);
 }
 
 function prayerSettingsCard(lang: Locale): HTMLElement {
@@ -1161,6 +1188,7 @@ export function deen(): HTMLElement {
     h("p", { class: "muted" }, t("deen.control", lang)),
     fastCard(lang),
     prayerTimesCard(lang),
+    prayerMethodCard(lang),
     prayerSettingsCard(lang),
     ...ents.map((e) => {
       const fs = FIELDS.filter((f) => f.entity === e.id);

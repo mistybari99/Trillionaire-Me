@@ -46,7 +46,7 @@ async function deliver(s: AlertSlot, lang: Locale, showDetails: NotifyPrefs) {
 }
 
 let timer: ReturnType<typeof setInterval> | null = null;
-let cache: { date: string; times: PrayerTimes; coords: string } | null = null;
+let cache: { date: string; times: PrayerTimes; key: string } | null = null;
 
 /** One check: finds alerts due now, delivers each once, and remembers it for the Dhaka day. */
 export async function checkPrayerAlerts(nowMs: number = Date.now()): Promise<void> {
@@ -55,8 +55,9 @@ export async function checkPrayerAlerts(nowMs: number = Date.now()): Promise<voi
   const { date, minute } = dhakaNow(nowMs);
   const day = isoDate(date);
   const coords = prefs.prayerCoords;
-  const key = `${coords.lat},${coords.lon}`;
-  if (!cache || cache.date !== day || cache.coords !== key) cache = { date: day, times: prayerTimes(date, coords), coords: key };
+  const settings = prefs.prayerSettings;
+  const key = `${coords.lat},${coords.lon},${JSON.stringify(settings)}`;
+  if (!cache || cache.date !== day || cache.key !== key) cache = { date: day, times: prayerTimes(date, coords, settings), key };
   const slots = alertSlots(day, cache.times, alerts);
   const saved = prefs.prayerFired;
   const delivered = new Set(saved.date === day ? saved.ids : []);

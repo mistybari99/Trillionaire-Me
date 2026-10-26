@@ -7,7 +7,7 @@ export const DHAKA_UTC_OFFSET_MIN = 360;
 
 /** Method angles (degrees). Named so an owner or reviewer can change them in one place. */
 export const FAJR_ANGLE_DEG = 18;            // Fajr: sun this far below the horizon, before sunrise
-export const ISHA_ANGLE_DEG = 17;            // Isha: sun this far below the horizon, after sunset
+export const ISHA_ANGLE_DEG = 18;            // Isha: sun this far below the horizon, after sunset (Karachi default; see prayerMethod.ts)
 export const MAGHRIB_ALTITUDE_DEG = -0.833;  // Maghrib: sunset, sun's upper edge with refraction
 export const ASR_SHADOW_FACTOR = 1;          // Asr: shadow length = factor x object + noon shadow (1 = standard, 2 = Hanafi)
 
@@ -20,6 +20,8 @@ export const PRAYER_KEYS: readonly PrayerKey[] = ["fajr", "dhuhr", "asr", "maghr
 export type PrayerTimes = Record<PrayerKey, number | null>;
 export interface Coords { lat: number; lon: number }
 export interface CalDate { y: number; m: number; d: number }
+
+import { DEFAULT_PRAYER_SETTINGS, METHODS, type PrayerSettings } from "./prayerMethod";
 
 const RAD = Math.PI / 180;
 const DEG = 180 / Math.PI;
@@ -74,19 +76,35 @@ const toDhakaMinute = (utMin: number | null): number | null => {
   return ((m % 1440) + 1440) % 1440;
 };
 
-/** The five daily prayer times for a calendar date (Dhaka calendar) at a location, in Dhaka clock minutes. */
-export function prayerTimes(date: CalDate, c: Coords): PrayerTimes {
+const NO_TIMES: PrayerTimes = { fajr: null, dhuhr: null, asr: null, maghrib: null, isha: null };
+
+/**
+ * The five daily prayer times for a calendar date (Dhaka calendar) at a location, in Dhaka clock minutes.
+ * `settings` (method, Asr rule, per-prayer minutes) is optional; the default is Karachi, standard Asr, no offsets.
+ * No usable location gives Unknown (null) for every prayer, never a guessed time.
+ */
+export function prayerTimes(date: CalDate, c: Coords, settings: PrayerSettings = DEFAULT_PRAYER_SETTINGS): PrayerTimes {
+  if (!validCoords(c)) return { ...NO_TIMES };
+  const raw = rawPrayerTimes(date, c, settings);
+  const out = { ...raw };
+  for (const k of PRAYER_KEYS) { const v = raw[k]; out[k] = v === null ? null : (((v + (settings.offsets[k] ?? 0)) % 1440) + 1440) % 1440; }
+  return out;
+}
+
+function rawPrayerTimes(date: CalDate, c: Coords, settings: PrayerSettings): PrayerTimes {
+  const { fajrAngle, ishaAngle } = METHODS[settings.method];
+  const asrFactor = settings.asr === "hanafi" ? 2 : ASR_SHADOW_FACTOR;
   const jd0 = julianDayUT0(date);
   // Solar noon from the equation of time at the middle of the Dhaka day (about 06:00 UT).
   const noonMin = noonUT(c.lon, sunAt(jd0 + 0.25).eot);
   const at = (alt: number, sign: -1 | 1) => eventUT(jd0, c, () => alt, sign);
-  const asr = eventUT(jd0, c, (dec) => Math.atan(1 / (ASR_SHADOW_FACTOR + Math.tan(Math.abs(c.lat * RAD - dec)))) * DEG, 1);
+  const asr = eventUT(jd0, c, (dec) => Math.atan(1 / (asrFactor + Math.tan(Math.abs(c.lat * RAD - dec)))) * DEG, 1);
   return {
-    fajr: toDhakaMinute(at(-FAJR_ANGLE_DEG, -1)),
+    fajr: toDhakaMinute(at(-fajrAngle, -1)),
     dhuhr: toDhakaMinute(noonMin),
     asr: toDhakaMinute(asr),
     maghrib: toDhakaMinute(at(MAGHRIB_ALTITUDE_DEG, 1)),
-    isha: toDhakaMinute(at(-ISHA_ANGLE_DEG, 1)),
+    isha: toDhakaMinute(at(-ishaAngle, 1)),
   };
 }
 

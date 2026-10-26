@@ -8,6 +8,7 @@ import { DEFAULT_KEEP, isKeep, type SnapshotRepo } from "../core/snapshots";
 import { parseNotifyPrefs, type NotifyPrefs } from "../core/notify";
 import { DHAKA_COORDS, validCoords, type Coords } from "../core/prayer";
 import { DEFAULT_ALERT_PREFS, parseAlertPrefs, type AlertPrefs } from "../core/prayerAlerts";
+import { parsePrayerSettings, type PrayerSettings } from "../core/prayerMethod";
 import { isDataMode, type DataMode } from "../core/dataMode";
 import { applyDesign, migrateDesignId } from "./themes";
 import { isProgressMode, type ProgressMemory, type ProgressMode } from "../core/overallProgress";
@@ -86,6 +87,9 @@ export const prefs = {
   set prayerCoords(v: Coords) { set(this.dataMode === "real" ? "tm:ui:prayerCoords:real" : "tm:ui:prayerCoords", JSON.stringify(validCoords(v) ? { lat: v.lat, lon: v.lon } : DHAKA_COORDS)); },
   /** Forgets the real prayer place (back to Dhaka). Used by "Delete all real data". The demo place is untouched. */
   clearRealPrayerPlace(): void { try { localStorage.removeItem("tm:ui:prayerCoords:real"); } catch { /* storage unavailable */ } },
+  /** Prayer-time method, Asr rule and minute offsets (M13). A calculation setting, not personal data. Missing or broken = Karachi, standard Asr, no offsets. */
+  get prayerSettings(): PrayerSettings { try { return parsePrayerSettings(JSON.parse(get("tm:ui:prayerSettings") ?? "null")); } catch { return parsePrayerSettings(null); } },
+  set prayerSettings(v: PrayerSettings) { set("tm:ui:prayerSettings", JSON.stringify(parsePrayerSettings(v))); },
   /** Pre-prayer and azan alerts (M13). Both off by default. */
   get prayerAlerts(): AlertPrefs { try { return parseAlertPrefs(JSON.parse(get("tm:ui:prayerAlerts") ?? "null")); } catch { return { ...DEFAULT_ALERT_PREFS }; } },
   set prayerAlerts(v: AlertPrefs) { set("tm:ui:prayerAlerts", JSON.stringify(parseAlertPrefs(v))); },
