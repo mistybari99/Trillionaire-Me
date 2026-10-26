@@ -27,6 +27,12 @@ const set = (k: string, v: string) => { try { localStorage.setItem(k, v); } catc
 
 export type PlanMode = "normal" | "minimum_week" | "pause";
 export type HorizonView = "stack" | "compact";
+/** Template chooser for the dashboard screens. "full" is the default; unknown values fall back to it. */
+export type ScreenView = "full" | "compact";
+export const VIEW_SCREENS = ["journey", "money", "habits", "plan", "report", "review", "today"] as const;
+export type ViewScreen = typeof VIEW_SCREENS[number];
+export const screenView = (s: ViewScreen): ScreenView => (get(`tm:ui:view:${s}`) === "compact" ? "compact" : "full");
+export const setScreenView = (s: ViewScreen, v: ScreenView) => set(`tm:ui:view:${s}`, v === "compact" ? "compact" : "full");
 export const prefs = {
   /** Unknown, missing or blocked storage falls back to the default (Bangla). */
   get lang(): Locale { const v = get("tm:ui:lang"); return isLocale(v) ? v : DEFAULT_LOCALE; },

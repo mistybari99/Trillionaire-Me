@@ -4,7 +4,7 @@ import { h } from "./dom";
 import { t, tb, fmtNumber } from "../i18n/t";
 import type { Key } from "../i18n/packs";
 import { LOCALES, LOCALE_ORDER, intlLocale, type Locale } from "../i18n/registry";
-import { applyPrefs, consentKv, prefs, store, type HorizonView, type PlanMode } from "./state";
+import { applyPrefs, consentKv, prefs, screenView, setScreenView, store, type HorizonView, type PlanMode, type ViewScreen } from "./state";
 import { grantConsent, readConsent, revokeConsent } from "../core/consent";
 import { demoBadge, disclaimers, fieldHelp, num, valueEl } from "./components";
 import { STAGES, DEMO_DATE, DEMO_TASKS } from "../demo/seed";
@@ -83,12 +83,21 @@ function saveAnswers(step: number, vals: Answers): boolean {
 }
 
 // ---- shared bits ----
+// Template chooser shared by the dashboard screens: same records, a different view. Stored per screen in prefs.
+function viewBar(screen: ViewScreen, lang: Locale): HTMLElement {
+  const cur = screenView(screen);
+  const seg = (v: "full" | "compact") => h("button", { type: "button", "data-view-opt": v, "aria-pressed": String(cur === v), onclick: () => { setScreenView(screen, v); rerender(); } }, t(`view.${v}` as Key, lang));
+  return h("div", { class: "seg", role: "group", "data-view-bar": screen, "aria-label": t("view.label", lang) }, seg("full"), seg("compact"));
+}
+
 function stageLadder(lang: Locale): HTMLElement {
-  const ol = h("ol", { class: "ladder", "aria-label": t("stage.ladder", lang) });
+  const compact = screenView("journey") === "compact";
+  const ol = h("ol", { class: compact ? "ladder ladder-compact" : "ladder", "data-view": compact ? "compact" : "full", "aria-label": t("stage.ladder", lang) });
   const states = stageStates(stageData().passed);
   stagesFor(prefs.stageTemplate).forEach((g, i) => {
     const st = states[i]!;
-    ol.append(h("li", { class: st }, h("b", {}, g.code), h("div", {}, h("div", {}, tb(g.name, lang)), h("div", { class: "muted" }, tb(g.exit, lang))), h("span", { class: `tag ${st === "done" ? "ok" : st === "now" ? "warn" : "off"}` }, t(`stage.${st === "now" ? "current" : st}` as Key, lang))));
+    if (compact) { ol.append(h("li", { class: st, "data-stage": g.code }, h("b", {}, g.code), " ", h("span", {}, tb(g.name, lang)), " ", h("span", { class: `tag ${st === "done" ? "ok" : st === "now" ? "warn" : "off"}` }, t(`stage.${st === "now" ? "current" : st}` as Key, lang)))); return; }
+    ol.append(h("li", { class: st, "data-stage": g.code }, h("b", {}, g.code), h("div", {}, h("div", {}, tb(g.name, lang)), h("div", { class: "muted" }, tb(g.exit, lang))), h("span", { class: `tag ${st === "done" ? "ok" : st === "now" ? "warn" : "off"}` }, t(`stage.${st === "now" ? "current" : st}` as Key, lang))));
   });
   return ol;
 }
@@ -224,6 +233,14 @@ export function planScreen(): HTMLElement {
     rerender();
   });
   const afterTitle = (id: string) => cp.titles.get(id) || "";
+  const planCompact = screenView("plan") === "compact";
+  const taskLines = cp.recs.filter((r) => r.entity === "task").sort((a, b) => a.id.localeCompare(b.id)).map((r) => {
+    const mv = r.values["task.minutes"];
+    const done = r.values["task.done_on"]?.state === "value";
+    return h("li", { "data-task": r.id }, nsTag(r.ns, lang), " ", h("strong", {}, cp.titles.get(r.id) ?? ""), " · ",
+      mv && mv.state === "value" ? valueEl(t("task.minutes", lang, { n: num(Number(mv.value), lang) }), mv.label, lang) : t("plan.task.minutes.later", lang),
+      done ? h("span", { class: "tag ok" }, t("reward.done", lang)) : null);
+  });
   const taskRows = cp.recs.filter((r) => r.entity === "task").sort((a, b) => a.id.localeCompare(b.id)).map((r) => {
     const mv = r.values["task.minutes"];
     return h("div", { class: "card", "data-task": r.id }, h("div", { class: "row" },
@@ -245,7 +262,8 @@ export function planScreen(): HTMLElement {
     h("h2", {}, t("plan.mode", lang)), h("div", { class: "seg", role: "group" }, seg("normal"), seg("minimum_week"), seg("pause")),
     prefs.mode !== "normal" ? h("p", { class: "muted" }, t(`plan.mode.${prefs.mode}.desc` as Key, lang)) : null,
     h("h2", {}, t("plan.add", lang)), form,
-    cp.hasTasks ? h("div", {}, ...taskRows) : h("p", { class: "muted" }, t("plan.task.empty", lang)),
+    viewBar("plan", lang),
+    cp.hasTasks ? (planCompact ? h("ul", { class: "list-compact", "data-view": "compact" }, ...taskLines) : h("div", { "data-view": "full" }, ...taskRows)) : h("p", { class: "muted" }, t("plan.task.empty", lang)),
     h("h2", {}, t("plan.week", lang)),
     week.length ? h("div", {}, ...week, h("p", { class: "muted" }, t("plan.used", lang, { m: num(cp.plan.usedMinutes, lang), c: num(cp.input.weeklyFreeMinutes ?? 0, lang) }))) : h("p", { class: "muted" }, t("plan.nothing", lang)),
     cp.plan.deferred.length ? h("div", {}, h("h2", { class: "card-h", }, t("plan.later", lang)), ...cp.plan.deferred.map((d) => h("p", { class: "muted", "data-deferred": d.reason }, `${cp.titles.get(d.taskId) ?? ""} — ${t(`plan.why.${d.reason}` as Key, lang)}`))) : null,
@@ -301,13 +319,20 @@ export function moneyScreen(): HTMLElement {
       h("p", { class: "muted" }, a.state === "value" ? valueEl(t("money.bdt", lang, { v: fmtNum(Number(a.value), lang) }), a.label, lang) : t(`unknown.${a.state}` as Key, lang))),
       h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0;min-height:44px", onclick: () => { storeOf(r).delete(r.id); rerender(); } }, t("money.remove", lang))));
   });
+  const moneyCompact = screenView("money") === "compact";
+  const moneyTable = h("table", { class: "table-compact", "data-view": "compact" }, h("tbody", {}, ...recs.filter((r) => r.entity === "finance_item").sort((a, b) => a.id.localeCompare(b.id)).map((r) => {
+    const a = r.values["finance.amount"]!;
+    return h("tr", { "data-fin": r.id }, h("td", {}, nsTag(r.ns, lang)), h("td", {}, fv.labels.get(r.id) ?? String((r.values["finance.label"] as { value?: unknown })?.value ?? "")),
+      h("td", {}, a.state === "value" ? valueEl(t("money.bdt", lang, { v: fmtNum(Number(a.value), lang) }), a.label, lang) : t(`unknown.${a.state}` as Key, lang)));
+  })));
   return h("main", { class: "scr scr-money" },
     link("#/diary", "crumb", `← ${t("diary.title", lang)}`), h("h1", {}, t("money.title", lang)), h("p", { class: "sub" }, t("money.intro", lang)),
     h("h2", {}, t("money.summary", lang)), sum("personal"), sum("business"),
     fv.notMonthly ? h("p", { class: "muted" }, t("money.notMonthly", lang, { n: num(fv.notMonthly, lang) })) : null,
     mixed ? h("p", { class: "muted", "data-mix": "1" }, t("entry.mixNote", lang)) : null,
     h("h2", {}, t("money.add", lang)), form,
-    rows.length ? h("div", {}, ...rows) : h("p", { class: "muted" }, t("money.empty", lang)),
+    viewBar("money", lang),
+    rows.length ? (moneyCompact ? moneyTable : h("div", { "data-view": "full" }, ...rows)) : h("p", { class: "muted" }, t("money.empty", lang)),
     h("p", { class: "muted" }, t("money.note", lang)), disclaimers(lang));
 }
 
@@ -454,14 +479,22 @@ export function captureScreen(): HTMLElement {
 }
 
 export function reportScreen(): HTMLElement {
-  const lang = L(); const items = allRecs().filter((r) => r.entity === "capture_item").map(itemOf); const s = summarize(items);
+  const lang = L(); const capRecs = allRecs().filter((r) => r.entity === "capture_item").sort((a, b) => a.id.localeCompare(b.id)); const items = capRecs.map(itemOf); const s = summarize(items);
+  const repCompact = screenView("report") === "compact";
+  const entryText = (i: Item) => i.text ?? (typeof i.number === "number" ? `${fmtNum(i.number, lang)}${i.unit ? ` ${i.unit}` : ""}` : i.date ?? "");
+  const entries = h("ul", { class: "list-compact", "data-entries": "1" }, ...capRecs.map((r, k) => h("li", { "data-item": r.id }, nsTag(r.ns, lang), " ", h("span", { class: "muted" }, t(`capture.kind.${items[k]!.kind}` as Key, lang)), " · ", entryText(items[k]!))));
+  const compactBody = h("div", { "data-view": "compact" },
+    h("p", {}, s.amountCount ? valueEl(t("report.amountTotal", lang, { n: num(s.amountCount, lang), v: t("money.bdt", lang, { v: fmtNum(s.amountTotal, lang) }) }), "ESTIMATE", lang) : t("report.empty", lang)),
+    h("h2", { class: "card-h" }, t("report.entries", lang)), entries);
   const sec = (title: Key, ...kids: Array<Node | string | null>) => h("div", { class: "card" }, h("h2", { class: "card-h", }, t(title, lang)), ...kids);
   return h("main", {}, link("#/journey", "crumb", `← ${t("journey.title", lang)}`), h("h1", {}, t("report.title", lang)), h("p", { class: "sub" }, t("report.intro", lang)),
-    items.length ? h("div", {},
+    viewBar("report", lang),
+    items.length && repCompact ? compactBody : items.length ? h("div", { "data-view": "full" },
       sec("report.decisions", s.decisions.length ? h("ul", { style: "padding-inline-start:20px" }, ...s.decisions.map((x) => h("li", { "data-decision": "1" }, x))) : h("p", { class: "muted" }, t("report.empty", lang))),
       sec("report.amounts", s.amountCount ? valueEl(t("report.amountTotal", lang, { n: num(s.amountCount, lang), v: t("money.bdt", lang, { v: fmtNum(s.amountTotal, lang) }) }), "ESTIMATE", lang) : h("p", { class: "muted" }, t("report.empty", lang))),
       sec("report.durations", s.durationMinutes ? valueEl(t("report.minutes", lang, { m: fmtNum(s.durationMinutes, lang) }), "INFERENCE", lang) : h("p", { class: "muted" }, t("report.empty", lang))),
-      sec("report.dates", s.dates.length ? h("div", {}, ...s.dates.map((d) => h("p", {}, valueEl(d, "DEMO", lang)))) : h("p", { class: "muted" }, t("report.empty", lang)))) : h("p", { class: "muted" }, t("report.empty", lang)),
+      sec("report.dates", s.dates.length ? h("div", {}, ...s.dates.map((d) => h("p", {}, valueEl(d, "DEMO", lang)))) : h("p", { class: "muted" }, t("report.empty", lang))),
+      sec("report.entries", entries)) : h("p", { class: "muted" }, t("report.empty", lang)),
     disclaimers(lang));
 }
 
@@ -661,6 +694,7 @@ function removeHabit(id: string) {
 export function habitsScreen(): HTMLElement {
   const lang = L(); const { habits, logs } = habitsFromStore(); const today = Habits.todayIso();
   const wd = (i: number) => new Intl.DateTimeFormat(intlLocale(lang), { weekday: "short" }).format(new Date(2023, 0, 1 + i));
+  const habitCompact = screenView("habits") === "compact";
   const cards = habits.map((hb) => {
     const done = Habits.isDone(hb, logs, today); const cnt = Habits.countOn(hb, logs, today);
     const main = hb.target === null
@@ -671,6 +705,8 @@ export function habitsScreen(): HTMLElement {
       return h("button", { type: "button", "data-day": d, "data-done": String(dn), "aria-pressed": String(dn), ...(planned ? {} : { style: "opacity:.45" }), "aria-label": `${d} ${dn ? "✓" : ""}`, onclick: () => { setLog(hb, d, dn ? 0 : (hb.target ?? 1)); rerender(); } }, `${wd(Habits.parseIso(d).getDay())} ${dn ? "●" : "○"}`);
     }));
     const c = Habits.consistency(hb, logs, Habits.addDays(today, -27), today, today);
+    if (habitCompact) return h("li", { "data-habit-card": hb.id }, nsTag(findRec(hb.id)?.ns ?? activeNs(), lang), " ", h("strong", {}, hb.title), " ", main,
+      h("span", { class: "muted", "data-consistency": "1" }, c.planned ? valueEl(t("habits.month", lang, { d: num(c.done, lang), p: num(c.planned, lang) }), "INFERENCE", lang) : t("habits.noPlanned", lang)));
     return h("div", { class: "card", "data-habit-card": hb.id },
       h("div", { class: "row" }, h("div", {}, nsTag(findRec(hb.id)?.ns ?? activeNs(), lang), h("h2", { class: "card-h", }, hb.title)), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0;min-height:44px", onclick: () => { removeHabit(hb.id); rerender(); } }, t("habits.remove", lang))),
       main, dots,
@@ -696,7 +732,8 @@ export function habitsScreen(): HTMLElement {
     rerender();
   });
   return h("main", {}, link("#/today", "crumb", `← ${t("nav.today", lang)}`), h("h1", {}, t("habits.title", lang)), h("p", { class: "sub" }, t("habits.intro", lang)),
-    ...(cards.length ? cards : [h("p", { class: "muted" }, t("habits.empty", lang))]), h("p", { class: "muted" }, t("habits.tip", lang)), h("h2", {}, t("habits.add", lang)), form, disclaimers(lang, ["noGuarantee"]));
+    viewBar("habits", lang),
+    ...(cards.length ? (habitCompact ? [h("ul", { class: "list-compact", "data-view": "compact" }, ...cards)] : cards) : [h("p", { class: "muted" }, t("habits.empty", lang))]), h("p", { class: "muted" }, t("habits.tip", lang)), h("h2", {}, t("habits.add", lang)), form, disclaimers(lang, ["noGuarantee"]));
 }
 
 // ---- flashcards ----
@@ -738,6 +775,8 @@ export function cardsScreen(): HTMLElement {
 function todayFromPlan(cp: ReturnType<typeof currentPlan>, lang: Locale): HTMLElement[] {
   const acts = todaysActions(cp.plan, new Date().getDay());
   if (!acts.length) return [h("p", { class: "muted", "data-today": "none" }, t("home.today.none", lang), " ", link("#/diary/plan", "crumb", t("home.today.open", lang)))];
+  if (screenView("today") === "compact") return [h("ul", { class: "list-compact", "data-view": "compact" }, ...acts.map((p) => h("li", { "data-placement": p.taskId },
+    valueEl(`${fmtClock(p.start)}–${fmtClock(p.end)}`, labelFor(findRec(p.taskId)?.ns ?? activeNs()), lang), " · ", h("strong", {}, cp.titles.get(p.taskId) ?? ""), " ", doneBtn(p.taskId, lang), focusBtn(p.taskId, lang))))];
   return acts.map((p, i) => h("div", { class: "task", "data-placement": p.taskId }, h("b", {}, num(i + 1, lang)),
     h("div", {}, cp.titles.get(p.taskId) ?? "", h("p", {}, valueEl(`${fmtClock(p.start)}–${fmtClock(p.end)}`, labelFor(findRec(p.taskId)?.ns ?? activeNs()), lang)), h("div", { class: "row" }, doneBtn(p.taskId, lang), focusBtn(p.taskId, lang)))));
 }
@@ -762,7 +801,8 @@ export function today(): HTMLElement {
       h("div", { class: "n" }, num(curStage + 1, lang), h("span", { style: "font-size:22px;color:var(--muted)" }, ` / ${num(STAGES.length, lang)}`)),
       rungs),
     h("h2", {}, t("home.tasks", lang)),
-    ...(cp.hasTasks ? todayFromPlan(cp, lang) : activeNs() === "real" ? [h("p", { class: "muted", "data-empty-real": "1" }, t("mode.today.empty", lang))] : DEMO_TASKS.slice(0, 3).map((k, i) => h("div", { class: "task" }, h("b", {}, num(i + 1, lang)),
+    viewBar("today", lang),
+    ...(cp.hasTasks ? todayFromPlan(cp, lang) : activeNs() === "real" ? [h("p", { class: "muted", "data-empty-real": "1" }, t("mode.today.empty", lang))] : screenView("today") === "compact" ? [h("ul", { class: "list-compact", "data-view": "compact" }, ...DEMO_TASKS.slice(0, 3).map((k) => h("li", {}, h("strong", {}, tb(k.title, lang)), " · ", valueEl(t("task.minutes", lang, { n: num(k.minutes, lang) }), "DEMO", lang))))] : DEMO_TASKS.slice(0, 3).map((k, i) => h("div", { class: "task" }, h("b", {}, num(i + 1, lang)),
       h("div", {}, tb(k.title, lang), h("p", {}, valueEl(t("task.minutes", lang, { n: num(k.minutes, lang) }), "DEMO", lang), " · ", tb(k.hint, lang)))))),
     h("div", { class: "actions" },
       link("#/diary/intake", "cta", t("home.start", lang)),
@@ -790,14 +830,22 @@ export function reviewScreen(): HTMLElement {
   const card = (id: string, title: Key, value: string | null) => h("section", { class: "card", "data-review": id },
     h("h2", { class: "card-h", }, t(title, lang)),
     value === null ? h("p", { class: "muted", "data-review-empty": id }, t("review.notEnough", lang)) : valueEl(value, "INFERENCE", lang));
+  const revCompact = screenView("review") === "compact";
+  const measures: Array<[string, Key, string | null]> = [
+    ["tasks", "review.tasks", s.tasksDone === null ? null : t("review.tasks.n", lang, { n: num(s.tasksDone, lang) })],
+    ["focus", "review.focus", s.focusMinutes === null ? null : t("review.focus.n", lang, { m: num(Math.round(s.focusMinutes), lang) })],
+    ["passes", "review.passes", s.stagePasses === null ? null : t("review.passes.n", lang, { n: num(s.stagePasses, lang) })]];
+  const revBody = revCompact
+    ? [h("table", { class: "table-compact", "data-view": "compact" }, h("tbody", {}, ...measures.map(([id, title, v]) => h("tr", { "data-review": id }, h("th", { scope: "row" }, t(title, lang)),
+      h("td", {}, v === null ? h("span", { class: "muted", "data-review-empty": id }, t("review.notEnough", lang)) : valueEl(v, "INFERENCE", lang))))))]
+    : [card("tasks", "review.tasks", measures[0]![2]), card("focus", "review.focus", measures[1]![2]), card("passes", "review.passes", measures[2]![2])];
   return h("main", {}, link("#/journey", "crumb", `← ${t("journey.title", lang)}`),
     h("h1", {}, t("review.title", lang)),
     h("p", { class: "sub" }, t("review.intro", lang)),
     h("p", { class: "muted", "data-review-period": "1" }, valueEl(t("review.period", lang, { from: s.from, to: s.to }), "DEMO", lang)),
-    card("tasks", "review.tasks", s.tasksDone === null ? null : t("review.tasks.n", lang, { n: num(s.tasksDone, lang) })),
-    card("focus", "review.focus", s.focusMinutes === null ? null : t("review.focus.n", lang, { m: num(Math.round(s.focusMinutes), lang) })),
+    viewBar("review", lang),
+    ...revBody,
     s.focusUnknown > 0 ? h("p", { class: "muted" }, t("review.unknownFocus", lang, { n: num(s.focusUnknown, lang) })) : null,
-    card("passes", "review.passes", s.stagePasses === null ? null : t("review.passes.n", lang, { n: num(s.stagePasses, lang) })),
     h("p", { class: "muted" }, t("review.quiet", lang)),
     disclaimers(lang));
 }
@@ -818,6 +866,7 @@ export function journey(): HTMLElement {
       link("#/journey/history", "btn ghost", t("hist.link", lang)),
       link("#/journey/northstar", "btn ghost", t("ns.link", lang))),
     templatePicker(lang),
+    viewBar("journey", lang),
     stageLadder(lang),
     h("h2", {}, t("journey.slots", lang)),
     ...MODULES.filter((m) => m.tab === "journey").map((m) => moduleCard(m, lang)),

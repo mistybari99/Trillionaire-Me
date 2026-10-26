@@ -277,3 +277,4 @@ h2.card-h{font:600 17px/1.4 "Hind Siliguri",sans-serif;margin:0 0 2px}
 .scr-reward .cta{margin-top:16px}
 @media (prefers-reduced-motion:no-preference){.scr-reward [data-fresh]{animation:inspireIn .6s ease-out both}}
 @media (prefers-reduced-motion:reduce){.scr-reward [data-fresh]{animation:none!important}}
+.list-compact{list-style:none;padding:0;margin:8px 0} .list-compact li{padding:8px 0;border-bottom:1px solid var(--line,#ddd)} .table-compact{width:100%;border-collapse:collapse;margin:8px 0} .table-compact td,.table-compact th{padding:8px 4px;text-align:start;border-bottom:1px solid var(--line,#ddd)} .ladder-compact li{padding:6px 0}

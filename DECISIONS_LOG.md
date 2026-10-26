@@ -245,3 +245,11 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 - Limits: the Wikipedia saved-search cache and own-option lists still live in the demo namespace (not user records, never counted). Existing devices see the first-run choice once; nothing is deleted by that.
 - How to undo: remove `renderApp`/`demoPanels`/`trackDemoDay` from `src/app.ts` and `src/main.ts`, make `activeNs()` return "real" when consent exists, and delete `src/core/dataMode.ts`, `src/ui/modeUi.ts`, `tests/data_mode.test.ts`.
 - Proof: `tests/data_mode.test.ts` (18), updated entry tests, `tools/e2e.mjs` MODE-FIRST / MODE-DEMO / MODE-REAL.
+
+## Build step 2: template chooser on every dashboard (26 Oct 2026)
+- What: Journey (stage ladder), Money (finance lines), Habits, Plan (tasks), Report (entries), Review (measures) and Today (tasks) each get a Detailed / Compact switch. Same records in both views (ids on `data-stage`, `data-fin`, `data-habit-card`, `data-task`, `data-item`, `data-review`, `data-placement`). Choice stored per screen in `tm:ui:view:<screen>` (`screenView`/`setScreenView` in `src/ui/state.ts`); missing or unknown value = full. Horizon keeps its own `horizonView` pref.
+- Mode: views read through `allRecs()`, so the hidden namespace never shows and totals never mix modes. Labels, ESTIMATE/DEMO chips and unknown handling are unchanged in both views.
+- Copy: keys `view.*`, `report.entries`, `report.kind` in en and bn (plain wording, Latin digits). No streak, rank or grade words.
+- Alternatives: one global view pref (rejected: owner asked per screen). A new view per entity type (rejected: two views are enough for now; charts come in step 3).
+- Undo: remove `viewBar`, `screenView` use and compact branches in `src/ui/screens.ts`, the `ScreenView` block in `src/ui/state.ts`, the `.list-compact`/`.table-compact` CSS, the keys above, and `tests/screen_views.test.ts`.
+- Proof: `tests/screen_views.test.ts` (19: default/fallback, per-screen persistence, same ids in both views for 7 screens in demo and real mode, hidden namespace absent, bn labels).
