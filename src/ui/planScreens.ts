@@ -4,8 +4,8 @@ import { h } from "./dom";
 import { t, tb, fmtNumber } from "../i18n/t";
 import type { Key } from "../i18n/packs";
 import { prefs, store } from "./state";
-import { activeNs, allRecs, putMode } from "./entry";
-import { demoBadge, disclaimers, num } from "./components";
+import { activeNs, allRecs, consentOn, consentPrompt, nsTag, saveBlockedText, saveTyped } from "./entry";
+import { disclaimers, num } from "./components";
 import { checkFreeText } from "../core/safety";
 import { fieldById } from "../catalog/fields";
 import type { FieldValue } from "../core/types";
@@ -23,10 +23,16 @@ const txt = (v: string): FieldValue => ({ state: "value", value: v, label: "DEMO
 const num_ = (n: number): FieldValue => ({ state: "value", value: n, label: "DEMO" });
 const UNKNOWN: FieldValue = { state: "unknown" };
 
-function putRecord(entity: string, prefix: string, values: Record<string, FieldValue>) {
+/** Saves one entry in the active mode (DEMO in demo, FACT in real). False, and nothing saved, while real mode has no consent tick. */
+function putRecord(entity: string, prefix: string, values: Record<string, FieldValue>): boolean {
   const id = `${prefix}-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`;
-  putMode({ id, entity, ns: "demo", ownerId: "demo-user", schemaVersion: 1, createdAt: new Date().toISOString(), values });
+  return saveTyped({ id, entity, createdAt: new Date().toISOString(), values });
 }
+
+/** Consent prompt above a form while real mode has no tick. */
+const gateFor = (lang: Locale) => (consentOn() ? null : consentPrompt(lang));
+/** Page mark: DEMO badge in demo mode, Real tag in real mode (never both). */
+const modeMark = (lang: Locale) => nsTag(activeNs(), lang);
 
 /** Blank input = unknown; a number = value; anything else = invalid (null). Bangla digits accepted. */
 function numberInput(raw: string): FieldValue | null {
@@ -60,7 +66,7 @@ export function riskScreen(): HTMLElement {
   const stop = h("input", { id: "rk-stop", type: "text", maxlength: "200", autocomplete: "off" });
   const date = h("input", { id: "rk-date", type: "date" });
   const err = h("p", { class: "err", role: "alert" });
-  const form = h("form", { novalidate: true, "data-form": "risk" },
+  const form = h("form", { novalidate: true, "data-form": "risk" }, gateFor(lang),
     h("label", { for: "rk-text" }, t("risk.textLabel", lang)), text,
     h("label", { for: "rk-likelihood" }, t("risk.likelihood", lang)), lk,
     h("label", { for: "rk-stop" }, t("risk.stopLabel", lang)), stop,
@@ -75,12 +81,12 @@ export function riskScreen(): HTMLElement {
     const values: Record<string, FieldValue> = { "risk.text": txt(p.text.trim()), "risk.likelihood": lk.value ? txt(lk.value) : UNKNOWN };
     if (p.stopRule.trim()) values["risk.stop_rule"] = txt(p.stopRule.trim());
     if (p.reviewOn) values["risk.review_on"] = txt(p.reviewOn);
-    putRecord("risk", "risk", values);
+    if (!putRecord("risk", "risk", values)) { err.textContent = saveBlockedText(lang); return; }
     rerender();
   });
   const rows = riskRows(allRecs());
   const list = rows.map((r) => h("div", { class: "card", "data-risk": r.id }, h("div", { class: "row" }, h("div", {},
-    h("h2", { class: "card-h" }, r.text),
+    modeMark(lang), h("h2", { class: "card-h" }, r.text),
     h("p", { class: "muted" }, t("risk.likelihood", lang), ": ", r.likelihood ? choiceLabel("risk.likelihood", r.likelihood as Likelihood, lang) : t("unknown.unknown", lang)),
     h("p", { class: "muted" }, r.stopRule ? `${t("risk.stopLabel", lang)}: ${r.stopRule}` : t("risk.noStop", lang)),
     h("p", { class: "muted" }, r.reviewOn ? `${t("risk.dateLabel", lang)}: ${r.reviewOn}` : t("risk.noDate", lang))),
@@ -91,7 +97,7 @@ export function riskScreen(): HTMLElement {
     h("p", { class: "muted", "data-risk-missing": "1" }, t("risk.missingCount", lang, { n: num(withoutStopRule(rows), lang) })),
     h("h2", {}, t("risk.add", lang)), form,
     rows.length ? h("div", {}, ...list) : h("p", { class: "muted" }, t("risk.empty", lang)),
-    h("p", { class: "muted" }, t("risk.note", lang)), demoBadge(lang), disclaimers(lang, ["advice"]));
+    h("p", { class: "muted" }, t("risk.note", lang)), modeMark(lang), disclaimers(lang, ["advice"]));
 }
 
 // ---- M09 ventures and assets ----
@@ -131,7 +137,7 @@ export function ventureScreen(): HTMLElement {
       h("p", { class: "muted" }, r.stage ? choiceLabel("venture.stage", r.stage, lang) : t("unknown.unknown", lang)),
       h("p", { class: "muted" }, r.ownership === null ? t("ven.ownUnknown", lang) : `${fmtNumber(r.ownership, lang)}%`)),
       removeBtn(r.id, lang))))) : h("p", { class: "muted" }, t("ven.empty", lang)),
-    h("p", { class: "muted" }, t("ven.note", lang)), demoBadge(lang), disclaimers(lang, ["advice"]));
+    h("p", { class: "muted" }, t("ven.note", lang)), modeMark(lang), disclaimers(lang, ["advice"]));
 }
 
 // ---- M10 team roles (roles only) ----
@@ -165,7 +171,7 @@ export function teamScreen(): HTMLElement {
       h("h2", { class: "card-h" }, r.role),
       h("p", { class: "muted" }, r.holder ? choiceLabel("team_role.holder", r.holder as Holder, lang) : t("unknown.unknown", lang))),
       removeBtn(r.id, lang))))) : h("p", { class: "muted" }, t("team.empty", lang)),
-    h("p", { class: "muted" }, t("team.note", lang)), demoBadge(lang), disclaimers(lang, ["advice"]));
+    h("p", { class: "muted" }, t("team.note", lang)), modeMark(lang), disclaimers(lang, ["advice"]));
 }
 
 // ---- M12 plan history (read-only) ----
@@ -178,7 +184,7 @@ export function planHistoryScreen(): HTMLElement {
     rows.length ? h("ul", { class: "plain", "data-history": "1" }, ...rows.map((r) => h("li", { "data-hist": r.kind },
       h("strong", {}, r.title || "—"), " · ", t(`hist.${r.kind}` as Key, lang), " · ", r.day)))
       : h("p", { class: "muted" }, t("hist.empty", lang)),
-    demoBadge(lang), disclaimers(lang, ["advice"]));
+    modeMark(lang), disclaimers(lang, ["advice"]));
 }
 
 // ---- M03 North Star measures and ladder ----
@@ -226,5 +232,5 @@ export function northStarScreen(): HTMLElement {
     h("h1", {}, t("ns.title", lang)), h("p", { class: "sub" }, t("ns.intro", lang)),
     h("h2", {}, t("ns.add", lang)), form,
     rows.length ? h("div", {}, ...cards) : h("p", { class: "muted" }, t("ns.empty", lang)),
-    h("p", { class: "muted" }, t("ns.note", lang)), demoBadge(lang), disclaimers(lang, ["advice"]));
+    h("p", { class: "muted" }, t("ns.note", lang)), modeMark(lang), disclaimers(lang, ["advice"]));
 }

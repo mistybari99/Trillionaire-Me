@@ -11,7 +11,7 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 - [ ] Check Goal Universe, overall progress card, language icon in rendered UI.
 
 ### Block 2 — Real-data ready forms (D-B approved, device only)
-- [ ] Risk register form (real namespace, consent tick, clear-all covers it).
+- [x] Risk register form (real namespace, consent tick, clear-all covers it).
 - [ ] Venture form, Team form, North Star form.
 - [ ] Flashcards and prayer-place forms.
 - [ ] Each: demo/real guards, Unknown not 0, no mixing in totals, tests.

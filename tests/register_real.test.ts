@@ -1,0 +1,84 @@
+// D-B: register forms (risk, venture, team, North Star, flashcards, prayer place) are real-data ready.
+// Device only, consent tick first, demo and real never mixed, Unknown is never 0, clear-all covers them.
+import "fake-indexeddb/auto";
+import { beforeEach, describe, expect, it } from "vitest";
+import { grantConsent, revokeConsent } from "../src/core/consent";
+import type { FieldValue, TMRecord } from "../src/core/types";
+import { render } from "../src/app";
+import { consentKv, prefs, store } from "../src/ui/state";
+
+const NOW = "2026-10-26T00:00:00.000Z";
+const v = (x: unknown): FieldValue => ({ state: "value", value: x, label: "DEMO" });
+const demoRec = (id: string, entity: string, values: Record<string, FieldValue>): TMRecord => ({ id, entity, ns: "demo", ownerId: "demo-user", schemaVersion: 1, createdAt: NOW, values });
+const go = (hash: string) => { location.hash = hash; render(); };
+const submit = (sel: string) => { document.querySelector(sel)!.dispatchEvent(new Event("submit", { cancelable: true, bubbles: true })); render(); };
+const send = (sel: string) => document.querySelector(sel)!.dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }));
+const tap = (sel: string) => document.querySelector<HTMLButtonElement>(sel)!.click();
+const setv = (id: string, value: string) => { (document.getElementById(id) as HTMLInputElement | HTMLSelectElement).value = value; };
+const labels = (recs: TMRecord[]) => recs.flatMap((r) => Object.values(r.values).filter((x) => x.state === "value").map((x) => (x as { label: string }).label));
+const clearAll = () => { go("#/more/data"); tap("[data-act=clear-real]"); render(); tap("[data-act=clear-real-yes]"); render(); };
+
+beforeEach(() => {
+  localStorage.clear(); sessionStorage.clear();
+  store.demo.clear(); store.real.clear();
+  document.body.innerHTML = '<div id="app"></div>';
+  localStorage.setItem("tm:ui:lang", "en");
+  revokeConsent(consentKv);
+  localStorage.setItem("tm:ui:dataMode", "real");
+});
+
+describe("risk register (real data)", () => {
+  it("no consent: prompt shown, nothing saved", () => {
+    go("#/journey/risks");
+    expect(document.querySelector("form[data-form=risk] [data-consent-prompt]")).not.toBeNull();
+    setv("rk-text", "Supplier delay"); send("form[data-form=risk]");
+    expect(document.querySelector("form[data-form=risk] .err")!.textContent).toMatch(/Nothing saved/);
+    expect(store.real.list()).toEqual([]); expect(store.demo.list()).toEqual([]);
+  });
+
+  describe("with consent", () => {
+    beforeEach(() => grantConsent(consentKv, NOW));
+
+    it("saves a real (FACT) risk with a Real tag; unknown likelihood stays unknown", () => {
+      go("#/journey/risks");
+      expect(document.querySelector("[data-consent-prompt]")).toBeNull();
+      setv("rk-text", "Supplier delay"); submit("form[data-form=risk]");
+      const r = store.real.list().find((x) => x.entity === "risk")!;
+      expect(r.ownerId).toBe("owner");
+      expect(r.values["risk.text"]).toMatchObject({ label: "FACT" });
+      expect(r.values["risk.likelihood"]).toEqual({ state: "unknown" });
+      expect(store.demo.list()).toEqual([]);
+      const card = document.querySelector(`[data-risk='${r.id}']`)!;
+      expect(card.querySelector("[data-ns=real]")).not.toBeNull();
+      expect(document.querySelector(".badge.ns-demo")).toBeNull();
+      expect(card.textContent).toMatch(/Don't know/);
+    });
+
+    it("demo risks are hidden in real mode and not counted; labels never mix", () => {
+      store.demo.put(demoRec("risk-d1", "risk", { "risk.text": v("Demo risk") }));
+      go("#/journey/risks");
+      setv("rk-text", "Real risk"); submit("form[data-form=risk]");
+      expect(document.body.textContent).not.toMatch(/Demo risk/);
+      expect(document.querySelector("[data-risk-missing]")!.textContent).toMatch(/: 1/);
+      expect(labels(store.demo.list()).every((l) => l === "DEMO")).toBe(true);
+      expect(labels(store.real.list()).every((l) => l === "FACT")).toBe(true);
+    });
+
+    it("Bangla and Mix keep Latin digits and show the form", () => {
+      localStorage.setItem("tm:ui:lang", "bn");
+      go("#/journey/risks");
+      expect(document.querySelector("form[data-form=risk]")).not.toBeNull();
+      expect(document.body.textContent).not.toMatch(/[০-৯]/);
+    });
+
+    it("clear-all removes the real risk and keeps demo", () => {
+      store.demo.put(demoRec("risk-d2", "risk", { "risk.text": v("Keep demo") }));
+      go("#/journey/risks"); setv("rk-text", "Remove me"); submit("form[data-form=risk]");
+      clearAll();
+      expect(store.real.list()).toEqual([]);
+      expect(store.demo.list().map((r) => r.id)).toEqual(["risk-d2"]);
+    });
+  });
+});
+
+void prefs;
