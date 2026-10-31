@@ -263,9 +263,10 @@
   },
   "TM-TST-040": {
     "outcome": "Partial",
-    "scope": "100 generated plans (not 200): 0 placements inside hard blocks, none overlap, capacity respected. User override with a log entry does not exist, so it is not tested",
+    "scope": "Automated: 200 random plans (and 100 in g3.test.ts) place 0 steps on hard blocks; core placeByHand refuses an overlap without confirmation and logs one entry when confirmed. No screen offers the override yet (the app passes no hard blocks), so this is core-only",
     "artifacts": [
-      "tests/g3.test.ts"
+      "tests/g3.test.ts",
+      "tests/hard_constraint_override.test.ts"
     ]
   },
   "TM-TST-047": {
