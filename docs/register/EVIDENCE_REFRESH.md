@@ -72,3 +72,11 @@ Source is still the original v2_0 xlsx (read only, sha256 `a65616a8…1e71` befo
 | `npx tsc --noEmit` / `npx vite build` | clean |
 
 Changes in this run: finance outputs carry an ESTIMATE label (`tests/finance_labels.test.ts`); the Bangla library gained `public/content/pack-002.json` (14 tips, pending reviewer). Typed amounts stay DEMO until real data opens (D-B). See DECISIONS_LOG.md.
+
+
+## Refresh 31 Oct 2026 (Block 6)
+1. `node tools/evidence.mjs`: vitest 926/926 passed, 0 failed; 32 TM-TST rows with linked tests, all `evidenceOk = true`.
+2. `python3 tools/update_register.py` regenerated `docs/register/Trillionaire_Me_Requirements_Register_v2_1_evidence_refresh.xlsx` from the v2_0 original. The original v2_0 file was not modified (sha256 checked before and after: unchanged).
+3. Counts (linked TM-TST rows): Pass 11, Partial 21, Fail 0. Rows stay Partial where a manual or human gate is open (device tests, reviewer sign-off, usability sessions).
+4. New this pass: Block 5 advice cards (`tests/advice.test.ts`), azan slot (`tests/prayer.test.ts`) and pack-008 add no new TM-TST mapping; their requirement rows are not marked Verified (the Register is only updated from mapped tests).
+5. The `evidence/` folder is run output and is not committed.
