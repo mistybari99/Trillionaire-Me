@@ -51,7 +51,7 @@ import * as Cards from "../core/cards";
 import { CAUSE_TEXT, QUESTIONS, diagnose, type Answer, type Helper } from "../core/stuck";
 import { wordChain } from "../core/learning";
 import { extract, summarize, type Candidate, type Item } from "../core/capture";
-import { netWorth, monthlyCashFlow, cashFlow90Days, type Calc } from "../core/finance";
+import { netWorth, monthlyCashFlow, cashFlow90Days, runwayFor, type Calc } from "../core/finance";
 import { financeFrom } from "../core/financeInputs";
 import { research, safeQuery } from "../core/research";
 import { ownOptions, saveOwnOption, saveSearchResults, savedSearchResults } from "../core/savedLists";
@@ -332,9 +332,18 @@ export function moneyScreen(): HTMLElement {
   const show = (c: Calc) => c.ok ? valueEl(t("money.bdt", lang, { v: fmtNum(c.value, lang) }), c.label, lang) : h("span", { class: "muted", "data-unknown": "1" }, t("money.unknown", lang, { n: num(c.missing, lang) }));
   // nothing entered is "nothing yet", not a computed 0
   const has = (sc: "personal" | "business", kinds: string[]) => fv.items.some((i) => i.scope === sc && kinds.includes(i.kind));
+  const runwayRow = (sc: "personal" | "business") => {
+    const r = runwayFor(fv.items, sc);
+    return h("p", { "data-runway": r.state, "data-runway-scope": sc }, t("money.runway", lang), ": ",
+      r.state === "baseline_needed" ? h("span", { class: "muted", "data-baseline-needed": sc }, t("money.baselineNeeded", lang))
+      : r.state === "unknown_flow" ? h("span", { class: "muted", "data-unknown": "1" }, t("money.unknown", lang, { n: num(r.missing, lang) }))
+      : r.state === "steady" ? t("money.runway.steady", lang)
+      : valueEl(t("money.runway.months", lang, { n: num(Math.round(r.value * 10) / 10, lang) }), r.label, lang));
+  };
   const sum = (sc: "personal" | "business") => h("div", { class: "card", "data-scope": sc }, h("h2", { class: "card-h", }, t(`money.${sc}` as Key, lang)),
     h("p", {}, t("money.networth", lang), ": ", has(sc, ["asset", "liability"]) ? show(netWorth(fv.items, sc)) : h("span", { class: "muted", "data-none": "1" }, t("money.none", lang))),
     h("p", {}, t("money.cashflow", lang), ": ", has(sc, ["income", "expense"]) ? show(monthlyCashFlow(fv.items, sc)) : h("span", { class: "muted", "data-none": "1" }, t("money.none", lang))),
+    has(sc, ["income", "expense"]) ? runwayRow(sc) : null,
     h("p", { "data-cash90": sc }, t("money.cash90", lang), ": ", has(sc, ["income", "expense"]) ? show(cashFlow90Days(fv.items, sc)) : h("span", { class: "muted", "data-none": "1" }, t("money.none", lang))));
   const rows = recs.filter((r) => r.entity === "finance_item").sort((a, b) => a.id.localeCompare(b.id)).map((r) => {
     const a = r.values["finance.amount"]!;

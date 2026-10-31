@@ -46,6 +46,7 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 - [x] Step 2: Weekly review screen `#/journey/week` (`src/core/weeklyReview.ts`, `tests/weekly_review.test.ts`): own entries, last 7 days, Unknown when empty, neutral wording.
 - [x] Step 3: bundled inline-SVG 3D-style logo (32 px) on the Today header; static, no network, nothing moves so reduced motion needs no fallback (`tests/logo3d.test.ts`).
 - [x] Step 4a (TM-REQ-015): infeasible-plan flag `feasibility()` in `src/core/planner.ts`, notice on the plan screen, 20-case test, mapped to TM-TST-015.
+- [x] Step 4b (TM-REQ-005): `runwayFor()` returns baseline needed without an own Asset line; prompt on Money; TM-TST-005 mapped as Partial (only runway exists).
 
 ## Part B — Owner-only tasks
 - [ ] Phone offline test: open online once, visit all pages, airplane mode, reopen (O1).

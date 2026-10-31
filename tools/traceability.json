@@ -336,5 +336,12 @@
     "artifacts": [
       "tests/infeasible_plan.test.ts"
     ]
+  },
+  "TM-TST-005": {
+    "outcome": "Partial",
+    "scope": "Automated: runway returns baseline_needed with no asset line or an unknown asset amount, ignores business and demo lines, and the Money screen shows a prompt (never 0). Emergency-fund and investment calculators do not exist, so the full criterion is not proven",
+    "artifacts": [
+      "tests/baseline_runway.test.ts"
+    ]
   }
 }

@@ -38,3 +38,21 @@ export function runwayMonths(cash: FieldValue, monthlyFlow: Calc): Calc | { ok: 
 /** Totals of the monthly income and expense entries of one scope. Unknown amounts make the total unknown (never 0). */
 export const monthlyIncome = (items: FinItem[], scope: FinItem["scope"]): Calc => total(items, "income", scope);
 export const monthlyExpenses = (items: FinItem[], scope: FinItem["scope"]): Calc => total(items, "expense", scope);
+
+/** TM-REQ-005: runway needs a baseline the user has entered. No asset line, or an asset line with an unknown amount, means "baseline needed":
+ *  nothing is read, guessed or carried over from an old figure. The baseline is the total of the user's own Asset lines of that scope. */
+export type Runway =
+  | { state: "baseline_needed" }
+  | { state: "unknown_flow"; missing: number }
+  | { state: "steady" }
+  | { state: "months"; value: number; label: Label };
+export function runwayFor(items: FinItem[], scope: FinItem["scope"]): Runway {
+  const assets = items.filter((i) => i.kind === "asset" && i.scope === scope);
+  if (assets.length === 0 || assets.some((a) => num(a.amount) === null)) return { state: "baseline_needed" };
+  const cash: FieldValue = { state: "value", value: assets.reduce((s, a) => s + num(a.amount)!, 0), label: CALC_LABEL };
+  const flow = monthlyCashFlow(items, scope);
+  if (!flow.ok) return { state: "unknown_flow", missing: flow.missing };
+  const r = runwayMonths(cash, flow);
+  if (!r.ok) return { state: "unknown_flow", missing: r.missing };
+  return r.value === null ? { state: "steady" } : { state: "months", value: r.value, label: r.label };
+}
