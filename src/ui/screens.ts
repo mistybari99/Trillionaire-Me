@@ -821,7 +821,7 @@ export function today(): HTMLElement {
     ...STAGES.map((_, i) => h("li", { class: i < curStage ? "done" : i === curStage ? "now" : "" })));
   return h("main", { class: "scr scr-today" },
     h("p", { class: "muted" }, activeNs() === "real" ? todayIso() : valueEl(tb(DEMO_DATE, lang), "DEMO", lang)),
-    h("h1", {}, t("home.title", lang)),
+    h("div", { class: "logo-row" }, logo3d(32, lang), h("h1", {}, t("home.title", lang))),
     h("aside", { class: `card inspire ${insp.theme}`, "aria-label": "Inspiration" },
       h("span", { class: "chip" }, `${THEME_LABEL[insp.theme].bn} · ${THEME_LABEL[insp.theme].en}`),
       h("p", { class: "inspire-bn" }, insp.bn), h("p", { class: "muted inspire-en" }, insp.en)),
