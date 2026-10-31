@@ -16,6 +16,8 @@ page.on("console", (m) => { const x = m.text(); if (/Content Security Policy|Ref
 const results = [];
 const idb = (pg) => pg.evaluate(() => new Promise((res) => { const q = indexedDB.open("tm-db"); q.onerror = () => res([]); q.onsuccess = () => { const db = q.result; if (!db.objectStoreNames.contains("records")) return res([]); db.transaction("records").objectStore("records").getAll().onsuccess = (e) => res(e.target.result); }; }));
 const check = (id, name, pass, detail = "") => { results.push({ id, name, pass, detail }); console.log(pass ? "PASS" : "FAIL", id, name, detail); };
+// A TM-TST row built from checks that already ran: passes only when every one of those checks passed (and at least one ran).
+const passOf = (...ids) => { const r = results.filter((x) => ids.includes(x.id)); return r.length > 0 && r.every((x) => x.pass); };
 
 await page.goto("http://localhost:4174/#/today");
 // First run: the choice comes before anything else. Explore with demo data first (empty start check below).
@@ -181,6 +183,7 @@ check("G3-STUCK", "choosing it switches mode and adds 0 tasks", (await idb(page)
 await page.goto("http://localhost:4174/#/diary/plan"); await page.waitForSelector("[data-mode]");
 check("G3-STUCK", "plan screen shows Minimum week as active", (await page.locator("[data-mode=minimum_week]").getAttribute("aria-pressed")) === "true");
 await page.click("[data-mode=normal]");
+check("TM-TST-047", "stuck flow: tired offers only lighter modes and adds 0 tasks (browser)", passOf("G3-STUCK"));
 // R5 (B7/B8/B10): calm reflection cards on the stuck page, word chain in the journey log
 await page.goto("http://localhost:4174/#/stuck"); await page.waitForSelector("[data-card=where_time_goes]");
 const cardIds = await page.locator("[data-card]").evaluateAll((e) => e.map((x) => x.getAttribute("data-card")));
@@ -243,6 +246,7 @@ await ctx.setOffline(false);
   const bad = await page.evaluate(async (files) => { const out = []; for (const f of files) { try { const r = await fetch(f, { cache: "no-store" }); if (!r.ok) out.push(f); } catch { out.push(f); } } return out; }, pre.files);
   check("PRECACHE", "every saved file can be read with the network off", bad.length === 0, bad.slice(0, 5).join(","));
   await ctx.setOffline(false);
+  check("TM-TST-084", "headless Chromium with the network off: shell, status screen and cold-start screens open, every saved file readable (not a real-device run)", passOf("G1-OFFLINE", "PRECACHE"));
 }
 
 // Design version: default light-futuristic, switch to ink-paper and back, persists across reload, dark follows phone; old "classic" saved value migrates

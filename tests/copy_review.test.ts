@@ -25,13 +25,13 @@ describe("copy review: plain English", () => {
   it("every English line is 120 characters or fewer", () => {
     for (const k of keys) expect(en[k]!.length, k).toBeLessThanOrEqual(120);
   });
+});
 
+describe("TM-TST-041/116 copy review: no banned words in any mode", () => {
   it("no banned English words in en", () => {
     for (const k of keys) expect(BANNED_EN.exec(en[k]!)?.[0], k).toBeUndefined();
   });
-});
 
-describe("TM-TST-041 copy review: no banned words in any mode", () => {
   it("no banned English words in bn or mix (English words inside Bangla lines)", () => {
     for (const k of keys) {
       expect(BANNED_EN.exec(bn[k]!)?.[0], `bn ${k}`).toBeUndefined();

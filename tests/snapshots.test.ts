@@ -122,7 +122,7 @@ describe("reminder rule", () => {
   });
 });
 
-describe("IndexedDB adapter", () => {
+describe("TM-TST-089 IndexedDB adapter", () => {
   it("snapshots persist and an existing version-1 database keeps its records after the upgrade", async () => {
     const name = `snapdb-${Math.random().toString(36).slice(2)}`;
     const v1 = new Dexie(name); v1.version(1).stores({ records: "[ns+id], ns, entity" }); await v1.table("records").put(rec("demo", "old")); v1.close();

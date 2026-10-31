@@ -8,7 +8,7 @@ import { grantConsent } from "../src/core/consent";
 const base = (over: Partial<PlanInput>): PlanInput => ({ weeklyFreeMinutes: 600, blocked: [], tasks: [], mode: "normal", startDay: 0, ...over });
 const abs = (p: { day: number; start: number }) => p.day * 1440 + p.start;
 
-describe("dependency: a task waits for its prerequisite", () => {
+describe("TM-TST-039 dependency: a task waits for its prerequisite", () => {
   it("the dependent is placed after the prerequisite ends, even when it has higher priority", () => {
     const p = schedule(base({ tasks: [{ id: "a", minutes: 60, priority: 1 }, { id: "b", minutes: 30, priority: 3, after: "a" }] }));
     const a = p.placements.find((x) => x.taskId === "a")!, b = p.placements.find((x) => x.taskId === "b")!;

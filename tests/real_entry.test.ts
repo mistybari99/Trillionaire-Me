@@ -33,7 +33,7 @@ beforeEach(() => {
   localStorage.setItem("tm:ui:dataMode", "real");
 });
 
-describe("consent gate: no consent, no save", () => {
+describe("TM-TST-093 consent gate: no consent, no save", () => {
   it("the task form shows the consent prompt and saves nothing", () => {
     go("#/diary/plan");
     expect(document.querySelector("form[data-form=task] [data-consent-prompt]")).not.toBeNull();

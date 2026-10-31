@@ -27,7 +27,7 @@ describe("precacheList", () => {
   });
 });
 
-describe("service worker source", () => {
+describe("TM-TST-084 service worker source", () => {
   it("stamps version and list; the unstamped source is a safe empty list", () => {
     const out = stampServiceWorker(sw, "abc123", ["./", "./a.js"]);
     expect(out).toContain('const VERSION = "abc123";'); expect(out).toContain('const PRECACHE = ["./","./a.js"];'); expect(out).not.toContain("/*PRECACHE");

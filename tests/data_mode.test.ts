@@ -165,7 +165,7 @@ describe("asking: after 3 separate days, at most once per day", () => {
   });
 });
 
-describe("Only demo / Only real: the other namespace is hidden everywhere and never counted", () => {
+describe("TM-TST-119 Only demo / Only real: the other namespace is hidden everywhere and never counted", () => {
   const SCREENS = ["#/today", "#/habits", "#/diary/plan", "#/diary/money", "#/journey/horizon", "#/journey/review", "#/journey/report"];
   const text = () => document.body.textContent ?? "";
 

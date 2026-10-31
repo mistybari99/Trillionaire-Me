@@ -80,3 +80,66 @@ Changes in this run: finance outputs carry an ESTIMATE label (`tests/finance_lab
 3. Counts (linked TM-TST rows): Pass 11, Partial 21, Fail 0. Rows stay Partial where a manual or human gate is open (device tests, reviewer sign-off, usability sessions).
 4. New this pass: Block 5 advice cards (`tests/advice.test.ts`), azan slot (`tests/prayer.test.ts`) and pack-008 add no new TM-TST mapping; their requirement rows are not marked Verified (the Register is only updated from mapped tests).
 5. The `evidence/` folder is run output and is not committed.
+
+
+## Run 3: mapping pass (31 Oct 2026)
+Source is the original v2_0 xlsx (read only, sha256 `a65616a8...1e71` before and after). Run: `node tools/evidence.mjs` (vitest 963/963 passed, 0 failed), `node tools/e2e.mjs` (0 FAIL), then `python3 tools/update_register.py` into `..._v2_1_evidence_refresh.xlsx`. The Change Log sheet of the copy has a new "Evidence" line.
+
+Counts of linked TM-TST rows: 42 (was 32). Verified (Pass) 13 (was 11). Partial 29 (was 21). Fail 0. Requirements with no evidence: 138 (was 148).
+
+### Newly mapped (each test file was read first)
+| TM-TST | Outcome | Test | Why it counts / what is missing |
+|---|---|---|---|
+| 041 | Pass (was Partial) | `copy_review.test.ts`, `focus_habits_cards_ui.test.ts` | Scan of every key in en, bn, mix (the en scan moved into the same describe) plus a new check that two missed days create no task, log or reminder (no catch-up backlog) |
+| 116 | Pass (was Partial) | `copy_review.test.ts`, `r5_stuck_log.test.ts`, `g3.test.ts`, `stuck.test.ts`, e2e | No shame words in any key and in the rendered stuck screen in overload (new check); overload adds 0 tasks (scheduler, stuck flow, browser) |
+| 039 | Partial | `m_dependency.test.ts` | Unmet prerequisite is never placed (reason waiting_for_prerequisite); about 8 cases, no word "blocked" |
+| 040 | Partial | `g3.test.ts` | 100 plans, not 200; user override with a log does not exist |
+| 047 | Partial | `g3.test.ts`, `stuck.test.ts`, e2e | Adds 0 tasks; Reduce Scope and Resume Gently are not offered |
+| 084 | Partial | `precache.test.ts`, e2e | Headless offline run only; real-phone airplane test is owner task O1 |
+| 085 | Partial | `sync.test.ts` | Replay twice and interrupted replay, not 5x, no device |
+| 086 | Partial | `sync.test.ts` | One conflict case, not 20; no resolution screen |
+| 089 | Partial | `snapshots.test.ts` | Real v1 to v2 database upgrade keeps records; no failed-migration case |
+| 093 | Partial | `real_entry.test.ts`, `real_data.test.ts` | No consent means nothing saved; revoke works; no full "all unrelated features" check |
+| 119 | Partial | `data_mode.test.ts` | Demo and real never shown as each other; not all KPIs reconcile-tested |
+| 126 | Partial | `connections.test.ts` | Everything off by default, approval and cost gate, withdraw; no live integration exists |
+
+Test edits for the mapping were titles and moving tests into their own describe (so an id counts only its own assertions): `g3.test.ts` (003/040, 047/116, plan basics), `stuck.test.ts` (047/116 describe), `copy_review.test.ts` (041/116). Two small new assertions: no-backlog test and a rendered-text scan in overload. `tools/e2e.mjs` got two derived checks, TM-TST-047 and TM-TST-084, that pass only when the underlying checks pass.
+
+### Rows still Partial and why (29)
+| TM-TST | Reason |
+|---|---|
+| TM-TST-010 | Structural check passes (max 7 fields/screen). 3-user timed usability session NOT run |
+| TM-TST-066 | Catalog 100% help/what-why-example/format complete. 5-user usability session NOT run |
+| TM-TST-067 | Completeness indicator + next-needed with reason in 500/500 random states. User sessions NOT run |
+| TM-TST-130 | Checklist done; owner confirmation line still open |
+| TM-TST-161 | Bangla glossary (30 terms) + field help exist. Human reviewer sign-off NOT done; every key present and non-empty in en, bn and mix (unit parity) |
+| TM-TST-022 | Money screen: net worth per scope from saved items, unknown stays unknown, nothing-entered shows 'nothing yet'. Real-user test not run |
+| TM-TST-023 | Monthly cash flow on screen (one-off/yearly counted aside). 90-day review view not built |
+| TM-TST-171 | Home shows 1-3 own planned actions + current stage only (DOM test + browser e2e). 5-user 10-second usability test NOT run |
+| TM-TST-166 | Stage rules + journey log work: order fixed, evidence required, history append-only, calm copy (scan), before/after logged; browser e2e A->B. Stage templates beyond A are generic; usability test NOT run |
+| TM-TST-053 | O7 own options + saved offline search list: save, cap 20 per field, add-own, source snapshot kept for offline reuse, secrets refused. Select/compare/customize/reject/defer and replace-history not covered |
+| TM-TST-146 | Research contract via Wikipedia provider: 2-3 options with source and date, HTTP error never crashes, saved term read first. UI select/compare/reject/defer actions not covered; research contract: 0 calls without click, <2 results invents nothing (unit) |
+| TM-TST-165 | O5 scoring and path fit keep unknown as unknown (not_enough_data, no guess, no 0). 'incomplete' label on early path suggestions and the full assessment flow not covered |
+| TM-TST-043 | O6 90-day review: no records gives 'not enough data' (null, never 0); only in-window records counted. Weekly review itself not covered |
+| TM-TST-088 | G2 backup/restore round-trip into a clean database; damaged or tampered file rejected; demo backup never restored as real; newer schema refused. Device-level checksum and attachments not covered |
+| TM-TST-117 | Automated part: focus rings, 44px targets, skip link, label and heading checks on every route in en and bn. TalkBack, 200% font on device and small-viewport device runs NOT done |
+| TM-TST-148 | Habits: two missed days gives a kind restart offer, never red or run-count copy; no run-count or score function. Cue/frequency/goal link not covered |
+| TM-TST-151 | Sensitive topics (emotions, health, money, deen) carry a sensitive flag; app links are real routes. Advice-boundary note and expert-review flag on each finance/legal/tax/medical/religious screen NOT covered |
+| TM-TST-155 | Lock-screen text hidden by default for worship, health, money and third-party; per-category 'Show details' opt-in; neutral en/bn/mix text. On-device lock-screen check, app lock and passphrase recovery NOT done (Owner) |
+| TM-TST-158 | Horizon view places goals from stored data; unset goals kept apart; empty horizons are empty, not zero. Gantt, kanban, resource and readiness maps and text-equivalent check NOT covered |
+| TM-TST-039 | Planner: a task with an unmet prerequisite is not placed and is deferred as waiting_for_prerequisite; it follows its prerequisite, cycles and missing ids are safe. About 8 cases, not 20 fixtures; the screen shows the link but not the word blocked |
+| TM-TST-040 | 100 generated plans (not 200): 0 placements inside hard blocks, none overlap, capacity respected. User override with a log entry does not exist, so it is not tested |
+| TM-TST-047 | Overload adds 0 tasks: minimum_week is a subset of the normal plan, pause places nothing (50 plans), tired/overloaded never offers a tiny step (500 answer sets), choosing Minimum week adds no task (unit and browser). Reduce Scope and Resume Gently are not offered or tested |
+| TM-TST-084 | Headless Chromium with the network off: shell, status screen and cold-start screens open, every saved file readable, service worker source checks. NOT a real-device airplane run (owner task O1) |
+| TM-TST-085 | Unit: replaying the same operations twice and an interrupted flush then full replay give the same state; enqueue is idempotent. No 5x run and no device |
+| TM-TST-086 | Unit: two devices editing one field are detected and the loser is kept in the conflict list; same device is not a conflict. One case, not 20; no device; no resolution screen |
+| TM-TST-089 | Unit: an existing version-1 IndexedDB database keeps its records after the upgrade. No failed-migration case and no device |
+| TM-TST-093 | Unit: no consent means real forms save nothing and real writes are refused; demo works without consent; missing, broken or old consent is none; grant then revoke. A fuller check that every unrelated feature still works is not written |
+| TM-TST-119 | Unit: demo mode shows no real data and real mode shows no demo data on any screen; totals never add demo and real. KPI reconciliation to source records is covered only for the money cards, not all KPIs |
+| TM-TST-126 | Unit: every facility is off by default with a null adapter, no network call while off, enabling needs approval and states cost, withdraw switches it off, connected stubs call nothing. No real integration exists yet, so scoped revoke of a live integration is untested |
+
+### Looked at and not mapped (no honest fit)
+- 005 (baseline needed), 009 (paused goal gives no reminders), 007 (stale badge), 150 (currency), 156 (tombstone): no such code exists yet.
+- 015: no explicit infeasible flag (deferred with reason only). 045: rules give suggestions but no old/new proposal. 068: tests show text equivalents for several visuals but not "every visual", and TalkBack is a device test.
+- 044, 077, 078, 097, 120: `security_review.test.ts`, `g1.test.ts` and the pack guards cover parts only (no provider retention map, no log scan beyond sources, packs only). Left unmapped to avoid overstating.
+- 168: offline e2e opens only some AI-free screens; the full flows are not driven offline.

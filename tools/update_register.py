@@ -21,5 +21,10 @@ have = {r[0].value for r in reqs.iter_rows(min_row=4)}
 for n in new:
     if n["id"] not in have:
         reqs.append([n["id"], "Life Success system", n["requirement"], "U", "", "R1", n["gate"], n["gate"], "FIRST-BUILD (G1-G3)", "", "", "", "", "", "Not verified — no build"])
+# Change Log line (the copy is always rebuilt from the untouched original, so this never duplicates)
+npass = sum(1 for x in req_of.values() if x["outcome"] == "Pass")
+npart = sum(1 for x in req_of.values() if x["outcome"] != "Pass")
+data = json.load(open("evidence/traceability-result.json"))
+wb["Change Log"].append(["Evidence", f"{data['generated'][:10]}: statuses written from real runs only ({data['totalTests']} vitest tests, {data['failed']} failed; browser e2e). {len(req_of)} requirement rows linked to tests: Verified (Pass) {npass}, Partial {npart}. Verified means every linked automated check passed in that run; Partial rows keep their device, human or usability gate open. Original v2_0 file untouched. Details: docs/register/EVIDENCE_REFRESH.md"])
 wb.save(dst)
 print("updated", len(req_of), "requirement rows")

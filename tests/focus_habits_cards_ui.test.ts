@@ -41,7 +41,7 @@ describe("focus timer screen", () => {
   });
 });
 
-describe("TM-TST-148 habits screen", () => {
+describe("TM-TST-041/148 habits screen", () => {
   beforeEach(() => { reset(); vi.useFakeTimers(); vi.setSystemTime(new Date("2026-10-24T09:00:00")); });
   afterEach(() => vi.useRealTimers());
   const habit = (extra: Record<string, FieldValue> = {}): TMRecord => ({ ...base, id: "habit-1", entity: "habit", values: { "habit.title": v("Read"), "habit.days": v("0,1,2,3,4,5,6"), ...extra } });
@@ -65,6 +65,12 @@ describe("TM-TST-148 habits screen", () => {
   it("two missed days → a kind restart offer; never red failure copy, never a run-count", () => {
     store.demo.put(habit()); go("#/habits"); expect(document.querySelector("[data-restart]")!.textContent).toMatch(/smallest version/);
     expect(document.querySelector("[data-habit-card]")?.textContent ?? "".toLowerCase()).not.toMatch(/streak|fail|broken|lost|shame|best/);
+  });
+  it("missed days create no catch-up backlog: viewing the screen adds no task, no log and no reminder, only the restart offer", () => {
+    store.demo.put(habit()); const before = store.demo.list().length;
+    go("#/habits"); render(); go("#/today"); go("#/diary/plan");
+    expect(store.demo.list().length).toBe(before);
+    expect(store.demo.list().filter((r) => r.entity === "task" || r.entity === "habit_log")).toEqual([]);
   });
   it("a secret in the habit name is rejected; adding one habit works", () => {
     grantConsent(consentKv, "2026-10-25T00:00:00.000Z"); localStorage.setItem("tm:ui:dataMode", "real");

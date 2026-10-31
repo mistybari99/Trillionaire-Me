@@ -30,7 +30,7 @@ beforeEach(() => {
 });
 afterEach(() => { vi.restoreAllMocks(); });
 
-describe("ports: null adapters are the default", () => {
+describe("TM-TST-126 ports: null adapters are the default", () => {
   it("every facility is off and the registry returns its null adapter", async () => {
     const reg = createRegistry(new MemoryKV());
     for (const id of FACILITY_IDS) {
@@ -103,7 +103,7 @@ describe("keys: accepted shapes and refusals", () => {
   });
 });
 
-describe("Connections screen", () => {
+describe("TM-TST-126 Connections screen", () => {
   it("one card per facility, all off, Enable disabled without approval", () => {
     go("#/more/connections");
     for (const id of FACILITY_IDS) {

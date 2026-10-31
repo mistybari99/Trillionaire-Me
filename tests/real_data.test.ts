@@ -74,7 +74,7 @@ describe("D-B: demo and real never mix", () => {
   });
 });
 
-describe("D-B: consent record", () => {
+describe("TM-TST-093 D-B: consent record", () => {
   it("missing, broken or old-version consent means no consent", () => {
     const kv = new MemoryKV();
     expect(readConsent(kv)).toBe(false);

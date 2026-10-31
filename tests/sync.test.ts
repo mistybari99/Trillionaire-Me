@@ -9,7 +9,7 @@ function rng(seed: number) { return () => ((seed = (seed * 1664525 + 1013904223)
 const canon = (x: unknown): unknown => Array.isArray(x) ? x.map(canon) : x && typeof x === "object" ? Object.fromEntries(Object.entries(x).sort(([a], [b]) => a.localeCompare(b)).map(([k, y]) => [k, canon(y)])) : x;
 const final = (s: ReturnType<typeof emptyState>) => JSON.stringify(canon(s.records)); // key order is not state
 
-describe("G2 sync: duplicate replay, interruption, ordering", () => {
+describe("TM-TST-085 G2 sync: duplicate replay, interruption, ordering", () => {
   const ops = [op(1, "A", 10, v("a1")), op(2, "B", 20, v("b1")), op(3, "A", 30, v("a2")), op(4, "A", 15, v("x"), "profile.birth_year")];
   it("duplicate replay changes nothing", () => {
     const once = applyAll(emptyState(), ops);
@@ -33,7 +33,7 @@ describe("G2 sync: duplicate replay, interruption, ordering", () => {
   it("enqueue is idempotent", () => { const ob = new Outbox(); ob.enqueue(ops[0]!); ob.enqueue(ops[0]!); expect(ob.pending().length).toBe(1); });
 });
 
-describe("G2 sync: conflicts are recorded, never silent", () => {
+describe("TM-TST-086 G2 sync: conflicts are recorded, never silent", () => {
   it("two devices editing the same field: later wins, loser is kept in conflicts", () => {
     const s = applyAll(emptyState(), [op(1, "A", 10, v("mine")), op(2, "B", 20, v("theirs"))]);
     expect(s.records["demo:r1"]!.values["profile.display_name"]).toEqual(v("theirs"));

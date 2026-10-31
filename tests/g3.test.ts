@@ -7,7 +7,7 @@ import type { FieldValue } from "../src/core/types";
 function rng(seed: number) { return () => ((seed = (seed * 1664525 + 1013904223) >>> 0) / 2 ** 32); }
 const overlap = (a: { start: number; end: number }, b: { start: number; end: number }) => a.start < b.end && b.start < a.end;
 
-describe("TM-TST-003 hard constraints are never violated (100 generated plans)", () => {
+describe("TM-TST-003/040 hard constraints are never violated (100 generated plans)", () => {
   it("no task lands inside prayer/family/rest, never over capacity, unknown minutes never placed", () => {
     const r = rng(3);
     for (let n = 0; n < 100; n++) {
@@ -26,14 +26,9 @@ describe("TM-TST-003 hard constraints are never violated (100 generated plans)",
       expect(JSON.stringify(schedule({ weeklyFreeMinutes: cap, blocked, tasks }))).toBe(JSON.stringify(p)); // deterministic
     }
   });
-  it("unknown capacity places nothing (never assumes 0 or unlimited) and says why", () => {
-    const p = schedule({ weeklyFreeMinutes: null, blocked: [], tasks: [{ id: "a", minutes: 10, priority: 1 }] });
-    expect(p.placements).toEqual([]); expect(p.deferred[0]!.reason).toBe("unknown_capacity");
-  });
-  it("unknown task time is 'needs_estimate', not scheduled as 0 minutes", () => {
-    const p = schedule({ weeklyFreeMinutes: 600, blocked: [], tasks: [{ id: "a", minutes: null, priority: 9 }, { id: "b", minutes: 30, priority: 1 }] });
-    expect(p.placements.map((x) => x.taskId)).toEqual(["b"]); expect(p.deferred).toEqual([{ taskId: "a", reason: "needs_estimate" }]);
-  });
+});
+
+describe("TM-TST-047/116 overload modes add no work (scheduler)", () => {
   it("overload modes never add work: minimum_week ⊆ normal, pause = nothing", () => {
     const r = rng(9);
     for (let n = 0; n < 50; n++) {
@@ -42,6 +37,17 @@ describe("TM-TST-003 hard constraints are never violated (100 generated plans)",
       const normal = schedule(base).placements.length, minw = schedule({ ...base, mode: "minimum_week" }).placements.length;
       expect(minw).toBeLessThanOrEqual(Math.min(3, normal)); expect(schedule({ ...base, mode: "pause" }).placements).toEqual([]);
     }
+  });
+});
+
+describe("plan basics: unknown capacity and time, start day, Home limit", () => {
+  it("unknown capacity places nothing (never assumes 0 or unlimited) and says why", () => {
+    const p = schedule({ weeklyFreeMinutes: null, blocked: [], tasks: [{ id: "a", minutes: 10, priority: 1 }] });
+    expect(p.placements).toEqual([]); expect(p.deferred[0]!.reason).toBe("unknown_capacity");
+  });
+  it("unknown task time is 'needs_estimate', not scheduled as 0 minutes", () => {
+    const p = schedule({ weeklyFreeMinutes: 600, blocked: [], tasks: [{ id: "a", minutes: null, priority: 9 }, { id: "b", minutes: 30, priority: 1 }] });
+    expect(p.placements.map((x) => x.taskId)).toEqual(["b"]); expect(p.deferred).toEqual([{ taskId: "a", reason: "needs_estimate" }]);
   });
   it("the week starts on the chosen day, so today's tasks come first", () => {
     for (const sd of [0, 3, 6]) {

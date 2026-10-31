@@ -183,10 +183,11 @@
     ]
   },
   "TM-TST-041": {
-    "outcome": "Partial",
-    "scope": "Copy string scan: no banned punitive/judging words in en, bn or mix across all keys (habit-specific wording in TM-TST-148). Review of copy by a human not done",
+    "outcome": "Pass",
+    "scope": "Automated: banned-word scan over every key in en, bn and mix; habits screen after two missed days shows only a kind restart offer (no red, no run-count) and creates no task, log or reminder (no catch-up backlog). The word list is a fixed list, so a human copy review is still advised",
     "artifacts": [
-      "tests/copy_review.test.ts"
+      "tests/copy_review.test.ts",
+      "tests/focus_habits_cards_ui.test.ts"
     ]
   },
   "TM-TST-043": {
@@ -204,10 +205,15 @@
     ]
   },
   "TM-TST-116": {
-    "outcome": "Partial",
-    "scope": "Calm copy guard on the stuck and log keys: no judging, score, streak or grade words in en/bn/mix. Crisis-mode screens and 'adds 0 tasks' not covered here",
+    "outcome": "Pass",
+    "scope": "Automated: no shame/judging words in any key (en, bn, mix) and in the rendered stuck screen in overload; overload modes add 0 tasks (scheduler minimum_week and pause, stuck flow, browser e2e). Word list is fixed; Bangla wording still awaits reviewer sign-off (TM-TST-161)",
     "artifacts": [
-      "tests/r5_stuck_log.test.ts"
+      "tests/copy_review.test.ts",
+      "tests/r5_stuck_log.test.ts",
+      "tests/g3.test.ts",
+      "tests/stuck.test.ts",
+      "tools/e2e.mjs",
+      "evidence/e2e-report.json"
     ]
   },
   "TM-TST-117": {
@@ -246,6 +252,82 @@
     "scope": "Horizon view places goals from stored data; unset goals kept apart; empty horizons are empty, not zero. Gantt, kanban, resource and readiness maps and text-equivalent check NOT covered",
     "artifacts": [
       "tests/horizon.test.ts"
+    ]
+  },
+  "TM-TST-039": {
+    "outcome": "Partial",
+    "scope": "Planner: a task with an unmet prerequisite is not placed and is deferred as waiting_for_prerequisite; it follows its prerequisite, cycles and missing ids are safe. About 8 cases, not 20 fixtures; the screen shows the link but not the word blocked",
+    "artifacts": [
+      "tests/m_dependency.test.ts"
+    ]
+  },
+  "TM-TST-040": {
+    "outcome": "Partial",
+    "scope": "100 generated plans (not 200): 0 placements inside hard blocks, none overlap, capacity respected. User override with a log entry does not exist, so it is not tested",
+    "artifacts": [
+      "tests/g3.test.ts"
+    ]
+  },
+  "TM-TST-047": {
+    "outcome": "Partial",
+    "scope": "Overload adds 0 tasks: minimum_week is a subset of the normal plan, pause places nothing (50 plans), tired/overloaded never offers a tiny step (500 answer sets), choosing Minimum week adds no task (unit and browser). Reduce Scope and Resume Gently are not offered or tested",
+    "artifacts": [
+      "tests/g3.test.ts",
+      "tests/stuck.test.ts",
+      "tools/e2e.mjs",
+      "evidence/e2e-report.json"
+    ]
+  },
+  "TM-TST-084": {
+    "outcome": "Partial",
+    "scope": "Headless Chromium with the network off: shell, status screen and cold-start screens open, every saved file readable, service worker source checks. NOT a real-device airplane run (owner task O1)",
+    "artifacts": [
+      "tests/precache.test.ts",
+      "tools/e2e.mjs",
+      "evidence/e2e-report.json"
+    ]
+  },
+  "TM-TST-085": {
+    "outcome": "Partial",
+    "scope": "Unit: replaying the same operations twice and an interrupted flush then full replay give the same state; enqueue is idempotent. No 5x run and no device",
+    "artifacts": [
+      "tests/sync.test.ts"
+    ]
+  },
+  "TM-TST-086": {
+    "outcome": "Partial",
+    "scope": "Unit: two devices editing one field are detected and the loser is kept in the conflict list; same device is not a conflict. One case, not 20; no device; no resolution screen",
+    "artifacts": [
+      "tests/sync.test.ts"
+    ]
+  },
+  "TM-TST-089": {
+    "outcome": "Partial",
+    "scope": "Unit: an existing version-1 IndexedDB database keeps its records after the upgrade. No failed-migration case and no device",
+    "artifacts": [
+      "tests/snapshots.test.ts"
+    ]
+  },
+  "TM-TST-093": {
+    "outcome": "Partial",
+    "scope": "Unit: no consent means real forms save nothing and real writes are refused; demo works without consent; missing, broken or old consent is none; grant then revoke. A fuller check that every unrelated feature still works is not written",
+    "artifacts": [
+      "tests/real_entry.test.ts",
+      "tests/real_data.test.ts"
+    ]
+  },
+  "TM-TST-119": {
+    "outcome": "Partial",
+    "scope": "Unit: demo mode shows no real data and real mode shows no demo data on any screen; totals never add demo and real. KPI reconciliation to source records is covered only for the money cards, not all KPIs",
+    "artifacts": [
+      "tests/data_mode.test.ts"
+    ]
+  },
+  "TM-TST-126": {
+    "outcome": "Partial",
+    "scope": "Unit: every facility is off by default with a null adapter, no network call while off, enabling needs approval and states cost, withdraw switches it off, connected stubs call nothing. No real integration exists yet, so scoped revoke of a live integration is untested",
+    "artifacts": [
+      "tests/connections.test.ts"
     ]
   }
 }
