@@ -4,7 +4,7 @@ import { h } from "./dom";
 import { t, tb, fmtNumber } from "../i18n/t";
 import type { Key } from "../i18n/packs";
 import { LOCALES, LOCALE_ORDER, intlLocale, type Locale } from "../i18n/registry";
-import { applyPrefs, consentKv, prefs, screenView, setScreenView, snapshotRepo, store, type HorizonView, type PlanMode, type ViewScreen } from "./state";
+import { applyPrefs, consentKv, prefs, screenView, snapshotRepo, store, type HorizonView, type PlanMode } from "./state";
 import { DESIGNS } from "./themes";
 import { grantConsent, readConsent, revokeConsent } from "../core/consent";
 import { demoBadge, disclaimers, fieldHelp, num, valueEl } from "./components";
@@ -40,6 +40,7 @@ import { celebrate, journeyGoalsCard, overallProgressCard } from "./lifeUi";
 import { adviceCardsView, homeCountCards, homeSummaryCards, nextActionCard } from "./homeUi";
 import { progressRing, isMilestone } from "./ring";
 import { logo3d } from "./logo";
+import { viewBar, withView } from "./viewBar";
 import { backupReminderCard, snapshotsCard } from "./snapshotsUi";
 import { scrubRealParts } from "../core/snapshots";
 import { overallProgress } from "../core/overallProgress";
@@ -95,11 +96,6 @@ function saveAnswers(step: number, vals: Answers): boolean {
 
 // ---- shared bits ----
 // Template chooser shared by the dashboard screens: same records, a different view. Stored per screen in prefs.
-function viewBar(screen: ViewScreen, lang: Locale): HTMLElement {
-  const cur = screenView(screen);
-  const seg = (v: "full" | "compact") => h("button", { type: "button", "data-view-opt": v, "aria-pressed": String(cur === v), onclick: () => { setScreenView(screen, v); rerender(); } }, t(`view.${v}` as Key, lang));
-  return h("div", { class: "seg", role: "group", "data-view-bar": screen, "aria-label": t("view.label", lang) }, seg("full"), seg("compact"));
-}
 
 function stageLadder(lang: Locale): HTMLElement {
   const compact = screenView("journey") === "compact";
@@ -438,7 +434,8 @@ function passedBanner(lang: Locale): HTMLElement | null {
   return code ? h("div", { class: "card", role: "status", "data-passed": code }, h("p", { class: "ok-msg" }, t("stage.passedMsg", lang, { code })), h("p", {}, t("reward.stageUnlocked", lang, { code })), link("#/journey/art", "btn ghost", t("reward.see", lang))) : null;
 }
 
-export function journeyLog(): HTMLElement {
+export function journeyLog(): HTMLElement { return withView("log", L(), journeyLogInner()); }
+function journeyLogInner(): HTMLElement {
   const lang = L(); const logs = allRecs().filter((r) => r.entity === "journey_log").sort((a, b) => b.createdAt.localeCompare(a.createdAt));
   const passes = allRecs().filter((r) => r.entity === "stage_pass").sort((a, b) => a.createdAt.localeCompare(b.createdAt))
     .map((r) => ({ code: String((r.values["stage_pass.stage_code"] as { value?: unknown } | undefined)?.value ?? ""), note: String((r.values["stage_pass.evidence"] as { value?: unknown } | undefined)?.value ?? "") }));
@@ -775,7 +772,8 @@ function cardsFromStore(): Cards.Card[] {
 const putCard = (c: Cards.Card): boolean => saveTyped({ id: c.id, entity: "card", createdAt: new Date().toISOString(),
   values: { "card.front": typed(c.front), "card.back": typed(c.back), "card.box": typed(c.box), "card.due": typed(c.due) } });
 
-export function cardsScreen(): HTMLElement {
+export function cardsScreen(): HTMLElement { return withView("cards", L(), cardsScreenInner()); }
+function cardsScreenInner(): HTMLElement {
   const lang = L(); const today = Habits.todayIso(); const all = cardsFromStore(); const queue = Cards.dueCards(all, today);
   const study = h("div", { role: "status" });
   const showCard = (i: number) => {

@@ -4,6 +4,7 @@ import { h } from "./dom";
 import { t, tb, fmtNumber } from "../i18n/t";
 import type { Key } from "../i18n/packs";
 import { prefs, store } from "./state";
+import { withView } from "./viewBar";
 import { activeNs, allRecs, consentOn, consentPrompt, nsTag, saveBlockedText, saveTyped } from "./entry";
 import { disclaimers, num } from "./components";
 import { checkFreeText } from "../core/safety";
@@ -58,7 +59,8 @@ function removeBtn(id: string, lang: Locale) {
 }
 
 // ---- M15 risks & stop rules ----
-export function riskScreen(): HTMLElement {
+export function riskScreen(): HTMLElement { return withView("risks", L(), riskScreenInner()); }
+function riskScreenInner(): HTMLElement {
   const lang = L();
   const text = h("input", { id: "rk-text", type: "text", maxlength: "80", autocomplete: "off" });
   const lk = h("select", { id: "rk-likelihood" }, h("option", { value: "" }, t("unknown.unknown", lang)),
@@ -101,7 +103,8 @@ export function riskScreen(): HTMLElement {
 }
 
 // ---- M09 ventures and assets ----
-export function ventureScreen(): HTMLElement {
+export function ventureScreen(): HTMLElement { return withView("ventures", L(), ventureScreenInner()); }
+function ventureScreenInner(): HTMLElement {
   const lang = L();
   const name = h("input", { id: "vn-name", type: "text", maxlength: "80", autocomplete: "off" });
   const stage = choiceSelect("vn-stage", "venture.stage", lang);
@@ -141,7 +144,8 @@ export function ventureScreen(): HTMLElement {
 }
 
 // ---- M10 team roles (roles only) ----
-export function teamScreen(): HTMLElement {
+export function teamScreen(): HTMLElement { return withView("team", L(), teamScreenInner()); }
+function teamScreenInner(): HTMLElement {
   const lang = L();
   const role = h("input", { id: "tm-role", type: "text", maxlength: "80", autocomplete: "off" });
   const holder = choiceSelect("tm-holder", "team_role.holder", lang);
@@ -175,7 +179,8 @@ export function teamScreen(): HTMLElement {
 }
 
 // ---- M12 plan history (read-only) ----
-export function planHistoryScreen(): HTMLElement {
+export function planHistoryScreen(): HTMLElement { return withView("history", L(), planHistoryScreenInner()); }
+function planHistoryScreenInner(): HTMLElement {
   const lang = L();
   const rows = planHistory(allRecs());
   return h("main", { class: "scr scr-history" },

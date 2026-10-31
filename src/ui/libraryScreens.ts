@@ -5,6 +5,7 @@ import { t, tb } from "../i18n/t";
 import type { Key } from "../i18n/packs";
 import type { Locale } from "../i18n/registry";
 import { prefs, store } from "./state";
+import { withView } from "./viewBar";
 import { disclaimers, num } from "./components";
 import { SYSTEMS } from "../library/systemList";
 import { activeNs, allRecs } from "./entry";
@@ -56,7 +57,8 @@ function systemCard(sys: SystemTemplate, ns: Namespace, recs: TMRecord[], lang: 
     button);
 }
 
-export function systemsLibraryScreen(): HTMLElement {
+export function systemsLibraryScreen(): HTMLElement { return withView("library", L(), systemsLibraryScreenInner()); }
+function systemsLibraryScreenInner(): HTMLElement {
   const lang = L();
   const ns = targetNs();
   const recs = store[ns].list();
@@ -104,7 +106,8 @@ export function rulesTodayCard(lang: Locale): HTMLElement | null {
     h("ul", {}, ...items.map((s) => suggestionRow(s, lang))));
 }
 
-export function rulesScreen(): HTMLElement {
+export function rulesScreen(): HTMLElement { return withView("rules", L(), rulesScreenInner()); }
+function rulesScreenInner(): HTMLElement {
   const lang = L();
   const sw = prefs.ruleSwitches;
   const rows = RULE_IDS.map((id) => {

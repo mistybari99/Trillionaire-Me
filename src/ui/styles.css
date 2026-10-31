@@ -422,3 +422,8 @@ textarea[data-swot]{width:100%;box-sizing:border-box;font:inherit;padding:8px}
 .snap-btns{display:flex;gap:6px;flex-wrap:wrap}
 .snap-btns .btn{width:auto;margin:0;min-height:44px}
 #snap-keep{min-height:44px}
+/* Compact view (Detailed / Compact chooser): denser rows, intro line hidden. Records and Unknown notes stay visible. */
+.view-compact .sub,.view-compact .note{display:none}
+.view-compact .card,.view-compact article.card{padding:6px 10px;margin:4px 0}
+.view-compact .card-h,.view-compact h2{font-size:1rem;margin:4px 0}
+.view-compact p{margin:4px 0}

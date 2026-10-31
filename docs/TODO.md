@@ -41,6 +41,9 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 - [x] Accessibility pass (contrast, focus, 44px, reduced motion) over all 4 looks.
 - [x] Security review (secrets excluded from backups/exports; keys device-only).
 
+### Block 7 — Builder run 31 Oct 2026
+- [x] Step 1: Detailed/Compact chooser on 10 more screens (log, goals, risks, ventures, team, history, cards, library, rules, wheel). Compact = denser rows, intro hidden; same records.
+
 ## Part B — Owner-only tasks
 - [ ] Phone offline test: open online once, visit all pages, airplane mode, reopen (O1).
 - [ ] Lock-screen privacy check on a real device (O8).

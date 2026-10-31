@@ -5,6 +5,7 @@ import { t } from "../i18n/t";
 import type { Key } from "../i18n/packs";
 import type { Locale } from "../i18n/registry";
 import { prefs, readProgressMemory, writeProgressMemory } from "./state";
+import { withView } from "./viewBar";
 import { num } from "./components";
 import { allRecs, consentOn, consentPrompt, findRec, labelFor, nsTag, saveBlockedText, saveTyped, storeOf } from "./entry";
 import { AREAS, MAX_RATING, lifeAreaRecord, wedgePath, wheelData, type Area } from "../core/lifeWheel";
@@ -41,7 +42,8 @@ export function celebrate(kind: "step" | "milestone", lang: Locale): HTMLElement
 }
 
 // ---- Life wheel ----
-export function wheelScreen(): HTMLElement {
+export function wheelScreen(): HTMLElement { return withView("wheel", L(), wheelScreenInner()); }
+function wheelScreenInner(): HTMLElement {
   const lang = L(); const d = wheelData(allRecs());
   const title = t("wheel.title", lang);
   const lines = d.areas.map((a) => (a.rating === null ? t("wheel.lineUnknown", lang, { area: areaName(a.area, lang) }) : t("wheel.line", lang, { area: areaName(a.area, lang), n: num(a.rating, lang) })));
@@ -93,7 +95,8 @@ export function journeyGoalsCard(lang: Locale): HTMLElement {
     h("div", { class: "actions" }, link("#/journey/goals", "btn ghost", t("goals.link", lang)), link("#/journey/wheel", "btn ghost", t("wheel.link", lang))));
 }
 
-export function goalsScreen(): HTMLElement {
+export function goalsScreen(): HTMLElement { return withView("goals", L(), goalsScreenInner()); }
+function goalsScreenInner(): HTMLElement {
   const lang = L(); const recs = allRecs(); const list = goalProgress(recs); const ns = new Map(recs.map((r) => [r.id, r.ns] as const));
   return h("main", {}, link("#/journey", "crumb", `← ${t("journey.title", lang)}`), h("h1", {}, t("goals.title", lang)), h("p", { class: "sub" }, t("goals.intro", lang)),
     ...(list.length ? list.map((g) => h("article", { class: "card", "data-goal": g.id },
