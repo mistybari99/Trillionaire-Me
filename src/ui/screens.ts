@@ -19,6 +19,7 @@ import { type FieldValue, type TMRecord, type UnknownState } from "../core/types
 import type { FieldDef } from "../catalog/types";
 import { StoreRepo } from "../adapters/storeRepo";
 import { createBackup, restoreBackup } from "../core/backup";
+import { exportCsv } from "../core/csv";
 import { goalReminders } from "../core/goalStatus";
 import { freshnessOf } from "../core/freshness";
 import { feasibility, schedule, todaysActions } from "../core/planner";
@@ -1412,6 +1413,20 @@ function clearDemoBlock(lang: Locale): HTMLElement {
     h("button", { class: "btn ghost", type: "button", "data-act": "clear-demo-no", onclick: () => { demoClearAsk = false; rerender(); } }, t("mode.del.cancel", lang)));
 }
 
+// TM-REQ-153: spreadsheet copy of the person's own entries. One file per kind, never mixed. Real needs the consent tick. Nothing is uploaded.
+function csvCard(realOn: boolean, lang: Locale): HTMLElement {
+  const save = (ns: "demo" | "real") => {
+    const stamp = new Date().toISOString().slice(0, 10);
+    const a = h("a", { href: URL.createObjectURL(new Blob([exportCsv(store, ns)], { type: "text/csv;charset=utf-8" })), download: `tm-${ns}-data-${stamp}.csv` });
+    document.body.append(a); a.click(); a.remove();
+  };
+  return h("section", { class: "card", "data-card": "csv" }, h("h2", { class: "card-h" }, t("csv.title", lang)), h("p", { class: "muted" }, t("csv.note", lang)),
+    h("div", { class: "actions" },
+      h("button", { class: "btn ghost", type: "button", "data-act": "csv-demo", onclick: () => save("demo") }, t("csv.demo", lang)),
+      h("button", { class: "btn ghost", type: "button", "data-act": "csv-real", ...(realOn ? {} : { disabled: true }), onclick: () => save("real") }, t("csv.real", lang))),
+    realOn ? null : h("p", { class: "muted", "data-csv-locked": "1" }, t("csv.locked", lang)));
+}
+
 export function dataScreen(): HTMLElement {
   const lang = L();
   const realOn = readConsent(consentKv);
@@ -1425,6 +1440,7 @@ export function dataScreen(): HTMLElement {
     h("div", { class: "card", "data-ns": "demo" }, h("h2", { class: "card-h", }, t("data.demo", lang), " ", demoBadge(lang)), h("p", {}, t("data.demo.count", lang, { n: num(store.demo.list().length, lang) }))),
     h("p", { class: "muted" }, t("data.nopromote", lang)),
     clearDemoBlock(lang),
+    csvCard(realOn, lang),
     h("h2", {}, t("backup.title", lang)),
     h("p", { class: "muted" }, t("backup.note", lang)),
     h("button", { class: "btn", type: "button", "data-act": "backup", onclick: async () => {

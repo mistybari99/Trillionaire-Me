@@ -50,6 +50,7 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 - [x] Step 4c (TM-REQ-040): `src/core/override.ts` (`placeByHand`, confirmation required, log entry); core only, no screen yet; TM-TST-040 stays Partial.
 - [x] Step 4d (TM-REQ-007): `freshnessOf()` + stale badge on saved Wikipedia option cards (30 days); TM-TST-007 mapped Partial.
 - [x] Step 4e (TM-REQ-009): goal status active/paused/retired (`src/core/goalStatus.ts`, goal page buttons), calm date reminders on Today for active goals only; TM-TST-009 mapped.
+- [x] Step 5 (TM-REQ-153): CSV export on More > Data (`src/core/csv.ts`): demo and real in separate files, real needs the consent tick, no secrets; TM-TST-153 mapped Partial (no CSV import, PDF or dictionary).
 
 ## Part B — Owner-only tasks
 - [ ] Phone offline test: open online once, visit all pages, airplane mode, reopen (O1).

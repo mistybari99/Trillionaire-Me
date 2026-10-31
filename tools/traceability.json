@@ -358,5 +358,12 @@
     "artifacts": [
       "tests/goal_status_reminders.test.ts"
     ]
+  },
+  "TM-TST-153": {
+    "outcome": "Partial",
+    "scope": "Automated: CSV export reads back with every record and value, unknown stays unknown (empty cell plus state), demo and real in separate files, health/worship excluded, secrets redacted, formula cells neutralised. No CSV re-import, PDF or data dictionary yet, so the full criterion is not proven",
+    "artifacts": [
+      "tests/csv_export.test.ts"
+    ]
   }
 }
