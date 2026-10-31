@@ -351,5 +351,12 @@
     "artifacts": [
       "tests/stale_badge.test.ts"
     ]
+  },
+  "TM-TST-009": {
+    "outcome": "Pass",
+    "scope": "Automated: 20 paused/retired goals with passed dates give 0 reminders while the same goals active give 20; Today shows no reminder after pausing and the goal page (title, progress, status) stays readable; demo goals never remind in real mode",
+    "artifacts": [
+      "tests/goal_status_reminders.test.ts"
+    ]
   }
 }

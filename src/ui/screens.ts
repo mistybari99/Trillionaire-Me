@@ -19,6 +19,7 @@ import { type FieldValue, type TMRecord, type UnknownState } from "../core/types
 import type { FieldDef } from "../catalog/types";
 import { StoreRepo } from "../adapters/storeRepo";
 import { createBackup, restoreBackup } from "../core/backup";
+import { goalReminders } from "../core/goalStatus";
 import { freshnessOf } from "../core/freshness";
 import { feasibility, schedule, todaysActions } from "../core/planner";
 import { buildPlanInput, capacityState, fmtClock, freeWindow, isOpenTask } from "../core/planInputs";
@@ -829,6 +830,14 @@ function todayFromPlan(cp: ReturnType<typeof currentPlan>, lang: Locale): HTMLEl
     h("div", {}, cp.titles.get(p.taskId) ?? "", h("p", {}, valueEl(`${fmtClock(p.start)}–${fmtClock(p.end)}`, labelFor(findRec(p.taskId)?.ns ?? activeNs()), lang)), h("div", { class: "row" }, doneBtn(p.taskId, lang), focusBtn(p.taskId, lang)))));
 }
 
+// TM-REQ-009: calm date reminders for active goals only. Paused and retired goals never appear here.
+function goalDateReminders(lang: Locale): HTMLElement | null {
+  const list = goalReminders(allRecs(), todayIso()).slice(0, 2);
+  if (!list.length) return null;
+  return h("section", { class: "card", "data-goal-reminders": String(list.length) }, h("h2", { class: "card-h" }, t("remind.goal.h", lang)),
+    ...list.map((r) => h("p", { "data-goal-reminder": r.goalId }, t("remind.goal", lang, { title: r.title, date: r.targetDate }), " ", link(`#/journey/goal/${r.goalId}`, "crumb", t("remind.goal.open", lang)))));
+}
+
 export function today(): HTMLElement {
   const lang = L(); const cp = currentPlan();
   const insp = todaysInspiration(new Date());
@@ -864,6 +873,7 @@ export function today(): HTMLElement {
       link("#/stuck", "btn ghost", t("stuck.link", lang)),
       link("#/capture", "btn ghost", t("capture.link", lang))),
     nxt.field ? h("aside", { class: "card next-step", "data-next-step": nxt.field.id }, h("small", {}, "→ "), h("p", {}, t("home.next", lang, { field: tb(nxt.field.label, lang) }))) : null,
+    goalDateReminders(lang),
     rulesTodayCard(lang),
     disclaimers(lang));
 }

@@ -49,6 +49,7 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 - [x] Step 4b (TM-REQ-005): `runwayFor()` returns baseline needed without an own Asset line; prompt on Money; TM-TST-005 mapped as Partial (only runway exists).
 - [x] Step 4c (TM-REQ-040): `src/core/override.ts` (`placeByHand`, confirmation required, log entry); core only, no screen yet; TM-TST-040 stays Partial.
 - [x] Step 4d (TM-REQ-007): `freshnessOf()` + stale badge on saved Wikipedia option cards (30 days); TM-TST-007 mapped Partial.
+- [x] Step 4e (TM-REQ-009): goal status active/paused/retired (`src/core/goalStatus.ts`, goal page buttons), calm date reminders on Today for active goals only; TM-TST-009 mapped.
 
 ## Part B — Owner-only tasks
 - [ ] Phone offline test: open online once, visit all pages, airplane mode, reopen (O1).

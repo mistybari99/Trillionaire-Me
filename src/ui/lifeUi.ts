@@ -13,6 +13,7 @@ import { smartFunnel } from "./smartFunnel";
 import { SMART_PARTS, SWOT_KEYS, goalProgress, listValue, milestoneOf, parseList, readList, smartFilled, swotField, type GoalProgress, type SwotKey } from "../core/goalPlan";
 import { overallProgress, nextProgressMemory, progressTrend, PROGRESS_MODES } from "../core/overallProgress";
 import { checkFreeText } from "../core/safety";
+import { GOAL_STATUSES, goalStatusOf, withGoalStatus, type GoalStatus } from "../core/goalStatus";
 import { goalAreaCard } from "./universeUi";
 import { progressRing } from "./ring";
 import { HORIZONS } from "../core/horizon";
@@ -109,6 +110,19 @@ const textOf = (r: TMRecord, f: string): string => { const v = r.values[f]; retu
 const typedFor = (r: TMRecord, value: unknown): FieldValue => ({ state: "value", value, label: labelFor(r.ns) });
 const validDate = (x: string): boolean => /^\d{4}-\d{2}-\d{2}$/.test(x) && !Number.isNaN(Date.parse(x)) && new Date(x).toISOString().slice(0, 10) === x;
 
+// TM-REQ-009: active / paused / retired. Paused and retired goals give no reminders; their history stays on this page.
+function statusCard(rec: TMRecord, lang: Locale): HTMLElement {
+  const cur = goalStatusOf(rec);
+  const seg = (st: GoalStatus) => h("button", { type: "button", "data-goal-status": st, "aria-pressed": String(cur === st), onclick: () => {
+    if (!consentOn() && rec.ns === "real") return;
+    const latest = findRec(rec.id); if (!latest) return;
+    storeOf(latest).put(withGoalStatus(latest, st)); rerender();
+  } }, t(`goal.status.${st}` as Key, lang));
+  return h("section", { class: "card", "data-goal-status-card": cur }, h("h2", { class: "card-h" }, t("goal.status.h", lang)),
+    h("div", { class: "seg", role: "group", "aria-label": t("goal.status.h", lang) }, ...GOAL_STATUSES.map(seg)),
+    h("p", { class: "muted" }, t("goal.status.note", lang)));
+}
+
 export function goalScreen(id: string): HTMLElement {
   const lang = L(); const back = link("#/journey/goals", "crumb", `← ${t("goals.back", lang)}`);
   const rec = findRec(id);
@@ -173,7 +187,7 @@ export function goalScreen(id: string): HTMLElement {
   // Read-only SWOT summary so the four lists are visible as text; unknown lists say so.
   const swotView = h("section", { class: "card", "data-swot-view": "1" }, h("h2", { class: "card-h" }, t("swot.title", lang)),
     h("div", { class: "swot-grid" }, ...SWOT_KEYS.map((k) => { const items = readList(rec.values[swotField(k)]); return h("div", { "data-swot-box": k }, h("h3", {}, t(`swot.${k}` as Key, lang)), items ? h("ul", {}, ...items.map((i) => h("li", {}, i))) : h("p", { class: "muted", "data-swot-empty": k }, t("swot.empty", lang))); })));
-  return h("main", {}, back, h("h1", {}, textOf(rec, "goal.title")), progress, goalAreaCard(rec, lang), smartForm, swotView, swotForm);
+  return h("main", {}, back, h("h1", {}, textOf(rec, "goal.title")), progress, statusCard(rec, lang), goalAreaCard(rec, lang), smartForm, swotView, swotForm);
 }
 
 // ---- Overall progress card (Today and Journey) ----
