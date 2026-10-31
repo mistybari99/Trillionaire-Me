@@ -1,8 +1,9 @@
+import { existsSync } from "node:fs";
 // M13 prayer times: formula, Dhaka clock, input parsing, alert logic, one-tap marks and the Deen UI.
 // Reference values come from tools/prayer_reference.py (pyephem ephemeris, same method angles), not from this code.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { DHAKA_COORDS, DHAKA_UTC_OFFSET_MIN, PRAYER_KEYS, dhakaNow, parseCoord, prayerClock, prayerTimes, validCoords, type PrayerKey } from "../src/core/prayer";
-import { AZAN_AUDIO_FILE, soundPlan } from "../src/core/prayerSound";
+import { AZAN_FAJR_FILE, AZAN_FILE, AZAN_MAX_BYTES, NO_AZAN, azanFileFor, clampVolume, detectAzan, soundPlan } from "../src/core/prayerSound";
 import { DEFAULT_PRAYER_SETTINGS, parsePrayerSettings } from "../src/core/prayerMethod";
 import { DEFAULT_ALERT_PREFS, alertSlots, dueSlots, parseAlertPrefs } from "../src/core/prayerAlerts";
 import { markedOn, prayerLogId, prayerLogRecord } from "../src/core/prayerLog";
@@ -11,7 +12,7 @@ import { buildNotification, NEUTRAL_TITLE, DEFAULT_NOTIFY_PREFS } from "../src/c
 import { PACKS, type Key } from "../src/i18n/packs";
 import { render } from "../src/app";
 import { store, prefs } from "../src/ui/state";
-import { checkPrayerAlerts, dismissReminder, inAppReminders, playAlertSound } from "../src/ui/prayerAlerts";
+import { checkPrayerAlerts, dismissReminder, inAppReminders, playAlertSound, previewAzan, refreshAzanAvailability, setAzanAvailability } from "../src/ui/prayerAlerts";
 
 const toMin = (hhmm: string) => { const [h, m] = hhmm.split(":").map(Number); return h! * 60 + m!; };
 const dhaka = (y: number, m: number, d: number) => ({ y, m, d });
@@ -122,10 +123,10 @@ describe("M13 place input", () => {
 describe("M13 alerts: settings and due logic", () => {
   it("both alerts are off by default; minutes default to 10", () => {
     const all = { fajr: true, dhuhr: true, asr: true, maghrib: true, isha: true };
-    expect(DEFAULT_ALERT_PREFS).toEqual({ preAlert: false, preMinutes: 10, azan: false, prayers: all, sound: false });
+    expect(DEFAULT_ALERT_PREFS).toEqual({ preAlert: false, preMinutes: 10, azan: false, prayers: all, sound: false, volume: 80 });
     expect(parseAlertPrefs(null)).toEqual(DEFAULT_ALERT_PREFS);
     expect(parseAlertPrefs({ preAlert: "yes", preMinutes: 7.5, azan: 1, sound: "on" })).toEqual(DEFAULT_ALERT_PREFS);
-    expect(parseAlertPrefs({ preAlert: true, preMinutes: 15, azan: true })).toEqual({ preAlert: true, preMinutes: 15, azan: true, prayers: all, sound: false });
+    expect(parseAlertPrefs({ preAlert: true, preMinutes: 15, azan: true })).toEqual({ preAlert: true, preMinutes: 15, azan: true, prayers: all, sound: false, volume: 80 });
     expect(parseAlertPrefs({ prayers: { asr: false, isha: "no" } }).prayers).toEqual({ ...all, asr: false });
     expect(parseAlertPrefs({ preMinutes: 0 }).preMinutes).toBe(10);
     expect(parseAlertPrefs({ preMinutes: 61 }).preMinutes).toBe(10);
@@ -185,8 +186,32 @@ describe("M13 alerts: per-prayer choice and sound plan", () => {
     expect(soundPlan({ kind: "azan" }, true, null, true)).toBe("vibrate");
     expect(soundPlan({ kind: "azan" }, true, null, false)).toBe("none");
   });
-  it("no audio file is bundled, and nothing points to the internet", () => {
-    expect(AZAN_AUDIO_FILE).toBeNull();
+  it("no audio file is bundled, and the slots are same-origin relative paths", () => {
+    expect(existsSync("public/audio/azan.mp3")).toBe(false);
+    expect(existsSync("public/audio/azan-fajr.mp3")).toBe(false);
+    for (const f of [AZAN_FILE, AZAN_FAJR_FILE]) expect(f).toMatch(/^\.\/audio\//);
+  });
+  const resp = (ok: boolean, type: string, len?: number) => async () => ({ ok, headers: { get: (n: string) => (n === "content-type" ? type : n === "content-length" && len !== undefined ? String(len) : null) } });
+  it("detects a present file, an absent file, an HTML fallback page, an oversize file and a network error", async () => {
+    expect(await detectAzan(resp(true, "audio/mpeg", 1000))).toEqual({ main: true, fajr: true });
+    expect(await detectAzan(resp(false, "text/html"))).toEqual(NO_AZAN);
+    expect(await detectAzan(resp(true, "text/html; charset=utf-8"))).toEqual(NO_AZAN);
+    expect(await detectAzan(resp(true, "audio/mpeg", AZAN_MAX_BYTES + 1))).toEqual(NO_AZAN);
+    expect(await detectAzan(async () => { throw new Error("offline"); })).toEqual(NO_AZAN);
+  });
+  it("Fajr prefers its own file, otherwise the main one; nothing added gives null", () => {
+    expect(azanFileFor("fajr", { main: true, fajr: true })).toBe(AZAN_FAJR_FILE);
+    expect(azanFileFor("fajr", { main: true, fajr: false })).toBe(AZAN_FILE);
+    expect(azanFileFor("asr", { main: true, fajr: true })).toBe(AZAN_FILE);
+    expect(azanFileFor("asr", { main: false, fajr: true })).toBeNull();
+    expect(azanFileFor("fajr", NO_AZAN)).toBeNull();
+  });
+  it("volume is clamped; zero is silent; reduced motion skips vibration but not audio", () => {
+    expect(clampVolume(150)).toBe(100); expect(clampVolume(-4)).toBe(0); expect(clampVolume("x")).toBe(80); expect(clampVolume(33.4)).toBe(33);
+    expect(soundPlan({ kind: "azan" }, true, "./a.mp3", true, 0)).toBe("none");
+    expect(soundPlan({ kind: "azan" }, true, null, true, 80, true)).toBe("none");
+    expect(soundPlan({ kind: "azan" }, true, "./a.mp3", true, 80, true)).toBe("audio");
+    expect(parseAlertPrefs({ volume: 40 }).volume).toBe(40); expect(parseAlertPrefs({}).volume).toBe(80);
   });
 });
 
@@ -300,6 +325,33 @@ describe("M13 Deen screen and alerts (UI)", () => {
     expect(playAlertSound(azan, true)).toBe("vibrate"); expect(vib).toHaveBeenCalledTimes(1);
     Object.defineProperty(navigator, "vibrate", { value: undefined, configurable: true });
     expect(playAlertSound(azan, true)).toBe("none");
+  });
+  it("with a (mocked) azan file present, an azan alert plays it at the chosen volume; preview plays once; absent file is silent", async () => {
+    const plays: Array<{ src: string; vol: number }> = [];
+    class FakeAudio { src: string; volume = 1; constructor(src: string) { this.src = src; } play() { plays.push({ src: this.src, vol: this.volume }); return Promise.resolve(); } }
+    vi.stubGlobal("Audio", FakeAudio);
+    const azan = { id: "x", prayer: "fajr" as const, kind: "azan" as const, minute: 1, minutesBefore: 0 };
+    try {
+      prefs.prayerAlerts = { ...DEFAULT_ALERT_PREFS, azan: true, sound: true, volume: 50 };
+      setAzanAvailability({ main: true, fajr: true });
+      expect(playAlertSound(azan, true)).toBe("audio");
+      expect(plays).toEqual([{ src: AZAN_FAJR_FILE, vol: 0.5 }]);
+      expect(playAlertSound(azan, false)).toBe("none");
+      expect(previewAzan("dhuhr")).toBe(true); expect(plays[1]).toEqual({ src: AZAN_FILE, vol: 0.5 });
+      setAzanAvailability(NO_AZAN);
+      expect(previewAzan("dhuhr")).toBe(false); expect(playAlertSound(azan, true)).not.toBe("audio"); expect(plays.length).toBe(2);
+      // refresh looks at the app's own origin only
+      const calls: string[] = [];
+      vi.stubGlobal("fetch", async (u: string) => { calls.push(u); return { ok: true, headers: { get: (n: string) => (n === "content-type" ? "audio/mpeg" : null) } }; });
+      expect(await refreshAzanAvailability(true)).toEqual({ main: true, fajr: true });
+      expect(calls.every((u) => u.startsWith("./"))).toBe(true);
+    } finally { vi.unstubAllGlobals(); setAzanAvailability(NO_AZAN); }
+  });
+  it("Settings shows the volume slider, preview button and the docs pointer", () => {
+    location.hash = "#/deen"; render();
+    expect(document.querySelector("#azan-vol")).not.toBeNull();
+    expect(document.querySelector("[data-act=azan-preview]")).not.toBeNull();
+    expect(document.querySelector("[data-azan-doc]")!.textContent).toBe("Add your own azan file: see docs/azan.md");
   });
   it("a switched-off prayer gives no in-app card", async () => {
     for (const r of [...inAppReminders()]) dismissReminder(r.id); // reminders live in module memory across tests

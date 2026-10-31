@@ -1,4 +1,5 @@
 // Prayer alerts (M13): which alert is due now. Pure. The UI layer (src/ui/prayerAlerts.ts) delivers them.
+import { clampVolume, DEFAULT_AZAN_VOLUME } from "./prayerSound";
 import { PRAYER_KEYS, type PrayerKey, type PrayerTimes } from "./prayer";
 
 /**
@@ -6,9 +7,9 @@ import { PRAYER_KEYS, type PrayerKey, type PrayerTimes } from "./prayer";
  * (all five by default, so switching an alert on is one tap; the user can switch single prayers off).
  * sound: optional azan sound / vibration while the app is open (OFF by default).
  */
-export interface AlertPrefs { preAlert: boolean; preMinutes: number; azan: boolean; prayers: Record<PrayerKey, boolean>; sound: boolean }
+export interface AlertPrefs { preAlert: boolean; preMinutes: number; azan: boolean; prayers: Record<PrayerKey, boolean>; sound: boolean; volume: number }
 const ALL_ON: Record<PrayerKey, boolean> = { fajr: true, dhuhr: true, asr: true, maghrib: true, isha: true };
-export const DEFAULT_ALERT_PREFS: AlertPrefs = { preAlert: false, preMinutes: 10, azan: false, prayers: { ...ALL_ON }, sound: false };
+export const DEFAULT_ALERT_PREFS: AlertPrefs = { preAlert: false, preMinutes: 10, azan: false, prayers: { ...ALL_ON }, sound: false, volume: DEFAULT_AZAN_VOLUME };
 export type AlertKind = "pre" | "azan";
 export interface AlertSlot { id: string; prayer: PrayerKey; kind: AlertKind; minute: number; minutesBefore: number }
 
@@ -19,7 +20,7 @@ export function parseAlertPrefs(raw: unknown): AlertPrefs {
   const pr = (typeof r.prayers === "object" && r.prayers !== null ? r.prayers : {}) as Record<string, unknown>;
   const prayers = { ...ALL_ON };
   for (const k of PRAYER_KEYS) if (pr[k] === false) prayers[k] = false;
-  return { preAlert: r.preAlert === true, preMinutes: mins, azan: r.azan === true, prayers, sound: r.sound === true };
+  return { preAlert: r.preAlert === true, preMinutes: mins, azan: r.azan === true, prayers, sound: r.sound === true, volume: clampVolume(r.volume) };
 }
 
 /** Alert moments for one Dhaka date. Prayers with no time (null) get no alert. A pre-alert before midnight is skipped. */

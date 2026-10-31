@@ -15,8 +15,22 @@ self.addEventListener("activate", (e) => {
 self.addEventListener("fetch", (e) => {
   const req = e.request;
   if (req.method !== "GET" || new URL(req.url).origin !== location.origin) return;
+  // Audio is played with Range requests. Online: let the browser talk to the network. Offline: answer the range from the saved copy.
+  if (req.headers.has("range")) { e.respondWith(rangeFromCache(req).then((r) => r || fetch(req))); return; }
   e.respondWith(
     fetch(req).then((res) => { if (res.ok) { const c = res.clone(); caches.open(RUNTIME).then((x) => x.put(req, c)); } return res; })
       .catch(() => caches.match(req).then((m) => m || caches.match(req, { ignoreSearch: true })).then((m) => m || caches.match("./")))
   );
 });
+
+// Offline range answer for saved audio. Returns null when there is no saved copy (the network is then tried).
+async function rangeFromCache(req) {
+  if (self.navigator && self.navigator.onLine !== false) return null;
+  const m = await caches.match(req.url, { ignoreSearch: true });
+  if (!m) return null;
+  const buf = await m.arrayBuffer();
+  const mt = /bytes=(\d*)-(\d*)/.exec(req.headers.get("range") || "");
+  const start = mt && mt[1] ? Number(mt[1]) : 0;
+  const end = mt && mt[2] ? Math.min(Number(mt[2]), buf.byteLength - 1) : buf.byteLength - 1;
+  return new Response(buf.slice(start, end + 1), { status: 206, headers: { "Content-Type": m.headers.get("Content-Type") || "audio/mpeg", "Content-Range": `bytes ${start}-${end}/${buf.byteLength}`, "Content-Length": String(end - start + 1) } });
+}

@@ -2,7 +2,7 @@
 // Lock-screen text goes through the existing O8 rule (buildNotification): neutral unless "show details" is on for worship.
 import { dhakaNow, isoDate, prayerTimes, type PrayerKey, type PrayerTimes } from "../core/prayer";
 import { alertSlots, dueSlots, type AlertSlot } from "../core/prayerAlerts";
-import { AZAN_AUDIO_FILE, VIBRATE_PATTERN, soundPlan } from "../core/prayerSound";
+import { NO_AZAN, VIBRATE_PATTERN, azanFileFor, detectAzan, soundPlan, type AzanAvailability } from "../core/prayerSound";
 import { buildNotification, notifyText, type NotifyPrefs } from "../core/notify";
 import { prefs } from "./state";
 import type { Bi, Locale } from "../i18n/registry";
@@ -31,15 +31,45 @@ export function notifyState(): "unsupported" | "denied" | "ask" | "granted" {
   return Notification.permission === "granted" ? "granted" : Notification.permission === "denied" ? "denied" : "ask";
 }
 
+let azanAvail: AzanAvailability = NO_AZAN;
+let azanProbed: Promise<AzanAvailability> | null = null;
+/** What audio the owner has added. Checked once (same-origin HEAD) and kept; pass force to look again. Never throws. */
+export function refreshAzanAvailability(force = false): Promise<AzanAvailability> {
+  if (azanProbed && !force) return azanProbed;
+  const f = typeof fetch === "function" ? (fetch as unknown as Parameters<typeof detectAzan>[0]) : null;
+  azanProbed = (f ? detectAzan(f) : Promise.resolve(NO_AZAN)).then((a) => (azanAvail = a), () => (azanAvail = NO_AZAN));
+  return azanProbed;
+}
+export const azanAvailability = (): AzanAvailability => azanAvail;
+/** Test hook: set the known availability without a request. */
+export function setAzanAvailability(a: AzanAvailability) { azanAvail = a; azanProbed = Promise.resolve(a); }
+
+const reducedMotion = (): boolean => typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/** Plays one file at the chosen volume. Needs a tap or an open app; a blocked play is ignored. */
+function playFile(file: string, volume: number) {
+  const a = new Audio(file); a.volume = Math.min(1, Math.max(0, volume / 100));
+  void a.play().catch(() => { /* the phone may block sound until a tap */ });
+}
+
 /** Sound or vibration for an azan alert, only if switched on. Works while the app is open; a closed page cannot play audio. Never throws. */
 export function playAlertSound(s: AlertSlot, soundOn: boolean): "audio" | "vibrate" | "none" {
   const canVibrate = typeof navigator !== "undefined" && typeof navigator.vibrate === "function";
-  const plan = soundPlan(s, soundOn, AZAN_AUDIO_FILE, canVibrate);
+  const volume = prefs.prayerAlerts.volume;
+  const file = azanFileFor(s.prayer, azanAvail);
+  const plan = soundPlan(s, soundOn, file, canVibrate, volume, reducedMotion());
   try {
-    if (plan === "audio" && AZAN_AUDIO_FILE) { void new Audio(AZAN_AUDIO_FILE).play().catch(() => { /* the phone may block sound until a tap */ }); }
+    if (plan === "audio" && file) playFile(file, volume);
     else if (plan === "vibrate") navigator.vibrate([...VIBRATE_PATTERN]);
   } catch { return "none"; }
   return plan;
+}
+
+/** Preview button: plays the added azan (or the Fajr one) once at the chosen volume. Returns false when no file was added. */
+export function previewAzan(prayer: PrayerKey = "dhuhr"): boolean {
+  const file = azanFileFor(prayer, azanAvail);
+  if (!file || prefs.prayerAlerts.volume <= 0) return false;
+  try { playFile(file, prefs.prayerAlerts.volume); return true; } catch { return false; }
 }
 
 async function showPhone(title: string, body: string, tag: string, quiet: boolean): Promise<boolean> {
@@ -90,6 +120,7 @@ export async function checkPrayerAlerts(nowMs: number = Date.now()): Promise<voi
 /** Starts the in-app checker once (every 30 s, and when the app comes back to the front). */
 export function startPrayerAlerts() {
   if (timer !== null) return;
+  void refreshAzanAvailability();
   timer = setInterval(() => { checkPrayerAlerts().catch(() => { /* never break the app */ }); }, 30_000);
   document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") checkPrayerAlerts().catch(() => { /* ignore */ }); });
   checkPrayerAlerts().catch(() => { /* ignore */ });
