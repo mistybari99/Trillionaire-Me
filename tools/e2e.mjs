@@ -11,6 +11,8 @@ const external = [];
 const wiki = [];
 page.on("request", (r) => { const u = r.url(); if (u.startsWith("http://localhost:4174")) return; (u.startsWith("https://en.wikipedia.org/") ? wiki : external).push(u); });
 await page.route("https://en.wikipedia.org/**", (route) => route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ query: { search: [1, 2, 3, 4].map((i) => ({ title: `Bookkeeping ${i}`, snippet: `A <span>record</span> ${i}` })) } }) }));
+const cspHits = [];
+page.on("console", (m) => { const x = m.text(); if (/Content Security Policy|Refused to/i.test(x)) cspHits.push(x.slice(0, 160)); });
 const results = [];
 const idb = (pg) => pg.evaluate(() => new Promise((res) => { const q = indexedDB.open("tm-db"); q.onerror = () => res([]); q.onsuccess = () => { const db = q.result; if (!db.objectStoreNames.contains("records")) return res([]); db.transaction("records").objectStore("records").getAll().onsuccess = (e) => res(e.target.result); }; }));
 const check = (id, name, pass, detail = "") => { results.push({ id, name, pass, detail }); console.log(pass ? "PASS" : "FAIL", id, name, detail); };
@@ -263,6 +265,7 @@ await ctx.setOffline(false);
   for (const id of ["emerald-obsidian", "broadsheet"]) { await page.click(`[data-design-opt=${id}]`); await page.waitForTimeout(100); const dd = await page.evaluate(() => document.documentElement.dataset.design); check("DESIGN-VER", `${id} applies`, dd === id, dd); }
   await page.click("[data-design-opt=light-futuristic]"); await page.waitForTimeout(100);
 }
+check("SEC-CSP", "page policy (CSP meta) blocks nothing the app needs: 0 violations in the whole run", cspHits.length === 0, JSON.stringify(cspHits));
 check("G1-NONET", "0 third-party/external requests during all of the above", external.length === 0, JSON.stringify(external));
 
 // Start for real from a fresh phone: one confirmation with the consent tick, then real mode with no demo banner.

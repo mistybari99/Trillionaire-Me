@@ -39,7 +39,7 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 - [x] Re-run owner-demand audit (docs/design/owner-demand-audit.md) and update counts.
 - [x] DECISIONS_LOG: add language-icon entry.
 - [x] Accessibility pass (contrast, focus, 44px, reduced motion) over all 4 looks.
-- [ ] Security review (secrets excluded from backups/exports; keys device-only).
+- [x] Security review (secrets excluded from backups/exports; keys device-only).
 
 ## Part B — Owner-only tasks
 - [ ] Phone offline test: open online once, visit all pages, airplane mode, reopen (O1).
