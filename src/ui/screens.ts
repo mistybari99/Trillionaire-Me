@@ -24,6 +24,7 @@ import { buildPlanInput, capacityState, fmtClock, freeWindow, isOpenTask } from 
 import { planFlowData } from "../core/planFlow";
 import { assessmentSection } from "./assessment";
 import { markNotTrue, realityLogRecord, RealityError } from "../core/reality";
+import { weeklySummary } from "../core/weeklyReview";
 import { reviewSummary } from "../core/review";
 import { NEUTRAL_TITLE, NOTIFY_CATEGORIES, notifyText } from "../core/notify";
 import { stagesFor, TEMPLATE_IDS, TEMPLATES, type TemplateId } from "../core/stageTemplates";
@@ -886,6 +887,32 @@ export function reviewScreen(): HTMLElement {
     disclaimers(lang));
 }
 
+// Weekly review: last 7 days from the user's own records. Unknown when empty; neutral wording.
+export function weeklyScreen(): HTMLElement {
+  const lang = L(); const recs = allRecs(); const w = weeklySummary(recs, todayIso());
+  const one = (n: number | null, key: Key) => (n === null ? null : t(key, lang, { n: num(n, lang) }));
+  const measures: Array<[string, Key, string | null]> = [
+    ["tasks", "week.tasks", one(w.tasksDone, "week.tasks.n")],
+    ["focus", "week.focus", w.focusMinutes === null ? null : t("week.focus.n", lang, { m: num(Math.round(w.focusMinutes), lang) })],
+    ["habits", "week.habits", one(w.habitCheckins, "week.habits.n")],
+    ["notes", "week.notes", one(w.journeyNotes, "week.notes.n")],
+    ["open", "week.open", one(w.stillOpen, "week.open.n")]];
+  const cell = (id: string, v: string | null) => (v === null ? h("span", { class: "muted", "data-week-empty": id }, t("week.notEnough", lang)) : valueEl(v, "INFERENCE", lang));
+  const compact = screenView("weekly") === "compact";
+  const body = compact
+    ? [h("table", { class: "table-compact", "data-view": "compact" }, h("tbody", {}, ...measures.map(([id, title, v]) => h("tr", { "data-week": id }, h("th", { scope: "row" }, t(title, lang)), h("td", {}, cell(id, v))))))]
+    : measures.map(([id, title, v]) => h("section", { class: "card", "data-week": id }, h("h2", { class: "card-h" }, t(title, lang)), cell(id, v)));
+  return h("main", {}, link("#/journey", "crumb", `← ${t("journey.title", lang)}`),
+    h("h1", {}, t("week.title", lang)),
+    h("p", { class: "sub" }, t("week.intro", lang)),
+    h("p", { class: "muted", "data-week-period": "1" }, valueEl(t("review.period", lang, { from: w.from, to: w.to }), "DEMO", lang)),
+    viewBar("weekly", lang),
+    ...body,
+    w.focusUnknown > 0 ? h("p", { class: "muted" }, t("week.unknownFocus", lang, { n: num(w.focusUnknown, lang) })) : null,
+    h("p", { class: "muted" }, t("week.quiet", lang)),
+    disclaimers(lang));
+}
+
 export function journey(): HTMLElement {
   const lang = L();
   return h("main", { class: "scr scr-journey" },
@@ -898,6 +925,7 @@ export function journey(): HTMLElement {
       link("#/journey/log", "btn ghost", t("log.link", lang)),
       link("#/journey/horizon", "btn ghost", t("horizon.link", lang)),
       link("#/journey/report", "btn ghost", t("report.link", lang)),
+      link("#/journey/week", "btn ghost", t("week.link", lang)),
       link("#/journey/review", "btn ghost", t("review.link", lang)),
       link("#/journey/risks", "btn ghost", t("risk.link", lang)),
       link("#/journey/history", "btn ghost", t("hist.link", lang)),

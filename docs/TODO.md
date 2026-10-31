@@ -43,6 +43,7 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 
 ### Block 7 — Builder run 31 Oct 2026
 - [x] Step 1: Detailed/Compact chooser on 10 more screens (log, goals, risks, ventures, team, history, cards, library, rules, wheel). Compact = denser rows, intro hidden; same records.
+- [x] Step 2: Weekly review screen `#/journey/week` (`src/core/weeklyReview.ts`, `tests/weekly_review.test.ts`): own entries, last 7 days, Unknown when empty, neutral wording.
 
 ## Part B — Owner-only tasks
 - [ ] Phone offline test: open online once, visit all pages, airplane mode, reopen (O1).
