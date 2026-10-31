@@ -10,6 +10,8 @@ import { financeFrom } from "../core/financeInputs";
 import { moneySummary, type Metric, type ScopeSummary } from "../core/homeSummary";
 import { goalStepCount, taskCount, type Count } from "../core/homeCounts";
 import { nextBestAction, type NextAction } from "../core/nextAction";
+import { adviceCards } from "../core/advice";
+import { TOPICS } from "../library/topics";
 
 const METRICS = [["networth", "netWorth", "home.sum.networth"], ["income", "income", "home.sum.income"], ["expenses", "expenses", "home.sum.expenses"]] as const;
 
@@ -66,4 +68,19 @@ export function nextActionCard(lang: Locale): HTMLElement {
     h("p", { class: "next-why", "data-next-reason": "1" }, h("strong", {}, `${t("next.why", lang)} `), t(`next.${a.id}.reason` as Key, lang)),
     h("a", { href: a.href, class: "btn", "data-act": "next-go", style: "width:auto;margin:0;min-height:44px" }, t(BTN[a.id], lang)),
     h("p", { class: "muted" }, t("next.note", lang)));
+}
+
+/** Up to three rule-based suggestion cards. Each shows the rule that chose it. Nothing is shown when no rule applies. */
+export function adviceCardsView(lang: Locale): HTMLElement | null {
+  const cards = adviceCards(allRecs());
+  if (!cards.length) return null;
+  return h("section", { class: "card advice", "data-advice": String(cards.length), "aria-label": t("advice.title", lang) },
+    h("h2", { class: "card-h" }, t("advice.title", lang)),
+    ...cards.map((c) => h("article", { class: "advice-item", "data-advice-rule": c.rule },
+      h("p", { class: "next-title" }, t(`advice.${c.rule}.title` as Key, lang, c.args)),
+      h("p", { class: "next-why", "data-advice-reason": "1" }, h("strong", {}, `${t("advice.why", lang)} `), t(`advice.${c.rule}.reason` as Key, lang, c.args)),
+      h("p", { class: "muted", "data-advice-prov": `${c.provenance.kind}/${c.provenance.source}/${c.provenance.reviewer}` }, t("advice.draft", lang)),
+      h("a", { href: `#/topic/${TOPICS.some((x) => x.id === c.topic) ? c.topic : "goal-strategy"}`, class: "btn ghost", "data-act": "advice-open", style: "width:auto;margin:0 8px 0 0;min-height:44px" }, t("advice.open", lang)),
+      h("a", { href: c.href, class: "btn ghost", style: "width:auto;margin:0;min-height:44px" }, t("next.btn.plan", lang)))),
+    h("p", { class: "muted" }, t("advice.note", lang)));
 }

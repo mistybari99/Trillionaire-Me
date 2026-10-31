@@ -1,0 +1,633 @@
+{
+  "schema": "tm-content-pack",
+  "schemaVersion": 1,
+  "packId": "pack-008",
+  "reviewStatus": "pending_reviewer",
+  "license": "original",
+  "description": "Original, practical entries (Bangla and English) widening the offline knowledge: goals, self-awareness, emotions (non-clinical), skills, execution, obstacles, measurement, balance, a private ruling-free note for the faith topic, time, habits, money, decisions, relationships, learning and focus. Each entry has a kind, a source note where it points to learning, and reviewer pending. Drafts: shown as যাচাই হয়নি until a reviewer signs off.",
+  "tips": [
+    {
+      "id": "p8-gs-1",
+      "topic": "goal-strategy",
+      "tags": [
+        "goal",
+        "why"
+      ],
+      "title": {
+        "bn": "একটি লক্ষ্য, একটি কারণ",
+        "en": "One goal, one reason"
+      },
+      "how": {
+        "bn": "লক্ষ্যের পাশে এক লাইনে কারণ লিখুন: কেন এটা আমার জন্য জরুরি। কারণ পরিষ্কার থাকলে কঠিন দিনে ফিরে আসা সহজ হয়।",
+        "en": "Write one line beside the goal: why it matters to you. A clear reason makes it easier to come back on hard days."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "লক্ষ্য|কারণ|ফিরে দেখি",
+        "en": "Goal|Reason|Look back"
+      },
+      "appLink": "#/journey/goals",
+      "kind": "explain",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p8-gs-2",
+      "topic": "goal-strategy",
+      "tags": [
+        "goal",
+        "focus"
+      ],
+      "title": {
+        "bn": "একসাথে অনেক লক্ষ্য",
+        "en": "Too many goals at once"
+      },
+      "how": {
+        "bn": "অনেক লক্ষ্য একসাথে ধরলে কোনোটিতেই পর্যাপ্ত সময় থাকে না। এখন একটা-দুটো বাছুন, বাকিগুলো ‘পরে’ তালিকায় রাখুন।",
+        "en": "With many goals at once, none gets enough time. Pick one or two now and keep the rest on a “later” list."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "সব লিখি|একটা-দুটো বাছি|বাকি পরে",
+        "en": "Write all|Pick one or two|Rest later"
+      },
+      "appLink": "#/journey/goals",
+      "kind": "watchout",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p8-gs-3",
+      "topic": "goal-strategy",
+      "tags": [
+        "goal",
+        "learning"
+      ],
+      "title": {
+        "bn": "লক্ষ্য নির্ধারণ নিয়ে আরও শিখতে",
+        "en": "Learn more about setting goals"
+      },
+      "how": {
+        "bn": "‘SMART লক্ষ্য’ নিয়ে সাধারণ ব্যাখ্যা পড়ুন। পড়ে একটি নিজের লক্ষ্য অ্যাপে লিখে দেখুন। যাচাইকারীর অপেক্ষায়।",
+        "en": "Read general explainers on “SMART goals”. Then write one of your own goals in the app. Reviewer pending."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "পড়ি|একটি লক্ষ্য লিখি|ফিরে দেখি",
+        "en": "Read|Write one goal|Look back"
+      },
+      "appLink": "#/journey/goals",
+      "kind": "learn",
+      "source": "general",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p8-sa-1",
+      "topic": "self-awareness",
+      "tags": [
+        "review",
+        "strengths"
+      ],
+      "title": {
+        "bn": "সপ্তাহের শেষে 3 প্রশ্ন",
+        "en": "Three questions at week's end"
+      },
+      "how": {
+        "bn": "সপ্তাহের শেষে নিজেকে তিনটি প্রশ্ন করুন: কী ভালো গেল, কী কঠিন ছিল, আগামী সপ্তাহে একটা কী বদলাব। উত্তর অল্প কথায় লিখুন।",
+        "en": "At the end of the week ask yourself three things: what went well, what was hard, and one thing to change next week. Answer briefly."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "ভালো|কঠিন|একটা বদল",
+        "en": "Went well|Was hard|One change"
+      },
+      "appLink": "#/journey/log",
+      "kind": "steps",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p8-sa-2",
+      "topic": "self-awareness",
+      "tags": [
+        "values",
+        "beliefs"
+      ],
+      "title": {
+        "bn": "যা আপনার কাছে জরুরি তা চেনা",
+        "en": "Know what matters to you"
+      },
+      "how": {
+        "bn": "এমন তিনটি দিন মনে করুন যখন আপনি তৃপ্ত ছিলেন। তাতে কোন বিষয় বারবার এসেছে? সেটাই আপনার কাছে জরুরি, আর পরিকল্পনা সেদিকেই হওয়া ভালো।",
+        "en": "Recall three days when you felt satisfied. What kept appearing? That is likely what matters to you, and plans fit best around it."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "তিনটি দিন|মিল খুঁজি|পরিকল্পনায় রাখি",
+        "en": "Three days|Find the pattern|Put it in the plan"
+      },
+      "kind": "example",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p8-em-1",
+      "topic": "emotions",
+      "tags": [
+        "emotions",
+        "calm"
+      ],
+      "title": {
+        "bn": "ভাবনাকে নাম দিন",
+        "en": "Name the feeling"
+      },
+      "how": {
+        "bn": "কঠিন সময়ে থেমে একটি শব্দে বলুন আপনি কী অনুভব করছেন, যেমন চিন্তিত বা ক্লান্ত। নাম দিলে অনুভূতি সামলানো সহজ হয়। এটি চিকিৎসা নয়।",
+        "en": "In a hard moment, pause and say in one word what you feel, such as worried or tired. Naming a feeling makes it easier to handle. This is not treatment."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "থামি|নাম দিই|একটা ছোট কাজ",
+        "en": "Pause|Name it|One small action"
+      },
+      "kind": "steps",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p8-em-2",
+      "topic": "emotions",
+      "tags": [
+        "emotions",
+        "support"
+      ],
+      "title": {
+        "bn": "সাহায্য চাওয়ার সময়",
+        "en": "When to ask for help"
+      },
+      "how": {
+        "bn": "কষ্ট অনেক দিন ধরে থাকলে বা দৈনন্দিন কাজে বাধা দিলে বিশ্বস্ত কারও সাথে বা যোগ্য সহায়তাকারীর সাথে কথা বলুন। অ্যাপ কোনো রোগ নির্ণয় করে না।",
+        "en": "If a hard feeling lasts for many days or blocks daily life, talk to someone you trust or a qualified helper. The app does not give medical opinions."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "কথা বলি|সময় নিই|সাহায্য নিই",
+        "en": "Talk|Take time|Get help"
+      },
+      "kind": "watchout",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p8-sk-1",
+      "topic": "skills",
+      "tags": [
+        "skills",
+        "practice"
+      ],
+      "title": {
+        "bn": "একটি দক্ষতা গভীরে, কয়েকটি মোটামুটি",
+        "en": "One skill deep, a few basic"
+      },
+      "how": {
+        "bn": "সব দক্ষতা একসাথে না শিখে একটি বেছে গভীরে যান। অন্যগুলো কাজ চালানোর মতো শিখুন। এতে অগ্রগতি চোখে পড়ে।",
+        "en": "Do not learn every skill at once. Pick one and go deep; learn the others just enough to get by. Progress then becomes visible."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "একটি বাছি|গভীরে যাই|বাকি মোটামুটি",
+        "en": "Pick one|Go deep|Others basic"
+      },
+      "appLink": "#/diary/intake/3",
+      "kind": "explain",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p8-sk-2",
+      "topic": "skills",
+      "tags": [
+        "skills",
+        "learning"
+      ],
+      "title": {
+        "bn": "দক্ষতা নিয়ে আরও শিখতে",
+        "en": "Learn more about building skills"
+      },
+      "how": {
+        "bn": "‘ইচ্ছাকৃত অনুশীলন’ নিয়ে সাধারণ লেখা পড়ুন, তারপর এই সপ্তাহে একটি ছোট অনুশীলন ঠিক করুন। যাচাইকারীর অপেক্ষায়।",
+        "en": "Read general explainers on “deliberate practice”, then choose one small practice for this week. Reviewer pending."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "পড়ি|অনুশীলন ঠিক করি|করি",
+        "en": "Read|Choose practice|Do it"
+      },
+      "kind": "learn",
+      "source": "wikipedia",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p8-ex-1",
+      "topic": "execution",
+      "tags": [
+        "execution",
+        "planning"
+      ],
+      "title": {
+        "bn": "সপ্তাহের একটি মূল কাজ",
+        "en": "One key task for the week"
+      },
+      "how": {
+        "bn": "সপ্তাহের শুরুতে একটি কাজ বেছে নিন যেটা হলে সপ্তাহটা সফল মনে হবে। সেটার সময় আগে ক্যালেন্ডারে রাখুন, বাকি কাজ তার চারপাশে সাজান।",
+        "en": "At the start of the week choose one task that would make the week feel worthwhile. Book its time first and fit the rest around it."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "একটি কাজ বাছি|সময় রাখি|বাকি সাজাই",
+        "en": "Choose one task|Book time|Fit the rest"
+      },
+      "appLink": "#/diary/plan",
+      "kind": "steps",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p8-ex-2",
+      "topic": "execution",
+      "tags": [
+        "execution",
+        "perfection"
+      ],
+      "title": {
+        "bn": "নিখুঁত পরিকল্পনার ফাঁদ",
+        "en": "The perfect-plan trap"
+      },
+      "how": {
+        "bn": "পরিকল্পনা নিখুঁত করতে করতে শুরু দেরি হয়ে যায়। অসম্পূর্ণ হলেও প্রথম ছোট ধাপ আজ করুন, তারপর পরিকল্পনা ঠিক করুন।",
+        "en": "Polishing a plan can delay the start. Do the first small step today even if the plan is rough, then adjust the plan."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "ছোট ধাপ|আজই করি|পরে ঠিক করি",
+        "en": "Small step|Do it today|Adjust later"
+      },
+      "appLink": "#/diary/plan",
+      "kind": "watchout",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p8-ob-1",
+      "topic": "obstacles",
+      "tags": [
+        "obstacles",
+        "adaptation"
+      ],
+      "title": {
+        "bn": "আটকে গেলে একটি ছোট বদল",
+        "en": "One small change when stuck"
+      },
+      "how": {
+        "bn": "যা আটকে আছে সেটা এক লাইনে লিখুন, তারপর আকার, সময় বা উপায়ের মধ্যে একটি বদলান। পুরো পরিকল্পনা ফেলে দিতে হয় না।",
+        "en": "Write what is stuck in one line, then change one thing: its size, its timing or its method. You do not need to drop the whole plan."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "লিখি|একটা বদলাই|আবার চেষ্টা",
+        "en": "Write it|Change one thing|Try again"
+      },
+      "appLink": "#/stuck",
+      "kind": "example",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p8-ob-2",
+      "topic": "obstacles",
+      "tags": [
+        "obstacles",
+        "learning"
+      ],
+      "title": {
+        "bn": "বাধা সামলানো নিয়ে আরও শিখতে",
+        "en": "Learn more about handling setbacks"
+      },
+      "how": {
+        "bn": "‘সমস্যা সমাধানের ধাপ’ নিয়ে সাধারণ লেখা পড়ুন। শেষ আটকে যাওয়া কাজটি অ্যাপের ‘আটকে আছি’ পাতায় লিখে দেখুন। যাচাইকারীর অপেক্ষায়।",
+        "en": "Read general explainers on “problem-solving steps”. Then log your last stuck task on the app's stuck page. Reviewer pending."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "পড়ি|আটকানো কাজ লিখি|একটি বদল",
+        "en": "Read|Log the stuck task|One change"
+      },
+      "appLink": "#/stuck",
+      "kind": "learn",
+      "source": "reviewer",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p8-me-1",
+      "topic": "measurement",
+      "tags": [
+        "measurement",
+        "review"
+      ],
+      "title": {
+        "bn": "মাসে একবার ফিরে দেখা",
+        "en": "A monthly look back"
+      },
+      "how": {
+        "bn": "মাসের শেষে লগ খুলে দেখুন কী বারবার আটকেছে আর কী কাজ করেছে। একটি জিনিস রাখুন, একটি বদলান। যা লেখা নেই তা ‘জানি না’ থাকুক।",
+        "en": "At month's end open the log and see what kept blocking you and what worked. Keep one thing, change one thing. Anything not recorded stays “don't know”."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "লগ দেখি|একটি রাখি|একটি বদলাই",
+        "en": "Open the log|Keep one|Change one"
+      },
+      "appLink": "#/journey/log",
+      "kind": "steps",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p8-ba-1",
+      "topic": "balance",
+      "tags": [
+        "balance",
+        "meaning"
+      ],
+      "title": {
+        "bn": "ভারসাম্য মানে সমান ভাগ নয়",
+        "en": "Balance does not mean equal parts"
+      },
+      "how": {
+        "bn": "জীবনের সব ক্ষেত্রে সমান সময় দিতে হবে না। এই সময়ে কোনটি বেশি জরুরি ঠিক করুন, আর বাকিগুলো ন্যূনতম স্তরে চালু রাখুন।",
+        "en": "You do not need equal time for every area of life. Decide which matters most right now and keep the others running at a basic level."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "এখন কোনটি জরুরি|বাকি ন্যূনতম|মাসে ফিরে দেখি",
+        "en": "What matters now|Others basic|Review monthly"
+      },
+      "appLink": "#/journey/wheel",
+      "kind": "explain",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p8-ba-2",
+      "topic": "balance",
+      "tags": [
+        "balance",
+        "rest"
+      ],
+      "title": {
+        "bn": "বিশ্রামও পরিকল্পনার অংশ",
+        "en": "Rest is part of the plan"
+      },
+      "how": {
+        "bn": "সপ্তাহে অন্তত একটি সময় রাখুন যেখানে কোনো লক্ষ্যের কাজ নেই। বিশ্রাম নিলে পরের কাজ ভালো হয়, এটি সময় নষ্ট নয়।",
+        "en": "Keep at least one slot in the week with no goal work. Rest helps the next task go better; it is not wasted time."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "একটি খালি সময়|বিশ্রাম|ফিরে আসি",
+        "en": "One free slot|Rest|Come back"
+      },
+      "appLink": "#/diary/plan",
+      "kind": "explain",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p8-de-1",
+      "topic": "deen",
+      "tags": [
+        "deen",
+        "planning"
+      ],
+      "title": {
+        "bn": "ইবাদতের পরিকল্পনা ছোট ও ব্যক্তিগত রাখুন",
+        "en": "Keep worship plans small and private"
+      },
+      "how": {
+        "bn": "নিজের সামর্থ্য অনুযায়ী ছোট একটি নিয়মিত অভ্যাস ঠিক করুন, যেমন নির্দিষ্ট সময়ে একটি কাজ। এটি শুধু আপনার স্মরণ করার সহায়ক; কোনো গণনা বা তুলনা নেই।",
+        "en": "Pick one small regular habit that fits your ability, at a set time. It is only a reminder aid for you; nothing is counted or compared."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "ছোট করে ঠিক করি|সময় রাখি|নিজের মতো করি",
+        "en": "Keep it small|Set a time|Do it your way"
+      },
+      "appLink": "#/deen",
+      "kind": "explain",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p8-de-2",
+      "topic": "deen",
+      "tags": [
+        "deen",
+        "comparison"
+      ],
+      "title": {
+        "bn": "অন্যের সাথে তুলনা নয়",
+        "en": "No comparing with others"
+      },
+      "how": {
+        "bn": "নিজের অভ্যাস অন্যের সাথে মেলানোর দরকার নেই। যেদিন কম হলো, সেদিন নিজের প্রতি নরম থাকুন এবং পরের দিন আবার শুরু করুন।",
+        "en": "You do not need to match your habits to anyone else's. On a lighter day, stay kind to yourself and begin again the next day."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "নিজের গতি|নরম থাকি|আবার শুরু",
+        "en": "Own pace|Stay kind|Begin again"
+      },
+      "appLink": "#/deen",
+      "kind": "watchout",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p8-de-3",
+      "topic": "deen",
+      "tags": [
+        "deen",
+        "learning"
+      ],
+      "title": {
+        "bn": "দ্বীন নিয়ে শেখার উৎস",
+        "en": "Where to learn about Deen"
+      },
+      "how": {
+        "bn": "শেখার জন্য নির্ভরযোগ্য আলেম বা প্রতিষ্ঠিত শিক্ষা প্রতিষ্ঠানের সাথে যোগাযোগ করুন। অ্যাপ কোনো ফতোয়া বা ধর্মীয় নির্দেশ দেয় না। যাচাইকারীর অপেক্ষায়।",
+        "en": "For learning, reach out to a trusted scholar or an established school. The app gives no rulings or religious instructions. Reviewer pending."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "বিশ্বস্ত শিক্ষক|প্রশ্ন লিখি|নিয়মিত শিখি",
+        "en": "Trusted teacher|Write questions|Learn regularly"
+      },
+      "appLink": "#/deen",
+      "kind": "learn",
+      "source": "reviewer",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p8-ti-1",
+      "topic": "time",
+      "tags": [
+        "time",
+        "priorities"
+      ],
+      "title": {
+        "bn": "সবকিছুকে জরুরি ভাবা",
+        "en": "Treating everything as urgent"
+      },
+      "how": {
+        "bn": "সব কাজ জরুরি মনে হলে আজ কোনটি না হলে ক্ষতি বেশি তা বাছুন। সেটা আগে করুন; বাকিগুলো কাল বা পরে রাখুন।",
+        "en": "When everything feels urgent, pick the one that would cost most if left today. Do it first and move the rest to tomorrow or later."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "সব লিখি|একটি বাছি|আগে করি",
+        "en": "List all|Pick one|Do it first"
+      },
+      "appLink": "#/diary/plan",
+      "kind": "watchout",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p8-ha-1",
+      "topic": "habits",
+      "tags": [
+        "habits",
+        "start-small"
+      ],
+      "title": {
+        "bn": "অভ্যাস এত ছোট করুন যে না বলা কঠিন",
+        "en": "Make a habit too small to refuse"
+      },
+      "how": {
+        "bn": "নতুন অভ্যাস দুই মিনিটের মতো ছোট করে শুরু করুন। পরিচিত একটি কাজের পরপর জুড়ে দিন, যেমন চা খাওয়ার পর। ধীরে বাড়ান।",
+        "en": "Start a new habit at about two minutes. Attach it right after something you already do, such as after tea. Grow it slowly."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "ছোট করি|পরিচিত কাজের পরে|ধীরে বাড়াই",
+        "en": "Make it tiny|After a habit|Grow slowly"
+      },
+      "appLink": "#/habits",
+      "kind": "steps",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p8-mo-1",
+      "topic": "money",
+      "tags": [
+        "money",
+        "unknown"
+      ],
+      "title": {
+        "bn": "অঙ্ক না জেনে সিদ্ধান্ত নয়",
+        "en": "Do not decide on unknown numbers"
+      },
+      "how": {
+        "bn": "আয় বা খরচের অঙ্ক জানা না থাকলে অনুমান করে কিছু ধরে নেবেন না। আগে তিন মাসের সত্যিকারের তথ্য নোট করুন; তার আগে ‘জানি না’ থাকুক।",
+        "en": "If you do not know an income or expense number, do not assume one. Note real figures for a few months first; until then keep “don't know”."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "জানি না লিখি|সত্যি তথ্য নোট|তারপর সিদ্ধান্ত",
+        "en": "Mark unknown|Note real data|Then decide"
+      },
+      "appLink": "#/diary/money",
+      "kind": "watchout",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p8-dc-1",
+      "topic": "decisions",
+      "tags": [
+        "decision",
+        "review"
+      ],
+      "title": {
+        "bn": "তাড়াহুড়োর সিদ্ধান্ত থামান",
+        "en": "Pause a rushed decision"
+      },
+      "how": {
+        "bn": "বড় সিদ্ধান্তে অন্তত একটি রাত সময় নিন। তখন লিখুন কী জানা আছে, কী জানা নেই, আর ফেরানো যাবে কি না।",
+        "en": "For a big decision, take at least one night. Write what you know, what you do not know, and whether it can be undone."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "জানা|অজানা|ফেরানো যায় কি",
+        "en": "Known|Unknown|Can undo it"
+      },
+      "appLink": "#/capture",
+      "kind": "steps",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p8-re-1",
+      "topic": "relationships",
+      "tags": [
+        "relationships",
+        "feedback"
+      ],
+      "title": {
+        "bn": "ভদ্রভাবে মতামত চাওয়া",
+        "en": "Asking for feedback kindly"
+      },
+      "how": {
+        "bn": "বিশ্বস্ত একজনকে জিজ্ঞাসা করুন: আমি কোন একটি জিনিস বদলালে ভালো হয়? শুনুন, ধন্যবাদ বলুন, আর তর্ক করবেন না।",
+        "en": "Ask someone you trust: what is one thing I could change? Listen, say thanks, and do not argue."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "একজনকে বাছি|একটি প্রশ্ন|শুনি",
+        "en": "Pick one person|Ask one question|Listen"
+      },
+      "kind": "steps",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p8-kn-1",
+      "topic": "knowledge",
+      "tags": [
+        "learning",
+        "action"
+      ],
+      "title": {
+        "bn": "পড়া থেকে একটি কাজ",
+        "en": "One action from what you read"
+      },
+      "how": {
+        "bn": "কিছু পড়ার পর একটি ছোট কাজ লিখুন যা আজ বা কাল করবেন। না করলে শেখা মনে থাকে কম।",
+        "en": "After reading something, write one small action you will do today or tomorrow. Without action, little of the learning stays."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "পড়ি|একটি কাজ লিখি|করি",
+        "en": "Read|Write one action|Do it"
+      },
+      "appLink": "#/cards",
+      "kind": "steps",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p8-fo-1",
+      "topic": "focus",
+      "tags": [
+        "focus",
+        "deep-work"
+      ],
+      "title": {
+        "bn": "এক সময়ে এক কাজ",
+        "en": "One thing at a time"
+      },
+      "how": {
+        "bn": "ফোন দূরে রেখে 25 মিনিট একটি কাজ করুন, তারপর ছোট বিরতি নিন। শেষে কতটা হলো শুধু দেখুন, নম্বর দেবেন না।",
+        "en": "Put the phone away and work on one thing for 25 minutes, then take a short break. Just notice how far you got; do not give marks."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "ফোন দূরে|25 মিনিট|ছোট বিরতি",
+        "en": "Phone away|25 minutes|Short break"
+      },
+      "appLink": "#/today",
+      "kind": "explain",
+      "reviewer": "pending"
+    }
+  ]
+}

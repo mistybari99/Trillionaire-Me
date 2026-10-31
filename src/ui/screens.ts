@@ -37,7 +37,7 @@ import { activityChart, goalRingsChart, habitChart, moneyChart } from "./charts"
 import { encBackupCard } from "./encBackup";
 import { rulesTodayCard } from "./libraryScreens";
 import { celebrate, journeyGoalsCard, overallProgressCard } from "./lifeUi";
-import { homeCountCards, homeSummaryCards, nextActionCard } from "./homeUi";
+import { adviceCardsView, homeCountCards, homeSummaryCards, nextActionCard } from "./homeUi";
 import { progressRing, isMilestone } from "./ring";
 import { logo3d } from "./logo";
 import { backupReminderCard, snapshotsCard } from "./snapshotsUi";
@@ -835,6 +835,7 @@ export function today(): HTMLElement {
     homeCountCards(lang),
     homeSummaryCards(lang),
     nextActionCard(lang),
+    adviceCardsView(lang),
     backupReminderCard(lang),
     h("h2", {}, t("home.tasks", lang)),
     viewBar("today", lang),

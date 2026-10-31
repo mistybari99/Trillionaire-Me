@@ -63,6 +63,7 @@ function card(id: FacilityId, lang: Locale): HTMLElement {
     h("h2", { class: "card-h" }, t(`conn.${id}.name` as Key, lang), " ", h("span", { class: `tag ${st === "connected" ? "ok" : st === "needs_approval" ? "warn" : "off"}`, "data-conn-tag": id }, t(`conn.status.${st}` as Key, lang))),
     h("p", {}, t(`conn.${id}.does` as Key, lang)),
     h("p", { class: "muted" }, t(`conn.${id}.needs` as Key, lang)),
+    id === "aiAssistant" || id === "cloudSync" ? h("p", { class: "muted", "data-conn-slot": id }, t(`conn.${id}.slot` as Key, lang)) : null,
     keyBox(id, lang),
     on ? h("button", { class: "btn ghost", type: "button", "data-conn-disable": id, onclick: () => { setEnabled(consentKv, id, false); rerender(); } }, t("conn.disable", lang)) : enable,
     " ",

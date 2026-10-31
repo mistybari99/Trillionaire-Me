@@ -27,10 +27,11 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 - [x] Per-goal progress stays; no tasks => Unknown.
 
 ### Block 5 — Knowledge and advice
-- [ ] Rule-based advice cards from built-in knowledge (reason always shown, no invented amounts).
-- [ ] Offline knowledge base wider coverage; mark source/kind/reviewer pending.
-- [ ] Port-ready slot for online suggestions (off until owner approves D-C cost/provider).
-- [ ] Free-cloud sync port option only (off; text stays "Saved on this device").
+- [x] Azan system: audio-ready slot public/audio/azan.mp3 (+ azan-fajr.mp3), presence check, volume, preview, offline cache, docs/azan.md (owner supplies the file later).
+- [x] Rule-based advice cards from built-in knowledge (reason always shown, no invented amounts).
+- [x] Offline knowledge base wider coverage; mark source/kind/reviewer pending.
+- [x] Port-ready slot for online suggestions (off until owner approves D-C cost/provider).
+- [x] Free-cloud sync port option only (off; text stays "Saved on this device").
 
 ### Block 6 — Docs, evidence, quality
 - [x] Fix docs/design/m-list-status.md (M19 etc.).
