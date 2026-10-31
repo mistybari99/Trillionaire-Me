@@ -83,7 +83,7 @@ Changes in this run: finance outputs carry an ESTIMATE label (`tests/finance_lab
 
 
 ## Run 3: mapping pass (31 Oct 2026)
-Source is the original v2_0 xlsx (read only, sha256 `a65616a8...1e71` before and after). Run: `node tools/evidence.mjs` (vitest 963/963 passed, 0 failed), `node tools/e2e.mjs` (0 FAIL), then `python3 tools/update_register.py` into `..._v2_1_evidence_refresh.xlsx`. The Change Log sheet of the copy has a new "Evidence" line.
+Source is the original v2_0 xlsx (read only, sha256 `a65616a8...1e71` before and after). Run: `node tools/evidence.mjs` (vitest 964/964 passed, 0 failed), `node tools/e2e.mjs` (59 PASS, 0 FAIL), then `python3 tools/update_register.py` into `..._v2_1_evidence_refresh.xlsx`. The Change Log sheet of the copy has a new "Evidence" line.
 
 Counts of linked TM-TST rows: 42 (was 32). Verified (Pass) 13 (was 11). Partial 29 (was 21). Fail 0. Requirements with no evidence: 138 (was 148).
 

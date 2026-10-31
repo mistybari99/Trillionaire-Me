@@ -75,6 +75,18 @@ describe("M24 ready-system library screen", () => {
     for (const r of real) for (const x of Object.values(r.values)) if (x.state === "value") expect(x.label).not.toBe("DEMO");
     revokeConsent(consentKv);
   });
+
+  it("habits and tasks of a system added in real mode show on Habits and Plan", () => {
+    grantConsent(consentKv, "2026-10-25T04:00:00.000Z"); localStorage.setItem("tm:ui:dataMode", "real");
+    go("#/more/library");
+    $<HTMLButtonElement>("[data-system=study-block] [data-act=system-add]")!.click();
+    const real: TMRecord[] = store.real.list();
+    const habitCount = real.filter((r) => r.entity === "habit").length, taskCount = real.filter((r) => r.entity === "task").length;
+    expect(habitCount + taskCount).toBeGreaterThan(0);
+    go("#/habits"); expect($$("[data-habit-card]")).toHaveLength(habitCount);
+    go("#/diary/plan"); expect($$("[data-task]")).toHaveLength(taskCount);
+    revokeConsent(consentKv);
+  });
 });
 
 describe("M19 automation rules screen and Today suggestions", () => {
