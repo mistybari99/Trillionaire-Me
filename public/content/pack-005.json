@@ -134,7 +134,7 @@
         "en": "What clear communication means"
       },
       "how": {
-        "bn": "স্পষ্ট যোগাযোগ মানে নিজের কথা সরল ভাষায় বলা আর অন্যের কথা শোনা। আগে বুঝে নিন অন্যজন কী বলতে চাইছে, তারপর নিজের কথা বলুন। এটা সাধারণ দক্ষতা, থেরাপি নয়।",
+        "bn": "স্পষ্ট যোগাযোগ মানে নিজের কথা সরল ভাষায় বলা আর অন্যের কথা শোনা। আগে বুঝে নিন অন্যজন কী বলতে চাইছে, তারপর নিজের কথা বলুন। এটা সাধারণ স্কিল, থেরাপি নয়।",
         "en": "Clear communication means saying your point simply and listening to the other person. First make sure you understand what they mean, then say yours. This is a general skill, not therapy."
       },
       "diagram": {
@@ -226,12 +226,12 @@
         "en": "Learn more about relationships and communication"
       },
       "how": {
-        "bn": "‘সক্রিয় শোনা’ ও ‘যোগাযোগ দক্ষতা’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অ্যাপে উইকিপিডিয়া খুঁজলে পরিচিতি সংরক্ষিত হয়। গভীর সমস্যায় যোগ্য কাউন্সেলরের সঙ্গে কথা বলুন।",
+        "bn": "‘সক্রিয় শোনা’ ও ‘যোগাযোগ স্কিল’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অ্যাপে উইকিপিডিয়া খুঁজলে পরিচিতি সেভ হয়। গভীর সমস্যায় যোগ্য কাউন্সেলরের সঙ্গে কথা বলুন।",
         "en": "Read general explainers on “active listening” and “communication skills”. A Wikipedia search in the app saves an overview. For deep difficulties, talk to a qualified counsellor."
       },
       "diagram": {
         "type": "steps",
-        "bn": "সাধারণ লেখা পড়ি|একটা অনুশীলন করি|প্রয়োজনে কাউন্সেলর",
+        "bn": "সাধারণ লেখা পড়ি|একটা প্র্যাকটিস করি|প্রয়োজনে কাউন্সেলর",
         "en": "Read general explainers|Practise one skill|Counsellor if needed"
       },
       "appLink": "#/cards",
@@ -247,16 +247,16 @@
         "career"
       ],
       "title": {
-        "bn": "ক্যারিয়ারের জন্য দক্ষতা কীভাবে ভাবব",
+        "bn": "ক্যারিয়ারের জন্য স্কিল কীভাবে ভাবব",
         "en": "How to think about career skills"
       },
       "how": {
-        "bn": "দক্ষতা তিন ধরনের হতে পারে: কাজের নির্দিষ্ট দক্ষতা, মানুষের সঙ্গে কাজের দক্ষতা, আর নিজেকে সামলানোর দক্ষতা। নিজের ক্ষেত্রে কোনটা দুর্বল তা লিখে দেখুন, কিন্তু নিজেকে নম্বর দেবেন না।",
+        "bn": "স্কিল তিন ধরনের হতে পারে: কাজের নির্দিষ্ট স্কিল, মানুষের সঙ্গে কাজের স্কিল, আর নিজেকে সামলানোর স্কিল। নিজের ক্ষেত্রে কোনটা দুর্বল তা লিখে দেখুন, কিন্তু নিজেকে নম্বর দেবেন না।",
         "en": "Skills can be work-specific, people skills, and self-management skills. Note which is thin for you, but do not give yourself a number."
       },
       "diagram": {
         "type": "matrix",
-        "bn": "কাজের দক্ষতা: নির্দিষ্ট কাজ|মানুষের দক্ষতা: সহযোগিতা|নিজেকে সামলানো: গুছিয়ে চলা|নতুন শেখা: খোলা মন",
+        "bn": "কাজের স্কিল: নির্দিষ্ট কাজ|মানুষের স্কিল: সহযোগিতা|নিজেকে সামলানো: গুছিয়ে চলা|নতুন শেখা: খোলা মন",
         "en": "Work skills: the craft|People skills: working together|Self-management: staying organised|Learning: staying open"
       },
       "appLink": "#/diary/intake/3",
@@ -272,16 +272,16 @@
         "practice"
       ],
       "title": {
-        "bn": "একটা দক্ষতা গড়ার ধাপ",
+        "bn": "একটা স্কিল গড়ার ধাপ",
         "en": "Steps to build one skill"
       },
       "how": {
-        "bn": "1) একটা দক্ষতা বাছুন। 2) এই মাসে একটা ছোট কাজ ঠিক করুন যাতে সেটা লাগে। 3) সপ্তাহে 2–3 বার 15 মিনিট অনুশীলন করুন। 4) কাউকে দেখিয়ে মতামত নিন।",
+        "bn": "1) একটা স্কিল বাছুন। 2) এই মাসে একটা ছোট কাজ ঠিক করুন যাতে সেটা লাগে। 3) সপ্তাহে 2–3 বার 15 মিনিট প্র্যাকটিস করুন। 4) কাউকে দেখিয়ে মতামত নিন।",
         "en": "1) Pick one skill. 2) Choose a small piece of work this month that uses it. 3) Practise 15 minutes, 2–3 times a week. 4) Show someone and ask for feedback."
       },
       "diagram": {
         "type": "steps",
-        "bn": "একটা দক্ষতা বাছি|ছোট কাজ ঠিক|15 মিনিট অনুশীলন|মতামত নিই",
+        "bn": "একটা স্কিল বাছি|ছোট কাজ ঠিক|15 মিনিট প্র্যাকটিস|মতামত নিই",
         "en": "Pick one skill|Choose a small task|Practise 15 min|Ask feedback"
       },
       "appLink": "#/diary/intake/3",
@@ -296,11 +296,11 @@
         "career"
       ],
       "title": {
-        "bn": "উদাহরণ: লেখার দক্ষতা",
+        "bn": "উদাহরণ: লেখার স্কিল",
         "en": "Example: building writing skill"
       },
       "how": {
-        "bn": "জুলেখা কাজের ইমেইল আরও পরিষ্কার করতে চাইল। প্রতিদিন একটা ইমেইল তিন লাইনে লেখা অনুশীলন করল, এক সহকর্মীকে দেখাল, আর তাঁর পরামর্শে ‘কী চাই’ লাইনটা প্রথমে আনল।",
+        "bn": "জুলেখা কাজের ইমেইল আরও পরিষ্কার করতে চাইল। প্রতিদিন একটা ইমেইল তিন লাইনে লেখা প্র্যাকটিস করল, এক সহকর্মীকে দেখাল, আর তাঁর পরামর্শে ‘কী চাই’ লাইনটা প্রথমে আনল।",
         "en": "Julekha wanted clearer work emails. She practised one email a day in three lines, showed a colleague, and on their suggestion moved the “what I need” line to the top."
       },
       "diagram": {
@@ -320,7 +320,7 @@
         "career"
       ],
       "title": {
-        "bn": "দক্ষতা গড়ায় যা এড়াবেন",
+        "bn": "স্কিল গড়ায় যা এড়াবেন",
         "en": "Skill-building slips to avoid"
       },
       "how": {
@@ -345,16 +345,16 @@
         "learning"
       ],
       "title": {
-        "bn": "ক্যারিয়ার ও দক্ষতা নিয়ে আরও শিখতে",
+        "bn": "ক্যারিয়ার ও স্কিল নিয়ে আরও শিখতে",
         "en": "Learn more about career and skills"
       },
       "how": {
-        "bn": "নিজের ক্ষেত্রের কাজের বিবরণ, চাকরির বিজ্ঞপ্তি আর অভিজ্ঞ কারও সঙ্গে কথা থেকে জানুন কোন দক্ষতা লাগে। সাধারণ জ্ঞানের লেখাও পড়তে পারেন। যাচাইকারীর অপেক্ষায়।",
+        "bn": "নিজের ক্ষেত্রের কাজের বিবরণ, চাকরির নোটিফিকেশন আর অভিজ্ঞ কারও সঙ্গে কথা থেকে জানুন কোন স্কিল লাগে। সাধারণ জ্ঞানের লেখাও পড়তে পারেন। যাচাইকারীর অপেক্ষায়।",
         "en": "Learn which skills matter from job descriptions in your field, job notices and a chat with an experienced person. General explainers help too. Reviewer pending."
       },
       "diagram": {
         "type": "steps",
-        "bn": "কাজের বিবরণ দেখি|অভিজ্ঞের সঙ্গে কথা|দক্ষতার তালিকা বানাই",
+        "bn": "কাজের বিবরণ দেখি|অভিজ্ঞের সঙ্গে কথা|স্কিলের লিস্ট বানাই",
         "en": "Read job descriptions|Talk to someone experienced|Make a skill list"
       },
       "appLink": "#/diary/intake/3",
@@ -536,12 +536,12 @@
         "en": "Example: a suspicious message"
       },
       "how": {
-        "bn": "ফারজানার কাছে ব্যাংকের নামে একটা বার্তা এল, ‘এখনই লিঙ্কে ক্লিক করুন’। সে ক্লিক না করে নিজে ব্যাংকের অ্যাপ খুলে দেখল, আর বার্তাটা মুছে দিল। ওটিপি সে কাউকে বলে না।",
+        "bn": "ফারজানার কাছে ব্যাংকের নামে একটা বার্তা এল, ‘এখনই লিঙ্কে ক্লিক করুন’। সে ক্লিক না করে নিজে ব্যাংকের অ্যাপ খুলে দেখল, আর বার্তাটা ডিলিট করে দিল। ওটিপি সে কাউকে বলে না।",
         "en": "Farzana got a message in a bank's name saying “click now”. She did not click. She opened the bank's own app to check, and deleted the message. She never tells anyone her one-time codes."
       },
       "diagram": {
         "type": "steps",
-        "bn": "বার্তা পাই|ক্লিক করি না|নিজে অ্যাপ খুলে দেখি|মুছে দিই",
+        "bn": "বার্তা পাই|ক্লিক করি না|নিজে অ্যাপ খুলে দেখি|ডিলিট করে দিই",
         "en": "Receive message|Do not click|Check in the real app|Delete it"
       },
       "kind": "example",
@@ -582,7 +582,7 @@
         "en": "Learn more about digital safety"
       },
       "how": {
-        "bn": "‘ফিশিং’, ‘পাসওয়ার্ড ম্যানেজার’ ও ‘দুই ধাপের যাচাই’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অ্যাপে উইকিপিডিয়া খুঁজলে পরিচিতি সংরক্ষিত হয়। নিজের ব্যাংকের নিরাপত্তা নির্দেশনাও দেখুন।",
+        "bn": "‘ফিশিং’, ‘পাসওয়ার্ড ম্যানেজার’ ও ‘দুই ধাপের যাচাই’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অ্যাপে উইকিপিডিয়া খুঁজলে পরিচিতি সেভ হয়। নিজের ব্যাংকের নিরাপত্তা নির্দেশনাও দেখুন।",
         "en": "Read general explainers on “phishing”, “password managers” and “two-step verification”. A Wikipedia search in the app saves an overview. Also read your own bank's safety guidance."
       },
       "diagram": {

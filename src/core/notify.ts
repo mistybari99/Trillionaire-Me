@@ -13,7 +13,7 @@ export type NotifyPrefs = Partial<Record<NotifyCategory, boolean>>;
 export const DEFAULT_NOTIFY_PREFS: NotifyPrefs = {};
 
 /** Neutral text used whenever details are hidden. It names no item, category or amount. */
-export const NEUTRAL_TITLE: Bi = { en: "A reminder is waiting", bn: "একটি স্মরণ অপেক্ষা করছে" };
+export const NEUTRAL_TITLE: Bi = { en: "A reminder is waiting", bn: "একটি রিমাইন্ডার অপেক্ষা করছে" };
 export const NEUTRAL_BODY: Bi = { en: "Open the app to see it", bn: "খুলে দেখুন" };
 
 /** Safe read of a stored value: anything that is not a known category set to true is hidden. */

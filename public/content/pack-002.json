@@ -57,16 +57,16 @@
         "risk"
       ],
       "title": {
-        "bn": "তিনটি বিকল্প লিখুন",
+        "bn": "তিনটি অপশন লিখুন",
         "en": "Write three options"
       },
       "how": {
-        "bn": "একটি সিদ্ধান্তের জন্য তিনটি বিকল্প লিখুন। প্রতিটির একটি সুবিধা আর একটি ঝুঁকি লিখুন।",
+        "bn": "একটি সিদ্ধান্তের জন্য তিনটি অপশন লিখুন। প্রতিটির একটি সুবিধা আর একটি রিস্ক লিখুন।",
         "en": "For one decision, write three options. Note one benefit and one risk for each."
       },
       "diagram": {
         "type": "matrix",
-        "bn": "বিকল্প ১|বিকল্প ২|বিকল্প ৩|তুলনা করি",
+        "bn": "অপশন ১|অপশন ২|অপশন ৩|তুলনা করি",
         "en": "Option 1|Option 2|Option 3|Compare"
       },
       "appLink": "#/capture"
@@ -249,7 +249,7 @@
         "planning"
       ],
       "title": {
-        "bn": "বাধার তালিকা",
+        "bn": "বাধার লিস্ট",
         "en": "List the blockers"
       },
       "how": {
@@ -297,12 +297,12 @@
         "en": "What happened, what was planned"
       },
       "how": {
-        "bn": "আজকের পরিকল্পনা আর আসল কাজ পাশাপাশি লিখুন। পার্থক্যের একটি কারণ লিখুন।",
+        "bn": "আজকের প্ল্যান আর আসল কাজ পাশাপাশি লিখুন। পার্থক্যের একটি কারণ লিখুন।",
         "en": "Write today's plan and what really happened side by side. Note one reason for the gap."
       },
       "diagram": {
         "type": "steps",
-        "bn": "পরিকল্পনা লিখি|আসল কাজ লিখি|একটি কারণ",
+        "bn": "প্ল্যান লিখি|আসল কাজ লিখি|একটি কারণ",
         "en": "Write the plan|Write what happened|One reason"
       }
     }

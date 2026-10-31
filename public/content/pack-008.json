@@ -42,7 +42,7 @@
         "en": "Too many goals at once"
       },
       "how": {
-        "bn": "অনেক লক্ষ্য একসাথে ধরলে কোনোটিতেই পর্যাপ্ত সময় থাকে না। এখন একটা-দুটো বাছুন, বাকিগুলো ‘পরে’ তালিকায় রাখুন।",
+        "bn": "অনেক লক্ষ্য একসাথে ধরলে কোনোটিতেই পর্যাপ্ত সময় থাকে না। এখন একটা-দুটো বাছুন, বাকিগুলো ‘পরে’ লিস্টে রাখুন।",
         "en": "With many goals at once, none gets enough time. Pick one or two now and keep the rest on a “later” list."
       },
       "diagram": {
@@ -115,12 +115,12 @@
         "en": "Know what matters to you"
       },
       "how": {
-        "bn": "এমন তিনটি দিন মনে করুন যখন আপনি তৃপ্ত ছিলেন। তাতে কোন বিষয় বারবার এসেছে? সেটাই আপনার কাছে জরুরি, আর পরিকল্পনা সেদিকেই হওয়া ভালো।",
+        "bn": "এমন তিনটি দিন মনে করুন যখন আপনি তৃপ্ত ছিলেন। তাতে কোন বিষয় বারবার এসেছে? সেটাই আপনার কাছে জরুরি, আর প্ল্যান সেদিকেই হওয়া ভালো।",
         "en": "Recall three days when you felt satisfied. What kept appearing? That is likely what matters to you, and plans fit best around it."
       },
       "diagram": {
         "type": "steps",
-        "bn": "তিনটি দিন|মিল খুঁজি|পরিকল্পনায় রাখি",
+        "bn": "তিনটি দিন|মিল খুঁজি|প্ল্যানে রাখি",
         "en": "Three days|Find the pattern|Put it in the plan"
       },
       "kind": "example",
@@ -180,11 +180,11 @@
         "practice"
       ],
       "title": {
-        "bn": "একটি দক্ষতা গভীরে, কয়েকটি মোটামুটি",
+        "bn": "একটি স্কিল গভীরে, কয়েকটি মোটামুটি",
         "en": "One skill deep, a few basic"
       },
       "how": {
-        "bn": "সব দক্ষতা একসাথে না শিখে একটি বেছে গভীরে যান। অন্যগুলো কাজ চালানোর মতো শিখুন। এতে অগ্রগতি চোখে পড়ে।",
+        "bn": "সব স্কিল একসাথে না শিখে একটি বেছে গভীরে যান। অন্যগুলো কাজ চালানোর মতো শিখুন। এতে প্রোগ্রেস চোখে পড়ে।",
         "en": "Do not learn every skill at once. Pick one and go deep; learn the others just enough to get by. Progress then becomes visible."
       },
       "diagram": {
@@ -204,16 +204,16 @@
         "learning"
       ],
       "title": {
-        "bn": "দক্ষতা নিয়ে আরও শিখতে",
+        "bn": "স্কিল নিয়ে আরও শিখতে",
         "en": "Learn more about building skills"
       },
       "how": {
-        "bn": "‘ইচ্ছাকৃত অনুশীলন’ নিয়ে সাধারণ লেখা পড়ুন, তারপর এই সপ্তাহে একটি ছোট অনুশীলন ঠিক করুন। যাচাইকারীর অপেক্ষায়।",
+        "bn": "‘ইচ্ছাকৃত প্র্যাকটিস’ নিয়ে সাধারণ লেখা পড়ুন, তারপর এই সপ্তাহে একটি ছোট প্র্যাকটিস ঠিক করুন। যাচাইকারীর অপেক্ষায়।",
         "en": "Read general explainers on “deliberate practice”, then choose one small practice for this week. Reviewer pending."
       },
       "diagram": {
         "type": "steps",
-        "bn": "পড়ি|অনুশীলন ঠিক করি|করি",
+        "bn": "পড়ি|প্র্যাকটিস ঠিক করি|করি",
         "en": "Read|Choose practice|Do it"
       },
       "kind": "learn",
@@ -252,11 +252,11 @@
         "perfection"
       ],
       "title": {
-        "bn": "নিখুঁত পরিকল্পনার ফাঁদ",
+        "bn": "নিখুঁত প্ল্যানের ফাঁদ",
         "en": "The perfect-plan trap"
       },
       "how": {
-        "bn": "পরিকল্পনা নিখুঁত করতে করতে শুরু দেরি হয়ে যায়। অসম্পূর্ণ হলেও প্রথম ছোট ধাপ আজ করুন, তারপর পরিকল্পনা ঠিক করুন।",
+        "bn": "প্ল্যান নিখুঁত করতে করতে শুরু দেরি হয়ে যায়। অসম্পূর্ণ হলেও প্রথম ছোট ধাপ আজ করুন, তারপর প্ল্যান ঠিক করুন।",
         "en": "Polishing a plan can delay the start. Do the first small step today even if the plan is rough, then adjust the plan."
       },
       "diagram": {
@@ -280,7 +280,7 @@
         "en": "One small change when stuck"
       },
       "how": {
-        "bn": "যা আটকে আছে সেটা এক লাইনে লিখুন, তারপর আকার, সময় বা উপায়ের মধ্যে একটি বদলান। পুরো পরিকল্পনা ফেলে দিতে হয় না।",
+        "bn": "যা আটকে আছে সেটা এক লাইনে লিখুন, তারপর আকার, সময় বা উপায়ের মধ্যে একটি বদলান। পুরো প্ল্যান ফেলে দিতে হয় না।",
         "en": "Write what is stuck in one line, then change one thing: its size, its timing or its method. You do not need to drop the whole plan."
       },
       "diagram": {
@@ -373,7 +373,7 @@
         "rest"
       ],
       "title": {
-        "bn": "বিশ্রামও পরিকল্পনার অংশ",
+        "bn": "বিশ্রামও প্ল্যানের অংশ",
         "en": "Rest is part of the plan"
       },
       "how": {
@@ -397,7 +397,7 @@
         "planning"
       ],
       "title": {
-        "bn": "ইবাদতের পরিকল্পনা ছোট ও ব্যক্তিগত রাখুন",
+        "bn": "ইবাদতের প্ল্যান ছোট ও ব্যক্তিগত রাখুন",
         "en": "Keep worship plans small and private"
       },
       "how": {
@@ -445,7 +445,7 @@
         "learning"
       ],
       "title": {
-        "bn": "দ্বীন নিয়ে শেখার উৎস",
+        "bn": "দ্বীন নিয়ে শেখার সোর্স",
         "en": "Where to learn about Deen"
       },
       "how": {
@@ -522,7 +522,7 @@
         "en": "Do not decide on unknown numbers"
       },
       "how": {
-        "bn": "আয় বা খরচের অঙ্ক জানা না থাকলে অনুমান করে কিছু ধরে নেবেন না। আগে তিন মাসের সত্যিকারের তথ্য নোট করুন; তার আগে ‘জানি না’ থাকুক।",
+        "bn": "ইনকাম বা খরচের অঙ্ক জানা না থাকলে অনুমান করে কিছু ধরে নেবেন না। আগে তিন মাসের সত্যিকারের তথ্য নোট করুন; তার আগে ‘জানি না’ থাকুক।",
         "en": "If you do not know an income or expense number, do not assume one. Note real figures for a few months first; until then keep “don't know”."
       },
       "diagram": {
@@ -617,12 +617,12 @@
         "en": "One thing at a time"
       },
       "how": {
-        "bn": "ফোন দূরে রেখে 25 মিনিট একটি কাজ করুন, তারপর ছোট বিরতি নিন। শেষে কতটা হলো শুধু দেখুন, নম্বর দেবেন না।",
+        "bn": "ফোন দূরে রেখে 25 মিনিট একটি কাজ করুন, তারপর ছোট ব্রেক নিন। শেষে কতটা হলো শুধু দেখুন, নম্বর দেবেন না।",
         "en": "Put the phone away and work on one thing for 25 minutes, then take a short break. Just notice how far you got; do not give marks."
       },
       "diagram": {
         "type": "steps",
-        "bn": "ফোন দূরে|25 মিনিট|ছোট বিরতি",
+        "bn": "ফোন দূরে|25 মিনিট|ছোট ব্রেক",
         "en": "Phone away|25 minutes|Short break"
       },
       "appLink": "#/today",

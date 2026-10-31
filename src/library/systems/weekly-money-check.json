@@ -9,7 +9,7 @@
     { "key": "g1", "title": { "en": "Weekly money check done", "bn": "সাপ্তাহিক টাকার হিসাব সম্পন্ন" }, "horizon": "week" }
   ],
   "tasks": [
-    { "key": "t1", "goal": "g1", "title": { "en": "Write this week's income (or 'unknown')", "bn": "এই সপ্তাহের আয় লিখুন (না জানলে 'জানা নেই')" }, "minutes": 15, "priority": "high" },
+    { "key": "t1", "goal": "g1", "title": { "en": "Write this week's income (or 'unknown')", "bn": "এই সপ্তাহের ইনকাম লিখুন (না জানলে 'জানা নেই')" }, "minutes": 15, "priority": "high" },
     { "key": "t2", "goal": "g1", "title": { "en": "Write this week's spending", "bn": "এই সপ্তাহের খরচ লিখুন" }, "minutes": 15, "priority": "high" },
     { "key": "t3", "goal": "g1", "title": { "en": "Pick one spending limit for next week", "bn": "পরের সপ্তাহের জন্য একটি খরচের সীমা ঠিক করুন" }, "minutes": 10, "priority": "normal" }
   ],

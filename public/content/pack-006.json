@@ -66,12 +66,12 @@
         "en": "Example: before a role change"
       },
       "how": {
-        "bn": "আরিফ তিন সপ্তাহ লিখে দেখল সে মানুষের সঙ্গে সমস্যা মেটানোর কাজে সবচেয়ে সতেজ থাকে। তাই সে নতুন ভূমিকা বাছার সময় এ ধরনের কাজ থাকা কিনা জিজ্ঞাসা করল।",
+        "bn": "আরিফ তিন সপ্তাহ লিখে দেখল সে মানুষের সঙ্গে সমস্যা মেটানোর কাজে সবচেয়ে সতেজ থাকে। তাই সে নতুন রোল বাছার সময় এ ধরনের কাজ থাকা কিনা জিজ্ঞাসা করল।",
         "en": "For three weeks Arif noted that he felt freshest when solving problems with people. So when choosing a new role he asked whether that kind of work was included."
       },
       "diagram": {
         "type": "steps",
-        "bn": "তিন সপ্তাহ লিখি|ধরন দেখি|প্রশ্ন তৈরি করি|ভূমিকায় জিজ্ঞাসা",
+        "bn": "তিন সপ্তাহ লিখি|ধরন দেখি|প্রশ্ন তৈরি করি|রোলে জিজ্ঞাসা",
         "en": "Note for 3 weeks|See pattern|Form a question|Ask about the role"
       },
       "appLink": "#/diary/intake/2",
@@ -90,12 +90,12 @@
         "en": "Self-awareness slips to avoid"
       },
       "how": {
-        "bn": "একদিনের অনুভূতি দিয়ে নিজের পরিচয় ঠিক করবেন না। নিজের সম্পর্কে কড়া বিশেষণ (অযোগ্য, বেকার) লিখবেন না; ঘটনা লিখুন। অন্যের মন্তব্য এক-দুটো ধরনের সঙ্গে মিলিয়ে দেখুন।",
+        "bn": "একদিনের অনুভূতি দিয়ে নিজের পরিচয় ঠিক করবেন না। নিজের সম্পর্কে কড়া বিশেষণ (অযোগ্য, বেকার) লিখবেন না; ঘটনা লিখুন। অন্যের কমেন্ট এক-দুটো ধরনের সঙ্গে মিলিয়ে দেখুন।",
         "en": "Do not define yourself from one day's feeling. Avoid harsh labels for yourself; write the facts instead. Check others' remarks against a pattern before you accept them."
       },
       "diagram": {
         "type": "matrix",
-        "bn": "একদিনের মেজাজ: কয়েক সপ্তাহ দেখি|কড়া বিশেষণ: ঘটনা লিখি|একজনের মন্তব্য: ধরন মেলাই|জানা নেই: ‘জানি না’",
+        "bn": "একদিনের মেজাজ: কয়েক সপ্তাহ দেখি|কড়া বিশেষণ: ঘটনা লিখি|একজনের কমেন্ট: ধরন মেলাই|জানা নেই: ‘জানি না’",
         "en": "One day's mood: look over weeks|Harsh label: write facts|One remark: match patterns|Don't know: say so"
       },
       "appLink": "#/diary/intake/2",
@@ -139,12 +139,12 @@
         "en": "What deep work is"
       },
       "how": {
-        "bn": "গভীর কাজ মানে বিঘ্ন ছাড়া একটা কঠিন কাজে মন দেওয়া। এটা ঘণ্টার পর ঘণ্টা হতে হবে না; 25–50 মিনিট একটাই কাজই অনেক। মন সরে গেলে ফিরে আসাই আসল দক্ষতা।",
+        "bn": "গভীর কাজ মানে বিঘ্ন ছাড়া একটা কঠিন কাজে মন দেওয়া। এটা ঘণ্টার পর ঘণ্টা হতে হবে না; 25–50 মিনিট একটাই কাজই অনেক। মন সরে গেলে ফিরে আসাই আসল স্কিল।",
         "en": "Deep work means giving full attention to one demanding task without interruption. It need not last hours; 25–50 minutes on one task is plenty. Coming back when attention drifts is the real skill."
       },
       "diagram": {
         "type": "cycle",
-        "bn": "একটা কাজ|বিঘ্ন ছাড়া মন|মন সরলে ফিরি|ছোট বিরতি",
+        "bn": "একটা কাজ|বিঘ্ন ছাড়া মন|মন সরলে ফিরি|ছোট ব্রেক",
         "en": "One task|Uninterrupted attention|Drift, then come back|Short rest"
       },
       "appLink": "#/today",
@@ -163,12 +163,12 @@
         "en": "Setting up a deep-work session"
       },
       "how": {
-        "bn": "1) সেশনের কাজ এক লাইনে লিখুন। 2) টাইমার 25 মিনিটে দিন। 3) বিজ্ঞপ্তি বন্ধ করুন। 4) মনে আসা অন্য কথা কাগজে লিখুন। 5) শেষে কী হলো এক লাইনে লিখুন।",
+        "bn": "1) সেশনের কাজ এক লাইনে লিখুন। 2) টাইমার 25 মিনিটে দিন। 3) নোটিফিকেশন বন্ধ করুন। 4) মনে আসা অন্য কথা কাগজে লিখুন। 5) শেষে কী হলো এক লাইনে লিখুন।",
         "en": "1) Write the session's task in one line. 2) Set a 25-minute timer. 3) Turn off notifications. 4) Jot stray thoughts on paper. 5) Note what happened in one line."
       },
       "diagram": {
         "type": "steps",
-        "bn": "কাজ লিখি|টাইমার দিই|বিজ্ঞপ্তি বন্ধ|শেষে এক লাইন",
+        "bn": "কাজ লিখি|টাইমার দিই|নোটিফিকেশন বন্ধ|শেষে এক লাইন",
         "en": "Write the task|Set timer|Notifications off|One line after"
       },
       "appLink": "#/today",
@@ -183,11 +183,11 @@
         "environment"
       ],
       "title": {
-        "bn": "উদাহরণ: প্রতিবেদন লেখা",
+        "bn": "উদাহরণ: রিপোর্ট লেখা",
         "en": "Example: writing a report"
       },
       "how": {
-        "bn": "লিপি সকালে 25 মিনিট শুধু প্রতিবেদনের প্রথম অংশ লিখল। ফোন অন্য ঘরে, ট্যাব একটা। মাঝে একটা ইমেইলের কথা মনে এলে সে কাগজে লিখে রাখল এবং কাজে ফিরল।",
+        "bn": "লিপি সকালে 25 মিনিট শুধু রিপোর্টের প্রথম অংশ লিখল। ফোন অন্য ঘরে, ট্যাব একটা। মাঝে একটা ইমেইলের কথা মনে এলে সে কাগজে লিখে রাখল এবং কাজে ফিরল।",
         "en": "Lipi spent 25 morning minutes on just the first section of a report. Phone in another room, one tab open. When an email crossed her mind she jotted it on paper and went back."
       },
       "diagram": {
@@ -211,12 +211,12 @@
         "en": "Focus slips to avoid"
       },
       "how": {
-        "bn": "একসঙ্গে দুটো কাজ চালাবেন না। প্রতি 10 মিনিটে ফোন দেখবেন না। বিরতিতে আবার স্ক্রল করলে মন ফিরতে সময় লাগে; উঠে পানি খান বা হাঁটুন।",
+        "bn": "একসঙ্গে দুটো কাজ চালাবেন না। প্রতি 10 মিনিটে ফোন দেখবেন না। ব্রেকে আবার স্ক্রল করলে মন ফিরতে সময় লাগে; উঠে পানি খান বা হাঁটুন।",
         "en": "Do not run two tasks at once. Do not check the phone every 10 minutes. Scrolling during breaks makes returning harder; stand, drink water or walk."
       },
       "diagram": {
         "type": "matrix",
-        "bn": "দুই কাজ একসাথে: একটা|ঘন ঘন ফোন: ঠিক সময়ে একবার|বিরতিতে স্ক্রল: উঠে হাঁটি|কাজ অস্পষ্ট: এক লাইনে লিখি",
+        "bn": "দুই কাজ একসাথে: একটা|ঘন ঘন ফোন: ঠিক সময়ে একবার|ব্রেকে স্ক্রল: উঠে হাঁটি|কাজ অস্পষ্ট: এক লাইনে লিখি",
         "en": "Two tasks: do one|Frequent phone: one set check|Scrolling breaks: stand and walk|Vague task: write one line"
       },
       "appLink": "#/today",
@@ -235,7 +235,7 @@
         "en": "Learn more about focus"
       },
       "how": {
-        "bn": "‘মনোযোগ’ ও ‘টাইম বক্সিং’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। উইকিপিডিয়ার পরিচিতি অ্যাপে সংরক্ষিত হয়। অ্যাপের ফোকাস টাইমার একবার চালিয়ে নিজের জন্য কোন দৈর্ঘ্য ভালো দেখুন।",
+        "bn": "‘মনোযোগ’ ও ‘টাইম বক্সিং’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। উইকিপিডিয়ার পরিচিতি অ্যাপে সেভ হয়। অ্যাপের ফোকাস টাইমার একবার চালিয়ে নিজের জন্য কোন দৈর্ঘ্য ভালো দেখুন।",
         "en": "Read general explainers on “attention” and “time boxing”. Wikipedia overviews are saved in the app. Try the app's focus timer to see which length suits you."
       },
       "diagram": {
@@ -423,7 +423,7 @@
         "calm"
       ],
       "title": {
-        "bn": "উদাহরণ: কড়া মন্তব্যের পর",
+        "bn": "উদাহরণ: কড়া কমেন্টের পর",
         "en": "Example: after a sharp remark"
       },
       "how": {
@@ -493,16 +493,16 @@
         "planning"
       ],
       "title": {
-        "bn": "পরিকল্পনা থেকে কাজে যাওয়া",
+        "bn": "প্ল্যান থেকে কাজে যাওয়া",
         "en": "From plan to doing"
       },
       "how": {
-        "bn": "পরিকল্পনা ভালো হলেও কাজ না হলে ফল আসে না। কাজে নামতে দরকার ছোট পরের ধাপ, নির্দিষ্ট সময় আর সপ্তাহে একবার পর্যালোচনা। পরিকল্পনা বদলানো স্বাভাবিক।",
+        "bn": "প্ল্যান ভালো হলেও কাজ না হলে ফল আসে না। কাজে নামতে দরকার ছোট পরের ধাপ, নির্দিষ্ট সময় আর সপ্তাহে একবার রিভিউ। প্ল্যান বদলানো স্বাভাবিক।",
         "en": "A good plan brings nothing without action. To act you need a small next step, a set time and a weekly look back. Changing the plan is normal."
       },
       "diagram": {
         "type": "cycle",
-        "bn": "পরিকল্পনা|ছোট ধাপ|কাজ|পর্যালোচনা",
+        "bn": "প্ল্যান|ছোট ধাপ|কাজ|রিভিউ",
         "en": "Plan|Small step|Do|Review"
       },
       "appLink": "#/diary/plan",
@@ -517,11 +517,11 @@
         "planning"
       ],
       "title": {
-        "bn": "প্রকল্প ভেঙে কাজে বসানো",
+        "bn": "প্রজেক্ট ভেঙে কাজে বসানো",
         "en": "Breaking a project into tasks"
       },
       "how": {
-        "bn": "1) প্রকল্পের শেষ ফল লিখুন। 2) 5–8টা ধাপে ভাঙুন। 3) প্রতিটি ধাপে ছোট কাজ লিখুন। 4) এই সপ্তাহের 3টি কাজ প্ল্যানে বসান। 5) বাকিগুলো পরে।",
+        "bn": "1) প্রজেক্টের শেষ ফল লিখুন। 2) 5–8টা ধাপে ভাঙুন। 3) প্রতিটি ধাপে ছোট কাজ লিখুন। 4) এই সপ্তাহের 3টি কাজ প্ল্যানে বসান। 5) বাকিগুলো পরে।",
         "en": "1) Write the project's end result. 2) Break it into 5–8 stages. 3) Write small tasks under each. 4) Place this week's 3 tasks in the plan. 5) Leave the rest for later."
       },
       "diagram": {
@@ -545,12 +545,12 @@
         "en": "Example: a small shop page"
       },
       "how": {
-        "bn": "পলাশ নিজের ছোট দোকানের জন্য একটা অনলাইন পাতা চাইল। সে ধাপ করল: নাম ঠিক, পণ্যের ছবি, দাম লেখা, বন্ধুকে দেখানো। এই সপ্তাহে শুধু ছবি তোলা বসাল।",
+        "bn": "পলাশ নিজের ছোট দোকানের জন্য একটা অনলাইন পাতা চাইল। সে ধাপ করল: নাম ঠিক, প্রোডাক্টের ছবি, দাম লেখা, বন্ধুকে দেখানো। এই সপ্তাহে শুধু ছবি তোলা বসাল।",
         "en": "Palash wanted an online page for his small shop. He made stages: name, product photos, prices, show a friend. This week he scheduled only taking photos."
       },
       "diagram": {
         "type": "steps",
-        "bn": "নাম ঠিক|পণ্যের ছবি|দাম লেখা|বন্ধুকে দেখানো",
+        "bn": "নাম ঠিক|প্রোডাক্টের ছবি|দাম লেখা|বন্ধুকে দেখানো",
         "en": "Decide name|Product photos|Write prices|Show a friend"
       },
       "appLink": "#/diary/plan",
@@ -569,12 +569,12 @@
         "en": "Execution slips to avoid"
       },
       "how": {
-        "bn": "একসঙ্গে অনেক প্রকল্প খুলবেন না। নিখুঁত পরিকল্পনার জন্য শুরু পিছাবেন না। যা হয়নি তা মুছবেন না, পরের সপ্তাহে সরিয়ে দিন। আর অজানা সময়কে শূন্য ধরবেন না।",
+        "bn": "একসঙ্গে অনেক প্রজেক্ট খুলবেন না। নিখুঁত প্ল্যানের জন্য শুরু পিছাবেন না। যা হয়নি তা ডিলিট করবেন না, পরের সপ্তাহে সরিয়ে দিন। আর অজানা সময়কে শূন্য ধরবেন না।",
         "en": "Do not open many projects at once. Do not delay starting for a perfect plan. Do not delete what did not happen; move it to next week. Do not count unknown time as zero."
       },
       "diagram": {
         "type": "matrix",
-        "bn": "অনেক প্রকল্প: দুটোর বেশি নয়|নিখুঁত পরিকল্পনা: ছোট শুরু|যা হয়নি: সরিয়ে দিই|সময় অজানা: ‘জানি না’",
+        "bn": "অনেক প্রজেক্ট: দুটোর বেশি নয়|নিখুঁত প্ল্যান: ছোট শুরু|যা হয়নি: সরিয়ে দিই|সময় অজানা: ‘জানি না’",
         "en": "Many projects: max two|Perfect plan: start small|Undone task: move it|Unknown time: “don't know”"
       },
       "appLink": "#/diary/plan",
@@ -589,16 +589,16 @@
         "learning"
       ],
       "title": {
-        "bn": "প্রকল্প পরিচালনা নিয়ে আরও শিখতে",
+        "bn": "প্রজেক্ট পরিচালনা নিয়ে আরও শিখতে",
         "en": "Learn more about running projects"
       },
       "how": {
-        "bn": "‘প্রকল্প ব্যবস্থাপনা’ ও ‘কাজের তালিকা’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অ্যাপে উইকিপিডিয়া খুঁজলে পরিচিতি সংরক্ষিত হয়। নিজের একটা প্রকল্পে এক সপ্তাহ এসব চেষ্টা করুন।",
+        "bn": "‘প্রজেক্ট ম্যানেজমেন্ট’ ও ‘কাজের লিস্ট’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অ্যাপে উইকিপিডিয়া খুঁজলে পরিচিতি সেভ হয়। নিজের একটা প্রজেক্টে এক সপ্তাহ এসব চেষ্টা করুন।",
         "en": "Read general explainers on “project management” and “task lists”. A Wikipedia search in the app saves an overview. Try these on one of your own projects for a week."
       },
       "diagram": {
         "type": "steps",
-        "bn": "সাধারণ লেখা পড়ি|উইকিপিডিয়া খুঁজি|এক প্রকল্পে চেষ্টা",
+        "bn": "সাধারণ লেখা পড়ি|উইকিপিডিয়া খুঁজি|এক প্রজেক্টে চেষ্টা",
         "en": "Read general explainers|Search Wikipedia|Try on one project"
       },
       "appLink": "#/cards",
@@ -662,16 +662,16 @@
         "planning"
       ],
       "title": {
-        "bn": "উদাহরণ: যোগানদার দেরি করলে",
+        "bn": "উদাহরণ: সাপ্লায়ার দেরি করলে",
         "en": "Example: a supplier is late"
       },
       "how": {
-        "bn": "শামীম জানল তার যোগানদার এক সপ্তাহ দেরি করবে। সে ক্রেতাদের আগে জানাল, একটা বিকল্প যোগানদারের সঙ্গে ছোট অর্ডার দিয়ে পরীক্ষা করল, আর পরে কী শিখল লিখে রাখল।",
+        "bn": "শামীম জানল তার সাপ্লায়ার এক সপ্তাহ দেরি করবে। সে ক্রেতাদের আগে জানাল, একটা অপশন সাপ্লায়ারের সঙ্গে ছোট অর্ডার দিয়ে পরীক্ষা করল, আর পরে কী শিখল লিখে রাখল।",
         "en": "Shamim learned his supplier would be a week late. He told customers early, tested a small order with an alternative supplier, and later noted what he learned."
       },
       "diagram": {
         "type": "steps",
-        "bn": "ক্রেতাদের জানাই|বিকল্প পরীক্ষা|শিক্ষা লিখি",
+        "bn": "ক্রেতাদের জানাই|অপশন পরীক্ষা|শিক্ষা লিখি",
         "en": "Tell customers|Test an alternative|Note the lesson"
       },
       "kind": "example",
@@ -694,7 +694,7 @@
       },
       "diagram": {
         "type": "matrix",
-        "bn": "দোষারোপ: ঘটনা দেখি|লুকানো: জানাই|একই পথে জোর: বিকল্প ভাবি|একা সামলানো: সাহায্য চাই",
+        "bn": "দোষারোপ: ঘটনা দেখি|লুকানো: জানাই|একই পথে জোর: অপশন ভাবি|একা সামলানো: সাহায্য চাই",
         "en": "Blaming: look at facts|Hiding: tell someone|Pushing same route: find alternatives|Handling alone: ask for help"
       },
       "appLink": "#/stuck",
@@ -830,7 +830,7 @@
         "en": "Learn more about creativity"
       },
       "how": {
-        "bn": "‘সৃজনশীল চিন্তা’ ও ‘ব্রেনস্টর্মিং’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অ্যাপে উইকিপিডিয়া খুঁজলে পরিচিতি সংরক্ষিত হয়। পড়া কোনো পদ্ধতি নিজের ভাষায় লিখে ছোট করে চেষ্টা করুন।",
+        "bn": "‘সৃজনশীল চিন্তা’ ও ‘ব্রেনস্টর্মিং’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অ্যাপে উইকিপিডিয়া খুঁজলে পরিচিতি সেভ হয়। পড়া কোনো পদ্ধতি নিজের ভাষায় লিখে ছোট করে চেষ্টা করুন।",
         "en": "Read general explainers on “creative thinking” and “brainstorming”. A Wikipedia search in the app saves an overview. Rewrite one method in your own words and try it small."
       },
       "diagram": {

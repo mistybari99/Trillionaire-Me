@@ -84,7 +84,7 @@ async function showPhone(title: string, body: string, tag: string, quiet: boolea
 
 async function deliver(s: AlertSlot, lang: Locale, showDetails: NotifyPrefs) {
   const text = slotText(s);
-  const title: Bi = { bn: "নামাজের সতর্কবার্তা", en: "Prayer reminder" };
+  const title: Bi = { bn: "নামাজের অ্যালার্ট", en: "Prayer reminder" };
   const safe = buildNotification({ title, body: text, privacy: "worship" }, showDetails);
   const soundOn = prefs.prayerAlerts.sound;
   const ok = await showPhone(notifyText(safe.title, lang), notifyText(safe.body, lang), s.id, !soundOn);

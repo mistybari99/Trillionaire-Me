@@ -20,7 +20,7 @@ export function conditions(ctx: StageCtx, code: StageCode): Condition[] {
       { id: "A2", auto: true, met: ctx.goalCount >= 1, text: { bn: "অন্তত একটি লক্ষ্য লেখা হয়েছে", en: "At least one goal is written" } },
     ];
   }
-  return [{ id: `${code}1`, auto: false, met: false, text: { bn: "এই ধাপের শর্ত পূরণের প্রমাণ আপনি নিজের ভাষায় লিখেছেন", en: "You wrote your own evidence that this stage’s condition is met" } }];
+  return [{ id: `${code}1`, auto: false, met: false, text: { bn: "এই স্টেজের শর্ত পূরণের প্রমাণ আপনি নিজের ভাষায় লিখেছেন", en: "You wrote your own evidence that this stage’s condition is met" } }];
 }
 
 export const currentIndex = (passed: readonly string[]): number => {

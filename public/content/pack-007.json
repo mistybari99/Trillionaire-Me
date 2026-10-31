@@ -38,7 +38,7 @@
         "review"
       ],
       "title": {
-        "bn": "সপ্তাহের পর্যালোচনা ধাপে ধাপে",
+        "bn": "সপ্তাহের রিভিউ ধাপে ধাপে",
         "en": "A weekly review, step by step"
       },
       "how": {
@@ -66,12 +66,12 @@
         "en": "Example: a walking goal"
       },
       "how": {
-        "bn": "ইকবাল সপ্তাহে 3 দিন হাঁটার লক্ষ্য রেখেছিল। এক সপ্তাহে 2 দিন হলো। সে লিখল, বৃষ্টির দিনে আটকেছে। পরের সপ্তাহে বৃষ্টির দিনের জন্য ঘরের ভেতরে 10 মিনিটের বিকল্প রাখল।",
+        "bn": "ইকবাল সপ্তাহে 3 দিন হাঁটার লক্ষ্য রেখেছিল। এক সপ্তাহে 2 দিন হলো। সে লিখল, বৃষ্টির দিনে আটকেছে। পরের সপ্তাহে বৃষ্টির দিনের জন্য ঘরের ভেতরে 10 মিনিটের অপশন রাখল।",
         "en": "Iqbal aimed to walk 3 days a week. One week it was 2 days. He noted that rainy days got in the way. Next week he added a 10-minute indoor option for rain."
       },
       "diagram": {
         "type": "steps",
-        "bn": "লক্ষ্য 3 দিন|হলো 2 দিন|কারণ: বৃষ্টি|ঘরের ভেতরে বিকল্প",
+        "bn": "লক্ষ্য 3 দিন|হলো 2 দিন|কারণ: বৃষ্টি|ঘরের ভেতরে অপশন",
         "en": "Goal: 3 days|Did 2 days|Reason: rain|Indoor backup"
       },
       "appLink": "#/journey/log",
@@ -110,11 +110,11 @@
         "learning"
       ],
       "title": {
-        "bn": "মাপা ও পর্যালোচনা নিয়ে আরও শিখতে",
+        "bn": "মাপা ও রিভিউ নিয়ে আরও শিখতে",
         "en": "Learn more about measuring and reviewing"
       },
       "how": {
-        "bn": "‘আত্ম-পর্যালোচনা’ ও ‘ফিডব্যাক লুপ’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অ্যাপের জার্নি লগে সপ্তাহের শেষে 3 লাইন লিখে দেখুন। যাচাইকারীর অপেক্ষায়।",
+        "bn": "‘আত্ম-রিভিউ’ ও ‘ফিডব্যাক লুপ’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অ্যাপের জার্নি লগে সপ্তাহের শেষে 3 লাইন লিখে দেখুন। যাচাইকারীর অপেক্ষায়।",
         "en": "Read general explainers on “self-reflection” and “feedback loops”. Try writing 3 lines at week's end in the app's journey log. Reviewer pending."
       },
       "diagram": {
@@ -162,12 +162,12 @@
         "en": "Doing a scary task in small steps"
       },
       "how": {
-        "bn": "1) ভয়ের কাজটা লিখুন। 2) সবচেয়ে ছোট সংস্করণ ঠিক করুন। 3) কবে করবেন ঠিক করুন। 4) করুন। 5) কী ঘটল আর কেমন লাগল লিখুন।",
+        "bn": "1) ভয়ের কাজটা লিখুন। 2) সবচেয়ে ছোট ভার্সন ঠিক করুন। 3) কবে করবেন ঠিক করুন। 4) করুন। 5) কী ঘটল আর কেমন লাগল লিখুন।",
         "en": "1) Write the scary task. 2) Decide its smallest version. 3) Choose when. 4) Do it. 5) Note what happened and how it felt."
       },
       "diagram": {
         "type": "steps",
-        "bn": "কাজটা লিখি|সবচেয়ে ছোট সংস্করণ|সময় ঠিক|করে লিখি",
+        "bn": "কাজটা লিখি|সবচেয়ে ছোট ভার্সন|সময় ঠিক|করে লিখি",
         "en": "Write the task|Smallest version|Choose a time|Do it, then note"
       },
       "kind": "steps",
@@ -376,7 +376,7 @@
         "en": "Keeping a personal practice simple"
       },
       "how": {
-        "bn": "এখানে ইবাদত সম্পূর্ণ ব্যক্তিগত। অ্যাপ কিছু মাপে না, তুলনা করে না, ফতোয়া দেয় না। শুধু আপনার সময়-পরিকল্পনায় নিজের চর্চার জন্য জায়গা রাখতে সাহায্য করে।",
+        "bn": "এখানে ইবাদত সম্পূর্ণ ব্যক্তিগত। অ্যাপ কিছু মাপে না, তুলনা করে না, ফতোয়া দেয় না। শুধু আপনার সময়-প্ল্যানে নিজের চর্চার জন্য জায়গা রাখতে সাহায্য করে।",
         "en": "Worship here is entirely private. The app measures nothing, compares nothing and gives no rulings. It only helps you keep room for your own practice in your schedule."
       },
       "diagram": {
@@ -396,16 +396,16 @@
         "time"
       ],
       "title": {
-        "bn": "দিনের পরিকল্পনায় চর্চার জায়গা",
+        "bn": "দিনের প্ল্যানে চর্চার জায়গা",
         "en": "Making room for practice in the day"
       },
       "how": {
-        "bn": "1) আপনার জন্য স্থির সময়গুলো আগে লিখুন। 2) তার আশপাশে কাজ বসান। 3) ভ্রমণ বা ব্যস্ত দিনের জন্য ছোট বিকল্প ঠিক করুন। 4) কিছু জানার থাকলে যোগ্য ব্যক্তিকে জিজ্ঞাসা করুন।",
+        "bn": "1) আপনার জন্য স্থির সময়গুলো আগে লিখুন। 2) তার আশপাশে কাজ বসান। 3) ভ্রমণ বা ব্যস্ত দিনের জন্য ছোট অপশন ঠিক করুন। 4) কিছু জানার থাকলে যোগ্য ব্যক্তিকে জিজ্ঞাসা করুন।",
         "en": "1) Write your fixed times first. 2) Place tasks around them. 3) Plan a smaller option for travel or busy days. 4) Ask a qualified person if you need to know something."
       },
       "diagram": {
         "type": "steps",
-        "bn": "স্থির সময় আগে|কাজ আশপাশে|ছোট বিকল্প|জানার থাকলে জিজ্ঞাসা",
+        "bn": "স্থির সময় আগে|কাজ আশপাশে|ছোট অপশন|জানার থাকলে জিজ্ঞাসা",
         "en": "Fixed times first|Tasks around them|Smaller option|Ask if unsure"
       },
       "appLink": "#/deen",
@@ -448,7 +448,7 @@
         "en": "Slips to avoid in this area"
       },
       "how": {
-        "bn": "নিজের চর্চাকে সংখ্যা বা তালিকায় মাপবেন না, অন্যের সঙ্গে তুলনাও নয়। অ্যাপের লেখাকে বিধান ভাববেন না। বিধান বা প্রশ্নের জন্য যোগ্য আলেমকে জিজ্ঞাসা করুন। তথ্য ব্যক্তিগত রাখুন।",
+        "bn": "নিজের চর্চাকে সংখ্যা বা লিস্টে মাপবেন না, অন্যের সঙ্গে তুলনাও নয়। অ্যাপের লেখাকে বিধান ভাববেন না। বিধান বা প্রশ্নের জন্য যোগ্য আলেমকে জিজ্ঞাসা করুন। তথ্য ব্যক্তিগত রাখুন।",
         "en": "Do not measure your practice with numbers or lists, and do not compare it with others. Do not take the app's text as a ruling. For rulings or questions, ask a qualified scholar. Keep it private."
       },
       "diagram": {
@@ -472,7 +472,7 @@
         "en": "The right place to learn"
       },
       "how": {
-        "bn": "ধর্মীয় জ্ঞানের জন্য নির্ভরযোগ্য আলেম, স্থানীয় প্রতিষ্ঠান বা পরিবারের অভিজ্ঞদের কাছে যান। এই অ্যাপে কোনো ধর্মগ্রন্থের পাঠ নেই। পরে অনুমোদিত উৎস যোগ হলে মালিক সিদ্ধান্ত নেবেন।",
+        "bn": "ধর্মীয় জ্ঞানের জন্য নির্ভরযোগ্য আলেম, স্থানীয় প্রতিষ্ঠান বা পরিবারের অভিজ্ঞদের কাছে যান। এই অ্যাপে কোনো ধর্মগ্রন্থের পাঠ নেই। পরে অনুমোদিত সোর্স যোগ হলে মালিক সিদ্ধান্ত নেবেন।",
         "en": "For religious knowledge, go to trusted scholars, local institutions or experienced family members. This app holds no scripture text. If approved sources are added later, the owner will decide."
       },
       "diagram": {

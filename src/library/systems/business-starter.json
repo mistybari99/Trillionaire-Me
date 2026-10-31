@@ -4,7 +4,7 @@
   "id": "business-starter",
   "reviewStatus": "pending_reviewer",
   "name": { "en": "Business starter", "bn": "ব্যবসা শুরুর ধাপ" },
-  "summary": { "en": "Test a small idea before spending money: who buys, what you offer, five real conversations. No income is promised.", "bn": "টাকা খরচের আগে একটি ছোট ধারণা যাচাই করুন: কে কিনবে, আপনি কী দেবেন, পাঁচজনের সঙ্গে কথা। কোনো আয়ের নিশ্চয়তা নেই।" },
+  "summary": { "en": "Test a small idea before spending money: who buys, what you offer, five real conversations. No income is promised.", "bn": "টাকা খরচের আগে একটি ছোট ধারণা যাচাই করুন: কে কিনবে, আপনি কী দেবেন, পাঁচজনের সঙ্গে কথা। কোনো ইনকামের গ্যারান্টি নেই।" },
   "goals": [
     { "key": "g1", "title": { "en": "First small test", "bn": "প্রথম ছোট পরীক্ষা" }, "horizon": "month" }
   ],
