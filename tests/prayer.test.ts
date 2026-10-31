@@ -2,6 +2,7 @@
 // Reference values come from tools/prayer_reference.py (pyephem ephemeris, same method angles), not from this code.
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { DHAKA_COORDS, DHAKA_UTC_OFFSET_MIN, PRAYER_KEYS, dhakaNow, parseCoord, prayerClock, prayerTimes, validCoords, type PrayerKey } from "../src/core/prayer";
+import { AZAN_AUDIO_FILE, soundPlan } from "../src/core/prayerSound";
 import { DEFAULT_PRAYER_SETTINGS, parsePrayerSettings } from "../src/core/prayerMethod";
 import { DEFAULT_ALERT_PREFS, alertSlots, dueSlots, parseAlertPrefs } from "../src/core/prayerAlerts";
 import { markedOn, prayerLogId, prayerLogRecord } from "../src/core/prayerLog";
@@ -10,7 +11,7 @@ import { buildNotification, NEUTRAL_TITLE, DEFAULT_NOTIFY_PREFS } from "../src/c
 import { PACKS, type Key } from "../src/i18n/packs";
 import { render } from "../src/app";
 import { store, prefs } from "../src/ui/state";
-import { checkPrayerAlerts, inAppReminders } from "../src/ui/prayerAlerts";
+import { checkPrayerAlerts, dismissReminder, inAppReminders, playAlertSound } from "../src/ui/prayerAlerts";
 
 const toMin = (hhmm: string) => { const [h, m] = hhmm.split(":").map(Number); return h! * 60 + m!; };
 const dhaka = (y: number, m: number, d: number) => ({ y, m, d });
@@ -120,10 +121,12 @@ describe("M13 place input", () => {
 
 describe("M13 alerts: settings and due logic", () => {
   it("both alerts are off by default; minutes default to 10", () => {
-    expect(DEFAULT_ALERT_PREFS).toEqual({ preAlert: false, preMinutes: 10, azan: false });
-    expect(parseAlertPrefs(null)).toEqual({ preAlert: false, preMinutes: 10, azan: false });
-    expect(parseAlertPrefs({ preAlert: "yes", preMinutes: 7.5, azan: 1 })).toEqual({ preAlert: false, preMinutes: 10, azan: false });
-    expect(parseAlertPrefs({ preAlert: true, preMinutes: 15, azan: true })).toEqual({ preAlert: true, preMinutes: 15, azan: true });
+    const all = { fajr: true, dhuhr: true, asr: true, maghrib: true, isha: true };
+    expect(DEFAULT_ALERT_PREFS).toEqual({ preAlert: false, preMinutes: 10, azan: false, prayers: all, sound: false });
+    expect(parseAlertPrefs(null)).toEqual(DEFAULT_ALERT_PREFS);
+    expect(parseAlertPrefs({ preAlert: "yes", preMinutes: 7.5, azan: 1, sound: "on" })).toEqual(DEFAULT_ALERT_PREFS);
+    expect(parseAlertPrefs({ preAlert: true, preMinutes: 15, azan: true })).toEqual({ preAlert: true, preMinutes: 15, azan: true, prayers: all, sound: false });
+    expect(parseAlertPrefs({ prayers: { asr: false, isha: "no" } }).prayers).toEqual({ ...all, asr: false });
     expect(parseAlertPrefs({ preMinutes: 0 }).preMinutes).toBe(10);
     expect(parseAlertPrefs({ preMinutes: 61 }).preMinutes).toBe(10);
   });
@@ -132,13 +135,13 @@ describe("M13 alerts: settings and due logic", () => {
     expect(alertSlots("2026-10-24", times, DEFAULT_ALERT_PREFS)).toEqual([]);
   });
   it("pre-alert fires N minutes before; azan at the time; a null prayer gets nothing", () => {
-    const slots = alertSlots("2026-10-24", { ...times, asr: null }, { preAlert: true, preMinutes: 10, azan: true });
+    const slots = alertSlots("2026-10-24", { ...times, asr: null }, { ...DEFAULT_ALERT_PREFS, preAlert: true, azan: true });
     expect(slots.find((s) => s.id === "2026-10-24-pre-fajr")?.minute).toBe(272);
     expect(slots.find((s) => s.id === "2026-10-24-azan-fajr")?.minute).toBe(282);
     expect(slots.some((s) => s.prayer === "asr")).toBe(false);
   });
   it("each slot fires once, inside its window, and a late start still fires within the window", () => {
-    const slots = alertSlots("2026-10-24", times, { preAlert: true, preMinutes: 10, azan: false });
+    const slots = alertSlots("2026-10-24", times, { ...DEFAULT_ALERT_PREFS, preAlert: true });
     const fajrPre = slots.find((s) => s.id === "2026-10-24-pre-fajr")!;
     expect(dueSlots(271, slots, new Set())).toEqual([]);
     expect(dueSlots(272, slots, new Set())).toEqual([fajrPre]);
@@ -165,6 +168,25 @@ describe("M13 prayer marks (prayer_log)", () => {
     const rec = prayerLogRecord("2026-10-24", "isha", "2026-10-24T13:00:00Z");
     expect(Object.keys(rec.values)).toEqual(["prayer_log.date"]);
     expect(rec.links).toEqual({ prayer: "isha" });
+  });
+});
+
+describe("M13 alerts: per-prayer choice and sound plan", () => {
+  const times = { fajr: 282, dhuhr: 712, asr: 900, maghrib: 1046, isha: 1118 } as const;
+  it("a prayer switched off gets no alert of either kind; the rest still do", () => {
+    const p = parseAlertPrefs({ preAlert: true, azan: true, prayers: { dhuhr: false, asr: false } });
+    const slots = alertSlots("2026-10-24", times, p);
+    expect(slots.map((s) => s.prayer)).toEqual(["fajr", "fajr", "maghrib", "maghrib", "isha", "isha"]);
+  });
+  it("sound plan: nothing unless the toggle is on and the alert is an azan; no file means vibrate, else silent", () => {
+    expect(soundPlan({ kind: "azan" }, false, "./a.mp3", true)).toBe("none");
+    expect(soundPlan({ kind: "pre" }, true, "./a.mp3", true)).toBe("none");
+    expect(soundPlan({ kind: "azan" }, true, "./a.mp3", true)).toBe("audio");
+    expect(soundPlan({ kind: "azan" }, true, null, true)).toBe("vibrate");
+    expect(soundPlan({ kind: "azan" }, true, null, false)).toBe("none");
+  });
+  it("no audio file is bundled, and nothing points to the internet", () => {
+    expect(AZAN_AUDIO_FILE).toBeNull();
   });
 });
 
@@ -244,12 +266,46 @@ describe("M13 Deen screen and alerts (UI)", () => {
   });
 
   it("without notification permission, a due pre-alert shows an in-app card once", async () => {
-    prefs.prayerAlerts = { preAlert: true, preMinutes: 10, azan: false };
+    prefs.prayerAlerts = { ...DEFAULT_ALERT_PREFS, preAlert: true };
     vi.setSystemTime(new Date(Date.UTC(2026, 9, 23, 22, 35))); // 04:35 Dhaka on 24 Oct: Fajr is 04:44, so the 10-minute pre-alert (due at 04:34) is in its window
     await checkPrayerAlerts();
     await checkPrayerAlerts();
     const cards = inAppReminders().filter((r) => r.id === "2026-10-24-pre-fajr");
     expect(cards.length).toBe(1);
     expect(cards[0]!.text.en).toBe("Fajr in 10 minutes");
+  });
+  it("per-prayer buttons are all selected once an alert is on, can be switched off one by one, and the sound toggle starts Off", () => {
+    location.hash = "#/deen"; render();
+    expect(document.querySelectorAll("[data-alert-prayer][aria-pressed=true]").length).toBe(5);
+    expect(document.querySelector("[data-sound=false]")).not.toBeNull();
+    (document.querySelector("[data-alert-prayer=asr]") as HTMLButtonElement).click();
+    expect(prefs.prayerAlerts.prayers.asr).toBe(false); expect(prefs.prayerAlerts.prayers.fajr).toBe(true);
+    expect(prefs.prayerAlerts.preAlert).toBe(false); expect(prefs.prayerAlerts.azan).toBe(false); // choosing prayers never turns alerts on
+  });
+  it("the sound note says the audio file is not added yet, and does not claim a sound will play", () => {
+    location.hash = "#/deen"; render();
+    expect(document.querySelector("[data-sound-note]")!.textContent).toMatch(/No azan audio is added yet/);
+  });
+  it("when the browser has no Notification API, the message says so plainly", () => {
+    const saved = (globalThis as { Notification?: unknown }).Notification;
+    delete (globalThis as { Notification?: unknown }).Notification;
+    try { location.hash = "#/deen"; render(); expect(document.querySelector("[data-perm=unsupported]")!.textContent).toMatch(/cannot show phone notifications/); }
+    finally { if (saved) (globalThis as { Notification?: unknown }).Notification = saved; }
+  });
+  it("azan with the sound toggle On vibrates (no audio file); with it Off nothing happens; pre-alerts never vibrate", () => {
+    const vib = vi.fn(); Object.defineProperty(navigator, "vibrate", { value: vib, configurable: true });
+    const azan = { id: "x", prayer: "fajr" as const, kind: "azan" as const, minute: 1, minutesBefore: 0 };
+    expect(playAlertSound(azan, false)).toBe("none"); expect(vib).not.toHaveBeenCalled();
+    expect(playAlertSound({ ...azan, kind: "pre" }, true)).toBe("none");
+    expect(playAlertSound(azan, true)).toBe("vibrate"); expect(vib).toHaveBeenCalledTimes(1);
+    Object.defineProperty(navigator, "vibrate", { value: undefined, configurable: true });
+    expect(playAlertSound(azan, true)).toBe("none");
+  });
+  it("a switched-off prayer gives no in-app card", async () => {
+    for (const r of [...inAppReminders()]) dismissReminder(r.id); // reminders live in module memory across tests
+    prefs.prayerAlerts = { ...DEFAULT_ALERT_PREFS, preAlert: true, prayers: { ...DEFAULT_ALERT_PREFS.prayers, fajr: false } };
+    vi.setSystemTime(new Date(Date.UTC(2026, 9, 23, 22, 35)));
+    await checkPrayerAlerts();
+    expect(inAppReminders().filter((r) => r.id === "2026-10-24-pre-fajr").length).toBe(0);
   });
 });

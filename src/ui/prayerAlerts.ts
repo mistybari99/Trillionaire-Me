@@ -2,6 +2,7 @@
 // Lock-screen text goes through the existing O8 rule (buildNotification): neutral unless "show details" is on for worship.
 import { dhakaNow, isoDate, prayerTimes, type PrayerKey, type PrayerTimes } from "../core/prayer";
 import { alertSlots, dueSlots, type AlertSlot } from "../core/prayerAlerts";
+import { AZAN_AUDIO_FILE, VIBRATE_PATTERN, soundPlan } from "../core/prayerSound";
 import { buildNotification, notifyText, type NotifyPrefs } from "../core/notify";
 import { prefs } from "./state";
 import type { Bi, Locale } from "../i18n/registry";
@@ -24,12 +25,29 @@ export function slotText(s: AlertSlot): Bi {
 /** Whether a phone notification can be shown right now (API present and permission granted). */
 export const canNotify = (): boolean => typeof window !== "undefined" && "Notification" in window && Notification.permission === "granted";
 
-async function showPhone(title: string, body: string, tag: string): Promise<boolean> {
+/** Why phone notifications are not shown: not supported by this browser, blocked by the user, or not asked yet. */
+export function notifyState(): "unsupported" | "denied" | "ask" | "granted" {
+  if (typeof window === "undefined" || !("Notification" in window)) return "unsupported";
+  return Notification.permission === "granted" ? "granted" : Notification.permission === "denied" ? "denied" : "ask";
+}
+
+/** Sound or vibration for an azan alert, only if switched on. Works while the app is open; a closed page cannot play audio. Never throws. */
+export function playAlertSound(s: AlertSlot, soundOn: boolean): "audio" | "vibrate" | "none" {
+  const canVibrate = typeof navigator !== "undefined" && typeof navigator.vibrate === "function";
+  const plan = soundPlan(s, soundOn, AZAN_AUDIO_FILE, canVibrate);
+  try {
+    if (plan === "audio" && AZAN_AUDIO_FILE) { void new Audio(AZAN_AUDIO_FILE).play().catch(() => { /* the phone may block sound until a tap */ }); }
+    else if (plan === "vibrate") navigator.vibrate([...VIBRATE_PATTERN]);
+  } catch { return "none"; }
+  return plan;
+}
+
+async function showPhone(title: string, body: string, tag: string, quiet: boolean): Promise<boolean> {
   if (!canNotify()) return false;
   try {
     const reg = "serviceWorker" in navigator ? await navigator.serviceWorker.getRegistration() : undefined;
-    if (reg) { await reg.showNotification(title, { body, tag, icon: "./icon-192.png" }); return true; }
-    new Notification(title, { body, tag });
+    if (reg) { await reg.showNotification(title, { body, tag, icon: "./icon-192.png", silent: quiet }); return true; }
+    new Notification(title, { body, tag, silent: quiet });
     return true;
   } catch { return false; }
 }
@@ -38,7 +56,9 @@ async function deliver(s: AlertSlot, lang: Locale, showDetails: NotifyPrefs) {
   const text = slotText(s);
   const title: Bi = { bn: "নামাজের সতর্কবার্তা", en: "Prayer reminder" };
   const safe = buildNotification({ title, body: text, privacy: "worship" }, showDetails);
-  const ok = await showPhone(notifyText(safe.title, lang), notifyText(safe.body, lang), s.id);
+  const soundOn = prefs.prayerAlerts.sound;
+  const ok = await showPhone(notifyText(safe.title, lang), notifyText(safe.body, lang), s.id, !soundOn);
+  playAlertSound(s, soundOn);
   if (!ok) {
     reminders = [...reminders.filter((r) => r.id !== s.id), { id: s.id, text }];
     window.dispatchEvent(new HashChangeEvent("hashchange"));

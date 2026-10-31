@@ -60,7 +60,8 @@ import { METHOD_IDS, MAX_OFFSET_MIN, parsePrayerSettings, type PrayerSettings } 
 import { markedOn, prayerLogId, prayerLogRecord } from "../core/prayerLog";
 import { fastLogId, fastLogRecord, isFastMarked } from "../core/fastLog";
 import { DEFAULT_ALERT_PREFS, parseAlertPrefs } from "../core/prayerAlerts";
-import { canNotify } from "./prayerAlerts";
+import { notifyState } from "./prayerAlerts";
+import { AZAN_AUDIO_FILE } from "../core/prayerSound";
 import { modeSwitchCard } from "./modeUi";
 import { activeNs, allRecs, asReal, putMode, consentOn, consentPrompt, findRec, inNs, labelFor, nsTag, ownerOf, saveBlockedText, saveTyped, storeOf, typed, valueLabel } from "./entry";
 
@@ -1163,7 +1164,9 @@ function prayerSettingsCard(lang: Locale): HTMLElement {
   };
   const mins = h("input", { id: "pr-min", type: "number", min: "1", max: "60", step: "1", inputmode: "numeric", value: String(alerts.preMinutes), "aria-label": t("deen.set.preMin", lang), style: "width:6em" }) as HTMLInputElement;
   mins.addEventListener("change", () => { const n = Number(mins.value); setAlerts({ ...alerts, preMinutes: Number.isInteger(n) && n >= 1 && n <= 60 ? n : DEFAULT_ALERT_PREFS.preMinutes }); });
-  const perm = typeof Notification === "undefined" ? t("deen.set.permNo", lang) : canNotify() ? t("deen.set.permOk", lang) : Notification.permission === "denied" ? t("deen.set.permNo", lang) : t("deen.set.permAsk", lang);
+  const ns = notifyState();
+  const perm = ns === "unsupported" ? t("deen.set.permUnsupported", lang) : ns === "granted" ? t("deen.set.permOk", lang) : ns === "denied" ? t("deen.set.permDenied", lang) : t("deen.set.permAsk", lang);
+  const prayerBtns = PRAYER_KEYS.map((k) => h("button", { type: "button", "data-alert-prayer": k, "aria-pressed": String(alerts.prayers[k]), style: "min-height:44px;min-width:44px", onclick: () => setAlerts({ ...alerts, prayers: { ...alerts.prayers, [k]: !alerts.prayers[k] } }) }, t(`deen.prayer.name.${k}` as Key, lang)));
   return h("div", { class: "card", "data-prayer-settings": "1" },
     h("h2", { class: "card-h" }, t("deen.set.title", lang)),
     h("h3", {}, t("deen.set.place", lang), " ", nsTag(activeNs(), lang)),
@@ -1174,8 +1177,13 @@ function prayerSettingsCard(lang: Locale): HTMLElement {
     h("label", { for: "pr-min" }, t("deen.set.preMin", lang)), mins,
     h("h3", {}, t("deen.set.azan", lang)),
     h("div", { class: "row" }, h("div", { class: "seg", "data-azan-alert": String(alerts.azan) }, onOff("deen.set.off", !alerts.azan, () => setAlerts({ ...alerts, azan: false })), onOff("deen.set.on", alerts.azan, () => toggle("azan")(true)))),
+    h("h3", {}, t("deen.set.which", lang)), h("p", { class: "muted" }, t("deen.set.whichHint", lang)),
+    h("div", { class: "seg", role: "group", "aria-label": t("deen.set.which", lang), "data-alert-prayers": "1" }, ...prayerBtns),
+    h("h3", {}, t("deen.set.sound", lang)),
+    h("div", { class: "row" }, h("div", { class: "seg", "data-sound": String(alerts.sound) }, onOff("deen.set.off", !alerts.sound, () => setAlerts({ ...alerts, sound: false })), onOff("deen.set.on", alerts.sound, () => setAlerts({ ...alerts, sound: true })))),
+    h("p", { class: "muted", "data-sound-note": "1" }, t(AZAN_AUDIO_FILE ? "deen.set.soundNote" : "deen.set.soundNoFile", lang)),
     h("p", { class: "muted" }, t("deen.set.defaultNote", lang)),
-    h("p", { class: "muted", "data-perm": "1" }, perm),
+    h("p", { class: "muted", "data-perm": ns }, perm),
     h("p", { class: "muted" }, t("deen.set.lock", lang)));
 }
 

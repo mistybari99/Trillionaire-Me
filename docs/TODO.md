@@ -18,7 +18,7 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 
 ### Block 3 — Deen features (private, no score, no scripture text)
 - [x] Verify exact Bangladesh prayer times logic (Asia/Dhaka) and add method/adjustment setting (Karachi default, Hanafi Asr option, per-prayer minute offset, "verify with your local timetable", Unknown when no location); owner checks against official timetable (Part B).
-- [ ] Notifications + azan (alerts OFF by default); one-tap prayer mark; lock-screen privacy text neutral.
+- [x] Notifications per prayer (opt-in, OFF by default, neutral lock-screen text, clear unsupported/blocked messages); azan sound toggle OFF by default with vibrate fallback (audio file must be supplied by owner, Part B); one-tap prayer mark with undo.
 - [x] Deen items = plans and reminders only (D-D open).
 
 ### Block 4 — Overall progress polish (owner rules, 26 Oct)
