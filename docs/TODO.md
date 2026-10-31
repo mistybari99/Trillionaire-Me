@@ -38,7 +38,7 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 - [x] Refresh Register evidence (v2_1 copy; never edit original v2_0) and traceability.
 - [x] Re-run owner-demand audit (docs/design/owner-demand-audit.md) and update counts.
 - [x] DECISIONS_LOG: add language-icon entry.
-- [ ] Accessibility pass (contrast, focus, 44px, reduced motion) over all 4 looks.
+- [x] Accessibility pass (contrast, focus, 44px, reduced motion) over all 4 looks.
 - [ ] Security review (secrets excluded from backups/exports; keys device-only).
 
 ## Part B — Owner-only tasks
