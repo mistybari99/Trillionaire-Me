@@ -130,8 +130,8 @@ describe("Habits 14-day grid", () => {
 describe("Bangla", () => {
   it("titles and text option are in Bangla with Latin digits", () => {
     localStorage.setItem("tm:ui:lang", "bn"); store.demo.put(fin("demo", "pay", "income", 5000)); go("#/diary/money");
-    const c = chart("money")!; expect(c.textContent).toContain("মাসিক আয় ও খরচ"); expect(c.querySelector("summary")!.textContent).toBe("লেখা আকারে দেখুন");
+    const c = chart("money")!; expect(c.textContent).toContain("মাসিক ইনকাম ও খরচ"); expect(c.querySelector("summary")!.textContent).toBe("লেখা আকারে দেখুন");
     expect(c.textContent).not.toMatch(/[০-৯]/);
-    go("#/journey/review"); expect(chart("activity")!.textContent).toContain("তথ্য এখনো নেই");
+    go("#/journey/review"); expect(chart("activity")!.textContent).toContain("ডেটা এখনো নেই");
   });
 });

@@ -82,7 +82,7 @@ describe("M11 labels and M-list status", () => {
   it("status tag reads exactly the owner's label in Bangla and English", () => {
     expect(m11.statuses).toContain("saved-background");
     expect(PACKS.en["cap.saved-background"]).toBe("Wikipedia (saved in background)");
-    expect(PACKS.bn["cap.saved-background"]).toBe("উইকিপিডিয়া (ব্যাকগ্রাউন্ডে সংরক্ষিত)");
+    expect(PACKS.bn["cap.saved-background"]).toBe("উইকিপিডিয়া (ব্যাকগ্রাউন্ডে সেভ করা)");
     expect(PACKS.mix["cap.saved-background"].length).toBeGreaterThan(0);
   });
 
@@ -97,13 +97,13 @@ describe("M11 labels and M-list status", () => {
   it("M11 note explains first-tap save and no search at start, in plain Bangla with Latin digits", () => {
     expect(m11.note.en).toMatch(/saved on this phone/);
     expect(m11.note.en).toMatch(/No search runs when the app opens/);
-    expect(m11.note.bn).toMatch(/ফোনে সংরক্ষিত/);
+    expect(m11.note.bn).toMatch(/ফোনে সেভ করা/);
     expect(m11.note.bn).toMatch(/২-৩|2-3/);
     expect(m11.note.bn).not.toMatch(/[০-৯]/);
   });
 
   it("the consent line tells the user results are saved on the phone (en + bn)", () => {
     expect(PACKS.en["suggest.consent"]).toMatch(/saved on this phone/);
-    expect(PACKS.bn["suggest.consent"]).toMatch(/ফলাফল এই ফোনে সংরক্ষিত থাকবে/);
+    expect(PACKS.bn["suggest.consent"]).toMatch(/রেজাল্ট এই ফোনে সেভ করা থাকবে/);
   });
 });
