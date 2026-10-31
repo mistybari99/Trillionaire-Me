@@ -5,7 +5,7 @@ Status words: **Done** (built + tested) · **Next** (decided, build now) · **La
 
 ---
 
-## 1. Where we are (evidence: 162 unit tests passing, TypeScript clean)
+## 1. Where we are (evidence: 926 unit tests passing as of 31 Oct 2026, TypeScript clean)
 
 | Area | Status | Notes |
 |---|---|---|
