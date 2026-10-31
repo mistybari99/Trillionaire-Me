@@ -119,7 +119,8 @@ describe("goal progress", () => {
     store.demo.put(g("g1")); store.demo.put(g("g2"));
     store.demo.put(mk("demo", "a", "task", { "task.done_on": "2026-10-01" }, { goal: "g1" }));
     go("#/journey/goal/g1"); expect(app().querySelector("[data-milestone='100']")!.textContent).toContain("All linked tasks are done"); expect(app().querySelector("[data-mm=milestone]")).not.toBeNull();
-    go("#/journey/goal/g2"); expect(app().querySelector("[data-goal-progress=unknown]")).not.toBeNull(); expect(app().textContent).toContain("Progress is unknown"); expect(app().querySelector("[data-mm]")).toBeNull();
+    expect(app().querySelector("[data-goal-more]")!.textContent).toContain("more tasks left for this aim"); // plain question with a link, no red, no grade
+    go("#/journey/goal/g2"); expect(app().querySelector("[data-goal-more]")).toBeNull(); expect(app().querySelector("[data-goal-progress=unknown]")).not.toBeNull(); expect(app().textContent).toContain("Progress is unknown"); expect(app().querySelector("[data-mm]")).toBeNull();
     go("#/journey/goal/nope"); expect(app().querySelector("[data-goal-missing]")).not.toBeNull();
   });
 });

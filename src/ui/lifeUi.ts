@@ -118,7 +118,8 @@ export function goalScreen(id: string): HTMLElement {
       : h("div", {}, h("div", { class: "pr-row" }, progressRing(gp.percent, t("goal.progress.known", lang, { p: num(gp.percent, lang), d: num(gp.done, lang), n: num(gp.total, lang) }), ms !== null),
           h("p", {}, t("goal.progress.known", lang, { p: num(gp.percent, lang), d: num(gp.done, lang), n: num(gp.total, lang) }))),
         h("div", { class: "bar", role: "img", "aria-label": t("goal.progress.known", lang, { p: num(gp.percent, lang), d: num(gp.done, lang), n: num(gp.total, lang) }) }, h("i", { style: `width:${gp.percent}%` }))),
-    ms ? h("p", { class: "ok-msg", role: "status", "data-milestone": String(ms) }, celebrate("milestone", lang), " ", t(`goal.ms.${ms}` as Key, lang)) : null);
+    ms ? h("p", { class: "ok-msg", role: "status", "data-milestone": String(ms) }, celebrate("milestone", lang), " ", t(`goal.ms.${ms}` as Key, lang)) : null,
+    gp.mode !== "manual" && gp.percent !== null ? h("p", { class: "muted", "data-goal-more": "1" }, t("overall.more", lang), " ", link("#/diary/plan", "crumb", t("overall.addMore", lang))) : null);
 
   // SMART
   const inp = (idv: string, f: string) => h("input", { id: idv, type: "text", value: textOf(rec, f), maxlength: "160", autocomplete: "off" });

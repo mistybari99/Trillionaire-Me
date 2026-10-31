@@ -22,9 +22,9 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 - [x] Deen items = plans and reminders only (D-D open).
 
 ### Block 4 — Overall progress polish (owner rules, 26 Oct)
-- [ ] Goal creation: manual % or auto; auto = equal or by task size.
-- [ ] Prompt "more tasks left for this aim?" after plan changes; % recalculates; neutral wording, never red.
-- [ ] Per-goal progress stays; no tasks => Unknown.
+- [x] Goal creation: manual % or auto; auto = equal or by task size.
+- [x] Prompt "more tasks left for this aim?" (overall card and each goal page); % recalculates; neutral wording, never red.
+- [x] Per-goal progress stays; no tasks => Unknown.
 
 ### Block 5 — Knowledge and advice
 - [ ] Rule-based advice cards from built-in knowledge (reason always shown, no invented amounts).
