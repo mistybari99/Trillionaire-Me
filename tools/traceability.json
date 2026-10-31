@@ -344,5 +344,12 @@
     "artifacts": [
       "tests/baseline_runway.test.ts"
     ]
+  },
+  "TM-TST-007": {
+    "outcome": "Partial",
+    "scope": "Automated: 20 of 20 expired items classified stale and the badge says Old, never recent; unknown dates are unknown. The badge is wired to Wikipedia option cards but the full card flow is not rendered in this test",
+    "artifacts": [
+      "tests/stale_badge.test.ts"
+    ]
   }
 }

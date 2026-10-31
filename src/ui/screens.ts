@@ -19,6 +19,7 @@ import { type FieldValue, type TMRecord, type UnknownState } from "../core/types
 import type { FieldDef } from "../catalog/types";
 import { StoreRepo } from "../adapters/storeRepo";
 import { createBackup, restoreBackup } from "../core/backup";
+import { freshnessOf } from "../core/freshness";
 import { feasibility, schedule, todaysActions } from "../core/planner";
 import { buildPlanInput, capacityState, fmtClock, freeWindow, isOpenTask } from "../core/planInputs";
 import { planFlowData } from "../core/planFlow";
@@ -1019,6 +1020,12 @@ function inputFor(f: FieldDef, lang: Locale, cur: FieldValue | undefined): { el:
 const SUGGESTABLE = new Set(["interest.topic", "skill.name", "strength.name", "value.name", "goal.title"]);
 
 /** Inline option cards: nothing is sent until the user taps the search button (consent). */
+// TM-REQ-007: every saved outside option says how old it is. Old ones are marked, never called recent.
+export function freshBadge(fetchedAt: string, lang: Locale): HTMLElement {
+  const f = freshnessOf(fetchedAt, new Date());
+  return h("p", { class: "muted" }, h("span", { class: `tag ${f === "recent" ? "ok" : "warn"}`, "data-fresh": f }, t(`fresh.${f}` as Key, lang)));
+}
+
 function suggestPanel(f: FieldDef, lang: Locale, getInput: () => HTMLInputElement): HTMLElement {
   const box = h("div", { class: "suggest", "data-suggest": f.id });
   const out = h("div", { role: "status" });
@@ -1050,6 +1057,7 @@ function suggestPanel(f: FieldDef, lang: Locale, getInput: () => HTMLInputElemen
     const cards = r.options.map((o) => h("div", { class: "card", "data-option": o.id },
       h("h2", { class: "card-h", }, o.title), h("p", { class: "muted" }, o.snippet),
       h("p", { class: "muted" }, t("suggest.source", lang, { s: o.sourceName, d: o.fetchedAt.slice(0, 10) })),
+      freshBadge(o.fetchedAt, lang),
       h("button", { class: "btn", type: "button", onclick: () => {
         input.value = o.title; out.replaceChildren(); input.focus();
       } }, t("suggest.use", lang))));
