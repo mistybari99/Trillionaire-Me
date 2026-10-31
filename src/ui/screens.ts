@@ -19,7 +19,7 @@ import { type FieldValue, type TMRecord, type UnknownState } from "../core/types
 import type { FieldDef } from "../catalog/types";
 import { StoreRepo } from "../adapters/storeRepo";
 import { createBackup, restoreBackup } from "../core/backup";
-import { schedule, todaysActions } from "../core/planner";
+import { feasibility, schedule, todaysActions } from "../core/planner";
 import { buildPlanInput, capacityState, fmtClock, freeWindow, isOpenTask } from "../core/planInputs";
 import { planFlowData } from "../core/planFlow";
 import { assessmentSection } from "./assessment";
@@ -205,6 +205,13 @@ export function planFlow(cp: ReturnType<typeof currentPlan>, lang: Locale): HTML
   return h("div", { class: "card", "data-flow-card": "1" }, h("h2", { class: "card-h", }, t("plan.flow.title", lang)), h("p", { class: "muted" }, t("plan.flow.intro", lang)), svg);
 }
 
+// TM-REQ-015: flagged before scheduling, in calm words. Nothing is deleted or reordered by the flag.
+function feasibilityNote(cp: ReturnType<typeof currentPlan>, lang: Locale): HTMLElement | null {
+  const f = feasibility(cp.input);
+  if (f.state !== "infeasible") return null;
+  return h("p", { class: "note", role: "status", "data-infeasible": "1" }, t("plan.infeasible", lang, { need: num(Math.round(f.neededMinutes / 60 * 10) / 10, lang), have: num(Math.round(f.capacityMinutes / 60 * 10) / 10, lang) }));
+}
+
 export function planScreen(): HTMLElement {
   const lang = L(); const cp = currentPlan();
   const w = freeWindow(cp.a);
@@ -273,6 +280,7 @@ export function planScreen(): HTMLElement {
     link("#/diary", "crumb", `← ${t("diary.title", lang)}`),
     h("h1", {}, t("plan.title", lang)), h("p", { class: "sub" }, t("plan.intro", lang)),
     h("div", { class: "card", "data-capacity": cp.state }, h("h2", { class: "card-h", }, t("plan.free", lang)), h("p", {}, free)),
+    feasibilityNote(cp, lang),
     planFlow(cp, lang),
     assessmentSection(cp.recs, lang),
     h("h2", {}, t("plan.mode", lang)), h("div", { class: "seg", role: "group" }, seg("normal"), seg("minimum_week"), seg("pause")),

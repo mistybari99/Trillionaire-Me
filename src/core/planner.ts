@@ -86,3 +86,16 @@ export function schedule(inp: PlanInput): Plan {
 
 /** Home shows at most 3 actions (TM-REQ-171). */
 export const todaysActions = (p: Plan, day: number, max = 3) => p.placements.filter((x) => x.day === day).sort((a, b) => a.start - b.start).slice(0, max);
+
+/** TM-REQ-015: checked before scheduling. Needed time = the known minutes of the open tasks. Tasks without an estimate are counted
+ *  separately and never as 0 minutes. Capacity unknown -> "unknown", never "ok". Pause mode places nothing, so it cannot be too much. */
+export type Feasibility =
+  | { state: "unknown"; unknownEstimates: number }
+  | { state: "ok" | "infeasible"; neededMinutes: number; capacityMinutes: number; unknownEstimates: number };
+export function feasibility(inp: PlanInput): Feasibility {
+  let needed = 0, unknownEstimates = 0;
+  for (const t of inp.tasks) { if (t.minutes === null || t.minutes <= 0) unknownEstimates++; else needed += t.minutes; }
+  if (inp.weeklyFreeMinutes === null) return { state: "unknown", unknownEstimates };
+  const state = (inp.mode ?? "normal") !== "pause" && needed > inp.weeklyFreeMinutes ? "infeasible" : "ok";
+  return { state, neededMinutes: needed, capacityMinutes: inp.weeklyFreeMinutes, unknownEstimates };
+}
