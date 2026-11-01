@@ -73,7 +73,7 @@ Status words: **Done** (built + tested) · **Next** (decided, build now) · **La
 
 | Sprint | Build | Acceptance (proof) |
 |---|---|---|
-| R1 (now) | B1 premium motivation/discipline board; B6 next-step highlight | unit tests for daily pick, copy guard; e2e check Today shows card |
+| R1 (done) | B1 premium motivation/discipline board; B6 next-step highlight | unit tests for daily pick, copy guard; e2e check Today shows card |
 | R2 | B2 horizon view; B3 my-why + success criteria fields | catalog fields versioned; journey renders horizon levels; validator tests |
 | R3 | B4 template chooser per screen (setting stored in prefs) | tests per template same data; prefs migration note |
 | R4 | B5 micro-animations + reduced-motion; B11 focus tip | visual check via screenshot; `prefers-reduced-motion` test |

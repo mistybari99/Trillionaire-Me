@@ -10,7 +10,7 @@ Scope: the first plan items: G0–G3 gate deliverables (Spec §13, G1 Brief §1�
 | # | Item | Source | Start | Now | Evidence | Note |
 |---|---|---|---|---|---|---|
 | D1 | PWA-first stack (D-A) | CLAUDE §2 | Built | Built | `docs/design/pwa-vs-native.md`, `public/manifest.webmanifest` | Device parts are Owner (O1) |
-| D2 | "Ink & Paper" look, phone first (D-E) | CLAUDE §2 | Built | Built | `src/ui/styles.css`, `tests/a11y.test.ts` | Contrast checked for every token pair |
+| D2 | Look, phone first (D-E; default now Light / Colorful / Futuristic, Ink & Paper kept as an option) | CLAUDE §2 | Built | Built | `src/ui/styles.css`, `tests/a11y.test.ts` | Contrast checked for every token pair |
 | D3 | Bangla-first, EN / BN / Mix switch, common English words kept | CLAUDE §8 | Built | Built | `src/i18n/registry.ts`, `src/i18n/packs.ts`, `tests/i18n_modes.test.ts` | Mix is derived from Bangla |
 | D4 | Latin digits in Bangla and Mix | Owner feedback | Built | Built | `src/i18n/digits.ts`, `tests/latin_digits.test.ts` | |
 | D5 | Stage A–H (journey) and G0–G8 (build) names kept apart; Home shows ১/৮ | CLAUDE §2 | Built | Built | `src/demo/seed.ts`, `DECISIONS_LOG.md` L-03, L-04 | |

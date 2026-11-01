@@ -30,10 +30,7 @@ Only what fits the running app: "I'm stuck" flow → habits without streaks → 
 - R1 (ROADMAP §4): daily inspiration card with theme chip, bilingual, calm fade-in (reduced-motion safe) — done. Next-step highlight (B6) still open.
 - Register rows NOT changed in this pass (update_register.py needs input files; evidence JSON only).
 
-## Next actions (in order, superseded by ROADMAP §4 for build order)
-1. App storage → IndexedDB (write-through, migrate localStorage) 
-2. PNG icons + manifest for install
-3. Notification privacy settings (lock-screen hiding)
-4. PWA-vs-native comparison note
-5. Hosting guide for owner (Cloudflare Pages steps)
-6. G3 start
+## Next actions (updated 1 Nov 2026; see docs/TODO.md for the live list)
+Done: IndexedDB storage, PNG icons and manifest, notification privacy, PWA-vs-native note, hosting guide, G3 and G4 work, data safety (Block 9).
+Now: Block 10 in docs/TODO.md (onboarding, owner phone checklist, usability kit, bundle split, Bangladesh starter pack draft, Bangla review sheet).
+Owner-only: phone offline and lock-screen tests, prayer-time check, Bangla review, approvals D-C and D-D, hosting account.

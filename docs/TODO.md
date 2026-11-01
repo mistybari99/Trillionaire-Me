@@ -72,6 +72,15 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 - [x] Step 7: record migration `src/core/migrate.ts` (steps table, copy saved first via snapshot, failure keeps original), fixtures v0/v1, schema fingerprint bump check (`tests/schema_migration.test.ts`).
 - [x] End: e2e, DECISIONS_LOG entries with undo steps.
 
+### Block 10 — Audit plan, builder run 1 Nov 2026
+- [x] Step 1: stale docs fixed (README, capability notes, PLAN, audit text) and Register v2_1 copy regenerated (Decisions D-B/D-E, Start Here, Summary note); v2_0 untouched.
+- [ ] Step 2: 3-screen first-run onboarding with a first win.
+- [ ] Step 3: owner phone-test checklist and 5-user usability kit (`docs/owner/`).
+- [ ] Step 4: bundle split (lazy screens) with full offline precache.
+- [ ] Step 5: Bangladesh starter pack draft (`public/content/pack-009.json`) and halal-check flags draft.
+- [ ] Step 6: Bangla review sheet (`docs/owner/BANGLA_REVIEW_SHEET.md`, script in `tools/`).
+- [ ] End: e2e, DECISIONS_LOG entries.
+
 ## Part B — Owner-only tasks
 - [ ] Phone offline test: open online once, visit all pages, airplane mode, reopen (O1).
 - [ ] Lock-screen privacy check on a real device (O8).
