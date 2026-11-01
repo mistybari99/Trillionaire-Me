@@ -957,6 +957,8 @@ export function journey(): HTMLElement {
       link("#/journey/week", "btn ghost", t("week.link", lang)),
       link("#/journey/decide", "btn ghost", t("dec.link", lang)),
       link("#/journey/mine", "btn ghost", t("tri.link", lang)),
+      link("#/journey/legs", "btn ghost", t("legs.link", lang)),
+      link("#/journey/leak", "btn ghost", t("leak.link", lang)),
       link("#/journey/review", "btn ghost", t("review.link", lang)),
       link("#/journey/risks", "btn ghost", t("risk.link", lang)),
       link("#/journey/history", "btn ghost", t("hist.link", lang)),

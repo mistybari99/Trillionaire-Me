@@ -1,5 +1,5 @@
 // Decision wizard and ownership triage. Rule-based and pure: the same answers always give the same suggestion,
-// and every suggestion carries the reason key. Nothing is scored, nothing is invented, nothing is changed in the user's data.
+// and every suggestion carries the reason key. Nothing is graded, nothing is invented, nothing is changed in the user's data.
 // An unanswered question is "unknown" (null). It is never read as "no".
 
 export type YN = "yes" | "no" | "unsure";

@@ -55,6 +55,7 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 ### Block 8 — Builder run 1 Nov 2026
 - [x] Step 1: Register v2_1 evidence copy regenerated (47 rows linked) + Change Log line; v2_0 untouched.
 - [x] Step 2: Decision helper `#/journey/decide` and ownership check `#/journey/mine` (`src/core/decisions.ts`, `src/ui/decisionUi.ts`, `tests/decisions.test.ts`): rule-based, reason shown, own open tasks only, nothing saved.
+- [x] Step 3: Four legs `#/journey/legs` and Leak audit `#/journey/leak` (`src/core/legs.ts`, `src/ui/legsUi.ts`, `tests/legs.test.ts`): own entries only, Unknown when missing, personal and business kept apart.
 
 ## Part B — Owner-only tasks
 - [ ] Phone offline test: open online once, visit all pages, airplane mode, reopen (O1).
