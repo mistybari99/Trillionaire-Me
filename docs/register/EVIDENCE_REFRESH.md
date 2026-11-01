@@ -143,3 +143,8 @@ Test edits for the mapping were titles and moving tests into their own describe 
 - 015: no explicit infeasible flag (deferred with reason only). 045: rules give suggestions but no old/new proposal. 068: tests show text equivalents for several visuals but not "every visual", and TalkBack is a device test.
 - 044, 077, 078, 097, 120: `security_review.test.ts`, `g1.test.ts` and the pack guards cover parts only (no provider retention map, no log scan beyond sources, packs only). Left unmapped to avoid overstating.
 - 168: offline e2e opens only some AI-free screens; the full flows are not driven offline.
+
+## Refresh 1 Nov 2026 (Block 8, step 1)
+- `node tools/evidence.mjs`: vitest 1020/1020 passed, 0 failing; 47 TM-TST rows linked (Pass 15, Partial 32). New since the 31 Oct run: TM-TST-005, 007, 009, 015, 040, 153 mappings.
+- `python3 tools/update_register.py` rebuilt `..._v2_1_evidence_refresh.xlsx` from the untouched v2_0 (sha256 unchanged); Change Log line "Evidence" written by the tool.
+- The raw `evidence/*.json` run output was not committed (churn).
