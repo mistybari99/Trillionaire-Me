@@ -12,6 +12,7 @@ import * as CN from "./ui/connectionsUi";
 import * as UV from "./ui/universeUi";
 import * as DU from "./ui/decisionUi";
 import * as LG from "./ui/legsUi";
+import * as IM from "./ui/importUi";
 import { demoPanels, firstRunScreen, trackDemoDay } from "./ui/modeUi";
 import { LAYERS, TOPICS } from "./library/topics";
 import { dismissReminder, inAppReminders } from "./ui/prayerAlerts";
@@ -59,6 +60,7 @@ export const ROUTES: Array<[RegExp, (m: RegExpMatchArray) => HTMLElement, string
   [/^\/more\/fields$/, () => S.fieldsGuide(), "more"],
   [/^\/more\/glossary$/, () => S.glossary(), "more"],
   [/^\/more\/safety$/, () => S.safety(), "more"],
+  [/^\/more\/dictionary$/, () => IM.dictionaryScreen(), "more"],
   [/^\/more\/data$/, () => S.dataScreen(), "more"],
   [/^\/more\/connections$/, () => CN.connectionsScreen(prefs.lang), "more"],
   [/^\/more\/library$/, () => LS.systemsLibraryScreen(), "more"],

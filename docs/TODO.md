@@ -58,6 +58,7 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 - [x] Step 3: Four legs `#/journey/legs` and Leak audit `#/journey/leak` (`src/core/legs.ts`, `src/ui/legsUi.ts`, `tests/legs.test.ts`): own entries only, Unknown when missing, personal and business kept apart.
 - [x] Step 4: Goal funnel hero on Journey and horizon arc on Horizon (`src/ui/horizonArt.ts`, `funnelBands`/`arcMarker` in `src/core/horizon.ts`, `tests/horizon_art.test.ts`): own counts, "Not set" when unknown, text equivalent, reduced-motion safe.
 - [x] Step 5: Habit long view (31 days / 12 weeks / 12 months) on Habits (`habitRange` in `src/core/chartData.ts`, `habitGridTracker` in `src/ui/charts.ts`, `tests/habit_grid.test.ts`): planned days only, nothing before the habit existed, text equivalent.
+- [x] Step 6: CSV import on More > Data (`src/core/csvImport.ts`, `src/ui/importUi.ts`, `tests/csv_import.test.ts`): file decides demo or real, real needs the consent tick, whole file validated, secrets/worship/health refused, existing ids skipped, undo of last import. Data dictionary page `#/more/dictionary`. TM-TST-153 stays Partial (no PDF).
 
 ## Part B — Owner-only tasks
 - [ ] Phone offline test: open online once, visit all pages, airplane mode, reopen (O1).

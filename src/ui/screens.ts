@@ -47,6 +47,7 @@ import { progressRing, isMilestone } from "./ring";
 import { logo3d } from "./logo";
 import { goalFunnelHero, horizonArc } from "./horizonArt";
 import { viewBar, withView } from "./viewBar";
+import { importCard } from "./importUi";
 import { backupReminderCard, snapshotsCard } from "./snapshotsUi";
 import { scrubRealParts } from "../core/snapshots";
 import { overallProgress } from "../core/overallProgress";
@@ -1313,7 +1314,7 @@ function designCard(lang: Locale): HTMLElement {
 export function more(): HTMLElement {
   const lang = L();
   const seg = (label: string, active: boolean, on: () => void) => h("button", { type: "button", "aria-pressed": String(active), onclick: on }, label);
-  const items: Array<[string, Key, Key]> = [["#/topics", "topics.title", "topics.intro"], ["#/more/status", "more.status", "more.status.desc"], ["#/more/fields", "more.fields", "more.fields.desc"], ["#/more/glossary", "more.glossary", "more.glossary.desc"], ["#/more/safety", "more.safety", "more.safety.desc"], ["#/more/data", "more.data", "more.data.desc"], ["#/more/connections", "more.connections", "more.connections.desc"], ["#/more/library", "more.library", "more.library.desc"], ["#/more/rules", "more.rules", "more.rules.desc"]];
+  const items: Array<[string, Key, Key]> = [["#/topics", "topics.title", "topics.intro"], ["#/more/status", "more.status", "more.status.desc"], ["#/more/fields", "more.fields", "more.fields.desc"], ["#/more/glossary", "more.glossary", "more.glossary.desc"], ["#/more/safety", "more.safety", "more.safety.desc"], ["#/more/data", "more.data", "more.data.desc"], ["#/more/dictionary", "dict.title", "dict.intro.short"], ["#/more/connections", "more.connections", "more.connections.desc"], ["#/more/library", "more.library", "more.library.desc"], ["#/more/rules", "more.rules", "more.rules.desc"]];
   return h("main", { class: "scr scr-more" },
     h("h1", {}, t("more.title", lang)),
     ...items.map(([href, k, d]) => link(href, "card link", h("h2", { class: "card-h", }, t(k, lang)), h("p", { class: "muted" }, t(d, lang)))),
@@ -1458,6 +1459,7 @@ export function dataScreen(): HTMLElement {
     h("p", { class: "muted" }, t("data.nopromote", lang)),
     clearDemoBlock(lang),
     csvCard(realOn, lang),
+    importCard(lang),
     h("h2", {}, t("backup.title", lang)),
     h("p", { class: "muted" }, t("backup.note", lang)),
     h("button", { class: "btn", type: "button", "data-act": "backup", onclick: async () => {
