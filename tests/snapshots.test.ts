@@ -198,3 +198,11 @@ describe("text, size, network", () => {
     expect(src).not.toMatch(/fetch\(|XMLHttpRequest|https?:\/\/|sendBeacon|WebSocket/);
   });
 });
+
+describe("backup reminder default (Block 9 step 3)", () => {
+  it("on by default once real records exist; the user's own choice always wins", async () => {
+    const { reminderEnabled } = await import("../src/core/snapshots");
+    expect(reminderEnabled(null, false)).toBe(false); expect(reminderEnabled(null, true)).toBe(true);
+    expect(reminderEnabled("off", true)).toBe(false); expect(reminderEnabled("on", false)).toBe(true);
+  });
+});

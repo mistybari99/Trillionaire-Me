@@ -4,7 +4,7 @@ import { readConsent } from "../core/consent";
 import { isTemplateId, type TemplateId } from "../core/stageTemplates";
 import { MirrorKV, SaveMonitor, hydrate, mirrorToRepo } from "../core/persist";
 import { DexieRepo } from "../adapters/dexie";
-import { DEFAULT_KEEP, isKeep, type SnapshotRepo } from "../core/snapshots";
+import { DEFAULT_KEEP, isKeep, reminderEnabled, type SnapshotRepo } from "../core/snapshots";
 import { parseNotifyPrefs, type NotifyPrefs } from "../core/notify";
 import { DHAKA_COORDS, validCoords, type Coords } from "../core/prayer";
 import { DEFAULT_ALERT_PREFS, parseAlertPrefs, type AlertPrefs } from "../core/prayerAlerts";
@@ -64,8 +64,8 @@ export const prefs = {
   /** How many snapshots to keep: 3, 5 or 10. Unknown or missing value = 5. */
   get snapKeep(): number { const n = Number(get("tm:ui:snapKeep")); return isKeep(n) ? n : DEFAULT_KEEP; },
   set snapKeep(v: number) { set("tm:ui:snapKeep", String(isKeep(v) ? v : DEFAULT_KEEP)); },
-  /** Backup reminder inside the app. OFF by default. */
-  get backupRemind(): boolean { return get("tm:ui:backupRemind") === "on"; },
+  /** Backup reminder inside the app. With no choice made it is ON once real records exist (and the real-data tick is given), OFF otherwise. The user's own on/off always wins. */
+  get backupRemind(): boolean { const v = get("tm:ui:backupRemind"); return reminderEnabled(v === "on" || v === "off" ? v : null, readConsent(legacy) && store.real.list().length > 0); },
   set backupRemind(v: boolean) { set("tm:ui:backupRemind", v ? "on" : "off"); },
   /** When a backup file was last saved on this device (ISO), or "" for never. */
   get fileBackupAt(): string { return get("tm:ui:fileBackupAt") ?? ""; },

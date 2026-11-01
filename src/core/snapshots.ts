@@ -95,6 +95,9 @@ export function parseSnapshotFile(text: string): Snapshot {
 
 // ---- reminder (in-app only, off by default) ----
 export const REMIND_DAYS = 7;
+/** The reminder switch: the user's own choice wins; with no choice it is ON once real records exist (a weekly, gentle in-app line) and OFF otherwise. */
+export const reminderEnabled = (explicit: "on" | "off" | null, hasRealRecords: boolean): boolean => (explicit === "on" ? true : explicit === "off" ? false : hasRealRecords);
+
 /** Due when the reminder is on, there is data, and no backup file was saved in the last REMIND_DAYS days (or ever). `snoozedOn` is a YYYY-MM-DD day. */
 export function reminderDue(on: boolean, hasData: boolean, lastFileIso: string | null, now: Date, snoozedOn: string | null = null, days = REMIND_DAYS): boolean {
   if (!on || !hasData) return false;

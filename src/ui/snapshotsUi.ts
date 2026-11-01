@@ -114,5 +114,6 @@ export function backupReminderCard(lang: Locale): HTMLElement | null {
   const day = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
   return h("aside", { class: "card", role: "status", "data-backup-reminder": "1" }, h("h2", { class: "card-h" }, t("snap.reminder.title", lang)), h("p", {}, t("snap.reminder.text", lang)),
     h("a", { href: "#/more/data", class: "btn", style: "width:auto;margin:0;min-height:44px" }, t("snap.reminder.open", lang)),
-    h("button", { class: "btn ghost", type: "button", "data-act": "reminder-later", style: "width:auto;margin:0 0 0 8px;min-height:44px", onclick: () => { prefs.remindSnoozedOn = day; rerender(); } }, t("snap.reminder.later", lang)));
+    h("button", { class: "btn ghost", type: "button", "data-act": "reminder-later", style: "width:auto;margin:0 0 0 8px;min-height:44px", onclick: () => { prefs.remindSnoozedOn = day; rerender(); } }, t("snap.reminder.later", lang)),
+    h("button", { class: "btn ghost", type: "button", "data-act": "reminder-off", style: "width:auto;margin:0 0 0 8px;min-height:44px", onclick: () => { prefs.backupRemind = false; rerender(); } }, t("snap.reminder.off", lang)));
 }
