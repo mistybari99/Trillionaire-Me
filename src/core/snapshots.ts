@@ -4,7 +4,7 @@
 import { BackupError, createBackup, parseBackup, restoreBackup, type BackupFile } from "./backup";
 import { guardWrite, type RecordRepo } from "./repo";
 
-export type SnapshotReason = "auto" | "manual" | "before_restore";
+export type SnapshotReason = "auto" | "manual" | "before_restore" | "before_migrate";
 export interface Snapshot { id: string; createdAt: string; reason: SnapshotReason; demo: BackupFile; real: BackupFile | null }
 export interface SnapshotRepo { list(): Promise<Snapshot[]>; put(s: Snapshot): Promise<void>; delete(id: string): Promise<void> }
 

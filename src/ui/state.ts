@@ -4,8 +4,10 @@ import { readConsent } from "../core/consent";
 import { isTemplateId, type TemplateId } from "../core/stageTemplates";
 import { MirrorKV, SaveMonitor, hydrate, mirrorToRepo } from "../core/persist";
 import { DexieRepo } from "../adapters/dexie";
+import { migrateAll } from "../core/migrate";
 import { moveListsToReal } from "../core/savedLists";
-import { DEFAULT_KEEP, isKeep, reminderEnabled, type SnapshotRepo } from "../core/snapshots";
+import { StoreRepo } from "../adapters/storeRepo";
+import { DEFAULT_KEEP, isKeep, reminderEnabled, takeSnapshot, type SnapshotRepo } from "../core/snapshots";
 import { parseNotifyPrefs, type NotifyPrefs } from "../core/notify";
 import { DHAKA_COORDS, validCoords, type Coords } from "../core/prayer";
 import { DEFAULT_ALERT_PREFS, parseAlertPrefs, type AlertPrefs } from "../core/prayerAlerts";
@@ -31,7 +33,16 @@ export const snapshotRepo: SnapshotRepo | null = repo ? repo.snapshots() : null;
 /** Per-device consent record (src/core/consent.ts). Same place as the other small per-device settings. */
 export const consentKv = legacy;
 /** Call once before the first render. */
-export async function initStorage(): Promise<void> { if (repo) { try { await hydrate(mem, repo, legacy); } catch { /* start empty rather than crash */ } } }
+export async function initStorage(): Promise<void> {
+  if (repo) { try { await hydrate(mem, repo, legacy); } catch { /* start empty rather than crash */ } }
+  // Old-version records are upgraded after a snapshot copy is saved; if the copy cannot be saved, nothing is changed.
+  try {
+    await migrateAll(mem, repo, async () => {
+      if (!snapshotRepo) return; // no IndexedDB: nothing to copy into; the migration steps never drop values
+      await takeSnapshot(new StoreRepo(store), snapshotRepo, { reason: "before_migrate", keep: 10, realOk: readConsent(legacy) });
+    });
+  } catch { /* records stay as they are */ }
+}
 
 const get = (k: string) => { try { return localStorage.getItem(k); } catch { return null; } };
 const set = (k: string, v: string) => { try { localStorage.setItem(k, v); } catch { /* ignore */ } };
