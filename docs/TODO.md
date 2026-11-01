@@ -70,7 +70,7 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 - [x] Step 5: at-rest encryption design note only (`docs/design/at-rest-encryption.md`); nothing built; waits for the owner (recommended default: not yet).
 - [x] Step 6: own options and saved search results follow the active namespace (`src/core/savedLists.ts`, one-time repair `repairListNamespaces`, `tests/lists_namespace.test.ts`).
 - [x] Step 7: record migration `src/core/migrate.ts` (steps table, copy saved first via snapshot, failure keeps original), fixtures v0/v1, schema fingerprint bump check (`tests/schema_migration.test.ts`).
-- [ ] End: e2e, DECISIONS_LOG entries with undo steps.
+- [x] End: e2e, DECISIONS_LOG entries with undo steps.
 
 ## Part B — Owner-only tasks
 - [ ] Phone offline test: open online once, visit all pages, airplane mode, reopen (O1).
