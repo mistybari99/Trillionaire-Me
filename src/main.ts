@@ -1,6 +1,6 @@
 import "./ui/styles.css";
 import { render, renderApp } from "./app";
-import { initStorage, saveMonitor } from "./ui/state";
+import { initStorage, repairListNamespaces, saveMonitor } from "./ui/state";
 import { updateNetBadge } from "./ui/net";
 import { startPrayerAlerts } from "./ui/prayerAlerts";
 import { ensureContentPacks } from "./library/packs";
@@ -17,6 +17,6 @@ window.addEventListener("hashchange", onRoute);
 saveMonitor.subscribe(() => onRoute());
 window.addEventListener("online", () => updateNetBadge());
 window.addEventListener("offline", () => updateNetBadge());
-initStorage().finally(() => { onRoute(); startPrayerAlerts(); void runAutoSnapshot(); persistIfReal(); initLock(); });
+initStorage().finally(() => { repairListNamespaces(); onRoute(); startPrayerAlerts(); void runAutoSnapshot(); persistIfReal(); initLock(); });
 
 if ("serviceWorker" in navigator && import.meta.env.PROD) navigator.serviceWorker.register("./sw.js").catch(() => { /* shell still works without it */ });

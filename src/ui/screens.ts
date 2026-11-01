@@ -1048,6 +1048,9 @@ function inputFor(f: FieldDef, lang: Locale, cur: FieldValue | undefined): { el:
   return { el, read };
 }
 
+/** Own options and saved results live in the active mode: demo in demo, real in real (writes need the tick). Reads in real mode without the tick find nothing. */
+const listStore = () => (prefs.dataMode === "real" ? store.real : store.demo);
+
 const SUGGESTABLE = new Set(["interest.topic", "skill.name", "strength.name", "value.name", "goal.title"]);
 
 /** Inline option cards: nothing is sent until the user taps the search button (consent). */
@@ -1063,15 +1066,16 @@ function suggestPanel(f: FieldDef, lang: Locale, getInput: () => HTMLInputElemen
   // O7 own options: saved on this phone per field (cap 20, oldest removed), shown above the search button.
   const ownBox = h("div", { "data-own-list": f.id });
   const renderOwn = () => {
-    const list = ownOptions(store.demo, f.id);
+    const list = ownOptions(listStore(), f.id);
     ownBox.replaceChildren(...(list.length ? [h("p", { class: "muted" }, t("suggest.ownList", lang)),
       ...list.map((text) => h("button", { class: "btn ghost", type: "button", "data-own-option": f.id, onclick: () => { getInput().value = text; out.replaceChildren(); getInput().focus(); } }, text))] : []));
   };
   renderOwn();
   const saveNote = h("p", { class: "muted", role: "status" });
   const saveOwn = h("button", { class: "btn ghost", type: "button", "data-act": "suggest-save-own", onclick: () => {
-    const res = saveOwnOption(store.demo, f.id, getInput().value, new Date());
-    saveNote.textContent = res === "empty" ? t("suggest.empty", lang) : res === "secret" ? t("suggest.secret", lang) : t("suggest.ownSaved", lang);
+    let res: ReturnType<typeof saveOwnOption> | "locked";
+    try { res = saveOwnOption(listStore(), f.id, getInput().value, new Date()); } catch { res = "locked"; }
+    saveNote.textContent = res === "locked" ? t("mode.real.needTick", lang) : res === "empty" ? t("suggest.empty", lang) : res === "secret" ? t("suggest.secret", lang) : t("suggest.ownSaved", lang);
     if (res === "saved" || res === "duplicate_updated") renderOwn();
   } }, t("suggest.saveOwn", lang));
   const go = h("button", { class: "btn ghost", type: "button", "data-act": "suggest-go" }, t("suggest.go", lang));
@@ -1081,10 +1085,10 @@ function suggestPanel(f: FieldDef, lang: Locale, getInput: () => HTMLInputElemen
     const safe = safeQuery(q);
     if (!safe) { out.replaceChildren(h("p", { class: "err" }, t("suggest.secret", lang))); return; }
     out.replaceChildren(h("p", { class: "muted" }, t("suggest.loading", lang)));
-    const wasSaved = savedSearchResults(store.demo, f.id, safe).length >= 2;
-    const r = await research(safe, true, { provider: wikipedia(lang === "en" ? "en" : "bn"), online: () => navigator.onLine, cached: (qq) => savedSearchResults(store.demo, f.id, qq) });
+    const wasSaved = savedSearchResults(listStore(), f.id, safe).length >= 2;
+    const r = await research(safe, true, { provider: wikipedia(lang === "en" ? "en" : "bn"), online: () => navigator.onLine, cached: (qq) => savedSearchResults(listStore(), f.id, qq) });
     // M11 (owner, 24 Oct): the first successful search is saved on this phone right away, so the same term works offline later.
-    if (r.status === "options" && !wasSaved) saveSearchResults(store.demo, f.id, safe, r.options, new Date());
+    if (r.status === "options" && !wasSaved) { try { saveSearchResults(listStore(), f.id, safe, r.options, new Date()); } catch { /* real mode without the tick: nothing is saved */ } }
     const cards = r.options.map((o) => h("div", { class: "card", "data-option": o.id },
       h("h2", { class: "card-h", }, o.title), h("p", { class: "muted" }, o.snippet),
       h("p", { class: "muted" }, t("suggest.source", lang, { s: o.sourceName, d: o.fetchedAt.slice(0, 10) })),

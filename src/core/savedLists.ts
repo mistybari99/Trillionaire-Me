@@ -1,16 +1,23 @@
-// O7: per-field "own options" and "saved search results" kept on this phone (demo namespace only).
+// O7: per-field "own options" and "saved search results" kept on this phone, in the ACTIVE namespace (demo in demo mode, real in real mode; never mixed).
 // Pure: works on any { list, put, delete } store (the demo NsStore in practice). Nothing here touches the network.
 import type { Suggestion } from "./research";
-import type { TMRecord } from "./types";
+import type { Label, Namespace, TMRecord } from "./types";
 import { detectSecret } from "./safety";
 
 export const LIST_CAP = 20;
 
 export interface ListStore {
+  /** Namespace of the store; a store without one is treated as demo. */
+  readonly ns?: Namespace;
   list(): TMRecord[];
   put(rec: TMRecord): void;
   delete(id: string): void;
 }
+
+const nsOf = (s: ListStore): Namespace => s.ns ?? "demo";
+/** Demo values are DEMO; what the user typed in real mode is FACT; saved outside results are EXTERNAL in real mode. */
+const labelOf = (ns: Namespace, kind: "typed" | "external"): Label => (ns === "demo" ? "DEMO" : kind === "typed" ? "FACT" : "EXTERNAL");
+const ownerOf = (ns: Namespace) => (ns === "real" ? "owner" : "demo-user");
 
 export const OWN_ENTITY = "own_option";
 export const SAVED_ENTITY = "saved_search";
@@ -47,10 +54,10 @@ export function saveOwnOption(store: ListStore, field: string, text: string, at:
   const id = `own-${field}-${key}`;
   const existed = store.list().some((r) => r.id === id);
   store.put({
-    id, entity: OWN_ENTITY, ns: "demo", ownerId: "demo-user", schemaVersion: 1, createdAt: at.toISOString(),
+    id, entity: OWN_ENTITY, ns: nsOf(store), ownerId: ownerOf(nsOf(store)), schemaVersion: 1, createdAt: at.toISOString(),
     values: {
-      "list.field": { state: "value", value: field, label: "DEMO" },
-      "list.text": { state: "value", value: clean, label: "DEMO" },
+      "list.field": { state: "value", value: field, label: labelOf(nsOf(store), "typed") },
+      "list.text": { state: "value", value: clean, label: labelOf(nsOf(store), "typed") },
     },
   });
   enforceCap(store, OWN_ENTITY, field);
@@ -71,11 +78,11 @@ export function saveSearchResults(store: ListStore, field: string, query: string
   if (!key || options.length < 2) return;
   if (detectSecret(key)) return;
   store.put({
-    id: `saved-${field}-${key}`, entity: SAVED_ENTITY, ns: "demo", ownerId: "demo-user", schemaVersion: 1, createdAt: at.toISOString(),
+    id: `saved-${field}-${key}`, entity: SAVED_ENTITY, ns: nsOf(store), ownerId: ownerOf(nsOf(store)), schemaVersion: 1, createdAt: at.toISOString(),
     values: {
-      "list.field": { state: "value", value: field, label: "DEMO" },
-      "list.query": { state: "value", value: key, label: "DEMO" },
-      "list.options": { state: "value", value: options.slice(0, 3).map(({ title, snippet, sourceName, sourceUrl, fetchedAt }) => ({ title, snippet, sourceName, sourceUrl, fetchedAt })), label: "DEMO" },
+      "list.field": { state: "value", value: field, label: labelOf(nsOf(store), "typed") },
+      "list.query": { state: "value", value: key, label: labelOf(nsOf(store), "typed") },
+      "list.options": { state: "value", value: options.slice(0, 3).map(({ title, snippet, sourceName, sourceUrl, fetchedAt }) => ({ title, snippet, sourceName, sourceUrl, fetchedAt })), label: labelOf(nsOf(store), "external") },
     },
   });
   enforceCap(store, SAVED_ENTITY, field);
@@ -88,4 +95,25 @@ export function savedSearchResults(store: ListStore, field: string, query: strin
   const v = rec?.values["list.options"];
   if (!v || v.state !== "value" || !Array.isArray(v.value)) return [];
   return (v.value as Omit<Suggestion, "id">[]).map((o, i) => ({ ...o, id: `saved-${i + 1}` }));
+}
+
+/**
+ * One-time repair (Block 9 step 6). Before this fix, own options and saved search results were always written to the demo namespace, even in real mode.
+ * When the user is in real mode with the tick given, those two kinds of record (and nothing else) are moved to the real namespace and re-labelled.
+ * Secret-looking text is dropped, not moved. Returns how many records moved. Run once per device (the caller keeps a flag).
+ */
+export function moveListsToReal(demo: ListStore, real: ListStore): number {
+  let n = 0;
+  for (const r of demo.list()) {
+    if (r.entity !== OWN_ENTITY && r.entity !== SAVED_ENTITY) continue;
+    const texts = Object.values(r.values).map((v) => (v.state === "value" && typeof v.value === "string" ? v.value : ""));
+    const secret = texts.some((x) => x && detectSecret(x));
+    if (!secret) {
+      const values: TMRecord["values"] = {};
+      for (const [k, v] of Object.entries(r.values)) values[k] = v.state === "value" ? { ...v, label: labelOf("real", k === "list.options" ? "external" : "typed") } : v;
+      real.put({ ...r, ns: "real", ownerId: ownerOf("real"), values }); n++;
+    }
+    demo.delete(r.id);
+  }
+  return n;
 }

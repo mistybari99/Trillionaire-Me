@@ -4,6 +4,7 @@ import { readConsent } from "../core/consent";
 import { isTemplateId, type TemplateId } from "../core/stageTemplates";
 import { MirrorKV, SaveMonitor, hydrate, mirrorToRepo } from "../core/persist";
 import { DexieRepo } from "../adapters/dexie";
+import { moveListsToReal } from "../core/savedLists";
 import { DEFAULT_KEEP, isKeep, reminderEnabled, type SnapshotRepo } from "../core/snapshots";
 import { parseNotifyPrefs, type NotifyPrefs } from "../core/notify";
 import { DHAKA_COORDS, validCoords, type Coords } from "../core/prayer";
@@ -137,3 +138,11 @@ export function readProgressMemory(key: string): ProgressMemory | null {
   try { const o = JSON.parse(get(`tm:ui:overallMem:${key}`) ?? "null"); const ok = (x: unknown) => x === null || (typeof x === "number" && Number.isFinite(x)); return o && ok(o.last) && ok(o.from) ? { last: o.last, from: o.from } : null; } catch { return null; }
 }
 export function writeProgressMemory(key: string, m: ProgressMemory): void { set(`tm:ui:overallMem:${key}`, JSON.stringify(m)); }
+
+/** One-time repair per device: own options and saved search results written to the demo bucket while in real mode move to real (src/core/savedLists.ts). The flag is set either way, so later demo-mode lists are never moved. Returns records moved. */
+export function repairListNamespaces(): number {
+  if (get("tm:ui:listsNs") === "v1") return 0;
+  let n = 0;
+  try { if (prefs.dataMode === "real" && readConsent(legacy)) n = moveListsToReal(store.demo, store.real); } catch { return 0; /* try again next start */ }
+  set("tm:ui:listsNs", "v1"); return n;
+}
