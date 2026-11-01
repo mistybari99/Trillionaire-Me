@@ -69,3 +69,29 @@ export function habitGrid(hb: Habit, logs: Log[], today: string): HabitGrid {
   return { cells, planned, done };
 }
 export const weekdayIndex = (date: string): number => parseIso(date).getDay();
+
+// ---- Habit grid trackers beyond 14 days: 31 days, 12 weeks, 12 months ----
+// Planned days only. Days before the habit was added ("since") and future days are never counted, so nothing is a miss that was never possible.
+// A period with no countable planned day is "none" (unknown), never a 0%. No run-count and no overall number.
+export type GridRange = "days31" | "weeks12" | "months12";
+export const GRID_RANGES: readonly GridRange[] = ["days31", "weeks12", "months12"];
+export type PeriodState = "full" | "some" | "open" | "none";
+export interface GridPeriod { from: string; to: string; planned: number; done: number; state: PeriodState }
+
+const monthStart = (date: string, back: number): string => { const d = parseIso(date); return iso0(new Date(d.getFullYear(), d.getMonth() - back, 1)); };
+const monthEnd = (date: string, back: number): string => { const d = parseIso(date); return iso0(new Date(d.getFullYear(), d.getMonth() - back + 1, 0)); };
+const iso0 = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+
+export function habitRange(hb: Habit, logs: Log[], today: string, range: GridRange, since: string | null): GridPeriod[] {
+  const spans: Array<[string, string]> = [];
+  if (range === "days31") for (let i = 30; i >= 0; i--) { const d = addDays(today, -i); spans.push([d, d]); }
+  else if (range === "weeks12") for (let i = 11; i >= 0; i--) { const to = addDays(today, -7 * i); spans.push([addDays(to, -6), to]); }
+  else for (let i = 11; i >= 0; i--) { const end = monthEnd(today, i); spans.push([monthStart(today, i), end > today ? today : end]); }
+  return spans.map(([from, to]) => {
+    const start = since && since > from ? since : from;
+    let planned = 0, done = 0;
+    for (let d = start; d <= to && d <= today; d = addDays(d, 1)) if (isPlanned(hb, d)) { planned++; if (isDone(hb, logs, d)) done++; }
+    const state: PeriodState = planned === 0 ? "none" : done === planned ? "full" : done > 0 ? "some" : "open";
+    return { from, to, planned, done, state };
+  });
+}

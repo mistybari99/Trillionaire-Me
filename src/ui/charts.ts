@@ -6,7 +6,7 @@ import { t } from "../i18n/t";
 import type { Key } from "../i18n/packs";
 import type { Locale } from "../i18n/registry";
 import { num } from "./components";
-import { activityBars, flowBars, goalRings, habitGrid, weekdayIndex, type Cell } from "../core/chartData";
+import { GRID_RANGES, activityBars, flowBars, goalRings, habitGrid, habitRange, weekdayIndex, type Cell, type GridRange, type PeriodState } from "../core/chartData";
 import type { Habit, Log } from "../core/habits";
 import type { TMRecord } from "../core/types";
 
@@ -121,4 +121,38 @@ export function habitChart(hb: Habit, logs: Log[], today: string, lang: Locale):
   });
   void weekdayIndex;
   return box("habit", title, summary, lines, lang, svg, h("p", { class: "muted chart-legend" }, `● ${t("chart.cell.done", lang)} · ○ ${t("chart.cell.open", lang)} · – ${t("chart.cell.rest", lang)}`));
+}
+
+// ---- Habits: long view (31 days / 12 weeks / 12 months), one row per habit ----
+const STATE_KEY: Record<PeriodState, Key> = { full: "grid.cell.full", some: "grid.cell.some", open: "grid.cell.open", none: "grid.cell.none" };
+export function habitGridTracker(habits: readonly Habit[], logs: Log[], since: ReadonlyMap<string, string | null>, today: string, range: GridRange, onRange: (r: GridRange) => void, lang: Locale): HTMLElement {
+  const title = t("grid.title", lang);
+  const bar = h("div", { class: "seg", role: "group", "aria-label": t("grid.range.label", lang), "data-grid-range": range },
+    ...GRID_RANGES.map((r) => h("button", { type: "button", "data-range": r, "aria-pressed": String(r === range), style: "min-height:44px", onclick: () => onRange(r) }, t(`grid.range.${r}` as Key, lang))));
+  if (!habits.length) return h("section", { class: "card chart", "data-chart": "habit-grid", "data-chart-empty": "1" }, h("h2", { class: "card-h" }, title), bar, h("p", { class: "muted" }, t("grid.empty", lang)));
+  const rows = habits.map((hb) => ({ hb, periods: habitRange(hb, logs, today, range, since.get(hb.id) ?? null) }));
+  const n = rows[0]!.periods.length; const pitch = Math.floor(300 / n), sz = Math.max(7, pitch - (n > 20 ? 2 : 6)), RH = 44, W = 320;
+  const lines = rows.flatMap(({ hb, periods }) => periods.map((p) => (p.planned
+    ? t("grid.line", lang, { name: hb.title, from: p.from, to: p.to, d: num(p.done, lang), p: num(p.planned, lang) })
+    : t("grid.line.none", lang, { name: hb.title, from: p.from, to: p.to }))));
+  const summary = `${title}. ${t(`grid.range.${range}` as Key, lang)}. ${rows.map(({ hb, periods }) => { const pl = periods.reduce((a, x) => a + x.planned, 0), dn = periods.reduce((a, x) => a + x.done, 0); return pl ? t("grid.sum", lang, { name: hb.title, d: num(dn, lang), p: num(pl, lang) }) : t("grid.sum.none", lang, { name: hb.title }); }).join(" ")}`;
+  const svg = svgRoot(W, rows.length * RH, title, summary); svg.setAttribute("data-habit-long", range);
+  rows.forEach(({ hb, periods }, r) => {
+    const y0 = r * RH;
+    svg.append(s("text", { x: 0, y: y0 + 13, class: "chart-t" }, hb.title));
+    periods.forEach((p, i) => {
+      const x = i * pitch + 2, y = y0 + 20;
+      const g = s("g", { "data-period": p.from, "data-state": p.state });
+      if (p.state === "full") g.append(s("rect", { x, y, width: sz, height: sz, rx: 2, class: "cell-done" }));
+      else if (p.state === "some") g.append(s("rect", { x, y, width: sz, height: sz, rx: 2, class: "cell-open", fill: "none" }), s("rect", { x, y: y + sz / 2, width: sz, height: sz / 2, class: "cell-done" }));
+      else if (p.state === "open") g.append(s("rect", { x, y, width: sz, height: sz, rx: 2, class: "cell-open", fill: "none" }));
+      else g.append(s("line", { x1: x + 1, y1: y + sz / 2, x2: x + sz - 1, y2: y + sz / 2, class: "cell-rest" }));
+      svg.append(g);
+    });
+  });
+  const legend = (["full", "some", "open", "none"] as const).map((k) => t(STATE_KEY[k], lang)).join(" · ");
+  return h("section", { class: "card chart", "data-chart": "habit-grid" }, h("h2", { class: "card-h" }, title), bar, svg,
+    h("p", { class: "sr-only", "data-chart-summary": "habit-grid" }, summary),
+    h("p", { class: "muted chart-legend" }, legend), h("p", { class: "muted" }, t("grid.note", lang)),
+    h("details", { class: "help", "data-chart-text": "habit-grid" }, h("summary", {}, t("chart.showText", lang)), h("ul", { class: "chart-lines" }, ...lines.map((l) => h("li", {}, l)))));
 }

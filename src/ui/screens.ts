@@ -37,7 +37,8 @@ import { tipsFor } from "../library/packs";
 import { journeyArt } from "./rewardArt";
 import { messageIndex, milestoneAt } from "../core/reward";
 import { diagram } from "./diagram";
-import { activityChart, goalRingsChart, habitChart, moneyChart } from "./charts";
+import { activityChart, goalRingsChart, habitChart, habitGridTracker, moneyChart } from "./charts";
+import type { GridRange } from "../core/chartData";
 import { encBackupCard } from "./encBackup";
 import { rulesTodayCard } from "./libraryScreens";
 import { celebrate, journeyGoalsCard, overallProgressCard } from "./lifeUi";
@@ -744,6 +745,10 @@ function removeHabit(id: string) {
   for (const r of allRecs()) if (r.entity === "habit_log" && r.links?.habit === id) storeOf(r).delete(r.id);
 }
 
+const GRID_KEY = "tm:ui:habitGrid";
+function gridRange(): GridRange { try { const v = localStorage.getItem(GRID_KEY); return v === "weeks12" || v === "months12" ? v : "days31"; } catch { return "days31"; } }
+function setGridRange(r: GridRange) { try { localStorage.setItem(GRID_KEY, r); } catch { /* choice is only a convenience */ } }
+
 export function habitsScreen(): HTMLElement {
   const lang = L(); const { habits, logs } = habitsFromStore(); const today = Habits.todayIso();
   const wd = (i: number) => new Intl.DateTimeFormat(intlLocale(lang), { weekday: "short" }).format(new Date(2023, 0, 1 + i));
@@ -786,6 +791,7 @@ export function habitsScreen(): HTMLElement {
   });
   return h("main", {}, link("#/today", "crumb", `← ${t("nav.today", lang)}`), h("h1", {}, t("habits.title", lang)), h("p", { class: "sub" }, t("habits.intro", lang)),
     viewBar("habits", lang),
+    habitGridTracker(habits, logs, new Map(allRecs().filter((r) => r.entity === "habit").map((r) => [r.id, Number.isFinite(Date.parse(r.createdAt)) ? Habits.todayIso(new Date(r.createdAt)) : null] as const)), today, gridRange(), (r) => { setGridRange(r); rerender(); }, lang),
     ...(cards.length ? (habitCompact ? [h("ul", { class: "list-compact", "data-view": "compact" }, ...cards)] : cards) : [h("p", { class: "muted" }, t("habits.empty", lang))]), h("p", { class: "muted" }, t("habits.tip", lang)), h("h2", {}, t("habits.add", lang)), form, disclaimers(lang, ["noGuarantee"]));
 }
 
