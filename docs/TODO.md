@@ -75,7 +75,7 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 ### Block 10 — Audit plan, builder run 1 Nov 2026
 - [x] Step 1: stale docs fixed (README, capability notes, PLAN, audit text) and Register v2_1 copy regenerated (Decisions D-B/D-E, Start Here, Summary note); v2_0 untouched.
 - [x] Step 2: 3-screen first-run onboarding (`src/core/onboarding.ts`, `src/ui/onboardUi.ts`, route `#/start`, `tests/onboarding.test.ts`, e2e ONB-*): choice (1/3), one goal, one small step + first win; skippable; local time-to-first-step kept on the device only.
-- [ ] Step 3: owner phone-test checklist and 5-user usability kit (`docs/owner/`).
+- [x] Step 3: owner phone-test checklist (`docs/owner/PHONE_TEST_CHECKLIST.md`, 10 steps + report template) and 5-user usability kit (`docs/owner/USABILITY_KIT.md`). Owner runs them; nothing marked Verified until he does.
 - [ ] Step 4: bundle split (lazy screens) with full offline precache.
 - [ ] Step 5: Bangladesh starter pack draft (`public/content/pack-009.json`) and halal-check flags draft.
 - [ ] Step 6: Bangla review sheet (`docs/owner/BANGLA_REVIEW_SHEET.md`, script in `tools/`).
