@@ -36,3 +36,30 @@ describe("lazy screens", () => {
     expect(list).toContain("./assets/planScreens-b.js"); expect(list).toContain("./assets/dexie-c.js"); expect(list).not.toContain("./sw.js");
   });
 });
+
+import { HALAL, } from "../src/ui/lazyScreens";
+import { FLAG_GROUPS, HALAL_FLAGS } from "../src/library/halalFlags";
+import { render } from "../src/app";
+import { PACKS } from "../src/i18n/packs";
+
+describe("halal-check flags (draft)", () => {
+  it("is a lazy chunk and the page says: not a fatwa, ask a qualified person, draft", () => {
+    expect(typeof HALAL.get()!.halalFlagsScreen).toBe("function");
+    for (const lang of ["en", "bn", "mix"] as const) {
+      document.body.innerHTML = '<div id="app"></div>'; localStorage.setItem("tm:ui:lang", lang); localStorage.setItem("tm:ui:dataMode", "demo"); location.hash = "#/more/halal-flags"; render();
+      expect(document.querySelector("[data-halal-banner]")!.textContent).toBe(`${PACKS[lang]["halal.banner"]}${PACKS[lang]["halal.draft"]}`);
+      expect(document.querySelectorAll("[data-flag]").length).toBe(HALAL_FLAGS.length);
+    }
+    expect(PACKS.en["halal.banner"]).toMatch(/not a fatwa.*qualified person/i);
+  });
+  it("every group has at least one question, ids are unique, all questions are bilingual and end as questions", () => {
+    for (const g of FLAG_GROUPS) expect(HALAL_FLAGS.some((x) => x.group === g), g).toBe(true);
+    expect(new Set(HALAL_FLAGS.map((x) => x.id)).size).toBe(HALAL_FLAGS.length);
+    for (const x of HALAL_FLAGS) { expect(x.q.en.endsWith("?"), x.id).toBe(true); expect(x.q.bn.endsWith("?"), x.id).toBe(true); expect(/[ঀ-৿]/.test(x.q.bn)).toBe(true); }
+  });
+  it("gives no verdict: no ruling words and no scripture names, no rates or product names", () => {
+    const all = JSON.stringify(HALAL_FLAGS);
+    expect(/\b(halal is|haram is|is halal|is haram|permitted|forbidden|allowed|prohibited)\b|হারাম|হালাল (নয়|বলে)/i.test(all)).toBe(false);
+    expect(/কুরআন|হাদিস|সূরা|আয়াত|আল্লাহ|quran|hadith|surah|ayah|allah|%|৳|\bbdt\b/i.test(all)).toBe(false);
+  });
+});

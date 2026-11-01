@@ -5,3 +5,4 @@ export const PLAN = lazy("plan", () => import("./planScreens"));
 export const CONN = lazy("connections", () => import("./connectionsUi"));
 export const DECIDE = lazy("decide", () => import("./decisionUi"));
 export const LEGS = lazy("legs", () => import("./legsUi"));
+export const HALAL = lazy("halal", () => import("./halalUi"));

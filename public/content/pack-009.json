@@ -1,0 +1,435 @@
+{
+  "schema": "tm-content-pack",
+  "schemaVersion": 1,
+  "packId": "pack-009",
+  "reviewStatus": "pending_reviewer",
+  "license": "original",
+  "description": "DRAFT Bangladesh starter pack: original, general entries (Bangla and English) on mobile money safety, saving schemes in general terms, budgeting in taka, small-shop basics, freelancing and job search. No rates, prices, limits or guarantees; entries that depend on local rules are marked source reviewer and must be confirmed by a local reviewer. Reviewer pending on every entry. Shown as যাচাই হয়নি until a reviewer signs off.",
+  "tips": [
+    {
+      "id": "p9-bd-1",
+      "topic": "money",
+      "tags": [
+        "mobile-money",
+        "safety"
+      ],
+      "title": {
+        "bn": "মোবাইল মানি কীভাবে চলে",
+        "en": "How mobile money works"
+      },
+      "how": {
+        "bn": "মোবাইল মানি অ্যাকাউন্টে (যেমন bKash বা Nagad) আপনার ফোন নম্বরের সঙ্গে টাকা জমা থাকে। PIN দিয়ে পাঠান, নিন বা পেমেন্ট করুন; PIN শুধু আপনি জানবেন। পাঠানোর আগে অ্যাপে চার্জ দেখে নিন।",
+        "en": "A mobile money account (such as bKash or Nagad) holds money linked to your phone number. You send, receive and pay by confirming with a PIN that only you know. Check the charge shown in the app before you send."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "অফিশিয়াল অ্যাপ খুলুন|চার্জ দেখুন|PIN দিয়ে কনফার্ম করুন",
+        "en": "Open the official app|Check the charge|Confirm with your PIN"
+      },
+      "appLink": "#/diary/money",
+      "kind": "explain",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p9-bd-2",
+      "topic": "environment",
+      "tags": [
+        "mobile-money",
+        "digital-safety"
+      ],
+      "title": {
+        "bn": "PIN বা OTP কাউকে দেবেন না",
+        "en": "Never share your PIN or OTP"
+      },
+      "how": {
+        "bn": "কোনো কোম্পানি, এজেন্ট বা সাপোর্ট থেকে আপনার PIN বা OTP চাওয়ার দরকার হয় না। কেউ চাইলে থামুন। ফোন কেটে দিন এবং অফিশিয়াল অ্যাপে দেওয়া নম্বরে নিজে যোগাযোগ করুন।",
+        "en": "No real company, agent or support person needs your PIN or OTP. If a call or message asks for it, stop. Hang up and use the number shown in the official app instead."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "থামুন|কেটে দিন|অ্যাপের নম্বরে ফোন করুন",
+        "en": "Stop|Hang up|Call the number in the app"
+      },
+      "kind": "watchout",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p9-bd-3",
+      "topic": "money",
+      "tags": [
+        "budget",
+        "taka"
+      ],
+      "title": {
+        "bn": "টাকায় সহজ মাসিক হিসাব",
+        "en": "A simple monthly plan in taka"
+      },
+      "how": {
+        "bn": "মাসের শুরুতে লিখুন কত ইনকাম আসবে এবং কী কী খরচ ঠিক করা (ভাড়া, খাবার, স্কুল, যাতায়াত, মোবাইল)। যা থাকে তা জমানো আর বাড়তি খরচের জন্য। অন্য কারও নয়, নিজের সংখ্যা বসান।",
+        "en": "At the start of the month, write what comes in and the fixed costs (rent, food, school, transport, mobile). What is left is for saving and extras. Use your own numbers, not someone else's."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "ইনকাম|ঠিক করা খরচ|যা থাকে",
+        "en": "Income|Fixed costs|What is left"
+      },
+      "appLink": "#/diary/money",
+      "kind": "steps",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p9-bd-4",
+      "topic": "money",
+      "tags": [
+        "budget",
+        "family"
+      ],
+      "title": {
+        "bn": "পরিবারের টাকার কথা, এক পাতায়",
+        "en": "Family money talk, on one page"
+      },
+      "how": {
+        "bn": "মাসে একবার পরিবারের সবাই 15 মিনিট বসুন। এক পাতায় তিন লাইন লিখুন: কী দরকার, কী চাই, কী জমাব। পাতাটি এমন জায়গায় রাখুন যেখানে সবাই দেখতে পায়।",
+        "en": "Example: once a month, sit together as a family for 15 minutes. Write three lines on one page: what we need, what we want, what we put aside. Keep the page where everyone can see it."
+      },
+      "diagram": {
+        "type": "matrix",
+        "bn": "দরকার|চাই|জমাব|পরের মাস",
+        "en": "Need|Want|Put aside|Next month"
+      },
+      "kind": "example",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p9-bd-5",
+      "topic": "money",
+      "tags": [
+        "savings",
+        "dps"
+      ],
+      "title": {
+        "bn": "DPS সাধারণভাবে কীভাবে চলে",
+        "en": "How a DPS works, in general"
+      },
+      "how": {
+        "bn": "DPS (ডিপোজিট পেনশন স্কিম) ব্যাংকের একটি প্রোডাক্ট: নির্দিষ্ট মেয়াদ ধরে প্রতি মাসে একটি ঠিক করা অঙ্ক জমা দেন, মেয়াদ শেষে জমানো টাকা পান। শর্ত ব্যাংকভেদে আলাদা, তাই শুরুর আগে লিখিত শর্ত চান।",
+        "en": "A DPS (deposit pension scheme) is a bank product: you put in a fixed amount every month for a fixed number of years and receive the saved total at the end, plus anything the bank's written terms state. Terms differ by bank, so ask for them in writing first."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "মাসে জমা|মেয়াদ চলে|মেয়াদ শেষে পান",
+        "en": "Monthly deposit|Term runs|Paid at the end"
+      },
+      "appLink": "#/diary/money",
+      "kind": "learn",
+      "source": "reviewer",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p9-bd-6",
+      "topic": "money",
+      "tags": [
+        "savings",
+        "dps"
+      ],
+      "title": {
+        "bn": "মাসিক সেভিংস স্কিমে যোগ দেওয়ার আগে",
+        "en": "Before you join a monthly saving scheme"
+      },
+      "how": {
+        "bn": "জিজ্ঞেস করুন: এক মাস মিস হলে কী হয়? আগে বন্ধ করা যায় কি, তখন কত পাব? কে এই ব্যাংক বা স্কিম তদারক করে? উত্তর লিখে রাখুন। কেউ নিশ্চিত বড় অঙ্কের কথা বললে থামুন, বিশ্বস্ত কাউকে জিজ্ঞেস করুন।",
+        "en": "Ask: what if I miss a month? Can I close early, and what would I get? Who regulates this bank or scheme? Write the answers down. If someone promises a sure big payout, pause and ask a person you trust."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "মিস মাস|আগে বন্ধ|কে তদারক করে",
+        "en": "Missed month|Early close|Who regulates"
+      },
+      "kind": "watchout",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p9-bd-7",
+      "topic": "money",
+      "tags": [
+        "savings",
+        "sanchaypatra"
+      ],
+      "title": {
+        "bn": "সঞ্চয়পত্র কেনার আগে কী দেখবেন",
+        "en": "Sanchaypatra: what to check"
+      },
+      "how": {
+        "bn": "সঞ্চয়পত্র সরকারের জাতীয় সঞ্চয় সার্টিফিকেট, ব্যাংক ও পোস্ট অফিসের মাধ্যমে বিক্রি হয়। নিয়ম, সীমা ও শর্ত সরকার ঠিক করে এবং বদলাতে পারে। সিদ্ধান্তের আগে বর্তমান সরকারি শর্ত দেখে নিন।",
+        "en": "Sanchaypatra (national savings certificates) are sold by the government through banks and post offices. Rules, limits and terms are set by the government and can change. Check the current official terms before you decide."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "বর্তমান শর্ত দেখুন|নিজের প্ল্যানের সঙ্গে মেলান|তারপর সিদ্ধান্ত",
+        "en": "Check current terms|Match your plan|Then decide"
+      },
+      "kind": "learn",
+      "source": "reviewer",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p9-bd-8",
+      "topic": "money",
+      "tags": [
+        "savings",
+        "samity"
+      ],
+      "title": {
+        "bn": "সঞ্চয় সমিতিতে যোগ দেওয়ার আগে",
+        "en": "Before joining a savings group (samity)"
+      },
+      "how": {
+        "bn": "সমিতিতে সদস্যরা নিয়ম মেনে একসঙ্গে টাকা জমা দেন। যোগ দেওয়ার আগে জানুন: টাকা কে রাখে, হিসাব কে লেখে, সমিতি নিবন্ধিত কি না। নিজেও একটি লিখিত হিসাব রাখুন।",
+        "en": "In a savings group, members put in money together on a schedule. Before you join, find out who keeps the money, who writes the records, and whether the group is registered. Keep your own written record too."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "কে টাকা রাখে|কে হিসাব লেখে|নিবন্ধিত কি না",
+        "en": "Who holds the money|Who writes records|Is it registered"
+      },
+      "kind": "explain",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p9-bd-9",
+      "topic": "money",
+      "tags": [
+        "debt",
+        "loan"
+      ],
+      "title": {
+        "bn": "লোন নেওয়ার আগে",
+        "en": "Before taking a loan"
+      },
+      "how": {
+        "bn": "লিখিতভাবে জেনে নিন: মোট কত ফেরত দিতে হবে, মাসে কত, শেষ তারিখ কী, কোনো ফি আছে কি না। অন্তত আরেকটি অফারের সঙ্গে মিলিয়ে দেখুন। যে অঙ্ক নিজের আসা-যাওয়ার টাকা থেকে শোধ করতে পারবেন, সেটুকুই নিন।",
+        "en": "Get these in writing: the total you will pay back, the monthly amount, the end date and any fees. Compare with at least one other offer. Borrow only an amount you can repay from the money you already expect to come in."
+      },
+      "diagram": {
+        "type": "matrix",
+        "bn": "মোট শোধ|মাসিক কিস্তি|শেষ তারিখ|ফি",
+        "en": "Total to repay|Monthly amount|End date|Fees"
+      },
+      "appLink": "#/diary/money",
+      "kind": "watchout",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p9-bd-10",
+      "topic": "money",
+      "tags": [
+        "income",
+        "business"
+      ],
+      "title": {
+        "bn": "ঘরের টাকা আর দোকানের টাকা আলাদা রাখুন",
+        "en": "Keep home money and shop money apart"
+      },
+      "how": {
+        "bn": "ছোট দোকান থাকলে দোকানের জন্য একটি খাতা বা অ্যাকাউন্ট, ঘরের জন্য আরেকটি রাখুন। নিজের জন্য নির্দিষ্ট দিনে নির্দিষ্ট অঙ্ক তুলুন। এতে দোকান আসলে কেমন চলছে তা বোঝা যায়।",
+        "en": "If you run a small shop, use one notebook or account for the shop and another for the home. Take a fixed amount for yourself on a fixed day. This shows how the shop is really doing."
+      },
+      "diagram": {
+        "type": "cycle",
+        "bn": "দোকানের খাতা|নিজের অঙ্ক|ঘরের খাতা",
+        "en": "Shop book|Your fixed amount|Home book"
+      },
+      "kind": "explain",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p9-bd-11",
+      "topic": "money",
+      "tags": [
+        "business",
+        "bookkeeping"
+      ],
+      "title": {
+        "bn": "ছোট দোকানের দৈনিক ক্যাশ খাতা",
+        "en": "A daily cash book for a small shop"
+      },
+      "how": {
+        "bn": "দোকান বন্ধের সময় তিনটি জিনিস লিখুন: আজ কত এল, আজ কত গেল, ড্রয়ারে কত আছে। বাকির হিসাব আলাদা লিস্টে রাখুন, নাম-তারিখ-অঙ্ক সহ। সপ্তাহে একবার ড্রয়ার গুনে মিলিয়ে নিন।",
+        "en": "At closing time write three things: money in today, money out today, and cash in the drawer. Keep credit sales (baki) in a separate list with name, date and amount. Count the drawer once a week and compare."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "আজ এল|আজ গেল|ড্রয়ারে আছে",
+        "en": "In today|Out today|In the drawer"
+      },
+      "appLink": "#/diary/money",
+      "kind": "steps",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p9-bd-12",
+      "topic": "execution",
+      "tags": [
+        "business",
+        "licence"
+      ],
+      "title": {
+        "bn": "ট্রেড লাইসেন্স: কোথা থেকে শুরু",
+        "en": "Trade licence: where to start"
+      },
+      "how": {
+        "bn": "বেশির ভাগ ছোট ব্যবসায় স্থানীয় সিটি করপোরেশন, পৌরসভা বা ইউনিয়ন পরিষদ থেকে ট্রেড লাইসেন্স লাগে। আপনার কাজের জন্য আজ কোন কাগজ ও ফি লাগে তা তাদের কাছে জিজ্ঞেস করুন। নিয়ম জায়গা ও ব্যবসাভেদে আলাদা।",
+        "en": "Most small businesses need a trade licence from the local city corporation, municipality or union council. Ask them which papers and fees apply to your kind of work today. Rules differ by place and by business."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "স্থানীয় অফিস খুঁজুন|কাগজ জানুন|আবেদন করুন",
+        "en": "Find the local office|Ask what papers|Apply"
+      },
+      "kind": "learn",
+      "source": "reviewer",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p9-bd-13",
+      "topic": "skills",
+      "tags": [
+        "freelance",
+        "career"
+      ],
+      "title": {
+        "bn": "ফ্রিল্যান্সিং: আগে লিখে ঠিক করুন",
+        "en": "Freelancing basics: agree it first"
+      },
+      "how": {
+        "bn": "কাজ শুরুর আগে মেসেজে লিখে নিন: কী দেবেন, কবে দেবেন, কতবার বদল ধরা আছে, আর কীভাবে ও কবে টাকা পাবেন। এই চ্যাটই আপনার রেকর্ড। অগ্রিম কিছু ঠিক হলে সেটাও লিখুন।",
+        "en": "Before you start, write in a message: what you will deliver, by when, how many changes are included, and how and when you get paid. The chat is your record. If part is paid in advance, write that too."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "কী দেবেন|কবে|কত বদল|কীভাবে পেমেন্ট",
+        "en": "What|By when|How many changes|How paid"
+      },
+      "kind": "steps",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p9-bd-14",
+      "topic": "skills",
+      "tags": [
+        "career",
+        "job-search"
+      ],
+      "title": {
+        "bn": "চাকরি খোঁজার একটি ছোট সপ্তাহ",
+        "en": "A small job-search week"
+      },
+      "how": {
+        "bn": "পরিচিত 5টি প্রতিষ্ঠান বা মানুষ বেছে নিন। প্রত্যেককে ছোট মেসেজ পাঠান: আপনি কে, একটি স্কিল, একটি প্রশ্ন। কবে পাঠালেন লিখে রাখুন; এক সপ্তাহ পরে একবার ফলো-আপ করুন।",
+        "en": "Example: pick 5 employers or people you know. Send each a short message: who you are, one skill, one question. Note the date you sent it, and follow up once after a week."
+      },
+      "diagram": {
+        "type": "cycle",
+        "bn": "বেছে নিন|মেসেজ|তারিখ লিখুন|ফলো-আপ",
+        "en": "Pick|Message|Note the date|Follow up"
+      },
+      "appLink": "#/journey/goals",
+      "kind": "example",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p9-bd-15",
+      "topic": "environment",
+      "tags": [
+        "digital-safety",
+        "shopping"
+      ],
+      "title": {
+        "bn": "অনলাইনে নতুন বিক্রেতাকে দেওয়ার আগে",
+        "en": "Check before paying a new online seller"
+      },
+      "how": {
+        "bn": "এমন ফোন নম্বর আছে কি যাতে ফোন করা যায়? পেমেন্টের পর রসিদ চান। প্রথম অর্ডারে সম্ভব হলে ডেলিভারির সময় পেমেন্টের অপশন নিন। পণ্যের ছবি ও কথাবার্তা সেভ করে রাখুন।",
+        "en": "Is there a phone number you can call? Ask for a receipt after paying. For a first order, choose pay-on-delivery when it is offered. Save the product photos and the chat."
+      },
+      "diagram": {
+        "type": "matrix",
+        "bn": "ফোন নম্বর|রসিদ|ডেলিভারিতে পেমেন্ট|চ্যাট সেভ",
+        "en": "Phone number|Receipt|Pay on delivery|Save chat"
+      },
+      "kind": "watchout",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p9-bd-16",
+      "topic": "decisions",
+      "tags": [
+        "decision",
+        "money"
+      ],
+      "title": {
+        "bn": "'নিশ্চিত দ্বিগুণ' শুনলে ধীর হোন",
+        "en": "Slow down when you hear 'surely double'"
+      },
+      "how": {
+        "bn": "যে অফারে বলা হয় টাকা দ্রুত নিশ্চিত দ্বিগুণ হবে, সেখানে তাড়াহুড়ো নয়, থামার কারণ আছে। একদিন অপেক্ষা করুন, বিশ্বস্ত দুইজনকে জিজ্ঞেস করুন, আর কে এটি তদারক করে তা জানুন।",
+        "en": "An offer that says your money will quickly and surely double is a reason to slow down, not to hurry. Wait one day, ask two people you trust, and find out who regulates the offer."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "এক দিন অপেক্ষা|দুইজনকে জিজ্ঞেস|কে তদারক করে",
+        "en": "Wait one day|Ask two people|Who regulates"
+      },
+      "kind": "watchout",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p9-bd-17",
+      "topic": "money",
+      "tags": [
+        "regulation",
+        "safety"
+      ],
+      "title": {
+        "bn": "'তদারকি আছে' মানে কী",
+        "en": "What does 'regulated' mean"
+      },
+      "how": {
+        "bn": "তদারকির আওতার ব্যাংক বা মোবাইল মানি সেবা সরকারি কর্তৃপক্ষের নিয়ম মানে এবং অভিযোগ নেয়। প্রোভাইডারকে জিজ্ঞেস করুন কোন কর্তৃপক্ষ তদারক করে ও অভিযোগ কীভাবে করবেন। লিখিত শর্ত ও রসিদ সমস্যায় কাজে লাগে।",
+        "en": "A regulated bank or mobile money service answers to a government authority that sets rules and takes complaints. Ask the provider which authority regulates it and how to complain. Written terms and receipts help if there is a problem."
+      },
+      "diagram": {
+        "type": "steps",
+        "bn": "কে তদারক করে|অভিযোগের পথ|লিখিত শর্ত",
+        "en": "Who regulates|How to complain|Written terms"
+      },
+      "kind": "learn",
+      "source": "general",
+      "reviewer": "pending"
+    },
+    {
+      "id": "p9-bd-18",
+      "topic": "money",
+      "tags": [
+        "budget",
+        "taka"
+      ],
+      "title": {
+        "bn": "দরকার, চাই আর জমানো: ছোট উদাহরণ",
+        "en": "Needs, wants and saving: a small example"
+      },
+      "how": {
+        "bn": "উদাহরণ: ভাড়া আর খাবার দরকার। ফোনের নতুন কভার চাই। প্রতি মাসে ছোট হলেও কিছু আলাদা রাখা জমানো। প্রতিটি খরচ কোন দলে পড়ে তা লিখে ফেলুন।",
+        "en": "Example: rent and food are needs. A new phone cover is a want. Putting something aside each month, even if small, is saving. Write which group each cost belongs to."
+      },
+      "diagram": {
+        "type": "matrix",
+        "bn": "দরকার|চাই|জমানো|জানি না",
+        "en": "Need|Want|Saving|Not sure"
+      },
+      "appLink": "#/diary/money",
+      "kind": "example",
+      "reviewer": "pending"
+    }
+  ]
+}

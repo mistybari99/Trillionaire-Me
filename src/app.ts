@@ -10,7 +10,7 @@ import * as LF from "./ui/lifeUi";
 import * as UV from "./ui/universeUi";
 import * as IM from "./ui/importUi";
 import { viaLazy } from "./ui/lazy";
-import { CONN, DECIDE, LEGS, PLAN } from "./ui/lazyScreens";
+import { CONN, DECIDE, HALAL, LEGS, PLAN } from "./ui/lazyScreens";
 import { onboardScreen } from "./ui/onboardUi";
 import { demoPanels, firstRunScreen, trackDemoDay } from "./ui/modeUi";
 import { LAYERS, TOPICS } from "./library/topics";
@@ -66,6 +66,7 @@ export const ROUTES: Array<[RegExp, (m: RegExpMatchArray) => HTMLElement, string
   [/^\/more\/data$/, () => S.dataScreen(), "more"],
   [/^\/more\/connections$/, () => viaLazy(CONN, (m) => m.connectionsScreen(prefs.lang)), "more"],
   [/^\/more\/library$/, () => LS.systemsLibraryScreen(), "more"],
+  [/^\/more\/halal-flags$/, () => viaLazy(HALAL, (m) => m.halalFlagsScreen()), "more"],
   [/^\/more\/rules$/, () => LS.rulesScreen(), "more"],
 ];
 
