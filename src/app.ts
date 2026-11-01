@@ -10,6 +10,7 @@ import * as LS from "./ui/libraryScreens";
 import * as LF from "./ui/lifeUi";
 import * as CN from "./ui/connectionsUi";
 import * as UV from "./ui/universeUi";
+import * as DU from "./ui/decisionUi";
 import { demoPanels, firstRunScreen, trackDemoDay } from "./ui/modeUi";
 import { LAYERS, TOPICS } from "./library/topics";
 import { dismissReminder, inAppReminders } from "./ui/prayerAlerts";
@@ -33,6 +34,8 @@ export const ROUTES: Array<[RegExp, (m: RegExpMatchArray) => HTMLElement, string
   [/^\/capture$/, () => S.captureScreen(), "today"],
   [/^\/journey\/report$/, () => S.reportScreen(), "journey"],
   [/^\/journey\/week$/, () => S.weeklyScreen(), "journey"],
+  [/^\/journey\/decide$/, () => DU.decisionScreen(), "journey"],
+  [/^\/journey\/mine$/, () => DU.triageScreen(), "journey"],
   [/^\/journey\/review$/, () => S.reviewScreen(), "journey"],
   [/^\/journey\/risks$/, () => P.riskScreen(), "journey"],
   [/^\/journey\/history$/, () => P.planHistoryScreen(), "journey"],

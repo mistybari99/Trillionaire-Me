@@ -52,6 +52,10 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 - [x] Step 4e (TM-REQ-009): goal status active/paused/retired (`src/core/goalStatus.ts`, goal page buttons), calm date reminders on Today for active goals only; TM-TST-009 mapped.
 - [x] Step 5 (TM-REQ-153): CSV export on More > Data (`src/core/csv.ts`): demo and real in separate files, real needs the consent tick, no secrets; TM-TST-153 mapped Partial (no CSV import, PDF or dictionary).
 
+### Block 8 — Builder run 1 Nov 2026
+- [x] Step 1: Register v2_1 evidence copy regenerated (47 rows linked) + Change Log line; v2_0 untouched.
+- [x] Step 2: Decision helper `#/journey/decide` and ownership check `#/journey/mine` (`src/core/decisions.ts`, `src/ui/decisionUi.ts`, `tests/decisions.test.ts`): rule-based, reason shown, own open tasks only, nothing saved.
+
 ## Part B — Owner-only tasks
 - [ ] Phone offline test: open online once, visit all pages, airplane mode, reopen (O1).
 - [ ] Lock-screen privacy check on a real device (O8).
