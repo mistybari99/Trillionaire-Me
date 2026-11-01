@@ -44,6 +44,7 @@ import { celebrate, journeyGoalsCard, overallProgressCard } from "./lifeUi";
 import { adviceCardsView, homeCountCards, homeSummaryCards, nextActionCard } from "./homeUi";
 import { progressRing, isMilestone } from "./ring";
 import { logo3d } from "./logo";
+import { goalFunnelHero, horizonArc } from "./horizonArt";
 import { viewBar, withView } from "./viewBar";
 import { backupReminderCard, snapshotsCard } from "./snapshotsUi";
 import { scrubRealParts } from "../core/snapshots";
@@ -376,15 +377,19 @@ export function moneyScreen(): HTMLElement {
 
 
 // ---- horizon view (R2) ----
-export function horizonScreen(): HTMLElement {
-  const lang = L();
-  const nsById = new Map(allRecs().map((r) => [r.id, r.ns] as const));
-  const goals: HorizonGoal[] = allRecs().filter((r) => r.entity === "goal" && r.values["goal.title"]?.state === "value").map((r) => ({
+function ownHorizonGoals(): HorizonGoal[] {
+  return allRecs().filter((r) => r.entity === "goal" && r.values["goal.title"]?.state === "value").map((r) => ({
     id: r.id,
     title: String((r.values["goal.title"] as { value?: unknown }).value ?? ""),
     why: r.values["goal.why"]?.state === "value" ? String((r.values["goal.why"] as { value?: unknown }).value) : undefined,
     horizon: r.values["goal.horizon"]?.state === "value" ? String((r.values["goal.horizon"] as { value?: unknown }).value) : undefined,
   }));
+}
+
+export function horizonScreen(): HTMLElement {
+  const lang = L();
+  const nsById = new Map(allRecs().map((r) => [r.id, r.ns] as const));
+  const goals = ownHorizonGoals();
   const g = groupByHorizon(goals);
   const card = (x: HorizonGoal) => h("article", { class: "card", "data-goal": x.id }, nsTag(nsById.get(x.id) ?? "demo", lang), h("strong", {}, x.title),
     x.why ? h("p", { class: "muted" }, `${t("horizon.why", lang)}: ${x.why}`) : null);
@@ -406,6 +411,7 @@ export function horizonScreen(): HTMLElement {
       g.unset.length ? section("unset", g.unset) : null);
   return h("main", {},
     h("h1", {}, t("horizon.title", lang)),
+    horizonArc(goals, lang),
     toggle,
     body);
 }
@@ -948,6 +954,7 @@ export function journey(): HTMLElement {
     h("div", { class: "logo-row" }, logo3d(48, lang), h("h1", {}, t("journey.title", lang))),
     passedBanner(lang),
     stagePanel(lang),
+    goalFunnelHero(ownHorizonGoals(), (() => { const tk = allRecs().filter((r) => r.entity === "task"); return tk.length ? tk.filter(isOpenTask).length : null; })(), lang),
     h("div", { class: "actions" },
       link("#/journey/universe", "btn ghost", t("univ.link", lang)),
       link("#/journey/art", "btn ghost", t("reward.see", lang)),
