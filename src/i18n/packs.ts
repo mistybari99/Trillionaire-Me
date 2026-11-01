@@ -800,6 +800,13 @@ const en = {
   "snap.reminder.text": "You have not saved a backup file in the last 7 days. You can save one in More > Demo & real data.",
   "snap.reminder.open": "Open Data",
   "snap.reminder.later": "Remind me tomorrow",
+  "save.fail.title": "Could not save on this device",
+  "save.fail.text": "Could not save on this device. Export a backup now. Your latest changes are still on screen.",
+  "save.fail.retry": "Try saving again",
+  "save.fail.backup": "Export a backup now",
+  "save.fail.retryDone": "Saved. All changes are on this device now.",
+  "save.fail.retryStill": "Still could not save. Please export a backup.",
+  "save.fail.backupDone": "Backup file saved. Keep it somewhere private.",
 } as const;
 
 export type Key = keyof typeof en;
@@ -1941,6 +1948,13 @@ const bn: Record<Key, string> = {
   "snap.reminder.text": "গত 7 দিনে ব্যাকআপ ফাইল সেভ করা হয়নি। আরও > Demo ও আসল ডেটা থেকে করতে পারেন।",
   "snap.reminder.open": "ডেটা পাতা খুলুন",
   "snap.reminder.later": "কাল মনে করান",
+  "save.fail.title": "এই ডিভাইসে সেভ করা যায়নি",
+  "save.fail.text": "এই ডিভাইসে সেভ করা যায়নি। এখনই একটি ব্যাকআপ এক্সপোর্ট করুন। আপনার সর্বশেষ পরিবর্তন স্ক্রিনে আছে, তাই এখনো সব ঠিক আছে।",
+  "save.fail.retry": "আবার সেভ করে দেখুন",
+  "save.fail.backup": "এখনই ব্যাকআপ এক্সপোর্ট করুন",
+  "save.fail.retryDone": "সেভ হয়েছে। সব পরিবর্তন এখন এই ডিভাইসে আছে।",
+  "save.fail.retryStill": "এখনো সেভ করা যায়নি। অনুগ্রহ করে ব্যাকআপ এক্সপোর্ট করুন।",
+  "save.fail.backupDone": "ব্যাকআপ ফাইল সেভ হয়েছে। ফাইলটি নিরাপদ জায়গায় রাখুন।",
 };
 
 // Mix mode: Bangla sentences with common English words kept (owner request, decision L-11).

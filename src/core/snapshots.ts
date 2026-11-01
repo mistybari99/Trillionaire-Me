@@ -103,3 +103,10 @@ export function reminderDue(on: boolean, hasData: boolean, lastFileIso: string |
   const t = lastFileIso ? Date.parse(lastFileIso) : NaN;
   return !Number.isFinite(t) || now.getTime() - t >= days * 86400_000;
 }
+
+/** One-tap backup: a snapshot-file built straight from the records (no snapshot store needed). Real part only with the tick, and only when it has records. */
+export async function buildSnapshotFile(records: RecordRepo, realOk: boolean, now = new Date()): Promise<SnapshotFile> {
+  const demo = await createBackup(records, "demo", now);
+  const realFull = realOk ? await createBackup(records, "real", now) : null;
+  return { app: "trillionaire-me", kind: "snapshot-file", v: 1, createdAt: now.toISOString(), demo, real: realFull && realFull.count ? realFull : null };
+}

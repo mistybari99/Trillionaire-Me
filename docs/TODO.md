@@ -62,6 +62,16 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 - [ ] Step 7 (TM-REQ-040 override screen): not built on purpose. A real hard block (prayer) needs a block length the documents do not give, and a hand-placed step needs a stored placement (new task field + migration). Reasons and next step in DECISIONS_LOG. Core `src/core/override.ts` unchanged.
 - [x] Audit and DECISIONS_LOG updated; e2e 0 FAIL; Register v2_1 regenerated again at the end.
 
+### Block 9 — Data safety (real data), 1 Nov 2026
+- [x] Step 1: visible save-failed banner with retry and one-tap backup file (`SaveMonitor` in `src/core/persist.ts`, `src/ui/saveBanner.ts`, `tests/save_failed.test.ts`).
+- [ ] Step 2: `navigator.storage.persist()` + status and usage on More > Data.
+- [ ] Step 3: weekly backup reminder ON by default once real data exists.
+- [ ] Step 4: optional PIN app lock (off by default).
+- [ ] Step 5: at-rest encryption design note only (`docs/design/at-rest-encryption.md`).
+- [ ] Step 6: own options and saved search follow the active namespace (+ migration).
+- [ ] Step 7: record-schema migration fixture test + version bump check.
+- [ ] End: e2e, DECISIONS_LOG entries with undo steps.
+
 ## Part B — Owner-only tasks
 - [ ] Phone offline test: open online once, visit all pages, airplane mode, reopen (O1).
 - [ ] Lock-screen privacy check on a real device (O8).

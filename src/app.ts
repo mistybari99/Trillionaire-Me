@@ -16,6 +16,7 @@ import * as IM from "./ui/importUi";
 import { demoPanels, firstRunScreen, trackDemoDay } from "./ui/modeUi";
 import { LAYERS, TOPICS } from "./library/topics";
 import { dismissReminder, inAppReminders } from "./ui/prayerAlerts";
+import { saveFailedBanner } from "./ui/saveBanner";
 import { notifyText } from "./core/notify";
 
 const TABS: Array<[string, Key]> = [["today", "nav.today"], ["journey", "nav.journey"], ["diary", "nav.diary"], ["deen", "nav.deen"], ["more", "nav.more"]];
@@ -107,7 +108,7 @@ export function render() {
   const savedY = window.scrollY;
   const routeChanged = path !== lastRenderedPath;
   lastRenderedPath = path;
-  app.replaceChildren(skip, top, ...demoPanels(), ...reminders, body, nav, drawer);
+  app.replaceChildren(skip, top, ...demoPanels(), ...(saveFailedBanner(lang) ? [saveFailedBanner(lang)!] : []), ...reminders, body, nav, drawer);
   window.scrollTo(0, routeChanged ? 0 : savedY);
 }
 

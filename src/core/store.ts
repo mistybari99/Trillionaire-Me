@@ -13,8 +13,10 @@ export class MemoryKV implements KV {
 }
 
 export class LocalKV implements KV {
+  /** Optional: told when a record write fails or works again, so a failed save is never silent. */
+  constructor(private onResult?: (k: string, v: string, ok: boolean) => void) {}
   get(k: string) { try { return localStorage.getItem(k); } catch { return null; } }
-  set(k: string, v: string) { try { localStorage.setItem(k, v); } catch { /* storage unavailable */ } }
+  set(k: string, v: string) { try { localStorage.setItem(k, v); this.onResult?.(k, v, true); } catch { this.onResult?.(k, v, false); } }
   remove(k: string) { try { localStorage.removeItem(k); } catch { /* ignore */ } }
   keys() { try { return Object.keys(localStorage); } catch { return []; } }
 }

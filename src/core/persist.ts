@@ -21,11 +21,33 @@ export async function hydrate(mem: KV, repo: RecordRepo, legacy: KV): Promise<vo
   }
 }
 
-/** Serialises writes so the repo always ends in the same state as memory. */
-export function mirrorToRepo(repo: RecordRepo): (k: string, v: string | null) => void {
+/** Tracks whether writes to the repo failed. Failed keys stay in a queue (latest value wins) until a retry succeeds. Pure, no UI. */
+export class SaveMonitor {
+  private failed = new Map<string, string | null>();
+  private subs = new Set<() => void>();
+  private retryFn: (() => void) | null = null;
+  get hasFailure(): boolean { return this.failed.size > 0; }
+  get failedCount(): number { return this.failed.size; }
+  subscribe(f: () => void): () => void { this.subs.add(f); return () => { this.subs.delete(f); }; }
+  private emit() { for (const f of [...this.subs]) f(); }
+  fail(k: string, v: string | null) { const had = this.failed.has(k); this.failed.set(k, v); if (!had) this.emit(); }
+  ok(k: string) { if (this.failed.delete(k)) this.emit(); }
+  /** Re-queues every failed write with its latest value. Returns how many were queued. */
+  retry(): number { const n = this.failed.size; this.retryFn?.(); return n; }
+  bind(fn: () => void) { this.retryFn = fn; }
+  entries(): Array<[string, string | null]> { return [...this.failed]; }
+}
+
+/** Serialises writes so the repo always ends in the same state as memory. A failed write is never swallowed: it is recorded in the monitor and can be retried. */
+export function mirrorToRepo(repo: RecordRepo, monitor?: SaveMonitor): (k: string, v: string | null) => void {
   let chain: Promise<unknown> = Promise.resolve();
-  return (k, v) => {
+  const write = (k: string, v: string | null) => {
     const p = parse(k); if (!p) return;
-    chain = chain.then(() => (v === null ? repo.delete(p.ns, p.id) : repo.put(JSON.parse(v)))).catch(() => { /* memory copy stays valid; next write retries */ });
+    chain = chain.then(async () => {
+      try { if (v === null) await repo.delete(p.ns, p.id); else await repo.put(JSON.parse(v)); monitor?.ok(k); }
+      catch { monitor?.fail(k, v); /* memory copy stays valid; the monitor keeps it for a retry */ }
+    });
   };
+  monitor?.bind(() => { for (const [k, v] of monitor.entries()) write(k, v); });
+  return write;
 }

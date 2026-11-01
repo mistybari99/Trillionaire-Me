@@ -2,7 +2,7 @@ import { DEFAULT_LOCALE, LOCALES, isLocale, type Locale } from "../i18n/registry
 import { LocalKV, MemoryKV, REAL_DATA_ENABLED, Store } from "../core/store";
 import { readConsent } from "../core/consent";
 import { isTemplateId, type TemplateId } from "../core/stageTemplates";
-import { MirrorKV, hydrate, mirrorToRepo } from "../core/persist";
+import { MirrorKV, SaveMonitor, hydrate, mirrorToRepo } from "../core/persist";
 import { DexieRepo } from "../adapters/dexie";
 import { DEFAULT_KEEP, isKeep, type SnapshotRepo } from "../core/snapshots";
 import { parseNotifyPrefs, type NotifyPrefs } from "../core/notify";
@@ -14,12 +14,16 @@ import { applyDesign, migrateDesignId } from "./themes";
 import { isProgressMode, type ProgressMemory, type ProgressMode } from "../core/overallProgress";
 import { parseRuleSwitches, type FocusEnd, type RuleSwitches } from "../core/rules";
 
-const legacy = new LocalKV();
+/** Failed writes are tracked here and shown as a banner (never swallowed). */
+export const saveMonitor = new SaveMonitor();
+const isRecordKey = (k: string) => /^tm:(demo|real):/.test(k);
+const legacy = new LocalKV((k, v, ok) => { if (!isRecordKey(k)) return; if (ok) saveMonitor.ok(k); else saveMonitor.fail(k, v); });
 const mem = new MemoryKV();
 // Consent lives in the per-device store (localStorage). Real writes to IndexedDB need the same gate as memory.
 const repo = typeof indexedDB !== "undefined" ? new DexieRepo("tm-db", () => REAL_DATA_ENABLED && readConsent(legacy)) : null;
 // With IndexedDB: memory is mirrored to it. Without (private mode/old browser): fall back to the old localStorage store.
-const kv = repo ? new MirrorKV(mem, mirrorToRepo(repo)) : legacy;
+const kv = repo ? new MirrorKV(mem, mirrorToRepo(repo, saveMonitor)) : legacy;
+if (!repo) saveMonitor.bind(() => { for (const [k, v] of saveMonitor.entries()) if (v !== null) legacy.set(k, v); });
 export const store = new Store(kv, { consentKv: legacy });
 /** Local snapshot storage (same IndexedDB). null when IndexedDB is not available (private mode, old browser). */
 export const snapshotRepo: SnapshotRepo | null = repo ? repo.snapshots() : null;

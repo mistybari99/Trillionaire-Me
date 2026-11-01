@@ -1,6 +1,6 @@
 import "./ui/styles.css";
 import { render, renderApp } from "./app";
-import { initStorage } from "./ui/state";
+import { initStorage, saveMonitor } from "./ui/state";
 import { updateNetBadge } from "./ui/net";
 import { startPrayerAlerts } from "./ui/prayerAlerts";
 import { ensureContentPacks } from "./library/packs";
@@ -12,6 +12,7 @@ const onRoute = () => {
   if (location.hash.startsWith("#/topic")) ensureContentPacks(() => { if (location.hash.startsWith("#/topic")) render(); });
 };
 window.addEventListener("hashchange", onRoute);
+saveMonitor.subscribe(() => onRoute());
 window.addEventListener("online", () => updateNetBadge());
 window.addEventListener("offline", () => updateNetBadge());
 initStorage().finally(() => { onRoute(); startPrayerAlerts(); void runAutoSnapshot(); });
