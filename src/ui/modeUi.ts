@@ -10,6 +10,7 @@ import { recordDay, shouldAskDeleteDemo, type DataMode } from "../core/dataMode"
 import { todayIso } from "../core/habits";
 import { consentKv, prefs, store } from "./state";
 import { realConsent } from "./entry";
+import { resetOnboard } from "./onboardUi";
 import { langMenu } from "./langMenu";
 
 const rerender = () => window.dispatchEvent(new HashChangeEvent("hashchange"));
@@ -73,15 +74,15 @@ export function firstRunScreen(): HTMLElement {
         h("button", { class: "btn", type: "button", "data-act": "first-real-yes", onclick: () => {
           if (!ticked()) { needTick = true; rerender(); return; }
           if (!realConsent()) { grantConsent(consentKv, new Date().toISOString()); askPersistence(); }
-          prefs.dataMode = "real"; firstRealStep = false; needTick = false; location.hash = "#/today"; rerender();
+          prefs.dataMode = "real"; firstRealStep = false; needTick = false; resetOnboard(); prefs.onboard = "pending"; location.hash = "#/start"; rerender();
         } }, t("mode.real.confirm.btn", lang)),
         h("button", { class: "btn ghost", type: "button", "data-act": "first-real-back", onclick: () => { firstRealStep = false; needTick = false; rerender(); } }, t("mode.real.back", lang)))
     : h("div", {},
         h("div", { class: "card", "data-first": "demo" }, h("h2", { class: "card-h" }, t("mode.first.demo", lang)), h("p", { class: "muted" }, t("mode.first.demo.note", lang)),
-          h("button", { class: "btn ghost", type: "button", "data-act": "first-demo", onclick: () => { prefs.dataMode = "demo"; location.hash = "#/today"; rerender(); } }, t("mode.first.demo", lang))),
+          h("button", { class: "btn ghost", type: "button", "data-act": "first-demo", onclick: () => { prefs.dataMode = "demo"; resetOnboard(); prefs.onboard = "pending"; location.hash = "#/start"; rerender(); } }, t("mode.first.demo", lang))),
         h("div", { class: "card", "data-first": "real" }, h("h2", { class: "card-h" }, t("mode.first.real", lang)), h("p", { class: "muted" }, t("mode.first.real.note", lang)),
           h("button", { class: "btn", type: "button", "data-act": "first-real", onclick: () => { firstRealStep = true; needTick = false; rerender(); } }, t("mode.first.real", lang))));
-  return h("main", { class: "scr scr-first", id: "content" }, h("div", { class: "top" }, h("span", {}, t("app.title", lang)), h("span", { class: "right" }, langMenu(lang))), langButtons(), logo3d(112, lang, { animate: true }), h("h1", {}, t("mode.first.title", lang)), h("p", { class: "sub" }, t("mode.first.intro", lang)), body);
+  return h("main", { class: "scr scr-first", id: "content" }, h("div", { class: "top" }, h("span", {}, t("app.title", lang)), h("span", { class: "right" }, langMenu(lang))), langButtons(), logo3d(112, lang, { animate: true }), h("h1", {}, t("mode.first.title", lang)), h("p", { class: "muted", "data-onb-step": "1" }, t("onb.step", lang, { n: 1 })), h("p", { class: "sub" }, t("mode.first.intro", lang)), body);
 }
 
 function confirmCard(lang: Locale): HTMLElement {

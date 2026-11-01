@@ -13,6 +13,7 @@ import * as UV from "./ui/universeUi";
 import * as DU from "./ui/decisionUi";
 import * as LG from "./ui/legsUi";
 import * as IM from "./ui/importUi";
+import { onboardScreen } from "./ui/onboardUi";
 import { demoPanels, firstRunScreen, trackDemoDay } from "./ui/modeUi";
 import { LAYERS, TOPICS } from "./library/topics";
 import { dismissReminder, inAppReminders } from "./ui/prayerAlerts";
@@ -23,6 +24,7 @@ import { notifyText } from "./core/notify";
 const TABS: Array<[string, Key]> = [["today", "nav.today"], ["journey", "nav.journey"], ["diary", "nav.diary"], ["deen", "nav.deen"], ["more", "nav.more"]];
 
 export const ROUTES: Array<[RegExp, (m: RegExpMatchArray) => HTMLElement, string]> = [
+  [/^\/start$/, () => onboardScreen(), "today"],
   [/^\/today$/, () => S.today(), "today"],
   [/^\/journey$/, () => S.journey(), "journey"],
   [/^\/journey\/log$/, () => S.journeyLog(), "journey"],

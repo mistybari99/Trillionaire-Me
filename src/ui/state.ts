@@ -47,6 +47,7 @@ export async function initStorage(): Promise<void> {
 const get = (k: string) => { try { return localStorage.getItem(k); } catch { return null; } };
 const set = (k: string, v: string) => { try { localStorage.setItem(k, v); } catch { /* ignore */ } };
 
+import { parseOnboard, parseTimes, type OnboardState, type OnboardTimes } from "../core/onboarding";
 export type PlanMode = "normal" | "minimum_week" | "pause";
 export type HorizonView = "stack" | "compact";
 /** Template chooser for the dashboard screens. "full" is the default; unknown values fall back to it. */
@@ -121,6 +122,12 @@ export const prefs = {
   /** The mode screens and calculations use. Before the first choice it is demo, which is empty until used. */
   get dataMode(): DataMode { return this.dataModeChoice ?? "demo"; },
   set dataMode(v: DataMode) { set("tm:ui:dataMode", isDataMode(v) ? v : "demo"); },
+  /** First-run onboarding (audit M1). "" = not offered (older devices), pending, done or skipped. */
+  get onboard(): OnboardState { return parseOnboard(get("tm:ui:onboard")); },
+  set onboard(v: OnboardState) { set("tm:ui:onboard", parseOnboard(v)); },
+  /** Local-only start / first-step times of the onboarding. Never sent anywhere, never shown as a grade. */
+  get onboardTimes(): OnboardTimes { try { return parseTimes(JSON.parse(get("tm:ui:onboardT") ?? "null")); } catch { return {}; } },
+  set onboardTimes(v: OnboardTimes) { set("tm:ui:onboardT", JSON.stringify(parseTimes(v))); },
   /** Separate days the app was opened in demo mode (YYYY-MM-DD). */
   get demoDays(): string[] { try { const v = JSON.parse(get("tm:ui:demoDays") ?? "[]"); return Array.isArray(v) ? v.filter((x): x is string => typeof x === "string") : []; } catch { return []; } },
   set demoDays(v: string[]) { set("tm:ui:demoDays", JSON.stringify(v)); },
