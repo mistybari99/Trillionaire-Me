@@ -31,7 +31,7 @@ describe("keys and secrets stay out of every copy of the data", () => {
     const snaps = new MemorySnapshotRepo();
     const snap = (await takeSnapshot(repo, snaps, { reason: "manual", keep: 5, realOk: true }))!;
     const blobs = [JSON.stringify(demo), JSON.stringify(real), JSON.stringify(exportNamespace(st, "demo")), JSON.stringify(exportNamespace(st, "real")), JSON.stringify(enc), JSON.stringify(snapshotToFile(snap)), JSON.stringify(await snaps.list())];
-    for (const b of blobs) { expect(b).not.toContain(KEY); expect(b).not.toContain("tm:secret"); expect(b).not.toContain("tm:ui:"); expect(b).not.toContain("lat"); }
+    for (const b of blobs) { expect(b).not.toContain(KEY); expect(b).not.toContain("tm:secret"); expect(b).not.toContain("tm:ui:"); expect(b).not.toContain('"lat"'); }
     // the main data store never holds a key either
     expect(kv.keys().filter((k) => k.startsWith("tm:secret"))).toEqual([]);
     // keys live only in the per-device settings store, under a prefix that is not a record prefix

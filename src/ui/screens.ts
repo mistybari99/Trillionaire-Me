@@ -1,5 +1,6 @@
 import { todaysInspiration, THEME_LABEL } from "../library/inspiration";
 import { askPersistence, storageCard } from "./storageCard";
+import { lockCard } from "./lockUi";
 import { groupByHorizon, HORIZONS, type HorizonGoal } from "../core/horizon";
 import { h } from "./dom";
 import { t, tb, fmtNumber } from "../i18n/t";
@@ -1460,6 +1461,7 @@ export function dataScreen(): HTMLElement {
     h("p", { class: "muted" }, t("data.nopromote", lang)),
     clearDemoBlock(lang),
     storageCard(lang),
+    lockCard(lang),
     csvCard(realOn, lang),
     importCard(lang),
     h("h2", {}, t("backup.title", lang)),

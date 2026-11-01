@@ -16,6 +16,7 @@ import * as IM from "./ui/importUi";
 import { demoPanels, firstRunScreen, trackDemoDay } from "./ui/modeUi";
 import { LAYERS, TOPICS } from "./library/topics";
 import { dismissReminder, inAppReminders } from "./ui/prayerAlerts";
+import { isLocked, lockScreen } from "./ui/lockUi";
 import { saveFailedBanner } from "./ui/saveBanner";
 import { notifyText } from "./core/notify";
 
@@ -72,12 +73,14 @@ function toggleDrawer(open: boolean) { const d = document.getElementById("drawer
 
 /** Entry point for the browser: the first-run choice comes before anything else, once per device. */
 export function renderApp() {
+  if (isLocked()) { applyPrefs(); document.getElementById("app")!.replaceChildren(lockScreen()); return; }
   if (prefs.dataModeChoice !== null) { render(); return; }
   applyPrefs();
   document.getElementById("app")!.replaceChildren(firstRunScreen());
 }
 
 export function render() {
+  if (isLocked()) { renderApp(); return; }
   applyPrefs();
   trackDemoDay();
   const lang = prefs.lang;
