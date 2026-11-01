@@ -67,7 +67,7 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 - [x] Step 2: `navigator.storage.persist()` after the tick (`src/core/storageStatus.ts`, `src/ui/storageCard.ts`, `tests/storage_status.test.ts`); status and usage on More > Data, Unknown when unsupported.
 - [x] Step 3: weekly backup reminder is ON by default once real data exists (`reminderEnabled` in `src/core/snapshots.ts`); own on/off always wins; snooze and "turn off" on the card; prayer alerts stay off by default.
 - [x] Step 4: optional PIN app lock, off by default (`src/core/appLock.ts`, `src/ui/lockUi.ts`, `tests/app_lock.test.ts`): PBKDF2 salted hash under `tm:secret:` (never in backups), lock on hide/after N min, forgot-PIN removes only the PIN after a 15 min wait + tick, data never wiped.
-- [ ] Step 5: at-rest encryption design note only (`docs/design/at-rest-encryption.md`).
+- [x] Step 5: at-rest encryption design note only (`docs/design/at-rest-encryption.md`); nothing built; waits for the owner (recommended default: not yet).
 - [ ] Step 6: own options and saved search follow the active namespace (+ migration).
 - [ ] Step 7: record-schema migration fixture test + version bump check.
 - [ ] End: e2e, DECISIONS_LOG entries with undo steps.
