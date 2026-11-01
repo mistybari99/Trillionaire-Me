@@ -148,3 +148,4 @@ Test edits for the mapping were titles and moving tests into their own describe 
 - `node tools/evidence.mjs`: vitest 1020/1020 passed, 0 failing; 47 TM-TST rows linked (Pass 15, Partial 32). New since the 31 Oct run: TM-TST-005, 007, 009, 015, 040, 153 mappings.
 - `python3 tools/update_register.py` rebuilt `..._v2_1_evidence_refresh.xlsx` from the untouched v2_0 (sha256 unchanged); Change Log line "Evidence" written by the tool.
 - The raw `evidence/*.json` run output was not committed (churn).
+- Final run of Block 8: vitest 1087/1087, 47 rows linked, browser e2e 0 FAIL. TM-TST-153 now cites `tests/csv_import.test.ts` (still Partial: no PDF). v2_1 copy rebuilt again; v2_0 sha256 unchanged (a65616a8...).

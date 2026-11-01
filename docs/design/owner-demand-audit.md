@@ -73,8 +73,8 @@ Counts are in the summary at the bottom.
 |---|---|---|---|---|
 | Time-cascade ladder: 5y → 1y → month → week → day → now, each level derived from the one above, with the "one thing" prompt | batch 1 #1 | PARTIAL | Stage ladder (`stageLadder`); horizon groups (`groupByHorizon`) | No cascade, no "one thing" prompt per level. |
 | Discipline flow: systems → routines → habits → identity | batch 1 #2 | PARTIAL | Habits topic tips with step diagram (`src/library/topics.ts`, `src/ui/diagram.ts`) | Text tips only. No identity flow visual. |
-| Goal funnel hero (dream → 5y → 1y → month → week → day → now) | batch 1 #3 | MISSING | None (no "funnel" in `src/`) | Not built. |
-| Grid trackers: daily 31×5, weekly, monthly 12×5, long-range list | batch 1 #4 | PARTIAL | Habits: 7 day dots per habit, a 14-day grid with text summary (`habitChart` in `src/ui/charts.ts`, `tests/charts.test.ts`) and a 28-day "x of y planned days" figure | No 31-day, monthly 12×5 or long-range grid. |
+| Goal funnel hero (dream → 5y → 1y → month → week → day → now) | batch 1 #3 | PARTIAL | Funnel hero on Journey (`goalFunnelHero`, `funnelBands`); `tests/horizon_art.test.ts` | Dream > 5 years > 1 year > month > week > today > now with own counts; dashed "Not set" when unknown. Not a time cascade with the "one thing" prompt. |
+| Grid trackers: daily 31×5, weekly, monthly 12×5, long-range list | batch 1 #4 | PARTIAL | 14-day grid, 28-day figure, and the long view for 31 days / 12 weeks / 12 months on Habits (`habitRange`, `habitGridTracker`); `tests/habit_grid.test.ts` | Habits only. No weekly or monthly grid for other trackers, no long-range list outside the text equivalent. |
 | Challenge tracker: targets, 30-day grid, monthly review, rules, final mission, trophy | batch 1 #5 | MISSING | "My why" field only | Not built. Keep no grades. |
 | Action-plan table: objective, tasks, success criteria, time frame, resources | batch 1 #6 | PARTIAL | Goal fields (`src/catalog/fields.ts`); success criteria and time frame in the SMART guide on the goal page; task form in `planScreen` | No table view. No resources column. |
 |  Life-area map and Life Areas Wheel (8 areas, rate 1–10, radial view; Deen always present) | batch 1 #7; batch 3 #25 | DONE | Route `#/journey/wheel`, `src/core/lifeWheel.ts`; `tests/life_goal_step5.test.ts` | Rating is the user's own; unrated areas are Unknown. |
@@ -111,18 +111,18 @@ Counts are in the summary at the bottom.
 | Goal page: why, success, projects, dated tasks, progress %, status chips | batch 4 #51; batch 5 #55 | PARTIAL | Goal page (`#/journey/goal/:id`) with why, success, SMART guide, SWOT, life area, progress ring and percent, 50% milestone sentence (`tests/life_goal_step5.test.ts`, `tests/progress_ring.test.ts`); tasks link to goals | No status chips. No list of projects (sub-goals) on the page. |
 | Backward-planning wizard (last step → today) | batch 4 #52 | MISSING | "Plan backwards" appears in topic tips only | Wizard not built. |
 | "Make it concrete" bank (big task → tiny first action pairs) | batch 4 #53 | PARTIAL | Stuck `tiny_step` helper asks for a 5-minute step | No example bank. |
-| Ownership triage: is it mine? → Do / Delegate / Let go | batch 5 #54 | MISSING | None | Not built. |
+| Ownership triage: is it mine? → Do / Delegate / Let go | batch 5 #54 | PARTIAL | `#/journey/mine` (`decisions.ts` `triage`); `tests/decisions.test.ts` | Own open tasks only; suggestion Do / Hand over / Let go with reason; answers kept in memory only, nothing is written to the task. |
 | Goal → milestone → action → today journey with High / Medium / Low chips and % from ticks | batch 5 #55, #59, #60 | PARTIAL | Per-goal percent from ticks and an overall percent (`src/core/goalPlan.ts`, `src/core/overallProgress.ts`); priority select on tasks; week placements | No milestone layer between goal and task, no % per milestone, no journey view. |
 | Hidden-effort buffer visual (planned vs hidden effort) | batch 5 #56 | PARTIAL | Buffer appears as a tip only (`src/library/topics.ts`, "Add a time buffer") | Planner adds no buffer; no visual. |
 | Weekly design loop (plan → prioritise → execute → review → reflect) and weekly "what got in the way" | batch 5 #57; ROADMAP life brief | MISSING | 90-day review only (`src/core/review.ts`) | Weekly review not built ("still planned" in life brief). |
 | Real-life planning around existing blocks | batch 5 #62 | PARTIAL | Free window and weekly hours (`src/core/planner.ts`, `freeWindow`) | No calendar blocks (no external link, by rule). |
 | Reality-changed three questions (what changed / still matters / what next) | batch 5 #63 | PARTIAL | "No longer true" button, log and history (`src/core/reality.ts`, `planHistoryScreen`) | Three-question prompt not built. |
 | Starting-point prompt for new goals (clarify, break down, begin) | batch 5 #64 | MISSING | None | Not built. |
-| Big-decision wizard (reversible? time? uncertainty? regret in 10 years) and 7 questions | batch 5 #65, #67, #73 | MISSING | None | Not built. |
+| Big-decision wizard (reversible? time? uncertainty? regret in 10 years) and 7 questions | batch 5 #65, #67, #73 | PARTIAL | `#/journey/decide` (`src/core/decisions.ts`, `src/ui/decisionUi.ts`); `tests/decisions.test.ts` | Four questions (reversible, time, learn, regret) with a rule-based suggestion and reason. The 7-question version and the frameworks picker are not built. |
 | Decision frameworks picker (10/10/10, pros and cons, six hats, OODA) and decide-faster tips | batch 5 #68, #70 | PARTIAL | "decisions" topic with tips from the bundled library and packs 003 to 008 (`public/content/`, `src/library/topics.ts`) | No framework picker. Tips are drafts (reviewer pending). |
-| Attention-leak audit (silence, close, clarify, bound) | batch 5 #71; batch 6 #76 | MISSING | None | Not built. |
+| Attention-leak audit (silence, close, clarify, bound) | batch 5 #71; batch 6 #76 | PARTIAL | `#/journey/leak` (`src/core/legs.ts`, `src/ui/legsUi.ts`); `tests/legs.test.ts` | Four levers shown as a tick list (not saved) plus a money review of own monthly expense lines. No link to focus topics or planner tips yet. |
 | Phased system-setup checklist (foundation, build, maintain) | batch 5 #72, #74 | MISSING | Ready systems only | Not built. |
-| Life four-legs status (Finance, Tasks, Weekly review, Habits; weakest leg) | batch 6 #75 | MISSING | None | Not built. |
+| Life four-legs status (Finance, Tasks, Weekly review, Habits; weakest leg) | batch 6 #75 | PARTIAL | `#/journey/legs` (`legs.ts` `fourLegs`); `tests/legs.test.ts` | Finance, Tasks, Weekly review, Habits from own entries; Unknown when data is missing; lists legs worth a look. Not on the Home dashboard yet. |
 | Deadline breakdown with buffer day and back-computed steps | batch 6 #80 | MISSING | None | Not built. |
 | Clarity 2×2 (impact / effort) → top 3 → next 7 days | batch 6 #81 | MISSING | None | Not built. |
 | Thinking-mode picker (Think / Tell / Act) | batch 6 #82 | MISSING | None | Not built. |
@@ -146,7 +146,7 @@ Counts are in the summary at the bottom.
 | Stepping-stones path (current step highlighted) | batch 8 #1 | PARTIAL | `data-next-step` aside; stage rungs on Today | No stepping-stone visual. |
 | Plan → action → success path with glowing reward | batch 8 #2 | PARTIAL | Journey art (`src/ui/rewardArt.ts`), milestone moments | No path with climbing figure. |
 | Success gauge with Planning / Action / Discipline pillars (no score) | batch 8 #3 | MISSING | None | Not built. |
-| Horizon arc (year ago → today) and today → month → year marker | batch 8 #5; batch 9 #4 | MISSING | Horizon list only | Not built. |
+| Horizon arc (year ago → today) and today → month → year marker | batch 8 #5; batch 9 #4 | PARTIAL | Arc with stops and a marker on the nearest horizon with a goal on the Horizon screen (`src/ui/horizonArt.ts`); `tests/horizon_art.test.ts` | Marker is static (a short pop-in only when motion is allowed). No "year ago" side and no moving marker over time. |
 | "My why" reveal; goal reached through a question path | batch 8 #6 | PARTIAL | Why shown on horizon card | No reveal, no path. |
 | Setback-to-recovery message on Stuck | batch 8 #7 | MISSING | None | Not built. |
 | Quote cards (Day N / 365) | batch 8 #9 | DONE | Daily inspiration card (`src/library/inspiration.ts`, `tests/inspiration.test.ts`) | No "Day N" counter, by design (no counting). |
@@ -199,3 +199,9 @@ Declined, not counted (owner's batch 7 said NO): clinical self-assessment tests 
 - (Fixed 26 Oct 2026; kept as history) `docs/design/m-list-status.md` says M19 is "নেই", M24 is "আংশিক" and the count is 14 / 9 / 2. The code (`src/modules/capability.ts`) says 16 implemented, 8 partial, 1 not built (M23). The test `tests/m_list_status.test.ts` checks the code, so the doc is the stale part.
 - `docs/design/early-plan-status.md` marks B2 (arc) as "Built" in full. The arc is not built (B2 stays PARTIAL). B3 and B6 are now true (DONE above).
 - `docs/ROADMAP.md` section 1 quoted "162 unit tests" (fixed 31 Oct 2026; the number has grown since, so check the latest run).
+
+
+## 5. Update 1 Nov 2026 (Block 8)
+Moved from MISSING to PARTIAL (6 rows): big-decision wizard, ownership triage, attention-leak audit, four-legs status, horizon arc, goal funnel hero. The grid-tracker row stays PARTIAL but now covers 31 days, 12 weeks and 12 months. Not recounted in the table in section 4 (that count is the 31 Oct state): DONE 34, PARTIAL 53, MISSING 45 after these moves.
+CSV import and the data dictionary page (TM-REQ-153) are built; PDF export is still missing, so the register row stays Partial. Hard-constraint override screen (TM-REQ-040) was not built, see DECISIONS_LOG.
+
