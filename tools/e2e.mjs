@@ -28,8 +28,8 @@ await page.waitForSelector("[data-demo-banner]");
 check("MODE-DEMO", "exploring demo shows the Demo mode banner", /Demo mode|Demo মোড/.test(await page.textContent("[data-demo-banner]")));
 check("ONB-OFFER", "after the choice the 3-screen start is offered (step 2 of 3) and can be skipped", (await page.locator("[data-onboard=goal]").count()) === 1 && /2 of 3|2 \/ 3|ধাপ 2/.test(await page.textContent("[data-onb-step]")));
 await page.click("[data-act=onb-skip]");
-await page.waitForSelector("[data-demo-banner]");
-check("ONB-SKIP", "skipping the start saves nothing and it does not return", (await page.locator("[data-onboard]").count()) === 0 && (await idb(page)).filter((r) => r.entity === "goal" || r.entity === "task").length === 0);
+await page.waitForSelector("[data-onboard]", { state: "detached" });
+check("ONB-SKIP", "skipping the start saves nothing and it does not return", (await page.locator("[data-onboard]").count()) === 0 && (await idb(page)).filter((r) => r.entity === "goal" || r.entity === "task").length === 0, JSON.stringify((await idb(page)).map((r) => r.entity)));
 for (const r of ["today", "journey", "diary", "deen", "more", "more/status", "more/fields", "more/data"]) { await page.goto(`http://localhost:4174/#/${r}`); await page.waitForSelector("main"); }
 const keys = [...(await page.evaluate(() => Object.keys(localStorage).filter((k) => k.startsWith("tm:real:") || k.startsWith("tm:demo:")))), ...(await idb(page))];
 check("TM-TST-143", "empty start: no demo/real records after visiting every tab", keys.length === 0, JSON.stringify(keys));
@@ -242,7 +242,7 @@ await ctx.setOffline(false);
   await ctx.setOffline(true);
   await page.goto(base); await page.waitForSelector("main", { timeout: 8000 }).catch(() => {});
   const seen = {};
-  for (const [name, hash, sel] of [["universe", "#/journey/universe", "svg[data-universe-map]"], ["journey logo", "#/journey", "svg.logo3d"], ["snapshots", "#/more/data", "[data-card=snapshots]"], ["home cards", "#/today", "[data-home-summary]"], ["goals", "#/journey/goals", "main h1"], ["topic with content packs", "#/topic/procrastination", "main h1"]]) {
+  for (const [name, hash, sel] of [["universe", "#/journey/universe", "svg[data-universe-map]"], ["journey logo", "#/journey", "svg.logo3d"], ["snapshots", "#/more/data", "[data-card=snapshots]"], ["home cards", "#/today", "[data-home-summary]"], ["goals", "#/journey/goals", "main h1"], ["lazy plan chunk (risks)", "#/journey/risks", "main h1"], ["lazy connections chunk", "#/more/connections", "main h1:not([hidden])"], ["lazy legs chunk", "#/journey/legs", "main h1"], ["lazy decide chunk", "#/journey/decide", "main h1"], ["topic with content packs", "#/topic/procrastination", "main h1"]]) {
     await page.evaluate((h) => { location.hash = h; }, hash);
     seen[name] = await page.waitForSelector(sel, { timeout: 5000 }).then(() => true).catch(() => false);
   }

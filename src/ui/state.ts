@@ -3,7 +3,7 @@ import { LocalKV, MemoryKV, REAL_DATA_ENABLED, Store } from "../core/store";
 import { readConsent } from "../core/consent";
 import { isTemplateId, type TemplateId } from "../core/stageTemplates";
 import { MirrorKV, SaveMonitor, hydrate, mirrorToRepo } from "../core/persist";
-import { DexieRepo } from "../adapters/dexie";
+import { LazyDexieRepo } from "../adapters/lazyDexie";
 import { migrateAll } from "../core/migrate";
 import { moveListsToReal } from "../core/savedLists";
 import { StoreRepo } from "../adapters/storeRepo";
@@ -23,7 +23,7 @@ const isRecordKey = (k: string) => /^tm:(demo|real):/.test(k);
 const legacy = new LocalKV((k, v, ok) => { if (!isRecordKey(k)) return; if (ok) saveMonitor.ok(k); else saveMonitor.fail(k, v); });
 const mem = new MemoryKV();
 // Consent lives in the per-device store (localStorage). Real writes to IndexedDB need the same gate as memory.
-const repo = typeof indexedDB !== "undefined" ? new DexieRepo("tm-db", () => REAL_DATA_ENABLED && readConsent(legacy)) : null;
+const repo = typeof indexedDB !== "undefined" ? new LazyDexieRepo("tm-db", () => REAL_DATA_ENABLED && readConsent(legacy)) : null;
 // With IndexedDB: memory is mirrored to it. Without (private mode/old browser): fall back to the old localStorage store.
 const kv = repo ? new MirrorKV(mem, mirrorToRepo(repo, saveMonitor)) : legacy;
 if (!repo) saveMonitor.bind(() => { for (const [k, v] of saveMonitor.entries()) if (v !== null) legacy.set(k, v); });

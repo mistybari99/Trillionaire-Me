@@ -76,7 +76,7 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 - [x] Step 1: stale docs fixed (README, capability notes, PLAN, audit text) and Register v2_1 copy regenerated (Decisions D-B/D-E, Start Here, Summary note); v2_0 untouched.
 - [x] Step 2: 3-screen first-run onboarding (`src/core/onboarding.ts`, `src/ui/onboardUi.ts`, route `#/start`, `tests/onboarding.test.ts`, e2e ONB-*): choice (1/3), one goal, one small step + first win; skippable; local time-to-first-step kept on the device only.
 - [x] Step 3: owner phone-test checklist (`docs/owner/PHONE_TEST_CHECKLIST.md`, 10 steps + report template) and 5-user usability kit (`docs/owner/USABILITY_KIT.md`). Owner runs them; nothing marked Verified until he does.
-- [ ] Step 4: bundle split (lazy screens) with full offline precache.
+- [x] Step 4: bundle split: main chunk 713 kB to 339 kB (i18n 195 kB, library 60 kB, dexie 96 kB, 4 lazy screen chunks, content packs already lazy); no chunk over 500 kB; all 52 files precached; e2e offline opens the lazy screens (`src/ui/lazy.ts`, `lazyScreens.ts`, `adapters/lazyDexie.ts`, `tests/lazy_screens.test.ts`). Not split: Today/Journey/Data cards (they sit inside `screens.ts`).
 - [ ] Step 5: Bangladesh starter pack draft (`public/content/pack-009.json`) and halal-check flags draft.
 - [ ] Step 6: Bangla review sheet (`docs/owner/BANGLA_REVIEW_SHEET.md`, script in `tools/`).
 - [ ] End: e2e, DECISIONS_LOG entries.

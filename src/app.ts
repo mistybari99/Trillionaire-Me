@@ -5,14 +5,12 @@ import type { Key } from "./i18n/packs";
 import { demoBadge } from "./ui/components";
 import { langMenu } from "./ui/langMenu";
 import * as S from "./ui/screens";
-import * as P from "./ui/planScreens";
 import * as LS from "./ui/libraryScreens";
 import * as LF from "./ui/lifeUi";
-import * as CN from "./ui/connectionsUi";
 import * as UV from "./ui/universeUi";
-import * as DU from "./ui/decisionUi";
-import * as LG from "./ui/legsUi";
 import * as IM from "./ui/importUi";
+import { viaLazy } from "./ui/lazy";
+import { CONN, DECIDE, LEGS, PLAN } from "./ui/lazyScreens";
 import { onboardScreen } from "./ui/onboardUi";
 import { demoPanels, firstRunScreen, trackDemoDay } from "./ui/modeUi";
 import { LAYERS, TOPICS } from "./library/topics";
@@ -40,16 +38,16 @@ export const ROUTES: Array<[RegExp, (m: RegExpMatchArray) => HTMLElement, string
   [/^\/capture$/, () => S.captureScreen(), "today"],
   [/^\/journey\/report$/, () => S.reportScreen(), "journey"],
   [/^\/journey\/week$/, () => S.weeklyScreen(), "journey"],
-  [/^\/journey\/decide$/, () => DU.decisionScreen(), "journey"],
-  [/^\/journey\/mine$/, () => DU.triageScreen(), "journey"],
-  [/^\/journey\/legs$/, () => LG.legsScreen(), "journey"],
-  [/^\/journey\/leak$/, () => LG.leakScreen(), "journey"],
+  [/^\/journey\/decide$/, () => viaLazy(DECIDE, (m) => m.decisionScreen()), "journey"],
+  [/^\/journey\/mine$/, () => viaLazy(DECIDE, (m) => m.triageScreen()), "journey"],
+  [/^\/journey\/legs$/, () => viaLazy(LEGS, (m) => m.legsScreen()), "journey"],
+  [/^\/journey\/leak$/, () => viaLazy(LEGS, (m) => m.leakScreen()), "journey"],
   [/^\/journey\/review$/, () => S.reviewScreen(), "journey"],
-  [/^\/journey\/risks$/, () => P.riskScreen(), "journey"],
-  [/^\/journey\/history$/, () => P.planHistoryScreen(), "journey"],
-  [/^\/journey\/northstar$/, () => P.northStarScreen(), "journey"],
-  [/^\/diary\/ventures$/, () => P.ventureScreen(), "diary"],
-  [/^\/diary\/team$/, () => P.teamScreen(), "diary"],
+  [/^\/journey\/risks$/, () => viaLazy(PLAN, (m) => m.riskScreen()), "journey"],
+  [/^\/journey\/history$/, () => viaLazy(PLAN, (m) => m.planHistoryScreen()), "journey"],
+  [/^\/journey\/northstar$/, () => viaLazy(PLAN, (m) => m.northStarScreen()), "journey"],
+  [/^\/diary\/ventures$/, () => viaLazy(PLAN, (m) => m.ventureScreen()), "diary"],
+  [/^\/diary\/team$/, () => viaLazy(PLAN, (m) => m.teamScreen()), "diary"],
   [/^\/stuck$/, () => S.stuckScreen(), "today"],
   [/^\/topics$/, () => S.topicsIndex(), "more"],
   [/^\/topic\/([\w-]+)$/, (m) => S.topicScreen(m[1]), "more"],
@@ -66,7 +64,7 @@ export const ROUTES: Array<[RegExp, (m: RegExpMatchArray) => HTMLElement, string
   [/^\/more\/safety$/, () => S.safety(), "more"],
   [/^\/more\/dictionary$/, () => IM.dictionaryScreen(), "more"],
   [/^\/more\/data$/, () => S.dataScreen(), "more"],
-  [/^\/more\/connections$/, () => CN.connectionsScreen(prefs.lang), "more"],
+  [/^\/more\/connections$/, () => viaLazy(CONN, (m) => m.connectionsScreen(prefs.lang)), "more"],
   [/^\/more\/library$/, () => LS.systemsLibraryScreen(), "more"],
   [/^\/more\/rules$/, () => LS.rulesScreen(), "more"],
 ];
