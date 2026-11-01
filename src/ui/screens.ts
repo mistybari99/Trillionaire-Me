@@ -1,4 +1,5 @@
 import { todaysInspiration, THEME_LABEL } from "../library/inspiration";
+import { askPersistence, storageCard } from "./storageCard";
 import { groupByHorizon, HORIZONS, type HorizonGoal } from "../core/horizon";
 import { h } from "./dom";
 import { t, tb, fmtNumber } from "../i18n/t";
@@ -1397,7 +1398,7 @@ function consentCard(lang: Locale): HTMLElement {
       const tick = document.getElementById("consent-tick") as HTMLInputElement | null;
       if (!tick?.checked) { consentMissingTick = true; rerender(); return; }
       consentMissingTick = false;
-      grantConsent(consentKv, new Date().toISOString());
+      { grantConsent(consentKv, new Date().toISOString()); askPersistence(); }
       rerender();
     } }, t("data.consent.btn", lang)),
     consentMissingTick ? h("p", { class: "err", role: "alert" }, t("data.consent.needTick", lang)) : null);
@@ -1458,6 +1459,7 @@ export function dataScreen(): HTMLElement {
     h("div", { class: "card", "data-ns": "demo" }, h("h2", { class: "card-h", }, t("data.demo", lang), " ", demoBadge(lang)), h("p", {}, t("data.demo.count", lang, { n: num(store.demo.list().length, lang) }))),
     h("p", { class: "muted" }, t("data.nopromote", lang)),
     clearDemoBlock(lang),
+    storageCard(lang),
     csvCard(realOn, lang),
     importCard(lang),
     h("h2", {}, t("backup.title", lang)),

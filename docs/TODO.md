@@ -64,7 +64,7 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 
 ### Block 9 — Data safety (real data), 1 Nov 2026
 - [x] Step 1: visible save-failed banner with retry and one-tap backup file (`SaveMonitor` in `src/core/persist.ts`, `src/ui/saveBanner.ts`, `tests/save_failed.test.ts`).
-- [ ] Step 2: `navigator.storage.persist()` + status and usage on More > Data.
+- [x] Step 2: `navigator.storage.persist()` after the tick (`src/core/storageStatus.ts`, `src/ui/storageCard.ts`, `tests/storage_status.test.ts`); status and usage on More > Data, Unknown when unsupported.
 - [ ] Step 3: weekly backup reminder ON by default once real data exists.
 - [ ] Step 4: optional PIN app lock (off by default).
 - [ ] Step 5: at-rest encryption design note only (`docs/design/at-rest-encryption.md`).

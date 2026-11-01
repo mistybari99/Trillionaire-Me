@@ -807,6 +807,16 @@ const en = {
   "save.fail.retryDone": "Saved. All changes are on this device now.",
   "save.fail.retryStill": "Still could not save. Please export a backup.",
   "save.fail.backupDone": "Backup file saved. Keep it somewhere private.",
+  "store.title": "Storage on this device",
+  "store.note": "Your data lives in this browser. When space runs low, a browser can clear it unless it agrees to keep it.",
+  "store.checking": "Checking...",
+  "store.persist.yes": "Protected: the browser has agreed to keep your data.",
+  "store.persist.no": "Not protected yet: low space may clear your data. Save a backup file to be safe.",
+  "store.persist.unknown": "Unknown: this browser cannot say if it keeps your data. Save a backup file to be safe.",
+  "store.usage": "Space used: about {u}.",
+  "store.usage.of": "Space used: about {u} of {q} available to this app.",
+  "store.usage.unknown": "Space used: Unknown.",
+  "store.ask": "Ask the browser to keep my data",
 } as const;
 
 export type Key = keyof typeof en;
@@ -1955,6 +1965,16 @@ const bn: Record<Key, string> = {
   "save.fail.retryDone": "সেভ হয়েছে। সব পরিবর্তন এখন এই ডিভাইসে আছে।",
   "save.fail.retryStill": "এখনো সেভ করা যায়নি। অনুগ্রহ করে ব্যাকআপ এক্সপোর্ট করুন।",
   "save.fail.backupDone": "ব্যাকআপ ফাইল সেভ হয়েছে। ফাইলটি নিরাপদ জায়গায় রাখুন।",
+  "store.title": "এই ডিভাইসের স্টোরেজ",
+  "store.note": "আপনার ডেটা এই ফোনের ব্রাউজারে থাকে। ফোনে জায়গা কম পড়লে ব্রাউজার তা মুছে দিতে পারে, যদি না সে রাখতে রাজি হয়।",
+  "store.checking": "দেখা হচ্ছে...",
+  "store.persist.yes": "সুরক্ষিত: ব্রাউজার আপনার ডেটা রাখতে রাজি হয়েছে।",
+  "store.persist.no": "এখনো সুরক্ষিত নয়: ফোনে জায়গা কম পড়লে ব্রাউজার ডেটা মুছতে পারে। নিরাপদ থাকতে একটি ব্যাকআপ ফাইল সেভ করুন।",
+  "store.persist.unknown": "অজানা: এই ব্রাউজার বলতে পারছে না ডেটা রাখবে কি না। নিরাপদ থাকতে একটি ব্যাকআপ ফাইল সেভ করুন।",
+  "store.usage": "ব্যবহৃত জায়গা: প্রায় {u}।",
+  "store.usage.of": "ব্যবহৃত জায়গা: প্রায় {u}, অ্যাপের জন্য মোট পাওয়া যায় {q}।",
+  "store.usage.unknown": "ব্যবহৃত জায়গা: অজানা।",
+  "store.ask": "ব্রাউজারকে আমার ডেটা রাখতে বলুন",
 };
 
 // Mix mode: Bangla sentences with common English words kept (owner request, decision L-11).
