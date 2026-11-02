@@ -50,7 +50,7 @@ export const ROWS: SettingRow[] = [
   R("csv", "backup", "set.row.csv", "#/settings/backup/csv", ["csv", "spreadsheet", "excel", "export", "import"], [], []),
 
   R("lockscreen", "privacy", "more.lock", "#/settings/privacy/lockscreen", ["lock screen", "notification", "private", "show details", "hide"], ["notifyShow"], ["tm:ui:notifyShow"]),
-  R("consent", "privacy", "set.row.consent", "#/settings/privacy/consent", ["consent", "permission", "real data", "tick", "private"], [], ["tm:consent:real:v1", "tm:consent:health:v1"]),
+  R("consent", "privacy", "set.row.consent", "#/settings/privacy/consent", ["consent", "permission", "real data", "tick", "private"], [], ["tm:consent:real:v1", "tm:consent:health:v1", "tm:consent:hadith:v1"]),
   R("applock", "privacy", "set.row.applock", "#/settings/privacy/applock", ["pin", "lock", "password", "app lock", "forgot"], [], ["tm:secret:applock"]),
 
   R("mode", "data", "set.row.mode", "#/settings/data/mode", ["demo", "real", "mode", "switch"], ["dataMode", "dataModeChoice", "demoAskedOn", "demoDays"], ["tm:ui:dataMode", "tm:ui:demoAskedOn", "tm:ui:demoDays"]),
@@ -74,6 +74,7 @@ export const GUIDES: Array<{ id: string; route: string; label: Key; desc: Key }>
   { id: "topics", route: "#/topics", label: "topics.title", desc: "topics.intro" },
   { id: "library", route: "#/more/library", label: "more.library", desc: "more.library.desc" },
   { id: "cards", route: "#/cards", label: "cards.title", desc: "cards.intro" },
+  { id: "hadith", route: "#/hadith", label: "hd.link", desc: "hd.link.desc" },
   { id: "notes", route: "#/notes", label: "kn.title", desc: "kn.intro.short" },
   { id: "status", route: "#/more/status", label: "more.status", desc: "more.status.desc" },
   { id: "fields", route: "#/more/fields", label: "more.fields", desc: "more.fields.desc" },

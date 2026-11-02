@@ -116,8 +116,13 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 - [x] Run 2, step 16 (M01): profile name/birth year/time zone read back (`src/core/profileView.ts`, `src/ui/profileCard.ts`); hours_per_week read by M08.
 - [x] Run 2, step 17 (M02): three skippable questions shown back on cards (`approachFrom`, `tests/approach.test.ts`); schema additive (catalog 13).
 - [x] Run 2, step 18 (M14): health and family page with separate consent tick, counts only on Today/report, CSV excludes it (`src/core/health.ts`, `src/ui/healthUi.ts`, `tests/health.test.ts`); schema additive (catalog 14).
+- [x] Run 2, step 19 (D-D): hadith reader structure, off by default, importer, tests (`src/core/hadith.ts`, `src/ui/hadithUi.ts`, `tools/hadith_import.mjs`, `tests/hadith.test.ts`). Pack EMPTY: licence of translations unclear (see `docs/design/hadith-pack.md`).
+- [ ] Fill the hadith pack: pick a source with a clear licence (builder can do this), run the importer, run the read-only re-fetch check.
+- [ ] Run 2: M13 Deen plan/reminder forms (owner approved 2 Nov 2026) NOT built in this run.
+- [ ] Run 2: M18 drawn timeline / Kanban / option board NOT built in this run.
 
 ## Part B — Owner-only tasks
+- [ ] (optional, later) A scholar reviews the hadith entries and the halal-check flags; a named reviewer then marks entries reviewed.
 - [ ] Phone offline test: open online once, visit all pages, airplane mode, reopen (O1).
 - [ ] Lock-screen privacy check on a real device (O8).
 - [ ] Verify prayer times against the official Bangladesh timetable.

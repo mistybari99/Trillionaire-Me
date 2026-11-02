@@ -14,6 +14,7 @@ import { viaLazy } from "./ui/lazy";
 import { CONN, DECIDE, HALAL, LEGS, PLAN } from "./ui/lazyScreens";
 import { monthScreen } from "./ui/monthUi";
 import { healthScreen } from "./ui/healthUi";
+import { hadithScreen } from "./ui/hadithUi";
 import { notesScreen } from "./ui/notesUi";
 import { printScreen } from "./ui/printUi";
 import { onboardScreen } from "./ui/onboardUi";
@@ -67,6 +68,7 @@ export const ROUTES: Array<[RegExp, (m: RegExpMatchArray) => HTMLElement, string
   [/^\/journey\/art$/, () => S.artScreen(), "journey"],
   [/^\/focus\/([\w-]+)$/, (m) => S.focusScreen(m[1]), "today"],
   [/^\/habits$/, () => S.habitsScreen(), "today"],
+  [/^\/hadith$/, () => hadithScreen(), "settings"],
   [/^\/cards$/, () => S.cardsScreen(), "settings"],
   [/^\/notes$/, () => notesScreen(), "settings"],
   [/^\/deen$/, () => S.deen(), "deen"],
