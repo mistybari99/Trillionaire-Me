@@ -5,7 +5,7 @@ import type { Key } from "../i18n/packs";
 import type { Locale } from "../i18n/registry";
 import { num } from "./components";
 import type { TMRecord } from "../core/types";
-import { DIMENSIONS, SOURCE_WEIGHT, WEIGHT_MAX, WEIGHT_MIN, assessmentFrom, levelsOf, parseWeight, pathFit, resourceRows, skillEvidence, weightsFrom, type Dimension, type PathFit, type Source, type Weights } from "../core/assessment";
+import { APPROACH_FIELDS, approachFrom, DIMENSIONS, SOURCE_WEIGHT, WEIGHT_MAX, WEIGHT_MIN, assessmentFrom, levelsOf, parseWeight, pathFit, resourceRows, skillEvidence, weightsFrom, type Dimension, type PathFit, type Source, type Weights } from "../core/assessment";
 import { freshnessOf } from "../core/freshness";
 import { ventureRows } from "../core/ventures";
 import { activeNs, consentOn, consentPrompt, nsTag, saveBlockedText, saveTyped, storeOf, allRecs } from "./entry";
@@ -45,6 +45,7 @@ function fitCard(f: PathFit, lang: Locale, weights: Weights, custom: boolean, re
   return h("div", { class: "card", "data-fit-card": "1" },
     h("h3", {}, t("fit.title", lang)), h("p", { class: "muted" }, t("fit.intro", lang)),
     weightsCard(weights, custom, recs, lang),
+    approachLine(recs, lang),
     ...body,
     ownOptionsCard(recs, lang),
     f.status === "matched" ? unmapped : null,
@@ -75,7 +76,7 @@ export function assessmentSection(recs: readonly TMRecord[], lang: Locale): HTML
     h("h2", {}, t("assess.title", lang)),
     h("p", { class: "sub" }, t("assess.intro", lang)),
     ...DIMENSIONS.map((d) => dimensionCard(d, s.dimensions[d], lang)),
-    evidenceCard(recs, lang), resourcesCard(recs, lang),
+    evidenceCard(recs, lang), resourcesCard(recs, lang), approachCard(recs, lang),
     fitCard(pathFit(a, undefined, wt.weights), lang, wt.weights, wt.custom, recs));
 }
 
@@ -126,4 +127,33 @@ function ownOptionsCard(recs: readonly TMRecord[], lang: Locale): HTMLElement | 
   return h("div", { class: "card", "data-own-options": String(rows.length) }, h("h3", {}, t("fit.own.title", lang)), h("p", { class: "muted" }, t("fit.own.note", lang)),
     h("ul", { class: "plain" }, ...rows.map((v) => h("li", { "data-own-option": v.id }, h("strong", {}, v.name), v.stage ? h("span", { class: "muted" }, ` · ${tb(fieldById("venture.stage")!.options!.find((o) => o.code === v.stage)?.label ?? { bn: v.stage, en: v.stage }, lang)}`) : null))),
     h("a", { class: "crumb", href: "#/diary/ventures" }, t("fit.own.open", lang)));
+}
+
+const choiceText = (field: string, code: string | null, lang: Locale): string | null => (code === null ? null : tb(fieldById(field)!.options!.find((o) => o.code === code)?.label ?? { bn: code, en: code }, lang));
+
+/** Three optional questions. Each can be skipped (left on "skip"); a skipped one is Unknown and nothing is guessed. Saved only when you press Save. */
+function approachCard(recs: readonly TMRecord[], lang: Locale): HTMLElement {
+  const cur = approachFrom(recs);
+  const sels = APPROACH_FIELDS.map((f, i) => h("select", { id: `ap-${i}` }, h("option", { value: "" }, t("ap.skip", lang)),
+    ...fieldById(f)!.options!.map((o) => h("option", { value: o.code, ...(cur[f] === o.code ? { selected: true } : {}) }, tb(o.label, lang))))) as HTMLSelectElement[];
+  const err = h("p", { class: "muted", role: "alert", "data-err": "approach" });
+  const form = h("form", { novalidate: true, "data-form": "approach" }, consentOn() ? null : consentPrompt(lang),
+    ...APPROACH_FIELDS.flatMap((f, i) => [h("label", { for: `ap-${i}` }, tb(fieldById(f)!.label, lang)), sels[i]!]), err,
+    h("button", { class: "btn ghost", type: "submit", style: "width:auto;min-height:44px" }, t("ap.save", lang)));
+  form.addEventListener("submit", (ev) => {
+    ev.preventDefault(); err.textContent = "";
+    if (!consentOn()) { err.textContent = saveBlockedText(lang); return; }
+    for (const r of recs.filter((x) => x.entity === "approach")) storeOf(r).delete(r.id);
+    const values: Record<string, FieldValue> = {};
+    APPROACH_FIELDS.forEach((f, i) => { if (sels[i]!.value) values[f] = { state: "value", value: sels[i]!.value, label: "FACT" }; });
+    if (Object.keys(values).length && !saveTyped({ id: `approach-${activeNs()}`, entity: "approach", createdAt: new Date().toISOString(), values })) { err.textContent = saveBlockedText(lang); return; }
+    window.dispatchEvent(new HashChangeEvent("hashchange"));
+  });
+  return h("div", { class: "card", "data-approach-card": "1" }, h("h3", {}, t("ap.title", lang)), h("p", { class: "muted" }, t("ap.intro", lang)),
+    ...APPROACH_FIELDS.map((f) => h("p", { "data-approach": f }, h("span", { class: "muted" }, `${tb(fieldById(f)!.label, lang)}: `), choiceText(f, cur[f], lang) ?? h("span", { class: "muted", "data-unknown": "1" }, t("unknown.unknown", lang)))), form);
+}
+/** On the path cards: the person's own answers, shown back. Nothing when all three were skipped. */
+function approachLine(recs: readonly TMRecord[], lang: Locale): HTMLElement | null {
+  const cur = approachFrom(recs); const parts = APPROACH_FIELDS.flatMap((f) => { const x = choiceText(f, cur[f], lang); return x ? [`${tb(fieldById(f)!.label, lang)}: ${x}`] : []; });
+  return parts.length ? h("p", { class: "muted", "data-approach-line": "1" }, t("ap.line", lang, { list: parts.join(" · ") })) : null;
 }

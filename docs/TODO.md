@@ -114,6 +114,7 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 - [x] Run 2, step 14 (M04): source + date + stale flag on path cards, configurable skill/interest/strength weights, match strength shown, halal-check link on cards, own venture as an option (`src/core/assessment.ts`, `src/ui/assessment.ts`, `tests/path_sources_weights.test.ts`); schema additive (catalog 11). More paths wait for a reviewer.
 - [x] Run 2, step 15 (M17): notes, sources and SOPs page, freshness flag, role/hand-over links (`src/core/knowledge.ts`, `src/ui/notesUi.ts`, `tests/notes_sops.test.ts`); schema additive (catalog 12).
 - [x] Run 2, step 16 (M01): profile name/birth year/time zone read back (`src/core/profileView.ts`, `src/ui/profileCard.ts`); hours_per_week read by M08.
+- [x] Run 2, step 17 (M02): three skippable questions shown back on cards (`approachFrom`, `tests/approach.test.ts`); schema additive (catalog 13).
 
 ## Part B — Owner-only tasks
 - [ ] Phone offline test: open online once, visit all pages, airplane mode, reopen (O1).

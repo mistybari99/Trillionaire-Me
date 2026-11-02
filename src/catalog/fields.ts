@@ -2,7 +2,7 @@ import type { Bi } from "../i18n/registry";
 import { UNKNOWN_STATES, type UnknownState } from "../core/types";
 import type { AccessRule, ChoiceOption, FieldDef, FieldType, Importance, PrivacyClass, Purpose, Requirement } from "./types";
 
-export const CATALOG_VERSION = 12;
+export const CATALOG_VERSION = 13;
 
 const bi = (bn: string, en: string): Bi => ({ bn, en });
 const opt = (code: string, bn: string, en: string): ChoiceOption => ({ code, label: bi(bn, en) });
@@ -220,6 +220,19 @@ export const FIELDS: FieldDef[] = [
     what: bi("ধাপগুলো শেষবার যেদিন মিলিয়ে দেখেছেন।", "The day you last checked the steps still fit."),
     why: bi("১৮০ দিনের বেশি পুরোনো হলে ‘আবার দেখুন’ চিহ্ন আসে।", "Older than 180 days it is flagged to check again."),
     example: bi("২০২৬-১১-০২", "2026-11-02"), format: bi("বছর-মাস-দিন", "YYYY-MM-DD") }),
+  // ── way of working (M02): three optional self-descriptions, never a test or a label ──
+  f({ id: "approach.experience", entity: "approach", family: "FAM-35", type: "choice", purpose: "assessment", importance: "optional",
+    options: [opt("new", "নতুন, এখনো শুরু করিনি", "New, not started yet"), opt("some", "কিছুটা করেছি", "Done a little"), opt("much", "অনেকদিন করছি", "Done for a long time")],
+    label: bi("কাজের অভিজ্ঞতা", "Experience in the work"), what: bi("যে ধরনের কাজ ভাবছেন তাতে আপনার নিজের মতে কতটা অভিজ্ঞতা।", "How much experience you feel you have in the kind of work you are considering."),
+    why: bi("পথের কার্ডে আপনার উত্তর দেখানো হয়। এটি পরীক্ষা নয়; বাদ দিলে ‘জানা নেই’।", "Your answer is shown on path cards. It is not a test; skipped means Unknown."), example: bi("কিছুটা করেছি", "Done a little") }),
+  f({ id: "approach.risk_preference", entity: "approach", family: "FAM-35", type: "choice", purpose: "assessment", importance: "optional",
+    options: [opt("careful", "সাবধানে, ছোট ধাপে", "Careful, small steps"), opt("balanced", "মাঝামাঝি", "In between"), opt("bold", "সাহস করে বড় ধাপে", "Bolder, bigger steps")],
+    label: bi("ঝুঁকি নিয়ে আপনার ঝোঁক", "Your leaning on risk"), what: bi("নতুন কিছুতে আপনি সাধারণত কেমন ধাপে এগোতে পছন্দ করেন।", "How big a step you usually like to take in something new."),
+    why: bi("কার্ডে আপনার নিজের কথাই ফিরিয়ে দেখানো হয়; কোনো ভালো-মন্দ নেই। বাদ দিলে ‘জানা নেই’।", "Your own words are shown back; no choice is better. Skipped means Unknown."), example: bi("মাঝামাঝি", "In between") }),
+  f({ id: "approach.learning_style", entity: "approach", family: "FAM-35", type: "choice", purpose: "assessment", importance: "optional",
+    options: [opt("reading", "পড়ে", "By reading"), opt("watching", "দেখে", "By watching"), opt("doing", "করে করে", "By doing"), opt("talking", "কারও সাথে কথা বলে", "By talking with someone")],
+    label: bi("কীভাবে শিখতে ভালো লাগে", "How you like to learn"), what: bi("নতুন কিছু শিখতে আপনার সবচেয়ে সহজ লাগে যে উপায়।", "The way you find easiest for learning something new."),
+    why: bi("কার্ডে আপনার পছন্দ ফিরিয়ে দেখানো হয়। এটি কোনো ব্যক্তিত্ব-পরীক্ষা নয়; বাদ দিলে ‘জানা নেই’।", "Your preference is shown back. It is not a personality test; skipped means Unknown."), example: bi("করে করে", "By doing") }),
   // ── goals / tasks hierarchy (FAM-03) ──
   f({ id: "goal.title", entity: "goal", family: "FAM-03", type: "text", purpose: "planning", step: 6, importance: "core", requirement: "required",
     label: bi("লক্ষ্যের নাম", "Goal title"),

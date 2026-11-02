@@ -597,3 +597,7 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 ## 2 Nov 2026 — Block 12 (2nd run), step 16: profile name, birth year and time zone are read back
 - What: the diary shows an "About you" card (name, birth year, estimated age, time zone as typed; Unknown when missing), and Today greets by the typed name. Age is this year minus the birth year (1900 to this year only). `constraint.hours_per_week` was wired in step 13. The time zone is shown as typed with a note that plan times are plain 24-hour clock and prayer times use Dhaka time; no conversion is made (the documents give no rule).
 - Schema: none. Undo: revert this commit. M01 shows all six boxes built.
+
+## 2 Nov 2026 — Block 12 (2nd run), step 17: M02 experience, risk preference and learning style questions
+- What: three optional single-choice questions on the Plan screen (new entity `approach`, one record per mode). Each can be skipped (skipped = Unknown, nothing defaulted). Answers are shown back on the assessment card and as one line on the path cards. No personality label, no score, no change to the path order.
+- Choices (documents silent): the option lists are plain and short and are the builder's draft; not used to rank paths so no choice is "better". Schema: additive, entity + 3 fields, catalog 12 to 13, fingerprint updated. Undo: revert this commit. M02 shows all six boxes built.

@@ -67,6 +67,15 @@ export function levelsOf(a: Assessment): AssessmentLevels {
   return { dimensions, ready: DIMENSIONS.filter((d) => dimensions[d].status === "scored").length };
 }
 
+// ---- way of working: three optional self-descriptions, shown back in the person's own words ----
+export const APPROACH_FIELDS = ["approach.experience", "approach.risk_preference", "approach.learning_style"] as const;
+export type Approach = Record<(typeof APPROACH_FIELDS)[number], string | null>;
+/** Null for a skipped question: Unknown, never a default choice. */
+export function approachFrom(recs: readonly TMRecord[]): Approach {
+  const r = [...recs].sort(byId).filter((x) => x.entity === "approach").pop();
+  return Object.fromEntries(APPROACH_FIELDS.map((f) => [f, r ? text(r, f) : null])) as Approach;
+}
+
 // ---- path fit ----
 export type Source = "interest" | "skill" | "strength";
 /** Transparent weights: a skill says more about a path than an interest, and an interest more than a strength. */
