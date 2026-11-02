@@ -284,3 +284,14 @@ Every inventory row has a planned home in the judge's table, so none is orphaned
 - GAP-16 "Both parallel" 3e-3h require 3b first; `consentGate()` (3b) touches first-run, entry forms, Deen: highest D-B risk; needs the every-real-write-path-refuses test before merge.
 - GAP-17 Four looks rule: no Settings row defines a 4-looks screenshot check except SET-6.07; PR2 acceptance only checks 360 px. Add 4 looks to each PR screenshot step.
 - GAP-18 Register: no "Draft" rows added yet for the new requirements (SET-6.08); evidence only counts when a test file is linked.
+
+## O. Build-completeness order (owner approved 2 Nov 2026; audit `docs/audit/BUILD_COMPLETENESS_2026-11-02.md`)
+| ID | Step | Owner | Status | Evidence | DoD |
+|---|---|---|---|---|---|
+| BC-1.1 | Capability card = six build boxes + computed label; separate per-device data status | builder | Built+Linked+Tested | `src/modules/capability.ts`, `dataStatus.ts`, `src/ui/capabilityUi.ts`; `tests/m_list_status.test.ts`, `tests/g1.test.ts` | UI Y · LK Y (status page and journey/diary/deen tabs) · DR Y · L3 Y · TS Y |
+| BC-1.2 | Test that finds stored-but-never-shown and never-typable fields | builder | Built+Linked+Tested | `tests/field_reach.test.ts` (known lists DEAD / NO_INPUT only shrink) | TS Y |
+| BC-1.3 | Repo-wide link check (all routes, en/bn/mix, literal addresses, orphans) | builder | Built+Linked+Tested | `tests/link_check.test.ts`; closes GAP-01 | TS Y |
+| BC-1.4 | Dead code removed: goals.ts, override.ts, sync.ts, onlineAdvice.ts | builder | Built | DECISIONS_LOG 2 Nov 2026 | - |
+| BC-1.5 | Broken `#/more/topics` link on Flashcards | builder | Built+Linked+Tested | `src/ui/screens.ts`, `tests/link_check.test.ts` | LK Y · TS Y |
+| BC-2 | M16 KPI targets | builder | In progress | - | - |
+| BC-3 | M09 venture value and income/expense | builder | Not started | - | - |

@@ -97,6 +97,11 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 - [x] PR5 Search: magnifier on every Settings page (`src/ui/settingsSearch.ts`), static EN/BN/mix registry search + Bangla keywords (`SEARCH_BN`), results show category and link to the row, last 3 opened results remembered (`tm:ui:settingsRecent`, convenience). Test `tests/settings_search.test.ts` (every entry findable in 3 languages, every hit a real route, no network).
 - [x] PR6 Polish: focus to h1 + page title on route change, translated aria-label, Settings en/bn/mix parity + wording test (`tests/settings_a11y_i18n.test.ts`), e2e SET-OFFLINE / SET-200 / SET-SEARCH (e2e 64 PASS, 0 FAIL), 12 Settings routes x 2 languages screenshotted at 360 px (no overflow), Register mapping (traceability + TM-REQ-186..189 Draft), DECISIONS_LOG entries with undo steps.
 
+### Block 12 — Build completeness (owner order 2 Nov 2026)
+- [x] Step 1: capability card = build pipeline (six boxes) + separate data status; field-reach and link-check tests; dead code removed (goals, override, sync, onlineAdvice); `#/more/topics` fixed.
+- [ ] Step 2: M16 KPI targets (input, storage, planned vs actual, Today/Journey/report, EN/BN/mix, a11y, link check).
+- [ ] Step 3: M09 venture value and income/expense (input, storage, calculation, portfolio total, reports, EN/BN/mix, a11y, link check).
+
 ## Part B — Owner-only tasks
 - [ ] Phone offline test: open online once, visit all pages, airplane mode, reopen (O1).
 - [ ] Lock-screen privacy check on a real device (O8).

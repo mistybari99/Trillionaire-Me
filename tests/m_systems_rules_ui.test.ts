@@ -3,7 +3,7 @@ import { beforeEach, describe, expect, it } from "vitest";
 import { render } from "../src/app";
 import { consentKv, prefs, store } from "../src/ui/state";
 import { grantConsent, revokeConsent } from "../src/core/consent";
-import { MODULES } from "../src/modules/capability";
+import { MODULES, buildLabel } from "../src/modules/capability";
 import { EVIDENCE } from "../src/modules/evidence";
 import type { FieldValue, TMRecord } from "../src/core/types";
 
@@ -145,17 +145,15 @@ describe("M19 automation rules screen and Today suggestions", () => {
 });
 
 describe("capability status matches evidence for M19 and M24", () => {
-  it("both are built, with a route, a function and a test", () => {
+  it("both are complete, with a route, a function and a test", () => {
     for (const id of ["M19", "M24"]) {
       const m = MODULES.find((x) => x.id === id)!;
-      expect(m.statuses, id).toContain("implemented");
-      expect(m.statuses, id).not.toContain("not-built");
-      expect(m.statuses, id).not.toContain("partial");
+      expect(buildLabel(m), id).toBe("complete");
       expect(EVIDENCE[id]!.routes.length && EVIDENCE[id]!.fns.length && EVIDENCE[id]!.tests.length, id).toBeGreaterThan(0);
     }
   });
-  it("the AI and sync rows stay honest (not built / partly)", () => {
-    expect(MODULES.find((x) => x.id === "M23")!.statuses).toEqual(["not-built"]);
-    expect(MODULES.find((x) => x.id === "M20")!.statuses).toContain("partial");
+  it("the AI and sync rows stay honest (blocked / partly)", () => {
+    expect(buildLabel(MODULES.find((x) => x.id === "M23")!)).toBe("blocked");
+    expect(buildLabel(MODULES.find((x) => x.id === "M20")!)).toBe("partial");
   });
 });

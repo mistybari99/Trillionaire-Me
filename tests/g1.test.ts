@@ -5,7 +5,7 @@ import { FIELDS, intakeSteps } from "../src/catalog/fields";
 import { validateCatalog } from "../src/catalog/validate";
 import { GLOSSARY } from "../src/catalog/glossary";
 import { ENTITIES, orphanFields, WORSHIP_ENTITIES } from "../src/schema/entities";
-import { MODULES, CAP_STATUSES } from "../src/modules/capability";
+import { MODULES, BUILD_BOXES, BOX_STATES, CAP_ATTRS, buildLabel } from "../src/modules/capability";
 import { PACKS, COMMON_ENGLISH_KEYS } from "../src/i18n/packs";
 import { LOCALES } from "../src/i18n/registry";
 import { LABELS, UNKNOWN_STATES, numberOrNull, sumKnown, type FieldValue, type TMRecord } from "../src/core/types";
@@ -182,11 +182,14 @@ describe("TM-TST-010/067/017 intake", () => {
 });
 
 describe("TM-TST-144 capability status", () => {
-  it("100% of modules have a valid status; 'implemented' modules are the evidence-backed set (see m_list_status)", () => {
+  it("100% of modules have six valid build boxes and a computed label; 'complete' modules are the evidence-backed set (see m_list_status)", () => {
     expect(MODULES.length).toBe(25);
-    for (const m of MODULES) { expect(m.statuses.length).toBeGreaterThan(0); for (const s of m.statuses) expect(CAP_STATUSES).toContain(s); }
-    // "implemented" (আছে) is now evidence-based; the per-item file/route/test check lives in tests/m_list_status.test.ts.
-    expect(MODULES.filter((m) => m.statuses.includes("implemented")).map((m) => m.id)).toEqual(["M01", "M02", "M04", "M05", "M06", "M07", "M08", "M11", "M15", "M16", "M17", "M19", "M21", "M22", "M24", "M25"]);
+    for (const m of MODULES) {
+      for (const b of BUILD_BOXES) expect(BOX_STATES).toContain(m.build[b]);
+      for (const a of m.attrs) expect(CAP_ATTRS).toContain(a);
+      expect(["complete", "partial", "not-built", "blocked"]).toContain(buildLabel(m));
+    }
+    expect(MODULES.filter((m) => buildLabel(m) === "complete").map((m) => m.id)).toEqual(["M11", "M19", "M22", "M24", "M25"]);
   });
 });
 
@@ -239,7 +242,7 @@ describe("TM-TST-144/171 UI status and home structure", () => {
   it("status screen shows a status tag for every module", () => {
     document.body.innerHTML = '<div id="app"></div>'; localStorage.setItem("tm:ui:lang", "en"); location.hash = "#/more/status"; render();
     const cards = document.querySelectorAll("[data-module]"); expect(cards.length).toBe(25);
-    for (const c of cards) expect(c.querySelector("[data-cap]"), c.getAttribute("data-module") ?? "").not.toBeNull();
+    for (const c of cards) { expect(c.querySelector("[data-build]"), c.getAttribute("data-module") ?? "").not.toBeNull(); expect(c.querySelectorAll("[data-box]").length).toBe(6); expect(c.querySelector("[data-cap-data]")).not.toBeNull(); }
   });
   it("home shows only 1–3 actions and the current stage", () => {
     document.body.innerHTML = '<div id="app"></div>'; localStorage.setItem("tm:ui:lang", "bn"); location.hash = "#/today"; render();

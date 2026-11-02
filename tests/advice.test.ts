@@ -8,7 +8,6 @@ import { grantConsent } from "../src/core/consent";
 import type { FieldValue, Namespace, TMRecord } from "../src/core/types";
 import { MANY_OPEN_TASKS, adviceCards } from "../src/core/advice";
 import { createRegistry } from "../src/adapters/registry";
-import { onlineSuggestion } from "../src/adapters/onlineAdvice";
 import { MemoryKV } from "../src/core/store";
 import { TOPICS } from "../src/library/topics";
 import { validatePack } from "../src/library/packs";
@@ -62,11 +61,11 @@ describe("advice card on Today", () => {
 });
 
 describe("online suggestions slot and free-cloud option stay OFF", () => {
-  it("makes no call and answers not connected while off, even with a key stored; shows the slot text in Connections", async () => {
+  it("makes no call while off, even with a key stored; shows the slot text in Connections", async () => {
     const kv = new MemoryKV(); const reg = createRegistry(kv);
-    const ask = vi.fn(); const fetchSpy = vi.fn(); vi.stubGlobal("fetch", fetchSpy);
-    const r = await onlineSuggestion(reg, { topic: "money" });
-    expect(r).toMatchObject({ ok: false, reason: "not_connected" }); expect(ask).not.toHaveBeenCalled(); expect(fetchSpy).not.toHaveBeenCalled();
+    const fetchSpy = vi.fn(); vi.stubGlobal("fetch", fetchSpy);
+    expect(reg.status("aiAssistant")).toBe("off");
+    expect(await reg.get("aiAssistant").ask("hello")).toMatchObject({ ok: false, reason: "not_connected" }); expect(fetchSpy).not.toHaveBeenCalled();
     vi.unstubAllGlobals();
     location.hash = "#/settings/connections"; render();
     expect(app().querySelector("[data-conn-slot=cloudSync]")!.textContent).toContain("Saved on this device");

@@ -2,11 +2,10 @@
 // - routes: must match a route in src/app.ts ROUTES
 // - fns: "file#exportName" must be an export in that file
 // - files / tests: must exist on disk
-// "implemented" needs at least one route or fn; "partial" needs a route, fn or file; "not-built" needs none.
+// "complete" needs a route, an exported function and a test; "partial" needs a route, fn or file; "not-built" needs no route or fn; "blocked" needs its ready part (files).
 export interface Evidence { routes: string[]; fns: string[]; files: string[]; tests: string[] }
 
 const ev = (routes: string[], fns: string[], files: string[], tests: string[]): Evidence => ({ routes, fns, files, tests });
-const NONE = ev([], [], [], []);
 
 export const EVIDENCE: Record<string, Evidence> = {
   M01: ev(["#/diary/intake"], ["src/ui/screens.ts#intake"], [], ["tests/g3ui.test.ts"]),
@@ -22,16 +21,16 @@ export const EVIDENCE: Record<string, Evidence> = {
   M11: ev(["#/diary/intake"], ["src/ui/screens.ts#intake", "src/core/research.ts#research", "src/adapters/wikipedia.ts#wikipedia"], [], ["tests/research.test.ts", "tests/wikipedia.test.ts", "tests/m11_background_cache.test.ts"]),
   M12: ev(["#/diary/plan", "#/journey/history"], ["src/core/reality.ts#markNotTrue", "src/core/planHistory.ts#planHistory"], [], ["tests/o6_reality_review_templates.test.ts", "tests/m_registers.test.ts"]),
   M13: ev(["#/deen"], ["src/core/prayerLog.ts#markedOn", "src/core/fastLog.ts#isFastMarked", "src/core/prayer.ts#prayerTimes", "src/core/prayerAlerts.ts#alertSlots"], ["src/schema/entities.ts"], ["tests/prayer.test.ts", "tests/g1.test.ts", "tests/fast_log.test.ts"]),
-  M14: ev([], [], ["src/catalog/fields.ts"], ["tests/g1.test.ts"]),
+  M14: ev([], [], ["src/catalog/fields.ts"], []),
   M15: ev(["#/journey/risks"], ["src/core/risk.ts#riskRows"], [], ["tests/m_registers.test.ts"]),
   M16: ev(["#/journey/review", "#/journey/report"], ["src/core/review.ts#reviewSummary"], [], ["tests/o6_reality_review_templates.test.ts"]),
   M17: ev(["#/cards", "#/topics"], ["src/ui/screens.ts#cardsScreen", "src/core/cards.ts#dueCards"], ["src/library/topics.ts"], ["tests/focus_habits_cards.test.ts", "tests/topics_rewards.test.ts"]),
   M18: ev(["#/journey/art"], ["src/ui/rewardArt.ts#journeyArt", "src/ui/diagram.ts#diagram"], [], ["tests/r4_motion.test.ts"]),
   M19: ev(["#/settings/plan/automation", "#/today"], ["src/core/rules.ts#evaluateRules"], [], ["tests/rules.test.ts", "tests/m_systems_rules_ui.test.ts"]),
-  M20: ev(["#/settings/backup", "#/settings/data"], ["src/core/backup.ts#createBackup", "src/core/backup.ts#restoreBackup", "src/core/restore.ts#restoreBackupAtomic"], ["src/core/sync.ts"], ["tests/g2.test.ts", "tests/sync.test.ts", "tests/restore_safety.test.ts", "tests/restore_ui.test.ts"]),
+  M20: ev(["#/settings/backup", "#/settings/data"], ["src/core/backup.ts#createBackup", "src/core/backup.ts#restoreBackup", "src/core/restore.ts#restoreBackupAtomic"], [], ["tests/g2.test.ts", "tests/restore_safety.test.ts", "tests/restore_ui.test.ts"]),
   M21: ev(["#/more/safety", "#/settings/privacy"], ["src/core/safety.ts#checkFreeText"], [], ["tests/g1.test.ts", "tests/o8_notify_privacy.test.ts"]),
   M22: ev(["#/more/status"], ["src/ui/screens.ts#status"], [], ["tests/g1.test.ts"]),
-  M23: NONE,
+  M23: ev([], [], ["src/core/ports.ts", "src/adapters/connectedStubs.ts"], ["tests/connections.test.ts"]),
   M24: ev(["#/more/library", "#/journey"], ["src/core/systems.ts#addSystem", "src/core/systems.ts#planSystem", "src/core/stageTemplates.ts#stagesFor"], ["src/library/systemList.ts"], ["tests/systems.test.ts", "tests/m_systems_rules_ui.test.ts", "tests/o6_reality_review_templates.test.ts"]),
   M25: ev(["#/stuck"], ["src/ui/screens.ts#stuckScreen", "src/core/stuck.ts#diagnose"], [], ["tests/stuck.test.ts"]),
 };

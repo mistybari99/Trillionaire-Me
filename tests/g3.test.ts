@@ -1,6 +1,5 @@
 import { describe, expect, it } from "vitest";
 import { schedule, todaysActions, type Block, type PlanTask } from "../src/core/planner";
-import { add, mergeTasks, orphans, remove, rootGoal, splitTask, TreeError, type Tree } from "../src/core/goals";
 import { monthlyCashFlow, netWorth, runwayMonths, type FinItem } from "../src/core/finance";
 import type { FieldValue } from "../src/core/types";
 
@@ -58,41 +57,6 @@ describe("plan basics: unknown capacity and time, start day, Home limit", () => 
   it("Home shows at most 3 actions for a day", () => {
     const tasks = Array.from({ length: 12 }, (_, i) => ({ id: `t${i}`, minutes: 20, priority: i }));
     expect(todaysActions(schedule({ weeklyFreeMinutes: 5000, blocked: [], tasks }), 0).length).toBeLessThanOrEqual(3);
-  });
-});
-
-describe("TM-TST-037 goal hierarchy keeps links valid", () => {
-  const base = (): Tree => {
-    let t: Tree = {};
-    t = add(t, { id: "g", kind: "goal", parent: null, title: "G" }); t = add(t, { id: "s", kind: "subgoal", parent: "g", title: "S" });
-    t = add(t, { id: "p", kind: "project", parent: "s", title: "P" }); t = add(t, { id: "t1", kind: "task", parent: "p", title: "T1" });
-    return add(t, { id: "t2", kind: "task", parent: "p", title: "T2" });
-  };
-  it("rejects illegal parents", () => {
-    const t = base();
-    expect(() => add(t, { id: "x", kind: "goal", parent: "g", title: "" })).toThrow(TreeError);
-    expect(() => add(t, { id: "x", kind: "subgoal", parent: "p", title: "" })).toThrow(TreeError);
-    expect(() => add(t, { id: "x", kind: "task", parent: null, title: "" })).toThrow(TreeError);
-    expect(() => add(t, { id: "t1", kind: "task", parent: "p", title: "" })).toThrow(/duplicate/);
-  });
-  it("every task reaches a goal; split/merge/delete never orphan (200 random ops)", () => {
-    const r = rng(37); let t = base(); let id = 100;
-    for (let i = 0; i < 200; i++) {
-      const tasks = Object.values(t).filter((n) => n.kind === "task"); const pick = tasks[Math.floor(r() * tasks.length)];
-      const op = r();
-      try {
-        if (op < 0.3 && pick) t = splitTask(t, pick.id, [`n${id++}`, `n${id++}`]);
-        else if (op < 0.5 && tasks.length >= 2) { const a = tasks[0]!, same = tasks.filter((x) => x.parent === a.parent); if (same.length >= 2) t = mergeTasks(t, same.slice(0, 2).map((x) => x.id), `m${id++}`); }
-        else if (op < 0.7 && pick) t = remove(t, pick.id);
-        else if (op < 0.85) { const ps = Object.values(t).filter((n) => n.kind === "project"); if (ps.length) t = add(t, { id: `k${id++}`, kind: "task", parent: ps[Math.floor(r() * ps.length)]!.id, title: "x" }); }
-        else { const ps = Object.values(t).filter((n) => n.kind === "project" || n.kind === "subgoal"); const q = ps[Math.floor(r() * ps.length)]; if (q) t = remove(t, q.id); }
-      } catch (e) { expect(e).toBeInstanceOf(TreeError); }
-      expect(orphans(t)).toEqual([]);
-      for (const n of Object.values(t)) if (n.kind === "task") expect(rootGoal(t, n.id)).toBe("g");
-    }
-  });
-  it("deleting a project re-attaches its tasks upward", () => {
-    const t = remove(base(), "p"); expect(t["t1"]!.parent).toBe("s"); expect(rootGoal(t, "t1")).toBe("g");
   });
 });
 

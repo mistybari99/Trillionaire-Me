@@ -9,7 +9,8 @@ import { settingsHash } from "./settingsRegistry";
 import { pausedCard } from "./privacyUi";
 import { disclaimers, fieldHelp, num, valueEl } from "./components";
 import { STAGES, DEMO_DATE, DEMO_TASKS } from "../demo/seed";
-import { MODULES, CAP_STATUSES, type ModuleDef } from "../modules/capability";
+import { MODULES } from "../modules/capability";
+import { buildLegend, moduleCard } from "./capabilityUi";
 import { ENTITIES } from "../schema/entities";
 import { FIELDS, CATALOG_VERSION, intakeSteps, fieldById } from "../catalog/fields";
 import { semanticLabel } from "../catalog/labels";
@@ -108,19 +109,6 @@ function stageLadder(lang: Locale): HTMLElement {
   });
   return ol;
 }
-
-function capTag(s: ModuleDef["statuses"][number], lang: Locale) {
-  const cls = s === "implemented" || s === "offline-ok" || s === "saved-background" ? "ok" : s === "demo" || s === "internet-needed" || s === "partial" ? "warn" : "off";
-  return h("span", { class: `tag ${cls}`, "data-cap": s }, t(`cap.${s}` as Key, lang));
-}
-
-function moduleCard(m: ModuleDef, lang: Locale) {
-  return h("div", { class: "card", "data-module": m.id },
-    h("div", { class: "row" }, h("h2", { class: "card-h", }, `${m.id} · ${tb(m.name, lang)}`)),
-    h("p", { class: "muted" }, tb(m.note, lang)),
-    h("div", { class: "tags" }, ...m.statuses.map((s) => capTag(s, lang)), ...(m.statuses.includes("implemented") ? [] : [h("span", { class: "tag off" }, t("cap.gate", lang, { g: m.gate }))])));
-}
-
 
 // ---- plan (G3 core wired to the UI) ----
 // O6: "reality changed". The step stays on record, is no longer scheduled, and the change is appended to the journey log.
@@ -819,7 +807,7 @@ function cardsScreenInner(): HTMLElement {
     if (!putCard(Cards.newCard(`card-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 4)}`, f1, b1, today))) { err.textContent = saveBlockedText(lang); return; }
     rerender(); });
   const boxes = Cards.byBox(all);
-  return h("main", {}, link("#/more/topics", "crumb", `← ${t("topics.title", lang)}`), h("h1", {}, t("cards.title", lang)), h("p", { class: "sub" }, t("cards.intro", lang)),
+  return h("main", {}, link("#/topics", "crumb", `← ${t("topics.title", lang)}`), h("h1", {}, t("cards.title", lang)), h("p", { class: "sub" }, t("cards.intro", lang)),
     all.length ? h("div", {}, h("p", { "data-cards-due": String(queue.length) }, valueEl(queue.length ? t("cards.due", lang, { n: num(queue.length, lang) }) : t("cards.none", lang), "INFERENCE", lang)), ...(queue.length ? [go] : []), study,
       h("h2", { class: "card-h", }, t("cards.boxes", lang)), h("div", { class: "seg", role: "img", "aria-label": boxes.join(", ") }, ...boxes.map((n, i) => h("span", { class: "tag" }, `${num(i + 1, lang)}: ${num(n, lang)}`)))) : h("p", { class: "muted" }, t("cards.empty", lang)),
     h("h2", {}, t("cards.add", lang)), form, ...all.map((c) => h("div", { class: "card", "data-card": c.id }, h("div", { class: "row" }, h("span", {}, nsTag(activeNs(), lang), " ", c.front), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0;min-height:44px", onclick: () => { store[activeNs()].delete(c.id); rerender(); } }, t("cards.remove", lang))))), disclaimers(lang));
@@ -1212,7 +1200,7 @@ export function status(): HTMLElement {
     link("#/settings/about", "crumb", `← ${t("set.cat.about", lang)}`),
     h("h1", {}, t("cap.title", lang)),
     h("p", { class: "sub" }, t("cap.intro", lang)),
-    h("div", { class: "tags" }, ...CAP_STATUSES.map((s) => capTag(s, lang))),
+    buildLegend(lang), h("p", { class: "muted" }, t("cap.legend", lang)),
     ...MODULES.map((m) => moduleCard(m, lang)),
     disclaimers(lang));
 }

@@ -286,9 +286,21 @@ const en = {
   "rules.s.break_after_focus": "A focus block just ended. Take a {n}-minute break.",
   "rules.s.focus_again": "Another {n}-minute focus block is available if you want it. Skipping is fine.",
   "rules.open": "Open",
-  "cap.title": "Capability status",
-  "cap.intro": "Honest list. Built = works in the app and has a test. Partly = some parts or rules only.",
-  "cap.implemented": "Built", "cap.partial": "Partly built", "cap.demo": "Demo", "cap.offline-ok": "Works offline", "cap.internet-needed": "Needs internet", "cap.saved-background": "Wikipedia (saved in background)", "cap.not-built": "Not built",
+  "cap.title": "Build status",
+  "cap.intro": "Is the software itself built? Six boxes per module. Your own data does not change this.",
+  "cap.legend": "Complete = every needed box is built. Partly built lists the boxes still missing.",
+  "cap.build.complete": "Complete", "cap.build.partial": "Partly built", "cap.build.not-built": "Not built", "cap.build.blocked": "Needs your approval",
+  "cap.box.input": "Input", "cap.box.store": "Storage", "cap.box.calc": "Calculation", "cap.box.output": "Output", "cap.box.export": "Export", "cap.box.links": "Links",
+  "cap.state.built": "Built", "cap.state.missing": "Missing", "cap.state.na": "Not needed",
+  "cap.boxes": "Six build boxes",
+  "cap.missing": "Missing: {list}",
+  "cap.blocked": "Waits for your approval ({d})",
+  "cap.attr.offline": "Works offline", "cap.attr.tap-internet": "Internet only after a tap; the result is saved here", "cap.attr.private": "Private by default",
+  "cap.data.label": "Data on this phone ({mode})",
+  "cap.data.none": "This module keeps no records of its own",
+  "cap.data.empty": "Nothing entered yet",
+  "cap.data.demo": "Holds Demo data ({n} records)",
+  "cap.data.real": "Holds your own data ({n} records)",
   "cap.gate": "Planned for: {g}",
   "fields.title": "Field guide",
   "fields.count": "{n} fields · list version {v}",
@@ -1377,15 +1389,21 @@ const bn: Record<Key, string> = {
   "rules.s.break_after_focus": "একটি ফোকাস ব্লক শেষ হলো। {n} মিনিটের ব্রেক নিন।",
   "rules.s.focus_again": "চাইলে আরেকটি {n} মিনিটের ফোকাস ব্লক দিতে পারেন। না দিলেও ঠিক আছে।",
   "rules.open": "খুলুন",
-  "cap.title": "কী কী চলছে",
-  "cap.intro": "সৎ লিস্ট। “আছে” মানে স্ক্রিন বা ফাংশন অ্যাপে পাওয়া যায় এবং তার পরীক্ষা আছে। “আংশিক” মানে শুধু একটা অংশ বা শুধু নিয়ম/ডেটা আছে। “নেই” মানে এখনো কিছু বানানো হয়নি।",
-  "cap.implemented": "আছে",
-  "cap.partial": "আংশিক",
-  "cap.demo": "Demo",
-  "cap.offline-ok": "ইন্টারনেট ছাড়া চলে",
-  "cap.internet-needed": "ইন্টারনেট লাগে",
-  "cap.saved-background": "উইকিপিডিয়া (ব্যাকগ্রাউন্ডে সেভ করা)",
-  "cap.not-built": "নেই",
+  "cap.title": "বানানো অবস্থা",
+  "cap.intro": "সফটওয়্যারটি নিজে কতটা বানানো হয়েছে, সেটাই এখানে। প্রতি মডিউলে ছয়টি ঘর। আপনার ডেটা লেখা হয়েছে কি না, তাতে এটা বদলায় না।",
+  "cap.legend": "সম্পূর্ণ মানে দরকারি সব ঘর তৈরি। আংশিক হলে কোন ঘর বাকি, তা লেখা থাকে।",
+  "cap.build.complete": "সম্পূর্ণ", "cap.build.partial": "আংশিক", "cap.build.not-built": "তৈরি হয়নি", "cap.build.blocked": "আপনার পারমিশন লাগবে",
+  "cap.box.input": "ইনপুট", "cap.box.store": "সেভ", "cap.box.calc": "হিসাব", "cap.box.output": "আউটপুট", "cap.box.export": "এক্সপোর্ট", "cap.box.links": "লিংক",
+  "cap.state.built": "আছে", "cap.state.missing": "নেই", "cap.state.na": "লাগে না",
+  "cap.boxes": "ছয়টি বানানোর ঘর",
+  "cap.missing": "বাকি: {list}",
+  "cap.blocked": "আপনার পারমিশনের অপেক্ষায় ({d})",
+  "cap.attr.offline": "ইন্টারনেট ছাড়া চলে", "cap.attr.tap-internet": "ট্যাপ করলে তবেই ইন্টারনেট; ফল এখানে সেভ থাকে", "cap.attr.private": "ডিফল্টে ব্যক্তিগত",
+  "cap.data.label": "এই ফোনের ডেটা ({mode})",
+  "cap.data.none": "এই মডিউলের নিজের কোনো রেকর্ড নেই",
+  "cap.data.empty": "এখনো কিছু লেখা হয়নি",
+  "cap.data.demo": "Demo ডেটা আছে ({n}টি রেকর্ড)",
+  "cap.data.real": "আপনার নিজের ডেটা আছে ({n}টি রেকর্ড)",
   "cap.gate": "প্ল্যান: {g}",
   "fields.title": "ঘরের গাইড",
   "fields.count": "{n}টি ঘর · লিস্টের ভার্সন {v}",
@@ -2372,7 +2390,7 @@ const bn: Record<Key, string> = {
 
 // Mix mode: Bangla sentences with common English words kept (owner request, decision L-11).
 // Keys listed here show English in Mix (they are already English-first in the Bangla pack).
-export const COMMON_ENGLISH_KEYS: ReadonlySet<string> = new Set(["badge.demo", "status.online", "status.offline", "label.DEMO", "focus.plus", "focus.minus", "habits.plus", "help.format", "more.theme", "cap.demo", "data.demo", "backup.title", "suggest.btn", "habits.of"]);
+export const COMMON_ENGLISH_KEYS: ReadonlySet<string> = new Set(["badge.demo", "status.online", "status.offline", "label.DEMO", "focus.plus", "focus.minus", "habits.plus", "help.format", "more.theme", "data.demo", "backup.title", "suggest.btn", "habits.of"]);
 // Mix mode keeps the English word for everyday words people already say in English (owner rule, 1 Nov 2026).
 // Bangla mode writes the same words in Bangla script (for example স্টাফ), so each loanword is listed here with its English form.
 // Longer phrases come first. A Bangla suffix after a swapped word is kept after a hyphen, for example Plan-এর.
@@ -2395,6 +2413,7 @@ export const MIX_TERMS: ReadonlyArray<readonly [string, string]> = [
   ["সাবস্ক্রিপশন", "Subscription"], ["রিপোর্ট", "Report"], ["স্টাফ", "Staff"], ["টেমপ্লেট", "Template"], ["টার্গেট", "Target"],
   ["ক্যাপিটাল", "Capital"], ["প্রফিট", "Profit"], ["রেভিনিউ", "Revenue"], ["ইকুইটি", "Equity"], ["ভ্যালুয়েশন", "Valuation"],
   ["মেজারেবল", "Measurable"], ["অ্যাচিভেবল", "Achievable"], ["রিলেভেন্ট", "Relevant"], ["স্পেসিফিক", "Specific"], ["ফর্ম", "Form"],
+  ["ইনপুট", "Input"], ["আউটপুট", "Output"], ["এক্সপোর্ট", "Export"], ["লিংক", "Link"],
 ];
 const MIX_SUFFIX: Record<string, string> = { "ের": "এর", "ে": "এ", "র": "এর", "তে": "তে", "টি": "টি", "টা": "টা", "গুলো": "গুলো", "কে": "কে", "ও": "ও", "ই": "ই" };
 const mixRe = (w: string) => new RegExp(`(?<=^|[\\s(·,।:“"'-])${w}(ের|ে|র|তে|টি|টা|গুলো|কে|ও|ই)?(?=$|[\\s).,।:!?”"'·-])`, "gu");

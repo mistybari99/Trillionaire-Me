@@ -79,15 +79,15 @@ describe("M11 labels and M-list status", () => {
   const m11 = MODULES.find((m) => m.id === "M11")!;
   const m23 = MODULES.find((m) => m.id === "M23")!;
 
-  it("status tag reads exactly the owner's label in Bangla and English", () => {
-    expect(m11.statuses).toContain("saved-background");
-    expect(PACKS.en["cap.saved-background"]).toBe("Wikipedia (saved in background)");
-    expect(PACKS.bn["cap.saved-background"]).toBe("উইকিপিডিয়া (ব্যাকগ্রাউন্ডে সেভ করা)");
-    expect(PACKS.mix["cap.saved-background"].length).toBeGreaterThan(0);
+  it("M11 is marked as internet-only-after-a-tap, with the owner's wording in all three modes", () => {
+    expect(m11.attrs).toContain("tap-internet");
+    expect(m11.attrs).not.toContain("offline");
+    expect(PACKS.en["cap.attr.tap-internet"]).toMatch(/after a tap/);
+    expect(PACKS.bn["cap.attr.tap-internet"]).toMatch(/ট্যাপ/);
+    expect(PACKS.mix["cap.attr.tap-internet"].length).toBeGreaterThan(0);
   });
 
   it("no module says 'internet needed' any more (keys stay; wording changes)", () => {
-    for (const m of MODULES) expect(m.statuses, m.id).not.toContain("internet-needed");
     for (const m of [m11, m23]) {
       expect(`${m.note.en} ${m.name.en}`, m.id).not.toMatch(/internet/i);
       expect(`${m.note.bn} ${m.name.bn}`, m.id).not.toMatch(/ইন্টারনেট/);

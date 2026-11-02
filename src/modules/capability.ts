@@ -1,43 +1,122 @@
-// Capability Status registry (TM-REQ-144). Status claims must match evidence (see evidence.ts and tests/m_list_status.test.ts).
-// Owner-facing meaning: "implemented" = আছে (a screen or function is reachable in the app, with a test);
-// "partial" = আংশিক (only part is reachable, or only rules/data exist, no main screen);
-// "not-built" = নেই (nothing user-reachable yet).
+// Capability status (TM-REQ-144), redefined 2 Nov 2026 (owner): the card answers ONE question: "is the software's own build complete?"
+// It does not depend on whether any data was typed. Whether THIS phone holds demo or real data is a separate line (src/modules/dataStatus.ts).
+//
+// Build pipeline, six boxes per module (BuildBox): input form, storage, calculation or rule, output screens, export/backup, links to dependent screens.
+// Each box is built (B), missing (M) or not needed (-). The label is computed from the boxes, never typed by hand:
+//   complete = no box missing · partial = some box missing (the boxes are listed by name) · not-built = nothing user-reachable ·
+//   blocked  = waits for an owner approval (a D-number), whatever else is missing.
+// tests/m_list_status.test.ts checks every claim against routes, exported functions and tests; tests/field_reach.test.ts checks fields.
 import type { Bi } from "../i18n/registry";
 
-// "saved-background" (M11): Wikipedia is used only after a tap; the first result is saved on the phone and shown offline later.
-// "internet-needed" is kept as a key but no module uses it any more (owner, 24 Oct 2026: no "internet needed" labels).
-export type CapStatus = "implemented" | "partial" | "demo" | "offline-ok" | "internet-needed" | "saved-background" | "not-built";
-export const CAP_STATUSES: readonly CapStatus[] = ["implemented", "partial", "demo", "offline-ok", "internet-needed", "saved-background", "not-built"];
+export const BUILD_BOXES = ["input", "store", "calc", "output", "export", "links"] as const;
+export type BuildBox = (typeof BUILD_BOXES)[number];
+export type BoxState = "built" | "missing" | "na";
+export const BOX_STATES: readonly BoxState[] = ["built", "missing", "na"];
+export type BuildLabel = "complete" | "partial" | "not-built" | "blocked";
+/** Small facts about a module. They are not statuses. */
+export type CapAttr = "offline" | "tap-internet" | "private";
+export const CAP_ATTRS: readonly CapAttr[] = ["offline", "tap-internet", "private"];
 
-export interface ModuleDef { id: string; name: Bi; tab: "journey" | "diary" | "deen" | "more"; statuses: CapStatus[]; note: Bi; gate: string }
+export interface ModuleDef {
+  id: string; name: Bi; tab: "journey" | "diary" | "deen" | "more";
+  build: Record<BuildBox, BoxState>; attrs: CapAttr[];
+  /** An owner approval this module waits for (D-C, D-D ...). Set only when that approval is the blocker. */
+  blockedBy: string | null;
+  note: Bi; missing: Bi; gate: string;
+}
 
-const m = (id: string, bn: string, en: string, tab: ModuleDef["tab"], statuses: CapStatus[], gate: string, nbn: string, nen: string): ModuleDef =>
-  ({ id, name: { bn, en }, tab, statuses, gate, note: { bn: nbn, en: nen } });
+const CODE: Record<string, BoxState> = { B: "built", M: "missing", "-": "na" };
+const boxes = (s: string): Record<BuildBox, BoxState> => {
+  if (s.length !== BUILD_BOXES.length) throw new Error(`need ${BUILD_BOXES.length} box letters, got ${s}`);
+  return Object.fromEntries(BUILD_BOXES.map((b, i) => [b, CODE[s[i]!]!])) as Record<BuildBox, BoxState>;
+};
+
+export const missingBoxes = (m: Pick<ModuleDef, "build">): BuildBox[] => BUILD_BOXES.filter((b) => m.build[b] === "missing");
+export const builtBoxes = (m: Pick<ModuleDef, "build">): BuildBox[] => BUILD_BOXES.filter((b) => m.build[b] === "built");
+export function buildLabel(m: Pick<ModuleDef, "build" | "blockedBy">): BuildLabel {
+  if (m.blockedBy) return "blocked";
+  const miss = missingBoxes(m).length;
+  if (miss === 0) return "complete";
+  return builtBoxes(m).length === 0 ? "not-built" : "partial";
+}
+
+const m = (id: string, bn: string, en: string, tab: ModuleDef["tab"], b: string, attrs: CapAttr[], blockedBy: string | null, gate: string, nbn: string, nen: string, mbn: string, men: string): ModuleDef =>
+  ({ id, name: { bn, en }, tab, build: boxes(b), attrs, blockedBy, gate, note: { bn: nbn, en: nen }, missing: { bn: mbn, en: men } });
 
 export const MODULES: ModuleDef[] = [
-  m("M01", "Profile ও সম্মতি", "Profile & consent", "diary", ["implemented", "demo", "offline-ok"], "G1", "ধাপে ধাপে ডেটা লেখার স্ক্রিন আছে। শুরুতে Demo; আসল ডেটা শুধু ফোনে, সম্মতি টিক দিলে।", "Step-by-step entry screen works. Starts in Demo; real data stays on this phone and only after the consent tick."),
-  m("M02", "নিজেকে চেনা (মূল্যায়ন)", "Discover (assessment)", "journey", ["implemented", "demo", "offline-ok"], "G3", "আগ্রহ, স্কিল ও শক্তি লিখলে প্ল্যান পাতায় মিলিয়ে কার্ড দেখায়।", "Enter interests, skills and strengths; the Plan screen shows matching cards."),
-  m("M03", "মূল লক্ষ্য ও ধাপ-সিঁড়ি", "North Star & ladder", "journey", ["partial", "demo", "offline-ok"], "G3", "লক্ষ্য মেয়াদ অনুযায়ী সাজায় (৫ বছর থেকে আজ)। মূল মাপকাঠি লিখে শুরু থেকে লক্ষ্য পর্যন্ত ধাপ দেখা যায়। একাধিক মাপকাঠির ওজন ও অটোমেটিক বাছাই এখনো নেই।", "Shows goals by time horizon (5 years to today). You can write North Star measures and see steps from start to target. Weighting several measures and automatic choice are not built yet."),
-  m("M04", "পথ ও সুযোগ-লাইব্রেরি", "Paths & opportunity library", "journey", ["implemented", "demo", "offline-ok"], "G3", "প্ল্যান পাতায় স্কিল ও আগ্রহ মিলিয়ে পথের কার্ড আসে। পথের লিস্ট এখনো ছোট।", "Path cards on the Plan screen match your skills and interests. The path list is still short."),
-  m("M05", "স্টেজ ও যাত্রা-লগ", "Stages & journey log", "journey", ["implemented", "demo", "offline-ok"], "G3", "স্টেজের সিঁড়ি, স্টেজ পাস ও যাত্রা-লগ চলে (Demo data)।", "Stage ladder, stage pass and journey log work (Demo data)."),
-  m("M06", "লক্ষ্য, কাজ ও অভ্যাস", "Goals, tasks & habits", "journey", ["implemented", "demo", "offline-ok"], "G3", "আজকের কাজ, ফোকাস টাইমার, অভ্যাস ও লক্ষ্য লেখা চলে (Demo data)। একটি কাজ আরেকটির পরে রাখা যায়; আগের কাজ না বসলে পরেরটি অপেক্ষা করে।", "Today's tasks, focus timer, habits and goal entry work (Demo data). A task can be set to come after another; it waits until the earlier one has a place."),
-  m("M07", "সম্পদ ও অর্থ", "Resources & finance", "diary", ["implemented", "demo"], "G3", "ইনকাম, খরচ ও সম্পদ লিখে নিট হিসাব দেখা যায় (BDT, Demo data)। না জানা হলে 'জানা নেই' লেখা থাকে।", "Enter income, spending and assets to see a net figure (BDT, Demo data). Unknown values stay marked as unknown."),
-  m("M08", "সময় ও সক্ষমতা", "Time & capacity", "diary", ["implemented", "demo", "offline-ok"], "G3", "ফ্রি সময় লিখলে আজকের কাজের সূচি তৈরি হয় (Demo data)।", "Enter free time and today's schedule is built (Demo data)."),
-  m("M09", "উদ্যোগের পোর্টফোলিও", "Venture portfolio", "journey", ["partial", "demo", "offline-ok"], "G3", "যেকোনো সংখ্যক উদ্যোগ বা সম্পদ লিখে নাম, অবস্থা ও মালিকানা রাখা যায় (না জানলে ফাঁকা)। মূল্য ও ইনকাম-খরচের হিসাব এখনো নেই।", "Write any number of ventures or assets with name, stage and ownership (blank if unknown). Value and income-cost maths are not built yet."),
-  m("M10", "টিম ও দায়িত্ব বণ্টন", "Team & delegation", "diary", ["partial", "demo", "offline-ok"], "G3", "কাজের রোল লেখা যায় ও কে দেখছেন তা রাখা যায়; নাম লেখা হয় না। কাজ হস্তান্তর ও নিয়োগের ধাপ এখনো নেই।", "Write work roles and who covers each one; no names are stored. Handover and hiring steps are not built yet."),
-  m("M11", "গবেষণা ও অপশন", "Research & options", "more", ["implemented", "saved-background"], "G4", "ইনপুট ঘরের 'Suggest options' বাটনে চাপলে Wikipedia থেকে 2-3টি অপশন আসে। প্রথম খোঁজের ফল ফোনে সেভ করা থাকে, তাই পরে একই শব্দে ফোনেই দেখায়। অ্যাপ খোলার সময় কোনো খোঁজ যায় না।", "Tap 'Suggest options' in an input to get 2-3 Wikipedia options. The first search is saved on this phone, so the same search shows here later. No search runs when the app opens."),
-  m("M12", "বাস্তবতা বদল ও প্ল্যানের ইতিহাস", "Reality-changed & plan history", "journey", ["partial", "demo", "offline-ok"], "G3", "কাজকে 'আর সত্য নয়' বলে চিহ্নিত করা, লগে লেখা ও ইতিহাস পাতায় শেষ হওয়া ও বদলানো ধাপ দেখা চলে। পূর্ণ ভার্সন ও তুলনা এখনো নেই।", "You can mark a step 'no longer true', it is logged, and the history screen lists finished and changed steps. Full versions and comparison are not built yet."),
-  m("M13", "দ্বীন, ইবাদত ও আখিরাত", "Deen, ibadah & akhirah", "deen", ["partial", "demo", "offline-ok"], "G3", "নামাজ ও রোজার চিহ্ন করার ঘর আছে; নামাজের সময় এই ফোনে হিসাব হয় (যাচাই দরকার)। কোনো হিসাব, নম্বর বা ক্রম দেখানো হয় না। কুরআন, যাকাত, দান ইত্যাদির ঘর ও কনটেন্ট এখনো নেই। কোনো ধর্মীয় পাঠ্য নেই, ডিফল্ট ব্যক্তিগত।", "Prayer and fasting marks are here; prayer times are calculated on this phone (check them against an official timetable). Nothing is totalled or compared. Quran, zakat and giving entries and content are not built yet. No scripture text; private by default."),
-  m("M14", "স্বাস্থ্য ও পরিবার", "Health & family", "diary", ["partial"], "G3", "স্বাস্থ্য-নোটের ঘরের বিবরণ আছে। লেখার জায়গা এখনো নেই।", "A health-note field is defined. There is no place to write it yet."),
-  m("M15", "রিস্ক ও থামার শর্ত", "Risk & stop criteria", "journey", ["implemented", "demo", "offline-ok"], "G3", "রিস্ক লিখে তার রিভিউের তারিখ ও থামার শর্ত রাখা যায় (Demo data)। থামার শর্ত না লেখা থাকলে তা গোনা হয়।", "Write a risk with a review date and a stop rule (demo data). Risks without a stop rule are counted."),
-  m("M16", "রিভিউ ও KPI", "Reviews & KPIs", "journey", ["implemented", "demo", "offline-ok"], "G3", "৯০ দিনের রিভিউ ও রিপোর্ট পাতা আছে (গণনা, Demo data)। KPI টার্গেট এখনো নেই।", "90-day review and report screens exist (counts, Demo data). KPI targets are not built yet."),
-  m("M17", "জ্ঞান ও সূত্র", "Knowledge & sources", "more", ["implemented", "demo", "offline-ok"], "G4", "ফ্ল্যাশকার্ড ও বিষয়-গাইড চলে। সূত্র (source) আলাদা করে রাখা হয় না।", "Flashcards and topic guides work. Sources are not tracked separately yet."),
-  m("M18", "ভিজ্যুয়াল স্তর", "Visual layer", "more", ["partial", "demo", "offline-ok"], "G3", "স্টেজের সিঁড়ি, যাত্রার ছবি ও টিপসের ছোট ডায়াগ্রাম আছে। বাকি চার্ট পরে; প্রতিটির লেখা অপশন থাকবে।", "Stage ladder, journey art and small tip diagrams exist. Other charts come later, each with a text version."),
-  m("M19", "অটোমেশন নিয়ম", "Automation rules", "more", ["implemented", "demo", "offline-ok"], "G6", "চারটি ছোট নিয়ম ফোনেই চলে: ছোট ধাপের পরামর্শ, পরের ধাপ, ফোকাসের পর ব্রেক, আরেকটি ফোকাস (ডিফল্টে বন্ধ)। কোনো নোটিফিকেশন যায় না, নিয়ম নিজে কাজ যোগ করে না।", "Four small rules run on this phone: smaller step, next stage, break after focus, another focus block (off by default). No notifications are sent, and a rule never adds a task."),
-  m("M20", "Sync, Backup ও export", "Sync, backup & export", "more", ["partial", "demo"], "G2", "ব্যাকআপ সেভ ও ফেরত আনা, এনক্রিপ্টেড ব্যাকআপ, CSV export ও import চলে ('আরও > ডেটা')। সাপ্তাহিক ব্যাকআপ রিমাইন্ডার আছে। সিঙ্ক এখনো নেই।", "Backup save and restore, encrypted backup, CSV export and import work ('More > Data'). A weekly backup reminder exists. Sync is not built."),
-  m("M21", "নিরাপত্তা ও প্রাইভেসি", "Security & privacy", "more", ["implemented", "demo", "offline-ok"], "G7", "গোপন তথ্য (পাসওয়ার্ড, OTP ইত্যাদি) লিখতে দেয় না। ঐচ্ছিক PIN লক আছে (এনক্রিপশন নয়)। লক-স্ক্রিন গোপন থাকে। পূর্ণ আইনি রিভিউ G7-এ।", "Blocks secrets (passwords, OTP and similar). Optional PIN lock (a privacy screen, not encryption). Lock screen stays private. Full legal review is at G7."),
-  m("M22", "সক্ষমতার অবস্থা ও Demo", "Capability status & demo", "more", ["implemented", "offline-ok"], "G1", "এই স্ক্রিন।", "This screen."),
-  m("M23", "AI স্তর", "AI layer", "more", ["not-built"], "G6", "এখনো নেই। AI ছাড়াই সব চলে; G6-এ মালিকের পারমিশন নিয়ে যোগ হবে।", "Not built. Everything works without AI; it comes in G6 with owner approval."),
-  m("M24", "template লাইব্রেরি", "Template library", "more", ["implemented", "demo", "offline-ok"], "G3", "তৈরি সিস্টেম: সকালের রুটিন, সাপ্তাহিক টাকার হিসাব, পড়ার ব্লক, অভ্যাস আবার শুরু, চাকরি খোঁজার সপ্তাহ, ব্যবসা শুরুর ধাপ। এক ট্যাপে লক্ষ্য, কাজ ও অভ্যাস যোগ হয়, আবার সরানো যায়। বাংলা লেখা এখনো যাচাই হয়নি।", "Ready systems: morning routine, weekly money check, study block, habit reset, job-search week, business starter. One tap adds goals, tasks and habits; remove takes them out. Bangla text is not reviewed yet."),
-  m("M25", "আটকে গেলে", "When stuck", "journey", ["implemented", "demo", "offline-ok"], "G3", "৬টি ট্যাপে সম্ভাব্য কারণ ও ছোট সাহায্য; AI ছাড়া।", "Six taps → likely causes and small helpers; no AI."),
+  m("M01", "Profile ও সম্মতি", "Profile & consent", "diary", "BBBMBB", [], null, "G1",
+    "ধাপে ধাপে ডেটা লেখা, সম্মতি টিক, সেভ ও আবার শুরু করা পুরোটা তৈরি।", "Step-by-step entry, consent tick, save and resume are all built.",
+    "আউটপুট: নাম, জন্মসাল ও টাইম জোন সেভ হয়, কিন্তু কোনো স্ক্রিন বা হিসাব সেগুলো পড়ে না।", "Output: name, birth year and time zone are saved, but no screen or calculation reads them."),
+  m("M02", "নিজেকে চেনা (মূল্যায়ন)", "Discover (assessment)", "journey", "MBBMBB", ["offline", "private"], null, "G3",
+    "আগ্রহ, শক্তি, মূল্যবোধ ও স্কিল লিখে প্ল্যান পাতায় মিলিয়ে কার্ড দেখা যায়।", "Enter interests, strengths, values and skills; the Plan screen shows matching cards.",
+    "ইনপুট: অভিজ্ঞতা, রিস্কের ধরন ও শেখার ধরনের প্রশ্ন নেই। আউটপুট: মূল্যবোধ, সীমাবদ্ধতা ও স্কিলের প্রমাণ সেভ হয় কিন্তু কোথাও দেখায় না।", "Input: no questions on experience, risk preference or learning style. Output: values, constraints and skill evidence are saved but not shown."),
+  m("M03", "মূল লক্ষ্য ও ধাপ-সিঁড়ি", "North Star & ladder", "journey", "MBMBBM", ["offline"], null, "G3",
+    "মূল মাপকাঠি লিখে শুরু থেকে টার্গেট পর্যন্ত ধাপ দেখা যায়; লক্ষ্য মেয়াদ অনুযায়ী সাজানো।", "Write North Star measures and see steps from start to target; goals are grouped by time horizon.",
+    "ইনপুট ও হিসাব: 'এখন কোথায়' সংখ্যা নেই, তাই টার্গেটের দিকে কতটা এগোলাম হিসাব হয় না। লিংক: নেট ওয়ার্থ বা উদ্যোগের সাথে যুক্ত নয়।", "Input and calculation: no 'where I am now' number, so progress toward the target is not worked out. Links: not connected to net worth or ventures."),
+  m("M04", "পথ ও সুযোগ-লাইব্রেরি", "Paths & opportunity library", "journey", "--BM-B", ["offline"], null, "G3",
+    "প্ল্যান পাতায় স্কিল ও আগ্রহ মিলিয়ে পথের কার্ড আসে, কেন মিলল তা দেখায়।", "Path cards on the Plan screen match your skills and interests and show why.",
+    "আউটপুট: পথের সূত্র ও তারিখ নেই; হালাল-চেকের প্রশ্ন পথের কার্ডে যুক্ত নয়। লিস্ট ছোট (১০টি)।", "Output: paths carry no source or date, and the halal-check questions are not attached to path cards. The list is short (10 paths)."),
+  m("M05", "স্টেজ ও যাত্রা-লগ", "Stages & journey log", "journey", "BBMBBB", ["offline"], null, "G3",
+    "স্টেজের সিঁড়ি, স্টেজ পাস ও যাত্রা-লগ চলে।", "Stage ladder, stage pass and journey log work.",
+    "হিসাব: স্টেজ A ছাড়া বাকিগুলোর পাস-শর্ত শুধু নিজের লেখা প্রমাণ; মাপা যায় এমন শর্ত, রিভিউয়ের তারিখ, পজ ও রোলব্যাক নেই।", "Calculation: apart from Stage A, a stage passes on your own written evidence only; no measurable exit, review date, pause or rollback."),
+  m("M06", "লক্ষ্য, কাজ ও অভ্যাস", "Goals, tasks & habits", "journey", "MBBMBB", ["offline"], null, "G3",
+    "আজকের কাজ, ফোকাস টাইমার, অভ্যাস, ফ্ল্যাশকার্ড ও লক্ষ্য লেখা চলে; কাজ আরেকটির পরে রাখা যায়।", "Today's tasks, focus timer, habits, flashcards and goal entry work; a task can come after another.",
+    "ইনপুট: লক্ষ্যের ধরন লেখার ঘর নেই; উপ-লক্ষ্য বা প্রজেক্ট স্তর নেই; কাজ এডিট করা যায় না। আউটপুট: লক্ষ্যের মাপের নাম ও সপ্তাহে অভ্যাসের দিন সেভ হয়, কিন্তু কোথাও দেখায় না।", "Input: no field for goal kind; no sub-goal or project level; a task cannot be edited. Output: the goal's measure name and a habit's days per week are saved but never shown."),
+  m("M07", "সম্পদ ও অর্থ", "Resources & finance", "diary", "BBMBBM", ["offline", "private"], null, "G3",
+    "ইনকাম, খরচ ও সম্পদ লিখে নিট ওয়ার্থ, মাসের ক্যাশ ফ্লো ও রানওয়ে দেখা যায় (BDT)। না জানা হলে 'জানা নেই' দেখায়।", "Enter income, spending and assets to see net worth, monthly cash flow and runway (BDT). Unknown stays 'Not known yet'.",
+    "হিসাব: অন্য মুদ্রা, বছরের বা এককালীন খরচের রূপান্তর, যাকাতের হিসাব ও ইউনিট ইকোনমিক্স নেই। লিংক: আর্থিক লাইন উদ্যোগের সাথে যুক্ত নয়।", "Calculation: no other currencies, no yearly or one-off conversion, no zakat figure, no unit economics. Links: a money line is not tied to a venture."),
+  m("M08", "সময় ও সক্ষমতা", "Time & capacity", "diary", "BBMMBB", ["offline"], null, "G3",
+    "ফ্রি সময় লিখলে আজকের ও সপ্তাহের কাজের সূচি তৈরি হয়; জায়গা না হলে কারণসহ দেখায়।", "Enter free time and the day and week schedule is built; steps that do not fit are listed with a reason.",
+    "হিসাব: নামাজ, পরিবার ও বিশ্রাম ব্লক হিসেবে বসে না (ফ্রি সময়ের বাইরে ধরা হয়); এনার্জি হিসাবে নেই। আউটপুট: সীমাবদ্ধতার 'সপ্তাহে ঘণ্টা' সেভ হয়, কিন্তু কেউ পড়ে না।", "Calculation: prayer, family and rest are not placed as blocks (they sit outside the free window); energy is not modelled. Output: a constraint's hours per week is saved but nothing reads it."),
+  m("M09", "উদ্যোগের পোর্টফোলিও", "Venture portfolio", "journey", "MBMMBM", ["offline", "private"], null, "G3",
+    "যেকোনো সংখ্যক উদ্যোগ বা সম্পদ লিখে নাম, অবস্থা ও মালিকানা রাখা যায় (না জানলে ফাঁকা)।", "Write any number of ventures or assets with name, stage and ownership (blank if unknown).",
+    "ইনপুট ও আউটপুট: মূল্য লেখার ঘর নেই; আয়-খরচ ও মোট হিসাব নেই। লিংক: Today ও রিপোর্টে উদ্যোগ আসে না।", "Input and output: no place to write a value; no income-cost figures or total. Links: ventures do not appear on Today or in reports."),
+  m("M10", "টিম ও দায়িত্ব বণ্টন", "Team & delegation", "diary", "BBMBBM", ["offline", "private"], null, "G3",
+    "কাজের রোল লেখা যায় ও কে দেখছেন তা রাখা যায়; নাম লেখা হয় না।", "Write work roles and who covers each one; no names are stored.",
+    "হিসাব ও লিংক: কাজের সাথে রোল যুক্ত নয়; হস্তান্তর ও নিয়োগের ধাপ নেই; ফাঁকের হিসাব শুধু সংখ্যা।", "Calculation and links: tasks are not tied to roles; no handover or hiring step; the gap view is only a count."),
+  m("M11", "গবেষণা ও অপশন", "Research & options", "more", "BBBBBB", ["tap-internet", "private"], null, "G4",
+    "ইনপুট ঘরের 'Suggest options' বাটনে চাপলে Wikipedia থেকে 2-3টি অপশন আসে। প্রথম খোঁজের ফল ফোনে সেভ করা থাকে। অ্যাপ খোলার সময় কোনো খোঁজ যায় না।", "Tap 'Suggest options' in an input to get 2-3 Wikipedia options. The first search is saved on this phone. No search runs when the app opens.",
+    "", ""),
+  m("M12", "বাস্তবতা বদল ও প্ল্যানের ইতিহাস", "Reality-changed & plan history", "journey", "MBMMBB", ["offline"], null, "G3",
+    "কাজকে 'আর সত্য নয়' বলে চিহ্নিত করা, লগে লেখা ও ইতিহাস পাতায় শেষ হওয়া ও বদলানো কাজ দেখা চলে।", "You can mark a step 'no longer true', it is logged, and the history screen lists finished and changed steps.",
+    "ইনপুট, হিসাব ও আউটপুট: ঘটনা (যেমন ইনকাম বদল) লেখার ঘর, প্রভাব হিসাব, ৩টি অপশন, প্ল্যান-তুলনা ও ভার্সন নেই।", "Input, calculation and output: no place to log an event (such as an income change), no impact scan, no 3 options, no plan comparison or versions."),
+  m("M13", "দ্বীন, ইবাদত ও আখিরাত", "Deen, ibadah & akhirah", "deen", "MBMMBB", ["offline", "private"], null, "G3",
+    "নামাজ ও রোজার চিহ্ন, নামাজের সময় (এই ফোনে হিসাব), রিমাইন্ডার ও হালাল-চেকের প্রশ্ন আছে। নম্বর বা ক্রম দেখানো হয় না।", "Prayer and fasting marks, prayer times (worked out on this phone), reminders and halal-check questions. Nothing is totalled or ranked.",
+    "ইনপুট: কুরআন, যাকাত, দান, হজ, দ্বীনি শিক্ষা ও হকের ফর্ম নেই। হিসাব: যাকাতের হিসাব, হিজরি তারিখ নেই। আউটপুট: নামাজের নোট দেখায় না। ধর্মীয় পাঠ্য অপেক্ষায় (D-D)।", "Input: no forms for Quran, zakat, giving, hajj, Deen learning or rights. Calculation: no zakat figure, no Hijri date. Output: the prayer note is not shown. Scripture text waits for D-D."),
+  m("M14", "স্বাস্থ্য ও পরিবার", "Health & family", "diary", "MMMMMM", ["private"], null, "G3",
+    "স্বাস্থ্য-নোটের ঘরের বিবরণ আছে; লেখার জায়গা বা দেখানোর স্ক্রিন নেই।", "A health-note field is defined; there is no place to write it and no screen that shows it.",
+    "পুরোটা: স্বাস্থ্য ও পরিবারের নিজস্ব ইনপুট, সেভ, রুটিন/লক্ষ্যের লিংক ও ব্যক্তিগত স্ক্রিন তৈরি হয়নি।", "Everything: own input, storage, routine/goal link and private screen for health and family are not built."),
+  m("M15", "রিস্ক ও থামার শর্ত", "Risk & stop criteria", "journey", "BBMMBB", ["offline"], null, "G3",
+    "রিস্ক লিখে তার রিভিউয়ের তারিখ ও থামার শর্ত রাখা যায়; থামার শর্ত না থাকলে গোনা হয়।", "Write a risk with a review date and a stop rule; risks without a stop rule are counted.",
+    "হিসাব ও আউটপুট: রিভিউয়ের তারিখ পেরোলে কোনো চিহ্ন বা রিমাইন্ডার নেই; থামার শর্ত কোনো ডেটার সাথে মেলানো হয় না।", "Calculation and output: a past review date shows no flag or reminder; the stop rule is never compared with data."),
+  m("M16", "রিভিউ ও KPI", "Reviews & KPIs", "journey", "MMBBBM", ["offline"], null, "G3",
+    "৯০ দিনের ও সাপ্তাহিক রিভিউ এবং রিপোর্ট পাতা আছে (কাজ, ফোকাস, স্টেজ পাস, অভ্যাস)।", "90-day and weekly review and report screens exist (tasks, focus, stage passes, habits).",
+    "ইনপুট ও সেভ: KPI টার্গেট নেই। লিংক: টাকা ও রিস্ক রিভিউয়ে আসে না; মাসিক রিভিউ ও ধারণা-যাচাই নেই।", "Input and storage: no KPI targets. Links: money and risk are not in the reviews; no monthly review or assumptions check."),
+  m("M17", "জ্ঞান ও সূত্র", "Knowledge & sources", "more", "MMBBBB", ["offline"], null, "G4",
+    "২১টি বিষয়-গাইড, ফ্ল্যাশকার্ড (বাক্স ও দিন অনুযায়ী) ও শব্দকোষ চলে।", "21 topic guides, flashcards (boxes and due days) and a glossary work.",
+    "ইনপুট ও সেভ: সোর্স আলাদা করে রাখা বা নোট/SOP লেখার জায়গা নেই; গাইডে সোর্স ও তারিখ নেই।", "Input and storage: no separate source record and no notes/SOP place; guides carry no source or date."),
+  m("M18", "ভিজ্যুয়াল স্তর", "Visual layer", "more", "--BM-B", ["offline"], null, "G3",
+    "স্টেজের সিঁড়ি, যাত্রার ছবি, টাকার বার, লক্ষ্যের রিং, অভ্যাসের গ্রিড ও অন্যান্য চার্ট আছে; প্রতিটির লেখা অপশন আছে।", "Stage ladder, journey art, money bars, goal rings, habit grid and other charts exist, each with a text version.",
+    "আউটপুট: লক্ষ্যের গাছ, টাইমলাইন, Kanban, রিসোর্স ম্যাপ, প্ল্যান-তুলনা ও অপশন বোর্ড নেই।", "Output: no goal tree, timeline, Kanban, resource map, plan comparison or option board."),
+  m("M19", "অটোমেশন নিয়ম", "Automation rules", "more", "BBBBBB", ["offline"], null, "G6",
+    "চারটি ছোট নিয়ম ফোনেই চলে (ডিফল্টে বন্ধ)। কোনো নোটিফিকেশন যায় না, নিয়ম নিজে কাজ যোগ করে না।", "Four small rules run on this phone (off by default). No notifications are sent and a rule never adds a task.",
+    "", ""),
+  m("M20", "Sync, Backup ও export", "Sync, backup & export", "more", "BBBBMB", ["offline", "private"], null, "G2",
+    "ব্যাকআপ সেভ ও ফেরত আনা, এনক্রিপ্টেড ব্যাকআপ, CSV export ও import, সাপ্তাহিক রিমাইন্ডার চলে। ক্লাউড সিঙ্ক বন্ধ (D-C অনুমতির অপেক্ষায়)।", "Backup save and restore, encrypted backup, CSV export and import and a weekly reminder work. Cloud sync is off (waits for D-C).",
+    "এক্সপোর্ট: PDF export নেই।", "Export: PDF export is not built."),
+  m("M21", "নিরাপত্তা ও প্রাইভেসি", "Security & privacy", "more", "BMBBBB", ["offline", "private"], null, "G7",
+    "গোপন তথ্য (পাসওয়ার্ড, OTP ইত্যাদি) লিখতে দেয় না। ঐচ্ছিক PIN লক আছে। লক-স্ক্রিন গোপন থাকে।", "Blocks secrets (passwords, OTP and similar). Optional PIN lock. The lock screen stays private.",
+    "সেভ: ডিভাইসে ডেটা এনক্রিপ্ট করা নেই (PIN শুধু পর্দা ঢাকে)। আইনি রিভিউ G7-এ।", "Storage: data on the device is not encrypted (the PIN only covers the screen). Legal review is at G7."),
+  m("M22", "সক্ষমতার অবস্থা ও Demo", "Capability status & demo", "more", "--BB-B", ["offline"], null, "G1",
+    "এই স্ক্রিন: প্রতিটি মডিউলের বানানো অবস্থা ছয় ধাপে ও এই ফোনের ডেটা অবস্থা আলাদা দেখায়।", "This screen: shows each module's build state in six boxes and this phone's data state separately.",
+    "", ""),
+  m("M23", "AI স্তর", "AI layer", "more", "--MM--", ["private"], "D-C", "G6",
+    "AI পোর্ট ও 'সংযুক্ত নয়' অ্যাডাপ্টার তৈরি আছে। AI ছাড়াই সব চলে।", "The AI port and a 'not connected' adapter exist. Everything works without AI.",
+    "মালিকের অনুমতি (D-C: খরচ, প্রোভাইডার, সীমা) পেলে তবে বাকিটা তৈরি হবে।", "The rest is built only after your approval (D-C: cost, provider, cap)."),
+  m("M24", "template লাইব্রেরি", "Template library", "more", "BBBBBB", ["offline"], null, "G3",
+    "ছয়টি তৈরি সিস্টেম (এক ট্যাপে লক্ষ্য, কাজ ও অভ্যাস যোগ, আবার সরানো), তিনটি স্টেজ-নামের সেট।", "Six ready systems (one tap adds goals, tasks and habits; remove takes them out) and three stage-name sets.",
+    "", ""),
+  m("M25", "আটকে গেলে", "When stuck", "journey", "BBBBBB", ["offline"], null, "G3",
+    "৬টি ট্যাপে সম্ভাব্য কারণ ও ছোট সাহায্য; AI ছাড়া।", "Six taps lead to likely causes and small helpers; no AI.",
+    "", ""),
 ];
