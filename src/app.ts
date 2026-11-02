@@ -120,9 +120,15 @@ export function render() {
   // Keep the reader's place on taps inside the same screen; jump to top only when the screen changes.
   const savedY = window.scrollY;
   const routeChanged = path !== lastRenderedPath;
+  const firstLoad = lastRenderedPath === null;
   lastRenderedPath = path;
   app.replaceChildren(skip, top, ...demoPanels(), ...(saveFailedBanner(lang) ? [saveFailedBanner(lang)!] : []), ...reminders, body, nav, drawer);
   window.scrollTo(0, routeChanged ? 0 : savedY);
+  // After a real screen change (not a re-draw of the same screen, not the first load): the screen name becomes the page title and
+  // keyboard / screen-reader focus moves to the new heading, so the change is announced.
+  const heading = body.querySelector("h1");
+  if (heading) document.title = `${heading.textContent} · ${t("app.title", lang)}`;
+  if (routeChanged && !firstLoad && heading) { heading.setAttribute("tabindex", "-1"); (heading as HTMLElement).focus({ preventScroll: true }); }
 }
 
 let lastRenderedPath: string | null = null;

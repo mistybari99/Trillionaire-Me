@@ -20,7 +20,7 @@ new = json.load(open("docs/register/new-requirements.json", encoding="utf-8"))
 have = {r[0].value for r in reqs.iter_rows(min_row=4)}
 for n in new:
     if n["id"] not in have:
-        reqs.append([n["id"], "Life Success system", n["requirement"], "U", "", "R1", n["gate"], n["gate"], "FIRST-BUILD (G1-G3)", "", "", "", "", "", "Not verified — no build"])
+        reqs.append([n["id"], "Life Success system", n["requirement"], "U", "", "R1", n["gate"], n["gate"], "FIRST-BUILD (G1-G3)", "", "", "", "", "", n.get("status", "Not verified — no build")])
 # Change Log line (the copy is always rebuilt from the untouched original, so this never duplicates)
 npass = sum(1 for x in req_of.values() if x["outcome"] == "Pass")
 npart = sum(1 for x in req_of.values() if x["outcome"] != "Pass")

@@ -103,10 +103,11 @@
   },
   "TM-TST-161": {
     "outcome": "Partial",
-    "scope": "Bangla glossary (30 terms) + field help exist. Human reviewer sign-off NOT done; every key present and non-empty in en, bn and mix (unit parity)",
+    "scope": "Bangla glossary (30 terms) + field help exist. Human reviewer sign-off NOT done; every key present and non-empty in en, bn and mix (unit parity). Settings strings: en/bn/mix parity, Latin digits, loanword avoid list",
     "artifacts": [
       "src/catalog/glossary.ts",
-      "tests/i18n_modes.test.ts"
+      "tests/i18n_modes.test.ts",
+      "tests/settings_a11y_i18n.test.ts"
     ]
   },
   "TM-TST-003": {
@@ -199,9 +200,12 @@
   },
   "TM-TST-088": {
     "outcome": "Partial",
-    "scope": "G2 backup/restore round-trip into a clean database; damaged or tampered file rejected; demo backup never restored as real; newer schema refused. Device-level checksum and attachments not covered",
+    "scope": "G2 backup/restore round-trip into a clean database; damaged or tampered file rejected; demo backup never restored as real; newer schema refused. Device-level checksum and attachments not covered. Settings redesign: restore shows a preview, saves a Before restore copy, replaces without emptying first and rolls back on failure, Go back for 7 days, PIN asked again, real data without the tick writes nothing",
     "artifacts": [
-      "tests/g2.test.ts"
+      "tests/g2.test.ts",
+      "tests/restore_safety.test.ts",
+      "tests/restore_ui.test.ts",
+      "tests/backup_page.test.ts"
     ]
   },
   "TM-TST-116": {
@@ -240,11 +244,13 @@
   },
   "TM-TST-155": {
     "outcome": "Partial",
-    "scope": "Lock-screen text hidden by default for worship, health, money and third-party; per-category 'Show details' opt-in; neutral en/bn/mix text. On-device lock-screen check, app lock and passphrase recovery NOT done (Owner)",
+    "scope": "Lock-screen text hidden by default for worship, health, money and third-party; per-category 'Show details' opt-in; neutral en/bn/mix text. On-device lock-screen check, app lock and passphrase recovery NOT done (Owner). Settings redesign: Privacy page read-out computed from state, Withdraw revokes only, Show asks first, typed-word Delete page",
     "artifacts": [
       "src/core/notify.ts",
       "tests/o8_notify_privacy.test.ts",
-      "tests/notify.test.ts"
+      "tests/notify.test.ts",
+      "tests/privacy_page.test.ts",
+      "tests/delete_page.test.ts"
     ]
   },
   "TM-TST-158": {
@@ -281,11 +287,13 @@
   },
   "TM-TST-084": {
     "outcome": "Partial",
-    "scope": "Headless Chromium with the network off: shell, status screen and cold-start screens open, every saved file readable, service worker source checks. NOT a real-device airplane run (owner task O1)",
+    "scope": "Headless Chromium with the network off: shell, status screen and cold-start screens open, every saved file readable, service worker source checks. NOT a real-device airplane run (owner task O1). Settings pages open offline (e2e SET-OFFLINE, SET-200, SET-SEARCH)",
     "artifacts": [
       "tests/precache.test.ts",
       "tools/e2e.mjs",
-      "evidence/e2e-report.json"
+      "evidence/e2e-report.json",
+      "tests/settings_search.test.ts",
+      "tests/settings_shell.test.ts"
     ]
   },
   "TM-TST-085": {

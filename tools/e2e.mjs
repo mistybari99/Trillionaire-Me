@@ -116,9 +116,9 @@ const txt = await page.locator("[data-placement]").first().innerText();
 check("G3-PLAN", "task is placed inside 20:00–22:00", /^2[01]:\d\d–(2[012]:\d\d)/.test(txt) && /Call supplier/.test(txt), txt);
 await page.goto("http://localhost:4174/#/today"); await page.waitForSelector(".task");
 check("G3-PLAN", "Home shows the user's own planned task (today first)", (await page.locator(".task").count()) >= 1 && /Call supplier/.test(await page.locator(".task").first().innerText()));
-await page.goto("http://localhost:4174/#/diary/plan"); await page.click("[data-mode=pause]");
+await page.goto("http://localhost:4174/#/settings/plan"); await page.click("[data-mode=pause]"); await page.goto("http://localhost:4174/#/diary/plan");
 check("G3-PLAN", "pause mode places nothing, no error text", (await page.locator("[data-placement]").count()) === 0 && (await page.locator("[data-deferred='paused']").count()) === 1);
-await page.click("[data-mode=normal]");
+await page.goto("http://localhost:4174/#/settings/plan"); await page.click("[data-mode=normal]");
 // G3: money — unknown stays unknown, scopes apart
 await page.goto("http://localhost:4174/#/diary/money"); await page.waitForSelector("main");
 const addFin = async (kind, scope, name, amt, period = "once") => { await page.selectOption("#mf-kind", kind); await page.selectOption("#mf-scope", scope); await page.fill("#mf-name", name); await page.fill("#mf-amount", amt); await page.selectOption("#mf-period", period); await page.click("form[data-form=money] button[type=submit]"); await page.waitForTimeout(150); };
@@ -184,7 +184,7 @@ const before = (await idb(page)).filter((r) => r.entity === "task").length;
 await page.click("[data-helper=minimum_week]"); await page.waitForSelector("[data-done=minimum_week]");
 await page.waitForTimeout(250);
 check("G3-STUCK", "choosing it switches mode and adds 0 tasks", (await idb(page)).filter((r) => r.entity === "task").length === before);
-await page.goto("http://localhost:4174/#/diary/plan"); await page.waitForSelector("[data-mode]");
+await page.goto("http://localhost:4174/#/settings/plan"); await page.waitForSelector("[data-mode]");
 check("G3-STUCK", "plan screen shows Minimum week as active", (await page.locator("[data-mode=minimum_week]").getAttribute("aria-pressed")) === "true");
 await page.click("[data-mode=normal]");
 check("TM-TST-047", "stuck flow: tired offers only lighter modes and adds 0 tasks (browser)", passOf("G3-STUCK"));
@@ -225,6 +225,22 @@ check("G1-OFFLINE", "app shell loads and works with network off", offlineOk);
 await page.goto("http://localhost:4174/#/more/status").catch(() => {});
 await page.waitForSelector("[data-module]", { timeout: 5000 }).catch(() => {});
 check("G1-OFFLINE", "status screen renders offline", (await page.locator("[data-module]").count()) === 25);
+// Settings (settings redesign PR 6): every Settings page opens with the network off, has no sideways scroll at 360 px,
+// also at 200% text, and the search finds a row offline.
+{
+  const pages = ["settings", "settings/look", "settings/prayer", "settings/backup", "settings/backup/restore", "settings/privacy", "settings/data", "settings/data/start-real", "settings/plan", "settings/connections", "settings/delete", "settings/about"];
+  let okAll = true; const bad = [];
+  for (const p of pages) { await page.goto(`http://localhost:4174/#/${p}`).catch(() => {}); await page.reload().catch(() => {}); await page.waitForSelector("main h1", { timeout: 5000 }).catch(() => {}); const ok = await page.evaluate(() => !!document.querySelector("main h1") && document.documentElement.scrollWidth <= window.innerWidth + 1); if (!ok) { okAll = false; bad.push(p); } }
+  check("SET-OFFLINE", "every Settings page opens offline with no horizontal scroll at 360 px", okAll, bad.join(","));
+  await page.goto("http://localhost:4174/#/settings"); await page.reload(); await page.waitForSelector("[data-act=search-open]");
+  await page.evaluate(() => { document.documentElement.style.fontSize = "200%"; });
+  const wide = await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1);
+  const tabs = await page.evaluate(() => [...document.querySelectorAll("nav a.tab")].every((a) => a.getBoundingClientRect().right <= window.innerWidth + 1));
+  check("SET-200", "Settings home at 200% text: no sideways scroll, all five tabs on screen", wide && tabs);
+  await page.click("[data-act=search-open]"); await page.fill("[data-search=input]", "dark");
+  check("SET-SEARCH", "search finds Theme offline", (await page.locator("[data-search-hit=theme]").count()) === 1);
+  await page.evaluate(() => { document.documentElement.style.fontSize = ""; });
+}
 await ctx.setOffline(false);
 
 // Precache: the service worker saves every file of the build on the first visit, so a cold start with the network off still opens
@@ -242,7 +258,7 @@ await ctx.setOffline(false);
   await ctx.setOffline(true);
   await page.goto(base); await page.waitForSelector("main", { timeout: 8000 }).catch(() => {});
   const seen = {};
-  for (const [name, hash, sel] of [["universe", "#/journey/universe", "svg[data-universe-map]"], ["journey logo", "#/journey", "svg.logo3d"], ["snapshots", "#/settings/backup", "[data-card=snapshots]"], ["home cards", "#/today", "[data-home-summary]"], ["goals", "#/journey/goals", "main h1"], ["lazy plan chunk (risks)", "#/journey/risks", "main h1"], ["lazy connections chunk", "#/settings/connections", "main h1:not([hidden])"], ["lazy legs chunk", "#/journey/legs", "main h1"], ["lazy decide chunk", "#/journey/decide", "main h1"], ["topic with content packs", "#/topic/procrastination", "main h1"]]) {
+  for (const [name, hash, sel] of [["universe", "#/journey/universe", "svg[data-universe-map]"], ["journey logo", "#/journey", "svg.logo3d"], ["snapshots", "#/settings/backup/snapshots", "[data-card=snapshots]"], ["home cards", "#/today", "[data-home-summary]"], ["goals", "#/journey/goals", "main h1"], ["lazy plan chunk (risks)", "#/journey/risks", "main h1"], ["lazy connections chunk", "#/settings/connections", "main h1:not([hidden])"], ["lazy legs chunk", "#/journey/legs", "main h1"], ["lazy decide chunk", "#/journey/decide", "main h1"], ["topic with content packs", "#/topic/procrastination", "main h1"]]) {
     await page.evaluate((h) => { location.hash = h; }, hash);
     seen[name] = await page.waitForSelector(sel, { timeout: 5000 }).then(() => true).catch(() => false);
   }

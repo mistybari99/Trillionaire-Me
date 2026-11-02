@@ -64,7 +64,7 @@ const tickRow = (lang: Locale) => h("label", { style: "display:flex;gap:8px;alig
 const ticked = () => (document.getElementById("mode-tick") as HTMLInputElement | null)?.checked === true;
 
 function langButtons(): HTMLElement {
-  return h("div", { class: "seg", role: "group", "aria-label": "Language" }, ...(["en", "bn"] as Locale[]).map((l) =>
+  return h("div", { class: "seg", role: "group", "aria-label": t("more.language", L()) }, ...(["en", "bn"] as Locale[]).map((l) =>
     h("button", { type: "button", "data-lang": l, "aria-pressed": String(prefs.lang === l), onclick: () => { prefs.lang = l; rerender(); } }, LOCALES[l].endonym)));
 }
 
