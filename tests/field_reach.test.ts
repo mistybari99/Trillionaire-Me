@@ -82,11 +82,10 @@ const usedByCode = (id: string) => uiText.includes(`"${id}"`);
 // Known gaps (audit 2 Nov 2026). These lists only shrink: a field that is fixed but still listed fails the test, and a module that
 // claims "complete" may own none of them.
 // DEAD = stored by nobody or read by nobody: no code names the field and no screen shows it.
-const DEAD: string[] = ["constraint.hours_per_week", "giving.amount", "goal.metric_label", "habit.days_per_week", "hajj_plan.note", "learning_item.title", "prayer_log.note", "profile.birth_year", "profile.display_name", "profile.health_note",
-  "profile.timezone", "quran_activity.note", "resource.description", "right_duty.note", "skill.evidence", "zakat_snapshot.note"];
+const DEAD: string[] = ["constraint.hours_per_week", "giving.amount", "hajj_plan.note", "learning_item.title", "prayer_log.note", "profile.birth_year", "profile.display_name", "profile.health_note",
+  "profile.timezone", "quran_activity.note", "right_duty.note", "zakat_snapshot.note"];
 // NO_INPUT = no progressive-intake step and no form names the field.
-const NO_INPUT: string[] = ["giving.amount", "goal.kind", "goal.swot_opportunities", "goal.swot_strengths", "goal.swot_threats", "goal.swot_weaknesses", "habit.days_per_week", "hajj_plan.note", "learning_item.title", "prayer_log.note",
-  "profile.health_note", "quran_activity.note", "right_duty.note", "zakat_snapshot.note"];
+const NO_INPUT: string[] = ["giving.amount", "hajj_plan.note", "learning_item.title", "prayer_log.note", "profile.health_note", "quran_activity.note", "right_duty.note", "zakat_snapshot.note"];
 
 const dead = () => FIELDS.filter((f) => checkable(f.type) && !shown.has(f.id) && !usedByCode(f.id)).map((f) => f.id);
 const noInput = () => FIELDS.filter((f) => !hasInput(f.id, f.step)).map((f) => f.id);

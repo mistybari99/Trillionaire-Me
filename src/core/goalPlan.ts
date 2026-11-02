@@ -4,7 +4,9 @@ import { goalProgressMode, manualPercent } from "./overallProgress";
 
 export const SWOT_KEYS = ["strengths", "weaknesses", "opportunities", "threats"] as const;
 export type SwotKey = (typeof SWOT_KEYS)[number];
-export const swotField = (k: SwotKey): string => `goal.swot_${k}`;
+/** The four SWOT lists, each in its own catalog field. */
+const SWOT_FIELDS: Record<SwotKey, string> = { strengths: "goal.swot_strengths", weaknesses: "goal.swot_weaknesses", opportunities: "goal.swot_opportunities", threats: "goal.swot_threats" };
+export const swotField = (k: SwotKey): string => SWOT_FIELDS[k];
 export const SWOT_MAX_ITEMS = 5;
 export const SWOT_MAX_LEN = 80;
 

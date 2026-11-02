@@ -14,7 +14,7 @@ import { scrubRealParts } from "../core/snapshots";
 import { isDeleteWord } from "../core/typedConfirm";
 import { settingsHash } from "./settingsRegistry";
 
-const rerender = () => window.dispatchEvent(new HashChangeEvent("hashchange"));
+const rerender = () => { if (typeof window !== "undefined") window.dispatchEvent(new HashChangeEvent("hashchange")); };
 let demoAsk = false, realCantType = false, copySaved = false;
 let done: "demo" | "real" | null = null;
 

@@ -105,6 +105,7 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 - [x] Step 5: M03 North Star "where I am now" (typed, or from Money net worth / ventures), progress, steps passed, metric weights, one weighted overall (page, Journey, Today, report), edit form; `src/core/northStar.ts`, `src/ui/northStarCard.ts`, `tests/north_star.test.ts`; schema additive (catalog 7).
 - [x] Step 6: M10 steps tied to roles, hand-over (plan, mark done, delegated steps leave the schedule), hiring step, gap analysis (team page, Today, report); `src/core/team.ts`, `src/ui/teamCard.ts`, `tests/team_handover.test.ts`; schema additive (catalog 8).
 - [x] Step 7: M15 review-date trigger: due/soon tags, Today and report cards, stop-rule question ("Not yet" sets next date; "It has happened" starts a reality event); `src/core/risk.ts`, `src/ui/riskCard.ts`, `tests/risk_review.test.ts`; no schema change.
+- [x] Step 8: M06 goal tree (level, parent, branch progress, goal page), goal measure, step edit, habit days a week, SWOT literals, skill example and resource shown back; `src/core/goalTree.ts`, `src/ui/lifeUi.ts`, `tests/goal_tree.test.ts`; no schema change. Still open (no approval needed): `constraint.hours_per_week`, profile birth year / name / time zone readers, M02 extra question sets. Needs approval: Deen forms (D-D), health track.
 
 ## Part B — Owner-only tasks
 - [ ] Phone offline test: open online once, visit all pages, airplane mode, reopen (O1).

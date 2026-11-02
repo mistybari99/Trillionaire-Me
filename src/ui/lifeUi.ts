@@ -7,7 +7,7 @@ import type { Locale } from "../i18n/registry";
 import { prefs, readProgressMemory, writeProgressMemory } from "./state";
 import { withView } from "./viewBar";
 import { num } from "./components";
-import { allRecs, consentOn, consentPrompt, findRec, labelFor, nsTag, saveBlockedText, saveTyped, storeOf } from "./entry";
+import { allRecs, consentOn, consentPrompt, entryNs, findRec, labelFor, nsTag, saveBlockedText, saveTyped, storeOf } from "./entry";
 import { AREAS, MAX_RATING, lifeAreaRecord, wedgePath, wheelData, type Area } from "../core/lifeWheel";
 import { smartFunnel } from "./smartFunnel";
 import { SMART_PARTS, SWOT_KEYS, goalProgress, listValue, milestoneOf, parseList, readList, smartFilled, swotField, type GoalProgress, type SwotKey } from "../core/goalPlan";
@@ -16,6 +16,9 @@ import { planChip } from "./planSettings";
 import { checkFreeText } from "../core/safety";
 import { GOAL_STATUSES, goalStatusOf, withGoalStatus, type GoalStatus } from "../core/goalStatus";
 import { goalAreaCard } from "./universeUi";
+import { GOAL_KINDS, buildTree, eligibleParents, flatten, nodeById, validateGoalText, validatePlace, type GoalKind, type PlaceError, type TreeNode } from "../core/goalTree";
+import { fieldById } from "../catalog/fields";
+import { tb } from "../i18n/t";
 import { progressRing } from "./ring";
 import { HORIZONS } from "../core/horizon";
 import type { FieldValue, TMRecord } from "../core/types";
@@ -97,12 +100,76 @@ export function journeyGoalsCard(lang: Locale): HTMLElement {
     h("div", { class: "actions" }, link("#/journey/goals", "btn ghost", t("goals.link", lang)), link("#/journey/wheel", "btn ghost", t("wheel.link", lang))));
 }
 
+// ---- Goal tree (M06): Goal -> Sub-goal -> Project; steps (tasks) are added on the Plan screen and linked to any of them ----
+const kindLabel = (k: GoalKind, lang: Locale) => t(`gt.kind.${k}` as Key, lang);
+const MAIN_FORM = "goal-new";
+/** Percent text for a branch: pooled steps of the goal and everything under it. */
+function branchLine(n: TreeNode, lang: Locale): string {
+  if (n.mode === "manual") return n.branch.percent === null ? t("gt.branch.manualUnknown", lang) : t("gt.branch.manual", lang, { p: num(n.branch.percent, lang) });
+  if (n.branch.percent === null) return t("gt.branch.unknown", lang);
+  return n.children.length ? t("gt.branch.pooled", lang, { p: num(n.branch.percent, lang), d: num(n.branch.done, lang), n: num(n.branch.total, lang) }) : t("gt.branch.own", lang, { p: num(n.branch.percent, lang), d: num(n.branch.done, lang), n: num(n.branch.total, lang) });
+}
+const placeErrText = (e: PlaceError, lang: Locale) => t(`gt.err.${e}` as Key, lang);
+
+function treeView(roots: TreeNode[], lang: Locale): HTMLElement {
+  const item = (n: TreeNode): HTMLElement => h("li", { "data-tree-node": n.id, "data-kind": n.kind, "data-depth": String(n.depth), "data-tree-percent": n.branch.percent === null ? "unknown" : String(n.branch.percent) },
+    nsTag(n.ns, lang), " ", h("span", { class: "tag off" }, kindLabel(n.kind, lang)), " ", link(`#/journey/goal/${n.id}`, "crumb", n.title),
+    n.orphan ? h("span", { class: "muted", "data-orphan": "1" }, ` ${t("gt.orphan", lang)}`) : null,
+    h("p", { class: "muted" }, branchLine(n, lang), n.metricLabel ? ` · ${t("gt.metric.shown", lang, { m: n.metricLabel })}` : ""),
+    n.branch.percent === null ? null : h("div", { class: "bar", role: "img", "aria-label": branchLine(n, lang) }, h("i", { style: `width:${n.branch.percent}%` })),
+    n.children.length ? h("ul", { class: "plain gt-children" }, ...n.children.map(item)) : null);
+  return h("section", { class: "card", "data-goal-tree": String(flatten(roots).length), "aria-label": t("gt.title", lang) },
+    h("h2", { class: "card-h" }, t("gt.title", lang)), h("p", { class: "muted" }, t("gt.intro", lang)),
+    roots.length ? h("ul", { class: "plain" }, ...roots.map(item)) : h("p", { class: "muted" }, t("goals.none", lang)));
+}
+
+function newGoalForm(lang: Locale): HTMLElement {
+  const title = h("input", { id: "gn-title", type: "text", maxlength: "120", autocomplete: "off" });
+  const kind = h("select", { id: "gn-kind" }, ...GOAL_KINDS.map((k) => h("option", { value: k }, kindLabel(k, lang))));
+  const parent = h("select", { id: "gn-parent" });
+  const metric = h("input", { id: "gn-metric", type: "text", maxlength: "80", autocomplete: "off" });
+  const date = h("input", { id: "gn-date", type: "date" });
+  const err = h("p", { class: "err", role: "alert" });
+  const fillParents = () => {
+    const k = kind.value as GoalKind; const opts = eligibleParents(allRecs(), k);
+    parent.replaceChildren(h("option", { value: "" }, t("gt.parent.none", lang)), ...opts.map((o) => h("option", { value: o.id }, `${kindLabel(o.kind, lang)} · ${o.title}`)));
+    parent.disabled = k === "goal";
+  };
+  kind.addEventListener("change", fillParents); fillParents();
+  const form = h("form", { novalidate: true, "data-form": MAIN_FORM }, consentOn() ? null : consentPrompt(lang),
+    h("label", { for: "gn-title" }, t("gt.title.label", lang)), title,
+    h("label", { for: "gn-kind" }, tb(fieldById("goal.kind")!.label, lang)), kind,
+    h("label", { for: "gn-parent" }, t("gt.parent.label", lang)), parent,
+    h("label", { for: "gn-metric" }, tb(fieldById("goal.metric_label")!.label, lang)), metric,
+    h("label", { for: "gn-date" }, tb(fieldById("goal.target_date")!.label, lang)), date, err,
+    h("button", { class: "btn", type: "submit" }, t("gt.add", lang)));
+  form.addEventListener("submit", (ev) => {
+    ev.preventDefault(); err.textContent = "";
+    if (!checkFreeText(title.value).ok || !checkFreeText(metric.value).ok) { err.textContent = t("intake.secretRejected", lang); return; }
+    const k = kind.value as GoalKind; const pid = k === "goal" ? null : parent.value || null;
+    const bad = validateGoalText({ title: title.value, metric: metric.value }) ?? validatePlace(allRecs(), { kind: k, parentId: pid });
+    if (bad) { err.textContent = placeErrText(bad, lang); return; }
+    if (date.value && !validDate(date.value)) { err.textContent = t("intake.invalidNumber", lang); return; }
+    const typed = (value: unknown): FieldValue => ({ state: "value", value, label: "FACT" });
+    const values: Record<string, FieldValue> = { "goal.title": typed(title.value.trim()), "goal.kind": typed(k) };
+    if (metric.value.trim()) values["goal.metric_label"] = typed(metric.value.trim());
+    if (date.value) values["goal.target_date"] = typed(date.value);
+    const id = `goal-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`;
+    if (!saveTyped({ id, entity: "goal", createdAt: new Date().toISOString(), values, ...(pid ? { links: { parent: pid } } : {}) })) { err.textContent = saveBlockedText(lang); return; }
+    rerender();
+  });
+  return h("section", { class: "card" }, h("h2", { class: "card-h" }, t("gt.add.title", lang)), form);
+}
+
 export function goalsScreen(): HTMLElement { return withView("goals", L(), goalsScreenInner()); }
 function goalsScreenInner(): HTMLElement {
   const lang = L(); const recs = allRecs(); const list = goalProgress(recs); const ns = new Map(recs.map((r) => [r.id, r.ns] as const));
+  const roots = buildTree(recs); const kinds = new Map(flatten(roots).map((n) => [n.id, n] as const));
   return h("main", {}, link("#/journey", "crumb", `← ${t("journey.title", lang)}`), h("h1", {}, t("goals.title", lang)), h("p", { class: "sub" }, t("goals.intro", lang)),
+    newGoalForm(lang),
+    treeView(roots, lang),
     ...(list.length ? list.map((g) => h("article", { class: "card", "data-goal": g.id },
-      nsTag(ns.get(g.id) ?? "demo", lang), h("h2", { class: "card-h" }, g.title), h("p", { class: "muted", "data-progress": g.percent === null ? "unknown" : String(g.percent) }, progressLine(g, lang)),
+      nsTag(ns.get(g.id) ?? "demo", lang), kinds.get(g.id) && kinds.get(g.id)!.kind !== "goal" ? h("span", { class: "tag off" }, kindLabel(kinds.get(g.id)!.kind, lang)) : null, h("h2", { class: "card-h" }, g.title), h("p", { class: "muted", "data-progress": g.percent === null ? "unknown" : String(g.percent) }, progressLine(g, lang)),
       link(`#/journey/goal/${g.id}`, "btn ghost", t("goals.open", lang)))) : [h("p", { class: "muted" }, t("goals.none", lang))]));
 }
 
@@ -122,6 +189,48 @@ function statusCard(rec: TMRecord, lang: Locale): HTMLElement {
   return h("section", { class: "card", "data-goal-status-card": cur }, h("h2", { class: "card-h" }, t("goal.status.h", lang)),
     h("div", { class: "seg", role: "group", "aria-label": t("goal.status.h", lang) }, ...GOAL_STATUSES.map(seg)),
     h("p", { class: "muted" }, t("goal.status.note", lang)));
+}
+
+// Where this goal sits in the tree, what it is made of, and how to change its level, parent and the way it is measured.
+function placeCard(rec: TMRecord, lang: Locale): HTMLElement {
+  const roots = buildTree(allRecs()); const node = nodeById(roots, rec.id)!;
+  const parentNode = node.parentId ? nodeById(roots, node.parentId) : null;
+  const kind = h("select", { id: "gp-kind" }, ...GOAL_KINDS.map((k) => h("option", { value: k, ...(node.kind === k ? { selected: true } : {}) }, kindLabel(k, lang))));
+  const parent = h("select", { id: "gp-parent" });
+  const metric = h("input", { id: "gp-metric", type: "text", maxlength: "80", autocomplete: "off", value: node.metricLabel ?? "" });
+  const err = h("p", { class: "err", role: "alert" }), ok = h("p", { class: "ok-msg", role: "status", "data-saved": "place" });
+  const fill = () => {
+    const k = kind.value as GoalKind; const opts = eligibleParents(allRecs(), k, rec.id);
+    parent.replaceChildren(h("option", { value: "" }, t("gt.parent.none", lang)), ...opts.map((o) => h("option", { value: o.id, ...(o.id === node.parentId ? { selected: true } : {}) }, `${kindLabel(o.kind, lang)} · ${o.title}`)));
+    parent.disabled = k === "goal";
+  };
+  kind.addEventListener("change", fill); fill();
+  const form = h("form", { novalidate: true, "data-form": "goal-place" },
+    h("label", { for: "gp-kind" }, tb(fieldById("goal.kind")!.label, lang)), kind, h("label", { for: "gp-parent" }, t("gt.parent.label", lang)), parent,
+    h("label", { for: "gp-metric" }, tb(fieldById("goal.metric_label")!.label, lang)), metric, err, ok,
+    h("button", { class: "btn ghost", type: "submit", style: "width:auto;margin:0;min-height:44px" }, t("gt.save", lang)));
+  form.addEventListener("submit", (ev) => {
+    ev.preventDefault(); err.textContent = ""; ok.textContent = "";
+    if (!entryNs()) { err.textContent = saveBlockedText(lang); return; }
+    if (!checkFreeText(metric.value).ok) { err.textContent = t("intake.secretRejected", lang); return; }
+    const cur = findRec(rec.id); if (!cur) return;
+    const k = kind.value as GoalKind; const pid = k === "goal" ? null : parent.value || null;
+    const bad = validateGoalText({ title: "x", metric: metric.value }) ?? validatePlace(allRecs(), { kind: k, parentId: pid, selfId: cur.id });
+    if (bad) { err.textContent = placeErrText(bad, lang); return; }
+    const values = { ...cur.values, "goal.kind": typedFor(cur, k) } as Record<string, FieldValue>;
+    if (metric.value.trim()) values["goal.metric_label"] = typedFor(cur, metric.value.trim()); else if (values["goal.metric_label"]) values["goal.metric_label"] = { state: "unknown" };
+    const { parent: _p, ...rest } = cur.links ?? {}; const links = pid ? { ...rest, parent: pid } : rest;
+    const { links: _l, ...base } = cur;
+    storeOf(cur).put({ ...base, values, ...(Object.keys(links).length ? { links } : {}) } as TMRecord);
+    ok.textContent = t("gt.saved", lang); rerender();
+  });
+  return h("section", { class: "card", "data-goal-place": node.kind },
+    h("h2", { class: "card-h" }, t("gt.place.title", lang)),
+    h("p", {}, kindLabel(node.kind, lang), parentNode ? " · " : null, parentNode ? `${t("gt.partof", lang)} ` : null, parentNode ? link(`#/journey/goal/${parentNode.id}`, "crumb", parentNode.title) : null, !parentNode && node.orphan ? ` · ${t("gt.orphan", lang)}` : null),
+    h("p", { class: "muted", "data-branch": node.branch.percent === null ? "unknown" : String(node.branch.percent) }, branchLine(node, lang)),
+    node.metricLabel ? h("p", { "data-metric-label": "1" }, t("gt.metric.shown", lang, { m: node.metricLabel })) : null,
+    node.children.length ? h("div", {}, h("h3", {}, t("gt.parts", lang)), h("ul", { class: "plain", "data-parts": String(node.children.length) }, ...node.children.map((c) => h("li", { "data-part": c.id }, kindLabel(c.kind, lang), " · ", link(`#/journey/goal/${c.id}`, "crumb", c.title), h("span", { class: "muted" }, ` · ${branchLine(c, lang)}`))))) : null,
+    form);
 }
 
 export function goalScreen(id: string): HTMLElement {
@@ -188,7 +297,7 @@ export function goalScreen(id: string): HTMLElement {
   // Read-only SWOT summary so the four lists are visible as text; unknown lists say so.
   const swotView = h("section", { class: "card", "data-swot-view": "1" }, h("h2", { class: "card-h" }, t("swot.title", lang)),
     h("div", { class: "swot-grid" }, ...SWOT_KEYS.map((k) => { const items = readList(rec.values[swotField(k)]); return h("div", { "data-swot-box": k }, h("h3", {}, t(`swot.${k}` as Key, lang)), items ? h("ul", {}, ...items.map((i) => h("li", {}, i))) : h("p", { class: "muted", "data-swot-empty": k }, t("swot.empty", lang))); })));
-  return h("main", {}, back, h("h1", {}, textOf(rec, "goal.title")), progress, statusCard(rec, lang), goalAreaCard(rec, lang), smartForm, swotView, swotForm);
+  return h("main", {}, back, h("h1", {}, textOf(rec, "goal.title")), progress, placeCard(rec, lang), statusCard(rec, lang), goalAreaCard(rec, lang), smartForm, swotView, swotForm);
 }
 
 // ---- Overall progress card (Today and Journey) ----

@@ -71,7 +71,8 @@ import { GLOSSARY } from "../catalog/glossary";
 import { PRAYER_KEYS, dhakaNow, prayerClock, isoDate, prayerTimes, type PrayerKey } from "../core/prayer";
 import { markedOn, prayerLogId, prayerLogRecord } from "../core/prayerLog";
 import { fastLogId, fastLogRecord, isFastMarked } from "../core/fastLog";
-import { activeNs, allRecs, asReal, putMode, consentOn, consentPrompt, findRec, inNs, labelFor, nsTag, ownerOf, saveBlockedText, saveTyped, storeOf, typed, valueLabel } from "./entry";
+import { kindOf } from "../core/goalTree";
+import { activeNs, allRecs, asReal, entryNs, putMode, consentOn, consentPrompt, findRec, inNs, labelFor, nsTag, ownerOf, saveBlockedText, saveTyped, storeOf, typed, valueLabel } from "./entry";
 
 const L = () => prefs.lang;
 const link = (href: string, cls: string, ...kids: Array<Node | string>) => h("a", { href, class: cls }, ...kids);
@@ -206,6 +207,31 @@ function feasibilityNote(cp: ReturnType<typeof currentPlan>, lang: Locale): HTML
   return h("p", { class: "note", role: "status", "data-infeasible": "1" }, t("plan.infeasible", lang, { need: num(Math.round(f.neededMinutes / 60 * 10) / 10, lang), have: num(Math.round(f.capacityMinutes / 60 * 10) / 10, lang) }));
 }
 
+/** Edit a step after it was made: its words, its estimate (blank = not estimated yet, never 0) and how soon. Real mode needs the consent tick. */
+function taskEditForm(r: TMRecord, lang: Locale): HTMLElement {
+  const g = (k: string) => (r.values[k] as { value?: unknown } | undefined)?.value;
+  const title = h("input", { id: `te-t-${r.id}`, type: "text", maxlength: "120", autocomplete: "off", value: String(g("task.title") ?? "") });
+  const mv = g("task.minutes");
+  const mins = h("input", { id: `te-m-${r.id}`, type: "text", inputmode: "numeric", value: typeof mv === "number" ? String(mv) : "" });
+  const prio = h("select", { id: `te-p-${r.id}` }, ...fieldById("task.priority")!.options!.map((o) => h("option", { value: o.code, ...(o.code === String(g("task.priority") ?? "normal") ? { selected: true } : {}) }, tb(o.label, lang))));
+  const msg = h("p", { class: "err", role: "alert" });
+  const f = h("form", { novalidate: true, "data-task-edit": r.id },
+    h("label", { for: `te-t-${r.id}` }, t("plan.task.title", lang)), title, h("label", { for: `te-m-${r.id}` }, t("plan.task.minutes", lang)), mins,
+    h("label", { for: `te-p-${r.id}` }, t("plan.task.priority", lang)), prio, msg, h("button", { class: "btn ghost", type: "submit", style: "width:auto;margin:6px 0 0;min-height:44px" }, t("plan.task.update", lang)));
+  f.addEventListener("submit", (ev) => {
+    ev.preventDefault(); msg.textContent = "";
+    if (!entryNs()) { msg.textContent = saveBlockedText(lang); return; }
+    const name = title.value.trim(); if (!name) { msg.textContent = t("plan.task.err.title", lang); return; }
+    if (!checkFreeText(name).ok) { msg.textContent = t("intake.secretRejected", lang); return; }
+    const raw = mins.value.trim().replace(/[০-৯]/g, (c) => String(c.charCodeAt(0) - 0x09e6)); let m: FieldValue;
+    if (raw === "") m = { state: "later" }; else { const n = Number(raw); if (!Number.isFinite(n) || n <= 0 || n > 1440) { msg.textContent = t("intake.invalidNumber", lang); return; } m = { state: "value", value: Math.round(n), label: labelFor(r.ns) }; }
+    const cur = findRec(r.id); if (!cur) return;
+    storeOf(cur).put({ ...cur, values: { ...cur.values, "task.title": { state: "value", value: name, label: labelFor(cur.ns) }, "task.minutes": m, "task.priority": { state: "value", value: prio.value, label: labelFor(cur.ns) } } });
+    rerender();
+  });
+  return h("details", { class: "help" }, h("summary", {}, t("plan.task.edit", lang)), f);
+}
+
 export function planScreen(): HTMLElement {
   const lang = L(); const cp = currentPlan();
   const w = freeWindow(cp.a);
@@ -223,7 +249,7 @@ export function planScreen(): HTMLElement {
   // Optional link to a goal of the active mode (goal rings on Report read links.goal).
   const goalRecs = cp.recs.filter((r) => r.entity === "goal" && r.values["goal.title"]?.state === "value").sort((a, b) => a.id.localeCompare(b.id));
   const goalTitle = (r: TMRecord) => String((r.values["goal.title"] as { value?: unknown }).value ?? "");
-  const goalSel = h("select", { id: "pt-goal" }, h("option", { value: "" }, t("plan.goal.none", lang)), ...goalRecs.map((r) => h("option", { value: r.id }, goalTitle(r))));
+  const goalSel = h("select", { id: "pt-goal" }, h("option", { value: "" }, t("plan.goal.none", lang)), ...goalRecs.map((r) => h("option", { value: r.id }, kindOf(r) === "goal" ? goalTitle(r) : `${t(`gt.kind.${kindOf(r)}` as Key, lang)} · ${goalTitle(r)}`)));
   // M10: optional role that does this step. Roles only, no names. A role covered by someone else takes the step out of the user's own schedule.
   const roleRecs = cp.recs.filter((r) => r.entity === "team_role" && r.values["team_role.role"]?.state === "value").sort((a, b) => a.id.localeCompare(b.id));
   const roleTitle = (r: TMRecord) => String((r.values["team_role.role"] as { value?: unknown }).value ?? "");
@@ -264,7 +290,7 @@ export function planScreen(): HTMLElement {
   });
   const taskRows = cp.recs.filter((r) => r.entity === "task").sort((a, b) => a.id.localeCompare(b.id)).map((r) => {
     const mv = r.values["task.minutes"];
-    return h("div", { class: "card", "data-task": r.id }, h("div", { class: "row" },
+    const el = h("div", { class: "card", "data-task": r.id }, h("div", { class: "row" },
       h("div", {}, nsTag(r.ns, lang), h("h2", { class: "card-h", }, cp.titles.get(r.id) ?? ""), h("p", { class: "muted" }, mv && mv.state === "value" ? valueEl(t("task.minutes", lang, { n: num(Number(mv.value), lang) }), mv.label, lang) : t("plan.task.minutes.later", lang)),
         r.links?.after ? h("p", { class: "muted", "data-after": r.links.after }, t("plan.after.shown", lang, { title: afterTitle(r.links.after) })) : null,
         r.links?.goal && goalRecs.some((g) => g.id === r.links!.goal) ? h("p", { class: "muted", "data-goal": r.links.goal }, t("plan.goal.shown", lang, { title: goalTitle(goalRecs.find((g) => g.id === r.links!.goal)!) })) : null,
@@ -273,6 +299,8 @@ export function planScreen(): HTMLElement {
         : isParkedTask(r) ? h("div", {}, h("span", { class: "tag off", "data-parked": r.id }, t("rl.parked.tag", lang, { date: String((r.values["task.parked_on"] as { value?: unknown }).value) })), h("p", { class: "muted" }, t("rl.parked.note", lang)), link("#/journey/reality", "crumb", t("rl.parked.open", lang)))
         : r.values["task.not_true_on"]?.state === "value" ? h("div", {}, h("span", { class: "tag off" }, t("reality.tag", lang, { date: String((r.values["task.not_true_on"] as { value?: unknown }).value) })), h("p", { class: "muted" }, t("reality.note", lang)), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => { storeOf(r).delete(r.id); rerender(); } }, t("plan.task.remove", lang)))
         : h("div", {}, doneBtn(r.id, lang), focusBtn(r.id, lang), h("button", { class: "btn ghost", type: "button", "data-act": "reality-changed", "data-task-id": r.id, style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => markRealityChanged(r.id, lang) }, t("reality.btn", lang)), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => { storeOf(r).delete(r.id); rerender(); } }, t("plan.task.remove", lang)))));
+    if (r.values["task.done_on"]?.state !== "value") el.append(taskEditForm(r, lang));
+    return el;
   });
   const byDay = (d: number) => cp.plan.placements.filter((p) => p.day === d).sort((a, b) => a.start - b.start);
   const week = [0, 1, 2, 3, 4, 5, 6].map((i) => (new Date().getDay() + i) % 7).filter((d) => byDay(d).length).map((d) => h("div", { class: "card", "data-day": String(d) }, h("h2", { class: "card-h", }, weekday(d, lang)),
@@ -762,6 +790,8 @@ export function habitsScreen(): HTMLElement {
   const lang = L(); const { habits, logs } = habitsFromStore(); const today = Habits.todayIso();
   const wd = (i: number) => new Intl.DateTimeFormat(intlLocale(lang), { weekday: "short" }).format(new Date(2023, 0, 1 + i));
   const habitCompact = screenView("habits") === "compact";
+  // planned days a week: the number saved with the habit, or the count of chosen days for older habits
+  const perWeek = (hb: Habits.Habit): number => { const v = findRec(hb.id)?.values["habit.days_per_week"]; return v?.state === "value" && typeof v.value === "number" ? v.value : new Set(hb.days).size; };
   const cards = habits.map((hb) => {
     const done = Habits.isDone(hb, logs, today); const cnt = Habits.countOn(hb, logs, today);
     const main = hb.target === null
@@ -777,6 +807,7 @@ export function habitsScreen(): HTMLElement {
     return h("div", { class: "card", "data-habit-card": hb.id },
       h("div", { class: "row" }, h("div", {}, nsTag(findRec(hb.id)?.ns ?? activeNs(), lang), h("h2", { class: "card-h", }, hb.title)), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0;min-height:44px", onclick: () => { removeHabit(hb.id); rerender(); } }, t("habits.remove", lang))),
       main, dots, habitChart(hb, logs, today, lang),
+      h("p", { class: "muted", "data-per-week": String(perWeek(hb)) }, t("habits.perWeek", lang, { n: num(perWeek(hb), lang) })),
       h("p", { class: "muted", "data-consistency": "1" }, c.planned ? valueEl(t("habits.month", lang, { d: num(c.done, lang), p: num(c.planned, lang) }), "INFERENCE", lang) : t("habits.noPlanned", lang)),
       Habits.restartPlan(hb, logs, today) === "smallest_version" ? h("p", { class: "note", "data-restart": "1" }, t("habits.restart", lang)) : null);
   });
@@ -795,7 +826,7 @@ export function habitsScreen(): HTMLElement {
     const raw = target.value.trim().replace(/[০-৯]/g, (c) => String(c.charCodeAt(0) - 0x09e6)); let tv: FieldValue | null = null;
     if (raw !== "") { const n = Number(raw); if (!Number.isFinite(n) || n <= 0 || n > 1000) { err.textContent = t("intake.invalidNumber", lang); return; } tv = typed(Math.round(n)); }
     if (!saveTyped({ id: `habit-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 4)}`, entity: "habit", createdAt: new Date().toISOString(),
-      values: { "habit.title": typed(nm), "habit.days": typed([...chosen].sort().join(",")), ...(tv ? { "habit.target": tv, "habit.unit": typed(unit.value.trim()) } : {}) } })) { err.textContent = saveBlockedText(lang); return; }
+      values: { "habit.title": typed(nm), "habit.days": typed([...chosen].sort().join(",")), "habit.days_per_week": typed(chosen.size), ...(tv ? { "habit.target": tv, "habit.unit": typed(unit.value.trim()) } : {}) } })) { err.textContent = saveBlockedText(lang); return; }
     rerender();
   });
   return h("main", {}, link("#/today", "crumb", `← ${t("nav.today", lang)}`), h("h1", {}, t("habits.title", lang)), h("p", { class: "sub" }, t("habits.intro", lang)),

@@ -7,7 +7,7 @@ The card answers one question: is the software's own build complete? It does not
 Boxes (order): Input, Storage, Calculation, Output, Export, Links. B = built, M = missing, - = not needed.
 Label: complete = no box missing; partial = some box missing; not-built = no box built; blocked = waits for an owner approval (D-number).
 
-Counts: complete 9, partial 14, not-built 1, blocked 1 (of 25).
+Counts: complete 10, partial 13, not-built 1, blocked 1 (of 25).
 
 | Module | Name | Label | I S C O E L | Missing boxes | Waits for | Routes / functions | Tests |
 |---|---|---|---|---|---|---|---|
@@ -16,7 +16,7 @@ Counts: complete 9, partial 14, not-built 1, blocked 1 (of 25).
 | M03 | North Star & ladder | complete | B B B B B B | - | - | `#/journey/horizon`; `#/journey/northstar`; `#/journey`; `#/today`; `#/journey/report`; `src/core/horizon.ts#groupByHorizon`; `src/core/northStar.ts#ladder`; `src/core/northStar.ts#nowOf`; `src/core/northStar.ts#progressOf`; `src/core/northStar.ts#overallProgress` | `tests/north_star.test.ts`, `tests/horizon.test.ts`, `tests/m_registers.test.ts` |
 | M04 | Paths & opportunity library | partial | - - B M - B | output | - | `#/diary/plan`; `src/core/assessment.ts#pathFit` | `tests/o5_assessment_fit.test.ts` |
 | M05 | Stages & journey log | partial | B B M B B B | calc | - | `#/journey`; `#/journey/log`; `src/ui/screens.ts#journeyLog`; `src/core/stages.ts#passStage` | `tests/stages.test.ts` |
-| M06 | Goals, tasks & habits | partial | M B B M B B | input, output | - | `#/today`; `#/habits`; `#/diary/plan`; `src/ui/screens.ts#habitsScreen`; `src/ui/screens.ts#focusScreen`; `src/core/planner.ts#schedule` | `tests/focus_habits_cards.test.ts`, `tests/goal_form.test.ts`, `tests/m_dependency.test.ts` |
+| M06 | Goals, tasks & habits | complete | B B B B B B | - | - | `#/today`; `#/habits`; `#/diary/plan`; `#/journey/goals`; `src/ui/screens.ts#habitsScreen`; `src/ui/screens.ts#focusScreen`; `src/core/planner.ts#schedule`; `src/core/goalTree.ts#buildTree`; `src/core/goalTree.ts#validatePlace` | `tests/goal_tree.test.ts`, `tests/focus_habits_cards.test.ts`, `tests/goal_form.test.ts`, `tests/m_dependency.test.ts` |
 | M07 | Resources & finance | partial | B B M B B M | calc, links | - | `#/diary/money`; `src/ui/screens.ts#moneyScreen`; `src/core/finance.ts#netWorth` | `tests/money.test.ts` |
 | M08 | Time & capacity | partial | B B M M B B | calc, output | - | `#/diary/plan`; `src/core/planner.ts#schedule` | `tests/b9_plan_flow.test.ts` |
 | M09 | Venture portfolio | partial | B B M B B B | calc | - | `#/diary/ventures`; `#/diary/money`; `#/today`; `#/journey/report`; `src/core/ventures.ts#ventureViews`; `src/core/ventures.ts#portfolio`; `src/core/ventures.ts#ventureAccounts` | `tests/m_registers.test.ts`, `tests/venture_value.test.ts` |

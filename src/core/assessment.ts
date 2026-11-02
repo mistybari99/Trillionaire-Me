@@ -128,3 +128,21 @@ export function pathFit(a: Assessment, library: readonly PathEntry[] = PATHS): P
   const matches = scored.slice(0, MAX_MATCHES).map((x) => x.match);
   return { status: matches.length ? "matched" : "no_match", matches, unmapped };
 }
+
+// ---------------------------------------------------------------- the user's own words on skills and resources (shown back in their own words, never rated)
+export interface EvidenceRow { id: string; ns: TMRecord["ns"]; name: string; evidence: string }
+/** Skills that have an example written. The example is the user's own sentence; nothing is counted from it. */
+export function skillEvidence(recs: readonly TMRecord[]): EvidenceRow[] {
+  return [...recs].sort(byId).filter((r) => r.entity === "skill").flatMap((r) => {
+    const name = text(r, "skill.name"), ev = text(r, "skill.evidence");
+    return name !== null && ev !== null ? [{ id: r.id, ns: r.ns, name, evidence: ev }] : [];
+  });
+}
+export interface ResourceRow { id: string; ns: TMRecord["ns"]; kind: string | null; description: string | null }
+/** Resources the user listed (kind and a short description). A resource with neither is skipped. */
+export function resourceRows(recs: readonly TMRecord[]): ResourceRow[] {
+  return [...recs].sort(byId).filter((r) => r.entity === "resource").flatMap((r) => {
+    const kind = text(r, "resource.kind"), description = text(r, "resource.description");
+    return kind !== null || description !== null ? [{ id: r.id, ns: r.ns, kind, description }] : [];
+  });
+}

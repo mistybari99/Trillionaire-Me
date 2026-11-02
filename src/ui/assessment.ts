@@ -5,7 +5,9 @@ import type { Key } from "../i18n/packs";
 import type { Locale } from "../i18n/registry";
 import { num } from "./components";
 import type { TMRecord } from "../core/types";
-import { DIMENSIONS, assessmentFrom, pathFit, levelsOf, type Dimension, type PathFit, type Source } from "../core/assessment";
+import { DIMENSIONS, assessmentFrom, pathFit, levelsOf, resourceRows, skillEvidence, type Dimension, type PathFit, type Source } from "../core/assessment";
+import { fieldById } from "../catalog/fields";
+import { valueEl } from "./components";
 import { THEME_LABEL } from "../library/paths";
 
 const list = (xs: string[]) => xs.join(", ");
@@ -40,6 +42,22 @@ function fitCard(f: PathFit, lang: Locale): HTMLElement {
     h("p", { class: "muted" }, t("fit.draft", lang)));
 }
 
+/** Skills with an example the user wrote. Shown back in their own words; nothing is counted from it. */
+function evidenceCard(recs: readonly TMRecord[], lang: Locale): HTMLElement {
+  const rows = skillEvidence(recs);
+  return h("div", { class: "card", "data-evidence": String(rows.length) }, h("h3", {}, t("assess.evidence.title", lang)),
+    rows.length ? h("ul", { class: "plain" }, ...rows.map((r) => h("li", { "data-evidence-row": r.id }, h("strong", {}, r.name), ": ", valueEl(r.evidence, r.ns === "real" ? "FACT" : "DEMO", lang))))
+      : h("p", { class: "muted" }, t("assess.evidence.none", lang), " ", h("a", { class: "crumb", href: "#/diary/intake/3" }, t("assess.evidence.add", lang))));
+}
+/** Resources the user listed: kind and short description.  */
+function resourcesCard(recs: readonly TMRecord[], lang: Locale): HTMLElement {
+  const rows = resourceRows(recs);
+  const kindName = (code: string | null) => (code === null ? t("unknown.unknown", lang) : tb(fieldById("resource.kind")!.options!.find((o) => o.code === code)?.label ?? { bn: code, en: code }, lang));
+  return h("div", { class: "card", "data-resources": String(rows.length) }, h("h3", {}, t("assess.resources.title", lang)),
+    rows.length ? h("ul", { class: "plain" }, ...rows.map((r) => h("li", { "data-resource-row": r.id }, h("strong", {}, kindName(r.kind)), r.description ? ": " : null, r.description ? valueEl(r.description, r.ns === "real" ? "FACT" : "DEMO", lang) : null)))
+      : h("p", { class: "muted" }, t("assess.resources.none", lang), " ", h("a", { class: "crumb", href: "#/diary/intake/5" }, t("assess.resources.add", lang))));
+}
+
 /** Plan screen section: assessment cards, then path-fit cards. Reads only the user's own records. */
 export function assessmentSection(recs: readonly TMRecord[], lang: Locale): HTMLElement {
   const a = assessmentFrom(recs);
@@ -48,5 +66,6 @@ export function assessmentSection(recs: readonly TMRecord[], lang: Locale): HTML
     h("h2", {}, t("assess.title", lang)),
     h("p", { class: "sub" }, t("assess.intro", lang)),
     ...DIMENSIONS.map((d) => dimensionCard(d, s.dimensions[d], lang)),
+    evidenceCard(recs, lang), resourcesCard(recs, lang),
     fitCard(pathFit(a), lang));
 }
