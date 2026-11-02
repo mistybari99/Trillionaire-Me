@@ -8,7 +8,7 @@ export interface Evidence { routes: string[]; fns: string[]; files: string[]; te
 const ev = (routes: string[], fns: string[], files: string[], tests: string[]): Evidence => ({ routes, fns, files, tests });
 
 export const EVIDENCE: Record<string, Evidence> = {
-  M01: ev(["#/diary/intake"], ["src/ui/screens.ts#intake"], [], ["tests/g3ui.test.ts"]),
+  M01: ev(["#/diary/intake", "#/diary", "#/today"], ["src/ui/screens.ts#intake", "src/core/profileView.ts#profileView"], [], ["tests/g3ui.test.ts", "tests/profile_view.test.ts"]),
   M02: ev(["#/diary/plan"], ["src/ui/assessment.ts#assessmentSection", "src/core/assessment.ts#assessmentFrom"], [], ["tests/o5_assessment_fit.test.ts"]),
   M03: ev(["#/journey/horizon", "#/journey/northstar", "#/journey", "#/today", "#/journey/report"], ["src/core/horizon.ts#groupByHorizon", "src/core/northStar.ts#ladder", "src/core/northStar.ts#nowOf", "src/core/northStar.ts#progressOf", "src/core/northStar.ts#overallProgress"], ["src/ui/northStarCard.ts", "src/catalog/fields.ts"], ["tests/north_star.test.ts", "tests/horizon.test.ts", "tests/m_registers.test.ts"]),
   M04: ev(["#/diary/plan"], ["src/core/assessment.ts#pathFit", "src/core/assessment.ts#weightsFrom"], ["src/library/paths.ts"], ["tests/o5_assessment_fit.test.ts", "tests/path_sources_weights.test.ts"]),

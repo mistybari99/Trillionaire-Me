@@ -82,8 +82,8 @@ const usedByCode = (id: string) => uiText.includes(`"${id}"`);
 // Known gaps (audit 2 Nov 2026). These lists only shrink: a field that is fixed but still listed fails the test, and a module that
 // claims "complete" may own none of them.
 // DEAD = stored by nobody or read by nobody: no code names the field and no screen shows it.
-const DEAD: string[] = ["giving.amount", "hajj_plan.note", "learning_item.title", "prayer_log.note", "profile.birth_year", "profile.display_name", "profile.health_note",
-  "profile.timezone", "quran_activity.note", "right_duty.note", "zakat_snapshot.note"];
+const DEAD: string[] = ["giving.amount", "hajj_plan.note", "learning_item.title", "prayer_log.note", "profile.health_note",
+  "quran_activity.note", "right_duty.note", "zakat_snapshot.note"];
 // NO_INPUT = no progressive-intake step and no form names the field.
 const NO_INPUT: string[] = ["giving.amount", "hajj_plan.note", "learning_item.title", "prayer_log.note", "profile.health_note", "quran_activity.note", "right_duty.note", "zakat_snapshot.note"];
 

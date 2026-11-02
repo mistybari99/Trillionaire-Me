@@ -7,11 +7,11 @@ The card answers one question: is the software's own build complete? It does not
 Boxes (order): Input, Storage, Calculation, Output, Export, Links. B = built, M = missing, - = not needed.
 Label: complete = no box missing; partial = some box missing; not-built = no box built; blocked = waits for an owner approval (D-number).
 
-Counts: complete 17, partial 6, not-built 1, blocked 1 (of 25).
+Counts: complete 18, partial 5, not-built 1, blocked 1 (of 25).
 
 | Module | Name | Label | I S C O E L | Missing boxes | Waits for | Routes / functions | Tests |
 |---|---|---|---|---|---|---|---|
-| M01 | Profile & consent | partial | B B B M B B | output | - | `#/diary/intake`; `src/ui/screens.ts#intake` | `tests/g3ui.test.ts` |
+| M01 | Profile & consent | complete | B B B B B B | - | - | `#/diary/intake`; `#/diary`; `#/today`; `src/ui/screens.ts#intake`; `src/core/profileView.ts#profileView` | `tests/g3ui.test.ts`, `tests/profile_view.test.ts` |
 | M02 | Discover (assessment) | partial | M B B M B B | input, output | - | `#/diary/plan`; `src/ui/assessment.ts#assessmentSection`; `src/core/assessment.ts#assessmentFrom` | `tests/o5_assessment_fit.test.ts` |
 | M03 | North Star & ladder | complete | B B B B B B | - | - | `#/journey/horizon`; `#/journey/northstar`; `#/journey`; `#/today`; `#/journey/report`; `src/core/horizon.ts#groupByHorizon`; `src/core/northStar.ts#ladder`; `src/core/northStar.ts#nowOf`; `src/core/northStar.ts#progressOf`; `src/core/northStar.ts#overallProgress` | `tests/north_star.test.ts`, `tests/horizon.test.ts`, `tests/m_registers.test.ts` |
 | M04 | Paths & opportunity library | complete | B B B B B B | - | - | `#/diary/plan`; `src/core/assessment.ts#pathFit`; `src/core/assessment.ts#weightsFrom` | `tests/o5_assessment_fit.test.ts`, `tests/path_sources_weights.test.ts` |

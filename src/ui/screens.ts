@@ -53,6 +53,7 @@ import { northStarCard } from "./northStarCard";
 import { syncDelegationNow, teamCard } from "./teamCard";
 import { riskDueCard } from "./riskCard";
 import { printLink } from "./printLink";
+import { greeting, profileCard } from "./profileCard";
 import { blocksTodayCard, commitCard, currentBlocks } from "./blocksUi";
 import { toPlannerBlocks } from "../core/timeBlocks";
 import { moneyReviewCard, riskReviewCard } from "./monthUi";
@@ -970,6 +971,7 @@ export function today(): HTMLElement {
   const rungs = h("ul", { class: "rungs", role: "img", "aria-label": t("home.rungs", lang, { done: num(curStage, lang), total: num(STAGES.length, lang), now: num(curStage + 1, lang) }) },
     ...STAGES.map((_, i) => h("li", { class: i < curStage ? "done" : i === curStage ? "now" : "" })));
   return h("main", { class: "scr scr-today" },
+    greeting(lang),
     h("p", { class: "muted" }, activeNs() === "real" ? todayIso() : valueEl(tb(DEMO_DATE, lang), "DEMO", lang)),
     h("div", { class: "logo-row" }, logo3d(32, lang), h("h1", {}, t("home.title", lang))),
     h("aside", { class: `card inspire ${insp.theme}`, "aria-label": "Inspiration" },
@@ -1120,6 +1122,7 @@ export function diary(): HTMLElement {
   return h("main", { class: "scr scr-diary" },
     h("h1", {}, t("diary.title", lang)),
     h("p", { class: "sub" }, t("diary.intro", lang)),
+    profileCard(lang),
     h("section", { class: "card", "aria-label": t("diary.completeness", lang) },
       h("h2", { class: "card-h", }, t("diary.completeness", lang), " ", valueEl(`${num(c.pct, lang)}%`, "INFERENCE", lang)),
       h("div", { class: "bar", role: "img", "aria-label": `${c.pct}%` }, h("i", { style: `width:${c.pct}%` })),

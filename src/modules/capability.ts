@@ -44,9 +44,10 @@ const m = (id: string, bn: string, en: string, tab: ModuleDef["tab"], b: string,
   ({ id, name: { bn, en }, tab, build: boxes(b), attrs, blockedBy, gate, note: { bn: nbn, en: nen }, missing: { bn: mbn, en: men } });
 
 export const MODULES: ModuleDef[] = [
-  m("M01", "Profile ও সম্মতি", "Profile & consent", "diary", "BBBMBB", [], null, "G1",
-    "ধাপে ধাপে ডেটা লেখা, সম্মতি টিক, সেভ ও আবার শুরু করা পুরোটা তৈরি।", "Step-by-step entry, consent tick, save and resume are all built.",
-    "আউটপুট: নাম, জন্মসাল ও টাইম জোন সেভ হয়, কিন্তু কোনো স্ক্রিন বা হিসাব সেগুলো পড়ে না।", "Output: name, birth year and time zone are saved, but no screen or calculation reads them."),
+  m("M01", "Profile ও সম্মতি", "Profile & consent", "diary", "BBBBBB", [], null, "G1",
+    "ধাপে ধাপে ডেটা লেখা, সম্মতি টিক, সেভ ও আবার শুরু করা পুরোটা তৈরি। নাম, জন্মসাল (থেকে আনুমানিক বয়স) ও টাইম জোন ডায়েরির ‘আপনার সম্পর্কে’ কার্ডে দেখায়; নাম আজকের পাতার শুভেচ্ছায় আসে। না লিখলে ‘জানি না’।",
+    "Step-by-step entry, consent tick, save and resume are all built. Name, birth year (and an estimated age) and time zone show on the diary's 'About you' card; the name is used in the greeting on Today. If not written, Unknown.",
+    "", ""),
   m("M02", "নিজেকে চেনা (মূল্যায়ন)", "Discover (assessment)", "journey", "MBBMBB", ["offline", "private"], null, "G3",
     "আগ্রহ, শক্তি, মূল্যবোধ ও স্কিল লিখে প্ল্যান পাতায় মিলিয়ে কার্ড দেখা যায়।", "Enter interests, strengths, values and skills; the Plan screen shows matching cards.",
     "ইনপুট: অভিজ্ঞতা, রিস্কের ধরন ও শেখার ধরনের প্রশ্ন নেই। আউটপুট: স্কিলের উদাহরণ ও হাতের সম্পদ এখন প্ল্যান পাতায় দেখায়; মূল্যবোধ ও সীমাবদ্ধতার ধরন পথের কার্ডে বা ফাঁকের ছবিতে ব্যবহার হয় না।", "Input: no questions on experience, risk preference or learning style. Output: skill examples and resources now show on the Plan screen; values and constraint kind are not used in path cards or a gap view."),

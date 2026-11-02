@@ -593,3 +593,7 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 - Choices (documents silent): a reference is only typed text; the app never opens or fetches it (no network). The 180-day limit matches the path library. SOP steps max 30, 200 characters each. Topic guides keep their existing tip source/reviewer marks; no new date was invented for them.
 - Schema: additive. Entities `source`, `note`, `sop` with 10 optional fields, catalog 11 to 12, fingerprint updated. Undo: revert this commit; records stay as ordinary records.
 - M17 shows all six boxes built.
+
+## 2 Nov 2026 — Block 12 (2nd run), step 16: profile name, birth year and time zone are read back
+- What: the diary shows an "About you" card (name, birth year, estimated age, time zone as typed; Unknown when missing), and Today greets by the typed name. Age is this year minus the birth year (1900 to this year only). `constraint.hours_per_week` was wired in step 13. The time zone is shown as typed with a note that plan times are plain 24-hour clock and prayer times use Dhaka time; no conversion is made (the documents give no rule).
+- Schema: none. Undo: revert this commit. M01 shows all six boxes built.
