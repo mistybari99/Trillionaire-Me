@@ -67,18 +67,20 @@ describe("TM-TST-155 O8 neutral text", () => {
   });
 });
 
-describe("TM-TST-155 O8 settings screen on More", () => {
+describe("TM-TST-155 O8 settings screen on Settings > Privacy & lock", () => {
   it("four category rows start on Hide; choosing Show for one stores only that one; the lock preview stays neutral", async () => {
     const { render } = await import("../src/app");
     const { prefs } = await import("../src/ui/state");
     localStorage.clear(); localStorage.setItem("tm:ui:lang", "en"); document.body.innerHTML = '<div id="app"></div>';
-    location.hash = "#/more"; render();
+    location.hash = "#/settings/privacy"; render();
     const rows = [...document.querySelectorAll<HTMLElement>("[data-lock-cat]")];
     expect(rows.map((r) => r.dataset.lockCat)).toEqual([...NOTIFY_CATEGORIES]);
     for (const r of rows) expect(r.querySelector("[aria-pressed='true']")?.textContent).toBe("Hide");
     expect(document.querySelector("[data-lock-settings]")!.textContent).toContain("A reminder is waiting");
     const health = rows.find((r) => r.dataset.lockCat === "health")!;
     [...health.querySelectorAll("button")].find((b) => b.textContent === "Show details")!.click();
+    expect(prefs.notifyShow).toEqual({}); // Show asks one calm line first
+    render(); document.querySelector<HTMLElement>("[data-lock-ask='health']")!.querySelector<HTMLButtonElement>("[data-act=lock-show-yes]")!.click();
     expect(prefs.notifyShow).toEqual({ health: true });
     render(); // main.ts re-renders on hashchange; the test has no main.ts, so render directly
     const again = [...document.querySelectorAll<HTMLElement>("[data-lock-cat='health'] [aria-pressed='true']")][0];

@@ -1,6 +1,5 @@
 import { todaysInspiration, THEME_LABEL } from "../library/inspiration";
-import { askPersistence, storageCard } from "./storageCard";
-import { lockCard } from "./lockUi";
+import { storageCard } from "./storageCard";
 import { groupByHorizon, HORIZONS, type HorizonGoal } from "../core/horizon";
 import { h } from "./dom";
 import { t, tb, fmtNumber } from "../i18n/t";
@@ -8,7 +7,10 @@ import type { Key } from "../i18n/packs";
 import { LOCALES, LOCALE_ORDER, intlLocale, type Locale } from "../i18n/registry";
 import { applyPrefs, consentKv, prefs, screenView, store, type HorizonView, type PlanMode } from "./state";
 import { DESIGNS } from "./themes";
-import { grantConsent, readConsent } from "../core/consent";
+import { readConsent } from "../core/consent";
+import { consentGate } from "./consentGate";
+import { pausedCard } from "./privacyUi";
+import { categorySummary } from "./settingsUi";
 import { demoBadge, disclaimers, fieldHelp, num, valueEl } from "./components";
 import { STAGES, DEMO_DATE, DEMO_TASKS } from "../demo/seed";
 import { MODULES, CAP_STATUSES, type ModuleDef } from "../modules/capability";
@@ -32,7 +34,6 @@ import { assessmentSection } from "./assessment";
 import { markNotTrue, realityLogRecord, RealityError } from "../core/reality";
 import { weeklySummary } from "../core/weeklyReview";
 import { reviewSummary } from "../core/review";
-import { NEUTRAL_TITLE, NOTIFY_CATEGORIES, notifyText } from "../core/notify";
 import { stagesFor, TEMPLATE_IDS, TEMPLATES, type TemplateId } from "../core/stageTemplates";
 import { STAGE_CODES, StageError, conditions, currentIndex, passStage, stageStates, type StageCode } from "../core/stages";
 import { LAYERS, TOPICS, topicById, relatedTips, type Tip } from "../library/topics";
@@ -873,6 +874,7 @@ export function today(): HTMLElement {
       h("small", {}, `${t("home.stage", lang)} · ${tb(stage.name, lang)}`),
       h("div", { class: "n" }, num(curStage + 1, lang), h("span", { style: "font-size:22px;color:var(--muted)" }, ` / ${num(STAGES.length, lang)}`)),
       rungs),
+    pausedCard(lang),
     overallProgressCard(lang, "today"),
     homeCountCards(lang),
     homeSummaryCards(lang),
@@ -1332,16 +1334,6 @@ export function more(): HTMLElement {
     designCard(lang),
     h("div", { class: "card" }, h("h2", { class: "card-h", }, t("more.textsize", lang)),
       h("div", { class: "seg" }, ...[100, 125, 150, 200].map((c) => seg(`${num(c, lang)}%`, prefs.scale === c, () => { prefs.scale = c; applyPrefs(); rerender(); })))),
-    h("div", { class: "card", "data-lock-settings": "" }, h("h2", { class: "card-h", }, t("more.lock", lang)),
-      h("p", { class: "muted" }, t("more.lock.desc", lang)),
-      ...NOTIFY_CATEGORIES.map((c) => {
-        const shown = prefs.notifyShow[c] === true;
-        const setTo = (on: boolean) => () => { const cur = { ...prefs.notifyShow, [c]: on }; prefs.notifyShow = cur; rerender(); };
-        return h("div", { class: "row", "data-lock-cat": c },
-          h("span", {}, t(`privacy.${c}` as Key, lang)),
-          h("div", { class: "seg" }, seg(t("more.lock.hide", lang), !shown, setTo(false)), seg(t("more.lock.show", lang), shown, setTo(true))));
-      }),
-      h("p", { class: "muted" }, t("more.lock.preview", lang, { text: notifyText(NEUTRAL_TITLE, lang) }))),
     h("h2", {}, t("more.modules", lang)),
     ...MODULES.filter((m) => m.tab === "more" && m.id !== "M22").map((m) => moduleCard(m, lang)),
     disclaimers(lang, ["noGuarantee", "advice"]));
@@ -1385,28 +1377,6 @@ export function safety(): HTMLElement {
     disclaimers(lang, ["noGuarantee", "advice", "noFatwa"]));
 }
 
-// Data screen state.
-let consentMissingTick = false;
-
-function consentCard(lang: Locale): HTMLElement {
-  return h("div", { class: "card", "data-consent": "real" },
-    h("h2", { class: "card-h" }, t("data.consent.title", lang)),
-    h("p", {}, t("data.consent.p1", lang)),
-    h("p", {}, t("data.consent.p2", lang)),
-    h("p", {}, t("data.consent.p3", lang)),
-    h("p", {}, t("data.consent.p4", lang)),
-    h("label", { style: "display:flex;gap:8px;align-items:center;margin:8px 0" },
-      h("input", { type: "checkbox", id: "consent-tick", style: "width:24px;margin:0" }), t("data.consent.tick", lang)),
-    h("button", { class: "btn", type: "button", "data-act": "consent", onclick: () => {
-      const tick = document.getElementById("consent-tick") as HTMLInputElement | null;
-      if (!tick?.checked) { consentMissingTick = true; rerender(); return; }
-      consentMissingTick = false;
-      { grantConsent(consentKv, new Date().toISOString()); askPersistence(); }
-      rerender();
-    } }, t("data.consent.btn", lang)),
-    consentMissingTick ? h("p", { class: "err", role: "alert" }, t("data.consent.needTick", lang)) : null);
-}
-
 // TM-REQ-153: spreadsheet copy of the person's own entries. One file per kind, never mixed. Real needs the consent tick. Nothing is uploaded.
 function csvCard(realOn: boolean, lang: Locale): HTMLElement {
   const save = (ns: "demo" | "real") => {
@@ -1429,12 +1399,12 @@ export function dataScreen(): HTMLElement {
     h("h1", {}, t("data.title", lang)),
     modeSwitchCard(),
     h("div", { class: "card", "data-ns": "real" }, h("h2", { class: "card-h", }, t("data.real", lang)), h("p", {}, t("data.real.count", lang, { n: num(store.real.list().length, lang) })), h("p", { class: "muted" }, t(realOn ? "data.real.on" : "data.real.locked", lang))),
-    realOn ? null : consentCard(lang),
+    realOn ? null : consentGate(lang),
     h("div", { class: "card", "data-ns": "demo" }, h("h2", { class: "card-h", }, t("data.demo", lang), " ", demoBadge(lang)), h("p", {}, t("data.demo.count", lang, { n: num(store.demo.list().length, lang) }))),
     h("p", { class: "muted" }, t("data.nopromote", lang)),
     link("#/settings/delete", "card link", h("h2", { class: "card-h" }, t("set.cat.delete", lang)), h("p", { class: "muted" }, t("set.sum.delete", lang))),
     storageCard(lang),
-    lockCard(lang),
+    link("#/settings/privacy", "card link", h("h2", { class: "card-h" }, t("set.cat.privacy", lang)), h("p", { class: "muted" }, categorySummary("privacy", lang))),
     csvCard(realOn, lang),
     importCard(lang),
     h("h2", {}, t("backup.title", lang)),

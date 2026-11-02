@@ -1,14 +1,13 @@
 // First-run choice, demo banner, "delete demo?" ask and the Only demo / Only real switch (owner rule 25 Oct 2026).
 // DEMO data is not permanent. Nothing is deleted without an explicit confirm, and real data is never touched.
 import { logo3d } from "./logo";
-import { askPersistence } from "./storageCard";
 import { h } from "./dom";
 import { t } from "../i18n/t";
 import { LOCALES, type Locale } from "../i18n/registry";
-import { grantConsent } from "../core/consent";
+import { grantRealConsent } from "./consentGate";
 import { recordDay, shouldAskDeleteDemo, type DataMode } from "../core/dataMode";
 import { todayIso } from "../core/habits";
-import { consentKv, prefs, store } from "./state";
+import { prefs, store } from "./state";
 import { realConsent } from "./entry";
 import { resetOnboard } from "./onboardUi";
 import { langMenu } from "./langMenu";
@@ -40,7 +39,7 @@ export function openStartReal(): void { startRealOpen = true; needTick = false; 
 export function confirmStartReal(ticked: boolean): boolean {
   if (!realConsent() && !ticked) { needTick = true; rerender(); return false; }
   store.demo.clear(); // demo namespace only: real records are never listed here
-  if (!realConsent()) { grantConsent(consentKv, new Date().toISOString()); askPersistence(); }
+  if (!realConsent()) { grantRealConsent(); }
   prefs.dataMode = "real";
   startRealOpen = false; needTick = false;
   rerender();
@@ -73,7 +72,7 @@ export function firstRunScreen(): HTMLElement {
         needTick ? h("p", { class: "err", role: "alert" }, t("mode.real.needTick", lang)) : null,
         h("button", { class: "btn", type: "button", "data-act": "first-real-yes", onclick: () => {
           if (!ticked()) { needTick = true; rerender(); return; }
-          if (!realConsent()) { grantConsent(consentKv, new Date().toISOString()); askPersistence(); }
+          if (!realConsent()) { grantRealConsent(); }
           prefs.dataMode = "real"; firstRealStep = false; needTick = false; resetOnboard(); prefs.onboard = "pending"; location.hash = "#/start"; rerender();
         } }, t("mode.real.confirm.btn", lang)),
         h("button", { class: "btn ghost", type: "button", "data-act": "first-real-back", onclick: () => { firstRealStep = false; needTick = false; rerender(); } }, t("mode.real.back", lang)))

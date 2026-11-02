@@ -29,3 +29,9 @@ export function grantConsent(kv: KV, nowIso: string): void {
 export function revokeConsent(kv: KV): void {
   kv.remove(CONSENT_KEY);
 }
+
+/** The ISO time the tick was given, or null when consent is not on. For display only ("allowed since ..."). */
+export function consentSince(kv: KV): string | null {
+  if (!readConsent(kv)) return null;
+  try { return (JSON.parse(kv.get(CONSENT_KEY) ?? "null") as ConsentRecord).at; } catch { return null; }
+}

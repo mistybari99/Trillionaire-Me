@@ -47,9 +47,9 @@ export const ROWS: SettingRow[] = [
   R("snapshots", "backup", "set.row.snapshots", "#/more/data", ["snapshot", "automatic", "keep", "copies"], ["snapAuto", "snapKeep"], ["tm:ui:snapAuto", "tm:ui:snapKeep"]),
   R("csv", "backup", "set.row.csv", "#/more/data", ["csv", "spreadsheet", "excel", "export", "import"], [], []),
 
-  R("lockscreen", "privacy", "more.lock", "#/more", ["lock screen", "notification", "private", "show details", "hide"], ["notifyShow"], ["tm:ui:notifyShow"]),
-  R("consent", "privacy", "set.row.consent", "#/more/data", ["consent", "permission", "real data", "tick", "private"], [], ["tm:consent:real:v1"]),
-  R("applock", "privacy", "set.row.applock", "#/more/data", ["pin", "lock", "password", "app lock", "forgot"], [], ["tm:secret:applock"]),
+  R("lockscreen", "privacy", "more.lock", "#/settings/privacy/lockscreen", ["lock screen", "notification", "private", "show details", "hide"], ["notifyShow"], ["tm:ui:notifyShow"]),
+  R("consent", "privacy", "set.row.consent", "#/settings/privacy/consent", ["consent", "permission", "real data", "tick", "private"], [], ["tm:consent:real:v1"]),
+  R("applock", "privacy", "set.row.applock", "#/settings/privacy/applock", ["pin", "lock", "password", "app lock", "forgot"], [], ["tm:secret:applock"]),
 
   R("mode", "data", "set.row.mode", "#/more/data", ["demo", "real", "mode", "switch"], ["dataMode", "dataModeChoice", "demoAskedOn", "demoDays"], ["tm:ui:dataMode", "tm:ui:demoAskedOn", "tm:ui:demoDays"]),
   R("startreal", "data", "set.row.startreal", "#/more/data", ["start real", "begin", "own data"], [], [], true),
