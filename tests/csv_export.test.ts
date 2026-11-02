@@ -84,7 +84,7 @@ describe("CSV card on the Data screen", () => {
     localStorage.setItem("tm:ui:lang", "en"); localStorage.setItem("tm:ui:dataMode", "demo");
   });
   it("real export is disabled until the consent tick; demo export is available", () => {
-    location.hash = "#/more/data"; render();
+    location.hash = "#/settings/backup"; render();
     expect(document.querySelector<HTMLButtonElement>("[data-act=csv-real]")!.disabled).toBe(true);
     expect(document.querySelector("[data-csv-locked]")).not.toBeNull();
     expect(document.querySelector<HTMLButtonElement>("[data-act=csv-demo]")!.disabled).toBe(false);

@@ -80,9 +80,14 @@ export const prefs = {
   /** Backup reminder inside the app. With no choice made it is ON once real records exist (and the real-data tick is given), OFF otherwise. The user's own on/off always wins. */
   get backupRemind(): boolean { const v = get("tm:ui:backupRemind"); return reminderEnabled(v === "on" || v === "off" ? v : null, readConsent(legacy) && store.real.list().length > 0); },
   set backupRemind(v: boolean) { set("tm:ui:backupRemind", v ? "on" : "off"); },
+  /** The user's own reminder choice, or null when none was made (then the default applies). */
+  get backupRemindChoice(): "on" | "off" | null { const v = get("tm:ui:backupRemind"); return v === "on" || v === "off" ? v : null; },
   /** When a backup file was last saved on this device (ISO), or "" for never. */
   get fileBackupAt(): string { return get("tm:ui:fileBackupAt") ?? ""; },
   set fileBackupAt(v: string) { set("tm:ui:fileBackupAt", v); },
+  /** When a backup file that holds real entries was last saved (ISO), or "" for never. Additive key. */
+  get realBackupAt(): string { return get("tm:ui:realBackupAt") ?? ""; },
+  set realBackupAt(v: string) { set("tm:ui:realBackupAt", v); },
   /** Day (YYYY-MM-DD) the user chose "remind me tomorrow". */
   get remindSnoozedOn(): string { return get("tm:ui:remindSnoozedOn") ?? ""; },
   set remindSnoozedOn(v: string) { set("tm:ui:remindSnoozedOn", v); },

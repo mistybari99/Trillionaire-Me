@@ -6,7 +6,7 @@ import { consentKv, saveMonitor, store } from "./state";
 import { readConsent } from "../core/consent";
 import { StoreRepo } from "../adapters/storeRepo";
 import { buildSnapshotFile } from "../core/snapshots";
-import { prefs } from "./state";
+import { markBackupFile } from "./snapshotsUi";
 
 /** The banner, or null when every change is saved. Memory still holds the records, so the backup comes from what is on screen. */
 export function saveFailedBanner(lang: Locale): HTMLElement | null {
@@ -23,7 +23,8 @@ export function saveFailedBanner(lang: Locale): HTMLElement | null {
       const f = await buildSnapshotFile(new StoreRepo(store), readConsent(consentKv));
       const a = h("a", { href: URL.createObjectURL(new Blob([JSON.stringify(f)], { type: "application/json" })), download: `tm-backup-${f.createdAt.slice(0, 10)}.json` });
       document.body.append(a); a.click(); a.remove();
-      prefs.fileBackupAt = new Date().toISOString();
+      markBackupFile(f.real?.count ?? 0);
       msg.textContent = t("save.fail.backupDone", lang);
-    } }, t("save.fail.backup", lang)), msg);
+    } }, t("save.fail.backup", lang)),
+    h("a", { href: "#/settings/backup", class: "btn ghost", "data-act": "save-open-backup", style: "width:auto;margin:0 0 0 8px;min-height:44px" }, t("set.cat.backup", lang)), msg);
 }

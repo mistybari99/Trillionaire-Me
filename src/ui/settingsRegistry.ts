@@ -40,12 +40,12 @@ export const ROWS: SettingRow[] = [
   R("prayerplace", "prayer", "set.row.prayerplace", "#/deen", ["place", "location", "city", "dhaka", "coordinates", "latitude"], ["prayerCoords"], ["tm:ui:prayerCoords", "tm:ui:prayerCoords:real"]),
   R("prayeralerts", "prayer", "set.row.prayeralerts", "#/deen", ["alert", "azan", "adhan", "reminder", "sound", "volume", "notification"], ["prayerAlerts", "prayerFired"], ["tm:ui:prayerAlerts", "tm:ui:prayerFired"]),
 
-  R("reminder", "backup", "set.row.reminder", "#/more/data", ["backup", "reminder", "weekly", "remind"], ["backupRemind", "remindSnoozedOn", "fileBackupAt"], ["tm:ui:backupRemind", "tm:ui:remindSnoozedOn", "tm:ui:fileBackupAt"]),
-  R("storage", "backup", "set.row.storage", "#/more/data", ["storage", "persist", "keep data", "safe"], [], []),
-  R("savebackup", "backup", "set.row.savebackup", "#/more/data", ["backup", "save", "json", "encrypted", "passphrase", "export", "file"], [], []),
-  R("restore", "backup", "set.row.restore", "#/more/data", ["restore", "import", "backup", "snapshot file", "go back"], [], []),
-  R("snapshots", "backup", "set.row.snapshots", "#/more/data", ["snapshot", "automatic", "keep", "copies"], ["snapAuto", "snapKeep"], ["tm:ui:snapAuto", "tm:ui:snapKeep"]),
-  R("csv", "backup", "set.row.csv", "#/more/data", ["csv", "spreadsheet", "excel", "export", "import"], [], []),
+  R("reminder", "backup", "set.row.reminder", "#/settings/backup/reminder", ["backup", "reminder", "weekly", "remind"], ["backupRemind", "backupRemindChoice", "remindSnoozedOn", "fileBackupAt", "realBackupAt"], ["tm:ui:backupRemind", "tm:ui:remindSnoozedOn", "tm:ui:fileBackupAt", "tm:ui:realBackupAt"]),
+  R("storage", "backup", "set.row.storage", "#/settings/backup/storage", ["storage", "persist", "keep data", "safe"], [], []),
+  R("savebackup", "backup", "set.row.savebackup", "#/settings/backup/savebackup", ["backup", "save", "json", "encrypted", "passphrase", "export", "file"], [], []),
+  R("restore", "backup", "set.row.restore", "#/settings/backup/restore", ["restore", "import", "backup", "snapshot file", "go back"], [], []),
+  R("snapshots", "backup", "set.row.snapshots", "#/settings/backup/snapshots", ["snapshot", "automatic", "keep", "copies"], ["snapAuto", "snapKeep"], ["tm:ui:snapAuto", "tm:ui:snapKeep"]),
+  R("csv", "backup", "set.row.csv", "#/settings/backup/csv", ["csv", "spreadsheet", "excel", "export", "import"], [], []),
 
   R("lockscreen", "privacy", "more.lock", "#/settings/privacy/lockscreen", ["lock screen", "notification", "private", "show details", "hide"], ["notifyShow"], ["tm:ui:notifyShow"]),
   R("consent", "privacy", "set.row.consent", "#/settings/privacy/consent", ["consent", "permission", "real data", "tick", "private"], [], ["tm:consent:real:v1"]),

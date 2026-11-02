@@ -31,13 +31,15 @@ beforeEach(() => {
 
 describe("encrypted backup card", () => {
   it("refuses empty, short and mismatching passphrases", async () => {
-    go("#/more/data");
+    go("#/settings/backup");
     const click = (a: string) => q<HTMLButtonElement>(`[data-act=${a}]`).click();
     click("enc-save"); await tick(); expect(q("#enc-msg").textContent).toMatch(/passphrase first/);
     q<HTMLInputElement>("#enc-pass").value = "abc"; q<HTMLInputElement>("#enc-pass2").value = "abc"; click("enc-save"); await tick();
     expect(q("#enc-msg").textContent).toMatch(/at least 8/);
     q<HTMLInputElement>("#enc-pass").value = "longenough1"; q<HTMLInputElement>("#enc-pass2").value = "different11"; click("enc-save"); await tick();
     expect(q("#enc-msg").textContent).toMatch(/not the same/);
+    q<HTMLInputElement>("#enc-pass2").value = "longenough1"; click("enc-save"); await tick();
+    expect(q("#enc-msg").textContent).toMatch(/Tick the box first/); // "I wrote the passphrase down"
   });
 
   async function fileFor(demoRecs: TMRecord[], realRecs: TMRecord[], pass: string) {
@@ -50,7 +52,7 @@ describe("encrypted backup card", () => {
   it("wrong passphrase and damaged file show plain errors and change nothing", async () => {
     store.demo.put(mk("demo", "keep", "task", { "task.title": "keep me" }));
     const text = await fileFor([mk("demo", "d1", "task", { "task.title": "a" })], [], "right-pass-1");
-    go("#/more/data");
+    go("#/settings/backup/restore");
     setFile(q("#enc-file"), text); q<HTMLInputElement>("#enc-rpass").value = "wrong-pass-9"; q<HTMLButtonElement>("[data-act=enc-open]").click();
     await until(() => !!q("#enc-msg").textContent);
     expect(q("#enc-msg").textContent).toMatch(/does not match, or the file is damaged/); expect(q("[data-act=enc-confirm]")).toBeNull();
@@ -62,7 +64,7 @@ describe("encrypted backup card", () => {
   it("restore needs an explicit confirm, then puts demo into demo and real into real only", async () => {
     store.demo.put(mk("demo", "old", "task", { "task.title": "old" })); store.real.put(mk("real", "oldr", "task", { "task.title": "oldr" }));
     const text = await fileFor([mk("demo", "d1", "task", { "task.title": "a" })], [mk("real", "r1", "task", { "task.title": "b" })], "right-pass-1");
-    go("#/more/data");
+    go("#/settings/backup/restore");
     setFile(q("#enc-file"), text); q<HTMLInputElement>("#enc-rpass").value = "right-pass-1"; q<HTMLButtonElement>("[data-act=enc-open]").click();
     await until(() => !!q("[data-act=enc-confirm]"));
     expect(q("#enc-msg").textContent).toMatch(/1 demo and 1 real/);
@@ -77,7 +79,7 @@ describe("encrypted backup card", () => {
     store.real.put(mk("real", "oldr", "task", { "task.title": "oldr" }));
     const text = await fileFor([mk("demo", "d1", "task", { "task.title": "a" })], [mk("real", "r1", "task", { "task.title": "b" })], "right-pass-1");
     revokeConsent(consentKv);
-    go("#/more/data");
+    go("#/settings/backup/restore");
     setFile(q("#enc-file"), text); q<HTMLInputElement>("#enc-rpass").value = "right-pass-1"; q<HTMLButtonElement>("[data-act=enc-open]").click();
     await until(() => !!q("[data-restore=blocked]"));
     expect(q("[data-restore=blocked]").textContent).toMatch(/needs your permission first. Nothing was changed/); expect(q("[data-act=enc-confirm]")).toBeNull();
@@ -86,7 +88,7 @@ describe("encrypted backup card", () => {
   });
 
   it("has Bangla copy with Latin digits", () => {
-    localStorage.setItem("tm:ui:lang", "bn"); go("#/more/data");
+    localStorage.setItem("tm:ui:lang", "bn"); go("#/settings/backup");
     expect(q("[data-card=enc-backup]").textContent).toContain("এনক্রিপ্টেড ব্যাকআপ"); expect(q("[data-card=enc-backup]").textContent).not.toMatch(/[০-৯]/);
   });
 });

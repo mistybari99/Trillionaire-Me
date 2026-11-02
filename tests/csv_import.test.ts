@@ -120,12 +120,12 @@ describe("import card and dictionary (screens)", () => {
     await new Promise((r) => setTimeout(r, 20));
   };
   it("no file chosen: calm message", async () => {
-    go("#/more/data"); (app().querySelector('[data-act="csv-check"]') as HTMLElement).click();
+    go("#/settings/backup"); (app().querySelector('[data-act="csv-check"]') as HTMLElement).click();
     expect(app().querySelector('[data-imp-notice="imp.nofile"]')).not.toBeNull();
   });
   it("real file without the tick: ready but locked, import button disabled", async () => {
     const a = fresh(true); seed(a.s); const csv = exportCsv(a.s, "real");
-    go("#/more/data"); await pick(csv);
+    go("#/settings/backup"); await pick(csv);
     expect(app().querySelector('[data-imp-ready="real"]')).not.toBeNull(); expect(app().querySelector("[data-imp-locked]")).not.toBeNull();
     expect((app().querySelector('[data-act="csv-import"]') as HTMLButtonElement).disabled).toBe(true);
     expect(appStore.real.list()).toHaveLength(0);
@@ -133,7 +133,7 @@ describe("import card and dictionary (screens)", () => {
   it("with the tick: import writes the records, then undo removes them", async () => {
     grantConsent(consentKv, NOW);
     const a = fresh(true); seed(a.s); const csv = exportCsv(a.s, "real");
-    go("#/more/data"); await pick(csv);
+    go("#/settings/backup"); await pick(csv);
     (app().querySelector('[data-act="csv-import"]') as HTMLElement).click();
     expect(appStore.real.list().map((r) => r.id).sort()).toEqual(["f1", "t1"]);
     expect(app().querySelector("[data-imp-undo]")).not.toBeNull();
@@ -142,7 +142,7 @@ describe("import card and dictionary (screens)", () => {
   });
   it("a bad file shows the problem rows and writes nothing", async () => {
     grantConsent(consentKv, NOW);
-    go("#/more/data"); await pick("x,y\r\n1,2\r\n");
+    go("#/settings/backup"); await pick("x,y\r\n1,2\r\n");
     expect(app().querySelector("[data-imp-errors]")).not.toBeNull(); expect(app().querySelector('[data-imp-error="header"]')).not.toBeNull(); expect(appStore.real.list()).toHaveLength(0);
   });
   it("dictionary lists every catalog field with type and import rule, in all three languages", () => {

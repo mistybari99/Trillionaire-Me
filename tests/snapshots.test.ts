@@ -135,7 +135,7 @@ describe("TM-TST-089 IndexedDB adapter", () => {
   });
 });
 
-describe("screen (More > Demo & real data)", () => {
+describe("screen (Settings > Backup & export)", () => {
   const app = () => document.getElementById("app")!;
   const go = (hash: string) => { location.hash = hash; render(); };
   beforeEach(async () => {
@@ -145,15 +145,15 @@ describe("screen (More > Demo & real data)", () => {
   });
   it("defaults: automatic on, keep 5, reminder OFF", () => {
     expect(prefs.snapAuto).toBe(true); expect(prefs.snapKeep).toBe(5); expect(prefs.backupRemind).toBe(false);
-    go("#/more/data"); expect((app().querySelector("[data-snap=auto]") as HTMLInputElement).checked).toBe(true); expect((app().querySelector("[data-snap=remind]") as HTMLInputElement).checked).toBe(false);
+    go("#/settings/backup"); expect((app().querySelector("[data-snap=auto]") as HTMLInputElement).checked).toBe(true); expect((app().querySelector("[data-snap=remind]") as HTMLInputElement).checked).toBe(false);
     expect((app().querySelector("[data-snap=keep]") as HTMLSelectElement).value).toBe("5");
   });
   it("take a snapshot, see it listed with counts, restore only after the confirm, and today's data is saved first", async () => {
-    store.demo.put(rec("demo", "a")); go("#/more/data");
+    store.demo.put(rec("demo", "a")); go("#/settings/backup");
     (app().querySelector("[data-act=snap-take]") as HTMLElement).click(); await settle();
     expect(app().querySelector("[data-snap=msg]")!.textContent).toBe("Snapshot saved."); expect(app().querySelectorAll("[data-snapshot]").length).toBe(1);
     expect(app().querySelector("[data-snapshot]")!.textContent).toMatch(/manual · 1 demo, 0 real/);
-    store.demo.put(rec("demo", "b"));
+    store.demo.put(rec("demo", "b")); go("#/settings/backup/restore"); await settle();
     (app().querySelector("[data-act=snap-restore]") as HTMLElement).click();
     await settle();
     expect(app().querySelector("[data-restore=preview]")!.textContent).toMatch(/Replace my 2 entries with the 1 in this file/); expect(store.demo.list().length).toBe(2);
@@ -166,10 +166,10 @@ describe("screen (More > Demo & real data)", () => {
     expect(store.demo.list().map((r) => r.id).sort()).toEqual(["a", "b"]);
   });
   it("cancel leaves everything as it was; nothing to save says so", async () => {
-    go("#/more/data"); (app().querySelector("[data-act=snap-take]") as HTMLElement).click(); await settle();
+    go("#/settings/backup"); (app().querySelector("[data-act=snap-take]") as HTMLElement).click(); await settle();
     expect(app().querySelector("[data-snap=msg]")!.textContent).toMatch(/nothing to save/); expect(app().querySelectorAll("[data-snapshot]").length).toBe(0);
-    store.demo.put(rec("demo", "a")); go("#/more/data"); (app().querySelector("[data-act=snap-take]") as HTMLElement).click(); await settle();
-    (app().querySelector("[data-act=snap-restore]") as HTMLElement).click(); await settle();
+    store.demo.put(rec("demo", "a")); go("#/settings/backup"); (app().querySelector("[data-act=snap-take]") as HTMLElement).click(); await settle();
+    go("#/settings/backup/restore"); await settle(); (app().querySelector("[data-act=snap-restore]") as HTMLElement).click(); await settle();
     expect(document.activeElement?.getAttribute("data-act")).toBe("snap-cancel"); // Cancel is the default focus
     (app().querySelector("[data-act=snap-cancel]") as HTMLElement).click();
     expect(app().querySelector("[data-restore=preview]")).toBeNull(); expect(store.demo.list().length).toBe(1);
@@ -187,7 +187,7 @@ describe("screen (More > Demo & real data)", () => {
   });
   it("deleting real data also removes real copies from snapshots", async () => {
     grantConsent(consentKv, NOW); localStorage.setItem("tm:ui:dataMode", "real"); store.real.put(rec("real", "r")); store.demo.put(rec("demo", "d"));
-    go("#/more/data"); (app().querySelector("[data-act=snap-take]") as HTMLElement).click(); await settle();
+    go("#/settings/backup"); (app().querySelector("[data-act=snap-take]") as HTMLElement).click(); await settle();
     expect((await snapshotRepo!.list())[0]!.real!.count).toBe(1);
     go("#/settings/delete"); { const i = app().querySelector<HTMLInputElement>("[data-delete-word]")!; i.value = "DELETE"; i.dispatchEvent(new Event("input")); }
     (app().querySelector("[data-act=clear-real-yes]") as HTMLElement).click(); await settle();

@@ -28,7 +28,7 @@ beforeEach(() => {
 describe("backup file restore flow", () => {
   it("shows a preview with both numbers, changes nothing until confirm, then offers Go back", async () => {
     store.demo.put(rec("a")); store.demo.put(rec("b")); const text = await fileOf(["x", "y", "z"]);
-    go("#/more/data"); setFile(q("[data-act=restore]"), text); q<HTMLInputElement>("[data-act=restore]").dispatchEvent(new Event("change"));
+    go("#/settings/backup/restore"); setFile(q("[data-act=restore]"), text); q<HTMLInputElement>("[data-act=restore]").dispatchEvent(new Event("change"));
     await wait(() => !!q("[data-restore=preview]"));
     expect(q("[data-restore=preview]").textContent).toMatch(/your 2 entries on this phone will be replaced by the 3 in this file/);
     expect(q("[data-act=json-confirm]").textContent).toBe("Replace my 2 entries with the 3 in this file"); expect(store.demo.list().length).toBe(2);
@@ -39,13 +39,13 @@ describe("backup file restore flow", () => {
     expect(store.demo.list().map((r) => r.id).sort()).toEqual(["a", "b"]);
   });
   it("a damaged file is refused with a plain message and nothing changes", async () => {
-    store.demo.put(rec("a")); go("#/more/data"); setFile(q("[data-act=restore]"), "{nope"); q<HTMLInputElement>("[data-act=restore]").dispatchEvent(new Event("change"));
+    store.demo.put(rec("a")); go("#/settings/backup/restore"); setFile(q("[data-act=restore]"), "{nope"); q<HTMLInputElement>("[data-act=restore]").dispatchEvent(new Event("change"));
     await wait(() => !!q("#backup-msg").textContent); expect(q("#backup-msg").textContent).toMatch(/Nothing was changed/); expect(store.demo.list().length).toBe(1);
   });
   it("with the app lock on, the PIN is asked again; a wrong PIN changes nothing", async () => {
     await setPin(consentKv, "4821", "4821", 1000); expect(consentKv.get(LOCK_KEY)).toBeTruthy(); grantConsent(consentKv, NOW);
     store.demo.put(rec("a")); const text = await fileOf(["x"]);
-    go("#/more/data"); setFile(q("[data-act=restore]"), text); q<HTMLInputElement>("[data-act=restore]").dispatchEvent(new Event("change"));
+    go("#/settings/backup/restore"); setFile(q("[data-act=restore]"), text); q<HTMLInputElement>("[data-act=restore]").dispatchEvent(new Event("change"));
     await wait(() => !!q("[data-restore=pin]"));
     q<HTMLInputElement>("[data-restore=pin]").value = "0000"; q<HTMLButtonElement>("[data-act=json-confirm]").click();
     await wait(() => !!q("[data-restore=err]").textContent); expect(q("[data-restore=err]").textContent).toMatch(/not right/); expect(store.demo.list().map((r) => r.id)).toEqual(["a"]);
@@ -53,6 +53,6 @@ describe("backup file restore flow", () => {
     await wait(() => store.demo.list().some((r) => r.id === "x")); expect(store.demo.list().map((r) => r.id)).toEqual(["x"]);
   });
   it("the Save buttons say what the file contains", () => {
-    go("#/more/data"); expect(q("[data-backup=contains]").textContent).toMatch(/demo entries only/); expect(q("[data-enc=contains]").textContent).toMatch(/demo and real/);
+    go("#/settings/backup"); expect(q("[data-backup=contains]").textContent).toMatch(/demo entries only/); expect(q("[data-enc=contains]").textContent).toMatch(/demo and real/);
   });
 });

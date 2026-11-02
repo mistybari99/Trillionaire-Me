@@ -1,5 +1,4 @@
 import { todaysInspiration, THEME_LABEL } from "../library/inspiration";
-import { storageCard } from "./storageCard";
 import { groupByHorizon, HORIZONS, type HorizonGoal } from "../core/horizon";
 import { h } from "./dom";
 import { t, tb, fmtNumber } from "../i18n/t";
@@ -21,10 +20,7 @@ import { completeness, nextStep, stepFields, type Answers } from "../core/intake
 import { checkFreeText } from "../core/safety";
 import { type FieldValue, type TMRecord, type UnknownState } from "../core/types";
 import type { FieldDef } from "../catalog/types";
-import { StoreRepo } from "../adapters/storeRepo";
-import { createBackup, parseBackup } from "../core/backup";
-import { restoreHost, startRestore } from "./restoreUi";
-import { exportCsv } from "../core/csv";
+
 import { goalReminders } from "../core/goalStatus";
 import { freshnessOf } from "../core/freshness";
 import { feasibility, schedule, todaysActions } from "../core/planner";
@@ -43,7 +39,6 @@ import { messageIndex, milestoneAt } from "../core/reward";
 import { diagram } from "./diagram";
 import { activityChart, goalRingsChart, habitChart, habitGridTracker, moneyChart } from "./charts";
 import type { GridRange } from "../core/chartData";
-import { encBackupCard } from "./encBackup";
 import { rulesTodayCard } from "./libraryScreens";
 import { celebrate, journeyGoalsCard, overallProgressCard } from "./lifeUi";
 import { adviceCardsView, homeCountCards, homeSummaryCards, nextActionCard } from "./homeUi";
@@ -51,8 +46,7 @@ import { progressRing, isMilestone } from "./ring";
 import { logo3d } from "./logo";
 import { goalFunnelHero, horizonArc } from "./horizonArt";
 import { viewBar, withView } from "./viewBar";
-import { importCard } from "./importUi";
-import { backupReminderCard, snapshotsCard } from "./snapshotsUi";
+import { backupReminderCard } from "./snapshotsUi";
 import { overallProgress } from "../core/overallProgress";
 import * as Focus from "../core/focus";
 import * as Habits from "../core/habits";
@@ -1377,20 +1371,6 @@ export function safety(): HTMLElement {
     disclaimers(lang, ["noGuarantee", "advice", "noFatwa"]));
 }
 
-// TM-REQ-153: spreadsheet copy of the person's own entries. One file per kind, never mixed. Real needs the consent tick. Nothing is uploaded.
-function csvCard(realOn: boolean, lang: Locale): HTMLElement {
-  const save = (ns: "demo" | "real") => {
-    const stamp = new Date().toISOString().slice(0, 10);
-    const a = h("a", { href: URL.createObjectURL(new Blob([exportCsv(store, ns)], { type: "text/csv;charset=utf-8" })), download: `tm-${ns}-data-${stamp}.csv` });
-    document.body.append(a); a.click(); a.remove();
-  };
-  return h("section", { class: "card", "data-card": "csv" }, h("h2", { class: "card-h" }, t("csv.title", lang)), h("p", { class: "muted" }, t("csv.note", lang)),
-    h("div", { class: "actions" },
-      h("button", { class: "btn ghost", type: "button", "data-act": "csv-demo", onclick: () => save("demo") }, t("csv.demo", lang)),
-      h("button", { class: "btn ghost", type: "button", "data-act": "csv-real", ...(realOn ? {} : { disabled: true }), onclick: () => save("real") }, t("csv.real", lang))),
-    realOn ? null : h("p", { class: "muted", "data-csv-locked": "1" }, t("csv.locked", lang)));
-}
-
 export function dataScreen(): HTMLElement {
   const lang = L();
   const realOn = readConsent(consentKv);
@@ -1403,30 +1383,8 @@ export function dataScreen(): HTMLElement {
     h("div", { class: "card", "data-ns": "demo" }, h("h2", { class: "card-h", }, t("data.demo", lang), " ", demoBadge(lang)), h("p", {}, t("data.demo.count", lang, { n: num(store.demo.list().length, lang) }))),
     h("p", { class: "muted" }, t("data.nopromote", lang)),
     link("#/settings/delete", "card link", h("h2", { class: "card-h" }, t("set.cat.delete", lang)), h("p", { class: "muted" }, t("set.sum.delete", lang))),
-    storageCard(lang),
     link("#/settings/privacy", "card link", h("h2", { class: "card-h" }, t("set.cat.privacy", lang)), h("p", { class: "muted" }, categorySummary("privacy", lang))),
-    csvCard(realOn, lang),
-    importCard(lang),
-    h("h2", {}, t("backup.title", lang)),
-    h("p", { class: "muted" }, t("backup.note", lang)),
-    h("button", { class: "btn", type: "button", "data-act": "backup", onclick: async () => {
-      const b = await createBackup(new StoreRepo(store), "demo");
-      const a = h("a", { href: URL.createObjectURL(new Blob([JSON.stringify(b)], { type: "application/json" })), download: `tm-demo-backup-${b.createdAt.slice(0, 10)}.json` });
-      document.body.append(a); a.click(); a.remove();
-    } }, t("backup.save", lang)),
-    h("p", { class: "muted", "data-backup": "contains" }, t("backup.contains.demo", lang)),
-    h("label", { class: "btn ghost", style: "cursor:pointer" }, t("backup.restore", lang),
-      h("input", { type: "file", accept: "application/json,.json", "data-act": "restore", class: "sr-only", onchange: async (e: Event) => {
-        const f = (e.target as HTMLInputElement).files?.[0]; if (!f) return;
-        const out = document.getElementById("backup-msg")!;
-        try { const b = parseBackup(await f.text()); out.textContent = ""; await startRestore("json", { demo: b.ns === "demo" ? b : null, real: b.ns === "real" ? b : null, createdAt: b.createdAt }, lang); }
-        catch (err) { out.className = "err"; out.textContent = t("backup.bad", lang, { why: (err as Error).message }); }
-        (e.target as HTMLInputElement).value = "";
-      } })),
-    h("p", { id: "backup-msg", role: "status" }),
-    restoreHost(lang),
-    encBackupCard(lang),
-    snapshotsCard(lang),
+    link("#/settings/backup", "card link", h("h2", { class: "card-h" }, t("set.cat.backup", lang)), h("p", { class: "muted" }, categorySummary("backup", lang))),
     disclaimers(lang));
 }
 
