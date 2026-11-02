@@ -53,6 +53,7 @@ import { northStarCard } from "./northStarCard";
 import { syncDelegationNow, teamCard } from "./teamCard";
 import { riskDueCard } from "./riskCard";
 import { printLink } from "./printLink";
+import { moneyReviewCard, riskReviewCard } from "./monthUi";
 import { exitConds, gateDueCard, gateReportCard, stageRulesBlock } from "./gateCard";
 import { portfolioCard } from "./ventureCard";
 import { ventureRows } from "../core/ventures";
@@ -979,9 +980,9 @@ export function reviewScreen(): HTMLElement {
     viewBar("review", lang),
     activityChart(recs, todayIso(), lang),
     ...revBody,
-    kpiSection("days90", lang),
+    kpiSection("days90", lang), moneyReviewCard(lang), riskReviewCard(lang),
     s.focusUnknown > 0 ? h("p", { class: "muted" }, t("review.unknownFocus", lang, { n: num(s.focusUnknown, lang) })) : null,
-    h("p", { class: "muted" }, t("review.quiet", lang)),
+    h("p", { class: "muted" }, t("review.quiet", lang)), link("#/journey/month", "crumb", t("month.link", lang)),
     disclaimers(lang));
 }
 
@@ -1006,9 +1007,9 @@ export function weeklyScreen(): HTMLElement {
     h("p", { class: "muted", "data-week-period": "1" }, valueEl(t("review.period", lang, { from: w.from, to: w.to }), "DEMO", lang)),
     viewBar("weekly", lang),
     ...body,
-    kpiSection("week", lang),
+    kpiSection("week", lang), moneyReviewCard(lang), riskReviewCard(lang),
     w.focusUnknown > 0 ? h("p", { class: "muted" }, t("week.unknownFocus", lang, { n: num(w.focusUnknown, lang) })) : null,
-    h("p", { class: "muted" }, t("week.quiet", lang)),
+    h("p", { class: "muted" }, t("week.quiet", lang)), link("#/journey/month", "crumb", t("month.link", lang)),
     disclaimers(lang));
 }
 
@@ -1026,6 +1027,7 @@ export function journey(): HTMLElement {
       link("#/journey/horizon", "btn ghost", t("horizon.link", lang)),
       link("#/journey/report", "btn ghost", t("report.link", lang)),
       link("#/journey/week", "btn ghost", t("week.link", lang)),
+      link("#/journey/month", "btn ghost", t("month.link", lang)),
       link("#/journey/decide", "btn ghost", t("dec.link", lang)),
       link("#/journey/mine", "btn ghost", t("tri.link", lang)),
       link("#/journey/legs", "btn ghost", t("legs.link", lang)),

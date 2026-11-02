@@ -23,7 +23,7 @@ export const EVIDENCE: Record<string, Evidence> = {
   M13: ev(["#/deen"], ["src/core/prayerLog.ts#markedOn", "src/core/fastLog.ts#isFastMarked", "src/core/prayer.ts#prayerTimes", "src/core/prayerAlerts.ts#alertSlots"], ["src/schema/entities.ts"], ["tests/prayer.test.ts", "tests/g1.test.ts", "tests/fast_log.test.ts"]),
   M14: ev([], [], ["src/catalog/fields.ts"], []),
   M15: ev(["#/journey/risks", "#/today", "#/journey/report", "#/journey/reality"], ["src/core/risk.ts#riskRows", "src/core/risk.ts#riskDue", "src/core/risk.ts#dueRisks", "src/core/risk.ts#reviewedRisk"], ["src/ui/riskCard.ts"], ["tests/risk_review.test.ts", "tests/m_registers.test.ts"]),
-  M16: ev(["#/journey/review", "#/journey/report", "#/journey/week", "#/journey/kpi"], ["src/core/review.ts#reviewSummary", "src/core/kpi.ts#kpiStatus"], [], ["tests/o6_reality_review_templates.test.ts", "tests/kpi.test.ts"]),
+  M16: ev(["#/journey/review", "#/journey/report", "#/journey/week", "#/journey/month", "#/journey/kpi"], ["src/core/review.ts#reviewSummary", "src/core/kpi.ts#kpiStatus", "src/core/monthlyReview.ts#monthlySummary", "src/core/monthlyReview.ts#moneyReview"], [], ["tests/o6_reality_review_templates.test.ts", "tests/kpi.test.ts", "tests/month_review.test.ts"]),
   M17: ev(["#/cards", "#/topics"], ["src/ui/screens.ts#cardsScreen", "src/core/cards.ts#dueCards"], ["src/library/topics.ts"], ["tests/focus_habits_cards.test.ts", "tests/topics_rewards.test.ts"]),
   M18: ev(["#/journey/art"], ["src/ui/rewardArt.ts#journeyArt", "src/ui/diagram.ts#diagram"], [], ["tests/r4_motion.test.ts"]),
   M19: ev(["#/settings/plan/automation", "#/today"], ["src/core/rules.ts#evaluateRules"], [], ["tests/rules.test.ts", "tests/m_systems_rules_ui.test.ts"]),

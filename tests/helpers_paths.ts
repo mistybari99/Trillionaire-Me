@@ -3,7 +3,7 @@ import { TOPICS } from "../src/library/topics";
 import { CATEGORIES, ROWS } from "../src/ui/settingsRegistry";
 
 export const STATIC = ["/start", "/today", "/journey", "/journey/log", "/journey/wheel", "/journey/universe", "/journey/goals", "/journey/horizon", "/diary", "/diary/intake", "/diary/intake/2",
-  "/diary/plan", "/diary/money", "/capture", "/journey/report", "/journey/print", "/journey/print/report", "/journey/print/plan", "/journey/print/handover", "/journey/week", "/journey/decide", "/journey/mine", "/journey/legs", "/journey/leak", "/journey/review", "/journey/risks",
+  "/diary/plan", "/diary/money", "/capture", "/journey/report", "/journey/print", "/journey/print/report", "/journey/print/plan", "/journey/print/handover", "/journey/week", "/journey/month", "/journey/decide", "/journey/mine", "/journey/legs", "/journey/leak", "/journey/review", "/journey/risks",
   "/journey/history", "/journey/northstar", "/journey/kpi", "/journey/gates", "/journey/reality", "/diary/ventures", "/diary/team", "/stuck", "/topics", "/journey/art", "/habits", "/cards", "/deen", "/more/status", "/more/fields",
   "/more/glossary", "/more/safety", "/more/dictionary", "/more/library", "/more/halal-flags", "/settings", "/settings/about", "/settings/connections"];
 
