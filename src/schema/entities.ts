@@ -22,6 +22,7 @@ export const ENTITIES: EntityDef[] = [
   e("strength", "FAM-35", "শক্তি", "Strength", "M02", "personal"),
   e("value", "FAM-35", "মূল্যবোধ", "Value", "M02", "personal"),
   e("skill", "FAM-35", "স্কিল", "Skill", "M02", "personal"),
+  e("path_weights", "FAM-35", "পথ মেলানোর ওজন", "Path-fit weights", "M04", "personal"),
   e("resource", "FAM-35", "সম্পদ/সুবিধা", "Resource", "M02", "personal"),
   e("constraint", "FAM-35", "সীমাবদ্ধতা", "Constraint", "M08", "personal"),
   e("goal", "FAM-03", "লক্ষ্য/কাজ", "Goal / task", "M06", "personal", "goal"),

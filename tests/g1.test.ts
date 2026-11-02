@@ -189,7 +189,7 @@ describe("TM-TST-144 capability status", () => {
       for (const a of m.attrs) expect(CAP_ATTRS).toContain(a);
       expect(["complete", "partial", "not-built", "blocked"]).toContain(buildLabel(m));
     }
-    expect(MODULES.filter((m) => buildLabel(m) === "complete").map((m) => m.id)).toEqual(["M03", "M05", "M06", "M07", "M08", "M10", "M11", "M12", "M15", "M16", "M19", "M20", "M22", "M24", "M25"]);
+    expect(MODULES.filter((m) => buildLabel(m) === "complete").map((m) => m.id)).toEqual(["M03", "M04", "M05", "M06", "M07", "M08", "M10", "M11", "M12", "M15", "M16", "M19", "M20", "M22", "M24", "M25"]);
   });
 });
 

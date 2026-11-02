@@ -72,6 +72,23 @@ export type Source = "interest" | "skill" | "strength";
 /** Transparent weights: a skill says more about a path than an interest, and an interest more than a strength. */
 export const SOURCE_WEIGHT: Record<Source, number> = { skill: 3, interest: 2, strength: 1 };
 export const MAX_MATCHES = 3;
+export type Weights = Record<Source, number>;
+export const WEIGHT_MIN = 1, WEIGHT_MAX = 10;
+
+/** The user's own weights (entity `path_weights`), or the built-in ones. `custom` is true only when the user saved at least one. A weight outside 1-10 is ignored. */
+export function weightsFrom(recs: readonly TMRecord[]): { weights: Weights; custom: boolean } {
+  const r = [...recs].sort(byId).filter((x) => x.entity === "path_weights").pop();
+  const pick = (key: string): number | null => { const n = r ? numberOrNull(r.values[key]) : null; return n !== null && Number.isInteger(n) && n >= WEIGHT_MIN && n <= WEIGHT_MAX ? n : null; };
+  const s = pick("path_weights.skill"), i = pick("path_weights.interest"), g = pick("path_weights.strength");
+  return { weights: { skill: s ?? SOURCE_WEIGHT.skill, interest: i ?? SOURCE_WEIGHT.interest, strength: g ?? SOURCE_WEIGHT.strength }, custom: s !== null || i !== null || g !== null };
+}
+/** A weight is a whole number from 1 to 10; blank means "use the built-in one" (null in the result). Invalid input is undefined. */
+export function parseWeight(raw: string): number | null | undefined {
+  const s = raw.trim().replace(/[০-৯]/g, (c) => String(c.charCodeAt(0) - 0x09e6));
+  if (s === "") return null;
+  const n = Number(s);
+  return Number.isInteger(n) && n >= WEIGHT_MIN && n <= WEIGHT_MAX ? n : undefined;
+}
 
 export interface Reason { source: Source; text: string; theme: Theme }
 export interface PathMatch { path: PathEntry; weight: number; reasons: Reason[]; unknownThemes: Theme[] }
@@ -90,7 +107,7 @@ export function themesOf(s: string): Theme[] {
 }
 
 /** Matches the user's interests, skills and strengths to the path library by theme. Pure and deterministic. */
-export function pathFit(a: Assessment, library: readonly PathEntry[] = PATHS): PathFit {
+export function pathFit(a: Assessment, library: readonly PathEntry[] = PATHS, weights: Weights = SOURCE_WEIGHT): PathFit {
   const items: { source: Source; text: string }[] = [
     ...a.skills.map((i) => ({ source: "skill" as const, text: i.name })),
     ...a.interests.map((i) => ({ source: "interest" as const, text: i.name })),
@@ -105,7 +122,7 @@ export function pathFit(a: Assessment, library: readonly PathEntry[] = PATHS): P
     const themes = themesOf(it.text);
     if (themes.length === 0) { unmapped.push(it.text); continue; }
     for (const th of themes) {
-      const weight = SOURCE_WEIGHT[it.source];
+      const weight = weights[it.source];
       const cur = best.get(th);
       if (!cur || weight > cur.weight) best.set(th, { source: it.source, text: it.text, theme: th, weight });
     }

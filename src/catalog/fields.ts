@@ -2,7 +2,7 @@ import type { Bi } from "../i18n/registry";
 import { UNKNOWN_STATES, type UnknownState } from "../core/types";
 import type { AccessRule, ChoiceOption, FieldDef, FieldType, Importance, PrivacyClass, Purpose, Requirement } from "./types";
 
-export const CATALOG_VERSION = 10;
+export const CATALOG_VERSION = 11;
 
 const bi = (bn: string, en: string): Bi => ({ bn, en });
 const opt = (code: string, bn: string, en: string): ChoiceOption => ({ code, label: bi(bn, en) });
@@ -152,6 +152,22 @@ export const FIELDS: FieldDef[] = [
     what: bi("প্রতিটি নামাজের সময় থেকে শুরু করে কত মিনিট কাজ বসানো হবে না। সংখ্যাটি আপনার; অ্যাপ নিজে ধরে না।", "From each prayer time, how many minutes no task is placed. The number is yours; the app assumes none."),
     why: bi("নামাজের সময় ফোনেই হিসাব হয়; এখানে শুধু সময় বসে, অন্য কিছু নয়। না দিলে কোনো নামাজ-ব্লক হয় না।", "Prayer times are worked out on this phone; only times are placed, nothing else. With no number, no prayer block is made."),
     example: bi("২০", "20"), format: bi("১ থেকে ২৪০ মিনিট", "1 to 240 minutes") }),
+  // ── path-fit weights (M04): how much a skill, an interest and a strength each count when paths are matched (Spec 3.3: transparent, configurable) ──
+  f({ id: "path_weights.skill", entity: "path_weights", family: "FAM-35", type: "number", purpose: "assessment", importance: "optional", affects: "path match",
+    label: bi("স্কিলের ওজন", "Weight of a skill"),
+    what: bi("পথ মেলানোর সময় আপনার একটি স্কিল কতটা গুরুত্ব পাবে। ১ থেকে ১০। ফাঁকা হলে অ্যাপের নিজের ওজন (৩) ধরা হয়।", "How much one of your skills counts when paths are matched. 1 to 10. Blank uses the built-in weight (3)."),
+    why: bi("কোন পথ আগে আসবে তা কেন, আপনি দেখতে ও বদলাতে পারেন। কোনো ওজন কোনো সাফল্যের প্রতিশ্রুতি নয়।", "You can see and change why one path comes before another. No weight promises any result."),
+    example: bi("৩", "3"), format: bi("১ থেকে ১০ পূর্ণ সংখ্যা", "A whole number 1 to 10") }),
+  f({ id: "path_weights.interest", entity: "path_weights", family: "FAM-35", type: "number", purpose: "assessment", importance: "optional", affects: "path match",
+    label: bi("আগ্রহের ওজন", "Weight of an interest"),
+    what: bi("পথ মেলানোর সময় আপনার একটি আগ্রহ কতটা গুরুত্ব পাবে। ১ থেকে ১০। ফাঁকা হলে অ্যাপের নিজের ওজন (২) ধরা হয়।", "How much one of your interests counts when paths are matched. 1 to 10. Blank uses the built-in weight (2)."),
+    why: bi("পথের ক্রম কেন, তা স্বচ্ছ রাখতে।", "To keep the order of paths transparent."),
+    example: bi("২", "2"), format: bi("১ থেকে ১০ পূর্ণ সংখ্যা", "A whole number 1 to 10") }),
+  f({ id: "path_weights.strength", entity: "path_weights", family: "FAM-35", type: "number", purpose: "assessment", importance: "optional", affects: "path match",
+    label: bi("শক্তির ওজন", "Weight of a strength"),
+    what: bi("পথ মেলানোর সময় আপনার একটি শক্তি কতটা গুরুত্ব পাবে। ১ থেকে ১০। ফাঁকা হলে অ্যাপের নিজের ওজন (১) ধরা হয়।", "How much one of your strengths counts when paths are matched. 1 to 10. Blank uses the built-in weight (1)."),
+    why: bi("পথের ক্রম কেন, তা স্বচ্ছ রাখতে।", "To keep the order of paths transparent."),
+    example: bi("১", "1"), format: bi("১ থেকে ১০ পূর্ণ সংখ্যা", "A whole number 1 to 10") }),
   // ── goals / tasks hierarchy (FAM-03) ──
   f({ id: "goal.title", entity: "goal", family: "FAM-03", type: "text", purpose: "planning", step: 6, importance: "core", requirement: "required",
     label: bi("লক্ষ্যের নাম", "Goal title"),

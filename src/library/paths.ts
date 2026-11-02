@@ -29,8 +29,16 @@ export const THEME_KEYWORDS: Record<Theme, string[]> = {
   learning: ["study", "research", "reading", "learn", "science", "পড়াশোনা", "গবেষণা", "পড়ার", "শিখ"],
 };
 
+/** Where the built-in path entries come from. They are the builder's own drafts: no outside source, no figures. Spec 3.3: every entry carries a source and a date, and goes stale when old. */
+export const PATH_SOURCE: Bi = { bn: "অ্যাপের ভেতরের খসড়া (নির্মাতার লেখা), বাইরের কোনো সূত্র নেই", en: "Built-in draft written by the builder; no outside source" };
+export const PATH_WRITTEN_ON = "2026-10-24";
+/** After this many days an entry is shown as old and the person is asked to check it again. */
+export const PATH_STALE_DAYS = 180;
+
 export interface PathEntry {
   id: string;
+  /** where the entry comes from and the day it was written */
+  source: Bi; writtenOn: string;
   name: Bi;
   summary: Bi;
   themes: Theme[];
@@ -43,7 +51,7 @@ export interface PathEntry {
 }
 
 const P = (id: string, name: Bi, summary: Bi, themes: Theme[], needs: Bi, firstTest: Bi, caution?: Bi): PathEntry =>
-  ({ id, name, summary, themes, needs, firstTest, caution });
+  ({ id, source: PATH_SOURCE, writtenOn: PATH_WRITTEN_ON, name, summary, themes, needs, firstTest, caution });
 
 export const PATHS: PathEntry[] = [
   P("design-freelance", { bn: "নকশা ও ছবির কাজ", en: "Design and visual work" },
