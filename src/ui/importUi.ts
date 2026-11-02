@@ -59,7 +59,7 @@ export function dictionaryScreen(): HTMLElement {
         h("td", {}, t(`dict.type.${f.type}` as Key, lang), f.unit ? ` · ${f.unit}` : "", allowed ? h("div", { class: "muted" }, `${t("dict.values", lang)}: ${allowed}`) : null,
           h("div", { class: "muted" }, t(`privacy.${f.privacy}` as Key, lang), " · ", t(restricted ? "dict.noimport" : "dict.import", lang))));
     })))));
-  return h("main", { "data-screen": "dictionary" }, h("a", { href: "#/more", class: "crumb" }, `← ${t("more.title", lang)}`), h("h1", {}, t("dict.title", lang)),
+  return h("main", { "data-screen": "dictionary" }, h("a", { href: "#/settings/about", class: "crumb" }, `← ${t("set.cat.about", lang)}`), h("h1", {}, t("dict.title", lang)),
     h("p", { class: "sub" }, t("dict.intro", lang, { n: num(FIELDS.length, lang), v: num(CATALOG_VERSION, lang) })),
     h("section", { class: "card" }, h("h2", { class: "card-h" }, t("dict.csv", lang)), h("p", {}, t("dict.csv.note", lang)), h("ul", {}, ...cols)),
     ...groups, disclaimers(lang, ["advice"]));

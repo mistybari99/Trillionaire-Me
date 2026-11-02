@@ -614,7 +614,7 @@ function tipCard(tp: Tip, lang: Locale): HTMLElement {
 
 export function topicsIndex(): HTMLElement {
   const lang = L();
-  return h("main", {}, link("#/more", "crumb", `← ${t("more.title", lang)}`), h("h1", {}, t("topics.title", lang)), h("p", { class: "sub" }, t("topics.intro", lang)),
+  return h("main", {}, link("#/settings/about", "crumb", `← ${t("set.cat.about", lang)}`), h("h1", {}, t("topics.title", lang)), h("p", { class: "sub" }, t("topics.intro", lang)),
     ...(Object.keys(LAYERS) as (keyof typeof LAYERS)[]).flatMap((ly) => [h("h2", {}, tb(LAYERS[ly], lang)), ...TOPICS.filter((x) => x.layer === ly).map((x) => link(`#/topic/${x.id}`, "card link", h("h2", { class: "card-h", }, tb(x.name, lang)), h("p", { class: "muted" }, `${num(tipsFor(x.id).length, lang)} ${t("topics.tips", lang)}`)))]),
     disclaimers(lang));
 }
@@ -1351,7 +1351,7 @@ export function more(): HTMLElement {
 export function status(): HTMLElement {
   const lang = L();
   return h("main", {},
-    link("#/more", "crumb", `← ${t("more.title", lang)}`),
+    link("#/settings/about", "crumb", `← ${t("set.cat.about", lang)}`),
     h("h1", {}, t("cap.title", lang)),
     h("p", { class: "sub" }, t("cap.intro", lang)),
     h("div", { class: "tags" }, ...CAP_STATUSES.map((s) => capTag(s, lang))),
@@ -1362,7 +1362,7 @@ export function status(): HTMLElement {
 export function fieldsGuide(): HTMLElement {
   const lang = L();
   return h("main", {},
-    link("#/more", "crumb", `← ${t("more.title", lang)}`),
+    link("#/settings/about", "crumb", `← ${t("set.cat.about", lang)}`),
     h("h1", {}, t("fields.title", lang)),
     h("p", { class: "sub" }, t("fields.count", lang, { n: num(FIELDS.length, lang), v: num(CATALOG_VERSION, lang) })),
     ...ENTITIES.filter((e) => FIELDS.some((f) => f.entity === e.id)).flatMap((e) => [
@@ -1378,7 +1378,7 @@ export function fieldsGuide(): HTMLElement {
 export function safety(): HTMLElement {
   const lang = L();
   return h("main", {},
-    link("#/more", "crumb", `← ${t("more.title", lang)}`),
+    link("#/settings/about", "crumb", `← ${t("set.cat.about", lang)}`),
     h("h1", {}, t("safety.title", lang)),
     h("div", { class: "card" }, h("p", {}, t("safety.never", lang))),
     h("div", { class: "card" }, h("p", {}, t("safety.demo", lang))),
@@ -1456,7 +1456,7 @@ export function dataScreen(): HTMLElement {
   const lang = L();
   const realOn = readConsent(consentKv);
   return h("main", {},
-    link("#/more", "crumb", `← ${t("more.title", lang)}`),
+    link("#/settings", "crumb", `← ${t("nav.settings", lang)}`),
     h("h1", {}, t("data.title", lang)),
     modeSwitchCard(),
     h("div", { class: "card", "data-ns": "real" }, h("h2", { class: "card-h", }, t("data.real", lang)), h("p", {}, t("data.real.count", lang, { n: num(store.real.list().length, lang) })), h("p", { class: "muted" }, t(realOn ? "data.real.on" : "data.real.locked", lang))),
@@ -1495,7 +1495,7 @@ export function dataScreen(): HTMLElement {
 export function glossary(): HTMLElement {
   const lang = L();
   return h("main", {},
-    link("#/more", "crumb", `← ${t("more.title", lang)}`),
+    link("#/settings/about", "crumb", `← ${t("set.cat.about", lang)}`),
     h("h1", {}, t("glossary.title", lang)),
     h("p", { class: "sub" }, t("glossary.unreviewed", lang)),
     ...GLOSSARY.map((g) => h("div", { class: "card", "data-term": g.id },

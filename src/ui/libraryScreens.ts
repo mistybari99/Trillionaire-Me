@@ -64,7 +64,7 @@ function systemsLibraryScreenInner(): HTMLElement {
   const recs = store[ns].list();
   const msg = flash; flash = null;
   return h("main", { class: "scr scr-library" },
-    link("#/more", "crumb", `← ${t("more.title", lang)}`),
+    link("#/settings/about", "crumb", `← ${t("set.cat.about", lang)}`),
     h("h1", {}, t("library.title", lang)),
     h("p", { class: "sub" }, t("library.intro", lang)),
     h("p", { class: "note", "data-library-where": ns }, t(ns === "real" ? "library.where.real" : "library.where.demo", lang)),
@@ -122,7 +122,7 @@ function rulesScreenInner(): HTMLElement {
       h("div", { class: "seg", role: "group", "aria-label": tb(def.name, lang) }, pick(t("rules.on", lang), on, true), pick(t("rules.disable", lang), !on, false)));
   });
   return h("main", { class: "scr scr-rules" },
-    link("#/more", "crumb", `← ${t("more.title", lang)}`),
+    link("#/settings", "crumb", `← ${t("nav.settings", lang)}`),
     h("h1", {}, t("rules.title", lang)),
     h("p", { class: "sub" }, t("rules.intro", lang)),
     ...rows,

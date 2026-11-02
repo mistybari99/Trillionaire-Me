@@ -443,3 +443,9 @@ textarea[data-swot]{width:100%;box-sizing:border-box;font:inherit;padding:8px}
 .view-compact .card,.view-compact article.card{padding:6px 10px;margin:4px 0}
 .view-compact .card-h,.view-compact h2{font-size:1rem;margin:4px 0}
 .view-compact p{margin:4px 0}
+/* Settings area */
+.scr-settings .card.link{padding:14px 16px;margin:10px 0}
+.scr-settings .card.link h3.card-h{margin:0 0 2px}
+.scr-settings .seg{gap:8px} .scr-settings .seg button{flex:1 1 0;min-width:0;padding-inline:8px}
+.scr-settings .set-delete{margin-top:24px;background:transparent}
+.set-hl{outline:3px solid var(--primary);outline-offset:2px}

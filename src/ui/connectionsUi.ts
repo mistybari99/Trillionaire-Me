@@ -77,7 +77,7 @@ function card(id: FacilityId, lang: Locale): HTMLElement {
 
 export function connectionsScreen(lang: Locale): HTMLElement {
   return h("main", { class: "scr scr-connections" },
-    h("a", { href: "#/more", class: "crumb" }, `← ${t("more.title", lang)}`),
+    h("a", { href: "#/settings", class: "crumb" }, `← ${t("nav.settings", lang)}`),
     h("h1", {}, t("conn.title", lang)),
     h("p", { class: "sub" }, t("conn.intro", lang)),
     ...FACILITY_IDS.map((id) => card(id, lang)));

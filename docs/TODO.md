@@ -83,6 +83,7 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 
 ### Block 11 — Settings redesign (docs/design/settings-final-decision.md), 2 Nov 2026
 - [x] PR1 Restore safety: `src/core/restore.ts` (planRestore, restoreBackupAtomic, goBack), `replaceNamespace` (no clear-before-write, rollback), 7-day "Before restore" copy outside keep-N, preview/PIN re-ask/numbered confirm/Go back for backup file, encrypted backup and snapshots (`src/ui/restoreUi.ts`), "Contains:" labels. Tests `tests/restore_safety.test.ts`, `tests/restore_ui.test.ts`.
+- [x] PR2 Settings shell: registry `src/ui/settingsRegistry.ts` (29 rows, 9 guide links), screen `src/ui/settingsUi.ts`, route `#/settings[/cat[/row]]`, 5th tab "Settings", quick card (language/theme/text size), computed status strip, 8 category cards, Guides & info, compact DEMO banner on `/settings*`, "← More" crumbs now go to Settings. Old `/more*` routes untouched (redirects come in PR4). Tests `tests/settings_shell.test.ts` (registry owns every prefs field and storage key; link check).
 
 ## Part B — Owner-only tasks
 - [ ] Phone offline test: open online once, visit all pages, airplane mode, reopen (O1).

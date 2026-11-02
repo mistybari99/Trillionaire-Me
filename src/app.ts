@@ -12,6 +12,7 @@ import * as IM from "./ui/importUi";
 import { viaLazy } from "./ui/lazy";
 import { CONN, DECIDE, HALAL, LEGS, PLAN } from "./ui/lazyScreens";
 import { onboardScreen } from "./ui/onboardUi";
+import { settingsScreen } from "./ui/settingsUi";
 import { demoPanels, firstRunScreen, trackDemoDay } from "./ui/modeUi";
 import { LAYERS, TOPICS } from "./library/topics";
 import { dismissReminder, inAppReminders } from "./ui/prayerAlerts";
@@ -19,7 +20,7 @@ import { isLocked, lockScreen } from "./ui/lockUi";
 import { saveFailedBanner } from "./ui/saveBanner";
 import { notifyText } from "./core/notify";
 
-const TABS: Array<[string, Key]> = [["today", "nav.today"], ["journey", "nav.journey"], ["diary", "nav.diary"], ["deen", "nav.deen"], ["more", "nav.more"]];
+const TABS: Array<[string, Key]> = [["today", "nav.today"], ["journey", "nav.journey"], ["diary", "nav.diary"], ["deen", "nav.deen"], ["settings", "nav.settings"]];
 
 export const ROUTES: Array<[RegExp, (m: RegExpMatchArray) => HTMLElement, string]> = [
   [/^\/start$/, () => onboardScreen(), "today"],
@@ -49,25 +50,26 @@ export const ROUTES: Array<[RegExp, (m: RegExpMatchArray) => HTMLElement, string
   [/^\/diary\/ventures$/, () => viaLazy(PLAN, (m) => m.ventureScreen()), "diary"],
   [/^\/diary\/team$/, () => viaLazy(PLAN, (m) => m.teamScreen()), "diary"],
   [/^\/stuck$/, () => S.stuckScreen(), "today"],
-  [/^\/topics$/, () => S.topicsIndex(), "more"],
-  [/^\/topic\/([\w-]+)$/, (m) => S.topicScreen(m[1]), "more"],
+  [/^\/topics$/, () => S.topicsIndex(), "settings"],
+  [/^\/topic\/([\w-]+)$/, (m) => S.topicScreen(m[1]), "settings"],
   [/^\/reward$/, () => S.rewardScreen(), "today"],
   [/^\/journey\/art$/, () => S.artScreen(), "journey"],
   [/^\/focus\/([\w-]+)$/, (m) => S.focusScreen(m[1]), "today"],
   [/^\/habits$/, () => S.habitsScreen(), "today"],
-  [/^\/cards$/, () => S.cardsScreen(), "more"],
+  [/^\/cards$/, () => S.cardsScreen(), "settings"],
   [/^\/deen$/, () => S.deen(), "deen"],
-  [/^\/more$/, () => S.more(), "more"],
-  [/^\/more\/status$/, () => S.status(), "more"],
-  [/^\/more\/fields$/, () => S.fieldsGuide(), "more"],
-  [/^\/more\/glossary$/, () => S.glossary(), "more"],
-  [/^\/more\/safety$/, () => S.safety(), "more"],
-  [/^\/more\/dictionary$/, () => IM.dictionaryScreen(), "more"],
-  [/^\/more\/data$/, () => S.dataScreen(), "more"],
-  [/^\/more\/connections$/, () => viaLazy(CONN, (m) => m.connectionsScreen(prefs.lang)), "more"],
-  [/^\/more\/library$/, () => LS.systemsLibraryScreen(), "more"],
-  [/^\/more\/halal-flags$/, () => viaLazy(HALAL, (m) => m.halalFlagsScreen()), "more"],
-  [/^\/more\/rules$/, () => LS.rulesScreen(), "more"],
+  [/^\/settings(?:\/([a-z]+))?(?:\/([a-z-]+))?$/, (m) => settingsScreen(m[1], m[2]), "settings"],
+  [/^\/more$/, () => S.more(), "settings"],
+  [/^\/more\/status$/, () => S.status(), "settings"],
+  [/^\/more\/fields$/, () => S.fieldsGuide(), "settings"],
+  [/^\/more\/glossary$/, () => S.glossary(), "settings"],
+  [/^\/more\/safety$/, () => S.safety(), "settings"],
+  [/^\/more\/dictionary$/, () => IM.dictionaryScreen(), "settings"],
+  [/^\/more\/data$/, () => S.dataScreen(), "settings"],
+  [/^\/more\/connections$/, () => viaLazy(CONN, (m) => m.connectionsScreen(prefs.lang)), "settings"],
+  [/^\/more\/library$/, () => LS.systemsLibraryScreen(), "settings"],
+  [/^\/more\/halal-flags$/, () => viaLazy(HALAL, (m) => m.halalFlagsScreen()), "settings"],
+  [/^\/more\/rules$/, () => LS.rulesScreen(), "settings"],
 ];
 
 function toggleDrawer(open: boolean) { const d = document.getElementById("drawer"); if (d) { d.classList.toggle("open", open); d.setAttribute("aria-hidden", String(!open)); } }

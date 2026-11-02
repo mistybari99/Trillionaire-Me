@@ -9,7 +9,7 @@ import { FLAG_GROUPS, HALAL_FLAGS } from "../library/halalFlags";
 export function halalFlagsScreen(): HTMLElement {
   const lang = prefs.lang;
   return h("main", { class: "scr scr-halal", "data-halal-flags": "draft" },
-    h("a", { href: "#/more", class: "crumb" }, `← ${t("more.title", lang)}`),
+    h("a", { href: "#/settings/about", class: "crumb" }, `← ${t("set.cat.about", lang)}`),
     h("h1", {}, t("halal.title", lang)),
     h("div", { class: "note", role: "note", "data-halal-banner": "1" }, h("p", {}, h("b", {}, t("halal.banner", lang))), h("p", {}, t("halal.draft", lang))),
     h("p", { class: "sub" }, t("halal.intro", lang)),
