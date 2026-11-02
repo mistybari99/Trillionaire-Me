@@ -58,6 +58,7 @@ export const ROUTES: Array<[RegExp, (m: RegExpMatchArray) => HTMLElement, string
   [/^\/habits$/, () => S.habitsScreen(), "today"],
   [/^\/cards$/, () => S.cardsScreen(), "settings"],
   [/^\/deen$/, () => S.deen(), "deen"],
+  [/^\/settings\/connections$/, () => viaLazy(CONN, (m) => m.connectionsScreen(prefs.lang)), "settings"],
   [/^\/settings(?:\/([a-z]+))?(?:\/([a-z-]+))?$/, (m) => settingsScreen(m[1], m[2]), "settings"],
   [/^\/more$/, () => S.more(), "settings"],
   [/^\/more\/status$/, () => S.status(), "settings"],

@@ -5,6 +5,7 @@ import type { Key } from "../i18n/packs";
 import type { Locale } from "../i18n/registry";
 import { consentKv } from "./state";
 import { FACILITY_IDS, type FacilityId } from "../core/ports";
+import { categorySummary } from "./settingsUi";
 import { clearKey, grantApproval, hasKey, isApproved, isEnabled, saveKey, setEnabled, withdrawApproval } from "../core/connections";
 import { createRegistry } from "../adapters/registry";
 
@@ -58,18 +59,17 @@ function card(id: FacilityId, lang: Locale): HTMLElement {
   const st = registry().status(id);
   const approved = isApproved(consentKv, id);
   const on = isEnabled(consentKv, id);
-  const enable = h("button", { class: "btn", type: "button", "data-conn-enable": id, disabled: !approved, "aria-disabled": String(!approved), onclick: () => { if (setEnabled(consentKv, id, true)) rerender(); } }, t("conn.enable", lang)) as HTMLButtonElement;
+  const enable = h("button", { class: "btn ghost", type: "button", "data-conn-enable": id, disabled: !approved, "aria-disabled": String(!approved), onclick: () => { if (setEnabled(consentKv, id, true)) rerender(); } }, t("conn.enable", lang)) as HTMLButtonElement;
   return h("section", { class: "card", "data-conn": id, "data-conn-status": st },
     h("h2", { class: "card-h" }, t(`conn.${id}.name` as Key, lang), " ", h("span", { class: `tag ${st === "connected" ? "ok" : st === "needs_approval" ? "warn" : "off"}`, "data-conn-tag": id }, t(`conn.status.${st}` as Key, lang))),
     h("p", {}, t(`conn.${id}.does` as Key, lang)),
     h("p", { class: "muted" }, t(`conn.${id}.needs` as Key, lang)),
     id === "aiAssistant" || id === "cloudSync" ? h("p", { class: "muted", "data-conn-slot": id }, t(`conn.${id}.slot` as Key, lang)) : null,
-    keyBox(id, lang),
-    on ? h("button", { class: "btn ghost", type: "button", "data-conn-disable": id, onclick: () => { setEnabled(consentKv, id, false); rerender(); } }, t("conn.disable", lang)) : enable,
+    approved ? null : h("button", { class: "btn ghost", type: "button", "data-conn-approve": id, onclick: () => { confirming = id; missingTick = null; rerender(); } }, t("conn.approve.btn", lang)),
     " ",
-    approved
-      ? h("button", { class: "btn ghost", type: "button", "data-conn-withdraw": id, onclick: () => { withdrawApproval(consentKv, id); rerender(); } }, t("conn.withdraw", lang))
-      : h("button", { class: "btn ghost", type: "button", "data-conn-approve": id, onclick: () => { confirming = id; missingTick = null; rerender(); } }, t("conn.approve.btn", lang)),
+    on ? h("button", { class: "btn ghost", type: "button", "data-conn-disable": id, onclick: () => { setEnabled(consentKv, id, false); rerender(); } }, t("conn.disable", lang)) : enable,
+    keyBox(id, lang),
+    approved ? h("button", { class: "btn ghost", type: "button", "data-conn-withdraw": id, onclick: () => { withdrawApproval(consentKv, id); rerender(); } }, t("conn.withdraw", lang)) : null,
     approved ? null : h("p", { class: "muted" }, t("conn.enable.hint", lang)),
     on ? h("p", { class: "muted" }, t("conn.stubNote", lang)) : null,
     confirming === id && !approved ? confirmPanel(id, lang) : null);
@@ -80,5 +80,6 @@ export function connectionsScreen(lang: Locale): HTMLElement {
     h("a", { href: "#/settings", class: "crumb" }, `← ${t("nav.settings", lang)}`),
     h("h1", {}, t("conn.title", lang)),
     h("p", { class: "sub" }, t("conn.intro", lang)),
+    h("p", { class: "card", role: "status", "data-conn-summary": "1" }, categorySummary("connections", lang)),
     ...FACILITY_IDS.map((id) => card(id, lang)));
 }
