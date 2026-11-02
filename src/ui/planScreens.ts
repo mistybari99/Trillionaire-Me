@@ -14,7 +14,8 @@ import { riskRows, validateRisk, withoutStopRule, type Likelihood } from "../cor
 import { looksLikePersonContact, roleRows, roleSummary, type Holder } from "../core/team";
 import { parseAmount, parseOwnership, ventureViews } from "../core/ventures";
 import { bdt, estimateLabel, moneyEl, portfolioCard } from "./ventureCard";
-import { ladder, starRows } from "../core/northStar";
+import { overallProgress, parseWeight, starRows, starViews } from "../core/northStar";
+import { overallEl, starRowView } from "./northStarCard";
 import { planHistory } from "../core/planHistory";
 import { KPI_MEASURES, KPI_PERIODS, kpiStatus, parseActual, parseTarget, validateKpi, type KpiError } from "../core/kpi";
 import { kpiRowView, todayIsoKpi } from "./kpiUi";
@@ -290,7 +291,7 @@ function planHistoryScreenInner(): HTMLElement {
     modeMark(lang), disclaimers(lang, ["advice"]));
 }
 
-// ---- M03 North Star measures and ladder ----
+// ---- M03 North Star measures and ladder: start, where you are now (typed or taken from Money / Ventures), target, weights, overall ----
 const numText = (v: number, lang: Locale) => fmtNumber(v, lang);
 export function northStarScreen(): HTMLElement {
   const lang = L();
@@ -298,28 +299,68 @@ export function northStarScreen(): HTMLElement {
   const unit = h("input", { id: "ns-unit", type: "text", maxlength: "40", autocomplete: "off" });
   const base = h("input", { id: "ns-base", type: "text", inputmode: "decimal", autocomplete: "off" });
   const target = h("input", { id: "ns-target", type: "text", inputmode: "decimal", autocomplete: "off" });
+  const sourceSel = (id: string, cur: string) => h("select", { id }, ...(fieldById("north_star.source")?.options ?? []).map((o) => h("option", { value: o.code, ...(o.code === cur ? { selected: true } : {}) }, tb(o.label, lang))));
+  const source = sourceSel("ns-source", "own");
+  const current = h("input", { id: "ns-current", type: "text", inputmode: "decimal", autocomplete: "off" });
+  const weight = h("input", { id: "ns-weight", type: "text", inputmode: "numeric", autocomplete: "off" });
   const err = h("p", { class: "err", role: "alert" });
   const form = h("form", { novalidate: true, "data-form": "north-star" }, gateFor(lang),
     h("label", { for: "ns-metric" }, t("ns.metric", lang)), metric,
     h("label", { for: "ns-unit" }, t("ns.unit", lang)), unit,
     h("label", { for: "ns-base" }, t("ns.baseline", lang)), base,
-    h("label", { for: "ns-target" }, t("ns.target", lang)), target, err,
+    h("label", { for: "ns-target" }, t("ns.target", lang)), target,
+    h("label", { for: "ns-source" }, labelOf("north_star.source", lang)), source,
+    h("label", { for: "ns-current" }, t("ns.current", lang)), current, h("p", { class: "muted" }, t("ns.current.hint", lang)),
+    h("label", { for: "ns-weight" }, t("ns.weight", lang)), weight, h("p", { class: "muted" }, t("ns.weight.hint", lang)), err,
     h("button", { class: "btn", type: "submit" }, t("ns.add", lang)));
   form.addEventListener("submit", (ev) => {
     ev.preventDefault(); err.textContent = "";
     const m = metric.value.trim();
     if (!m) { err.textContent = t("ns.err.metric", lang); return; }
     if (!checkFreeText(m).ok || !checkFreeText(unit.value).ok) { err.textContent = t("intake.secretRejected", lang); return; }
-    const b = numberInput(base.value), g = numberInput(target.value);
-    if (b === null || g === null) { err.textContent = t("ns.err.number", lang); return; }
-    const values: Record<string, FieldValue> = { "north_star.metric": txt(m), "north_star.baseline": b, "north_star.target": g };
+    const b = numberInput(base.value), g = numberInput(target.value), c = numberInput(current.value), w = parseWeight(weight.value);
+    if (b === null || g === null || c === null) { err.textContent = t("ns.err.number", lang); return; }
+    if (w === null) { err.textContent = t("ns.err.weight", lang); return; }
+    const values: Record<string, FieldValue> = { "north_star.metric": txt(m), "north_star.baseline": b, "north_star.target": g, "north_star.source": txt(source.value) };
     if (unit.value.trim()) values["north_star.unit"] = txt(unit.value.trim());
+    if (source.value === "own" && c.state === "value") { values["north_star.current"] = c; values["north_star.current_on"] = txt(todayIsoKpi()); }
+    if (w.state === "value") values["north_star.weight"] = num_(w.value);
     if (!putRecord("north_star", "ns", values)) { err.textContent = saveBlockedText(lang); return; }
     rerender();
   });
-  const rows = starRows(allRecs());
-  const cards = rows.map((r) => {
-    const l = ladder(r.baseline, r.target);
+  // Change the numbers later: starting number, target, where you are now, the source and the weight. A blank number is Unknown, never 0.
+  const editForm = (id: string) => {
+    const r = store[activeNs()].get(id); if (!r) return null;
+    const row = starRows([r])[0]!;
+    const inp = (suffix: string, val: number | null, mode = "decimal") => h("input", { id: `ns-${suffix}-${id}`, type: "text", inputmode: mode, autocomplete: "off", value: val === null ? "" : String(val) });
+    const eb = inp("eb", row.baseline), et = inp("et", row.target), ec = inp("ec", row.current), ew = inp("ew", row.weight, "numeric"); const es = sourceSel(`ns-es-${id}`, row.source);
+    const msg = h("p", { class: "err", role: "alert" });
+    const f = h("form", { novalidate: true, "data-star-edit": id },
+      h("label", { for: `ns-eb-${id}` }, t("ns.baseline", lang)), eb, h("label", { for: `ns-et-${id}` }, t("ns.target", lang)), et,
+      h("label", { for: `ns-es-${id}` }, labelOf("north_star.source", lang)), es, h("label", { for: `ns-ec-${id}` }, t("ns.current", lang)), ec,
+      h("label", { for: `ns-ew-${id}` }, t("ns.weight", lang)), ew, msg,
+      h("button", { class: "btn ghost", type: "submit", style: "width:auto;margin:0;min-height:44px" }, t("ns.update", lang)));
+    f.addEventListener("submit", (e) => {
+      e.preventDefault(); msg.textContent = "";
+      const b = numberInput(eb.value), g = numberInput(et.value), c = numberInput(ec.value), w = parseWeight(ew.value);
+      if (b === null || g === null || c === null) { msg.textContent = t("ns.err.number", lang); return; }
+      if (w === null) { msg.textContent = t("ns.err.weight", lang); return; }
+      const ns = entryNs(); if (!ns) { msg.textContent = saveBlockedText(lang); return; }
+      const lb = labelFor(r.ns); const lvv = (n: number): FieldValue => ({ state: "value", value: n, label: lb });
+      const values: Record<string, FieldValue> = { ...r.values, "north_star.baseline": b.state === "value" ? lvv(Number(b.value)) : UNKNOWN, "north_star.target": g.state === "value" ? lvv(Number(g.value)) : UNKNOWN,
+        "north_star.source": { state: "value", value: es.value, label: lb }, "north_star.weight": w.state === "value" ? lvv(w.value) : UNKNOWN };
+      if (es.value === "own") {
+        values["north_star.current"] = c.state === "value" ? lvv(Number(c.value)) : UNKNOWN;
+        if (c.state === "value" && Number(c.value) !== row.current) values["north_star.current_on"] = { state: "value", value: todayIsoKpi(), label: lb };
+      }
+      storeOf(r).put({ ...r, values }); rerender();
+    });
+    return h("details", { class: "help" }, h("summary", {}, t("ns.edit", lang)), f);
+  };
+  const recs = allRecs();
+  const views = starViews(recs);
+  const cards = views.map((v) => {
+    const r = v.row; const l = v.ladder;
     const steps = l.status === "ok"
       ? h("p", {}, `${t("ns.steps", lang)}: `, h("span", { "data-ladder": "ok" }, l.levels.map((p) => numText(p, lang)).join(" → ")))
       : l.status === "same"
@@ -327,14 +368,17 @@ export function northStarScreen(): HTMLElement {
         : h("p", { class: "muted", "data-ladder": "unknown" }, t("ns.unknown", lang, { what: l.missing.map((k) => t(`ns.missing.${k}` as Key, lang)).join(", ") }));
     return h("div", { class: "card", "data-north-star": r.id }, h("div", { class: "row" }, h("div", {},
       modeMark(lang), h("h2", { class: "card-h" }, r.metric, r.unit ? ` (${r.unit})` : ""),
-      h("p", { class: "muted" }, `${t("ns.baseline", lang)}: ${r.baseline === null ? t("unknown.unknown", lang) : numText(r.baseline, lang)} · ${t("ns.target", lang)}: ${r.target === null ? t("unknown.unknown", lang) : numText(r.target, lang)}`),
-      steps), removeBtn(r.id, lang)));
+      starRowView(v, lang), steps,
+      h("p", { class: "muted", "data-weight": r.weight === null ? "none" : String(r.weight) }, r.weight === null ? t("ns.weight.none", lang) : t("ns.weight.is", lang, { w: numText(r.weight, lang) })),
+      editForm(r.id)), removeBtn(r.id, lang)));
   });
   return h("main", { class: "scr scr-northstar" },
     link("#/journey", "crumb", `← ${t("journey.title", lang)}`),
     h("h1", {}, t("ns.title", lang)), h("p", { class: "sub" }, t("ns.intro", lang)),
+    overallEl(overallProgress(views), lang),
     h("h2", {}, t("ns.add", lang)), form,
-    rows.length ? h("div", {}, ...cards) : h("p", { class: "muted" }, t("ns.empty", lang)),
+    views.length ? h("div", {}, ...cards) : h("p", { class: "muted" }, t("ns.empty", lang)),
+    link("#/diary/money", "crumb", t("ns.money.link", lang)), " ", link("#/diary/ventures", "crumb", t("ns.ventures.link", lang)),
     h("p", { class: "muted" }, t("ns.note", lang)), modeMark(lang), disclaimers(lang, ["advice"]));
 }
 

@@ -49,6 +49,7 @@ import { goalFunnelHero, horizonArc } from "./horizonArt";
 import { viewBar, withView } from "./viewBar";
 import { kpiSection, kpiTodayCard } from "./kpiUi";
 import { realityReportCard, realityTodayCard } from "./realityUi";
+import { northStarCard } from "./northStarCard";
 import { portfolioCard } from "./ventureCard";
 import { ventureRows } from "../core/ventures";
 import { backupReminderCard } from "./snapshotsUi";
@@ -531,6 +532,7 @@ export function reportScreen(): HTMLElement {
     goalRingsChart(allRecs(), lang),
     kpiSection("week", lang), kpiSection("days90", lang),
     portfolioCard(lang, "report"),
+    northStarCard(lang, "report"),
     realityReportCard(lang),
     items.length && repCompact ? compactBody : items.length ? h("div", { "data-view": "full" },
       sec("report.decisions", s.decisions.length ? h("ul", { style: "padding-inline-start:20px" }, ...s.decisions.map((x) => h("li", { "data-decision": "1" }, x))) : h("p", { class: "muted" }, t("report.empty", lang))),
@@ -872,6 +874,7 @@ export function today(): HTMLElement {
     overallProgressCard(lang, "today"),
     homeCountCards(lang),
     kpiTodayCard(lang),
+    northStarCard(lang, "today"),
     realityTodayCard(lang),
     homeSummaryCards(lang),
     portfolioCard(lang, "today"),
@@ -979,6 +982,7 @@ export function journey(): HTMLElement {
       link("#/journey/northstar", "btn ghost", t("ns.link", lang)),
       link("#/journey/kpi", "btn ghost", t("kpi.link", lang))),
     overallProgressCard(lang, "journey"),
+    northStarCard(lang, "journey"),
     journeyGoalsCard(lang),
     templatePicker(lang),
     viewBar("journey", lang),

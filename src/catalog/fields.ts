@@ -2,7 +2,7 @@ import type { Bi } from "../i18n/registry";
 import { UNKNOWN_STATES, type UnknownState } from "../core/types";
 import type { AccessRule, ChoiceOption, FieldDef, FieldType, Importance, PrivacyClass, Purpose, Requirement } from "./types";
 
-export const CATALOG_VERSION = 6;
+export const CATALOG_VERSION = 7;
 
 const bi = (bn: string, en: string): Bi => ({ bn, en });
 const opt = (code: string, bn: string, en: string): ChoiceOption => ({ code, label: bi(bn, en) });
@@ -613,6 +613,28 @@ export const FIELDS: FieldDef[] = [
     what: bi("কোন সংখ্যায় পৌঁছাতে চান।", "The number you want to reach."),
     why: bi("শুরু ও লক্ষ্য মিলিয়ে ধাপ হিসাব হয়।", "Steps are worked out from start to target."),
     example: bi("৬০", "60"), format: bi("সংখ্যা", "Number") }),
+  f({ id: "north_star.current", entity: "north_star", family: "FAM-03", type: "number", purpose: "planning", importance: "core", affects: "progress toward the target",
+    label: bi("এখন কোথায় (আপনার সংখ্যা)", "Where you are now (your number)"),
+    what: bi("এই মাপকাঠিতে আজ আপনি কত। ‘নিজে লিখব’ বাছলে এটি কাজে লাগে।", "Your number on this measure today. Used when the source is ‘I type it’."),
+    why: bi("শুরু, এখন ও লক্ষ্য থেকে টার্গেটের দিকে কতটা এগোলেন হিসাব হয়। না জানলে ফাঁকা রাখুন; ফাঁকা মানে অজানা, শূন্য নয়।", "From start, now and target the app works out how far along you are. Leave it blank if unknown; blank means unknown, not zero."),
+    example: bi("৩০০০০০", "300000"), format: bi("সংখ্যা", "Number") }),
+  f({ id: "north_star.current_on", entity: "north_star", family: "FAM-03", type: "date", purpose: "planning", importance: "optional",
+    label: bi("সংখ্যাটি কোন দিনের", "Date of that number"),
+    what: bi("নিজের সংখ্যাটি যেদিন লিখেছেন বা বদলেছেন।", "The day you typed or changed your own number."),
+    why: bi("পুরোনো সংখ্যা চেনা যায়।", "It shows how old your number is."),
+    example: bi("২০২৬-১১-০২", "2026-11-02"), format: bi("বছর-মাস-দিন", "YYYY-MM-DD") }),
+  f({ id: "north_star.source", entity: "north_star", family: "FAM-03", type: "choice", purpose: "planning", importance: "useful",
+    options: [opt("own", "আমি নিজে লিখব", "I type it"), opt("net_worth", "আমার নেট ওয়ার্থ (টাকার পাতা, ব্যক্তিগত)", "My net worth (Money, personal)"),
+      opt("business_net_worth", "ব্যবসার নেট ওয়ার্থ (টাকার পাতা)", "Business net worth (Money)"), opt("venture_value", "সব উদ্যোগের মোট মূল্য", "Total value of my ventures"), opt("venture_share", "উদ্যোগে আমার অংশের মোট", "My total share of the ventures")],
+    label: bi("‘এখন’ সংখ্যা কোথা থেকে আসবে", "Where the ‘now’ number comes from"),
+    what: bi("নিজে লিখবেন, না টাকার পাতা বা উদ্যোগের পাতা থেকে নেওয়া হবে।", "Type it yourself, or take it from your Money or Ventures screens."),
+    why: bi("একই সংখ্যা দুবার লিখতে হয় না। সেই পাতায় সংখ্যা না থাকলে ‘জানা নেই’ দেখায়, ০ নয়।", "The same number is not typed twice. If that screen has no figure yet, it shows Unknown, never 0."),
+    example: bi("আমার নেট ওয়ার্থ", "My net worth") }),
+  f({ id: "north_star.weight", entity: "north_star", family: "FAM-03", type: "number", purpose: "planning", importance: "optional",
+    label: bi("ওজন (অপশনাল)", "Weight (optional)"),
+    what: bi("একাধিক মাপকাঠি থাকলে কোনটি মোট প্রোগ্রেসে কতটা গুরুত্ব পাবে। ১ থেকে ১০০। ফাঁকা হলে সমান ধরা হয়।", "With several measures, how much this one counts in the overall progress. 1 to 100. Blank counts equally."),
+    why: bi("আপনার নিজের গুরুত্ব অনুযায়ী মোট প্রোগ্রেস হিসাব হয়; অ্যাপ নিজে ওজন ঠিক করে না।", "The overall progress follows your own priorities; the app never picks a weight."),
+    example: bi("৬০", "60"), format: bi("১ থেকে ১০০ সংখ্যা", "A number from 1 to 100") }),
 ];
 
 export const fieldById = (id: string): FieldDef | undefined => FIELDS.find((x) => x.id === id);

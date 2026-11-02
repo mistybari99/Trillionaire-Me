@@ -7,13 +7,13 @@ The card answers one question: is the software's own build complete? It does not
 Boxes (order): Input, Storage, Calculation, Output, Export, Links. B = built, M = missing, - = not needed.
 Label: complete = no box missing; partial = some box missing; not-built = no box built; blocked = waits for an owner approval (D-number).
 
-Counts: complete 6, partial 17, not-built 1, blocked 1 (of 25).
+Counts: complete 7, partial 16, not-built 1, blocked 1 (of 25).
 
 | Module | Name | Label | I S C O E L | Missing boxes | Waits for | Routes / functions | Tests |
 |---|---|---|---|---|---|---|---|
 | M01 | Profile & consent | partial | B B B M B B | output | - | `#/diary/intake`; `src/ui/screens.ts#intake` | `tests/g3ui.test.ts` |
 | M02 | Discover (assessment) | partial | M B B M B B | input, output | - | `#/diary/plan`; `src/ui/assessment.ts#assessmentSection`; `src/core/assessment.ts#assessmentFrom` | `tests/o5_assessment_fit.test.ts` |
-| M03 | North Star & ladder | partial | M B M B B M | input, calc, links | - | `#/journey/horizon`; `#/journey/northstar`; `src/core/horizon.ts#groupByHorizon`; `src/core/northStar.ts#ladder` | `tests/horizon.test.ts`, `tests/m_registers.test.ts` |
+| M03 | North Star & ladder | complete | B B B B B B | - | - | `#/journey/horizon`; `#/journey/northstar`; `#/journey`; `#/today`; `#/journey/report`; `src/core/horizon.ts#groupByHorizon`; `src/core/northStar.ts#ladder`; `src/core/northStar.ts#nowOf`; `src/core/northStar.ts#progressOf`; `src/core/northStar.ts#overallProgress` | `tests/north_star.test.ts`, `tests/horizon.test.ts`, `tests/m_registers.test.ts` |
 | M04 | Paths & opportunity library | partial | - - B M - B | output | - | `#/diary/plan`; `src/core/assessment.ts#pathFit` | `tests/o5_assessment_fit.test.ts` |
 | M05 | Stages & journey log | partial | B B M B B B | calc | - | `#/journey`; `#/journey/log`; `src/ui/screens.ts#journeyLog`; `src/core/stages.ts#passStage` | `tests/stages.test.ts` |
 | M06 | Goals, tasks & habits | partial | M B B M B B | input, output | - | `#/today`; `#/habits`; `#/diary/plan`; `src/ui/screens.ts#habitsScreen`; `src/ui/screens.ts#focusScreen`; `src/core/planner.ts#schedule` | `tests/focus_habits_cards.test.ts`, `tests/goal_form.test.ts`, `tests/m_dependency.test.ts` |
