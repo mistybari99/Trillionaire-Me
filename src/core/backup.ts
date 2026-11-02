@@ -31,12 +31,31 @@ export function parseBackup(text: string): BackupFile {
   return b;
 }
 
-/** Replace the namespace contents with the backup. Validates everything first, so a bad file changes nothing. */
+/**
+ * Replaces the records of one namespace without ever emptying it first: the new records are written over the old ones, then the
+ * old records that are not in the new set are removed. If any write fails, the old records are put back and the error is thrown,
+ * so a failure never leaves an empty or half-filled store.
+ */
+export async function replaceNamespace(repo: RecordRepo, ns: Namespace, next: TMRecord[]): Promise<void> {
+  const old = await repo.list(ns);
+  const oldIds = new Set(old.map((r) => r.id)); const nextIds = new Set(next.map((r) => r.id));
+  try {
+    for (const r of next) await repo.put(r);
+    for (const o of old) if (!nextIds.has(o.id)) await repo.delete(ns, o.id);
+  } catch {
+    try {
+      for (const o of old) await repo.put(o);
+      for (const r of next) if (!oldIds.has(r.id)) await repo.delete(ns, r.id);
+    } catch { throw new BackupError("the write failed and the old copy could not be put back"); }
+    throw new BackupError("the write failed; nothing was changed");
+  }
+}
+
+/** Replace the namespace contents with the backup. Validates everything first, so a bad file changes nothing; a failed write is rolled back. */
 export async function restoreBackup(repo: RecordRepo, text: string, realEnabled = false): Promise<number> {
   const b = parseBackup(text);
   for (const r of b.records) { try { guardWrite(r, realEnabled); } catch (e) { throw new BackupError((e as Error).message); } }
-  await repo.clear(b.ns);
-  for (const r of b.records) await repo.put(r);
+  await replaceNamespace(repo, b.ns, b.records);
   return b.records.length;
 }
 

@@ -32,11 +32,16 @@ export function autoDue(list: Snapshot[], now: Date, minHours = AUTO_MIN_HOURS):
 
 const sameContent = (a: Snapshot, demo: BackupFile, real: BackupFile | null) => a.demo.checksum === demo.checksum && (a.real?.checksum ?? null) === (real?.checksum ?? null);
 
-/** Keeps the newest `keep` snapshots and deletes the rest. Returns how many were deleted. */
-export async function pruneSnapshots(snaps: SnapshotRepo, keep: number): Promise<number> {
-  const k = Number.isInteger(keep) && keep >= 1 ? keep : DEFAULT_KEEP; const old = newestFirst(await snaps.list()).slice(k);
-  for (const s of old) await snaps.delete(s.id);
-  return old.length;
+/** A "Before restore" copy is kept this many days. It is not counted in the "keep N" choice and is never pruned before then. */
+export const BEFORE_RESTORE_DAYS = 7;
+const isHeld = (s: Snapshot, now: Date) => s.reason === "before_restore" && now.getTime() - Date.parse(s.createdAt) < BEFORE_RESTORE_DAYS * 86400_000;
+
+/** Keeps the newest `keep` normal snapshots and deletes the rest. "Before restore" copies stay for 7 days, then go. Returns how many were deleted. */
+export async function pruneSnapshots(snaps: SnapshotRepo, keep: number, now = new Date()): Promise<number> {
+  const k = Number.isInteger(keep) && keep >= 1 ? keep : DEFAULT_KEEP; const all = await snaps.list();
+  const gone = [...newestFirst(all.filter((s) => s.reason !== "before_restore")).slice(k), ...all.filter((s) => s.reason === "before_restore" && !isHeld(s, now))];
+  for (const s of gone) await snaps.delete(s.id);
+  return gone.length;
 }
 
 export interface TakeOptions { reason: SnapshotReason; keep: number; /** the real-data tick is given now */ realOk: boolean; now?: Date }
