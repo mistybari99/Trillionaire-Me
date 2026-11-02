@@ -26,7 +26,7 @@ Counts: complete 5, partial 18, not-built 1, blocked 1 (of 25).
 | M13 | Deen, ibadah & akhirah | partial | M B M M B B | input, calc, output | - | `#/deen`; `src/core/prayerLog.ts#markedOn`; `src/core/fastLog.ts#isFastMarked`; `src/core/prayer.ts#prayerTimes`; `src/core/prayerAlerts.ts#alertSlots` | `tests/prayer.test.ts`, `tests/g1.test.ts`, `tests/fast_log.test.ts` |
 | M14 | Health & family | not-built | M M M M M M | input, store, calc, output, export, links | - | - | - |
 | M15 | Risk & stop criteria | partial | B B M M B B | calc, output | - | `#/journey/risks`; `src/core/risk.ts#riskRows` | `tests/m_registers.test.ts` |
-| M16 | Reviews & KPIs | partial | M M B B B M | input, store, links | - | `#/journey/review`; `#/journey/report`; `src/core/review.ts#reviewSummary` | `tests/o6_reality_review_templates.test.ts` |
+| M16 | Reviews & KPIs | partial | B B B B B M | links | - | `#/journey/review`; `#/journey/report`; `#/journey/week`; `#/journey/kpi`; `src/core/review.ts#reviewSummary`; `src/core/kpi.ts#kpiStatus` | `tests/o6_reality_review_templates.test.ts`, `tests/kpi.test.ts` |
 | M17 | Knowledge & sources | partial | M M B B B B | input, store | - | `#/cards`; `#/topics`; `src/ui/screens.ts#cardsScreen`; `src/core/cards.ts#dueCards` | `tests/focus_habits_cards.test.ts`, `tests/topics_rewards.test.ts` |
 | M18 | Visual layer | partial | - - B M - B | output | - | `#/journey/art`; `src/ui/rewardArt.ts#journeyArt`; `src/ui/diagram.ts#diagram` | `tests/r4_motion.test.ts` |
 | M19 | Automation rules | complete | B B B B B B | - | - | `#/settings/plan/automation`; `#/today`; `src/core/rules.ts#evaluateRules` | `tests/rules.test.ts`, `tests/m_systems_rules_ui.test.ts` |

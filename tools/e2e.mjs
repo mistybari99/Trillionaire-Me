@@ -258,7 +258,7 @@ await ctx.setOffline(false);
   await ctx.setOffline(true);
   await page.goto(base); await page.waitForSelector("main", { timeout: 8000 }).catch(() => {});
   const seen = {};
-  for (const [name, hash, sel] of [["universe", "#/journey/universe", "svg[data-universe-map]"], ["journey logo", "#/journey", "svg.logo3d"], ["snapshots", "#/settings/backup/snapshots", "[data-card=snapshots]"], ["home cards", "#/today", "[data-home-summary]"], ["goals", "#/journey/goals", "main h1"], ["lazy plan chunk (risks)", "#/journey/risks", "main h1"], ["lazy connections chunk", "#/settings/connections", "main h1:not([hidden])"], ["lazy legs chunk", "#/journey/legs", "main h1"], ["lazy decide chunk", "#/journey/decide", "main h1"], ["topic with content packs", "#/topic/procrastination", "main h1"]]) {
+  for (const [name, hash, sel] of [["universe", "#/journey/universe", "svg[data-universe-map]"], ["journey logo", "#/journey", "svg.logo3d"], ["snapshots", "#/settings/backup/snapshots", "[data-card=snapshots]"], ["home cards", "#/today", "[data-home-summary]"], ["goals", "#/journey/goals", "main h1"], ["lazy plan chunk (risks)", "#/journey/risks", "main h1"], ["KPI targets form", "#/journey/kpi", "form[data-form=kpi]"], ["lazy connections chunk", "#/settings/connections", "main h1:not([hidden])"], ["lazy legs chunk", "#/journey/legs", "main h1"], ["lazy decide chunk", "#/journey/decide", "main h1"], ["topic with content packs", "#/topic/procrastination", "main h1"]]) {
     await page.evaluate((h) => { location.hash = h; }, hash);
     seen[name] = await page.waitForSelector(sel, { timeout: 5000 }).then(() => true).catch(() => false);
   }

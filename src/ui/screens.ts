@@ -47,6 +47,7 @@ import { progressRing, isMilestone } from "./ring";
 import { logo3d } from "./logo";
 import { goalFunnelHero, horizonArc } from "./horizonArt";
 import { viewBar, withView } from "./viewBar";
+import { kpiSection, kpiTodayCard } from "./kpiUi";
 import { backupReminderCard } from "./snapshotsUi";
 import { overallProgress } from "../core/overallProgress";
 import * as Focus from "../core/focus";
@@ -516,6 +517,7 @@ export function reportScreen(): HTMLElement {
   return h("main", {}, link("#/journey", "crumb", `← ${t("journey.title", lang)}`), h("h1", {}, t("report.title", lang)), h("p", { class: "sub" }, t("report.intro", lang)),
     viewBar("report", lang),
     goalRingsChart(allRecs(), lang),
+    kpiSection("week", lang), kpiSection("days90", lang),
     items.length && repCompact ? compactBody : items.length ? h("div", { "data-view": "full" },
       sec("report.decisions", s.decisions.length ? h("ul", { style: "padding-inline-start:20px" }, ...s.decisions.map((x) => h("li", { "data-decision": "1" }, x))) : h("p", { class: "muted" }, t("report.empty", lang))),
       sec("report.amounts", s.amountCount ? valueEl(t("report.amountTotal", lang, { n: num(s.amountCount, lang), v: t("money.bdt", lang, { v: fmtNum(s.amountTotal, lang) }) }), "ESTIMATE", lang) : h("p", { class: "muted" }, t("report.empty", lang))),
@@ -855,6 +857,7 @@ export function today(): HTMLElement {
     pauseChip(lang),
     overallProgressCard(lang, "today"),
     homeCountCards(lang),
+    kpiTodayCard(lang),
     homeSummaryCards(lang),
     nextActionCard(lang),
     adviceCardsView(lang),
@@ -902,6 +905,7 @@ export function reviewScreen(): HTMLElement {
     viewBar("review", lang),
     activityChart(recs, todayIso(), lang),
     ...revBody,
+    kpiSection("days90", lang),
     s.focusUnknown > 0 ? h("p", { class: "muted" }, t("review.unknownFocus", lang, { n: num(s.focusUnknown, lang) })) : null,
     h("p", { class: "muted" }, t("review.quiet", lang)),
     disclaimers(lang));
@@ -928,6 +932,7 @@ export function weeklyScreen(): HTMLElement {
     h("p", { class: "muted", "data-week-period": "1" }, valueEl(t("review.period", lang, { from: w.from, to: w.to }), "DEMO", lang)),
     viewBar("weekly", lang),
     ...body,
+    kpiSection("week", lang),
     w.focusUnknown > 0 ? h("p", { class: "muted" }, t("week.unknownFocus", lang, { n: num(w.focusUnknown, lang) })) : null,
     h("p", { class: "muted" }, t("week.quiet", lang)),
     disclaimers(lang));
@@ -954,7 +959,8 @@ export function journey(): HTMLElement {
       link("#/journey/review", "btn ghost", t("review.link", lang)),
       link("#/journey/risks", "btn ghost", t("risk.link", lang)),
       link("#/journey/history", "btn ghost", t("hist.link", lang)),
-      link("#/journey/northstar", "btn ghost", t("ns.link", lang))),
+      link("#/journey/northstar", "btn ghost", t("ns.link", lang)),
+      link("#/journey/kpi", "btn ghost", t("kpi.link", lang))),
     overallProgressCard(lang, "journey"),
     journeyGoalsCard(lang),
     templatePicker(lang),

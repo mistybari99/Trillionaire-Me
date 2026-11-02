@@ -15,6 +15,9 @@ import { looksLikePersonContact, roleRows, roleSummary, type Holder } from "../c
 import { parseOwnership, ventureRows } from "../core/ventures";
 import { ladder, starRows } from "../core/northStar";
 import { planHistory } from "../core/planHistory";
+import { KPI_MEASURES, KPI_PERIODS, kpiStatus, parseActual, parseTarget, validateKpi, type KpiError } from "../core/kpi";
+import { kpiRowView, todayIsoKpi } from "./kpiUi";
+import { entryNs, labelFor, storeOf } from "./entry";
 import type { Locale } from "../i18n/registry";
 
 const L = () => prefs.lang;
@@ -238,4 +241,75 @@ export function northStarScreen(): HTMLElement {
     h("h2", {}, t("ns.add", lang)), form,
     rows.length ? h("div", {}, ...cards) : h("p", { class: "muted" }, t("ns.empty", lang)),
     h("p", { class: "muted" }, t("ns.note", lang)), modeMark(lang), disclaimers(lang, ["advice"]));
+}
+
+// ---- M16 KPI targets: planned (the target) against actual (your own records, or the number you type) ----
+const labelOf = (id: string, lang: Locale) => tb(fieldById(id)!.label, lang);
+export function kpiScreen(): HTMLElement {
+  const lang = L();
+  const name = h("input", { id: "kp-name", type: "text", maxlength: "80", autocomplete: "off" });
+  const measure = h("select", { id: "kp-measure" }, ...KPI_MEASURES.map((m) => h("option", { value: m }, choiceLabel("kpi.measure", m, lang))));
+  const period = h("select", { id: "kp-period" }, ...KPI_PERIODS.map((p) => h("option", { value: p }, choiceLabel("kpi.period", p, lang))));
+  const target = h("input", { id: "kp-target", type: "text", inputmode: "decimal", autocomplete: "off" });
+  const unit = h("input", { id: "kp-unit", type: "text", maxlength: "40", autocomplete: "off" });
+  const err = h("p", { class: "err", role: "alert" });
+  const form = h("form", { novalidate: true, "data-form": "kpi" }, gateFor(lang),
+    h("label", { for: "kp-name" }, labelOf("kpi.name", lang)), name,
+    h("label", { for: "kp-measure" }, labelOf("kpi.measure", lang)), measure,
+    h("label", { for: "kp-period" }, labelOf("kpi.period", lang)), period,
+    h("label", { for: "kp-target" }, labelOf("kpi.target", lang)), target,
+    h("label", { for: "kp-unit" }, labelOf("kpi.unit", lang)), unit, err,
+    h("button", { class: "btn", type: "submit" }, t("kpi.save", lang)));
+  form.addEventListener("submit", (ev) => {
+    ev.preventDefault(); err.textContent = "";
+    const bad: KpiError | null = validateKpi({ name: name.value, target: target.value, unit: unit.value });
+    if (bad) { err.textContent = t(`kpi.err.${bad}` as Key, lang); return; }
+    if (!checkFreeText(name.value).ok || !checkFreeText(unit.value).ok) { err.textContent = t("intake.secretRejected", lang); return; }
+    const tg = parseTarget(target.value)!;
+    const values: Record<string, FieldValue> = { "kpi.name": txt(name.value.trim()), "kpi.measure": txt(measure.value), "kpi.period": txt(period.value), "kpi.target": tg.state === "value" ? num_(tg.value) : UNKNOWN };
+    if (unit.value.trim()) values["kpi.unit"] = txt(unit.value.trim());
+    if (!putRecord("kpi", "kpi", values)) { err.textContent = saveBlockedText(lang); return; }
+    rerender();
+  });
+
+  // Change the target, or (for "my own number") the current number, on a saved card. The record keeps its id and namespace.
+  const editForm = (id: string, own: boolean, curTarget: number | null, curActual: number | null) => {
+    const tIn = h("input", { id: `kp-t-${id}`, type: "text", inputmode: "decimal", autocomplete: "off", value: curTarget === null ? "" : String(curTarget) });
+    const aIn = own ? h("input", { id: `kp-a-${id}`, type: "text", inputmode: "decimal", autocomplete: "off", value: curActual === null ? "" : String(curActual) }) : null;
+    const msg = h("p", { class: "err", role: "alert" });
+    const f = h("form", { novalidate: true, class: "kpi-edit", "data-kpi-edit": id },
+      h("label", { for: `kp-t-${id}` }, t("kpi.edit.target", lang)), tIn,
+      ...(aIn ? [h("label", { for: `kp-a-${id}` }, t("kpi.edit.actual", lang)), aIn] : []), msg,
+      h("button", { class: "btn ghost", type: "submit", style: "width:auto;margin:0;min-height:44px" }, t("kpi.update", lang)));
+    f.addEventListener("submit", (ev) => {
+      ev.preventDefault(); msg.textContent = "";
+      const tg = parseTarget(tIn.value); if (tg === null) { msg.textContent = t("kpi.err.target_invalid", lang); return; }
+      const ac = aIn ? parseActual(aIn.value) : null; if (aIn && ac === null) { msg.textContent = t("kpi.err.actual_invalid", lang); return; }
+      const ns = entryNs(); if (!ns) { msg.textContent = saveBlockedText(lang); return; }
+      const rec = findRecOf(id); if (!rec) return;
+      const lb = labelFor(rec.ns);
+      const lv = (v: number | string, l: typeof lb): FieldValue => ({ state: "value", value: v, label: l });
+      const values: Record<string, FieldValue> = { ...rec.values, "kpi.target": tg.state === "value" ? lv(tg.value, lb) : UNKNOWN };
+      if (aIn && ac) {
+        values["kpi.actual"] = ac.state === "value" ? lv(ac.value, lb) : UNKNOWN;
+        values["kpi.actual_on"] = ac.state === "value" ? lv(todayIsoKpi(), lb) : UNKNOWN;
+      }
+      storeOf(rec).put({ ...rec, values }); rerender();
+    });
+    return f;
+  };
+  const findRecOf = (id: string) => allRecs().find((r) => r.id === id) ?? null;
+
+  const rows = kpiStatus(allRecs(), todayIsoKpi());
+  const cards = rows.map((st) => h("div", { class: "card", "data-kpi-card": st.row.id }, h("div", { class: "row" }, h("div", {},
+    modeMark(lang), kpiRowView(st, lang),
+    h("p", { class: "muted" }, choiceLabel("kpi.measure", st.row.measure, lang)),
+    editForm(st.row.id, st.row.measure === "own", st.row.target, st.row.ownActual)), removeBtn(st.row.id, lang))));
+  return h("main", { class: "scr scr-kpi" },
+    link("#/journey", "crumb", `← ${t("journey.title", lang)}`),
+    h("h1", {}, t("kpi.title", lang)), h("p", { class: "sub" }, t("kpi.intro", lang)),
+    h("h2", {}, t("kpi.add", lang)), form,
+    rows.length ? h("div", {}, ...cards) : h("p", { class: "muted", "data-kpi-empty": "page" }, t("kpi.empty", lang)),
+    link("#/journey/week", "crumb", t("week.link", lang)), " ", link("#/journey/review", "crumb", t("review.link", lang)),
+    h("p", { class: "muted" }, t("kpi.note", lang)), modeMark(lang), disclaimers(lang, ["advice"]));
 }

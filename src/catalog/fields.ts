@@ -2,7 +2,7 @@ import type { Bi } from "../i18n/registry";
 import { UNKNOWN_STATES, type UnknownState } from "../core/types";
 import type { AccessRule, ChoiceOption, FieldDef, FieldType, Importance, PrivacyClass, Purpose, Requirement } from "./types";
 
-export const CATALOG_VERSION = 4;
+export const CATALOG_VERSION = 5;
 
 const bi = (bn: string, en: string): Bi => ({ bn, en });
 const opt = (code: string, bn: string, en: string): ChoiceOption => ({ code, label: bi(bn, en) });
@@ -489,6 +489,46 @@ export const FIELDS: FieldDef[] = [
     what: bi("এই রোল এখন কে দেখছেন।", "Who covers this role now."),
     why: bi("কেউ না থাকলে সেটি একটি ফাঁক। না জানলে 'জানা নেই' রাখুন।", "If nobody covers it, it is a gap. If you do not know, leave it as unknown."),
     example: bi("আমি", "Me") }),
+
+  // ── KPI targets (M16, FAM-17): a target per week or per 90 days, set against the user's own records ──
+  f({ id: "kpi.name", entity: "kpi", family: "FAM-17", type: "text", purpose: "planning", importance: "core",
+    label: bi("টার্গেটের নাম", "Target name"),
+    what: bi("কোন জিনিসের টার্গেট রাখছেন, ছোট করে।", "What the target is for, in a few words."),
+    why: bi("নাম থাকলে রিভিউয়ে টার্গেট চেনা যায়।", "A name makes the target easy to find in your reviews."),
+    example: bi("সপ্তাহে ৫টি কাজ শেষ", "Finish 5 tasks a week"), format: bi("এক লাইন", "One line") }),
+  f({ id: "kpi.measure", entity: "kpi", family: "FAM-17", type: "choice", purpose: "planning", importance: "core",
+    options: [opt("tasks_done", "শেষ করা কাজ", "Tasks finished"), opt("focus_minutes", "ফোকাসের মিনিট", "Focus minutes"), opt("habit_checkins", "অভ্যাসের চেক-ইন", "Habit check-ins"),
+      opt("stage_passes", "স্টেজ পাস", "Stage passes"), opt("own", "নিজের সংখ্যা", "My own number")],
+    label: bi("কী মাপা হবে", "What is measured"),
+    what: bi("অ্যাপ আপনার নিজের রেকর্ড থেকে গুনবে, অথবা আপনি নিজে সংখ্যা দেবেন।", "The app counts it from your own records, or you enter the number yourself."),
+    why: bi("রেকর্ড থেকে গোনা হলে নিজে কিছু লিখতে হয় না। কোনো রেকর্ড না থাকলে ‘জানা নেই’ দেখায়, ০ নয়।", "Counted from records, nothing is typed twice. With no record it shows Unknown, never 0."),
+    example: bi("শেষ করা কাজ", "Tasks finished") }),
+  f({ id: "kpi.period", entity: "kpi", family: "FAM-17", type: "choice", purpose: "planning", importance: "core",
+    options: [opt("week", "প্রতি সপ্তাহ (৭ দিন)", "Each week (7 days)"), opt("days90", "৯০ দিনে", "In 90 days")],
+    label: bi("কত সময়ে", "Over what time"),
+    what: bi("টার্গেটটি এক সপ্তাহের জন্য, না ৯০ দিনের জন্য।", "Whether the target is for one week or for 90 days."),
+    why: bi("সাপ্তাহিক রিভিউ সপ্তাহের টার্গেট, ৯০ দিনের রিভিউ ৯০ দিনের টার্গেট দেখায়।", "The weekly review shows week targets; the 90-day review shows 90-day targets."),
+    example: bi("প্রতি সপ্তাহ", "Each week") }),
+  f({ id: "kpi.target", entity: "kpi", family: "FAM-17", type: "number", purpose: "planning", importance: "core", affects: "planned vs actual",
+    label: bi("টার্গেট সংখ্যা", "Target number"),
+    what: bi("এই সময়ে কতটা করতে চান।", "How much you aim for in that time."),
+    why: bi("টার্গেট ও নিজের রেকর্ড পাশাপাশি দেখা যায়। ফাঁকা রাখলে ‘টার্গেট ঠিক হয়নি’ দেখায়।", "Target and your own records are shown side by side. Blank shows Not set."),
+    example: bi("৫", "5"), format: bi("০-এর বেশি সংখ্যা", "A number above 0") }),
+  f({ id: "kpi.unit", entity: "kpi", family: "FAM-17", type: "text", purpose: "planning", importance: "optional",
+    label: bi("একক", "Unit"),
+    what: bi("সংখ্যাটি কিসের, যেমন কাস্টমার বা বিক্রি।", "What the number counts, such as customers or sales."),
+    why: bi("নিজের সংখ্যার টার্গেটে একক থাকলে বোঝা সহজ।", "A unit makes your own number easy to read."),
+    example: bi("কাস্টমার", "customers"), format: bi("ছোট লেখা", "Short text") }),
+  f({ id: "kpi.actual", entity: "kpi", family: "FAM-17", type: "number", purpose: "planning", importance: "optional",
+    label: bi("এখনকার সংখ্যা (নিজের)", "Current number (yours)"),
+    what: bi("‘নিজের সংখ্যা’ টার্গেটে এই সময়ে এখন পর্যন্ত কত হয়েছে।", "For a ‘my own number’ target: how far you are in this period."),
+    why: bi("অ্যাপ নিজে গুনতে পারে না, তাই আপনার লেখা সংখ্যাই দেখানো হয়। না লিখলে ‘জানা নেই’।", "The app cannot count it, so your number is shown. If blank it shows Unknown."),
+    example: bi("৩", "3"), format: bi("সংখ্যা", "Number") }),
+  f({ id: "kpi.actual_on", entity: "kpi", family: "FAM-17", type: "date", purpose: "planning", importance: "optional",
+    label: bi("সংখ্যাটি কোন দিনের", "Date of that number"),
+    what: bi("নিজের সংখ্যাটি যেদিন লিখেছেন।", "The day you entered your own number."),
+    why: bi("পুরোনো সংখ্যা চেনা যায়।", "It shows how old your number is."),
+    example: bi("২০২৬-১১-০২", "2026-11-02"), format: bi("বছর-মাস-দিন", "YYYY-MM-DD") }),
 
   // ── north star measure & ladder (M03, FAM-03) ──
   f({ id: "north_star.metric", entity: "north_star", family: "FAM-03", type: "text", purpose: "planning", importance: "core",

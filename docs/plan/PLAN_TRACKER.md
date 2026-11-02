@@ -293,5 +293,5 @@ Every inventory row has a planned home in the judge's table, so none is orphaned
 | BC-1.3 | Repo-wide link check (all routes, en/bn/mix, literal addresses, orphans) | builder | Built+Linked+Tested | `tests/link_check.test.ts`; closes GAP-01 | TS Y |
 | BC-1.4 | Dead code removed: goals.ts, override.ts, sync.ts, onlineAdvice.ts | builder | Built | DECISIONS_LOG 2 Nov 2026 | - |
 | BC-1.5 | Broken `#/more/topics` link on Flashcards | builder | Built+Linked+Tested | `src/ui/screens.ts`, `tests/link_check.test.ts` | LK Y · TS Y |
-| BC-2 | M16 KPI targets | builder | In progress | - | - |
+| BC-2 | M16 KPI targets (form, storage, calc, weekly/90-day review, report, Today, Journey) | builder | Built+Linked+Tested | `src/core/kpi.ts`, `src/ui/kpiUi.ts`, `src/ui/planScreens.ts#kpiScreen`, route `#/journey/kpi`; `tests/kpi.test.ts`, `tests/link_check.test.ts`, e2e KPI cold-start check | UI Y · LK Y · DR Y · L3 Y · OFF Y · TS Y (4L not re-run) |
 | BC-3 | M09 venture value and income/expense | builder | Not started | - | - |

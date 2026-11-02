@@ -49,6 +49,7 @@ export const ENTITIES: EntityDef[] = [
   e("risk", "FAM-03", "রিস্ক", "Risk", "M15", "personal"),
   e("team_role", "FAM-03", "কাজের রোল", "Team role", "M10", "third_party"),
   e("north_star", "FAM-03", "মাপকাঠি (North Star)", "North Star measure", "M03", "personal"),
+  e("kpi", "FAM-17", "KPI টার্গেট", "KPI target", "M16", "personal"),
 ];
 
 export const entityById = (id: string): EntityDef | undefined => ENTITIES.find((x) => x.id === id);
