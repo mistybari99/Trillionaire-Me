@@ -30,7 +30,7 @@ check("ONB-OFFER", "after the choice the 3-screen start is offered (step 2 of 3)
 await page.click("[data-act=onb-skip]");
 await page.waitForSelector("[data-onboard]", { state: "detached" });
 check("ONB-SKIP", "skipping the start saves nothing and it does not return", (await page.locator("[data-onboard]").count()) === 0 && (await idb(page)).filter((r) => r.entity === "goal" || r.entity === "task").length === 0, JSON.stringify((await idb(page)).map((r) => r.entity)));
-for (const r of ["today", "journey", "diary", "deen", "more", "more/status", "more/fields", "more/data"]) { await page.goto(`http://localhost:4174/#/${r}`); await page.waitForSelector("main"); }
+for (const r of ["today", "journey", "diary", "deen", "settings", "more/status", "more/fields", "settings/data", "settings/look", "settings/privacy", "settings/backup", "settings/backup/restore", "settings/delete", "settings/plan", "settings/prayer", "settings/about"]) { await page.goto(`http://localhost:4174/#/${r}`); await page.waitForSelector("main"); }
 const keys = [...(await page.evaluate(() => Object.keys(localStorage).filter((k) => k.startsWith("tm:real:") || k.startsWith("tm:demo:")))), ...(await idb(page))];
 check("TM-TST-143", "empty start: no demo/real records after visiting every tab", keys.length === 0, JSON.stringify(keys));
 
@@ -51,7 +51,7 @@ await page.click("button[type=submit]"); await page.waitForTimeout(200);
 const noConsent = await idb(page);
 check("TM-TST-143", "without consent a valid entry saves nothing and shows the prompt", noConsent.length === 0 && (await page.locator("[data-consent-prompt]").count()) === 1);
 // the owner ticks 'I understand' on More > Demo & real data, then the same entry saves as real
-await page.goto("http://localhost:4174/#/more/data"); await page.waitForSelector("#consent-tick");
+await page.goto("http://localhost:4174/#/settings/privacy"); await page.waitForSelector("#consent-tick");
 await page.check("#consent-tick"); await page.click("[data-act=consent]"); await page.waitForTimeout(150);
 await page.goto("http://localhost:4174/#/diary/intake/3"); await page.waitForSelector("main");
 await page.fill("#f-skill\\.name", "Bookkeeping");
@@ -242,7 +242,7 @@ await ctx.setOffline(false);
   await ctx.setOffline(true);
   await page.goto(base); await page.waitForSelector("main", { timeout: 8000 }).catch(() => {});
   const seen = {};
-  for (const [name, hash, sel] of [["universe", "#/journey/universe", "svg[data-universe-map]"], ["journey logo", "#/journey", "svg.logo3d"], ["snapshots", "#/more/data", "[data-card=snapshots]"], ["home cards", "#/today", "[data-home-summary]"], ["goals", "#/journey/goals", "main h1"], ["lazy plan chunk (risks)", "#/journey/risks", "main h1"], ["lazy connections chunk", "#/more/connections", "main h1:not([hidden])"], ["lazy legs chunk", "#/journey/legs", "main h1"], ["lazy decide chunk", "#/journey/decide", "main h1"], ["topic with content packs", "#/topic/procrastination", "main h1"]]) {
+  for (const [name, hash, sel] of [["universe", "#/journey/universe", "svg[data-universe-map]"], ["journey logo", "#/journey", "svg.logo3d"], ["snapshots", "#/settings/backup", "[data-card=snapshots]"], ["home cards", "#/today", "[data-home-summary]"], ["goals", "#/journey/goals", "main h1"], ["lazy plan chunk (risks)", "#/journey/risks", "main h1"], ["lazy connections chunk", "#/settings/connections", "main h1:not([hidden])"], ["lazy legs chunk", "#/journey/legs", "main h1"], ["lazy decide chunk", "#/journey/decide", "main h1"], ["topic with content packs", "#/topic/procrastination", "main h1"]]) {
     await page.evaluate((h) => { location.hash = h; }, hash);
     seen[name] = await page.waitForSelector(sel, { timeout: 5000 }).then(() => true).catch(() => false);
   }
@@ -255,7 +255,7 @@ await ctx.setOffline(false);
 
 // Design version: default light-futuristic, switch to ink-paper and back, persists across reload, dark follows phone; old "classic" saved value migrates
 {
-  await page.goto("http://localhost:4174/#/more"); await page.waitForSelector("[data-design-pick]");
+  await page.goto("http://localhost:4174/#/settings/look"); await page.waitForSelector("[data-design-pick]");
   const d0 = await page.evaluate(() => ({ d: document.documentElement.dataset.design, v: localStorage.getItem("tm:ui:design"), cardBlur: getComputedStyle(document.querySelector(".card")).backdropFilter }));
   await page.click("[data-design-opt=ink-paper]"); await page.waitForTimeout(100);
   const bgInk = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);

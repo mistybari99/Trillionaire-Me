@@ -79,6 +79,6 @@ describe("Delete data page", () => {
   });
   it("nothing destructive on the Settings home, and the old Data page only links here", () => {
     go("#/settings"); expect(app().querySelector("[data-act^=clear], [data-delete-word]")).toBeNull();
-    go("#/more/data"); expect(app().querySelector("[data-act^=clear]")).toBeNull(); expect(q("a[href='#/settings/delete']")).not.toBeNull();
+    go("#/settings/data"); expect(app().querySelector("[data-act^=clear]")).toBeNull(); expect(q("a[href='#/settings/delete']")).not.toBeNull();
   });
 });

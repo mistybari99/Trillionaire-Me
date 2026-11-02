@@ -8,7 +8,7 @@ import { grantConsent } from "../src/core/consent";
 const NOW = "2026-10-25T00:00:00.000Z";
 const SCREENS: Array<[ViewScreen, string]> = [
   ["log", "#/journey/log"], ["goals", "#/journey/goals"], ["risks", "#/journey/risks"], ["ventures", "#/diary/ventures"], ["team", "#/diary/team"],
-  ["history", "#/journey/history"], ["cards", "#/cards"], ["library", "#/more/library"], ["rules", "#/more/rules"], ["wheel", "#/journey/wheel"],
+  ["history", "#/journey/history"], ["cards", "#/cards"], ["library", "#/more/library"], ["rules", "#/settings/plan/automation"], ["wheel", "#/journey/wheel"],
 ];
 const go = (hash: string) => { location.hash = hash; render(); };
 beforeEach(() => {
@@ -32,7 +32,7 @@ describe("Detailed/Compact chooser on more screens", () => {
       app.querySelector<HTMLButtonElement>(`[data-view-bar=${screen}] [data-view-opt=compact]`)!.click();
       expect(localStorage.getItem(`tm:ui:view:${screen}`)).toBe("compact");
       go(hash);
-      expect(app.querySelector("main[data-view=compact]")).not.toBeNull();
+      expect(app.querySelector("[data-view=compact]")).not.toBeNull();
       expect(app.querySelector(`[data-view-bar=${screen}] [data-view-opt=compact]`)!.getAttribute("aria-pressed")).toBe("true");
       localStorage.setItem(`tm:ui:view:${screen}`, "grid");
       go(hash);

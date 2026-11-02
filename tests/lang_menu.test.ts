@@ -5,7 +5,7 @@ import { ROUTES, render, renderApp } from "../src/app";
 import { PACKS } from "../src/i18n/packs";
 import { prefs } from "../src/ui/state";
 
-const SAMPLE = ["/start", "/journey/horizon", "/settings", "/settings/look", "/settings/about", "/settings/connections", "/more/library", "/more/connections", "/more/rules", "/today", "/journey", "/journey/risks", "/journey/week", "/journey/legs", "/journey/leak", "/journey/decide", "/journey/mine", "/journey/history", "/journey/northstar", "/diary/ventures", "/diary/team", "/diary", "/diary/intake/1", "/diary/intake/2", "/diary/intake/3", "/diary/intake/4", "/diary/intake/5", "/diary/intake/6", "/diary/intake/7", "/diary/plan", "/diary/money", "/journey/log", "/journey/report", "/journey/wheel", "/journey/universe", "/journey/goals", "/journey/goal/g1", "/journey/review", "/capture", "/stuck", "/topics", "/topic/procrastination", "/reward", "/journey/art", "/habits", "/cards", "/focus/none", "/deen", "/more", "/more/status", "/more/fields", "/more/glossary", "/more/safety", "/more/data", "/more/dictionary", "/more/halal-flags"];
+const SAMPLE = ["/start", "/journey/horizon", "/settings", "/settings/look", "/settings/about", "/settings/connections", "/more/library", "/settings/connections", "/settings/plan/automation", "/today", "/journey", "/journey/risks", "/journey/week", "/journey/legs", "/journey/leak", "/journey/decide", "/journey/mine", "/journey/history", "/journey/northstar", "/diary/ventures", "/diary/team", "/diary", "/diary/intake/1", "/diary/intake/2", "/diary/intake/3", "/diary/intake/4", "/diary/intake/5", "/diary/intake/6", "/diary/intake/7", "/diary/plan", "/diary/money", "/journey/log", "/journey/report", "/journey/wheel", "/journey/universe", "/journey/goals", "/journey/goal/g1", "/journey/review", "/capture", "/stuck", "/topics", "/topic/procrastination", "/reward", "/journey/art", "/habits", "/cards", "/focus/none", "/deen", "/settings", "/more/status", "/more/fields", "/more/glossary", "/more/safety", "/settings/data", "/more/dictionary", "/more/halal-flags"];
 const q = <T extends Element>(s: string) => document.querySelector(s) as T;
 const open = () => q<HTMLButtonElement>('[data-act="lang-open"]');
 const boot = (hash: string) => { document.body.innerHTML = '<div id="app"></div>'; location.hash = "#" + hash; render(); };
@@ -50,14 +50,14 @@ describe("language icon menu", () => {
   });
 
   it("menu lists English, বাংলা, Mix; current is marked; choosing changes language, persists, keeps the route", () => {
-    localStorage.setItem("tm:ui:dataModeChoice", "demo"); localStorage.setItem("tm:ui:lang", "bn"); boot("/more");
+    localStorage.setItem("tm:ui:dataModeChoice", "demo"); localStorage.setItem("tm:ui:lang", "bn"); boot("/settings");
     open().click();
     const items = [...document.querySelectorAll<HTMLButtonElement>(".lang-item")];
     expect(items.map((i) => i.textContent)).toEqual(["English", "✓বাংলা", "Mix"]);
     expect(items[1]!.getAttribute("aria-pressed")).toBe("true");
     items[0]!.click();
     expect(prefs.lang).toBe("en"); expect(localStorage.getItem("tm:ui:lang")).toBe("en");
-    expect(location.hash).toBe("#/more"); expect(document.documentElement.lang).toBe("en");
+    expect(location.hash).toBe("#/settings"); expect(document.documentElement.lang).toBe("en");
     expect(open().getAttribute("aria-label")).toBe("Language");
     expect(document.activeElement).toBe(open());
     open().click(); document.querySelector<HTMLButtonElement>('.lang-item[data-lang="mix"]')!.click();

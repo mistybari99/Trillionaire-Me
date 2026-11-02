@@ -96,18 +96,18 @@ describe("M19 automation rules screen and Today suggestions", () => {
     localStorage.setItem("tm:ui:lang", "en");
   });
 
-  it("More lists the two new sections; the rules screen shows four rules with the right defaults", () => {
-    go("#/more");
+  it("Guides & info lists Ready systems; the rules (Settings > Plan & progress) show four rules with the right defaults", () => {
+    go("#/settings/about");
     expect($('a[href="#/more/library"]')).not.toBeNull();
-    expect($('a[href="#/more/rules"]')).not.toBeNull();
-    go("#/more/rules");
+    go("#/settings/plan"); expect($('[data-setting-row=rules]')).not.toBeNull();
+    go("#/settings/plan/automation");
     expect($$("[data-rule]")).toHaveLength(4);
     expect($("[data-rule=focus_again] [data-rule-set='focus_again:off']")!.getAttribute("aria-pressed")).toBe("true");
     expect($("[data-rule=smaller_step] [data-rule-set='smaller_step:on']")!.getAttribute("aria-pressed")).toBe("true");
   });
 
   it("switching a rule off saves the choice on this phone and the screen reflects it", () => {
-    go("#/more/rules");
+    go("#/settings/plan/automation");
     $<HTMLButtonElement>("[data-rule=next_stage] [data-rule-set='next_stage:off']")!.click();
     expect(prefs.ruleSwitches.next_stage).toBe(false);
     render();

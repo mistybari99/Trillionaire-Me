@@ -23,7 +23,7 @@ describe("Plan & progress page", () => {
     go("#/diary/plan"); expect(app().querySelector("[data-mode]")).toBeNull(); expect(q("[data-plan-chip=planmode]").textContent).toMatch(/This week: Minimum week/); expect(q("[data-plan-chip=planmode] a").getAttribute("href")).toBe("#/settings/plan/planmode");
     go("#/today"); expect(app().querySelector("[data-ov-mode]")).toBeNull(); expect(q("[data-plan-chip=weighting] a").getAttribute("href")).toBe("#/settings/plan/weighting");
     go("#/journey"); expect(app().querySelector("[data-tpl], [data-ov-mode]")).toBeNull();
-    go("#/more/rules"); expect(app().querySelectorAll("[data-rule]").length).toBe(4); // same implementation, old route until the redirect
+    go("#/settings/plan/automation"); expect(app().querySelectorAll("[data-rule]").length).toBe(4); // same implementation, old route until the redirect
   });
   it("row ids open and highlight the right control (automation is the rules section)", () => {
     go("#/settings/plan/automation"); expect(q("[data-setting-row=rules]").classList.contains("set-hl")).toBe(true);

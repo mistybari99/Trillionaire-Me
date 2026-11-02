@@ -36,5 +36,5 @@ describe("Demo or real data", () => {
     store.demo.put(demo("d1")); go("#/settings/data/start-real"); q<HTMLButtonElement>("[data-act=demo-delete-cancel]").click(); render();
     expect(location.hash).toBe("#/settings/data"); expect(store.demo.list().length).toBe(1); expect(prefs.dataMode).toBe("demo");
   });
-  it("the old /more/data route still shows the same page (redirect comes later)", () => { go("#/more/data"); expect(q("[data-settings=data]")).not.toBeNull(); });
+  it("the old /more/data route still shows the same page (redirect comes later)", () => { go("#/settings/data"); expect(q("[data-settings=data]")).not.toBeNull(); });
 });

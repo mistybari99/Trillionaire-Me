@@ -71,10 +71,14 @@ export const screensDifferingFromMaster = (): ViewScreen[] => VIEW_SCREENS.filte
 export function resetLookLayout(): void {
   for (const k of ["tm:ui:design", "tm:ui:horizonView", "tm:ui:universeView", "tm:ui:habitGrid", "tm:ui:reduceMotion", VIEW_KEY("_default"), ...VIEW_SCREENS.map(VIEW_KEY)]) { try { localStorage.removeItem(k); } catch { /* ignore */ } }
 }
+export const MOVED_NOTE_DAYS = 14;
 export type ReduceMotion = "system" | "always";
 export type GridRange = "days31" | "weeks12" | "months12";
 export const prefs = {
   /** Reduce motion: follow the phone (default) or always reduce. The CSS already follows the phone setting. */
+  /** One-time "what moved" note: "" = not shown yet, an ISO time = first shown, "done" = dismissed. Additive key. */
+  get movedNote(): string { return get("tm:ui:movedNote") ?? ""; },
+  set movedNote(v: string) { set("tm:ui:movedNote", v); },
   get reduceMotion(): ReduceMotion { return get("tm:ui:reduceMotion") === "always" ? "always" : "system"; },
   set reduceMotion(v: ReduceMotion) { set("tm:ui:reduceMotion", v === "always" ? "always" : "system"); },
   /** Habit grid range on the Habits screen. Unknown or missing = 31 days. */

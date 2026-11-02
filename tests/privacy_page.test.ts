@@ -38,7 +38,7 @@ describe("single consent source", () => {
     go("#/settings/privacy"); expect(q("[data-consent=real]")).not.toBeNull();
     q<HTMLButtonElement>("[data-act=consent]").click(); render(); expect(readConsent(consentKv)).toBe(false); expect(q(".err")?.textContent).toMatch(/Tick/);
     q<HTMLInputElement>("#consent-tick").checked = true; q<HTMLButtonElement>("[data-act=consent]").click(); expect(readConsent(consentKv)).toBe(true);
-    go("#/more/data"); expect(app().querySelector("[data-consent=real]")).toBeNull();
+    go("#/settings/data"); expect(app().querySelector("[data-consent=real]")).toBeNull();
   });
 });
 
@@ -84,7 +84,7 @@ describe("lock screen details and app lock", () => {
   });
   it("app lock card and the forgot-PIN help line live here; More no longer holds these controls", () => {
     go("#/settings/privacy"); expect(q("[data-card=applock]")).not.toBeNull(); expect(q("[data-priv=forgot]").textContent).toMatch(/Only the PIN is removed. Your data is never deleted/);
-    go("#/more"); expect(app().querySelector("[data-lock-settings]")).toBeNull(); go("#/more/data"); expect(app().querySelector("[data-card=applock]")).toBeNull();
+    go("#/settings"); expect(app().querySelector("[data-lock-settings]")).toBeNull(); go("#/settings/data"); expect(app().querySelector("[data-card=applock]")).toBeNull();
   });
   it("Settings never reads or shows the PIN data", async () => {
     await setPin(consentKv, "4821", "4821", 1000); go("#/settings/privacy"); const html = app().innerHTML; expect(html).not.toMatch(/tm:secret|salt|hash/i);

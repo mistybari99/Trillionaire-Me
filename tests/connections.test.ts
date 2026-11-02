@@ -47,7 +47,7 @@ describe("TM-TST-126 ports: null adapters are the default", () => {
     const x = vi.fn(); vi.stubGlobal("XMLHttpRequest", x);
     const reg = createRegistry(new MemoryKV());
     await reg.get("aiAssistant").ask("hi"); await reg.get("webSearch").search("q"); await reg.get("cloudSync").pull(); await reg.get("licensedContent").getPack("p");
-    go("#/more/connections"); app().querySelectorAll<HTMLElement>("button").forEach((b) => b.click());
+    go("#/settings/connections"); app().querySelectorAll<HTMLElement>("button").forEach((b) => b.click());
     expect(f).not.toHaveBeenCalled(); expect(x).not.toHaveBeenCalled();
     vi.unstubAllGlobals();
   });
@@ -105,7 +105,7 @@ describe("keys: accepted shapes and refusals", () => {
 
 describe("TM-TST-126 Connections screen", () => {
   it("one card per facility, all off, Enable disabled without approval", () => {
-    go("#/more/connections");
+    go("#/settings/connections");
     for (const id of FACILITY_IDS) {
       expect(q(`[data-conn="${id}"]`).getAttribute("data-conn-status")).toBe("off");
       expect(q<HTMLButtonElement>(`[data-conn-enable="${id}"]`).disabled).toBe(true);
@@ -116,7 +116,7 @@ describe("TM-TST-126 Connections screen", () => {
   });
 
   it("confirm states cost, data leaving the device and real data; no tick saves nothing", () => {
-    go("#/more/connections"); click('[data-conn-approve="aiAssistant"]');
+    go("#/settings/connections"); click('[data-conn-approve="aiAssistant"]');
     const txt = q('[data-conn-confirm="aiAssistant"]').textContent!;
     expect(txt).toMatch(/cost/i); expect(txt).toMatch(/leaving your phone/i); expect(txt).toMatch(/real data is never sent/i);
     click('[data-conn-confirm-btn="aiAssistant"]');
@@ -126,7 +126,7 @@ describe("TM-TST-126 Connections screen", () => {
   });
 
   it("approval then Enable works for that facility only; withdraw switches it off", () => {
-    go("#/more/connections"); click('[data-conn-approve="cloudSync"]');
+    go("#/settings/connections"); click('[data-conn-approve="cloudSync"]');
     q<HTMLInputElement>('[data-conn-tick="cloudSync"]').checked = true; click('[data-conn-confirm-btn="cloudSync"]');
     expect(isApproved(consentKv, "cloudSync")).toBe(true); expect(isApproved(consentKv, "aiAssistant")).toBe(false);
     expect(q<HTMLButtonElement>('[data-conn-enable="cloudSync"]').disabled).toBe(false);
@@ -138,7 +138,7 @@ describe("TM-TST-126 Connections screen", () => {
   });
 
   it("key field is masked, never echoed, and a refused value is not saved", () => {
-    go("#/more/connections");
+    go("#/settings/connections");
     const f = q<HTMLInputElement>('[data-conn-key="webSearch"]'); expect(f.type).toBe("password");
     f.value = KEY; click('[data-conn-key-save="webSearch"]');
     expect(localStorage.getItem(secretKey("webSearch"))).toBe(KEY);
@@ -152,7 +152,7 @@ describe("TM-TST-126 Connections screen", () => {
   });
 
   it("is reachable from More", () => {
-    go("#/more"); expect(app().querySelector('a[href="#/more/connections"]')).not.toBeNull();
+    go("#/settings"); expect(app().querySelector('a[href="#/settings/connections"]')).not.toBeNull();
   });
 });
 
@@ -180,7 +180,7 @@ describe("demo and real separation is unaffected", () => {
   it("connection settings write no record and no namespace is touched", () => {
     const before = [store.demo.list().length, store.real.list().length];
     const kv = new MemoryKV(); grantApproval(kv, "webSearch", "t"); saveKey(kv, "webSearch", KEY); setEnabled(kv, "webSearch", true);
-    go("#/more/connections");
+    go("#/settings/connections");
     expect([store.demo.list().length, store.real.list().length]).toEqual(before);
     expect(connectionStatus(kv, "webSearch")).toBe("connected");
   });
@@ -190,7 +190,7 @@ describe("statuses and text in en, bn and mix", () => {
   it.each(["en", "bn", "mix"] as const)("%s: status tags and card text render, Latin digits, parity", (lang) => {
     localStorage.setItem("tm:ui:lang", lang);
     saveKey(consentKv, "webSearch", KEY);
-    go("#/more/connections");
+    go("#/settings/connections");
     const tags = FACILITY_IDS.map((id) => q(`[data-conn-tag="${id}"]`).textContent);
     expect(tags).toContain(PACKS[lang]["conn.status.needs_approval"]); expect(tags).toContain(PACKS[lang]["conn.status.off"]);
     expect(app().textContent).toContain(PACKS[lang]["conn.aiAssistant.does"]);

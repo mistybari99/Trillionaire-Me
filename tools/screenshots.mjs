@@ -3,7 +3,7 @@ import { chromium } from "playwright";
 import { preview } from "vite";
 import { mkdirSync, writeFileSync } from "node:fs";
 
-const routes = ["today", "journey", "diary", "diary/intake/1", "diary/intake/2", "diary/intake/3", "diary/intake/4", "diary/intake/5", "diary/intake/6", "diary/intake/7", "diary/plan", "diary/money", "journey/log", "journey/report", "journey/horizon", "capture", "stuck", "topics", "topic/procrastination", "topic/emotions", "reward", "journey/art", "habits", "cards", "deen", "more", "more/status", "more/fields", "more/glossary", "more/safety", "more/data", "focus/shot-task"];
+const routes = ["today", "journey", "diary", "diary/intake/1", "diary/intake/2", "diary/intake/3", "diary/intake/4", "diary/intake/5", "diary/intake/6", "diary/intake/7", "diary/plan", "diary/money", "journey/log", "journey/report", "journey/horizon", "capture", "stuck", "topics", "topic/procrastination", "topic/emotions", "reward", "journey/art", "habits", "cards", "deen", "settings", "more/status", "more/fields", "more/glossary", "more/safety", "settings/data", "focus/shot-task"];
 // Demo task seeded only for the focus screenshot (demo namespace, DEMO-labelled values, never real data).
 const SEED_TASK = { id: "shot-task", entity: "task", ns: "demo", ownerId: "demo-user", schemaVersion: 1, createdAt: new Date().toISOString(), values: { "task.title": { state: "value", value: "Write the report outline", label: "DEMO" }, "task.minutes": { state: "value", value: 25, label: "DEMO" }, "task.priority": { state: "value", value: "high", label: "DEMO" } } };
 const out = "evidence/screenshots";
@@ -17,7 +17,7 @@ const DESIGNS = ["light-futuristic", "ink-paper", "emerald-obsidian", "broadshee
 const mkRec = (id, entity, values, links) => ({ id, entity, ns: "demo", ownerId: "demo-user", schemaVersion: 1, createdAt: new Date().toISOString(), values: Object.fromEntries(Object.entries(values).map(([k, v]) => [k, { state: "value", value: v, label: "DEMO" }])), ...(links ? { links } : {}) });
 const SEED = [mkRec("shot-goal", "goal", { "goal.title": "Save for a laptop", "goal.smart_specific": "Put 500 BDT aside each week", "goal.success": "Jar holds 6000 BDT" }), mkRec("shot-t1", "task", { "task.title": "Open a savings jar", "task.done_on": "2026-10-20" }, { goal: "shot-goal" }), mkRec("shot-t2", "task", { "task.title": "Set a weekly reminder" }, { goal: "shot-goal" }), mkRec("shot-t3", "task", { "task.title": "Read the bill" })];
 if (LOOKS) {
-  const lookRoutes = ["today", "journey", "journey/goal/shot-goal", "deen", "more"];
+  const lookRoutes = ["today", "journey", "journey/goal/shot-goal", "deen", "settings"];
   for (const design of DESIGNS) for (const scheme of ["light", "dark"]) for (const motion of ["no-preference", "reduce"]) {
     const ctx = await browser.newContext({ viewport: { width: 360, height: 740 }, deviceScaleFactor: 2, colorScheme: scheme, reducedMotion: motion });
     await ctx.addInitScript(([d, th, recs]) => { try { localStorage.setItem("tm:ui:lang", "en"); localStorage.setItem("tm:ui:design", d); localStorage.setItem("tm:ui:theme", th); localStorage.setItem("tm:ui:dataMode", "demo"); for (const r of recs) localStorage.setItem(`tm:demo:${r.id}`, JSON.stringify(r)); } catch { /* storage blocked */ } }, [design, scheme, SEED]);

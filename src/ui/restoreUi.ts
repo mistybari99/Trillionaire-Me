@@ -60,7 +60,7 @@ export async function startRestore(kind: RestoreKind, src: RestoreSource, lang: 
   const cancel = h("button", { class: "btn ghost", type: "button", "data-act": `${kind}-cancel`, style: "min-height:44px", onclick: close }, t("restore.cancel", lang));
   if (plan.realBlocked) {
     el.replaceChildren(h("div", { class: "note", role: "alertdialog", "aria-label": t("restore.title", lang), "data-restore": "blocked" }, heading,
-      h("p", {}, t("restore.realBlocked", lang)), h("a", { href: "#/more/data", class: "btn ghost", style: "min-height:44px", "data-act": "restore-open-consent" }, t("restore.realBlocked.open", lang)), cancel));
+      h("p", {}, t("restore.realBlocked", lang)), h("a", { href: "#/settings/privacy/consent", class: "btn ghost", style: "min-height:44px", "data-act": "restore-open-consent" }, t("restore.realBlocked.open", lang)), cancel));
     cancel.focus(); return;
   }
   const lockOn = lockEnabled(consentKv);

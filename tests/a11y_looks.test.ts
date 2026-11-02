@@ -87,7 +87,7 @@ describe("rendered screens use tokens for colour in every look", () => {
   for (const L of LOOKS) {
     it(`${L.id}: no hard-coded colour in inline styles on the main screens`, () => {
       const bad: string[] = [];
-      for (const route of ["#/today", "#/journey", "#/diary/money", "#/deen", "#/more", "#/more/connections", "#/habits"]) {
+      for (const route of ["#/today", "#/journey", "#/diary/money", "#/deen", "#/settings", "#/settings/connections", "#/habits"]) {
         applyDesign(L.id); location.hash = route; render();
         for (const el of document.querySelectorAll("[style]")) { if (el.closest(".design-sw")) continue; // decorative preview of each look, hidden from assistive tech
            const st = el.getAttribute("style") ?? ""; if (/#[0-9a-fA-F]{3,8}\b|rgba?\(/.test(st) || /\b(color|background(-color)?)\s*:\s*(red|green|blue|white|black)\b/.test(st)) bad.push(`${route}: ${st}`); }

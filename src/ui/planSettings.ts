@@ -4,7 +4,8 @@ import { h } from "./dom";
 import { t, tb } from "../i18n/t";
 import type { Key } from "../i18n/packs";
 import type { Locale } from "../i18n/registry";
-import { prefs } from "./state";
+import { prefs, screenView } from "./state";
+import { viewBar } from "./viewBar";
 import { TEMPLATES, TEMPLATE_IDS, type TemplateId } from "../core/stageTemplates";
 import { PROGRESS_MODES } from "../core/overallProgress";
 import { ruleRows } from "./libraryScreens";
@@ -47,7 +48,7 @@ export function planPage(row: string | undefined, lang: Locale): HTMLElement {
   const weightCard = h("section", { class: "card", "data-setting-row": "weighting" }, h("h2", { class: "card-h" }, t("set.row.weighting", lang)),
     h("div", { class: "seg", role: "group", "aria-label": t("overall.weight", lang) }, ...PROGRESS_MODES.map((m) => seg(t(m === "size" ? "overall.mode.size" : "overall.mode.equal", lang), prefs.progressMode === m, () => { prefs.progressMode = m; rerender(); }, { "data-ov-mode": m }))),
     h("p", { class: "muted" }, t("overall.note", lang)));
-  const auto = h("section", { "data-setting-row": "rules" }, h("h2", {}, t("plan.set.automation", lang)), h("p", { class: "sub" }, t("rules.intro", lang)), ...ruleRows(lang), h("p", { class: "muted" }, t("rules.note", lang)));
+  const auto = h("section", { "data-setting-row": "rules", ...(screenView("rules") === "compact" ? { class: "view-compact", "data-view": "compact" } : {}) }, h("h2", {}, t("plan.set.automation", lang)), h("p", { class: "sub" }, t("rules.intro", lang)), viewBar("rules", lang), ...ruleRows(lang), h("p", { class: "muted" }, t("rules.note", lang)));
   const main = h("main", { class: "scr scr-settings", "data-settings": "plan" }, h("a", { href: "#/settings", class: "crumb" }, `← ${t("nav.settings", lang)}`), h("h1", {}, t("set.cat.plan", lang)),
     h("p", { class: "sub" }, t("plan.set.intro", lang)), modeCard, weightCard, stageCard, auto);
   flash(main, row === "automation" ? "rules" : row);

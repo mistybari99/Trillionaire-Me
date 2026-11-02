@@ -60,18 +60,22 @@ export const ROUTES: Array<[RegExp, (m: RegExpMatchArray) => HTMLElement, string
   [/^\/deen$/, () => S.deen(), "deen"],
   [/^\/settings\/connections$/, () => viaLazy(CONN, (m) => m.connectionsScreen(prefs.lang)), "settings"],
   [/^\/settings(?:\/([a-z]+))?(?:\/([a-z-]+))?$/, (m) => settingsScreen(m[1], m[2]), "settings"],
-  [/^\/more$/, () => S.more(), "settings"],
   [/^\/more\/status$/, () => S.status(), "settings"],
   [/^\/more\/fields$/, () => S.fieldsGuide(), "settings"],
   [/^\/more\/glossary$/, () => S.glossary(), "settings"],
   [/^\/more\/safety$/, () => S.safety(), "settings"],
   [/^\/more\/dictionary$/, () => IM.dictionaryScreen(), "settings"],
-  [/^\/more\/data$/, () => S.dataScreen(), "settings"],
-  [/^\/more\/connections$/, () => viaLazy(CONN, (m) => m.connectionsScreen(prefs.lang)), "settings"],
   [/^\/more\/library$/, () => LS.systemsLibraryScreen(), "settings"],
   [/^\/more\/halal-flags$/, () => viaLazy(HALAL, (m) => m.halalFlagsScreen()), "settings"],
-  [/^\/more\/rules$/, () => LS.rulesScreen(), "settings"],
 ];
+
+/** Old Settings addresses and where they live now. Resolved inside render() with history.replaceState (no second render, no Back loop). */
+export const REDIRECTS: Record<string, string> = {
+  "/more": "/settings",
+  "/more/data": "/settings/data",
+  "/more/connections": "/settings/connections",
+  "/more/rules": "/settings/plan/automation",
+};
 
 function toggleDrawer(open: boolean) { const d = document.getElementById("drawer"); if (d) { d.classList.toggle("open", open); d.setAttribute("aria-hidden", String(!open)); } }
 
@@ -88,7 +92,9 @@ export function render() {
   applyPrefs();
   trackDemoDay();
   const lang = prefs.lang;
-  const path = location.hash.replace(/^#/, "") || "/today";
+  let path = location.hash.replace(/^#/, "") || "/today";
+  const moved = REDIRECTS[path];
+  if (moved) { history.replaceState(null, "", `#${moved}`); path = moved; }
   let body: HTMLElement | null = null, tab = "today";
   for (const [re, fn, tb] of ROUTES) { const m = path.match(re); if (m) { body = fn(m); tab = tb; break; } }
   if (!body) { location.hash = "#/today"; return; }

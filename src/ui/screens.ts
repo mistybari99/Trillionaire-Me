@@ -3,10 +3,8 @@ import { groupByHorizon, HORIZONS, type HorizonGoal } from "../core/horizon";
 import { h } from "./dom";
 import { t, tb, fmtNumber } from "../i18n/t";
 import type { Key } from "../i18n/packs";
-import { LOCALES, LOCALE_ORDER, intlLocale, type Locale } from "../i18n/registry";
-import { applyPrefs, prefs, screenView, store, type HorizonView } from "./state";
-import { DESIGNS } from "./themes";
-import { dataPage } from "./dataUi";
+import { intlLocale, type Locale } from "../i18n/registry";
+import { prefs, screenView, store, type HorizonView } from "./state";
 import { settingsHash } from "./settingsRegistry";
 import { pausedCard } from "./privacyUi";
 import { disclaimers, fieldHelp, num, valueEl } from "./components";
@@ -31,6 +29,7 @@ import { weeklySummary } from "../core/weeklyReview";
 import { reviewSummary } from "../core/review";
 import { stagesFor } from "../core/stageTemplates";
 import { planChip, pauseChip } from "./planSettings";
+import { movedNoteCard } from "./settingsUi";
 import { prayerLinkRow } from "./prayerSettingsUi";
 import { STAGE_CODES, StageError, conditions, currentIndex, passStage, stageStates, type StageCode } from "../core/stages";
 import { LAYERS, TOPICS, topicById, relatedTips, type Tip } from "../library/topics";
@@ -863,6 +862,7 @@ export function today(): HTMLElement {
       h("small", {}, `${t("home.stage", lang)} · ${tb(stage.name, lang)}`),
       h("div", { class: "n" }, num(curStage + 1, lang), h("span", { style: "font-size:22px;color:var(--muted)" }, ` / ${num(STAGES.length, lang)}`)),
       rungs),
+    movedNoteCard(lang),
     pausedCard(lang),
     pauseChip(lang),
     overallProgressCard(lang, "today"),
@@ -1206,38 +1206,6 @@ export function deen(): HTMLElement {
     disclaimers(lang, ["noFatwa", "noGuarantee"]));
 }
 
-/** Design version chooser: radio cards with a small swatch. Adding a version in themes.ts adds a card here. */
-function designCard(lang: Locale): HTMLElement {
-  return h("fieldset", { class: "card design-pick", "data-design-pick": "" },
-    h("legend", { class: "card-h" }, t("more.design", lang)),
-    h("p", { class: "muted" }, t("more.design.desc", lang)),
-    ...DESIGNS.map((d) => h("label", { class: "design-opt", "data-design-opt": d.id },
-      h("input", { type: "radio", name: "design", value: d.id, checked: prefs.design === d.id, onchange: () => { prefs.design = d.id; applyPrefs(); rerender(); } }),
-      h("span", { class: "design-sw", "aria-hidden": "true" }, ...d.swatch.map((c) => h("i", { style: `background:${c}` }))),
-      h("span", { class: "design-txt" }, h("strong", {}, t(d.label, lang)), h("span", { class: "muted" }, t(d.desc, lang))))),
-    h("p", { class: "muted" }, t("more.design.note", lang)));
-}
-
-export function more(): HTMLElement {
-  const lang = L();
-  const seg = (label: string, active: boolean, on: () => void) => h("button", { type: "button", "aria-pressed": String(active), onclick: on }, label);
-  const items: Array<[string, Key, Key]> = [["#/topics", "topics.title", "topics.intro"], ["#/more/status", "more.status", "more.status.desc"], ["#/more/fields", "more.fields", "more.fields.desc"], ["#/more/glossary", "more.glossary", "more.glossary.desc"], ["#/more/safety", "more.safety", "more.safety.desc"], ["#/more/data", "more.data", "more.data.desc"], ["#/more/dictionary", "dict.title", "dict.intro.short"], ["#/more/connections", "more.connections", "more.connections.desc"], ["#/more/library", "more.library", "more.library.desc"], ["#/more/rules", "more.rules", "more.rules.desc"], ["#/more/halal-flags", "more.halal", "more.halal.desc"]];
-  return h("main", { class: "scr scr-more" },
-    h("h1", {}, t("more.title", lang)),
-    ...items.map(([href, k, d]) => link(href, "card link", h("h2", { class: "card-h", }, t(k, lang)), h("p", { class: "muted" }, t(d, lang)))),
-    h("h2", {}, t("more.display", lang)),
-    h("div", { class: "card" }, h("h2", { class: "card-h", }, t("more.language", lang)),
-      h("div", { class: "seg" }, ...LOCALE_ORDER.map((c) => seg(LOCALES[c].endonym, prefs.lang === c, () => { prefs.lang = c; applyPrefs(); rerender(); })))),
-    h("div", { class: "card" }, h("h2", { class: "card-h", }, t("more.theme", lang)),
-      h("div", { class: "seg" }, ...(["auto", "light", "dark"] as const).map((c) => seg(t(`more.theme.${c}` as Key, lang), prefs.theme === c, () => { prefs.theme = c; applyPrefs(); rerender(); })))),
-    designCard(lang),
-    h("div", { class: "card" }, h("h2", { class: "card-h", }, t("more.textsize", lang)),
-      h("div", { class: "seg" }, ...[100, 125, 150, 200].map((c) => seg(`${num(c, lang)}%`, prefs.scale === c, () => { prefs.scale = c; applyPrefs(); rerender(); })))),
-    h("h2", {}, t("more.modules", lang)),
-    ...MODULES.filter((m) => m.tab === "more" && m.id !== "M22").map((m) => moduleCard(m, lang)),
-    disclaimers(lang, ["noGuarantee", "advice"]));
-}
-
 export function status(): HTMLElement {
   const lang = L();
   return h("main", {},
@@ -1275,8 +1243,6 @@ export function safety(): HTMLElement {
     h("div", { class: "card" }, h("p", {}, t("safety.deen", lang))),
     disclaimers(lang, ["noGuarantee", "advice", "noFatwa"]));
 }
-
-export const dataScreen = (): HTMLElement => dataPage(undefined, L());
 
 export function glossary(): HTMLElement {
   const lang = L();

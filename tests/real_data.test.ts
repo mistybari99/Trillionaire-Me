@@ -95,7 +95,7 @@ describe("D-B: data screen flow (consent and clear-all)", () => {
   const click = (sel: string) => { $(sel)!.click(); render(); };
   const gotoDelete = () => { document.body.innerHTML = '<div id="app"></div>'; location.hash = "#/settings/delete"; render(); };
   const typeWord = (w: string) => { const i = $("[data-delete-word]") as HTMLInputElement; i.value = w; i.dispatchEvent(new Event("input")); };
-  const ui = () => { document.body.innerHTML = '<div id="app"></div>'; location.hash = "#/more/data"; render(); };
+  const ui = () => { document.body.innerHTML = '<div id="app"></div>'; location.hash = "#/settings/data"; render(); };
 
   beforeEach(() => { localStorage.clear(); localStorage.setItem("tm:ui:lang", "en"); store.demo.clear(); store.real.clear(); ui(); });
 

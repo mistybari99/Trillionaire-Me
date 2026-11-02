@@ -64,14 +64,14 @@ describe("link check", () => {
     }
   });
   it("old More crumbs no longer point at /more", () => {
-    for (const p of ["#/more/status", "#/more/fields", "#/more/glossary", "#/more/safety", "#/more/dictionary", "#/more/library", "#/more/halal-flags", "#/topics", "#/more/data", "#/more/rules"]) { go(p); expect(app().querySelector("a.crumb[href='#/more']"), p).toBeNull(); }
+    for (const p of ["#/more/status", "#/more/fields", "#/more/glossary", "#/more/safety", "#/more/dictionary", "#/more/library", "#/more/halal-flags", "#/topics", "#/settings/data", "#/settings/plan/automation"]) { go(p); expect(app().querySelector("a.crumb[href='#/" + "more']"), p).toBeNull(); }
   });
 });
 
 describe("shell", () => {
   it("the fifth tab is Settings, points at /settings, and is highlighted on Settings and content routes", () => {
     go("#/today"); const tabs = [...app().querySelectorAll("nav a.tab")]; expect(tabs).toHaveLength(5); expect(tabs[4]!.textContent).toBe("Settings"); expect(tabs[4]!.getAttribute("href")).toBe("#/settings");
-    for (const p of ["#/settings", "#/settings/look", "#/more/glossary", "#/topics", "#/more/data"]) { go(p); expect(q("nav a[aria-current=page]").getAttribute("href"), p).toBe("#/settings"); }
+    for (const p of ["#/settings", "#/settings/look", "#/more/glossary", "#/topics", "#/settings/data"]) { go(p); expect(q("nav a[aria-current=page]").getAttribute("href"), p).toBe("#/settings"); }
   });
   it("home shows quick card, status strip, 8 category cards and the Guides row in order", () => {
     go("#/settings");
@@ -107,7 +107,7 @@ describe("shell", () => {
     go("#/settings"); expect(q("[data-demo-banner]").getAttribute("data-compact")).toBe("1"); expect(app().querySelector("[data-mode-ask]")).toBeNull(); expect(app().querySelector("[data-act=start-real-banner]")).toBeNull();
     go("#/today"); expect(app().querySelector("[data-act=start-real-banner]")).not.toBeNull();
   });
-  it("/more still renders (old routes untouched until the redirect step)", () => { go("#/more"); expect(q("h1").textContent).toBeTruthy(); expect(q("nav a[aria-current=page]").getAttribute("href")).toBe("#/settings"); });
+  it("/more still renders (old routes untouched until the redirect step)", () => { go("#/settings"); expect(q("h1").textContent).toBeTruthy(); expect(q("nav a[aria-current=page]").getAttribute("href")).toBe("#/settings"); });
   it("with the app lock on, a deep link to Settings shows the lock screen first and the same route after unlock", async () => {
     await setPin(consentKv, "4821", "4821", 1000); lockNow(); location.hash = "#/settings/privacy"; render();
     expect(app().querySelector("[data-lock-screen]")).not.toBeNull(); expect(app().querySelector("[data-settings]")).toBeNull();

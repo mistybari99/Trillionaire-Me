@@ -50,7 +50,7 @@ describe("Backup & export page", () => {
     go("#/settings/backup/csv"); expect(q("details[data-setting-row=csv]").hasAttribute("open")).toBe(true); expect(q("details[data-setting-row=csv]").classList.contains("set-hl")).toBe(true);
   });
   it("the old Data page only links to Backup; storage status moved with it", () => {
-    go("#/more/data"); expect(app().querySelector("[data-act=backup], [data-card=storage], [data-card=csv]")).toBeNull(); expect(q("a[href='#/settings/backup']")).not.toBeNull();
+    go("#/settings/data"); expect(app().querySelector("[data-act=backup], [data-card=storage], [data-card=csv]")).toBeNull(); expect(q("a[href='#/settings/backup']")).not.toBeNull();
     go("#/settings/backup"); expect(q("[data-card=storage]")).not.toBeNull();
   });
   it("every way of saving a backup file updates the same status (banner button, snapshot file)", async () => {

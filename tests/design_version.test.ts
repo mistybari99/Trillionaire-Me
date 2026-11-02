@@ -74,8 +74,8 @@ describe("token contrast (AA)", () => {
   }
 });
 
-describe("chooser UI (More)", () => {
-  const boot = () => { document.body.innerHTML = '<div id="app"></div>'; location.hash = "#/more"; render(); };
+describe("chooser UI (Settings > Look & screens)", () => {
+  const boot = () => { document.body.innerHTML = '<div id="app"></div>'; location.hash = "#/settings/look"; render(); };
   it("shows one radio card per version, default checked, 44px-class rule, switch persists", () => {
     boot();
     const radios = [...document.querySelectorAll<HTMLInputElement>('[data-design-pick] input[type=radio]')];

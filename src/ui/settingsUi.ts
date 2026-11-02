@@ -5,7 +5,7 @@ import { h } from "./dom";
 import { t } from "../i18n/t";
 import type { Key } from "../i18n/packs";
 import { LOCALES, LOCALE_ORDER, type Locale } from "../i18n/registry";
-import { applyPrefs, prefs, consentKv } from "./state";
+import { applyPrefs, prefs, consentKv, MOVED_NOTE_DAYS } from "./state";
 import { num } from "./components";
 import { whenText } from "./snapshotsUi";
 import { readConsent } from "../core/consent";
@@ -154,3 +154,14 @@ export function settingsScreen(catArg: string | undefined, rowArg: string | unde
   return categoryPage(catArg, rowArg, lang);
 }
 
+
+/** Today: one dismissible card, shown for 14 days from the first time it appears, saying where Settings went. Never a modal. */
+export function movedNoteCard(lang: Locale, now = new Date()): HTMLElement | null {
+  const v = prefs.movedNote; if (v === "done") return null;
+  if (v === "") prefs.movedNote = now.toISOString();
+  else if (now.getTime() - Date.parse(v) > MOVED_NOTE_DAYS * 86400_000) return null;
+  const done = () => { prefs.movedNote = "done"; };
+  return h("aside", { class: "card", role: "status", "data-moved-note": "1" }, h("p", {}, t("set.moved.text", lang)),
+    h("a", { href: "#/settings", class: "btn", "data-act": "moved-open", style: "width:auto;margin:0;min-height:44px", onclick: done }, t("set.moved.open", lang)),
+    h("button", { class: "btn ghost", type: "button", "data-act": "moved-ok", style: "width:auto;margin:0 0 0 8px;min-height:44px", onclick: () => { done(); rerender(); } }, t("set.moved.ok", lang)));
+}

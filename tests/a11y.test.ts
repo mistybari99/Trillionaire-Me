@@ -124,7 +124,7 @@ describe("reduced motion", () => {
 });
 
 // ---------- rendered screens (both languages, every route) ----------
-const SAMPLE_PATHS = ["/today", "/journey", "/journey/log", "/journey/horizon", "/diary", "/diary/intake", "/diary/intake/3", "/diary/plan", "/diary/money", "/capture", "/journey/report", "/journey/review", "/stuck", "/topics", `/topic/${TOPICS[0]!.id}`, "/reward", "/journey/art", "/focus/none", "/habits", "/cards", "/deen", "/more", "/more/status", "/more/fields", "/more/glossary", "/more/safety", "/more/data"];
+const SAMPLE_PATHS = ["/today", "/journey", "/journey/log", "/journey/horizon", "/diary", "/diary/intake", "/diary/intake/3", "/diary/plan", "/diary/money", "/capture", "/journey/report", "/journey/review", "/stuck", "/topics", `/topic/${TOPICS[0]!.id}`, "/reward", "/journey/art", "/focus/none", "/habits", "/cards", "/deen", "/settings", "/more/status", "/more/fields", "/more/glossary", "/more/safety", "/settings/data"];
 
 const named = (el: Element) => {
   const id = el.getAttribute("id");

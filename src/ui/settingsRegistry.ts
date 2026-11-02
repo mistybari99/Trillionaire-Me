@@ -66,7 +66,7 @@ export const ROWS: SettingRow[] = [
   R("deletedemo", "delete", "set.row.deletedemo", "#/settings/delete", ["delete", "demo", "clear", "remove"], [], [], true),
   R("deletereal", "delete", "set.row.deletereal", "#/settings/delete", ["delete", "real", "clear", "erase", "remove all"], [], [], true),
 
-  R("welcome", "about", "set.row.welcome", "#/start", ["welcome", "intro", "first run", "onboarding", "again"], ["onboard", "onboardTimes"], ["tm:ui:onboard", "tm:ui:onboardT"]),
+  R("welcome", "about", "set.row.welcome", "#/start", ["welcome", "intro", "first run", "onboarding", "again"], ["onboard", "onboardTimes", "movedNote"], ["tm:ui:onboard", "tm:ui:onboardT", "tm:ui:movedNote"]),
 ];
 
 /** Guides & info: content pages that are not settings. They keep their URLs and are listed on #/settings/about. */

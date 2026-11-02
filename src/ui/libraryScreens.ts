@@ -106,7 +106,6 @@ export function rulesTodayCard(lang: Locale): HTMLElement | null {
     h("ul", {}, ...items.map((s) => suggestionRow(s, lang))));
 }
 
-export function rulesScreen(): HTMLElement { return withView("rules", L(), rulesScreenInner()); }
 /** The four rule switches (one implementation, used on the Settings plan page). */
 export function ruleRows(lang: Locale): HTMLElement[] {
   const sw = prefs.ruleSwitches;
@@ -122,15 +121,4 @@ export function ruleRows(lang: Locale): HTMLElement[] {
       h("div", { class: "seg", role: "group", "aria-label": tb(def.name, lang) }, pick(t("rules.on", lang), on, true), pick(t("rules.disable", lang), !on, false)));
   });
   return rows;
-}
-function rulesScreenInner(): HTMLElement {
-  const lang = L();
-  const rows = ruleRows(lang);
-  return h("main", { class: "scr scr-rules" },
-    link("#/settings", "crumb", `← ${t("nav.settings", lang)}`),
-    h("h1", {}, t("rules.title", lang)),
-    h("p", { class: "sub" }, t("rules.intro", lang)),
-    ...rows,
-    h("p", { class: "muted" }, t("rules.note", lang)),
-    disclaimers(lang, ["noGuarantee"]));
 }

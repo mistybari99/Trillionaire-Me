@@ -95,7 +95,7 @@ describe("delete demo data: explicit confirm only", () => {
   beforeEach(() => { localStorage.setItem("tm:ui:dataMode", "demo"); seedBoth(); });
 
   it("the Start real now button is on More > Data in demo mode and only opens the confirm", () => {
-    go("#/more/data");
+    go("#/settings/data");
     expect(document.querySelector("[data-act=start-real-now]")).not.toBeNull();
     click("[data-act=start-real-now]");
     expect(document.querySelector("[data-mode-confirm]")).not.toBeNull();
@@ -104,7 +104,7 @@ describe("delete demo data: explicit confirm only", () => {
   });
   it("confirm removes demo records only, keeps real, settings and language, and switches to real", () => {
     prefs.scale = 125;
-    go("#/more/data"); click("[data-act=start-real-now]");
+    go("#/settings/data"); click("[data-act=start-real-now]");
     click("[data-act=demo-delete-confirm]"); // consent tick missing: nothing deleted
     expect(store.demo.list().length).toBe(4);
     tick(); click("[data-act=demo-delete-confirm]");
@@ -117,7 +117,7 @@ describe("delete demo data: explicit confirm only", () => {
     expect(document.querySelector("[data-demo-banner]")).toBeNull();
   });
   it("Keep demo data cancels: nothing deleted", () => {
-    go("#/more/data"); click("[data-act=start-real-now]"); click("[data-act=demo-delete-cancel]");
+    go("#/settings/data"); click("[data-act=start-real-now]"); click("[data-act=demo-delete-cancel]");
     expect(store.demo.list().length).toBe(4);
     expect(document.querySelector("[data-mode-confirm]")).toBeNull();
     expect(prefs.dataMode).toBe("demo");
@@ -197,7 +197,7 @@ describe("TM-TST-119 Only demo / Only real: the other namespace is hidden everyw
   });
   it("the switch on More > Data changes the mode; real needs the consent tick first", () => {
     localStorage.setItem("tm:ui:dataMode", "demo"); seedBoth();
-    go("#/more/data"); click("[data-mode-set=real]");
+    go("#/settings/data"); click("[data-mode-set=real]");
     expect(prefs.dataMode).toBe("demo");
     expect(document.querySelector("[data-mode-switch] .err")).not.toBeNull();
     store.real.clear(); // nothing real was written by the refused switch

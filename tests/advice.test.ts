@@ -68,7 +68,7 @@ describe("online suggestions slot and free-cloud option stay OFF", () => {
     const r = await onlineSuggestion(reg, { topic: "money" });
     expect(r).toMatchObject({ ok: false, reason: "not_connected" }); expect(ask).not.toHaveBeenCalled(); expect(fetchSpy).not.toHaveBeenCalled();
     vi.unstubAllGlobals();
-    location.hash = "#/more/connections"; render();
+    location.hash = "#/settings/connections"; render();
     expect(app().querySelector("[data-conn-slot=cloudSync]")!.textContent).toContain("Saved on this device");
     expect(app().querySelector("[data-conn-slot=aiAssistant]")).not.toBeNull();
     expect(app().querySelector("[data-conn=cloudSync]")!.getAttribute("data-conn-status")).toBe("off");
