@@ -51,6 +51,7 @@ import { kpiSection, kpiTodayCard } from "./kpiUi";
 import { realityReportCard, realityTodayCard } from "./realityUi";
 import { northStarCard } from "./northStarCard";
 import { syncDelegationNow, teamCard } from "./teamCard";
+import { riskDueCard } from "./riskCard";
 import { portfolioCard } from "./ventureCard";
 import { ventureRows } from "../core/ventures";
 import { backupReminderCard } from "./snapshotsUi";
@@ -542,6 +543,7 @@ export function reportScreen(): HTMLElement {
     portfolioCard(lang, "report"),
     northStarCard(lang, "report"),
     teamCard(lang, "report"),
+    riskDueCard(lang, "report"),
     realityReportCard(lang),
     items.length && repCompact ? compactBody : items.length ? h("div", { "data-view": "full" },
       sec("report.decisions", s.decisions.length ? h("ul", { style: "padding-inline-start:20px" }, ...s.decisions.map((x) => h("li", { "data-decision": "1" }, x))) : h("p", { class: "muted" }, t("report.empty", lang))),
@@ -885,6 +887,7 @@ export function today(): HTMLElement {
     kpiTodayCard(lang),
     northStarCard(lang, "today"),
     teamCard(lang, "today"),
+    riskDueCard(lang, "today"),
     realityTodayCard(lang),
     homeSummaryCards(lang),
     portfolioCard(lang, "today"),

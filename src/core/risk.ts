@@ -1,5 +1,6 @@
 // M15 risk register rows (demo namespace). Pure: no UI, no network.
 // Unknown likelihood stays unknown (never guessed). A missing stop rule is counted, not scored.
+import { addDays, validDay } from "./realityLoop";
 import type { FieldValue, TMRecord } from "./types";
 
 export type Likelihood = "low" | "medium" | "high";
@@ -38,4 +39,24 @@ export function validateRisk(p: { text: string; stopRule: string; reviewOn: stri
     if (Number.isNaN(d.getTime()) || d.toISOString().slice(0, 10) !== p.reviewOn) return "date_invalid";
   }
   return null;
+}
+
+// ---------------------------------------------------------------- review-date trigger (M15)
+// A risk with a review date that has come is "due": a calm prompt, never a mark. The stop rule is the user's own words; the app shows it back
+// and asks whether it has happened. It is never compared with any data. A risk with no date has no trigger (Unknown, not "later").
+export type RiskDue = "due" | "soon" | "later" | "none";
+export const SOON_DAYS = 7;
+export const REVIEW_DAYS = [7, 14, 30] as const;
+export type ReviewDays = (typeof REVIEW_DAYS)[number];
+
+export function riskDue(r: Pick<RiskRow, "reviewOn">, today: string): RiskDue {
+  if (!r.reviewOn || !validDay(r.reviewOn)) return "none";
+  if (r.reviewOn <= today) return "due";
+  return r.reviewOn <= addDays(today, SOON_DAYS) ? "soon" : "later";
+}
+export const dueRisks = (rows: RiskRow[], today: string): RiskRow[] => rows.filter((r) => riskDue(r, today) === "due");
+
+/** The risk looked at again: the next review date is today plus the chosen days. Nothing else changes. */
+export function reviewedRisk(rec: TMRecord, today: string, days: ReviewDays): TMRecord {
+  return { ...rec, values: { ...rec.values, "risk.review_on": { state: "value", value: addDays(today, days), label: rec.ns === "real" ? "FACT" : "DEMO" } } };
 }

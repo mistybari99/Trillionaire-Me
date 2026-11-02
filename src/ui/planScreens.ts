@@ -10,7 +10,8 @@ import { disclaimers, num, valueEl } from "./components";
 import { checkFreeText } from "../core/safety";
 import { fieldById } from "../catalog/fields";
 import type { FieldValue, TMRecord } from "../core/types";
-import { riskRows, validateRisk, withoutStopRule, type Likelihood } from "../core/risk";
+import { riskDue, riskRows, validateRisk, withoutStopRule, type Likelihood } from "../core/risk";
+import { riskDueTag, riskReviewBox, todayIsoRisk } from "./riskCard";
 import { assignTask, completeHandover, looksLikePersonContact, roleSummary, roleViews, validateHandover, withHolder, type Holder } from "../core/team";
 import { analysisLines, syncDelegationNow, teamAnalysis } from "./teamCard";
 import { loopLogRecord } from "../core/realityLoop";
@@ -99,7 +100,8 @@ function riskScreenInner(): HTMLElement {
     modeMark(lang), h("h2", { class: "card-h" }, r.text),
     h("p", { class: "muted" }, t("risk.likelihood", lang), ": ", r.likelihood ? choiceLabel("risk.likelihood", r.likelihood as Likelihood, lang) : t("unknown.unknown", lang)),
     h("p", { class: "muted" }, r.stopRule ? `${t("risk.stopLabel", lang)}: ${r.stopRule}` : t("risk.noStop", lang)),
-    h("p", { class: "muted" }, r.reviewOn ? `${t("risk.dateLabel", lang)}: ${r.reviewOn}` : t("risk.noDate", lang))),
+    h("p", { class: "muted" }, r.reviewOn ? `${t("risk.dateLabel", lang)}: ${r.reviewOn}` : t("risk.noDate", lang), " ", riskDueTag(r, lang)),
+    riskReviewBox(r, lang, riskDue(r, todayIsoRisk()) === "due")),
     removeBtn(r.id, lang))));
   return h("main", { class: "scr scr-risk" },
     link("#/journey", "crumb", `← ${t("journey.title", lang)}`),
