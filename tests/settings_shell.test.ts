@@ -35,7 +35,7 @@ describe("registry", () => {
     for (const r of ROWS) for (const f of r.prefs) expect(fields, `${r.id} lists unknown prefs.${f}`).toContain(f);
   });
   it("every tm:ui / consent / secret storage key in the source belongs to a row (or is listed as internal state)", () => {
-    const INTERNAL = new Set(["tm:ui:focus", "tm:ui:listsNs"]); // running focus timer and a one-time migration marker: not settings
+    const INTERNAL = new Set(["tm:ui:focus", "tm:ui:listsNs", "tm:ui:settingsRecent"]); // running focus timer and a one-time migration marker: not settings
     const owned = ROWS.flatMap((r) => r.keys);
     const covered = (k: string) => owned.some((o) => o === k || (o.endsWith("*") && k.startsWith(o.slice(0, -1))));
     const found = new Set<string>();
@@ -75,7 +75,7 @@ describe("shell", () => {
   });
   it("home shows quick card, status strip, 8 category cards and the Guides row in order", () => {
     go("#/settings");
-    expect([...app().querySelectorAll("main > *")].map((e) => e.tagName + (e.getAttribute("data-card") ?? ""))).toEqual(["H1", "P", "SECTIONquick", "SECTIONstatus", ...Array(9).fill("A")]);
+    expect([...app().querySelectorAll("main > *")].map((e) => e.tagName + (e.getAttribute("data-card") ?? ""))).toEqual(["DIV", "SECTION", "P", "SECTIONquick", "SECTIONstatus", ...Array(9).fill("A")]);
     expect([...app().querySelectorAll("main > a")].map((a) => a.getAttribute("href"))).toEqual([...CATEGORIES, "about"].map((c) => `#/settings/${c}`));
     const last = app().querySelectorAll("main > a")[7]!; expect(last.getAttribute("href")).toBe("#/settings/delete"); // Delete data is the last category
   });

@@ -1009,6 +1009,12 @@ const en = {
   "set.moved.text": "Settings and Guides are now in the last tab.",
   "set.moved.open": "Open Settings",
   "set.moved.ok": "Got it",
+  "set.search": "Search settings",
+  "set.search.ph": "Type a word, for example dark or backup",
+  "set.search.none": "Nothing found. Try another word.",
+  "set.search.count": "{n} found",
+  "set.search.recent": "Recently opened",
+  "set.search.close": "Close search",
 } as const;
 
 export type Key = keyof typeof en;
@@ -2356,6 +2362,12 @@ const bn: Record<Key, string> = {
   "set.moved.text": "সেটিংস ও গাইড এখন শেষ ট্যাবে।",
   "set.moved.open": "সেটিংস খুলুন",
   "set.moved.ok": "বুঝেছি",
+  "set.search": "সেটিংস খুঁজুন",
+  "set.search.ph": "একটি শব্দ লিখুন, যেমন অন্ধকার বা ব্যাকআপ",
+  "set.search.none": "কিছু পাওয়া যায়নি। অন্য একটি শব্দ লিখে দেখুন।",
+  "set.search.count": "{n}টি পাওয়া গেছে",
+  "set.search.recent": "সম্প্রতি খোলা",
+  "set.search.close": "খোঁজা বন্ধ করুন",
 };
 
 // Mix mode: Bangla sentences with common English words kept (owner request, decision L-11).

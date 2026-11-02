@@ -16,6 +16,7 @@ import { RULE_IDS } from "../core/rules";
 import { designOf } from "./themes";
 import { resetOnboard } from "./onboardUi";
 import { deletePage } from "./deleteUi";
+import { withSearch } from "./settingsSearch";
 import { privacyPage } from "./privacyUi";
 import { backupPage } from "./backupUi";
 import { dataPage } from "./dataUi";
@@ -140,7 +141,7 @@ function aboutPage(row: string | undefined, lang: Locale): HTMLElement {
 }
 
 /** #/settings, #/settings/<category>, #/settings/<category>/<row>. Unknown category goes to the home; an unknown row id is ignored. */
-export function settingsScreen(catArg: string | undefined, rowArg: string | undefined): HTMLElement {
+function settingsInner(catArg: string | undefined, rowArg: string | undefined): HTMLElement {
   const lang = prefs.lang;
   if (!catArg || !isCat(catArg) || catArg === "home") return home(rowArg, lang);
   if (catArg === "about") return aboutPage(rowArg, lang);
@@ -153,6 +154,8 @@ export function settingsScreen(catArg: string | undefined, rowArg: string | unde
   if (catArg === "prayer") return prayerPage(rowArg, lang);
   return categoryPage(catArg, rowArg, lang);
 }
+
+export const settingsScreen = (catArg: string | undefined, rowArg: string | undefined): HTMLElement => withSearch(settingsInner(catArg, rowArg), prefs.lang);
 
 
 /** Today: one dismissible card, shown for 14 days from the first time it appears, saying where Settings went. Never a modal. */

@@ -26,9 +26,9 @@ export interface SettingRow {
 const R = (id: string, cat: Cat, label: Key, route: string, words: string[], prefs: string[] = [], keys: string[] = [], danger = false): SettingRow => ({ id, cat, label, words, prefs, keys, route, ...(danger ? { danger } : {}) });
 
 export const ROWS: SettingRow[] = [
-  R("language", "home", "more.language", "#/settings", ["language", "bangla", "english", "mix", "bn", "en"], ["lang"], ["tm:ui:lang"]),
-  R("theme", "home", "more.theme", "#/settings", ["theme", "dark", "light", "night", "mode", "auto"], ["theme"], ["tm:ui:theme"]),
-  R("textsize", "home", "more.textsize", "#/settings", ["text size", "font", "bigger", "larger", "zoom", "scale"], ["scale"], ["tm:ui:scale"]),
+  R("language", "home", "more.language", "#/settings/home/language", ["language", "bangla", "english", "mix", "bn", "en"], ["lang"], ["tm:ui:lang"]),
+  R("theme", "home", "more.theme", "#/settings/home/theme", ["theme", "dark", "light", "night", "mode", "auto"], ["theme"], ["tm:ui:theme"]),
+  R("textsize", "home", "more.textsize", "#/settings/home/textsize", ["text size", "font", "bigger", "larger", "zoom", "scale"], ["scale"], ["tm:ui:scale"]),
 
   R("design", "look", "more.design", "#/settings/look/design", ["design", "version", "look", "style", "colour", "color"], ["design"], ["tm:ui:design"]),
   R("density", "look", "set.row.density", "#/settings/look/density", ["detailed", "compact", "full", "screen view", "template"], [], ["tm:ui:view:*"]),
@@ -91,3 +91,16 @@ export const rowsOf = (cat: Cat): SettingRow[] => ROWS.filter((r) => r.cat === c
 export const rowById = (id: string): SettingRow | undefined => ROWS.find((r) => r.id === id);
 /** Hash for a category page, or for one row inside it (#/settings/<cat>[/<row>]). The home category is #/settings. */
 export const settingsHash = (cat: Cat, row?: string): string => (cat === "home" && !row ? "#/settings" : `#/settings/${cat}${row ? `/${row}` : ""}`);
+
+/** Extra Bangla search words (what people really type). Labels themselves are searched in all three languages. */
+export const SEARCH_BN: Record<string, string[]> = {
+  language: ["ভাষা", "বাংলা", "ইংরেজি"], theme: ["থিম", "অন্ধকার", "আলো", "রাত", "ডার্ক"], textsize: ["ফন্ট", "লেখা", "বড়", "সাইজ", "আকার"],
+  design: ["ডিজাইন", "রং", "লুক"], density: ["বিস্তারিত", "ছোট", "কমপ্যাক্ট"], horizon: ["হরাইজন", "লেআউট"], universe: ["ইউনিভার্স", "ম্যাপ"], habitgrid: ["হ্যাবিট", "গ্রিড"],
+  motion: ["অ্যানিমেশন", "নড়াচড়া", "মোশন"], resetlook: ["রিসেট", "আগের মতো"],
+  prayermethod: ["নামাজ", "আসর", "ফজর", "পদ্ধতি"], prayerplace: ["জায়গা", "শহর", "ঢাকা", "লোকেশন"], prayeralerts: ["অ্যালার্ট", "আজান", "নামাজ", "সাউন্ড"],
+  reminder: ["রিমাইন্ডার", "ব্যাকআপ"], storage: ["স্টোরেজ", "নিরাপদ"], savebackup: ["ব্যাকআপ", "সেভ", "পাসফ্রেজ"], restore: ["ফেরান", "রিস্টোর", "ব্যাকআপ"], snapshots: ["স্ন্যাপশট", "কপি"], csv: ["স্প্রেডশিট", "এক্সেল"],
+  lockscreen: ["লক স্ক্রিন", "নোটিফিকেশন"], consent: ["পারমিশন", "রিয়েল", "অনুমতি"], applock: ["পিন", "লক", "পাসওয়ার্ড"],
+  mode: ["ডেমো", "রিয়েল", "মোড"], startreal: ["রিয়েল শুরু", "শুরু"],
+  rules: ["নিয়ম", "অটোমেটিক"], planmode: ["প্ল্যান", "বিরতি", "ন্যূনতম"], stages: ["স্টেজ", "নাম"], weighting: ["প্রোগ্রেস", "ওজন"],
+  connections: ["কানেকশন", "এআই", "ক্লাউড"], deletedemo: ["ডিলিট", "ডেমো", "মুছুন"], deletereal: ["ডিলিট", "রিয়েল", "মুছুন"], welcome: ["স্বাগত", "শুরুর ধাপ"],
+};
