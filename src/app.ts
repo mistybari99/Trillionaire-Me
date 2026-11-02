@@ -9,6 +9,7 @@ import * as LS from "./ui/libraryScreens";
 import * as LF from "./ui/lifeUi";
 import * as UV from "./ui/universeUi";
 import * as IM from "./ui/importUi";
+import * as RL from "./ui/realityUi";
 import { viaLazy } from "./ui/lazy";
 import { CONN, DECIDE, HALAL, LEGS, PLAN } from "./ui/lazyScreens";
 import { onboardScreen } from "./ui/onboardUi";
@@ -47,6 +48,7 @@ export const ROUTES: Array<[RegExp, (m: RegExpMatchArray) => HTMLElement, string
   [/^\/journey\/risks$/, () => viaLazy(PLAN, (m) => m.riskScreen()), "journey"],
   [/^\/journey\/history$/, () => viaLazy(PLAN, (m) => m.planHistoryScreen()), "journey"],
   [/^\/journey\/northstar$/, () => viaLazy(PLAN, (m) => m.northStarScreen()), "journey"],
+  [/^\/journey\/reality$/, () => RL.realityScreen(), "journey"],
   [/^\/journey\/kpi$/, () => viaLazy(PLAN, (m) => m.kpiScreen()), "journey"],
   [/^\/diary\/ventures$/, () => viaLazy(PLAN, (m) => m.ventureScreen()), "diary"],
   [/^\/diary\/team$/, () => viaLazy(PLAN, (m) => m.teamScreen()), "diary"],

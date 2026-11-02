@@ -7,7 +7,7 @@ The card answers one question: is the software's own build complete? It does not
 Boxes (order): Input, Storage, Calculation, Output, Export, Links. B = built, M = missing, - = not needed.
 Label: complete = no box missing; partial = some box missing; not-built = no box built; blocked = waits for an owner approval (D-number).
 
-Counts: complete 5, partial 18, not-built 1, blocked 1 (of 25).
+Counts: complete 6, partial 17, not-built 1, blocked 1 (of 25).
 
 | Module | Name | Label | I S C O E L | Missing boxes | Waits for | Routes / functions | Tests |
 |---|---|---|---|---|---|---|---|
@@ -22,7 +22,7 @@ Counts: complete 5, partial 18, not-built 1, blocked 1 (of 25).
 | M09 | Venture portfolio | partial | B B M B B B | calc | - | `#/diary/ventures`; `#/diary/money`; `#/today`; `#/journey/report`; `src/core/ventures.ts#ventureViews`; `src/core/ventures.ts#portfolio`; `src/core/ventures.ts#ventureAccounts` | `tests/m_registers.test.ts`, `tests/venture_value.test.ts` |
 | M10 | Team & delegation | partial | B B M B B M | calc, links | - | `#/diary/team`; `src/core/team.ts#roleSummary` | `tests/m_registers.test.ts` |
 | M11 | Research & options | complete | B B B B B B | - | - | `#/diary/intake`; `src/ui/screens.ts#intake`; `src/core/research.ts#research`; `src/adapters/wikipedia.ts#wikipedia` | `tests/research.test.ts`, `tests/wikipedia.test.ts`, `tests/m11_background_cache.test.ts` |
-| M12 | Reality-changed & plan history | partial | M B M M B B | input, calc, output | - | `#/diary/plan`; `#/journey/history`; `src/core/reality.ts#markNotTrue`; `src/core/planHistory.ts#planHistory` | `tests/o6_reality_review_templates.test.ts`, `tests/m_registers.test.ts` |
+| M12 | Reality-changed & plan history | complete | B B B B B B | - | - | `#/journey/reality`; `#/journey/history`; `#/today`; `#/journey/report`; `#/diary/plan`; `src/core/realityLoop.ts#impactOf`; `src/core/realityLoop.ts#optionsFor`; `src/core/realityLoop.ts#planChange`; `src/core/realityLoop.ts#planDiff`; `src/core/realityLoop.ts#versionRows`; `src/core/reality.ts#markNotTrue`; `src/core/planHistory.ts#planHistory` | `tests/reality_loop.test.ts`, `tests/o6_reality_review_templates.test.ts`, `tests/m_registers.test.ts` |
 | M13 | Deen, ibadah & akhirah | partial | M B M M B B | input, calc, output | - | `#/deen`; `src/core/prayerLog.ts#markedOn`; `src/core/fastLog.ts#isFastMarked`; `src/core/prayer.ts#prayerTimes`; `src/core/prayerAlerts.ts#alertSlots` | `tests/prayer.test.ts`, `tests/g1.test.ts`, `tests/fast_log.test.ts` |
 | M14 | Health & family | not-built | M M M M M M | input, store, calc, output, export, links | - | - | - |
 | M15 | Risk & stop criteria | partial | B B M M B B | calc, output | - | `#/journey/risks`; `src/core/risk.ts#riskRows` | `tests/m_registers.test.ts` |

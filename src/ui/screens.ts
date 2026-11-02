@@ -22,7 +22,7 @@ import type { FieldDef } from "../catalog/types";
 import { goalReminders } from "../core/goalStatus";
 import { freshnessOf } from "../core/freshness";
 import { feasibility, schedule, todaysActions } from "../core/planner";
-import { buildPlanInput, capacityState, fmtClock, freeWindow, isOpenTask } from "../core/planInputs";
+import { buildPlanInput, capacityState, fmtClock, freeWindow, isOpenTask, isParkedTask } from "../core/planInputs";
 import { planFlowData } from "../core/planFlow";
 import { assessmentSection } from "./assessment";
 import { markNotTrue, realityLogRecord, RealityError } from "../core/reality";
@@ -48,6 +48,7 @@ import { logo3d } from "./logo";
 import { goalFunnelHero, horizonArc } from "./horizonArt";
 import { viewBar, withView } from "./viewBar";
 import { kpiSection, kpiTodayCard } from "./kpiUi";
+import { realityReportCard, realityTodayCard } from "./realityUi";
 import { portfolioCard } from "./ventureCard";
 import { ventureRows } from "../core/ventures";
 import { backupReminderCard } from "./snapshotsUi";
@@ -259,6 +260,7 @@ export function planScreen(): HTMLElement {
         r.links?.after ? h("p", { class: "muted", "data-after": r.links.after }, t("plan.after.shown", lang, { title: afterTitle(r.links.after) })) : null,
         r.links?.goal && goalRecs.some((g) => g.id === r.links!.goal) ? h("p", { class: "muted", "data-goal": r.links.goal }, t("plan.goal.shown", lang, { title: goalTitle(goalRecs.find((g) => g.id === r.links!.goal)!) })) : null),
       r.values["task.done_on"]?.state === "value" ? h("span", { class: "tag ok" }, t("reward.done", lang))
+        : isParkedTask(r) ? h("div", {}, h("span", { class: "tag off", "data-parked": r.id }, t("rl.parked.tag", lang, { date: String((r.values["task.parked_on"] as { value?: unknown }).value) })), h("p", { class: "muted" }, t("rl.parked.note", lang)), link("#/journey/reality", "crumb", t("rl.parked.open", lang)))
         : r.values["task.not_true_on"]?.state === "value" ? h("div", {}, h("span", { class: "tag off" }, t("reality.tag", lang, { date: String((r.values["task.not_true_on"] as { value?: unknown }).value) })), h("p", { class: "muted" }, t("reality.note", lang)), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => { storeOf(r).delete(r.id); rerender(); } }, t("plan.task.remove", lang)))
         : h("div", {}, doneBtn(r.id, lang), focusBtn(r.id, lang), h("button", { class: "btn ghost", type: "button", "data-act": "reality-changed", "data-task-id": r.id, style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => markRealityChanged(r.id, lang) }, t("reality.btn", lang)), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => { storeOf(r).delete(r.id); rerender(); } }, t("plan.task.remove", lang)))));
   });
@@ -529,6 +531,7 @@ export function reportScreen(): HTMLElement {
     goalRingsChart(allRecs(), lang),
     kpiSection("week", lang), kpiSection("days90", lang),
     portfolioCard(lang, "report"),
+    realityReportCard(lang),
     items.length && repCompact ? compactBody : items.length ? h("div", { "data-view": "full" },
       sec("report.decisions", s.decisions.length ? h("ul", { style: "padding-inline-start:20px" }, ...s.decisions.map((x) => h("li", { "data-decision": "1" }, x))) : h("p", { class: "muted" }, t("report.empty", lang))),
       sec("report.amounts", s.amountCount ? valueEl(t("report.amountTotal", lang, { n: num(s.amountCount, lang), v: t("money.bdt", lang, { v: fmtNum(s.amountTotal, lang) }) }), "ESTIMATE", lang) : h("p", { class: "muted" }, t("report.empty", lang))),
@@ -869,6 +872,7 @@ export function today(): HTMLElement {
     overallProgressCard(lang, "today"),
     homeCountCards(lang),
     kpiTodayCard(lang),
+    realityTodayCard(lang),
     homeSummaryCards(lang),
     portfolioCard(lang, "today"),
     nextActionCard(lang),
@@ -971,6 +975,7 @@ export function journey(): HTMLElement {
       link("#/journey/review", "btn ghost", t("review.link", lang)),
       link("#/journey/risks", "btn ghost", t("risk.link", lang)),
       link("#/journey/history", "btn ghost", t("hist.link", lang)),
+      link("#/journey/reality", "btn ghost", t("rl.link", lang)),
       link("#/journey/northstar", "btn ghost", t("ns.link", lang)),
       link("#/journey/kpi", "btn ghost", t("kpi.link", lang))),
     overallProgressCard(lang, "journey"),

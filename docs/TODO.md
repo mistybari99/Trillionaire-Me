@@ -101,6 +101,7 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 - [x] Step 1: capability card = build pipeline (six boxes) + separate data status; field-reach and link-check tests; dead code removed (goals, override, sync, onlineAdvice); `#/more/topics` fixed.
 - [x] Step 2: M16 KPI targets: `#/journey/kpi` (`src/core/kpi.ts`, `src/ui/kpiUi.ts`, `kpiScreen`), shown on weekly review, 90-day review, report, Today, Journey; `tests/kpi.test.ts`, e2e cold-start check.
 - [x] Step 3: M09 venture value and income/expense: value + edit on `#/diary/ventures`, venture-linked money lines (`links.venture`), Money venture picker, portfolio card on page/Today/report (`src/core/ventures.ts`, `src/ui/ventureCard.ts`, `tests/venture_value.test.ts`). Unit economics still missing.
+- [x] Step 4: M12 full reality-changed loop: `#/journey/reality` (event, impact, 3 options, old/new plan-diff, approval, plan versions, Resume gently), history, Today, report; `src/core/realityLoop.ts`, `src/ui/realityUi.ts`, `tests/reality_loop.test.ts`; schema additive (catalog 6).
 
 ## Part B — Owner-only tasks
 - [ ] Phone offline test: open online once, visit all pages, airplane mode, reopen (O1).

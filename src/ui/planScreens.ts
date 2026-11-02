@@ -19,6 +19,7 @@ import { planHistory } from "../core/planHistory";
 import { KPI_MEASURES, KPI_PERIODS, kpiStatus, parseActual, parseTarget, validateKpi, type KpiError } from "../core/kpi";
 import { kpiRowView, todayIsoKpi } from "./kpiUi";
 import { entryNs, labelFor, storeOf } from "./entry";
+import { historySections } from "./realityUi";
 import type { Locale } from "../i18n/registry";
 
 const L = () => prefs.lang;
@@ -281,6 +282,8 @@ function planHistoryScreenInner(): HTMLElement {
   return h("main", { class: "scr scr-history" },
     link("#/journey", "crumb", `← ${t("journey.title", lang)}`),
     h("h1", {}, t("hist.title", lang)), h("p", { class: "sub" }, t("hist.intro", lang)),
+    historySections(lang),
+    h("h2", {}, t("rl.hist.steps", lang)),
     rows.length ? h("ul", { class: "plain", "data-history": "1" }, ...rows.map((r) => h("li", { "data-hist": r.kind },
       h("strong", {}, r.title || "—"), " · ", t(`hist.${r.kind}` as Key, lang), " · ", r.day)))
       : h("p", { class: "muted" }, t("hist.empty", lang)),
