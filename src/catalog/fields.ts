@@ -2,7 +2,7 @@ import type { Bi } from "../i18n/registry";
 import { UNKNOWN_STATES, type UnknownState } from "../core/types";
 import type { AccessRule, ChoiceOption, FieldDef, FieldType, Importance, PrivacyClass, Purpose, Requirement } from "./types";
 
-export const CATALOG_VERSION = 13;
+export const CATALOG_VERSION = 14;
 
 const bi = (bn: string, en: string): Bi => ({ bn, en });
 const opt = (code: string, bn: string, en: string): ChoiceOption => ({ code, label: bi(bn, en) });
@@ -233,6 +233,20 @@ export const FIELDS: FieldDef[] = [
     options: [opt("reading", "পড়ে", "By reading"), opt("watching", "দেখে", "By watching"), opt("doing", "করে করে", "By doing"), opt("talking", "কারও সাথে কথা বলে", "By talking with someone")],
     label: bi("কীভাবে শিখতে ভালো লাগে", "How you like to learn"), what: bi("নতুন কিছু শিখতে আপনার সবচেয়ে সহজ লাগে যে উপায়।", "The way you find easiest for learning something new."),
     why: bi("কার্ডে আপনার পছন্দ ফিরিয়ে দেখানো হয়। এটি কোনো ব্যক্তিত্ব-পরীক্ষা নয়; বাদ দিলে ‘জানা নেই’।", "Your preference is shown back. It is not a personality test; skipped means Unknown."), example: bi("করে করে", "By doing") }),
+  // ── health & family (M14, FAM-02): the person's own simple entries. No normal range, no threshold, no advice. Private; own consent tick. ──
+  f({ id: "health_entry.date", entity: "health_entry", family: "FAM-02", type: "date", purpose: "habit", privacy: "health", importance: "optional",
+    label: bi("কোন দিনের", "Which day"), what: bi("এন্ট্রিটি যে দিনের।", "The day the entry is for."), why: bi("দিন ধরে নিজের রেকর্ড দেখতে। আপনার ফোনের বাইরে যায় না।", "To see your own record by day. It never leaves your phone."), example: bi("২০২৬-১১-০২", "2026-11-02"), format: bi("বছর-মাস-দিন", "YYYY-MM-DD") }),
+  f({ id: "health_entry.kind", entity: "health_entry", family: "FAM-02", type: "choice", purpose: "habit", privacy: "health", importance: "optional",
+    options: [opt("sleep", "ঘুম (ঘণ্টা)", "Sleep (hours)"), opt("walking", "হাঁটা (মিনিট)", "Walking (minutes)"), opt("water", "পানি (গ্লাস)", "Water (glasses)"), opt("exercise", "ব্যায়াম (মিনিট)", "Exercise (minutes)"),
+      opt("family", "পরিবারের সাথে সময় (মিনিট)", "Family time (minutes)"), opt("reading_a", "নিজের মাপা সংখ্যা ক", "A number I measured (A)"), opt("reading_b", "নিজের মাপা সংখ্যা খ", "A number I measured (B)")],
+    label: bi("কিসের এন্ট্রি", "What it is about"), what: bi("ঘুম, হাঁটা, পানি, ব্যায়াম, পরিবারের সময়, বা নিজের মাপা কোনো সংখ্যা।", "Sleep, walking, water, exercise, family time, or a number you measured yourself."),
+    why: bi("শুধু আপনার নিজের লেখা রেকর্ড। অ্যাপ কোনো স্বাভাবিক মান, সীমা বা পরামর্শ দেয় না।", "Only your own record. The app gives no normal range, limit or advice."), example: bi("হাঁটা (মিনিট)", "Walking (minutes)") }),
+  f({ id: "health_entry.value", entity: "health_entry", family: "FAM-02", type: "number", purpose: "habit", privacy: "health", importance: "optional",
+    label: bi("সংখ্যা", "Number"), what: bi("যা মেপেছেন বা করেছেন। না জানলে ফাঁকা।", "What you measured or did. Blank if unknown."), why: bi("ফাঁকা মানে অজানা, ০ নয়।", "Blank means Unknown, not 0."), example: bi("৩০", "30"), format: bi("০ বা তার বেশি সংখ্যা", "A number, 0 or more") }),
+  f({ id: "health_entry.unit", entity: "health_entry", family: "FAM-02", type: "text", purpose: "habit", privacy: "health", importance: "optional",
+    label: bi("একক", "Unit"), what: bi("নিজের মাপা সংখ্যার একক, আপনি যেভাবে লেখেন।", "The unit of a number you measured, as you write it."), why: bi("অ্যাপ কোনো একক বা মান ধরে নেয় না।", "The app assumes no unit and no range."), example: bi("mmHg (মাপার একক)", "mmHg"), format: bi("এক-দুই শব্দ", "One or two words") }),
+  f({ id: "health_entry.note", entity: "health_entry", family: "FAM-02", type: "text", purpose: "habit", privacy: "health", importance: "optional",
+    label: bi("ছোট নোট", "Short note"), what: bi("আপনার নিজের জন্য এক-দুই বাক্য।", "A sentence or two for yourself."), why: bi("ওষুধ বা রোগ নির্ণয় লিখবেন না; অ্যাপ পরামর্শ দেয় না।", "Do not write medicine or diagnoses; the app gives no advice."), example: bi("সন্ধ্যায় বাচ্চাদের সাথে খেলা", "Played with the children in the evening"), format: bi("এক-দুই বাক্য", "A sentence or two") }),
   // ── goals / tasks hierarchy (FAM-03) ──
   f({ id: "goal.title", entity: "goal", family: "FAM-03", type: "text", purpose: "planning", step: 6, importance: "core", requirement: "required",
     label: bi("লক্ষ্যের নাম", "Goal title"),

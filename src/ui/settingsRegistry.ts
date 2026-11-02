@@ -50,7 +50,7 @@ export const ROWS: SettingRow[] = [
   R("csv", "backup", "set.row.csv", "#/settings/backup/csv", ["csv", "spreadsheet", "excel", "export", "import"], [], []),
 
   R("lockscreen", "privacy", "more.lock", "#/settings/privacy/lockscreen", ["lock screen", "notification", "private", "show details", "hide"], ["notifyShow"], ["tm:ui:notifyShow"]),
-  R("consent", "privacy", "set.row.consent", "#/settings/privacy/consent", ["consent", "permission", "real data", "tick", "private"], [], ["tm:consent:real:v1"]),
+  R("consent", "privacy", "set.row.consent", "#/settings/privacy/consent", ["consent", "permission", "real data", "tick", "private"], [], ["tm:consent:real:v1", "tm:consent:health:v1"]),
   R("applock", "privacy", "set.row.applock", "#/settings/privacy/applock", ["pin", "lock", "password", "app lock", "forgot"], [], ["tm:secret:applock"]),
 
   R("mode", "data", "set.row.mode", "#/settings/data/mode", ["demo", "real", "mode", "switch"], ["dataMode", "dataModeChoice", "demoAskedOn", "demoDays"], ["tm:ui:dataMode", "tm:ui:demoAskedOn", "tm:ui:demoDays"]),

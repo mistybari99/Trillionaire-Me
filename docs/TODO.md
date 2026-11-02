@@ -115,6 +115,7 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 - [x] Run 2, step 15 (M17): notes, sources and SOPs page, freshness flag, role/hand-over links (`src/core/knowledge.ts`, `src/ui/notesUi.ts`, `tests/notes_sops.test.ts`); schema additive (catalog 12).
 - [x] Run 2, step 16 (M01): profile name/birth year/time zone read back (`src/core/profileView.ts`, `src/ui/profileCard.ts`); hours_per_week read by M08.
 - [x] Run 2, step 17 (M02): three skippable questions shown back on cards (`approachFrom`, `tests/approach.test.ts`); schema additive (catalog 13).
+- [x] Run 2, step 18 (M14): health and family page with separate consent tick, counts only on Today/report, CSV excludes it (`src/core/health.ts`, `src/ui/healthUi.ts`, `tests/health.test.ts`); schema additive (catalog 14).
 
 ## Part B — Owner-only tasks
 - [ ] Phone offline test: open online once, visit all pages, airplane mode, reopen (O1).

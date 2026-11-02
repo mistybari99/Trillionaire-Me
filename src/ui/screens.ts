@@ -53,6 +53,7 @@ import { northStarCard } from "./northStarCard";
 import { syncDelegationNow, teamCard } from "./teamCard";
 import { riskDueCard } from "./riskCard";
 import { printLink } from "./printLink";
+import { healthCard } from "./healthUi";
 import { greeting, profileCard } from "./profileCard";
 import { blocksTodayCard, commitCard, currentBlocks } from "./blocksUi";
 import { toPlannerBlocks } from "../core/timeBlocks";
@@ -637,6 +638,7 @@ export function reportContent(lang: Locale): Array<Node | null> {
     teamCard(lang, "report"),
     riskDueCard(lang, "report"),
     gateReportCard(lang),
+    healthCard(lang, "report"),
     realityReportCard(lang),
     items.length && repCompact ? compactBody : items.length ? h("div", { "data-view": "full" },
       sec("report.decisions", s.decisions.length ? h("ul", { style: "padding-inline-start:20px" }, ...s.decisions.map((x) => h("li", { "data-decision": "1" }, x))) : h("p", { class: "muted" }, t("report.empty", lang))),
@@ -992,6 +994,7 @@ export function today(): HTMLElement {
     teamCard(lang, "today"),
     riskDueCard(lang, "today"),
     blocksTodayCard(lang),
+    healthCard(lang, "today"),
     gateDueCard(lang, stageData().passed, "today"),
     realityTodayCard(lang),
     homeSummaryCards(lang),
@@ -1133,6 +1136,7 @@ export function diary(): HTMLElement {
     link("#/diary/money", "btn ghost", t("money.title", lang)),
     link("#/diary/ventures", "btn ghost", t("ven.link", lang)),
     link("#/diary/team", "btn ghost", t("team.link", lang)),
+    link("#/diary/health", "btn ghost", t("hl.title", lang)),
     h("h2", {}, t("diary.modules", lang)),
     ...MODULES.filter((m) => m.tab === "diary").map((m) => moduleCard(m, lang)),
     disclaimers(lang));

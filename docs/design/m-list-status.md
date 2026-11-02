@@ -7,7 +7,7 @@ The card answers one question: is the software's own build complete? It does not
 Boxes (order): Input, Storage, Calculation, Output, Export, Links. B = built, M = missing, - = not needed.
 Label: complete = no box missing; partial = some box missing; not-built = no box built; blocked = waits for an owner approval (D-number).
 
-Counts: complete 19, partial 4, not-built 1, blocked 1 (of 25).
+Counts: complete 20, partial 4, not-built 0, blocked 1 (of 25).
 
 | Module | Name | Label | I S C O E L | Missing boxes | Waits for | Routes / functions | Tests |
 |---|---|---|---|---|---|---|---|
@@ -24,7 +24,7 @@ Counts: complete 19, partial 4, not-built 1, blocked 1 (of 25).
 | M11 | Research & options | complete | B B B B B B | - | - | `#/diary/intake`; `src/ui/screens.ts#intake`; `src/core/research.ts#research`; `src/adapters/wikipedia.ts#wikipedia` | `tests/research.test.ts`, `tests/wikipedia.test.ts`, `tests/m11_background_cache.test.ts` |
 | M12 | Reality-changed & plan history | complete | B B B B B B | - | - | `#/journey/reality`; `#/journey/history`; `#/today`; `#/journey/report`; `#/diary/plan`; `src/core/realityLoop.ts#impactOf`; `src/core/realityLoop.ts#optionsFor`; `src/core/realityLoop.ts#planChange`; `src/core/realityLoop.ts#planDiff`; `src/core/realityLoop.ts#versionRows`; `src/core/reality.ts#markNotTrue`; `src/core/planHistory.ts#planHistory` | `tests/reality_loop.test.ts`, `tests/o6_reality_review_templates.test.ts`, `tests/m_registers.test.ts` |
 | M13 | Deen, ibadah & akhirah | partial | M B M M B B | input, calc, output | - | `#/deen`; `src/core/prayerLog.ts#markedOn`; `src/core/fastLog.ts#isFastMarked`; `src/core/prayer.ts#prayerTimes`; `src/core/prayerAlerts.ts#alertSlots` | `tests/prayer.test.ts`, `tests/g1.test.ts`, `tests/fast_log.test.ts` |
-| M14 | Health & family | not-built | M M M M M M | input, store, calc, output, export, links | - | - | - |
+| M14 | Health & family | complete | B B B B B B | - | - | `#/diary/health`; `#/today`; `#/journey/report`; `src/core/health.ts#healthRows`; `src/core/health.ts#summarise` | `tests/health.test.ts` |
 | M15 | Risk & stop criteria | complete | B B B B B B | - | - | `#/journey/risks`; `#/today`; `#/journey/report`; `#/journey/reality`; `src/core/risk.ts#riskRows`; `src/core/risk.ts#riskDue`; `src/core/risk.ts#dueRisks`; `src/core/risk.ts#reviewedRisk` | `tests/risk_review.test.ts`, `tests/m_registers.test.ts` |
 | M16 | Reviews & KPIs | complete | B B B B B B | - | - | `#/journey/review`; `#/journey/report`; `#/journey/week`; `#/journey/month`; `#/journey/kpi`; `src/core/review.ts#reviewSummary`; `src/core/kpi.ts#kpiStatus`; `src/core/monthlyReview.ts#monthlySummary`; `src/core/monthlyReview.ts#moneyReview` | `tests/o6_reality_review_templates.test.ts`, `tests/kpi.test.ts`, `tests/month_review.test.ts` |
 | M17 | Knowledge & sources | complete | B B B B B B | - | - | `#/cards`; `#/topics`; `#/notes`; `src/ui/screens.ts#cardsScreen`; `src/core/cards.ts#dueCards`; `src/core/knowledge.ts#sourceRows`; `src/core/knowledge.ts#sopRows` | `tests/focus_habits_cards.test.ts`, `tests/topics_rewards.test.ts`, `tests/notes_sops.test.ts` |
