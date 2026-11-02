@@ -2,7 +2,7 @@ import type { Bi } from "../i18n/registry";
 import { UNKNOWN_STATES, type UnknownState } from "../core/types";
 import type { AccessRule, ChoiceOption, FieldDef, FieldType, Importance, PrivacyClass, Purpose, Requirement } from "./types";
 
-export const CATALOG_VERSION = 9;
+export const CATALOG_VERSION = 10;
 
 const bi = (bn: string, en: string): Bi => ({ bn, en });
 const opt = (code: string, bn: string, en: string): ChoiceOption => ({ code, label: bi(bn, en) });
@@ -137,6 +137,21 @@ export const FIELDS: FieldDef[] = [
     what: bi("প্রতিদিন যে সময়ের পর আর কাজ বসবে না।", "The time after which no task is placed."),
     why: bi("শুরুর সময়ের পরে হতে হবে। অজানা থাকলে কাজ বসানো হবে না।", "Must be later than the start. If unknown, nothing is scheduled."),
     example: bi("২২:০০", "22:00"), format: bi("২৪ ঘণ্টার ঘড়ি, ঘণ্টা:মিনিট", "24-hour clock, HH:MM") }),
+  f({ id: "constraint.block_from", entity: "constraint", family: "FAM-35", type: "text", purpose: "time_capacity", importance: "optional", affects: "scheduler",
+    label: bi("প্রতিদিনের ব্লক শুরু", "Daily block starts"),
+    what: bi("এই বরাদ্দ সময় প্রতিদিন যখন শুরু হয়।", "When this committed time starts each day."),
+    why: bi("এই সময়ে কোনো কাজ বসানো হয় না। শুরু ও শেষ দুটোই লিখতে হয়।", "No task is placed in this time. Both start and end are needed."),
+    example: bi("১৩:০০", "13:00"), format: bi("২৪ ঘণ্টার ঘড়ি, ঘণ্টা:মিনিট", "24-hour clock, HH:MM") }),
+  f({ id: "constraint.block_to", entity: "constraint", family: "FAM-35", type: "text", purpose: "time_capacity", importance: "optional", affects: "scheduler",
+    label: bi("প্রতিদিনের ব্লক শেষ", "Daily block ends"),
+    what: bi("এই বরাদ্দ সময় প্রতিদিন যখন শেষ হয়।", "When this committed time ends each day."),
+    why: bi("শুরুর পরে হতে হবে।", "Must be later than the start."),
+    example: bi("১৪:০০", "14:00"), format: bi("২৪ ঘণ্টার ঘড়ি, ঘণ্টা:মিনিট", "24-hour clock, HH:MM") }),
+  f({ id: "constraint.block_minutes", entity: "constraint", family: "FAM-35", type: "number", unit: "minutes", purpose: "time_capacity", importance: "optional", affects: "scheduler",
+    label: bi("প্রতি নামাজে কত মিনিট ফাঁকা রাখবেন", "Minutes kept free at each prayer"),
+    what: bi("প্রতিটি নামাজের সময় থেকে শুরু করে কত মিনিট কাজ বসানো হবে না। সংখ্যাটি আপনার; অ্যাপ নিজে ধরে না।", "From each prayer time, how many minutes no task is placed. The number is yours; the app assumes none."),
+    why: bi("নামাজের সময় ফোনেই হিসাব হয়; এখানে শুধু সময় বসে, অন্য কিছু নয়। না দিলে কোনো নামাজ-ব্লক হয় না।", "Prayer times are worked out on this phone; only times are placed, nothing else. With no number, no prayer block is made."),
+    example: bi("২০", "20"), format: bi("১ থেকে ২৪০ মিনিট", "1 to 240 minutes") }),
   // ── goals / tasks hierarchy (FAM-03) ──
   f({ id: "goal.title", entity: "goal", family: "FAM-03", type: "text", purpose: "planning", step: 6, importance: "core", requirement: "required",
     label: bi("লক্ষ্যের নাম", "Goal title"),

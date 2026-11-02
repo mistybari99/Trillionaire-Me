@@ -7,7 +7,7 @@ The card answers one question: is the software's own build complete? It does not
 Boxes (order): Input, Storage, Calculation, Output, Export, Links. B = built, M = missing, - = not needed.
 Label: complete = no box missing; partial = some box missing; not-built = no box built; blocked = waits for an owner approval (D-number).
 
-Counts: complete 14, partial 9, not-built 1, blocked 1 (of 25).
+Counts: complete 15, partial 8, not-built 1, blocked 1 (of 25).
 
 | Module | Name | Label | I S C O E L | Missing boxes | Waits for | Routes / functions | Tests |
 |---|---|---|---|---|---|---|---|
@@ -18,7 +18,7 @@ Counts: complete 14, partial 9, not-built 1, blocked 1 (of 25).
 | M05 | Stages & journey log | complete | B B B B B B | - | - | `#/journey`; `#/journey/log`; `#/journey/gates`; `#/today`; `#/journey/report`; `src/ui/screens.ts#journeyLog`; `src/core/stages.ts#passStage`; `src/core/stageGates.ts#exitStatus`; `src/core/stageGates.ts#gateDue` | `tests/stages.test.ts`, `tests/stage_gates.test.ts` |
 | M06 | Goals, tasks & habits | complete | B B B B B B | - | - | `#/today`; `#/habits`; `#/diary/plan`; `#/journey/goals`; `src/ui/screens.ts#habitsScreen`; `src/ui/screens.ts#focusScreen`; `src/core/planner.ts#schedule`; `src/core/goalTree.ts#buildTree`; `src/core/goalTree.ts#validatePlace` | `tests/goal_tree.test.ts`, `tests/focus_habits_cards.test.ts`, `tests/goal_form.test.ts`, `tests/m_dependency.test.ts` |
 | M07 | Resources & finance | complete | B B B B B B | - | - | `#/diary/money`; `#/journey/month`; `src/ui/screens.ts#moneyScreen`; `src/core/finance.ts#netWorth`; `src/core/financeInputs.ts#cashFlow90`; `src/core/financeInputs.ts#bdtAmount` | `tests/money.test.ts`, `tests/money_fx.test.ts` |
-| M08 | Time & capacity | partial | B B M M B B | calc, output | - | `#/diary/plan`; `src/core/planner.ts#schedule` | `tests/b9_plan_flow.test.ts` |
+| M08 | Time & capacity | complete | B B B B B B | - | - | `#/diary/plan`; `#/today`; `src/core/planner.ts#schedule`; `src/core/timeBlocks.ts#weekBlocks`; `src/core/timeBlocks.ts#weeklyBudget` | `tests/b9_plan_flow.test.ts`, `tests/time_blocks.test.ts` |
 | M09 | Venture portfolio | partial | B B M B B B | calc | - | `#/diary/ventures`; `#/diary/money`; `#/today`; `#/journey/report`; `src/core/ventures.ts#ventureViews`; `src/core/ventures.ts#portfolio`; `src/core/ventures.ts#ventureAccounts` | `tests/m_registers.test.ts`, `tests/venture_value.test.ts` |
 | M10 | Team & delegation | complete | B B B B B B | - | - | `#/diary/team`; `#/diary/plan`; `#/today`; `#/journey/report`; `src/core/team.ts#roleSummary`; `src/core/team.ts#roleViews`; `src/core/team.ts#analyseTeam`; `src/core/team.ts#syncDelegation`; `src/core/team.ts#completeHandover` | `tests/team_handover.test.ts`, `tests/m_registers.test.ts` |
 | M11 | Research & options | complete | B B B B B B | - | - | `#/diary/intake`; `src/ui/screens.ts#intake`; `src/core/research.ts#research`; `src/adapters/wikipedia.ts#wikipedia` | `tests/research.test.ts`, `tests/wikipedia.test.ts`, `tests/m11_background_cache.test.ts` |

@@ -53,6 +53,8 @@ import { northStarCard } from "./northStarCard";
 import { syncDelegationNow, teamCard } from "./teamCard";
 import { riskDueCard } from "./riskCard";
 import { printLink } from "./printLink";
+import { blocksTodayCard, commitCard, currentBlocks } from "./blocksUi";
+import { toPlannerBlocks } from "../core/timeBlocks";
 import { moneyReviewCard, riskReviewCard } from "./monthUi";
 import { exitConds, gateDueCard, gateReportCard, stageRulesBlock } from "./gateCard";
 import { portfolioCard } from "./ventureCard";
@@ -135,7 +137,7 @@ function markRealityChanged(taskId: string, lang: Locale) {
 }
 function currentPlan() {
   const a = loadAnswers(); const recs = allRecs();
-  const input = buildPlanInput(a, recs, prefs.mode, new Date().getDay());
+  const input = buildPlanInput(a, recs, prefs.mode, new Date().getDay(), toPlannerBlocks(currentBlocks().week.blocks));
   const titles = new Map(recs.filter((r) => r.entity === "task").map((r) => [r.id, String((r.values["task.title"] as { value?: unknown })?.value ?? "")]));
   return { a, recs, input, plan: schedule(input), state: capacityState(a), titles, hasTasks: titles.size > 0 };
 }
@@ -313,6 +315,7 @@ export function planScreen(): HTMLElement {
     h("h1", {}, t("plan.title", lang)), h("p", { class: "sub" }, t("plan.intro", lang)), printLink("plan", lang),
     h("div", { class: "card", "data-capacity": cp.state }, h("h2", { class: "card-h", }, t("plan.free", lang)), h("p", {}, free)),
     feasibilityNote(cp, lang),
+    commitCard(lang, ((x) => (typeof x === "number" ? x : null))((cp.a["constraint.weekly_free_hours"] as { value?: unknown } | undefined)?.value)),
     planFlow(cp, lang),
     assessmentSection(cp.recs, lang),
     h("h2", {}, t("plan.mode", lang)), planChip("planmode", "plan.mode", lang),
@@ -986,6 +989,7 @@ export function today(): HTMLElement {
     northStarCard(lang, "today"),
     teamCard(lang, "today"),
     riskDueCard(lang, "today"),
+    blocksTodayCard(lang),
     gateDueCard(lang, stageData().passed, "today"),
     realityTodayCard(lang),
     homeSummaryCards(lang),

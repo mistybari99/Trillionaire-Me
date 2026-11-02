@@ -39,11 +39,11 @@ export function tasksFrom(records: TMRecord[]): PlanTask[] {
 }
 
 /** Capacity counts as known only when BOTH the weekly hours and the daily window are known — otherwise nothing is placed. */
-export function buildPlanInput(answers: RecordValues, taskRecords: TMRecord[], mode: CapacityMode, startDay = 0): PlanInput {
+export function buildPlanInput(answers: RecordValues, taskRecords: TMRecord[], mode: CapacityMode, startDay = 0, blocked: PlanInput["blocked"] = []): PlanInput {
   const hours = numVal(answers["constraint.weekly_free_hours"]); const w = freeWindow(answers);
   return {
     weeklyFreeMinutes: hours !== null && w ? Math.round(hours * 60) : null,
-    blocked: [], // worship/family/rest sit outside the user's own free window by construction
+    blocked, // prayer, family, rest, work blocks the user set (src/core/timeBlocks.ts); tasks never enter them
     dayWindow: w ? { start: w.from, end: w.to } : undefined,
     tasks: tasksFrom(taskRecords), mode, startDay,
   };
