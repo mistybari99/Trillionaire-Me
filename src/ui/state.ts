@@ -54,9 +54,32 @@ export type HorizonView = "stack" | "compact";
 export type ScreenView = "full" | "compact";
 export const VIEW_SCREENS = ["journey", "money", "habits", "plan", "report", "review", "today", "log", "goals", "risks", "ventures", "team", "history", "cards", "library", "rules", "wheel", "weekly"] as const;
 export type ViewScreen = typeof VIEW_SCREENS[number];
-export const screenView = (s: ViewScreen): ScreenView => (get(`tm:ui:view:${s}`) === "compact" ? "compact" : "full");
-export const setScreenView = (s: ViewScreen, v: ScreenView) => set(`tm:ui:view:${s}`, v === "compact" ? "compact" : "full");
+const VIEW_KEY = (s: string) => `tm:ui:view:${s}`;
+const isView = (v: unknown): v is ScreenView => v === "compact" || v === "full";
+/** The master Detailed/Compact choice (additive key tm:ui:view:_default). Never set = Detailed. The master never writes the per-screen keys. */
+export const masterView = (): ScreenView => (get(VIEW_KEY("_default")) === "compact" ? "compact" : "full");
+export const setMasterView = (v: ScreenView) => set(VIEW_KEY("_default"), v === "compact" ? "compact" : "full");
+/** A screen's own choice, or null when it was never set (then it follows the master). */
+export const screenViewOwn = (s: ViewScreen): ScreenView | null => { const v = get(VIEW_KEY(s)); return isView(v) ? v : null; };
+export const screenView = (s: ViewScreen): ScreenView => screenViewOwn(s) ?? masterView();
+/** Choosing the same layout as the master clears the screen's own key (it follows the master again). */
+export const setScreenView = (s: ViewScreen, v: ScreenView) => { if (v === masterView()) clearScreenView(s); else set(VIEW_KEY(s), v); };
+export const clearScreenView = (s: ViewScreen) => { try { localStorage.removeItem(VIEW_KEY(s)); } catch { /* ignore */ } };
+/** Screens whose own choice differs from the master (shown in Settings > Look & screens). */
+export const screensDifferingFromMaster = (): ViewScreen[] => VIEW_SCREENS.filter((s) => { const o = screenViewOwn(s); return o !== null && o !== masterView(); });
+/** Reset look & layout: design, every Detailed/Compact key (master included), horizon, universe, habit grid, reduce motion. Never data, consent, lock, prayer, connections, language, theme or text size. */
+export function resetLookLayout(): void {
+  for (const k of ["tm:ui:design", "tm:ui:horizonView", "tm:ui:universeView", "tm:ui:habitGrid", "tm:ui:reduceMotion", VIEW_KEY("_default"), ...VIEW_SCREENS.map(VIEW_KEY)]) { try { localStorage.removeItem(k); } catch { /* ignore */ } }
+}
+export type ReduceMotion = "system" | "always";
+export type GridRange = "days31" | "weeks12" | "months12";
 export const prefs = {
+  /** Reduce motion: follow the phone (default) or always reduce. The CSS already follows the phone setting. */
+  get reduceMotion(): ReduceMotion { return get("tm:ui:reduceMotion") === "always" ? "always" : "system"; },
+  set reduceMotion(v: ReduceMotion) { set("tm:ui:reduceMotion", v === "always" ? "always" : "system"); },
+  /** Habit grid range on the Habits screen. Unknown or missing = 31 days. */
+  get habitGrid(): GridRange { const v = get("tm:ui:habitGrid"); return v === "weeks12" || v === "months12" ? v : "days31"; },
+  set habitGrid(v: GridRange) { set("tm:ui:habitGrid", v); },
   /** Unknown, missing or blocked storage falls back to the default (Bangla). */
   get lang(): Locale { const v = get("tm:ui:lang"); return isLocale(v) ? v : DEFAULT_LOCALE; },
   set lang(v: Locale) { set("tm:ui:lang", v); },
@@ -153,6 +176,7 @@ export function applyPrefs() {
   r.dataset.theme = prefs.theme;
   applyDesign(prefs.design, r);
   r.style.fontSize = `${prefs.scale}%`;
+  if (prefs.reduceMotion === "always") r.dataset.motion = "reduce"; else delete r.dataset.motion;
   document.title = prefs.lang === "en" ? "Trillionaire Me" : "ট্রিলিয়নেয়ার মি";
 }
 

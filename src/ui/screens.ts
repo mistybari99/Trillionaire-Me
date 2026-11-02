@@ -741,9 +741,8 @@ function removeHabit(id: string) {
   for (const r of allRecs()) if (r.entity === "habit_log" && r.links?.habit === id) storeOf(r).delete(r.id);
 }
 
-const GRID_KEY = "tm:ui:habitGrid";
-function gridRange(): GridRange { try { const v = localStorage.getItem(GRID_KEY); return v === "weeks12" || v === "months12" ? v : "days31"; } catch { return "days31"; } }
-function setGridRange(r: GridRange) { try { localStorage.setItem(GRID_KEY, r); } catch { /* choice is only a convenience */ } }
+function gridRange(): GridRange { return prefs.habitGrid; }
+function setGridRange(r: GridRange) { prefs.habitGrid = r; }
 
 export function habitsScreen(): HTMLElement {
   const lang = L(); const { habits, logs } = habitsFromStore(); const today = Habits.todayIso();

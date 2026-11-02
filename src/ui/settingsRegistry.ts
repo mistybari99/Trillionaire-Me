@@ -30,11 +30,13 @@ export const ROWS: SettingRow[] = [
   R("theme", "home", "more.theme", "#/settings", ["theme", "dark", "light", "night", "mode", "auto"], ["theme"], ["tm:ui:theme"]),
   R("textsize", "home", "more.textsize", "#/settings", ["text size", "font", "bigger", "larger", "zoom", "scale"], ["scale"], ["tm:ui:scale"]),
 
-  R("design", "look", "more.design", "#/more", ["design", "version", "look", "style", "colour", "color"], ["design"], ["tm:ui:design"]),
-  R("density", "look", "set.row.density", "#/more", ["detailed", "compact", "full", "screen view", "template"], [], ["tm:ui:view:*"]),
+  R("design", "look", "more.design", "#/settings/look/design", ["design", "version", "look", "style", "colour", "color"], ["design"], ["tm:ui:design"]),
+  R("density", "look", "set.row.density", "#/settings/look/density", ["detailed", "compact", "full", "screen view", "template"], [], ["tm:ui:view:*"]),
   R("horizon", "look", "set.row.horizon", "#/journey/horizon", ["horizon", "layout", "stack"], ["horizonView"], ["tm:ui:horizonView"]),
   R("universe", "look", "set.row.universe", "#/journey/universe", ["universe", "goal map", "map", "list"], ["universeView"], ["tm:ui:universeView"]),
-  R("habitgrid", "look", "set.row.habitgrid", "#/habits", ["habit", "grid", "days", "weeks", "months", "range"], [], ["tm:ui:habitGrid"]),
+  R("habitgrid", "look", "set.row.habitgrid", "#/habits", ["habit", "grid", "days", "weeks", "months", "range"], ["habitGrid"], ["tm:ui:habitGrid"]),
+  R("motion", "look", "set.row.motion", "#/settings/look/motion", ["motion", "animation", "reduce", "calm", "movement"], ["reduceMotion"], ["tm:ui:reduceMotion"]),
+  R("resetlook", "look", "set.row.resetlook", "#/settings/look/resetlook", ["reset", "default look", "layout", "restore defaults"], [], []),
 
   R("prayermethod", "prayer", "set.row.prayermethod", "#/deen", ["prayer", "method", "namaz", "salah", "asr", "offset", "fajr"], ["prayerSettings"], ["tm:ui:prayerSettings"]),
   R("prayerplace", "prayer", "set.row.prayerplace", "#/deen", ["place", "location", "city", "dhaka", "coordinates", "latitude"], ["prayerCoords"], ["tm:ui:prayerCoords", "tm:ui:prayerCoords:real"]),

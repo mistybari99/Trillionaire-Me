@@ -44,7 +44,7 @@ export const azanAvailability = (): AzanAvailability => azanAvail;
 /** Test hook: set the known availability without a request. */
 export function setAzanAvailability(a: AzanAvailability) { azanAvail = a; azanProbed = Promise.resolve(a); }
 
-const reducedMotion = (): boolean => typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
+const reducedMotion = (): boolean => prefs.reduceMotion === "always" || (typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches);
 
 /** Plays one file at the chosen volume. Needs a tap or an open app; a blocked play is ignored. */
 function playFile(file: string, volume: number) {

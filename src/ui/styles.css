@@ -77,6 +77,7 @@ dl{margin:6px 0} .hrow{display:grid;grid-template-columns:96px 1fr;gap:8px;paddi
 .seg{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px} .seg button{min-height:44px;padding:4px 14px;font:inherit;background:var(--card);color:var(--ink);border:1.5px solid var(--ink)} .seg button[aria-pressed="true"]{background:var(--primary);color:var(--on-primary)}
 .crumb{display:inline-flex;align-items:center;min-height:44px;margin-top:8px;color:var(--primary)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (prefers-reduced-motion:no-preference){:root[data-motion="reduce"] *{animation:none!important;transition:none!important}:root[data-motion="reduce"] .arrow-draw{animation:none!important;stroke-dasharray:none!important;stroke-dashoffset:0!important}}
 
 /* topic visuals */
 .dg{margin:10px 0}

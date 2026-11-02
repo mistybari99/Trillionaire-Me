@@ -100,7 +100,7 @@ describe("shell", () => {
     go("#/settings/zzz"); expect(q("[data-settings=home]")).not.toBeNull();
   });
   it("rows show current values; each row opens where the setting is changed", () => {
-    go("#/settings/look"); expect(q("[data-row-value=design]").textContent).toBeTruthy(); expect(q("[data-setting-row=horizon]").getAttribute("href")).toBe("#/journey/horizon");
+    go("#/settings/look"); expect(q("[data-row-value=horizon]").textContent).toBe("Stack"); expect(q("[data-setting-row=horizon]").getAttribute("href")).toBe("#/journey/horizon");
     go("#/settings/prayer"); expect(q("[data-row-value=prayeralerts]").textContent).toBe("Off");
   });
   it("on Settings the DEMO banner is one compact line and the daily ask card is not shown", () => {
