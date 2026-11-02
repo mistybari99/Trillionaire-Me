@@ -16,7 +16,7 @@ export const EVIDENCE: Record<string, Evidence> = {
   M06: ev(["#/today", "#/habits", "#/diary/plan"], ["src/ui/screens.ts#habitsScreen", "src/ui/screens.ts#focusScreen", "src/core/planner.ts#schedule"], [], ["tests/focus_habits_cards.test.ts", "tests/goal_form.test.ts", "tests/m_dependency.test.ts"]),
   M07: ev(["#/diary/money"], ["src/ui/screens.ts#moneyScreen", "src/core/finance.ts#netWorth"], [], ["tests/money.test.ts"]),
   M08: ev(["#/diary/plan"], ["src/core/planner.ts#schedule"], [], ["tests/b9_plan_flow.test.ts"]),
-  M09: ev(["#/diary/ventures"], ["src/core/ventures.ts#ventureRows"], ["src/catalog/fields.ts"], ["tests/m_registers.test.ts"]),
+  M09: ev(["#/diary/ventures", "#/diary/money", "#/today", "#/journey/report"], ["src/core/ventures.ts#ventureViews", "src/core/ventures.ts#portfolio", "src/core/ventures.ts#ventureAccounts"], ["src/catalog/fields.ts", "src/ui/ventureCard.ts"], ["tests/m_registers.test.ts", "tests/venture_value.test.ts"]),
   M10: ev(["#/diary/team"], ["src/core/team.ts#roleSummary"], [], ["tests/m_registers.test.ts"]),
   M11: ev(["#/diary/intake"], ["src/ui/screens.ts#intake", "src/core/research.ts#research", "src/adapters/wikipedia.ts#wikipedia"], [], ["tests/research.test.ts", "tests/wikipedia.test.ts", "tests/m11_background_cache.test.ts"]),
   M12: ev(["#/diary/plan", "#/journey/history"], ["src/core/reality.ts#markNotTrue", "src/core/planHistory.ts#planHistory"], [], ["tests/o6_reality_review_templates.test.ts", "tests/m_registers.test.ts"]),

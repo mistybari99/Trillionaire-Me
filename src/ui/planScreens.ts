@@ -6,13 +6,14 @@ import type { Key } from "../i18n/packs";
 import { prefs, store } from "./state";
 import { withView } from "./viewBar";
 import { activeNs, allRecs, consentOn, consentPrompt, nsTag, saveBlockedText, saveTyped } from "./entry";
-import { disclaimers, num } from "./components";
+import { disclaimers, num, valueEl } from "./components";
 import { checkFreeText } from "../core/safety";
 import { fieldById } from "../catalog/fields";
 import type { FieldValue } from "../core/types";
 import { riskRows, validateRisk, withoutStopRule, type Likelihood } from "../core/risk";
 import { looksLikePersonContact, roleRows, roleSummary, type Holder } from "../core/team";
-import { parseOwnership, ventureRows } from "../core/ventures";
+import { parseAmount, parseOwnership, ventureViews } from "../core/ventures";
+import { bdt, estimateLabel, moneyEl, portfolioCard } from "./ventureCard";
 import { ladder, starRows } from "../core/northStar";
 import { planHistory } from "../core/planHistory";
 import { KPI_MEASURES, KPI_PERIODS, kpiStatus, parseActual, parseTarget, validateKpi, type KpiError } from "../core/kpi";
@@ -105,18 +106,20 @@ function riskScreenInner(): HTMLElement {
     h("p", { class: "muted" }, t("risk.note", lang)), modeMark(lang), disclaimers(lang, ["advice"]));
 }
 
-// ---- M09 ventures and assets ----
+// ---- M09 ventures and assets: details, estimated value, your share, and the venture's own monthly income and expenses ----
 export function ventureScreen(): HTMLElement { return withView("ventures", L(), ventureScreenInner()); }
 function ventureScreenInner(): HTMLElement {
   const lang = L();
   const name = h("input", { id: "vn-name", type: "text", maxlength: "80", autocomplete: "off" });
   const stage = choiceSelect("vn-stage", "venture.stage", lang);
   const own = h("input", { id: "vn-own", type: "text", inputmode: "decimal", autocomplete: "off" });
+  const value = h("input", { id: "vn-value", type: "text", inputmode: "decimal", autocomplete: "off" });
   const err = h("p", { class: "err", role: "alert" });
   const form = h("form", { novalidate: true, "data-form": "venture" }, gateFor(lang),
     h("label", { for: "vn-name" }, t("ven.name", lang)), name,
     h("label", { for: "vn-stage" }, t("ven.stage", lang)), stage,
-    h("label", { for: "vn-own" }, t("ven.ownership", lang)), own, err,
+    h("label", { for: "vn-own" }, t("ven.ownership", lang)), own,
+    h("label", { for: "vn-value" }, t("ven.value", lang)), value, err,
     h("button", { class: "btn", type: "submit" }, t("ven.add", lang)));
   form.addEventListener("submit", (ev) => {
     ev.preventDefault(); err.textContent = "";
@@ -125,25 +128,114 @@ function ventureScreenInner(): HTMLElement {
     if (!checkFreeText(nm).ok) { err.textContent = t("intake.secretRejected", lang); return; }
     const o = parseOwnership(own.value);
     if (o === null) { err.textContent = t("ven.err.ownership", lang); return; }
+    const vl = parseAmount(value.value);
+    if (vl === null) { err.textContent = t("ven.err.value", lang); return; }
     const values: Record<string, FieldValue> = {
       "venture.name": txt(nm),
       "venture.stage": stage.value ? txt(stage.value) : UNKNOWN,
       "venture.ownership_pct": o.state === "value" ? num_(o.value) : UNKNOWN,
+      "venture.valuation": vl.state === "value" ? num_(vl.value) : UNKNOWN,
     };
     if (!putRecord("venture", "ven", values)) { err.textContent = saveBlockedText(lang); return; }
     rerender();
   });
-  const rows = ventureRows(allRecs());
+
+  const recs = allRecs();
+  const findOne = (id: string) => recs.find((r) => r.id === id) ?? null;
+  const typedVal = (v: number | string, ns: "demo" | "real"): FieldValue => ({ state: "value", value: v, label: labelFor(ns) });
+
+  // Change details of a saved venture. The record keeps its id and mode.
+  const editForm = (v: ReturnType<typeof ventureViews>[number]) => {
+    const id = v.row.id;
+    const n = h("input", { id: `ve-n-${id}`, type: "text", maxlength: "80", autocomplete: "off", value: v.row.name });
+    const st = choiceSelect(`ve-s-${id}`, "venture.stage", lang); st.value = v.row.stage ?? "";
+    const ow = h("input", { id: `ve-o-${id}`, type: "text", inputmode: "decimal", autocomplete: "off", value: v.row.ownership === null ? "" : String(v.row.ownership) });
+    const va = h("input", { id: `ve-v-${id}`, type: "text", inputmode: "decimal", autocomplete: "off", value: v.row.valuation === null ? "" : String(v.row.valuation) });
+    const msg = h("p", { class: "err", role: "alert" });
+    const f = h("form", { novalidate: true, "data-venture-edit": id },
+      h("label", { for: `ve-n-${id}` }, t("ven.name", lang)), n, h("label", { for: `ve-s-${id}` }, t("ven.stage", lang)), st,
+      h("label", { for: `ve-o-${id}` }, t("ven.ownership", lang)), ow, h("label", { for: `ve-v-${id}` }, t("ven.value", lang)), va, msg,
+      h("button", { class: "btn ghost", type: "submit", style: "width:auto;margin:0;min-height:44px" }, t("ven.edit.save", lang)));
+    f.addEventListener("submit", (ev) => {
+      ev.preventDefault(); msg.textContent = "";
+      const nm = n.value.trim(); if (!nm) { msg.textContent = t("ven.err.name", lang); return; }
+      if (!checkFreeText(nm).ok) { msg.textContent = t("intake.secretRejected", lang); return; }
+      const o = parseOwnership(ow.value); if (o === null) { msg.textContent = t("ven.err.ownership", lang); return; }
+      const vl = parseAmount(va.value); if (vl === null) { msg.textContent = t("ven.err.value", lang); return; }
+      if (!entryNs()) { msg.textContent = saveBlockedText(lang); return; }
+      const rec = findOne(id); if (!rec) return;
+      storeOf(rec).put({ ...rec, values: { ...rec.values, "venture.name": typedVal(nm, rec.ns), "venture.stage": st.value ? typedVal(st.value, rec.ns) : UNKNOWN,
+        "venture.ownership_pct": o.state === "value" ? typedVal(o.value, rec.ns) : UNKNOWN, "venture.valuation": vl.state === "value" ? typedVal(vl.value, rec.ns) : UNKNOWN } });
+      rerender();
+    });
+    return h("details", { class: "help" }, h("summary", {}, t("ven.edit.title", lang)), f);
+  };
+
+  // Add one monthly income or expense line to this venture. It is an ordinary business money line with a link to the venture.
+  const lineForm = (vid: string) => {
+    const kind = h("select", { id: `vl-k-${vid}` }, ...(["income", "expense"] as const).map((k) => h("option", { value: k }, choiceLabel("finance.kind", k, lang))));
+    const label = h("input", { id: `vl-l-${vid}`, type: "text", maxlength: "80", autocomplete: "off" });
+    const amt = h("input", { id: `vl-a-${vid}`, type: "text", inputmode: "decimal", autocomplete: "off" });
+    const msg = h("p", { class: "err", role: "alert" });
+    const f = h("form", { novalidate: true, "data-venture-line": vid },
+      h("label", { for: `vl-k-${vid}` }, t("ven.line.kind", lang)), kind, h("label", { for: `vl-l-${vid}` }, t("ven.line.label", lang)), label,
+      h("p", { class: "muted" }, t("money.nameHint", lang)), h("label", { for: `vl-a-${vid}` }, t("ven.line.amount", lang)), amt, msg,
+      h("button", { class: "btn ghost", type: "submit", style: "width:auto;margin:0;min-height:44px" }, t("ven.line.save", lang)));
+    f.addEventListener("submit", (ev) => {
+      ev.preventDefault(); msg.textContent = "";
+      const lb = label.value.trim(); if (!lb) { msg.textContent = t("ven.line.err.name", lang); return; }
+      if (!checkFreeText(lb).ok) { msg.textContent = t("intake.secretRejected", lang); return; }
+      const am = parseAmount(amt.value); if (am === null) { msg.textContent = t("intake.invalidNumber", lang); return; }
+      const id = `fin-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`;
+      const ok = saveTyped({ id, entity: "finance_item", createdAt: new Date().toISOString(), links: { venture: vid },
+        values: { "finance.kind": txt(kind.value), "finance.scope": txt("business"), "finance.label": txt(lb), "finance.amount": am.state === "value" ? num_(am.value) : UNKNOWN, "finance.period": txt("monthly") } });
+      if (!ok) { msg.textContent = saveBlockedText(lang); return; }
+      rerender();
+    });
+    return h("details", { class: "help" }, h("summary", {}, t("ven.line.add", lang)), f);
+  };
+
+  // Removing a venture keeps its money lines: they lose the link and stay on the Money screen.
+  const removeVenture = (id: string) => h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0;min-height:44px", "data-remove": id, onclick: () => {
+    // Unlinking is a write: in real mode it needs the consent tick. Without it the lines keep a link to a venture that no longer exists, which every screen ignores.
+    if (entryNs()) for (const r of allRecs()) if (r.entity === "finance_item" && r.links?.venture === id) { const { venture: _v, ...rest } = r.links; storeOf(r).put({ ...r, links: Object.keys(rest).length ? rest : undefined }); }
+    store[activeNs()].delete(id); rerender();
+  } }, t("risk.remove", lang));
+
+  const views = ventureViews(recs);
+  const lineRows = (v: (typeof views)[number]) => v.accounts.lineIds.map((lid) => {
+    const r = findOne(lid)!; const a = r.values["finance.amount"]; const kind = String((r.values["finance.kind"] as { value?: unknown })?.value ?? "");
+    return h("li", { "data-venture-line-row": lid }, `${choiceLabel("finance.kind", kind, lang)}: ${String((r.values["finance.label"] as { value?: unknown })?.value ?? "")} · `,
+      a && a.state === "value" ? valueEl(bdt(Number(a.value), lang), a.label, lang) : t("unknown.unknown", lang), " ",
+      h("button", { class: "btn ghost", type: "button", "data-remove": lid, style: "width:auto;margin:0;min-height:44px", onclick: () => { storeOf(r).delete(lid); rerender(); } }, t("money.remove", lang)));
+  });
+  const est = estimateLabel();
+  const card = (v: (typeof views)[number]) => {
+    const { row, share, accounts: ac } = v;
+    return h("div", { class: "card", "data-venture": row.id }, h("div", { class: "row" }, h("div", {},
+      modeMark(lang), h("h2", { class: "card-h" }, row.name),
+      h("p", { class: "muted" }, row.stage ? choiceLabel("venture.stage", row.stage, lang) : t("unknown.unknown", lang)),
+      h("p", { class: "muted" }, row.ownership === null ? t("ven.ownUnknown", lang) : `${fmtNumber(row.ownership, lang)}%`),
+      h("p", { "data-venture-value": row.valuation === null ? "unknown" : "value" }, h("span", { class: "muted" }, `${t("ven.value.row", lang)}: `), row.valuation === null ? h("span", { class: "muted", "data-unknown": "1" }, t("ven.valueUnknown", lang)) : valueEl(bdt(row.valuation, lang), est, lang)),
+      h("p", { "data-venture-share": share.state }, h("span", { class: "muted" }, `${t("ven.share.row", lang)}: `),
+        share.state === "value" ? valueEl(bdt(share.value, lang), est, lang)
+          : h("span", { class: "muted", "data-unknown": "1" }, t("ven.share.needs", lang, { what: share.missing.map((m) => t(`ven.need.${m}` as Key, lang)).join(t("ven.need.and", lang)) }))),
+      h("h3", { class: "card-h" }, t("ven.acc.title", lang)),
+      h("p", { "data-acc": "income" }, h("span", { class: "muted" }, `${t("ven.acc.income", lang)}: `), moneyEl(ac.income, lang, est)),
+      h("p", { "data-acc": "expenses" }, h("span", { class: "muted" }, `${t("ven.acc.expenses", lang)}: `), moneyEl(ac.expenses, lang, est)),
+      h("p", { "data-acc": "net" }, h("span", { class: "muted" }, `${t("ven.acc.net", lang)}: `), ac.net.state === "none" ? h("span", { class: "muted", "data-unknown": "1" }, t("ven.acc.netNeeds", lang)) : moneyEl(ac.net, lang, est)),
+      ac.notMonthly ? h("p", { class: "muted", "data-acc-notmonthly": String(ac.notMonthly) }, t("money.notMonthly", lang, { n: num(ac.notMonthly, lang) })) : null,
+      ac.lineIds.length ? h("ul", { class: "plain" }, ...lineRows(v)) : h("p", { class: "muted" }, t("ven.line.empty", lang)),
+      lineForm(row.id), editForm(v)), removeVenture(row.id)));
+  };
   return h("main", { class: "scr scr-venture" },
     link("#/diary", "crumb", `← ${t("diary.title", lang)}`),
     h("h1", {}, t("ven.title", lang)), h("p", { class: "sub" }, t("ven.intro", lang)),
     form,
-    rows.length ? h("div", {}, ...rows.map((r) => h("div", { class: "card", "data-venture": r.id }, h("div", { class: "row" }, h("div", {},
-      modeMark(lang), h("h2", { class: "card-h" }, r.name),
-      h("p", { class: "muted" }, r.stage ? choiceLabel("venture.stage", r.stage, lang) : t("unknown.unknown", lang)),
-      h("p", { class: "muted" }, r.ownership === null ? t("ven.ownUnknown", lang) : `${fmtNumber(r.ownership, lang)}%`)),
-      removeBtn(r.id, lang))))) : h("p", { class: "muted" }, t("ven.empty", lang)),
-    h("p", { class: "muted" }, t("ven.note", lang)), modeMark(lang), disclaimers(lang, ["advice"]));
+    portfolioCard(lang, "page"),
+    views.length ? h("div", {}, ...views.map(card)) : h("p", { class: "muted" }, t("ven.empty", lang)),
+    link("#/diary/money", "crumb", t("ven.money.link", lang)),
+    h("p", { class: "muted" }, t("ven.note", lang)), h("p", { class: "muted" }, t("ven.remove.note", lang)), modeMark(lang), disclaimers(lang, ["advice"]));
 }
 
 // ---- M10 team roles (roles only) ----

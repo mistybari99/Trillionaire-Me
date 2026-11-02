@@ -48,6 +48,8 @@ import { logo3d } from "./logo";
 import { goalFunnelHero, horizonArc } from "./horizonArt";
 import { viewBar, withView } from "./viewBar";
 import { kpiSection, kpiTodayCard } from "./kpiUi";
+import { portfolioCard } from "./ventureCard";
+import { ventureRows } from "../core/ventures";
 import { backupReminderCard } from "./snapshotsUi";
 import { overallProgress } from "../core/overallProgress";
 import * as Focus from "../core/focus";
@@ -293,11 +295,15 @@ export function moneyScreen(): HTMLElement {
   const unk = h("select", { id: "mf-state", "aria-label": t("intake.valueFor", lang) }, h("option", { value: "value" }, t("intake.valueFor", lang)), ...(["unknown", "later", "prefer_not"] as const).map((u) => h("option", { value: u }, t(`unknown.${u}` as Key, lang))));
   const err = h("p", { class: "err", role: "alert" });
   const gate = consentOn() ? null : consentPrompt(lang);
+  // Optional link to one of the user's ventures (business income or expense lines only). Shown only when a venture exists.
+  const vRows = ventureRows(recs);
+  const ventureSel = vRows.length ? h("select", { id: "mf-venture" }, h("option", { value: "" }, t("ven.money.none", lang)), ...vRows.map((v) => h("option", { value: v.id }, v.name))) : null;
   const form = h("form", { novalidate: true, "data-form": "money" }, gate,
     h("label", { for: "mf-kind" }, t("money.kind", lang)), kind, h("label", { for: "mf-scope" }, t("money.scope", lang)), scope,
     h("label", { for: "mf-name" }, t("money.name", lang)), name, h("p", { class: "muted" }, t("money.nameHint", lang)),
     h("label", { for: "mf-amount" }, t("money.amount", lang)), amount, unk,
-    h("label", { for: "mf-period" }, t("money.period", lang)), period, err,
+    h("label", { for: "mf-period" }, t("money.period", lang)), period,
+    ...(ventureSel ? [h("label", { for: "mf-venture" }, t("ven.money.pick", lang)), ventureSel] : []), err,
     h("button", { class: "btn", type: "submit" }, t("money.save", lang)));
   form.addEventListener("submit", (ev) => {
     ev.preventDefault(); err.textContent = "";
@@ -311,8 +317,10 @@ export function moneyScreen(): HTMLElement {
       else { const n = Number(raw); if (!Number.isFinite(n) || n < 0) { err.textContent = t("intake.invalidNumber", lang); return; } amt = typed(n); }
     }
     const d = (x: string): FieldValue => typed(x);
+    const vid = ventureSel?.value ?? "";
+    if (vid && (scope.value !== "business" || (kind.value !== "income" && kind.value !== "expense"))) { err.textContent = t("ven.money.err", lang); return; }
     const id = `fin-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`;
-    if (!saveTyped({ id, entity: "finance_item", createdAt: new Date().toISOString(),
+    if (!saveTyped({ id, entity: "finance_item", createdAt: new Date().toISOString(), ...(vid ? { links: { venture: vid } } : {}),
       values: { "finance.kind": d(kind.value), "finance.scope": d(scope.value), "finance.label": d(nm), "finance.amount": amt, "finance.period": d(period.value) } })) { err.textContent = saveBlockedText(lang); return; }
     rerender();
   });
@@ -336,7 +344,8 @@ export function moneyScreen(): HTMLElement {
     const a = r.values["finance.amount"]!;
     return h("div", { class: "card", "data-fin": r.id }, h("div", { class: "row" }, h("div", {}, nsTag(r.ns, lang),
       h("h2", { class: "card-h", }, fv.labels.get(r.id) ?? String((r.values["finance.label"] as { value?: unknown })?.value ?? "")),
-      h("p", { class: "muted" }, a.state === "value" ? valueEl(t("money.bdt", lang, { v: fmtNum(Number(a.value), lang) }), a.label, lang) : t(`unknown.${a.state}` as Key, lang))),
+      h("p", { class: "muted" }, a.state === "value" ? valueEl(t("money.bdt", lang, { v: fmtNum(Number(a.value), lang) }), a.label, lang) : t(`unknown.${a.state}` as Key, lang)),
+      r.links?.venture && vRows.some((v) => v.id === r.links!.venture) ? h("p", { class: "muted", "data-fin-venture": r.links.venture }, t("ven.money.tag", lang, { v: vRows.find((v) => v.id === r.links!.venture)!.name })) : null),
       h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0;min-height:44px", onclick: () => { storeOf(r).delete(r.id); rerender(); } }, t("money.remove", lang))));
   });
   const moneyCompact = screenView("money") === "compact";
@@ -354,6 +363,7 @@ export function moneyScreen(): HTMLElement {
     moneyChart(recs, lang),
     viewBar("money", lang),
     rows.length ? (moneyCompact ? moneyTable : h("div", { "data-view": "full" }, ...rows)) : h("p", { class: "muted" }, t("money.empty", lang)),
+    vRows.length ? link("#/diary/ventures", "crumb", t("ven.link", lang)) : null,
     h("p", { class: "muted" }, t("money.note", lang)), disclaimers(lang));
 }
 
@@ -518,6 +528,7 @@ export function reportScreen(): HTMLElement {
     viewBar("report", lang),
     goalRingsChart(allRecs(), lang),
     kpiSection("week", lang), kpiSection("days90", lang),
+    portfolioCard(lang, "report"),
     items.length && repCompact ? compactBody : items.length ? h("div", { "data-view": "full" },
       sec("report.decisions", s.decisions.length ? h("ul", { style: "padding-inline-start:20px" }, ...s.decisions.map((x) => h("li", { "data-decision": "1" }, x))) : h("p", { class: "muted" }, t("report.empty", lang))),
       sec("report.amounts", s.amountCount ? valueEl(t("report.amountTotal", lang, { n: num(s.amountCount, lang), v: t("money.bdt", lang, { v: fmtNum(s.amountTotal, lang) }) }), "ESTIMATE", lang) : h("p", { class: "muted" }, t("report.empty", lang))),
@@ -859,6 +870,7 @@ export function today(): HTMLElement {
     homeCountCards(lang),
     kpiTodayCard(lang),
     homeSummaryCards(lang),
+    portfolioCard(lang, "today"),
     nextActionCard(lang),
     adviceCardsView(lang),
     backupReminderCard(lang),
