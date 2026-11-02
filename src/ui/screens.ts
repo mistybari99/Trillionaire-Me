@@ -4,13 +4,11 @@ import { h } from "./dom";
 import { t, tb, fmtNumber } from "../i18n/t";
 import type { Key } from "../i18n/packs";
 import { LOCALES, LOCALE_ORDER, intlLocale, type Locale } from "../i18n/registry";
-import { applyPrefs, consentKv, prefs, screenView, store, type HorizonView, type PlanMode } from "./state";
+import { applyPrefs, prefs, screenView, store, type HorizonView, type PlanMode } from "./state";
 import { DESIGNS } from "./themes";
-import { readConsent } from "../core/consent";
-import { consentGate } from "./consentGate";
+import { dataPage } from "./dataUi";
 import { pausedCard } from "./privacyUi";
-import { categorySummary } from "./settingsUi";
-import { demoBadge, disclaimers, fieldHelp, num, valueEl } from "./components";
+import { disclaimers, fieldHelp, num, valueEl } from "./components";
 import { STAGES, DEMO_DATE, DEMO_TASKS } from "../demo/seed";
 import { MODULES, CAP_STATUSES, type ModuleDef } from "../modules/capability";
 import { ENTITIES } from "../schema/entities";
@@ -66,7 +64,6 @@ import { markedOn, prayerLogId, prayerLogRecord } from "../core/prayerLog";
 import { fastLogId, fastLogRecord, isFastMarked } from "../core/fastLog";
 import { DEFAULT_ALERT_PREFS, parseAlertPrefs } from "../core/prayerAlerts";
 import { azanAvailability, notifyState, previewAzan, refreshAzanAvailability } from "./prayerAlerts";
-import { modeSwitchCard } from "./modeUi";
 import { activeNs, allRecs, asReal, putMode, consentOn, consentPrompt, findRec, inNs, labelFor, nsTag, ownerOf, saveBlockedText, saveTyped, storeOf, typed, valueLabel } from "./entry";
 
 const L = () => prefs.lang;
@@ -1371,22 +1368,7 @@ export function safety(): HTMLElement {
     disclaimers(lang, ["noGuarantee", "advice", "noFatwa"]));
 }
 
-export function dataScreen(): HTMLElement {
-  const lang = L();
-  const realOn = readConsent(consentKv);
-  return h("main", {},
-    link("#/settings", "crumb", `← ${t("nav.settings", lang)}`),
-    h("h1", {}, t("data.title", lang)),
-    modeSwitchCard(),
-    h("div", { class: "card", "data-ns": "real" }, h("h2", { class: "card-h", }, t("data.real", lang)), h("p", {}, t("data.real.count", lang, { n: num(store.real.list().length, lang) })), h("p", { class: "muted" }, t(realOn ? "data.real.on" : "data.real.locked", lang))),
-    realOn ? null : consentGate(lang),
-    h("div", { class: "card", "data-ns": "demo" }, h("h2", { class: "card-h", }, t("data.demo", lang), " ", demoBadge(lang)), h("p", {}, t("data.demo.count", lang, { n: num(store.demo.list().length, lang) }))),
-    h("p", { class: "muted" }, t("data.nopromote", lang)),
-    link("#/settings/delete", "card link", h("h2", { class: "card-h" }, t("set.cat.delete", lang)), h("p", { class: "muted" }, t("set.sum.delete", lang))),
-    link("#/settings/privacy", "card link", h("h2", { class: "card-h" }, t("set.cat.privacy", lang)), h("p", { class: "muted" }, categorySummary("privacy", lang))),
-    link("#/settings/backup", "card link", h("h2", { class: "card-h" }, t("set.cat.backup", lang)), h("p", { class: "muted" }, categorySummary("backup", lang))),
-    disclaimers(lang));
-}
+export const dataScreen = (): HTMLElement => dataPage(undefined, L());
 
 export function glossary(): HTMLElement {
   const lang = L();

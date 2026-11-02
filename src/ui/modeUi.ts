@@ -8,6 +8,8 @@ import { grantRealConsent } from "./consentGate";
 import { recordDay, shouldAskDeleteDemo, type DataMode } from "../core/dataMode";
 import { todayIso } from "../core/habits";
 import { prefs, store } from "./state";
+import { StoreRepo } from "../adapters/storeRepo";
+import { createBackup } from "../core/backup";
 import { realConsent } from "./entry";
 import { resetOnboard } from "./onboardUi";
 import { langMenu } from "./langMenu";
@@ -17,7 +19,6 @@ const L = () => prefs.lang;
 
 // Per page view only. Nothing here is stored.
 let firstRealStep = false;
-let startRealOpen = false;
 let needTick = false;
 let switchNeedConsent = false;
 
@@ -33,7 +34,8 @@ export function trackDemoDay(): void {
 export const askDue = (): boolean => shouldAskDeleteDemo({ mode: prefs.dataModeChoice, days: prefs.demoDays, askedOn: prefs.demoAskedOn, today: todayIso() });
 
 /** Opens the delete-demo confirm (the "Start real now" buttons call this). */
-export function openStartReal(): void { startRealOpen = true; needTick = false; rerender(); }
+export const START_REAL_HASH = "#/settings/data/start-real";
+export function openStartReal(): void { needTick = false; if (location.hash === START_REAL_HASH) rerender(); else location.hash = START_REAL_HASH; }
 
 /** Deletes DEMO records only, turns real on, keeps language and the other settings. Call only after the explicit confirm. */
 export function confirmStartReal(ticked: boolean): boolean {
@@ -41,13 +43,15 @@ export function confirmStartReal(ticked: boolean): boolean {
   store.demo.clear(); // demo namespace only: real records are never listed here
   if (!realConsent()) { grantRealConsent(); }
   prefs.dataMode = "real";
-  startRealOpen = false; needTick = false;
-  rerender();
+  needTick = false;
+  if (location.hash === "#/settings/data") rerender(); else location.hash = "#/settings/data";
   return true;
 }
 
 /** "Keep demo": nothing is deleted. The ask is not shown again today. */
-export function declineStartReal(): void { prefs.demoAskedOn = todayIso(); startRealOpen = false; needTick = false; rerender(); }
+export function declineStartReal(): void { prefs.demoAskedOn = todayIso(); needTick = false; rerender(); }
+/** Cancel on the Start-real page: nothing is deleted; the daily ask waits for today. */
+export function cancelStartReal(): void { prefs.demoAskedOn = todayIso(); needTick = false; location.hash = "#/settings/data"; }
 
 /** Switch between Only demo and Only real. Real needs the consent tick first. */
 export function switchMode(m: DataMode): void {
@@ -90,16 +94,15 @@ function confirmCard(lang: Locale): HTMLElement {
     realConsent() ? null : tickRow(lang),
     needTick ? h("p", { class: "err", role: "alert" }, t("mode.real.needTick", lang)) : null,
     h("button", { class: "btn", type: "button", "data-act": "demo-delete-confirm", onclick: () => { confirmStartReal(realConsent() || ticked()); } }, t("mode.del.btn", lang)),
-    h("button", { class: "btn ghost", type: "button", "data-act": "demo-delete-cancel", onclick: declineStartReal }, t("mode.del.cancel", lang)));
+    h("button", { class: "btn ghost", type: "button", "data-act": "demo-delete-cancel", onclick: cancelStartReal }, t("mode.del.cancel", lang)));
 }
 
-/** Cards shown above every screen in explicit demo mode: the confirm (if open), the ask (if due) and the Demo banner. */
+/** Cards shown above every screen in explicit demo mode: the ask (if due) and the Demo banner. */
 export function demoPanels(): HTMLElement[] {
   if (prefs.dataModeChoice !== "demo") return [];
   const lang = L(); const out: HTMLElement[] = [];
   const inSettings = /^#\/settings(\/|$)/.test(location.hash); // Settings keeps the first screen free: one-line banner, no daily ask
-  if (startRealOpen) out.push(confirmCard(lang));
-  else if (!inSettings && askDue()) out.push(h("div", { class: "card", role: "status", "data-mode-ask": "1" }, h("h2", { class: "card-h" }, t("mode.ask.title", lang)), h("p", {}, t("mode.ask.p", lang)),
+  if (!inSettings && askDue()) out.push(h("div", { class: "card", role: "status", "data-mode-ask": "1" }, h("h2", { class: "card-h" }, t("mode.ask.title", lang)), h("p", {}, t("mode.ask.p", lang)),
     h("button", { class: "btn", type: "button", "data-act": "demo-ask-yes", onclick: openStartReal }, t("mode.ask.yes", lang)),
     h("button", { class: "btn ghost", type: "button", "data-act": "demo-ask-no", onclick: declineStartReal }, t("mode.ask.no", lang))));
   if (inSettings) { out.push(h("div", { class: "note", role: "status", "data-demo-banner": "1", "data-compact": "1", style: "padding:6px 12px" }, h("p", { style: "margin:0" }, h("b", {}, t("mode.banner", lang))))); return out; }
@@ -119,4 +122,20 @@ export function modeSwitchCard(): HTMLElement {
     h("p", { class: "muted" }, t("mode.switch.note", lang)),
     switchNeedConsent && !realConsent() ? h("p", { class: "err", role: "alert" }, t("mode.switch.needConsent", lang)) : null,
     cur === "demo" ? h("button", { class: "btn", type: "button", "data-act": "start-real-now", onclick: openStartReal }, t("mode.start.btn", lang)) : null);
+}
+
+/** Settings > Demo or real data > Start real now: a full page. Optional demo copy first, then the explicit tick and confirm. */
+export function startRealPage(lang: Locale): HTMLElement {
+  let saved = false;
+  const msg = h("p", { class: "ok-msg", role: "status", "data-start": "copied" });
+  return h("main", { class: "scr scr-settings", "data-settings": "start-real" },
+    h("a", { href: "#/settings/data", class: "crumb" }, `← ${t("set.cat.data", lang)}`), h("h1", {}, t("set.row.startreal", lang)),
+    h("p", { class: "sub" }, t("del.intro", lang)),
+    h("div", { class: "card" }, h("h2", { class: "card-h" }, t("del.demo.copy", lang)),
+      h("button", { class: "btn ghost", type: "button", "data-act": "start-demo-copy", style: "min-height:44px", onclick: async () => {
+        const b = await createBackup(new StoreRepo(store), "demo");
+        const a = h("a", { href: URL.createObjectURL(new Blob([JSON.stringify(b)], { type: "application/json" })), download: `tm-demo-backup-${b.createdAt.slice(0, 10)}.json` });
+        document.body.append(a); a.click(); a.remove(); saved = true; msg.textContent = saved ? t("del.demo.copied", lang) : "";
+      } }, t("del.demo.copy", lang)), msg),
+    confirmCard(lang));
 }

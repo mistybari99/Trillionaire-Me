@@ -51,8 +51,8 @@ export const ROWS: SettingRow[] = [
   R("consent", "privacy", "set.row.consent", "#/settings/privacy/consent", ["consent", "permission", "real data", "tick", "private"], [], ["tm:consent:real:v1"]),
   R("applock", "privacy", "set.row.applock", "#/settings/privacy/applock", ["pin", "lock", "password", "app lock", "forgot"], [], ["tm:secret:applock"]),
 
-  R("mode", "data", "set.row.mode", "#/more/data", ["demo", "real", "mode", "switch"], ["dataMode", "dataModeChoice", "demoAskedOn", "demoDays"], ["tm:ui:dataMode", "tm:ui:demoAskedOn", "tm:ui:demoDays"]),
-  R("startreal", "data", "set.row.startreal", "#/more/data", ["start real", "begin", "own data"], [], [], true),
+  R("mode", "data", "set.row.mode", "#/settings/data/mode", ["demo", "real", "mode", "switch"], ["dataMode", "dataModeChoice", "demoAskedOn", "demoDays"], ["tm:ui:dataMode", "tm:ui:demoAskedOn", "tm:ui:demoDays"]),
+  R("startreal", "data", "set.row.startreal", "#/settings/data/start-real", ["start real", "begin", "own data"], [], [], true),
 
   R("rules", "plan", "more.rules", "#/more/rules", ["automation", "rules", "smaller step", "break", "focus"], ["ruleSwitches", "lastFocusEnd", "lastRestAt"], ["tm:ui:rules", "tm:ui:focusEnd", "tm:ui:restAt"]),
   R("planmode", "plan", "set.row.planmode", "#/diary/plan", ["plan mode", "minimum week", "pause", "normal", "stuck"], ["mode"], ["tm:ui:mode"]),
