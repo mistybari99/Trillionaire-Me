@@ -101,7 +101,7 @@ describe("shell", () => {
   });
   it("rows show current values; each row opens where the setting is changed", () => {
     go("#/settings/look"); expect(q("[data-row-value=horizon]").textContent).toBe("Stack"); expect(q("[data-setting-row=horizon]").getAttribute("href")).toBe("#/journey/horizon");
-    go("#/settings/prayer"); expect(q("[data-row-value=prayeralerts]").textContent).toBe("Off");
+    go("#/settings/prayer"); expect(q("[data-prayer-method-card]")).not.toBeNull(); expect(q("[data-prayer-settings]")).not.toBeNull();
   });
   it("on Settings the DEMO banner is one compact line and the daily ask card is not shown", () => {
     go("#/settings"); expect(q("[data-demo-banner]").getAttribute("data-compact")).toBe("1"); expect(app().querySelector("[data-mode-ask]")).toBeNull(); expect(app().querySelector("[data-act=start-real-banner]")).toBeNull();

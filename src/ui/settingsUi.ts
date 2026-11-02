@@ -21,6 +21,7 @@ import { backupPage } from "./backupUi";
 import { dataPage } from "./dataUi";
 import { planPage } from "./planSettings";
 import { lookPage } from "./lookUi";
+import { prayerPage } from "./prayerSettingsUi";
 import { CATEGORIES, CAT_LABEL, GUIDES, isCat, rowsOf, settingsHash, type Cat, type CatKey, type SettingRow } from "./settingsRegistry";
 
 const rerender = () => window.dispatchEvent(new HashChangeEvent("hashchange"));
@@ -149,6 +150,7 @@ export function settingsScreen(catArg: string | undefined, rowArg: string | unde
   if (catArg === "data") return dataPage(rowArg, lang);
   if (catArg === "plan") return planPage(rowArg, lang);
   if (catArg === "look") return lookPage(rowArg, lang);
+  if (catArg === "prayer") return prayerPage(rowArg, lang);
   return categoryPage(catArg, rowArg, lang);
 }
 

@@ -251,22 +251,24 @@ describe("M13 Deen screen and alerts (UI)", () => {
 
   it("method card: shows the verify note, saves method, Hanafi Asr and an offset, and the times change", () => {
     location.hash = "#/deen"; render();
-    expect(document.querySelector("[data-prayer-verify]")!.textContent).toMatch(/Verify with your local timetable/);
+    expect(document.querySelector("[data-prayer-method-card]")).toBeNull(); expect(document.querySelector("[data-prayer-link]")!.getAttribute("href")).toBe("#/settings/prayer"); // Deen keeps times and a link row
     expect(document.querySelector("[data-prayer-method]")!.textContent).toMatch(/Karachi/);
     const asrBefore = document.querySelector("[data-prayer-time=asr]")!.textContent;
+    location.hash = "#/settings/prayer"; render();
+    expect(document.querySelector("[data-prayer-verify]")!.textContent).toMatch(/Verify with your local timetable/);
     const sel = document.querySelector("[data-prayer-asr-select]") as HTMLSelectElement; sel.value = "hanafi"; sel.dispatchEvent(new Event("change"));
     expect(prefs.prayerSettings.asr).toBe("hanafi");
-    expect(document.querySelector("[data-prayer-time=asr]")!.textContent).not.toBe(asrBefore);
+    location.hash = "#/deen"; render(); expect(document.querySelector("[data-prayer-time=asr]")!.textContent).not.toBe(asrBefore); location.hash = "#/settings/prayer"; render();
     const fajrBefore = prayerTimes({ y: 2026, m: 10, d: 24 }, DHAKA_COORDS).fajr!;
     const off = document.querySelector("[data-prayer-offset=fajr]") as HTMLInputElement; off.value = "4"; off.dispatchEvent(new Event("change"));
-    expect(document.querySelector("[data-prayer-time=fajr]")!.textContent).toBe(prayerClock(fajrBefore + 4));
+    location.hash = "#/deen"; render(); expect(document.querySelector("[data-prayer-time=fajr]")!.textContent).toBe(prayerClock(fajrBefore + 4)); location.hash = "#/settings/prayer"; render();
     const m = document.querySelector("[data-prayer-method-select]") as HTMLSelectElement; m.value = "mwl"; m.dispatchEvent(new Event("change"));
     expect(prefs.prayerSettings.method).toBe("mwl");
     (document.querySelector("[data-act=prayer-method-reset]") as HTMLButtonElement).click();
     expect(prefs.prayerSettings).toEqual(DEFAULT_PRAYER_SETTINGS);
   });
   it("method settings are not personal data: no consent prompt is needed to change them", () => {
-    location.hash = "#/deen"; render();
+    location.hash = "#/settings/prayer"; render();
     expect(document.querySelector("[data-prayer-method-card] [data-consent]")).toBeNull();
   });
   it("a passed prayer that is not marked shows neutral text only", () => {
@@ -277,7 +279,7 @@ describe("M13 Deen screen and alerts (UI)", () => {
   });
 
   it("settings: alerts default off, the place can be changed by typing coordinates, bad input is refused", () => {
-    location.hash = "#/deen"; render();
+    location.hash = "#/settings/prayer"; render();
     expect(document.querySelector("[data-pre-alert=false]")).not.toBeNull();
     expect(document.querySelector("[data-azan-alert=false]")).not.toBeNull();
     (document.getElementById("pr-lat") as HTMLInputElement).value = "22.3569";
@@ -300,7 +302,7 @@ describe("M13 Deen screen and alerts (UI)", () => {
     expect(cards[0]!.text.en).toBe("Fajr in 10 minutes");
   });
   it("per-prayer buttons are all selected once an alert is on, can be switched off one by one, and the sound toggle starts Off", () => {
-    location.hash = "#/deen"; render();
+    location.hash = "#/settings/prayer"; render();
     expect(document.querySelectorAll("[data-alert-prayer][aria-pressed=true]").length).toBe(5);
     expect(document.querySelector("[data-sound=false]")).not.toBeNull();
     (document.querySelector("[data-alert-prayer=asr]") as HTMLButtonElement).click();
@@ -308,13 +310,13 @@ describe("M13 Deen screen and alerts (UI)", () => {
     expect(prefs.prayerAlerts.preAlert).toBe(false); expect(prefs.prayerAlerts.azan).toBe(false); // choosing prayers never turns alerts on
   });
   it("the sound note says the audio file is not added yet, and does not claim a sound will play", () => {
-    location.hash = "#/deen"; render();
+    location.hash = "#/settings/prayer"; render();
     expect(document.querySelector("[data-sound-note]")!.textContent).toMatch(/No azan audio is added yet/);
   });
   it("when the browser has no Notification API, the message says so plainly", () => {
     const saved = (globalThis as { Notification?: unknown }).Notification;
     delete (globalThis as { Notification?: unknown }).Notification;
-    try { location.hash = "#/deen"; render(); expect(document.querySelector("[data-perm=unsupported]")!.textContent).toMatch(/cannot show phone notifications/); }
+    try { location.hash = "#/settings/prayer"; render(); expect(document.querySelector("[data-perm=unsupported]")!.textContent).toMatch(/cannot show phone notifications/); }
     finally { if (saved) (globalThis as { Notification?: unknown }).Notification = saved; }
   });
   it("azan with the sound toggle On vibrates (no audio file); with it Off nothing happens; pre-alerts never vibrate", () => {
@@ -348,7 +350,7 @@ describe("M13 Deen screen and alerts (UI)", () => {
     } finally { vi.unstubAllGlobals(); setAzanAvailability(NO_AZAN); }
   });
   it("Settings shows the volume slider, preview button and the docs pointer", () => {
-    location.hash = "#/deen"; render();
+    location.hash = "#/settings/prayer"; render();
     expect(document.querySelector("#azan-vol")).not.toBeNull();
     expect(document.querySelector("[data-act=azan-preview]")).not.toBeNull();
     expect(document.querySelector("[data-azan-doc]")!.textContent).toBe("Add your own azan file: see docs/azan.md");

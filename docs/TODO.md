@@ -91,6 +91,7 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 - [x] PR3g Connections: `#/settings/connections` (lazy chunk), computed "N of 4 on. Nothing leaves this phone." line, fixed order Approve, Turn on, Key, Withdraw, equal weight. Test `tests/connections_page.test.ts`.
 - [x] PR3f Plan & progress: `#/settings/plan` (`src/ui/planSettings.ts`): plan mode, progress weighting, stage names, four rules (one implementation `ruleRows`); Today/Journey/Diary plan show a chip + link, Today shows an "end the pause" chip, `/stuck` says it can be changed back in Settings. Test `tests/plan_settings.test.ts`; 3 tests migrated.
 - [x] PR3a Look & screens: `#/settings/look` (`src/ui/lookUi.ts`): design version, master Detailed/Compact (additive `tm:ui:view:_default`, never writes the 18 keys, "Different on N screens" + Follow master, on-screen bar equal to master clears override), link rows for horizon/universe/habit grid (habit grid now through `prefs.habitGrid`), Reduce motion (`tm:ui:reduceMotion`), Reset look & layout (look and view keys only). Test `tests/look_page.test.ts`.
+- [x] PR3e Prayer & alerts: `#/settings/prayer` (`src/ui/prayerSettingsUi.ts`): method/Asr/offsets, place (namespace tag, real place needs the gate), alerts, phone notification permission line; Deen keeps times + fast card + one link row. Test `tests/prayer_page.test.ts`; prayer/register tests migrated.
 
 ## Part B — Owner-only tasks
 - [ ] Phone offline test: open online once, visit all pages, airplane mode, reopen (O1).

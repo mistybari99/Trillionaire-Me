@@ -282,7 +282,7 @@ describe("prayer place (real data)", () => {
   const CTG = { lat: 22.3569, lon: 91.7832 };
   const DHAKA = { lat: 23.8103, lon: 90.4125 };
   it("no consent: prompt shown, a typed place is not saved", () => {
-    go("#/deen");
+    go("#/settings/prayer");
     expect(document.querySelector("form[data-form=prayer-place] [data-consent-prompt]")).not.toBeNull();
     setv("pr-lat", "22.3569"); setv("pr-lon", "91.7832"); send("form[data-form=prayer-place]");
     expect(document.querySelector("form[data-form=prayer-place] .err")!.textContent).toMatch(/Nothing saved/);
@@ -294,7 +294,7 @@ describe("prayer place (real data)", () => {
     beforeEach(() => grantConsent(consentKv, NOW));
 
     it("saves the real place on this device only, with a Real tag and a device-only note", () => {
-      go("#/deen");
+      go("#/settings/prayer");
       expect(document.querySelector("form[data-form=prayer-place] [data-consent-prompt]")).toBeNull();
       expect(document.querySelector("[data-prayer-settings] [data-ns=real]")).not.toBeNull();
       expect(document.querySelector("[data-place-note]")).not.toBeNull();
@@ -323,7 +323,7 @@ describe("prayer place (real data)", () => {
     });
 
     it("an invalid place is refused and nothing changes", () => {
-      go("#/deen");
+      go("#/settings/prayer");
       setv("pr-lat", "99"); setv("pr-lon", "91"); send("form[data-form=prayer-place]");
       expect(document.querySelector("form[data-form=prayer-place] .err")!.textContent).toMatch(/Latitude/);
       expect(prefs.prayerCoords).toEqual(DHAKA);

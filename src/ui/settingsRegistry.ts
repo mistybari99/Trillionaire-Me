@@ -38,9 +38,9 @@ export const ROWS: SettingRow[] = [
   R("motion", "look", "set.row.motion", "#/settings/look/motion", ["motion", "animation", "reduce", "calm", "movement"], ["reduceMotion"], ["tm:ui:reduceMotion"]),
   R("resetlook", "look", "set.row.resetlook", "#/settings/look/resetlook", ["reset", "default look", "layout", "restore defaults"], [], []),
 
-  R("prayermethod", "prayer", "set.row.prayermethod", "#/deen", ["prayer", "method", "namaz", "salah", "asr", "offset", "fajr"], ["prayerSettings"], ["tm:ui:prayerSettings"]),
-  R("prayerplace", "prayer", "set.row.prayerplace", "#/deen", ["place", "location", "city", "dhaka", "coordinates", "latitude"], ["prayerCoords"], ["tm:ui:prayerCoords", "tm:ui:prayerCoords:real"]),
-  R("prayeralerts", "prayer", "set.row.prayeralerts", "#/deen", ["alert", "azan", "adhan", "reminder", "sound", "volume", "notification"], ["prayerAlerts", "prayerFired"], ["tm:ui:prayerAlerts", "tm:ui:prayerFired"]),
+  R("prayermethod", "prayer", "set.row.prayermethod", "#/settings/prayer/prayermethod", ["prayer", "method", "namaz", "salah", "asr", "offset", "fajr"], ["prayerSettings"], ["tm:ui:prayerSettings"]),
+  R("prayerplace", "prayer", "set.row.prayerplace", "#/settings/prayer/prayerplace", ["place", "location", "city", "dhaka", "coordinates", "latitude"], ["prayerCoords"], ["tm:ui:prayerCoords", "tm:ui:prayerCoords:real"]),
+  R("prayeralerts", "prayer", "set.row.prayeralerts", "#/settings/prayer/prayeralerts", ["alert", "azan", "adhan", "reminder", "sound", "volume", "notification"], ["prayerAlerts", "prayerFired"], ["tm:ui:prayerAlerts", "tm:ui:prayerFired"]),
 
   R("reminder", "backup", "set.row.reminder", "#/settings/backup/reminder", ["backup", "reminder", "weekly", "remind"], ["backupRemind", "backupRemindChoice", "remindSnoozedOn", "fileBackupAt", "realBackupAt"], ["tm:ui:backupRemind", "tm:ui:remindSnoozedOn", "tm:ui:fileBackupAt", "tm:ui:realBackupAt"]),
   R("storage", "backup", "set.row.storage", "#/settings/backup/storage", ["storage", "persist", "keep data", "safe"], [], []),
