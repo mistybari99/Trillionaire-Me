@@ -189,7 +189,8 @@ describe("screen (More > Demo & real data)", () => {
     grantConsent(consentKv, NOW); localStorage.setItem("tm:ui:dataMode", "real"); store.real.put(rec("real", "r")); store.demo.put(rec("demo", "d"));
     go("#/more/data"); (app().querySelector("[data-act=snap-take]") as HTMLElement).click(); await settle();
     expect((await snapshotRepo!.list())[0]!.real!.count).toBe(1);
-    (app().querySelector("[data-act=clear-real]") as HTMLElement).click(); render(); (app().querySelector("[data-act=clear-real-yes]") as HTMLElement).click(); await settle();
+    go("#/settings/delete"); { const i = app().querySelector<HTMLInputElement>("[data-delete-word]")!; i.value = "DELETE"; i.dispatchEvent(new Event("input")); }
+    (app().querySelector("[data-act=clear-real-yes]") as HTMLElement).click(); await settle();
     expect((await snapshotRepo!.list()).every((x) => x.real === null)).toBe(true);
   });
 });

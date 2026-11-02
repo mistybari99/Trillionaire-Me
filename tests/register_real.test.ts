@@ -16,7 +16,8 @@ const send = (sel: string) => document.querySelector(sel)!.dispatchEvent(new Eve
 const tap = (sel: string) => document.querySelector<HTMLButtonElement>(sel)!.click();
 const setv = (id: string, value: string) => { (document.getElementById(id) as HTMLInputElement | HTMLSelectElement).value = value; };
 const labels = (recs: TMRecord[]) => recs.flatMap((r) => Object.values(r.values).filter((x) => x.state === "value").map((x) => (x as { label: string }).label));
-const clearAll = () => { go("#/more/data"); tap("[data-act=clear-real]"); render(); tap("[data-act=clear-real-yes]"); render(); };
+const typeDel = () => { const i = document.querySelector<HTMLInputElement>("[data-delete-word]")!; i.value = "delete"; i.dispatchEvent(new Event("input")); };
+const clearAll = () => { go("#/settings/delete"); typeDel(); tap("[data-act=clear-real-yes]"); render(); };
 
 beforeEach(() => {
   localStorage.clear(); sessionStorage.clear();

@@ -6,9 +6,9 @@ import { h } from "./dom";
 import { t, tb, fmtNumber } from "../i18n/t";
 import type { Key } from "../i18n/packs";
 import { LOCALES, LOCALE_ORDER, intlLocale, type Locale } from "../i18n/registry";
-import { applyPrefs, consentKv, prefs, screenView, snapshotRepo, store, type HorizonView, type PlanMode } from "./state";
+import { applyPrefs, consentKv, prefs, screenView, store, type HorizonView, type PlanMode } from "./state";
 import { DESIGNS } from "./themes";
-import { grantConsent, readConsent, revokeConsent } from "../core/consent";
+import { grantConsent, readConsent } from "../core/consent";
 import { demoBadge, disclaimers, fieldHelp, num, valueEl } from "./components";
 import { STAGES, DEMO_DATE, DEMO_TASKS } from "../demo/seed";
 import { MODULES, CAP_STATUSES, type ModuleDef } from "../modules/capability";
@@ -52,7 +52,6 @@ import { goalFunnelHero, horizonArc } from "./horizonArt";
 import { viewBar, withView } from "./viewBar";
 import { importCard } from "./importUi";
 import { backupReminderCard, snapshotsCard } from "./snapshotsUi";
-import { scrubRealParts } from "../core/snapshots";
 import { overallProgress } from "../core/overallProgress";
 import * as Focus from "../core/focus";
 import * as Habits from "../core/habits";
@@ -1386,9 +1385,7 @@ export function safety(): HTMLElement {
     disclaimers(lang, ["noGuarantee", "advice", "noFatwa"]));
 }
 
-// Data screen state. Clear-all is two taps (ask, then confirm); the flags live only for this page view.
-let realClearAsk = false;
-let realClearDone = false;
+// Data screen state.
 let consentMissingTick = false;
 
 function consentCard(lang: Locale): HTMLElement {
@@ -1408,34 +1405,6 @@ function consentCard(lang: Locale): HTMLElement {
       rerender();
     } }, t("data.consent.btn", lang)),
     consentMissingTick ? h("p", { class: "err", role: "alert" }, t("data.consent.needTick", lang)) : null);
-}
-
-function clearRealCard(lang: Locale): HTMLElement {
-  const kids: Array<Node | string> = [h("h2", { class: "card-h" }, t("data.clearReal", lang))];
-  if (!realClearAsk) {
-    kids.push(h("button", { class: "btn ghost", type: "button", "data-act": "clear-real", onclick: () => { realClearAsk = true; realClearDone = false; rerender(); } }, t("data.clearReal", lang)));
-  } else {
-    kids.push(h("p", { role: "alert" }, t("data.clearReal.ask", lang)), h("p", { class: "muted" }, t("data.clearReal.note", lang)),
-      h("button", { class: "btn", type: "button", "data-act": "clear-real-yes", onclick: () => {
-        store.real.clear();            // real records only; demo is untouched
-        prefs.clearRealPrayerPlace();  // the real prayer place is a personal location: forget it too
-        if (snapshotRepo) void scrubRealParts(snapshotRepo).catch(() => { /* nothing to scrub */ }); // no snapshot may keep a copy of real data
-        revokeConsent(consentKv);      // next real entry needs a new tick
-        realClearAsk = false; realClearDone = true; rerender();
-      } }, t("data.clearReal.yes", lang)),
-      h("button", { class: "btn ghost", type: "button", "data-act": "clear-real-no", onclick: () => { realClearAsk = false; rerender(); } }, t("data.clearReal.no", lang)));
-  }
-  if (realClearDone && !realClearAsk) kids.push(h("p", { role: "status" }, t("data.clearReal.done", lang)));
-  return h("div", { class: "card", "data-clear": "real" }, ...kids);
-}
-
-let demoClearAsk = false;
-/** Delete only the demo entries: two taps (ask, then confirm). Real data is never touched. */
-function clearDemoBlock(lang: Locale): HTMLElement {
-  if (!demoClearAsk) return h("button", { class: "btn ghost", type: "button", "data-act": "clear-demo", onclick: () => { demoClearAsk = true; rerender(); } }, t("data.clearDemo", lang));
-  return h("div", { class: "card", role: "alert", "data-clear": "demo" }, h("p", {}, t("data.clearDemo.ask", lang)),
-    h("button", { class: "btn", type: "button", "data-act": "clear-demo-yes", onclick: () => { store.demo.clear(); demoClearAsk = false; rerender(); } }, t("data.clearDemo.yes", lang)),
-    h("button", { class: "btn ghost", type: "button", "data-act": "clear-demo-no", onclick: () => { demoClearAsk = false; rerender(); } }, t("mode.del.cancel", lang)));
 }
 
 // TM-REQ-153: spreadsheet copy of the person's own entries. One file per kind, never mixed. Real needs the consent tick. Nothing is uploaded.
@@ -1461,10 +1430,9 @@ export function dataScreen(): HTMLElement {
     modeSwitchCard(),
     h("div", { class: "card", "data-ns": "real" }, h("h2", { class: "card-h", }, t("data.real", lang)), h("p", {}, t("data.real.count", lang, { n: num(store.real.list().length, lang) })), h("p", { class: "muted" }, t(realOn ? "data.real.on" : "data.real.locked", lang))),
     realOn ? null : consentCard(lang),
-    clearRealCard(lang),
     h("div", { class: "card", "data-ns": "demo" }, h("h2", { class: "card-h", }, t("data.demo", lang), " ", demoBadge(lang)), h("p", {}, t("data.demo.count", lang, { n: num(store.demo.list().length, lang) }))),
     h("p", { class: "muted" }, t("data.nopromote", lang)),
-    clearDemoBlock(lang),
+    link("#/settings/delete", "card link", h("h2", { class: "card-h" }, t("set.cat.delete", lang)), h("p", { class: "muted" }, t("set.sum.delete", lang))),
     storageCard(lang),
     lockCard(lang),
     csvCard(realOn, lang),

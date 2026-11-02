@@ -93,12 +93,14 @@ describe("TM-TST-093 D-B: consent record", () => {
 describe("D-B: data screen flow (consent and clear-all)", () => {
   const $ = (sel: string) => document.querySelector(sel) as HTMLElement | null;
   const click = (sel: string) => { $(sel)!.click(); render(); };
+  const gotoDelete = () => { document.body.innerHTML = '<div id="app"></div>'; location.hash = "#/settings/delete"; render(); };
+  const typeWord = (w: string) => { const i = $("[data-delete-word]") as HTMLInputElement; i.value = w; i.dispatchEvent(new Event("input")); };
   const ui = () => { document.body.innerHTML = '<div id="app"></div>'; location.hash = "#/more/data"; render(); };
 
   beforeEach(() => { localStorage.clear(); localStorage.setItem("tm:ui:lang", "en"); store.demo.clear(); store.real.clear(); ui(); });
 
   it("shows the consent card first; real entry is locked until 'I understand' is ticked", () => {
-    expect($("[data-consent='real']")).not.toBeNull();
+    ui(); expect($("[data-consent='real']")).not.toBeNull();
     expect(readConsent(consentKv)).toBe(false);
     expect(() => store.real.put(rec("real", "r1", { x: fact(1) }))).toThrow(StoreError);
   });
@@ -118,14 +120,13 @@ describe("D-B: data screen flow (consent and clear-all)", () => {
     expect(store.real.list().length).toBe(1);
   });
 
-  it("clear-all needs a second tap; cancel keeps everything", () => {
+  it("clear-all needs the typed word: without it the button stays off and everything is kept", () => {
     grantConsent(consentKv, NOW);
     store.real.put(rec("real", "r1", { x: fact(1) }));
     store.demo.put(rec("demo", "d1", { x: demoVal(1) }));
-    ui();
-    click("[data-act='clear-real']");
-    expect($("[data-act='clear-real-yes']")).not.toBeNull();
-    click("[data-act='clear-real-no']");
+    gotoDelete();
+    const yes = $("[data-act='clear-real-yes']") as HTMLButtonElement; expect(yes.disabled).toBe(true);
+    typeWord("nope"); expect(yes.disabled).toBe(true); yes.click(); render();
     expect(store.real.list().length).toBe(1);
     expect(readConsent(consentKv)).toBe(true);
   });
@@ -135,13 +136,12 @@ describe("D-B: data screen flow (consent and clear-all)", () => {
     store.real.put(rec("real", "r1", { x: fact(1) }));
     store.real.put(rec("real", "r2", { x: fact(2) }));
     store.demo.put(rec("demo", "d1", { x: demoVal(1) }));
-    ui();
-    click("[data-act='clear-real']");
+    gotoDelete(); typeWord("delete");
     click("[data-act='clear-real-yes']");
     expect(store.real.list()).toEqual([]);
     expect(store.demo.list().map((r) => r.id)).toEqual(["d1"]);
     expect(readConsent(consentKv)).toBe(false);
-    expect($("[data-consent='real']")).not.toBeNull();
+    ui(); expect($("[data-consent='real']")).not.toBeNull();
     expect(() => store.real.put(rec("real", "r3", { x: fact(3) }))).toThrow(StoreError);
   });
 });

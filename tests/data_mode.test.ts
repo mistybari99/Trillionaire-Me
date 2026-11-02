@@ -123,7 +123,7 @@ describe("delete demo data: explicit confirm only", () => {
     expect(prefs.dataMode).toBe("demo");
   });
   it("Delete my demo entries is two taps and leaves real data alone", () => {
-    go("#/more/data"); click("[data-act=clear-demo]");
+    go("#/settings/delete"); click("[data-act=clear-demo]");
     expect(store.demo.list().length).toBe(4);
     click("[data-act=clear-demo-yes]");
     expect(store.demo.list()).toEqual([]);

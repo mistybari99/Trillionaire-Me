@@ -190,8 +190,8 @@ describe("consent on: real records", () => {
   it("clear-all removes only real records; demo stays on Plan", () => {
     store.demo.put(demoRec("task-demo-3", "task", { "task.title": v("Keep me") }));
     go("#/diary/plan"); setv("pt-title", "Remove me"); submit("form[data-form=task]");
-    go("#/more/data");
-    tap("[data-act=clear-real]"); render();
+    go("#/settings/delete");
+    { const i = document.querySelector<HTMLInputElement>("[data-delete-word]")!; i.value = "delete"; i.dispatchEvent(new Event("input")); }
     tap("[data-act=clear-real-yes]"); render();
     expect(store.real.list()).toEqual([]);
     expect(store.demo.list().map((r) => r.id)).toEqual(["task-demo-3"]);

@@ -15,6 +15,7 @@ import { FACILITY_IDS } from "../core/ports";
 import { RULE_IDS } from "../core/rules";
 import { designOf } from "./themes";
 import { resetOnboard } from "./onboardUi";
+import { deletePage } from "./deleteUi";
 import { CATEGORIES, CAT_LABEL, GUIDES, isCat, rowsOf, settingsHash, type Cat, type CatKey, type SettingRow } from "./settingsRegistry";
 
 const rerender = () => window.dispatchEvent(new HashChangeEvent("hashchange"));
@@ -137,6 +138,7 @@ export function settingsScreen(catArg: string | undefined, rowArg: string | unde
   const lang = prefs.lang;
   if (!catArg || !isCat(catArg) || catArg === "home") return home(rowArg, lang);
   if (catArg === "about") return aboutPage(rowArg, lang);
+  if (catArg === "delete") return deletePage(rowArg, lang);
   return categoryPage(catArg, rowArg, lang);
 }
 

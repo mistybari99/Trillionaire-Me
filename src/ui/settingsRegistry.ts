@@ -61,8 +61,8 @@ export const ROWS: SettingRow[] = [
 
   R("connections", "connections", "more.connections", "#/more/connections", ["connection", "ai", "cloud", "sync", "web search", "licensed", "api key", "approve"], [], ["tm:ui:conn:*", "tm:secret:conn:*"]),
 
-  R("deletedemo", "delete", "set.row.deletedemo", "#/more/data", ["delete", "demo", "clear", "remove"], [], [], true),
-  R("deletereal", "delete", "set.row.deletereal", "#/more/data", ["delete", "real", "clear", "erase", "remove all"], [], [], true),
+  R("deletedemo", "delete", "set.row.deletedemo", "#/settings/delete", ["delete", "demo", "clear", "remove"], [], [], true),
+  R("deletereal", "delete", "set.row.deletereal", "#/settings/delete", ["delete", "real", "clear", "erase", "remove all"], [], [], true),
 
   R("welcome", "about", "set.row.welcome", "#/start", ["welcome", "intro", "first run", "onboarding", "again"], ["onboard", "onboardTimes"], ["tm:ui:onboard", "tm:ui:onboardT"]),
 ];
