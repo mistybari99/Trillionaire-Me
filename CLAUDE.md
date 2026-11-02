@@ -29,6 +29,7 @@ Loanword rule (owner, 1 Nov 2026): in Bangla and Mix text, common everyday words
 - Prefer small commits, one PR per work block, tests with every feature. Run lint/tests/build before reporting.
 - If a tool or setup step fails, diagnose and fix it yourself; report only the result.
 - Use available skills/tools on your own (design, accessibility, TDD, security review) when the gate calls for them. If a skill you need is missing, say which one and continue with the best fallback.
+- Definition of done: end-to-end complete and linked everywhere it is used; a link-check test must pass; no stubs.
 - Keep the Register and Change Log current. Keep the data schema stable and versioned; schema changes need a migration + a note.
 
 ## 4. When you MUST stop and ask the owner (only these)
