@@ -11,7 +11,8 @@ import { allRecs, consentOn, consentPrompt, findRec, labelFor, nsTag, saveBlocke
 import { AREAS, MAX_RATING, lifeAreaRecord, wedgePath, wheelData, type Area } from "../core/lifeWheel";
 import { smartFunnel } from "./smartFunnel";
 import { SMART_PARTS, SWOT_KEYS, goalProgress, listValue, milestoneOf, parseList, readList, smartFilled, swotField, type GoalProgress, type SwotKey } from "../core/goalPlan";
-import { overallProgress, nextProgressMemory, progressTrend, PROGRESS_MODES } from "../core/overallProgress";
+import { overallProgress, nextProgressMemory, progressTrend } from "../core/overallProgress";
+import { planChip } from "./planSettings";
 import { checkFreeText } from "../core/safety";
 import { GOAL_STATUSES, goalStatusOf, withGoalStatus, type GoalStatus } from "../core/goalStatus";
 import { goalAreaCard } from "./universeUi";
@@ -208,7 +209,6 @@ export function overallProgressCard(lang: Locale, where: "today" | "journey"): H
     trend === "down" ? h("p", { class: "muted", "data-overall-fall": "1" }, t("overall.fall", lang)) : null,
     o.percent === null ? h("p", { class: "muted" }, link("#/diary/plan", "crumb", t("overall.add", lang)))
       : h("p", { class: "muted", "data-overall-prompt": "1" }, t("overall.more", lang), " ", link("#/diary/plan", "crumb", t("overall.addMore", lang))),
-    h("div", { class: "seg", role: "group", "aria-label": t("overall.weight", lang) },
-      ...PROGRESS_MODES.map((m) => h("button", { type: "button", "data-ov-mode": m, "aria-pressed": String(mode === m), onclick: () => { prefs.progressMode = m; rerender(); } }, t(m === "size" ? "overall.mode.size" : "overall.mode.equal", lang)))),
+    planChip("weighting", "overall.weight", lang),
     h("p", { class: "muted" }, t("overall.note", lang)));
 }

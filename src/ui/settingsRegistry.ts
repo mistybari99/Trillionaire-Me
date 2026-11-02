@@ -54,10 +54,10 @@ export const ROWS: SettingRow[] = [
   R("mode", "data", "set.row.mode", "#/settings/data/mode", ["demo", "real", "mode", "switch"], ["dataMode", "dataModeChoice", "demoAskedOn", "demoDays"], ["tm:ui:dataMode", "tm:ui:demoAskedOn", "tm:ui:demoDays"]),
   R("startreal", "data", "set.row.startreal", "#/settings/data/start-real", ["start real", "begin", "own data"], [], [], true),
 
-  R("rules", "plan", "more.rules", "#/more/rules", ["automation", "rules", "smaller step", "break", "focus"], ["ruleSwitches", "lastFocusEnd", "lastRestAt"], ["tm:ui:rules", "tm:ui:focusEnd", "tm:ui:restAt"]),
-  R("planmode", "plan", "set.row.planmode", "#/diary/plan", ["plan mode", "minimum week", "pause", "normal", "stuck"], ["mode"], ["tm:ui:mode"]),
-  R("stages", "plan", "set.row.stages", "#/journey", ["stage names", "stage", "template", "journey"], ["stageTemplate"], ["tm:ui:stageTemplate"]),
-  R("weighting", "plan", "set.row.weighting", "#/journey", ["progress", "weight", "equal", "size", "overall"], ["progressMode"], ["tm:ui:progressMode", "tm:ui:overallMem:*"]),
+  R("rules", "plan", "more.rules", "#/settings/plan/rules", ["automation", "rules", "smaller step", "break", "focus"], ["ruleSwitches", "lastFocusEnd", "lastRestAt"], ["tm:ui:rules", "tm:ui:focusEnd", "tm:ui:restAt"]),
+  R("planmode", "plan", "set.row.planmode", "#/settings/plan/planmode", ["plan mode", "minimum week", "pause", "normal", "stuck"], ["mode"], ["tm:ui:mode"]),
+  R("stages", "plan", "set.row.stages", "#/settings/plan/stages", ["stage names", "stage", "template", "journey"], ["stageTemplate"], ["tm:ui:stageTemplate"]),
+  R("weighting", "plan", "set.row.weighting", "#/settings/plan/weighting", ["progress", "weight", "equal", "size", "overall"], ["progressMode"], ["tm:ui:progressMode", "tm:ui:overallMem:*"]),
 
   R("connections", "connections", "more.connections", "#/settings/connections", ["connection", "ai", "cloud", "sync", "web search", "licensed", "api key", "approve"], [], ["tm:ui:conn:*", "tm:secret:conn:*"]),
 

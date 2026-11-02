@@ -4,9 +4,10 @@ import { h } from "./dom";
 import { t, tb, fmtNumber } from "../i18n/t";
 import type { Key } from "../i18n/packs";
 import { LOCALES, LOCALE_ORDER, intlLocale, type Locale } from "../i18n/registry";
-import { applyPrefs, prefs, screenView, store, type HorizonView, type PlanMode } from "./state";
+import { applyPrefs, prefs, screenView, store, type HorizonView } from "./state";
 import { DESIGNS } from "./themes";
 import { dataPage } from "./dataUi";
+import { settingsHash } from "./settingsRegistry";
 import { pausedCard } from "./privacyUi";
 import { disclaimers, fieldHelp, num, valueEl } from "./components";
 import { STAGES, DEMO_DATE, DEMO_TASKS } from "../demo/seed";
@@ -28,7 +29,8 @@ import { assessmentSection } from "./assessment";
 import { markNotTrue, realityLogRecord, RealityError } from "../core/reality";
 import { weeklySummary } from "../core/weeklyReview";
 import { reviewSummary } from "../core/review";
-import { stagesFor, TEMPLATE_IDS, TEMPLATES, type TemplateId } from "../core/stageTemplates";
+import { stagesFor } from "../core/stageTemplates";
+import { planChip, pauseChip } from "./planSettings";
 import { STAGE_CODES, StageError, conditions, currentIndex, passStage, stageStates, type StageCode } from "../core/stages";
 import { LAYERS, TOPICS, topicById, relatedTips, type Tip } from "../library/topics";
 import { tipsFor } from "../library/packs";
@@ -218,7 +220,6 @@ export function planScreen(): HTMLElement {
   const free = cp.state === "ok"
     ? valueEl(t("plan.hours", lang, { h: num(Number((cp.a["constraint.weekly_free_hours"] as { value: number }).value), lang), from: fmtClock(w!.from), to: fmtClock(w!.to) }), valueLabel(cp.a["constraint.weekly_free_hours"]), lang)
     : h("span", {}, t(cp.state === "need_hours" ? "plan.need_hours" : "plan.need_window", lang), " ", link("#/diary/intake/4", "crumb", t("plan.setup", lang)));
-  const seg = (m: PlanMode) => h("button", { type: "button", "data-mode": m, "aria-pressed": String(prefs.mode === m), onclick: () => { prefs.mode = m; rerender(); } }, t(`plan.mode.${m}` as Key, lang));
   const title = h("input", { id: "pt-title", type: "text", maxlength: "120", autocomplete: "off" });
   const mins = h("input", { id: "pt-min", type: "text", inputmode: "numeric" });
   const prio = h("select", { id: "pt-prio" }, ...fieldById("task.priority")!.options!.map((o) => h("option", { value: o.code, ...(o.code === "normal" ? { selected: true } : {}) }, tb(o.label, lang))));
@@ -283,7 +284,7 @@ export function planScreen(): HTMLElement {
     feasibilityNote(cp, lang),
     planFlow(cp, lang),
     assessmentSection(cp.recs, lang),
-    h("h2", {}, t("plan.mode", lang)), h("div", { class: "seg", role: "group" }, seg("normal"), seg("minimum_week"), seg("pause")),
+    h("h2", {}, t("plan.mode", lang)), planChip("planmode", "plan.mode", lang),
     prefs.mode !== "normal" ? h("p", { class: "muted" }, t(`plan.mode.${prefs.mode}.desc` as Key, lang)) : null,
     h("h2", {}, t("plan.add", lang)), form,
     viewBar("plan", lang),
@@ -569,7 +570,7 @@ export function stuckScreen(): HTMLElement {
         return h("div", { class: "card" }, h("h2", { class: "card-h", }, t("stuck.h.tiny_step", lang)), h("label", { for: "stuck-step" }, t("stuck.stepName", lang)), name, msg, add);
       }
       const b = h("button", { class: "btn", type: "button", "data-helper": hp }, t(`stuck.h.${hp}` as Key, lang));
-      b.addEventListener("click", () => { prefs.mode = hp; log(d, hp); out.replaceChildren(h("p", { class: "ok-msg", "data-done": hp }, t(`stuck.done.${hp}` as Key, lang)), link("#/diary/plan", "btn ghost", t("plan.title", lang))); });
+      b.addEventListener("click", () => { prefs.mode = hp; log(d, hp); out.replaceChildren(h("p", { class: "ok-msg", "data-done": hp }, t(`stuck.done.${hp}` as Key, lang)), h("p", { class: "muted", "data-stuck-back": "1" }, t("plan.set.back", lang), " ", link(settingsHash("plan", "planmode"), "crumb", t("plan.set.change", lang))), link("#/diary/plan", "btn ghost", t("plan.title", lang))); });
       return h("div", { class: "card" }, b);
     });
     out.replaceChildren(h("h2", {}, t("stuck.causes", lang)),
@@ -866,6 +867,7 @@ export function today(): HTMLElement {
       h("div", { class: "n" }, num(curStage + 1, lang), h("span", { style: "font-size:22px;color:var(--muted)" }, ` / ${num(STAGES.length, lang)}`)),
       rungs),
     pausedCard(lang),
+    pauseChip(lang),
     overallProgressCard(lang, "today"),
     homeCountCards(lang),
     homeSummaryCards(lang),
@@ -887,13 +889,9 @@ export function today(): HTMLElement {
     disclaimers(lang));
 }
 
-// O6: stage-name template chooser. Names only; codes, order and past passes are never changed.
+// O6: stage names are chosen in Settings > Plan & progress; here only the current choice and a link.
 function templatePicker(lang: Locale): HTMLElement {
-  const cur = prefs.stageTemplate;
-  const seg = (id: TemplateId) => h("button", { type: "button", "data-tpl": id, "aria-pressed": String(cur === id), onclick: () => { prefs.stageTemplate = id; rerender(); } }, tb(TEMPLATES[id].name, lang));
-  return h("section", { class: "card", "data-card": "stage_templates" }, h("h2", { class: "card-h", }, t("stage.tpl.h", lang)),
-    h("div", { class: "seg", role: "group", "aria-label": t("stage.tpl.h", lang) }, ...TEMPLATE_IDS.map(seg)),
-    h("p", { class: "muted" }, t("stage.tpl.note", lang)));
+  return h("section", { class: "card", "data-card": "stage_templates_chip" }, h("h2", { class: "card-h" }, t("stage.tpl.h", lang)), planChip("stages", "stage.tpl.h", lang), h("p", { class: "muted" }, t("stage.tpl.note", lang)));
 }
 
 // O6: 90-day review. Counts only; a measure with no record in the window reads "not enough data", never 0.

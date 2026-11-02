@@ -107,8 +107,8 @@ export function rulesTodayCard(lang: Locale): HTMLElement | null {
 }
 
 export function rulesScreen(): HTMLElement { return withView("rules", L(), rulesScreenInner()); }
-function rulesScreenInner(): HTMLElement {
-  const lang = L();
+/** The four rule switches (one implementation, used on the Settings plan page). */
+export function ruleRows(lang: Locale): HTMLElement[] {
   const sw = prefs.ruleSwitches;
   const rows = RULE_IDS.map((id) => {
     const def = RULES[id];
@@ -121,6 +121,11 @@ function rulesScreenInner(): HTMLElement {
       h("p", { class: "muted" }, tb(def.desc, lang)),
       h("div", { class: "seg", role: "group", "aria-label": tb(def.name, lang) }, pick(t("rules.on", lang), on, true), pick(t("rules.disable", lang), !on, false)));
   });
+  return rows;
+}
+function rulesScreenInner(): HTMLElement {
+  const lang = L();
+  const rows = ruleRows(lang);
   return h("main", { class: "scr scr-rules" },
     link("#/settings", "crumb", `← ${t("nav.settings", lang)}`),
     h("h1", {}, t("rules.title", lang)),

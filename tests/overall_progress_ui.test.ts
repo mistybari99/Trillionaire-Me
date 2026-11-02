@@ -1,3 +1,4 @@
+import { render } from "../src/app";
 // Overall progress card on Today and Journey: unknown with no tasks, text equivalent, gentle prompt, no red, goal creation fields.
 import { beforeEach, describe, expect, it } from "vitest";
 import { journey, today, intake } from "../src/ui/screens";
@@ -32,7 +33,8 @@ describe("overall progress card", () => {
   });
   it("size mode is a button choice that persists", () => {
     store.demo.put(task("a", { ...done, "task.minutes": { state: "value", value: 10, label: "DEMO" } }) as never); store.demo.put(task("b", { "task.minutes": { state: "value", value: 30, label: "DEMO" } }) as never);
-    document.body.appendChild(today());
+    document.body.appendChild(today()); expect(document.querySelector("[data-ov-mode]")).toBeNull(); expect(document.querySelector("[data-plan-chip=weighting] a")!.getAttribute("href")).toBe("#/settings/plan/weighting");
+    document.body.innerHTML = '<div id="app"></div>'; location.hash = "#/settings/plan"; render();
     document.querySelector<HTMLButtonElement>("[data-ov-mode=size]")!.click();
     expect(prefs.progressMode).toBe("size");
     document.body.innerHTML = ""; document.body.appendChild(today());

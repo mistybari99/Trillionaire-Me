@@ -157,13 +157,15 @@ describe("O6 screens render (both languages)", () => {
     expect(document.querySelector("[data-review=tasks] [data-review-empty=tasks]")!.textContent).toBe(bn["review.notEnough"]);
   });
   it("template chooser changes stage names in the ladder, keeps codes, and marks the choice", () => {
-    go("#/journey");
+    go("#/journey"); expect(document.querySelector("[data-tpl]")).toBeNull(); expect(document.querySelector("[data-plan-chip=stages] a")!.getAttribute("href")).toBe("#/settings/plan/stages"); // Journey shows a chip and a link
+    go("#/settings/plan");
     expect(document.querySelector("[data-tpl=default]")!.getAttribute("aria-pressed")).toBe("true");
     (document.querySelector("[data-tpl=learning]") as HTMLButtonElement).click(); render(); // main.ts re-renders on hashchange; tests do it by hand
     expect(prefs.stageTemplate).toBe("learning");
+    go("#/journey"); expect(document.querySelector("[data-plan-chip=stages]")!.textContent).toMatch(new RegExp(TEMPLATES.learning.name.en));
     const names = [...document.querySelectorAll(".ladder li div > div:first-child")].map((x) => x.textContent);
     expect(names[1]).toBe(TEMPLATES.learning.stages[1]!.name.en);
-    expect(document.querySelector("[data-tpl=learning]")!.getAttribute("aria-pressed")).toBe("true");
+    go("#/settings/plan"); expect(document.querySelector("[data-tpl=learning]")!.getAttribute("aria-pressed")).toBe("true");
     localStorage.removeItem("tm:ui:stageTemplate");
   });
   it("plan: 'no longer true' keeps the step on record, logs it, and it stops being scheduled", () => {

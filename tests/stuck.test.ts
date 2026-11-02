@@ -55,6 +55,7 @@ describe("TM-TST-047/116 overload (tired) in the stuck flow adds no work", () =>
     expect(document.querySelector("[data-helper=tiny_step]")).toBeNull();
     (document.querySelector("[data-helper=minimum_week]") as HTMLButtonElement).click();
     expect(prefs.mode).toBe("minimum_week"); expect(store.demo.list().filter((r) => r.entity === "task")).toEqual([]);
+    expect(document.querySelector("[data-stuck-back] a")!.getAttribute("href")).toBe("#/settings/plan/planmode"); // says it can be changed back in Settings
     expect(document.getElementById("app")!.textContent!).not.toMatch(/\b(shame\w*|guilt\w*|fail\w*|grade\w*|rank\w*|streak\w*|score\w*|lazy|overdue|behind|punish\w*|penalt\w*|mistake\w*)\b/i); // crisis screen text
   });
 });

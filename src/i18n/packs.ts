@@ -976,6 +976,12 @@ const en = {
   "bak.fold.snap": "Snapshots on this phone",
   "bak.fold.csv": "Spreadsheet copy and import",
   "bak.backToBackup": "Back to Backup & export",
+  "plan.set.intro": "These choices change what Today, Journey and your plan show. Nothing is added or deleted.",
+  "plan.set.automation": "Automation rules",
+  "plan.set.chip": "{what}: {value}",
+  "plan.set.change": "Change in Settings",
+  "plan.set.endpause": "End the pause",
+  "plan.set.back": "You can change this back in Settings.",
 } as const;
 
 export type Key = keyof typeof en;
@@ -2292,6 +2298,12 @@ const bn: Record<Key, string> = {
   "bak.fold.snap": "এই ফোনের স্ন্যাপশট",
   "bak.fold.csv": "স্প্রেডশিট কপি ও ইমপোর্ট",
   "bak.backToBackup": "ব্যাকআপ ও এক্সপোর্টে ফিরুন",
+  "plan.set.intro": "এই পছন্দগুলো Today, Journey ও প্ল্যানে কী দেখাবে তা ঠিক করে। কিছু যোগ বা ডিলিট হয় না।",
+  "plan.set.automation": "অটোমেটিক নিয়ম",
+  "plan.set.chip": "{what} এখন: {value}",
+  "plan.set.change": "সেটিংসে বদলান",
+  "plan.set.endpause": "বিরতি শেষ করুন",
+  "plan.set.back": "এটা আবার সেটিংস থেকে বদলাতে পারবেন।",
 };
 
 // Mix mode: Bangla sentences with common English words kept (owner request, decision L-11).
