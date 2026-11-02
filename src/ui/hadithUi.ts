@@ -17,6 +17,7 @@ function card(e: HadithEntry, lang: Locale): HTMLElement {
     e.arabic ? h("p", { lang: "ar", dir: "rtl", style: "font-size:1.2em", "data-hadith-ar": "1" }, e.arabic) : null,
     text ? h("p", { "data-hadith-text": "1" }, text) : null,
     h("p", { class: "muted", "data-hadith-ref": "1" }, t("hd.ref", lang, { c: e.collection, n: e.number }), e.book ? ` · ${e.book}` : ""),
+    e.reference ? h("details", { class: "help" }, h("summary", {}, t("hd.reflines", lang)), h("p", { lang: "ar", dir: "rtl", class: "muted", style: "white-space:pre-line", "data-hadith-refline": "1" }, e.reference)) : null,
     e.grade ? h("p", { class: "muted", "data-hadith-grade": "1" }, t("hd.grade", lang, { g: e.grade, by: e.gradeBy ?? "" })) : null,
     h("p", { class: "muted", "data-hadith-source": "1" }, t("hd.source", lang, { s: e.source, l: e.licence }), " ", h("span", { class: "muted" }, e.sourceUrl)),
     h("span", { class: "tag off", "data-hadith-status": e.status }, e.status === "reviewed" ? t("hd.reviewed", lang, { r: e.reviewer ?? "" }) : t("hd.unreviewed", lang)));
@@ -26,7 +27,8 @@ export function hadithScreen(): HTMLElement {
   const lang = prefs.lang; const on = readHadithOn(consentKv);
   const body = h("div", { "data-hadith-body": "1" });
   const head = [h("a", { href: "#/settings/about", class: "crumb" }, `← ${t("set.cat.about", lang)}`), h("h1", {}, t("hd.title", lang)), h("p", { class: "sub" }, t("hd.intro", lang)),
-    h("div", { class: "note", role: "note", "data-hadith-banner": "1" }, h("p", {}, t("hd.banner", lang)))];
+    h("div", { class: "note", role: "note", "data-hadith-banner": "1" }, h("p", {}, t("hd.banner", lang))),
+    h("p", { class: "muted", "data-hadith-sourcenote": "1" }, t("hd.sourceNote", lang))];
   if (!on) {
     return h("main", { class: "scr scr-hadith" }, ...head, h("div", { class: "card", "data-hadith-off": "1" }, h("h2", { class: "card-h" }, t("hd.off.title", lang)), h("p", {}, t("hd.off.p", lang)),
       h("label", { style: "display:flex;gap:8px;align-items:center;margin:8px 0" }, h("input", { type: "checkbox", id: "hadith-tick", style: "width:24px;margin:0" }), t("hd.tick", lang)),
@@ -45,5 +47,5 @@ export function hadithScreen(): HTMLElement {
   import("../library/hadithPack.json").then((m) => { pack = loadPack(m.default); draw(); }).catch(() => { body.replaceChildren(h("p", { class: "muted" }, t("lazy.failed", lang))); });
   draw();
   return h("main", { class: "scr scr-hadith" }, ...head, h("label", { for: "hd-q" }, t("hd.search", lang)), input, chips, body,
-    h("button", { class: "btn ghost", type: "button", "data-act": "hadith-off", style: "width:auto;min-height:44px", onclick: () => { disableHadith(consentKv); rerender(); } }, t("hd.off.btn", lang)), disclaimers(lang, ["noFatwa"]));
+    h("button", { class: "btn ghost", type: "button", "data-act": "hadith-off", style: "width:auto;min-height:44px", onclick: () => { disableHadith(consentKv); rerender(); } }, t("hd.off.btn", lang)), disclaimers(lang, ["noFatwa", "noGuarantee"]));
 }

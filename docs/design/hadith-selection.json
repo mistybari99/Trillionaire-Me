@@ -1,0 +1,1316 @@
+{
+ "about": "Hadith ids taken from HadeethEnc.com (rules in tools/hadith_import_hadeethenc.mjs). Topic tags are the builder's own labels.",
+ "mirrorCommit": "429f7bd041246a943751121590287c7877b15372",
+ "versions": {
+  "ar": "1.8.0",
+  "en": "1.25.0",
+  "bn": "1.56.0"
+ },
+ "entries": [
+  {
+   "id": "2936",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "2941",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "2945",
+   "topics": [
+    "purpose"
+   ]
+  },
+  {
+   "id": "2965",
+   "topics": [
+    "wealth"
+   ]
+  },
+  {
+   "id": "3007",
+   "topics": [
+    "purpose",
+    "knowledge"
+   ]
+  },
+  {
+   "id": "3017",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "3018",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "3044",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "3053",
+   "topics": [
+    "life"
+   ]
+  },
+  {
+   "id": "3060",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "3071",
+   "topics": [
+    "family"
+   ]
+  },
+  {
+   "id": "3087",
+   "topics": [
+    "intention"
+   ]
+  },
+  {
+   "id": "3127",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "3133",
+   "topics": [
+    "purpose"
+   ]
+  },
+  {
+   "id": "3138",
+   "topics": [
+    "purpose"
+   ]
+  },
+  {
+   "id": "3142",
+   "topics": [
+    "intention"
+   ]
+  },
+  {
+   "id": "3153",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "3157",
+   "topics": [
+    "intention"
+   ]
+  },
+  {
+   "id": "3159",
+   "topics": [
+    "patience",
+    "character"
+   ]
+  },
+  {
+   "id": "3173",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "3267",
+   "topics": [
+    "purpose"
+   ]
+  },
+  {
+   "id": "3298",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "3342",
+   "topics": [
+    "intention",
+    "purpose"
+   ]
+  },
+  {
+   "id": "3347",
+   "topics": [
+    "purpose"
+   ]
+  },
+  {
+   "id": "3358",
+   "topics": [
+    "wealth",
+    "character"
+   ]
+  },
+  {
+   "id": "3360",
+   "topics": [
+    "purpose"
+   ]
+  },
+  {
+   "id": "3367",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "3381",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "3414",
+   "topics": [
+    "purpose"
+   ]
+  },
+  {
+   "id": "3419",
+   "topics": [
+    "purpose"
+   ]
+  },
+  {
+   "id": "3420",
+   "topics": [
+    "purpose"
+   ]
+  },
+  {
+   "id": "3422",
+   "topics": [
+    "purpose"
+   ]
+  },
+  {
+   "id": "3520",
+   "topics": [
+    "purpose"
+   ]
+  },
+  {
+   "id": "3552",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "3553",
+   "topics": [
+    "time",
+    "purpose"
+   ]
+  },
+  {
+   "id": "3561",
+   "topics": [
+    "purpose"
+   ]
+  },
+  {
+   "id": "3575",
+   "topics": [
+    "purpose"
+   ]
+  },
+  {
+   "id": "3578",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "3584",
+   "topics": [
+    "life"
+   ]
+  },
+  {
+   "id": "3587",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "3599",
+   "topics": [
+    "wealth"
+   ]
+  },
+  {
+   "id": "3602",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "3689",
+   "topics": [
+    "knowledge"
+   ]
+  },
+  {
+   "id": "3700",
+   "topics": [
+    "purpose"
+   ]
+  },
+  {
+   "id": "3703",
+   "topics": [
+    "life"
+   ]
+  },
+  {
+   "id": "3705",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "3706",
+   "topics": [
+    "patience",
+    "character"
+   ]
+  },
+  {
+   "id": "3715",
+   "topics": [
+    "purpose"
+   ]
+  },
+  {
+   "id": "3716",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "3719",
+   "topics": [
+    "purpose"
+   ]
+  },
+  {
+   "id": "3753",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "3756",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "3773",
+   "topics": [
+    "life"
+   ]
+  },
+  {
+   "id": "3779",
+   "topics": [
+    "intention"
+   ]
+  },
+  {
+   "id": "3785",
+   "topics": [
+    "halal_earning"
+   ]
+  },
+  {
+   "id": "3788",
+   "topics": [
+    "life"
+   ]
+  },
+  {
+   "id": "3854",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "3863",
+   "topics": [
+    "family"
+   ]
+  },
+  {
+   "id": "3910",
+   "topics": [
+    "purpose"
+   ]
+  },
+  {
+   "id": "4195",
+   "topics": [
+    "halal_earning"
+   ]
+  },
+  {
+   "id": "4233",
+   "topics": [
+    "knowledge"
+   ]
+  },
+  {
+   "id": "4236",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "4243",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "4244",
+   "topics": [
+    "life"
+   ]
+  },
+  {
+   "id": "4308",
+   "topics": [
+    "intention",
+    "character"
+   ]
+  },
+  {
+   "id": "4314",
+   "topics": [
+    "intention",
+    "character"
+   ]
+  },
+  {
+   "id": "4318",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "4558",
+   "topics": [
+    "purpose",
+    "wealth"
+   ]
+  },
+  {
+   "id": "4559",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "4560",
+   "topics": [
+    "intention"
+   ]
+  },
+  {
+   "id": "4568",
+   "topics": [
+    "purpose"
+   ]
+  },
+  {
+   "id": "4704",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "4709",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "4716",
+   "topics": [
+    "purpose"
+   ]
+  },
+  {
+   "id": "4717",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "4721",
+   "topics": [
+    "intention"
+   ]
+  },
+  {
+   "id": "4723",
+   "topics": [
+    "life"
+   ]
+  },
+  {
+   "id": "4809",
+   "topics": [
+    "purpose"
+   ]
+  },
+  {
+   "id": "4817",
+   "topics": [
+    "purpose"
+   ]
+  },
+  {
+   "id": "4935",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "4939",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "4950",
+   "topics": [
+    "time"
+   ]
+  },
+  {
+   "id": "4963",
+   "topics": [
+    "life",
+    "character"
+   ]
+  },
+  {
+   "id": "4965",
+   "topics": [
+    "halal_earning"
+   ]
+  },
+  {
+   "id": "4969",
+   "topics": [
+    "purpose"
+   ]
+  },
+  {
+   "id": "5141",
+   "topics": [
+    "patience"
+   ]
+  },
+  {
+   "id": "5326",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "5330",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "5336",
+   "topics": [
+    "halal_earning"
+   ]
+  },
+  {
+   "id": "5341",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "5346",
+   "topics": [
+    "purpose"
+   ]
+  },
+  {
+   "id": "5348",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "5351",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "5354",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "5365",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "5367",
+   "topics": [
+    "family"
+   ]
+  },
+  {
+   "id": "5368",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "5371",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "5372",
+   "topics": [
+    "purpose"
+   ]
+  },
+  {
+   "id": "5377",
+   "topics": [
+    "knowledge"
+   ]
+  },
+  {
+   "id": "5437",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "5439",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "5449",
+   "topics": [
+    "time",
+    "character"
+   ]
+  },
+  {
+   "id": "5456",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "5474",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "5478",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "5493",
+   "topics": [
+    "intention"
+   ]
+  },
+  {
+   "id": "5495",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "5497",
+   "topics": [
+    "intention",
+    "character"
+   ]
+  },
+  {
+   "id": "5504",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "5512",
+   "topics": [
+    "wealth"
+   ]
+  },
+  {
+   "id": "5514",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "5516",
+   "topics": [
+    "purpose"
+   ]
+  },
+  {
+   "id": "5518",
+   "topics": [
+    "knowledge"
+   ]
+  },
+  {
+   "id": "5520",
+   "topics": [
+    "purpose"
+   ]
+  },
+  {
+   "id": "5542",
+   "topics": [
+    "patience"
+   ]
+  },
+  {
+   "id": "5545",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "5787",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "5791",
+   "topics": [
+    "halal_earning"
+   ]
+  },
+  {
+   "id": "5792",
+   "topics": [
+    "family",
+    "character"
+   ]
+  },
+  {
+   "id": "5795",
+   "topics": [
+    "purpose"
+   ]
+  },
+  {
+   "id": "5796",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "5797",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "5800",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "5802",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "5803",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "5805",
+   "topics": [
+    "wealth"
+   ]
+  },
+  {
+   "id": "5808",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "5811",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "5814",
+   "topics": [
+    "life"
+   ]
+  },
+  {
+   "id": "5821",
+   "topics": [
+    "family"
+   ]
+  },
+  {
+   "id": "5830",
+   "topics": [
+    "life",
+    "patience"
+   ]
+  },
+  {
+   "id": "5840",
+   "topics": [
+    "life"
+   ]
+  },
+  {
+   "id": "5863",
+   "topics": [
+    "family"
+   ]
+  },
+  {
+   "id": "5866",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "5889",
+   "topics": [
+    "halal_earning"
+   ]
+  },
+  {
+   "id": "5927",
+   "topics": [
+    "purpose"
+   ]
+  },
+  {
+   "id": "5934",
+   "topics": [
+    "purpose"
+   ]
+  },
+  {
+   "id": "5936",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "5953",
+   "topics": [
+    "intention"
+   ]
+  },
+  {
+   "id": "6035",
+   "topics": [
+    "family"
+   ]
+  },
+  {
+   "id": "6078",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "6103",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "6106",
+   "topics": [
+    "knowledge"
+   ]
+  },
+  {
+   "id": "6179",
+   "topics": [
+    "wealth",
+    "character"
+   ]
+  },
+  {
+   "id": "6180",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "6220",
+   "topics": [
+    "family"
+   ]
+  },
+  {
+   "id": "6262",
+   "topics": [
+    "intention",
+    "knowledge",
+    "character"
+   ]
+  },
+  {
+   "id": "6389",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "6454",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "6460",
+   "topics": [
+    "wealth"
+   ]
+  },
+  {
+   "id": "6468",
+   "topics": [
+    "purpose"
+   ]
+  },
+  {
+   "id": "6469",
+   "topics": [
+    "purpose"
+   ]
+  },
+  {
+   "id": "6614",
+   "topics": [
+    "life"
+   ]
+  },
+  {
+   "id": "6765",
+   "topics": [
+    "purpose"
+   ]
+  },
+  {
+   "id": "6820",
+   "topics": [
+    "knowledge"
+   ]
+  },
+  {
+   "id": "8265",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "8289",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "10101",
+   "topics": [
+    "purpose",
+    "character"
+   ]
+  },
+  {
+   "id": "10411",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "10974",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "58066",
+   "topics": [
+    "family"
+   ]
+  },
+  {
+   "id": "58067",
+   "topics": [
+    "family"
+   ]
+  },
+  {
+   "id": "58093",
+   "topics": [
+    "family"
+   ]
+  },
+  {
+   "id": "58125",
+   "topics": [
+    "family"
+   ]
+  },
+  {
+   "id": "58188",
+   "topics": [
+    "family"
+   ]
+  },
+  {
+   "id": "65002",
+   "topics": [
+    "purpose"
+   ]
+  },
+  {
+   "id": "65003",
+   "topics": [
+    "purpose"
+   ]
+  },
+  {
+   "id": "65004",
+   "topics": [
+    "purpose",
+    "character"
+   ]
+  },
+  {
+   "id": "65007",
+   "topics": [
+    "purpose"
+   ]
+  },
+  {
+   "id": "65008",
+   "topics": [
+    "purpose"
+   ]
+  },
+  {
+   "id": "65010",
+   "topics": [
+    "purpose"
+   ]
+  },
+  {
+   "id": "65014",
+   "topics": [
+    "intention",
+    "wealth"
+   ]
+  },
+  {
+   "id": "65015",
+   "topics": [
+    "purpose"
+   ]
+  },
+  {
+   "id": "65018",
+   "topics": [
+    "patience",
+    "character"
+   ]
+  },
+  {
+   "id": "65043",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "65047",
+   "topics": [
+    "intention",
+    "life",
+    "knowledge"
+   ]
+  },
+  {
+   "id": "65055",
+   "topics": [
+    "intention"
+   ]
+  },
+  {
+   "id": "65063",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "65069",
+   "topics": [
+    "purpose"
+   ]
+  },
+  {
+   "id": "65074",
+   "topics": [
+    "purpose",
+    "character"
+   ]
+  },
+  {
+   "id": "65107",
+   "topics": [
+    "intention"
+   ]
+  },
+  {
+   "id": "65116",
+   "topics": [
+    "purpose"
+   ]
+  },
+  {
+   "id": "65121",
+   "topics": [
+    "purpose"
+   ]
+  },
+  {
+   "id": "65124",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "65218",
+   "topics": [
+    "purpose"
+   ]
+  },
+  {
+   "id": "65303",
+   "topics": [
+    "purpose"
+   ]
+  },
+  {
+   "id": "65566",
+   "topics": [
+    "knowledge"
+   ]
+  },
+  {
+   "id": "65620",
+   "topics": [
+    "wealth"
+   ]
+  },
+  {
+   "id": "65772",
+   "topics": [
+    "intention",
+    "patience"
+   ]
+  },
+  {
+   "id": "65812",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "65814",
+   "topics": [
+    "life",
+    "character"
+   ]
+  },
+  {
+   "id": "65815",
+   "topics": [
+    "life",
+    "character"
+   ]
+  },
+  {
+   "id": "65816",
+   "topics": [
+    "life",
+    "character"
+   ]
+  },
+  {
+   "id": "65820",
+   "topics": [
+    "life",
+    "character"
+   ]
+  },
+  {
+   "id": "65821",
+   "topics": [
+    "life",
+    "character"
+   ]
+  },
+  {
+   "id": "65869",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "66221",
+   "topics": [
+    "life"
+   ]
+  },
+  {
+   "id": "66224",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "66232",
+   "topics": [
+    "life"
+   ]
+  },
+  {
+   "id": "66233",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "66234",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "66236",
+   "topics": [
+    "purpose",
+    "character"
+   ]
+  },
+  {
+   "id": "66251",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "66252",
+   "topics": [
+    "intention",
+    "character"
+   ]
+  },
+  {
+   "id": "66254",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "66255",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "66268",
+   "topics": [
+    "halal_earning"
+   ]
+  },
+  {
+   "id": "66271",
+   "topics": [
+    "purpose",
+    "character"
+   ]
+  },
+  {
+   "id": "66272",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "66284",
+   "topics": [
+    "character"
+   ]
+  },
+  {
+   "id": "66385",
+   "topics": [
+    "halal_earning"
+   ]
+  }
+ ]
+}

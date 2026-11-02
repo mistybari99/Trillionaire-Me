@@ -16,6 +16,8 @@ export interface HadithEntry {
   id: string; topics: HadithTopic[];
   arabic?: string; bn?: string; en?: string;
   collection: string; book?: string; number: string;
+  /** the reference lines exactly as the source gives them (Arabic) */
+  reference?: string;
   /** only when the source itself gives a grade */
   grade?: string; gradeBy?: string;
   source: string; sourceUrl: string; licence: string;
@@ -52,5 +54,5 @@ export function loadPack(json: unknown): LoadResult {
 const norm = (s: string) => latinDigits(s).toLowerCase();
 export function searchHadith(entries: readonly HadithEntry[], q: string, topic: HadithTopic | null): HadithEntry[] {
   const needle = norm(q.trim());
-  return entries.filter((e) => (!topic || e.topics.includes(topic)) && (!needle || norm([e.bn, e.en, e.arabic, e.collection, e.number, e.book].filter(Boolean).join(" ")).includes(needle)));
+  return entries.filter((e) => (!topic || e.topics.includes(topic)) && (!needle || norm([e.bn, e.en, e.arabic, e.collection, e.number, e.book, e.reference].filter(Boolean).join(" ")).includes(needle)));
 }
