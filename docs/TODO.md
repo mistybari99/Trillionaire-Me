@@ -118,7 +118,7 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 - [x] Run 2, step 18 (M14): health and family page with separate consent tick, counts only on Today/report, CSV excludes it (`src/core/health.ts`, `src/ui/healthUi.ts`, `tests/health.test.ts`); schema additive (catalog 14).
 - [x] Run 2, step 19 (D-D): hadith reader structure, off by default, importer, tests (`src/core/hadith.ts`, `src/ui/hadithUi.ts`, `tools/hadith_import.mjs`, `tests/hadith.test.ts`). Pack EMPTY: licence of translations unclear (see `docs/design/hadith-pack.md`).
 - [ ] Fill the hadith pack: pick a source with a clear licence (builder can do this), run the importer, run the read-only re-fetch check.
-- [ ] Run 2: M13 Deen plan/reminder forms (owner approved 2 Nov 2026) NOT built in this run.
+- [x] Run 2 step 20: M13 Deen plan/reminder forms (owner approved 2 Nov 2026): `#/deen/plans`, `src/core/deenPlans.ts`, `src/ui/deenPlansUi.ts`, `tests/deen_plans.test.ts`. M13 stays partial: Hijri date and Ramadan view not built.
 - [ ] Run 2: M18 drawn timeline / Kanban / option board NOT built in this run.
 
 ## Part B — Owner-only tasks

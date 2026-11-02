@@ -2,7 +2,7 @@ import type { Bi } from "../i18n/registry";
 import { UNKNOWN_STATES, type UnknownState } from "../core/types";
 import type { AccessRule, ChoiceOption, FieldDef, FieldType, Importance, PrivacyClass, Purpose, Requirement } from "./types";
 
-export const CATALOG_VERSION = 14;
+export const CATALOG_VERSION = 15;
 
 const bi = (bn: string, en: string): Bi => ({ bn, en });
 const opt = (code: string, bn: string, en: string): ChoiceOption => ({ code, label: bi(bn, en) });
@@ -484,8 +484,8 @@ export const FIELDS: FieldDef[] = [
     example: bi("২০২৬-১০-২২", "2026-10-22"), format: bi("বছর-মাস-দিন", "YYYY-MM-DD") }),
   f({ id: "zakat_snapshot.note", entity: "zakat_snapshot", family: "FAM-13", type: "text", purpose: "deen_tracking", privacy: "worship", importance: "optional",
     label: bi("যাকাতের নোট", "Zakat note"),
-    what: bi("যাকাত নিয়ে আপনার নিজস্ব স্মরণীয় নোট। হিসাবের নিয়ম পরে যাচাই করে যোগ হবে।", "Your own reminder about zakat. Calculation rules are added later after verification."),
-    why: bi("টুল ফতোয়া দেয় না; কোনো হিসাব এখানে নেই।", "The tool gives no rulings; no calculation is made here."),
+    what: bi("যাকাত নিয়ে আপনার নিজস্ব রিমাইন্ডার নোট।", "Your own reminder note about zakat."),
+    why: bi("টুল ফতোয়া দেয় না; কোনো অঙ্ক নিজে বসায় না। কোনো অঙ্ক দেখালে তা আপনার লেখা সংখ্যা থেকেই।", "The tool gives no rulings and supplies no figure. Any figure shown comes only from numbers you type."),
     example: bi("বছর পূর্ণ হবে রমজানে", "Due year completes in Ramadan") }),
   f({ id: "giving.amount", entity: "giving", family: "FAM-13", type: "money", unit: "BDT", purpose: "deen_tracking", privacy: "worship", importance: "optional",
     label: bi("দানের পরিমাণ", "Giving amount"),
@@ -508,6 +508,47 @@ export const FIELDS: FieldDef[] = [
     why: bi("তৃতীয় পক্ষের নাম এড়িয়ে সংক্ষেপে লিখুন।", "Keep it brief and avoid naming third parties."),
     example: bi("আত্মীয়ের ধার পরিশোধ বাকি", "A loan from a relative to repay"), format: bi("এক-দুই বাক্য", "One or two sentences") }),
 
+  // ── Deen plans and reminders (M13, FAM-13): the person's own plans; zakat figure only from numbers the person types. Nothing is rated or ruled on. ──
+  f({ id: "deen_plan.kind", entity: "deen_plan", family: "FAM-13", type: "choice", purpose: "deen_tracking", privacy: "worship", importance: "optional",
+    options: [opt("salah", "নামাজ", "Salah"), opt("fasting", "রোজা", "Fasting"), opt("zakat", "যাকাত", "Zakat"), opt("learning", "দ্বীনি শিক্ষা", "Learning"), opt("family", "পরিবার ও হক", "Family and duties"), opt("giving", "দান", "Giving")],
+    label: bi("প্ল্যানের ধরন", "Kind of plan"), what: bi("কোন বিষয়ের প্ল্যান বা রিমাইন্ডার।", "What the plan or reminder is about."),
+    why: bi("ধরন অনুযায়ী লিস্ট সাজানো থাকে। কোনো ধরন অন্যটির চেয়ে ওপরে নয়।", "The list is grouped by kind. No kind ranks above another."), example: bi("নামাজ", "Salah") }),
+  f({ id: "deen_plan.title", entity: "deen_plan", family: "FAM-13", type: "text", purpose: "deen_tracking", privacy: "worship", importance: "optional",
+    label: bi("প্ল্যানের নাম", "Plan name"), what: bi("আপনার নিজের ভাষায় ছোট নাম।", "A short name in your own words."),
+    why: bi("আজকের পাতায় রিমাইন্ডার হিসেবে এই নাম দেখায়।", "This name shows as the reminder on Today."), example: bi("ফজরের পর ১০ মিনিট পড়া", "Ten minutes of study after Fajr"), format: bi("৮০ অক্ষরের মধ্যে", "Up to 80 characters") }),
+  f({ id: "deen_plan.repeat", entity: "deen_plan", family: "FAM-13", type: "choice", purpose: "deen_tracking", privacy: "worship", importance: "optional",
+    options: [opt("daily", "প্রতিদিন", "Every day"), opt("weekly", "প্রতি সপ্তাহে", "Every week"), opt("monthly", "প্রতি মাসে", "Every month"), opt("yearly", "প্রতি বছর", "Every year"), opt("once", "একবার", "Once")],
+    label: bi("কত দিন পরপর", "How often"), what: bi("কখন কখন রিমাইন্ডার দেখাবে।", "When the reminder shows."),
+    why: bi("সাপ্তাহিক, মাসিক, বার্ষিক ও একবারের প্ল্যানে একটি তারিখ লাগে; না দিলে রিমাইন্ডার দেখাবে না।", "Weekly, monthly, yearly and one-time plans need a date; without one no reminder shows."), example: bi("প্রতিদিন", "Every day") }),
+  f({ id: "deen_plan.due", entity: "deen_plan", family: "FAM-13", type: "date", purpose: "deen_tracking", privacy: "worship", importance: "optional",
+    label: bi("তারিখ", "Date"), what: bi("শুরুর বা নির্দিষ্ট তারিখ। সাপ্তাহিকে এই তারিখের বার ধরা হয়, মাসিকে তারিখটি।", "The start or set date. Weekly uses this date's weekday; monthly uses its day of the month."),
+    why: bi("কখন রিমাইন্ডার আসবে তা ঠিক করতে।", "To decide when the reminder comes."), example: bi("২০২৬-১১-০৩", "2026-11-03"), format: bi("বছর-মাস-দিন", "YYYY-MM-DD") }),
+  f({ id: "deen_plan.status", entity: "deen_plan", family: "FAM-13", type: "choice", purpose: "deen_tracking", privacy: "worship", importance: "optional",
+    options: [opt("active", "চালু", "Active"), opt("paused", "বিরতি", "Paused")],
+    label: bi("অবস্থা", "State"), what: bi("চালু থাকলে রিমাইন্ডার দেখায়; বিরতিতে দেখায় না।", "Active plans show a reminder; paused plans do not."),
+    why: bi("যেকোনো সময় বিরতি দেওয়া ও আবার চালু করা যায়। কোনো দোষ বা হিসাব নেই।", "You can pause and resume any time. Nothing is blamed or counted."), example: bi("চালু", "Active") }),
+  f({ id: "deen_plan.prayer", entity: "deen_plan", family: "FAM-13", type: "choice", purpose: "deen_tracking", privacy: "worship", importance: "optional",
+    options: [opt("fajr", "ফজর", "Fajr"), opt("dhuhr", "যোহর", "Dhuhr"), opt("asr", "আসর", "Asr"), opt("maghrib", "মাগরিব", "Maghrib"), opt("isha", "এশা", "Isha"), opt("other", "অন্য নামাজ", "Another prayer")],
+    label: bi("কোন নামাজ (নামাজের প্ল্যানে)", "Which prayer (for a salah plan)"), what: bi("পাঁচ ওয়াক্তের একটি বাছলে এক ট্যাপের চিহ্ন দ্বীন পাতার নামাজের চিহ্নের সাথে মিলে যায়।", "Choosing one of the five makes the one-tap mark the same as the prayer mark on the Deen page."),
+    why: bi("একই চিহ্ন দুই জায়গায় আলাদা হয় না।", "The same mark is never kept twice."), example: bi("ফজর", "Fajr") }),
+  f({ id: "deen_plan.note", entity: "deen_plan", family: "FAM-13", type: "text", purpose: "deen_tracking", privacy: "worship", importance: "optional",
+    label: bi("ব্যক্তিগত নোট", "Private note"), what: bi("শুধু আপনার জন্য এক-দুই বাক্য।", "A sentence or two for yourself."),
+    why: bi("কোনো রিপোর্ট বা CSV-তে যায় না।", "It never goes into a report or a CSV file."), example: bi("সহজ থেকে শুরু", "Start small") }),
+  f({ id: "deen_mark.date", entity: "deen_mark", family: "FAM-13", type: "date", purpose: "deen_tracking", privacy: "worship", importance: "optional",
+    label: bi("যে দিন চিহ্ন দিলেন", "Day you marked"), what: bi("এক ট্যাপে দেওয়া চিহ্নের দিন। আবার ট্যাপ করলে চিহ্ন উঠে যায়।", "The day of a one-tap mark. Tapping again removes it."),
+    why: bi("শুধু আজকের অবস্থা দেখাতে। দিন গোনা বা ধারাবাহিকতার হিসাব নেই।", "Only to show today's state. Days are not counted."), example: bi("২০২৬-১১-০২", "2026-11-02"), format: bi("বছর-মাস-দিন", "YYYY-MM-DD") }),
+  f({ id: "zakat_snapshot.wealth", entity: "zakat_snapshot", family: "FAM-13", type: "money", unit: "BDT", purpose: "deen_tracking", privacy: "worship", importance: "optional",
+    label: bi("যাকাতযোগ্য সম্পদ (আপনার লেখা)", "Zakatable wealth (as you type it)"), what: bi("আপনি নিজে যে মোট অঙ্ক ধরছেন। অ্যাপ নিজে কোনো সম্পদ গোনে না।", "The total you count yourself. The app counts no wealth for you."),
+    why: bi("ফাঁকা থাকলে হিসাব ‘জানা নেই’, ০ নয়।", "Blank means Unknown, not 0."), example: bi("৫০০০০০", "500000"), format: bi("টাকার অঙ্ক", "Amount in BDT") }),
+  f({ id: "zakat_snapshot.nisab", entity: "zakat_snapshot", family: "FAM-13", type: "money", unit: "BDT", purpose: "deen_tracking", privacy: "worship", importance: "optional",
+    label: bi("বর্তমান নিসাব (আপনার লেখা)", "Current nisab (as you type it)"), what: bi("নিসাবের যে অঙ্ক আপনি নিজে জেনে লিখছেন। অ্যাপ কোনো নিসাব দেয় না।", "The nisab amount you look up and type yourself. The app supplies none."),
+    why: bi("না লিখলে ‘নিজে বর্তমান নিসাব লিখুন’ দেখায়। অঙ্ক আলেম বা নির্ভরযোগ্য সূত্র থেকে জেনে নিন।", "Without it the app says to enter the current nisab yourself. Get the amount from a scholar or a reliable source."), example: bi("৪০০০০০", "400000"), format: bi("টাকার অঙ্ক", "Amount in BDT") }),
+  f({ id: "zakat_snapshot.rate", entity: "zakat_snapshot", family: "FAM-13", type: "number", unit: "%", purpose: "deen_tracking", privacy: "worship", importance: "optional",
+    label: bi("যে হার ধরছেন (শতাংশ)", "Rate you use (percent)"), what: bi("আপনি যে শতাংশ হার অনুসরণ করেন। অ্যাপ কোনো হার ধরে নেয় না।", "The percent you follow. The app assumes no rate."),
+    why: bi("হার আলেমের কাছে জেনে নিন। না লিখলে কোনো অঙ্ক দেখায় না।", "Ask a scholar for the rate. Without it no figure is shown."), example: bi("২.৫", "2.5"), format: bi("০ থেকে ১০০", "0 to 100") }),
+  f({ id: "zakat_snapshot.hawl_on", entity: "zakat_snapshot", family: "FAM-13", type: "date", purpose: "deen_tracking", privacy: "worship", importance: "optional",
+    label: bi("বছর পূর্ণ হওয়ার তারিখ (আপনার লেখা)", "Date your year completes (as you type it)"), what: bi("আপনি নিজে যে তারিখ ঠিক করেছেন।", "The date you worked out yourself."),
+    why: bi("শুধু কত দিন বাকি তা দেখাতে। অ্যাপ তারিখ ঠিক করে না।", "Only to show the days left. The app does not decide the date."), example: bi("২০২৭-০৩-০১", "2027-03-01"), format: bi("বছর-মাস-দিন", "YYYY-MM-DD") }),
   // ── quick capture (FAM-17): free note + confirmed structured items ──
   f({ id: "capture.note", entity: "capture", family: "FAM-17", type: "text", purpose: "journey_log", importance: "optional",
     label: bi("আপনার নোট বা সিদ্ধান্ত (নিজের ভাষায়)", "Your note or decision (in your own words)"),

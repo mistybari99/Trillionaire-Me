@@ -41,6 +41,8 @@ export const ENTITIES: EntityDef[] = [
   e("hajj_plan", "FAM-13", "হজ/উমরাহ প্ল্যান", "Hajj/Umrah plan", "M13", "worship"),
   e("learning_item", "FAM-13", "দ্বীনি শিক্ষা", "Deen learning", "M13", "worship"),
   e("right_duty", "FAM-13", "হক ও দায়িত্ব", "Rights & duties", "M13", "worship"),
+  e("deen_plan", "FAM-13", "দ্বীনি প্ল্যান ও রিমাইন্ডার", "Deen plan and reminder", "M13", "worship"),
+  e("deen_mark", "FAM-13", "প্ল্যানের চিহ্ন", "Plan mark", "M13", "worship"),
   e("capture", "FAM-17", "নোট/সিদ্ধান্ত", "Note / decision", "M16", "personal"),
   e("capture_item", "FAM-17", "নোট থেকে নেওয়া তথ্য", "Item from a note", "M16", "personal", "capture"),
   e("stuck_log", "FAM-40", "আটকে-যাওয়ার লগ", "Stuck log", "M25", "personal"),

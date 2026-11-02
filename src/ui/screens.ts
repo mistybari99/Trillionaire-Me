@@ -54,6 +54,7 @@ import { syncDelegationNow, teamCard } from "./teamCard";
 import { riskDueCard } from "./riskCard";
 import { printLink } from "./printLink";
 import { healthCard } from "./healthUi";
+import { deenReportCard, deenTodayCard } from "./deenPlansUi";
 import { greeting, profileCard } from "./profileCard";
 import { blocksTodayCard, commitCard, currentBlocks } from "./blocksUi";
 import { toPlannerBlocks } from "../core/timeBlocks";
@@ -639,6 +640,7 @@ export function reportContent(lang: Locale): Array<Node | null> {
     riskDueCard(lang, "report"),
     gateReportCard(lang),
     healthCard(lang, "report"),
+    deenReportCard(lang),
     realityReportCard(lang),
     items.length && repCompact ? compactBody : items.length ? h("div", { "data-view": "full" },
       sec("report.decisions", s.decisions.length ? h("ul", { style: "padding-inline-start:20px" }, ...s.decisions.map((x) => h("li", { "data-decision": "1" }, x))) : h("p", { class: "muted" }, t("report.empty", lang))),
@@ -995,6 +997,7 @@ export function today(): HTMLElement {
     riskDueCard(lang, "today"),
     blocksTodayCard(lang),
     healthCard(lang, "today"),
+    deenTodayCard(lang),
     gateDueCard(lang, stageData().passed, "today"),
     realityTodayCard(lang),
     homeSummaryCards(lang),
@@ -1331,6 +1334,7 @@ export function deen(): HTMLElement {
     h("h1", {}, t("deen.title", lang)),
     h("p", { class: "sub" }, t("deen.intro", lang)),
     h("p", { class: "muted" }, t("deen.control", lang)),
+    link("#/deen/plans", "btn", t("dp.title", lang)),
     fastCard(lang),
     prayerTimesCard(lang),
     prayerLinkRow(lang),
