@@ -13,6 +13,7 @@ import * as RL from "./ui/realityUi";
 import { viaLazy } from "./ui/lazy";
 import { CONN, DECIDE, HALAL, LEGS, PLAN } from "./ui/lazyScreens";
 import { monthScreen } from "./ui/monthUi";
+import { notesScreen } from "./ui/notesUi";
 import { printScreen } from "./ui/printUi";
 import { onboardScreen } from "./ui/onboardUi";
 import { settingsScreen } from "./ui/settingsUi";
@@ -65,6 +66,7 @@ export const ROUTES: Array<[RegExp, (m: RegExpMatchArray) => HTMLElement, string
   [/^\/focus\/([\w-]+)$/, (m) => S.focusScreen(m[1]), "today"],
   [/^\/habits$/, () => S.habitsScreen(), "today"],
   [/^\/cards$/, () => S.cardsScreen(), "settings"],
+  [/^\/notes$/, () => notesScreen(), "settings"],
   [/^\/deen$/, () => S.deen(), "deen"],
   [/^\/settings\/connections$/, () => viaLazy(CONN, (m) => m.connectionsScreen(prefs.lang)), "settings"],
   [/^\/settings(?:\/([a-z]+))?(?:\/([a-z-]+))?$/, (m) => settingsScreen(m[1], m[2]), "settings"],

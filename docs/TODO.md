@@ -112,6 +112,7 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 - [x] Run 2, step 12 (M07): yearly (1/12) and one-off (dated, in the 90-day figure) lines, other currencies with a user-typed rate, no network (`src/core/financeInputs.ts`, `tests/money_fx.test.ts`); schema additive (catalog 9).
 - [x] Run 2, step 13 (M08): committed time (prayer length typed by the user, daily windows), blocks in the scheduler, week list, Today card, weekly hours budget; `constraint.hours_per_week` now read (`src/core/timeBlocks.ts`, `src/ui/blocksUi.ts`, `tests/time_blocks.test.ts`); schema additive (catalog 10).
 - [x] Run 2, step 14 (M04): source + date + stale flag on path cards, configurable skill/interest/strength weights, match strength shown, halal-check link on cards, own venture as an option (`src/core/assessment.ts`, `src/ui/assessment.ts`, `tests/path_sources_weights.test.ts`); schema additive (catalog 11). More paths wait for a reviewer.
+- [x] Run 2, step 15 (M17): notes, sources and SOPs page, freshness flag, role/hand-over links (`src/core/knowledge.ts`, `src/ui/notesUi.ts`, `tests/notes_sops.test.ts`); schema additive (catalog 12).
 
 ## Part B — Owner-only tasks
 - [ ] Phone offline test: open online once, visit all pages, airplane mode, reopen (O1).

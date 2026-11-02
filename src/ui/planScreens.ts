@@ -25,6 +25,7 @@ import { kpiRowView, todayIsoKpi } from "./kpiUi";
 import { EXIT_MEASURES, exitStatuses, gateIsEmpty, gateRows, summariseExits, validateExit, validateGate, type GateRow } from "../core/stageGates";
 import { exitRowView, stageName } from "./gateCard";
 import { printLink } from "./printLink";
+import { sopRows, sopsForRole } from "../core/knowledge";
 import { entryNs, labelFor, storeOf } from "./entry";
 import { historySections } from "./realityUi";
 import type { Locale } from "../i18n/registry";
@@ -332,6 +333,7 @@ function teamScreenInner(): HTMLElement {
     return h("div", { class: "card", "data-role": r.id, "data-gap": v.gap }, h("div", { class: "row" }, h("div", {},
       modeMark(lang), h("h2", { class: "card-h" }, r.role),
       h("p", { class: "muted" }, r.holder ? choiceLabel("team_role.holder", r.holder as Holder, lang) : t("unknown.unknown", lang)),
+      ...((sp) => (sp.length ? [h("p", { class: "muted", "data-role-sops": String(sp.length) }, `${t("team.sop.link", lang)}: ${sp.map((x) => x.title).join(", ")} `, h("a", { href: "#/notes", class: "crumb" }, t("kn.title", lang)))] : []))(sopsForRole(sopRows(allRecs(), new Date()), r.id)),
       h("p", { "data-gap-text": v.gap }, gapText),
       v.tasks.length ? h("p", { class: "muted", "data-role-load": "1" }, t("team.load", lang, { s: num(v.tasks.length, lang), m: num(v.knownMinutes, lang) }), v.unknownEstimates ? ` ${t("team.an.noest", lang, { n: num(v.unknownEstimates, lang) })}` : "") : null,
       v.tasks.length ? h("ul", { class: "plain" }, ...stepLis) : h("p", { class: "muted" }, t("team.nosteps", lang)),

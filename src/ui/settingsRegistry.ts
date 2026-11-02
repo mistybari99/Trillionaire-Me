@@ -74,6 +74,7 @@ export const GUIDES: Array<{ id: string; route: string; label: Key; desc: Key }>
   { id: "topics", route: "#/topics", label: "topics.title", desc: "topics.intro" },
   { id: "library", route: "#/more/library", label: "more.library", desc: "more.library.desc" },
   { id: "cards", route: "#/cards", label: "cards.title", desc: "cards.intro" },
+  { id: "notes", route: "#/notes", label: "kn.title", desc: "kn.intro.short" },
   { id: "status", route: "#/more/status", label: "more.status", desc: "more.status.desc" },
   { id: "fields", route: "#/more/fields", label: "more.fields", desc: "more.fields.desc" },
   { id: "glossary", route: "#/more/glossary", label: "more.glossary", desc: "more.glossary.desc" },

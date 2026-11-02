@@ -14,6 +14,7 @@ import { printLink } from "./printLink";
 import { teamAnalysis, analysisLines } from "./teamCard";
 import { PRINT_KINDS, isPrintKind, planDoc, printFileName } from "../core/printDoc";
 import { roleViews } from "../core/team";
+import { sopRows, sopsForRole } from "../core/knowledge";
 
 const link = (href: string, cls: string, ...kids: Array<Node | string>) => h("a", { href, class: cls }, ...kids);
 const holderLabel = (code: string | null, lang: Locale): string => {
@@ -37,7 +38,7 @@ function planBody(lang: Locale): HTMLElement {
 function handoverBody(lang: Locale): HTMLElement {
   const views = roleViews(allRecs());
   if (!views.length) return h("p", { class: "muted", "data-print-empty": "handover" }, t("print.ho.none", lang));
-  const a = teamAnalysis();
+  const a = teamAnalysis(); const sops = sopRows(allRecs(), new Date());
   return h("div", { "data-print-handover": String(views.length) },
     h("section", { class: "card" }, h("h2", { class: "card-h" }, t("print.ho.title", lang)), ...analysisLines(a, lang)),
     ...views.map((v) => h("section", { class: "card", "data-print-role": v.row.id },
@@ -46,7 +47,8 @@ function handoverBody(lang: Locale): HTMLElement {
       v.planned ? h("p", { "data-print-planned": "1" }, t("team.ho.planned", lang), v.planned.due ? ` · ${t("team.ho.due", lang, { d: v.planned.due })}` : "", v.planned.note ? ` · ${v.planned.note}` : "") : null,
       ...v.done.map((d) => h("p", { class: "muted" }, t("team.ho.was", lang, { d: d.doneOn ?? "—" }))),
       v.tasks.length ? h("ul", {}, ...v.tasks.map((x) => h("li", { "data-print-step": x.id }, x.title || "—", " · ", x.minutes === null ? t("plan.task.minutes.later", lang) : t("task.minutes", lang, { n: fmtNumber(x.minutes, lang) }),
-        x.delegated ? ` · ${t("team.step.delegated", lang)}` : ""))) : h("p", { class: "muted" }, t("print.ho.nosteps", lang)))));
+        x.delegated ? ` · ${t("team.step.delegated", lang)}` : ""))) : h("p", { class: "muted" }, t("print.ho.nosteps", lang)),
+      ...sopsForRole(sops, v.row.id).map((s) => h("div", { "data-print-sop": s.id }, h("p", {}, h("strong", {}, `${t("print.ho.sops", lang)}: ${s.title}`)), h("ol", {}, ...s.steps.map((x) => h("li", {}, x))))))));
 }
 
 const reportBody = (lang: Locale): HTMLElement => h("div", { "data-print-report": "1" }, ...reportContent(lang));
