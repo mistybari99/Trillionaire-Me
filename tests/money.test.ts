@@ -11,9 +11,9 @@ const fin = (id: string, kind: string, scope: string, amount: FieldValue, period
   values: { "finance.kind": v(kind), "finance.scope": v(scope), "finance.label": v(label), "finance.amount": amount, "finance.period": v(period) } });
 
 describe("TM-TST-021/022/023 money inputs", () => {
-  it("one-off and yearly income/expense are counted aside, never silently converted", () => {
+  it("one-off income/expense is counted aside; a yearly line counts as one twelfth, labelled ESTIMATE", () => {
     const fv = financeFrom([fin("a", "income", "personal", v(100)), fin("b", "expense", "personal", v(500), "yearly"), fin("c", "income", "personal", v(40), "once")]);
-    expect(fv.notMonthly).toBe(2); expect(monthlyCashFlow(fv.items, "personal")).toEqual({ ok: true, value: 100, label: "ESTIMATE" });
+    expect(fv.notMonthly).toBe(1); expect(fv.yearly).toBe(1); expect(monthlyCashFlow(fv.items, "personal")).toEqual({ ok: true, value: 58.33, label: "ESTIMATE" });
   });
   it("assets/liabilities ignore period; scopes stay apart; unknown amount → unknown result", () => {
     const fv = financeFrom([fin("a", "asset", "personal", v(100), "once"), fin("b", "liability", "personal", { state: "unknown" }), fin("c", "asset", "business", v(9000))]);

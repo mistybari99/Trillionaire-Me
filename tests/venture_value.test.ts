@@ -28,12 +28,12 @@ describe("venture core", () => {
     expect(yourShare({ valuation: null, ownership: null })).toEqual({ state: "unknown", missing: ["valuation", "ownership"] });
     expect(yourShare({ valuation: 1000, ownership: 0 })).toEqual({ state: "value", value: 0 }); // a typed 0 is a real 0
   });
-  it("accounts: only this venture's monthly income/expense lines; yearly lines are counted aside, never converted; orphans ignored", () => {
+  it("accounts: only this venture's monthly income/expense lines; a yearly line counts as one twelfth; orphans ignored", () => {
     const recs = [venture("a"), venture("b"), line("i1", "a", "income", 1000), line("i2", "a", "income", 500), line("e1", "a", "expense", 700), line("y", "a", "expense", 12000, "yearly"),
       line("other", "b", "income", 99), line("free", null, "income", 77), line("ghost", "gone", "income", 55), line("asset", "a", "asset", 9999)];
     const a = ventureAccounts(recs, "a");
-    expect(a.income).toEqual({ state: "value", value: 1500 }); expect(a.expenses).toEqual({ state: "value", value: 700 }); expect(a.net).toEqual({ state: "value", value: 800 });
-    expect(a.notMonthly).toBe(1); expect(a.lineIds).toEqual(["asset", "e1", "i1", "i2", "y"]);
+    expect(a.income).toEqual({ state: "value", value: 1500 }); expect(a.expenses).toEqual({ state: "value", value: 1700 }); expect(a.net).toEqual({ state: "value", value: -200 });
+    expect(a.notMonthly).toBe(0); expect(a.lineIds).toEqual(["asset", "e1", "i1", "i2", "y"]);
     expect(ventureAccounts(recs, "gone").lineIds).toEqual(["ghost"]); // the line exists, but no venture shows it
     expect(ventureViews(recs).map((x) => x.row.id)).toEqual(["a", "b"]);
   });

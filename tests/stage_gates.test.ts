@@ -68,7 +68,7 @@ describe("exit conditions (pure): real numbers or Unknown", () => {
     expect(at(100, 0)).toMatchObject({ state: "not_yet", toGo: 100 }); // a typed 0 is a real 0
   });
   it("monthly income from Money lines: personal and business apart; an unknown amount makes it incomplete, not smaller", () => {
-    const recs = [fin("i1", "income", "personal", 30000), fin("i2", "income", "personal", 20000), fin("b1", "income", "business", 9000), fin("y1", "income", "personal", 99999, "yearly")];
+    const recs = [fin("i1", "income", "personal", 30000), fin("i2", "income", "personal", 20000), fin("b1", "income", "business", 9000), fin("y1", "income", "personal", 99999, "once")];
     const p = exitRows([exit("p", "B", { measure: "monthly_income" })])[0]!; const b = exitRows([exit("b", "B", { measure: "business_income" })])[0]!;
     expect(exitActual(p, recs, TODAY)).toMatchObject({ state: "value", value: 50000 }); expect(exitActual(b, recs, TODAY)).toMatchObject({ value: 9000 });
     expect(exitActual(p, [...recs, fin("i3", "income", "personal", null)], TODAY)).toEqual({ state: "unknown", why: "incomplete" });

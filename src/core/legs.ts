@@ -1,6 +1,7 @@
 // Money leak review and the four-legs status. Own entries only (the caller passes the active mode's records).
 // Unknown is never 0. Each leg is Steady, Worth a look, Partly known, or Not enough data.
 import { monthlyCashFlow, monthlyIncome, type FinItem } from "./finance";
+import { bdtAmount } from "./financeInputs";
 import { weeklySummary } from "./weeklyReview";
 import type { FieldValue, TMRecord } from "./types";
 
@@ -29,13 +30,13 @@ export function leakReview(records: readonly TMRecord[]): LeakScope[] {
     const kind = val(r.values["finance.kind"]), scope = val(r.values["finance.scope"]), period = val(r.values["finance.period"]);
     if (!["asset", "liability", "income", "expense"].includes(String(kind)) || !["personal", "business"].includes(String(scope))) continue;
     if ((kind === "income" || kind === "expense") && period !== "monthly") continue;
-    items.push({ kind: kind as FinItem["kind"], scope: scope as Scope, amount: r.values["finance.amount"] ?? { state: "unknown" } });
+    items.push({ kind: kind as FinItem["kind"], scope: scope as Scope, amount: bdtAmount(r) });
   }
   for (const scope of ["personal", "business"] as const) {
     const mine = fin.filter((r) => val(r.values["finance.kind"]) === "expense" && val(r.values["finance.scope"]) === scope);
     if (!mine.length) continue;
     const monthly = mine.filter((r) => val(r.values["finance.period"]) === "monthly");
-    const lines: ExpenseLine[] = monthly.map((r) => ({ id: r.id, label: String(val(r.values["finance.label"]) ?? ""), amount: numOf(r.values["finance.amount"]) }));
+    const lines: ExpenseLine[] = monthly.map((r) => ({ id: r.id, label: String(val(r.values["finance.label"]) ?? ""), amount: numOf(bdtAmount(r)) }));
     const inc = monthlyIncome(items, scope);
     const income = inc.ok && inc.value > 0 ? inc.value : null;
     const top = lines.filter((l): l is ExpenseLine & { amount: number } => l.amount !== null).sort((a, b) => b.amount - a.amount || a.id.localeCompare(b.id)).slice(0, 3)
@@ -64,7 +65,7 @@ function financeLeg(records: readonly TMRecord[]): LegStatus {
     if (!["asset", "liability", "income", "expense"].includes(String(kind)) || !["personal", "business"].includes(String(scope))) continue;
     any = true;
     if ((kind === "income" || kind === "expense") && period !== "monthly") continue;
-    items.push({ kind: kind as FinItem["kind"], scope: scope as Scope, amount: r.values["finance.amount"] ?? { state: "unknown" } });
+    items.push({ kind: kind as FinItem["kind"], scope: scope as Scope, amount: bdtAmount(r) });
   }
   if (!any) return { leg: "finance", state: "unknown", why: "finance.none" };
   let known = 0, negative = 0, unknownScopes = 0;

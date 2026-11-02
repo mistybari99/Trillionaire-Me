@@ -109,6 +109,7 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 - [x] Run 2, step 9 (M20): Save as PDF for report, plan and hand-over through the phone's print window (`src/core/printDoc.ts`, `src/ui/printUi.ts`, `tests/print_pdf.test.ts`, e2e PDF-PRINT); no library, no network.
 - [x] Run 2, step 10 (M05): stage rules page, measurable exit conditions B-H read from own records, review date card on Today, report, stage panel (`src/core/stageGates.ts`, `src/ui/gateCard.ts`, `tests/stage_gates.test.ts`); schema additive (catalog 8).
 - [x] Run 2, step 11 (M16): monthly review `#/journey/month`, money and risk blocks in weekly, monthly and 90-day reviews, assumptions check (`src/core/monthlyReview.ts`, `src/ui/monthUi.ts`, `tests/month_review.test.ts`); no schema change.
+- [x] Run 2, step 12 (M07): yearly (1/12) and one-off (dated, in the 90-day figure) lines, other currencies with a user-typed rate, no network (`src/core/financeInputs.ts`, `tests/money_fx.test.ts`); schema additive (catalog 9).
 
 ## Part B — Owner-only tasks
 - [ ] Phone offline test: open online once, visit all pages, airplane mode, reopen (O1).

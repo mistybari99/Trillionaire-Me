@@ -47,7 +47,7 @@ import { progressRing, isMilestone } from "./ring";
 import { logo3d } from "./logo";
 import { goalFunnelHero, horizonArc } from "./horizonArt";
 import { viewBar, withView } from "./viewBar";
-import { kpiSection, kpiTodayCard } from "./kpiUi";
+import { kpiSection, kpiTodayCard, todayIsoKpi } from "./kpiUi";
 import { realityReportCard, realityTodayCard } from "./realityUi";
 import { northStarCard } from "./northStarCard";
 import { syncDelegationNow, teamCard } from "./teamCard";
@@ -65,8 +65,8 @@ import * as Cards from "../core/cards";
 import { CAUSE_TEXT, QUESTIONS, diagnose, type Answer, type Helper } from "../core/stuck";
 import { wordChain } from "../core/learning";
 import { extract, summarize, type Candidate, type Item } from "../core/capture";
-import { netWorth, monthlyCashFlow, cashFlow90Days, runwayFor, type Calc } from "../core/finance";
-import { financeFrom } from "../core/financeInputs";
+import { netWorth, monthlyCashFlow, runwayFor, type Calc } from "../core/finance";
+import { bdtAmount, cashFlow90, financeFrom, foreignOf, parseCurrency, parseRate } from "../core/financeInputs";
 import { research, safeQuery } from "../core/research";
 import { ownOptions, saveOwnOption, saveSearchResults, savedSearchResults } from "../core/savedLists";
 import { wikipedia } from "../adapters/wikipedia";
@@ -336,6 +336,9 @@ export function moneyScreen(): HTMLElement {
   const name = h("input", { id: "mf-name", type: "text", maxlength: "80", autocomplete: "off" });
   const amount = h("input", { id: "mf-amount", type: "text", inputmode: "decimal" });
   const unk = h("select", { id: "mf-state", "aria-label": t("intake.valueFor", lang) }, h("option", { value: "value" }, t("intake.valueFor", lang)), ...(["unknown", "later", "prefer_not"] as const).map((u) => h("option", { value: u }, t(`unknown.${u}` as Key, lang))));
+  const currency = h("input", { id: "mf-currency", type: "text", maxlength: "3", autocomplete: "off", style: "text-transform:uppercase" });
+  const rate = h("input", { id: "mf-rate", type: "text", inputmode: "decimal", autocomplete: "off" });
+  const onDate = h("input", { id: "mf-on", type: "date" });
   const err = h("p", { class: "err", role: "alert" });
   const gate = consentOn() ? null : consentPrompt(lang);
   // Optional link to one of the user's ventures (business income or expense lines only). Shown only when a venture exists.
@@ -346,6 +349,9 @@ export function moneyScreen(): HTMLElement {
     h("label", { for: "mf-name" }, t("money.name", lang)), name, h("p", { class: "muted" }, t("money.nameHint", lang)),
     h("label", { for: "mf-amount" }, t("money.amount", lang)), amount, unk,
     h("label", { for: "mf-period" }, t("money.period", lang)), period,
+    h("label", { for: "mf-on" }, t("money.on", lang)), onDate,
+    h("label", { for: "mf-currency" }, t("money.currency", lang)), currency, h("p", { class: "muted" }, t("money.currency.hint", lang)),
+    h("label", { for: "mf-rate" }, t("money.rate", lang)), rate, h("p", { class: "muted" }, t("money.rate.hint", lang)),
     ...(ventureSel ? [h("label", { for: "mf-venture" }, t("ven.money.pick", lang)), ventureSel] : []), err,
     h("button", { class: "btn", type: "submit" }, t("money.save", lang)));
   form.addEventListener("submit", (ev) => {
@@ -362,9 +368,16 @@ export function moneyScreen(): HTMLElement {
     const d = (x: string): FieldValue => typed(x);
     const vid = ventureSel?.value ?? "";
     if (vid && (scope.value !== "business" || (kind.value !== "income" && kind.value !== "expense"))) { err.textContent = t("ven.money.err", lang); return; }
+    const cur = parseCurrency(currency.value); if (cur === null) { err.textContent = t("money.err.currency", lang); return; }
+    const rt = parseRate(rate.value); if (rt === null) { err.textContent = t("money.err.rate", lang); return; }
+    const dayOk = (x: string) => /^\d{4}-\d{2}-\d{2}$/.test(x) && new Date(x).toISOString().slice(0, 10) === x;
+    if (onDate.value && !dayOk(onDate.value)) { err.textContent = t("money.err.on", lang); return; }
+    const extra: Record<string, FieldValue> = {};
+    if (cur.state === "code") { extra["finance.currency"] = d(cur.code); if (rt.state === "value") { extra["finance.fx_rate"] = typed(rt.value); extra["finance.fx_on"] = d(todayIsoKpi()); } }
+    if (onDate.value && period.value === "once") extra["finance.on"] = d(onDate.value);
     const id = `fin-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`;
     if (!saveTyped({ id, entity: "finance_item", createdAt: new Date().toISOString(), ...(vid ? { links: { venture: vid } } : {}),
-      values: { "finance.kind": d(kind.value), "finance.scope": d(scope.value), "finance.label": d(nm), "finance.amount": amt, "finance.period": d(period.value) } })) { err.textContent = saveBlockedText(lang); return; }
+      values: { "finance.kind": d(kind.value), "finance.scope": d(scope.value), "finance.label": d(nm), "finance.amount": amt, "finance.period": d(period.value), ...extra } })) { err.textContent = saveBlockedText(lang); return; }
     rerender();
   });
   const show = (c: Calc) => c.ok ? valueEl(t("money.bdt", lang, { v: fmtNum(c.value, lang) }), c.label, lang) : h("span", { class: "muted", "data-unknown": "1" }, t("money.unknown", lang, { n: num(c.missing, lang) }));
@@ -378,29 +391,72 @@ export function moneyScreen(): HTMLElement {
       : r.state === "steady" ? t("money.runway.steady", lang)
       : valueEl(t("money.runway.months", lang, { n: num(Math.round(r.value * 10) / 10, lang) }), r.label, lang));
   };
+  const cash90Row = (sc: "personal" | "business") => {
+    const c = cashFlow90(fv, sc, todayIsoKpi());
+    const has90 = has(sc, ["income", "expense"]) || fv.oneOff.some((o) => o.scope === sc && o.on !== null);
+    return h("div", { "data-cash90": sc }, h("p", {}, t("money.cash90", lang), ": ", !has90 ? h("span", { class: "muted", "data-none": "1" }, t("money.none", lang))
+      : c.state === "value" ? valueEl(t("money.bdt", lang, { v: fmtNum(c.value, lang) }), "ESTIMATE", lang) : h("span", { class: "muted", "data-unknown": "1" }, t("money.unknown", lang, { n: num(c.missing, lang) }))),
+      c.state === "value" && c.oneOffIn ? h("p", { class: "muted" }, t("money.cash90.extra", lang, { n: num(c.oneOffIn, lang) })) : null,
+      c.undated ? h("p", { class: "muted", "data-cash90-undated": String(c.undated) }, t("money.cash90.undated", lang, { n: num(c.undated, lang) })) : null);
+  };
   const sum = (sc: "personal" | "business") => h("div", { class: "card", "data-scope": sc }, h("h2", { class: "card-h", }, t(`money.${sc}` as Key, lang)),
     h("p", {}, t("money.networth", lang), ": ", has(sc, ["asset", "liability"]) ? show(netWorth(fv.items, sc)) : h("span", { class: "muted", "data-none": "1" }, t("money.none", lang))),
     h("p", {}, t("money.cashflow", lang), ": ", has(sc, ["income", "expense"]) ? show(monthlyCashFlow(fv.items, sc)) : h("span", { class: "muted", "data-none": "1" }, t("money.none", lang))),
     has(sc, ["income", "expense"]) ? runwayRow(sc) : null,
-    h("p", { "data-cash90": sc }, t("money.cash90", lang), ": ", has(sc, ["income", "expense"]) ? show(cashFlow90Days(fv.items, sc)) : h("span", { class: "muted", "data-none": "1" }, t("money.none", lang))));
+    cash90Row(sc));
+  // One line's amount: BDT as typed, or the other currency with the user's own rate and the BDT result. No rate means the BDT amount is Unknown.
+  const amountView = (r: TMRecord): Node => {
+    const a = r.values["finance.amount"]!; const f = foreignOf(r);
+    if (!f) return a.state === "value" ? valueEl(t("money.bdt", lang, { v: fmtNum(Number(a.value), lang) }), a.label, lang) : document.createTextNode(t(`unknown.${a.state}` as Key, lang));
+    if (a.state !== "value") return document.createTextNode(`${f.code} · ${t(`unknown.${a.state}` as Key, lang)}`);
+    const b = bdtAmount(r);
+    if (b.state !== "value" || f.rate === null) return h("span", { class: "muted", "data-fx-norate": r.id }, t("money.fx.norate", lang, { c: f.code, a: fmtNum(Number(a.value), lang) }));
+    return h("span", { "data-fx": r.id }, valueEl(t("money.fx.line", lang, { c: f.code, a: fmtNum(Number(a.value), lang), r: fmtNum(f.rate, lang), b: fmtNum(Number(b.value), lang) }), "ESTIMATE", lang), f.rateOn ? h("small", { class: "muted" }, ` (${t("money.fx.rateOn", lang, { d: f.rateOn })})`) : null);
+  };
+  // Change the rate of a line in another currency (a rate the user types; nothing is fetched).
+  const rateForm = (r: TMRecord): HTMLElement | null => {
+    const f = foreignOf(r); if (!f) return null;
+    const inp = h("input", { id: `fxr-${r.id}`, type: "text", inputmode: "decimal", autocomplete: "off", value: f.rate === null ? "" : String(f.rate) });
+    const msg = h("p", { class: "err", role: "alert" });
+    const form2 = h("form", { novalidate: true, "data-fx-edit": r.id }, h("label", { for: `fxr-${r.id}` }, t("money.fx.setRate", lang, { c: f.code })), inp, msg,
+      h("button", { class: "btn ghost", type: "submit", style: "width:auto;margin:0;min-height:44px" }, t("money.fx.update", lang)));
+    form2.addEventListener("submit", (ev) => {
+      ev.preventDefault(); msg.textContent = "";
+      const rt = parseRate(inp.value); if (rt === null) { msg.textContent = t("money.err.rate", lang); return; }
+      if (!entryNs()) { msg.textContent = saveBlockedText(lang); return; }
+      const rec = allRecs().find((x) => x.id === r.id); if (!rec) return;
+      const values = { ...rec.values };
+      if (rt.state === "value") { values["finance.fx_rate"] = { state: "value", value: rt.value, label: labelFor(rec.ns) }; values["finance.fx_on"] = { state: "value", value: todayIsoKpi(), label: labelFor(rec.ns) }; }
+      else { delete values["finance.fx_rate"]; delete values["finance.fx_on"]; }
+      storeOf(rec).put({ ...rec, values }); rerender();
+    });
+    return form2;
+  };
+  const periodTag = (r: TMRecord): HTMLElement | null => {
+    const p = (r.values["finance.period"] as { value?: unknown } | undefined)?.value; const k = (r.values["finance.kind"] as { value?: unknown } | undefined)?.value;
+    if (k !== "income" && k !== "expense") return null;
+    if (p === "yearly") return h("p", { class: "muted", "data-fin-period": "yearly" }, tb(fieldById("finance.period")!.options!.find((o) => o.code === "yearly")!.label, lang));
+    if (p === "once") { const on = (r.values["finance.on"] as { value?: unknown } | undefined)?.value; return h("p", { class: "muted", "data-fin-period": "once" }, typeof on === "string" ? t("money.oneoff.on", lang, { d: on }) : t("money.oneoff.undated", lang)); }
+    return null;
+  };
   const rows = recs.filter((r) => r.entity === "finance_item").sort((a, b) => a.id.localeCompare(b.id)).map((r) => {
-    const a = r.values["finance.amount"]!;
     return h("div", { class: "card", "data-fin": r.id }, h("div", { class: "row" }, h("div", {}, nsTag(r.ns, lang),
       h("h2", { class: "card-h", }, fv.labels.get(r.id) ?? String((r.values["finance.label"] as { value?: unknown })?.value ?? "")),
-      h("p", { class: "muted" }, a.state === "value" ? valueEl(t("money.bdt", lang, { v: fmtNum(Number(a.value), lang) }), a.label, lang) : t(`unknown.${a.state}` as Key, lang)),
+      h("p", { class: "muted" }, amountView(r)), periodTag(r), rateForm(r),
       r.links?.venture && vRows.some((v) => v.id === r.links!.venture) ? h("p", { class: "muted", "data-fin-venture": r.links.venture }, t("ven.money.tag", lang, { v: vRows.find((v) => v.id === r.links!.venture)!.name })) : null),
       h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0;min-height:44px", onclick: () => { storeOf(r).delete(r.id); rerender(); } }, t("money.remove", lang))));
   });
   const moneyCompact = screenView("money") === "compact";
   const moneyTable = h("table", { class: "table-compact", "data-view": "compact" }, h("tbody", {}, ...recs.filter((r) => r.entity === "finance_item").sort((a, b) => a.id.localeCompare(b.id)).map((r) => {
-    const a = r.values["finance.amount"]!;
     return h("tr", { "data-fin": r.id }, h("td", {}, nsTag(r.ns, lang)), h("td", {}, fv.labels.get(r.id) ?? String((r.values["finance.label"] as { value?: unknown })?.value ?? "")),
-      h("td", {}, a.state === "value" ? valueEl(t("money.bdt", lang, { v: fmtNum(Number(a.value), lang) }), a.label, lang) : t(`unknown.${a.state}` as Key, lang)));
+      h("td", {}, amountView(r)));
   })));
   return h("main", { class: "scr scr-money" },
     link("#/diary", "crumb", `← ${t("diary.title", lang)}`), h("h1", {}, t("money.title", lang)), h("p", { class: "sub" }, t("money.intro", lang)),
     h("h2", {}, t("money.summary", lang)), sum("personal"), sum("business"),
     fv.notMonthly ? h("p", { class: "muted" }, t("money.notMonthly", lang, { n: num(fv.notMonthly, lang) })) : null,
+    fv.yearly ? h("p", { class: "muted", "data-yearly-note": String(fv.yearly) }, t("money.yearly.note", lang, { n: num(fv.yearly, lang) })) : null,
+    fv.foreign ? h("p", { class: "muted", "data-fx-note": String(fv.foreign) }, t("money.fx.note", lang, { n: num(fv.foreign, lang), m: num(fv.foreignNoRate, lang) })) : null,
     mixed ? h("p", { class: "muted", "data-mix": "1" }, t("entry.mixNote", lang)) : null,
     h("h2", {}, t("money.add", lang)), form,
     moneyChart(recs, lang),

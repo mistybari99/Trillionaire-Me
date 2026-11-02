@@ -29,7 +29,7 @@ describe("monthly review (pure)", () => {
   });
   it("money: personal and business apart; unknown amount makes the total unknown; a scope without a monthly line is left out", () => {
     expect(moneyReview([])).toEqual([]);
-    const r = moneyReview([fin("i", "income", "personal", 40000), fin("e", "expense", "personal", 25000), fin("b", "income", "business", null), fin("y", "expense", "business", 5, "yearly")]);
+    const r = moneyReview([fin("i", "income", "personal", 40000), fin("e", "expense", "personal", 25000), fin("b", "income", "business", null), fin("y", "expense", "business", 5, "once")]);
     expect(r.map((x) => x.scope)).toEqual(["personal", "business"]);
     expect(r[0]).toMatchObject({ income: { state: "value", value: 40000 }, expense: { value: 25000 }, cashFlow: { value: 15000 } });
     expect(r[1]).toMatchObject({ income: { state: "unknown", why: "incomplete" }, expense: { state: "unknown", why: "no_lines" }, cashFlow: { state: "unknown" } });

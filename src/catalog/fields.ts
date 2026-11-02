@@ -2,7 +2,7 @@ import type { Bi } from "../i18n/registry";
 import { UNKNOWN_STATES, type UnknownState } from "../core/types";
 import type { AccessRule, ChoiceOption, FieldDef, FieldType, Importance, PrivacyClass, Purpose, Requirement } from "./types";
 
-export const CATALOG_VERSION = 8;
+export const CATALOG_VERSION = 9;
 
 const bi = (bn: string, en: string): Bi => ({ bn, en });
 const opt = (code: string, bn: string, en: string): ChoiceOption => ({ code, label: bi(bn, en) });
@@ -329,7 +329,27 @@ export const FIELDS: FieldDef[] = [
   f({ id: "finance.period", entity: "finance_item", family: "FAM-07", type: "choice", purpose: "finance_basics", privacy: "financial", step: 7, importance: "optional",
     options: [opt("once", "একবার", "One-off"), opt("monthly", "মাসিক", "Monthly"), opt("yearly", "বার্ষিক", "Yearly")],
     label: bi("কত সময় পর পর", "How often"), what: bi("ইনকাম বা খরচ কত ঘন ঘন হয়।", "How often the income or expense recurs."),
-    why: bi("৯০ দিনের ক্যাশ ফ্লোের হিসাবের জন্য (পরে)।", "For the 90-day cash-flow view (later)."), example: bi("মাসিক", "Monthly") }),
+    why: bi("বার্ষিক লাইন মাসে বারো ভাগের এক ভাগ ধরা হয়। একবারের লাইন মাসিক অঙ্কে ধরা হয় না; তারিখ দিলে ৯০ দিনের ক্যাশ ফ্লোতে আসে।", "A yearly line counts as one twelfth a month. A one-off line is not in monthly figures; with a date it is added to the 90-day cash flow."), example: bi("মাসিক", "Monthly") }),
+  f({ id: "finance.on", entity: "finance_item", family: "FAM-07", type: "date", purpose: "finance_basics", privacy: "financial", importance: "optional",
+    label: bi("একবারের লাইনের তারিখ", "Date of a one-off line"),
+    what: bi("একবারের ইনকাম বা খরচ যেদিন হবে বা হয়েছে।", "The day a one-off income or expense happens."),
+    why: bi("তারিখ থাকলে আজ থেকে ৯০ দিনের মধ্যে পড়লে ৯০ দিনের ক্যাশ ফ্লোতে ধরা হয়। তারিখ না দিলে শুধু গোনা হয়, যোগ হয় না।", "With a date inside the next 90 days it is added to the 90-day cash flow. With no date it is only counted, not added."),
+    example: bi("২০২৬-১২-১৫", "2026-12-15"), format: bi("বছর-মাস-দিন", "YYYY-MM-DD") }),
+  f({ id: "finance.currency", entity: "finance_item", family: "FAM-38", type: "text", purpose: "finance_basics", privacy: "financial", importance: "optional",
+    label: bi("মুদ্রা (BDT না হলে)", "Currency (if not BDT)"),
+    what: bi("অঙ্কটি অন্য মুদ্রায় হলে তিন অক্ষরের কোড। ফাঁকা মানে টাকা (BDT)।", "A three-letter code when the amount is in another currency. Blank means BDT."),
+    why: bi("আপনার দেওয়া রেট দিয়ে টাকায় বদলে হিসাবে আসে। রেট না দিলে অঙ্কটি ‘জানা নেই’, ০ নয়।", "It is converted to BDT with the rate you type. With no rate the amount is Unknown, never 0."),
+    example: bi("USD (ডলার)", "USD"), format: bi("তিনটি ইংরেজি অক্ষর", "Three letters") }),
+  f({ id: "finance.fx_rate", entity: "finance_item", family: "FAM-38", type: "number", purpose: "finance_basics", privacy: "financial", importance: "optional", affects: "converted amount",
+    label: bi("রেট (১ ইউনিট = কত টাকা)", "Rate (BDT for 1 unit)"),
+    what: bi("অন্য মুদ্রার ১ ইউনিটের জন্য কত টাকা, আপনার নিজের লেখা রেট।", "How many BDT for 1 unit of that currency, a rate you type yourself."),
+    why: bi("অ্যাপ নিজে কোনো রেট আনে না বা অনুমান করে না। রেট বদলালে নিজে বদলে দিন।", "The app never fetches or guesses a rate. Change it yourself when the rate moves."),
+    example: bi("১২০", "120"), format: bi("০-এর বেশি সংখ্যা", "A number above 0") }),
+  f({ id: "finance.fx_on", entity: "finance_item", family: "FAM-38", type: "date", purpose: "finance_basics", privacy: "financial", importance: "optional",
+    label: bi("রেটটি কোন দিনের", "Date of that rate"),
+    what: bi("রেটটি যেদিন লিখেছেন বা বদলেছেন।", "The day you typed or changed the rate."),
+    why: bi("পুরোনো রেট চেনা যায়।", "It shows how old the rate is."),
+    example: bi("২০২৬-১১-০২", "2026-11-02"), format: bi("বছর-মাস-দিন", "YYYY-MM-DD") }),
 
   // ── Deen / Ibadah (FAM-13) — schema + privacy only, no scripture text ──
   f({ id: "prayer_log.date", entity: "prayer_log", family: "FAM-13", type: "date", purpose: "deen_tracking", privacy: "worship", importance: "optional",
