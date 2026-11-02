@@ -2,7 +2,7 @@ import type { Bi } from "../i18n/registry";
 import { UNKNOWN_STATES, type UnknownState } from "../core/types";
 import type { AccessRule, ChoiceOption, FieldDef, FieldType, Importance, PrivacyClass, Purpose, Requirement } from "./types";
 
-export const CATALOG_VERSION = 7;
+export const CATALOG_VERSION = 8;
 
 const bi = (bn: string, en: string): Bi => ({ bn, en });
 const opt = (code: string, bn: string, en: string): ChoiceOption => ({ code, label: bi(bn, en) });
@@ -489,6 +489,30 @@ export const FIELDS: FieldDef[] = [
     what: bi("এই রোল এখন কে দেখছেন।", "Who covers this role now."),
     why: bi("কেউ না থাকলে সেটি একটি ফাঁক। না জানলে 'জানা নেই' রাখুন।", "If nobody covers it, it is a gap. If you do not know, leave it as unknown."),
     example: bi("আমি", "Me") }),
+  f({ id: "handover.status", entity: "handover", family: "FAM-03", type: "choice", purpose: "planning", importance: "core", privacy: "third_party",
+    options: [opt("planned", "পরিকল্পিত", "Planned"), opt("done", "হস্তান্তর হয়েছে", "Handed over")],
+    label: bi("হস্তান্তরের অবস্থা", "Hand-over state"),
+    what: bi("রোলটি অন্যকে দেওয়ার পরিকল্পনা আছে, না দেওয়া হয়ে গেছে।", "Whether handing the role over is planned or done."),
+    why: bi("‘হয়েছে’ করলে রোলের দায়িত্ব ‘অন্য কেউ’ হয় এবং রোলের খোলা কাজ আপনার শিডিউল থেকে সরে যায়।", "Marking it done sets the role to ‘Someone else’ and takes the role's open steps out of your schedule."),
+    example: bi("পরিকল্পিত", "Planned") }),
+  f({ id: "handover.note", entity: "handover", family: "FAM-03", type: "text", purpose: "planning", importance: "useful", privacy: "third_party",
+    label: bi("কী কী বুঝিয়ে দিতে হবে (অপশনাল)", "What to hand over (optional)"),
+    what: bi("রোলের কাজ, নিয়ম বা মনে রাখার কথা, নিজের জন্য সংক্ষেপে। নাম, নম্বর বা পাসওয়ার্ড লিখবেন না।", "The work, rules or reminders of the role, in short, for yourself. No names, numbers or passwords."),
+    why: bi("হস্তান্তরের সময় কিছু বাদ পড়ে না।", "Nothing is forgotten at hand-over."),
+    example: bi("মাসের শেষে খাতা মেলানো", "Reconcile the books at month end"), format: bi("এক-দুই লাইন", "A line or two") }),
+  f({ id: "handover.due", entity: "handover", family: "FAM-03", type: "date", purpose: "planning", importance: "optional", privacy: "third_party",
+    label: bi("কবের মধ্যে (অপশনাল)", "By when (optional)"),
+    what: bi("হস্তান্তর শেষ করার তারিখ। না জানলে ফাঁকা।", "The day the hand-over should be finished. Blank if unknown."),
+    why: bi("তারিখ থাকলে আজকের পাতায় শান্ত মনে করিয়ে দেওয়া যায়।", "A date allows a calm reminder on Today."),
+    example: bi("২০২৬-১২-০১", "2026-12-01"), format: bi("বছর-মাস-দিন", "YYYY-MM-DD") }),
+  f({ id: "handover.done_on", entity: "handover", family: "FAM-03", type: "date", purpose: "planning", importance: "optional", privacy: "third_party",
+    label: bi("হস্তান্তর হয়েছে (কবে)", "Handed over on"),
+    what: bi("যেদিন ‘হস্তান্তর হয়েছে’ চিহ্নিত করেছেন; অ্যাপ নিজে ভরে।", "The day you marked it handed over; filled by the app."),
+    why: bi("রেকর্ডে থাকে, পরে ইতিহাসে দেখা যায়।", "Stays on record and shows in the history."),
+    example: bi("২০২৬-১১-০২", "2026-11-02"), format: bi("বছর-মাস-দিন", "YYYY-MM-DD") }),
+  f({ id: "task.delegated_on", entity: "task", family: "FAM-03", type: "date", purpose: "planning", importance: "optional",
+    label: bi("অন্যকে দেওয়া (কবে)", "Handed to a role (since)"), what: bi("কাজটি এমন রোলের, যেটি ‘অন্য কেউ’ দেখছেন। অ্যাপ নিজে ভরে; কাজটি রেকর্ডে থাকে।", "The step belongs to a role that someone else covers. Filled by the app; the step stays on record."),
+    why: bi("অন্যের কাজ আপনার ফ্রি সময়ে বসে না, কিন্তু লক্ষ্যের প্রোগ্রেসে গোনা হয়।", "Someone else's step does not use your free time, but still counts toward the goal's progress."), example: bi("২০২৬-১১-০২", "2026-11-02"), format: bi("বছর-মাস-দিন", "YYYY-MM-DD") }),
 
   // ── KPI targets (M16, FAM-17): a target per week or per 90 days, set against the user's own records ──
   f({ id: "kpi.name", entity: "kpi", family: "FAM-17", type: "text", purpose: "planning", importance: "core",

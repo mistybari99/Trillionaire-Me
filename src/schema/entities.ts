@@ -48,6 +48,7 @@ export const ENTITIES: EntityDef[] = [
   e("stage_pass", "FAM-39", "স্টেজ পাস", "Stage pass", "M05", "personal"),
   e("risk", "FAM-03", "রিস্ক", "Risk", "M15", "personal"),
   e("team_role", "FAM-03", "কাজের রোল", "Team role", "M10", "third_party"),
+  e("handover", "FAM-03", "রোল হস্তান্তর", "Role hand-over", "M10", "third_party"),
   e("north_star", "FAM-03", "মাপকাঠি (North Star)", "North Star measure", "M03", "personal"),
   e("kpi", "FAM-17", "KPI টার্গেট", "KPI target", "M16", "personal"),
   e("reality_event", "FAM-03", "বাস্তবতা বদলের ঘটনা", "Reality event", "M12", "personal"),

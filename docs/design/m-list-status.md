@@ -7,7 +7,7 @@ The card answers one question: is the software's own build complete? It does not
 Boxes (order): Input, Storage, Calculation, Output, Export, Links. B = built, M = missing, - = not needed.
 Label: complete = no box missing; partial = some box missing; not-built = no box built; blocked = waits for an owner approval (D-number).
 
-Counts: complete 7, partial 16, not-built 1, blocked 1 (of 25).
+Counts: complete 8, partial 15, not-built 1, blocked 1 (of 25).
 
 | Module | Name | Label | I S C O E L | Missing boxes | Waits for | Routes / functions | Tests |
 |---|---|---|---|---|---|---|---|
@@ -20,7 +20,7 @@ Counts: complete 7, partial 16, not-built 1, blocked 1 (of 25).
 | M07 | Resources & finance | partial | B B M B B M | calc, links | - | `#/diary/money`; `src/ui/screens.ts#moneyScreen`; `src/core/finance.ts#netWorth` | `tests/money.test.ts` |
 | M08 | Time & capacity | partial | B B M M B B | calc, output | - | `#/diary/plan`; `src/core/planner.ts#schedule` | `tests/b9_plan_flow.test.ts` |
 | M09 | Venture portfolio | partial | B B M B B B | calc | - | `#/diary/ventures`; `#/diary/money`; `#/today`; `#/journey/report`; `src/core/ventures.ts#ventureViews`; `src/core/ventures.ts#portfolio`; `src/core/ventures.ts#ventureAccounts` | `tests/m_registers.test.ts`, `tests/venture_value.test.ts` |
-| M10 | Team & delegation | partial | B B M B B M | calc, links | - | `#/diary/team`; `src/core/team.ts#roleSummary` | `tests/m_registers.test.ts` |
+| M10 | Team & delegation | complete | B B B B B B | - | - | `#/diary/team`; `#/diary/plan`; `#/today`; `#/journey/report`; `src/core/team.ts#roleSummary`; `src/core/team.ts#roleViews`; `src/core/team.ts#analyseTeam`; `src/core/team.ts#syncDelegation`; `src/core/team.ts#completeHandover` | `tests/team_handover.test.ts`, `tests/m_registers.test.ts` |
 | M11 | Research & options | complete | B B B B B B | - | - | `#/diary/intake`; `src/ui/screens.ts#intake`; `src/core/research.ts#research`; `src/adapters/wikipedia.ts#wikipedia` | `tests/research.test.ts`, `tests/wikipedia.test.ts`, `tests/m11_background_cache.test.ts` |
 | M12 | Reality-changed & plan history | complete | B B B B B B | - | - | `#/journey/reality`; `#/journey/history`; `#/today`; `#/journey/report`; `#/diary/plan`; `src/core/realityLoop.ts#impactOf`; `src/core/realityLoop.ts#optionsFor`; `src/core/realityLoop.ts#planChange`; `src/core/realityLoop.ts#planDiff`; `src/core/realityLoop.ts#versionRows`; `src/core/reality.ts#markNotTrue`; `src/core/planHistory.ts#planHistory` | `tests/reality_loop.test.ts`, `tests/o6_reality_review_templates.test.ts`, `tests/m_registers.test.ts` |
 | M13 | Deen, ibadah & akhirah | partial | M B M M B B | input, calc, output | - | `#/deen`; `src/core/prayerLog.ts#markedOn`; `src/core/fastLog.ts#isFastMarked`; `src/core/prayer.ts#prayerTimes`; `src/core/prayerAlerts.ts#alertSlots` | `tests/prayer.test.ts`, `tests/g1.test.ts`, `tests/fast_log.test.ts` |

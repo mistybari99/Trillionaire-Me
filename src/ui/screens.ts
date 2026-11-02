@@ -50,6 +50,7 @@ import { viewBar, withView } from "./viewBar";
 import { kpiSection, kpiTodayCard } from "./kpiUi";
 import { realityReportCard, realityTodayCard } from "./realityUi";
 import { northStarCard } from "./northStarCard";
+import { syncDelegationNow, teamCard } from "./teamCard";
 import { portfolioCard } from "./ventureCard";
 import { ventureRows } from "../core/ventures";
 import { backupReminderCard } from "./snapshotsUi";
@@ -222,6 +223,10 @@ export function planScreen(): HTMLElement {
   const goalRecs = cp.recs.filter((r) => r.entity === "goal" && r.values["goal.title"]?.state === "value").sort((a, b) => a.id.localeCompare(b.id));
   const goalTitle = (r: TMRecord) => String((r.values["goal.title"] as { value?: unknown }).value ?? "");
   const goalSel = h("select", { id: "pt-goal" }, h("option", { value: "" }, t("plan.goal.none", lang)), ...goalRecs.map((r) => h("option", { value: r.id }, goalTitle(r))));
+  // M10: optional role that does this step. Roles only, no names. A role covered by someone else takes the step out of the user's own schedule.
+  const roleRecs = cp.recs.filter((r) => r.entity === "team_role" && r.values["team_role.role"]?.state === "value").sort((a, b) => a.id.localeCompare(b.id));
+  const roleTitle = (r: TMRecord) => String((r.values["team_role.role"] as { value?: unknown }).value ?? "");
+  const roleSel = h("select", { id: "pt-role" }, h("option", { value: "" }, t("plan.role.none", lang)), ...roleRecs.map((r) => h("option", { value: r.id }, roleTitle(r))));
   const err = h("p", { class: "err", role: "alert" });
   const gate = consentOn() ? null : consentPrompt(lang);
   const form = h("form", { novalidate: true, "data-form": "task" }, gate,
@@ -230,7 +235,8 @@ export function planScreen(): HTMLElement {
     h("label", { for: "pt-prio" }, t("plan.task.priority", lang)), prio,
     h("label", { for: "pt-size" }, t("plan.size.label", lang)), sizeSel,
     ...(openTasks.length ? [h("label", { for: "pt-after" }, t("plan.after.label", lang)), afterSel] : []),
-    ...(goalRecs.length ? [h("label", { for: "pt-goal" }, t("plan.goal.label", lang)), goalSel] : []), err,
+    ...(goalRecs.length ? [h("label", { for: "pt-goal" }, t("plan.goal.label", lang)), goalSel] : []),
+    ...(roleRecs.length ? [h("label", { for: "pt-role" }, t("plan.role.label", lang)), roleSel] : []), err,
     h("button", { class: "btn", type: "submit" }, t("plan.task.save", lang)));
   form.addEventListener("submit", (ev) => {
     ev.preventDefault(); err.textContent = "";
@@ -242,7 +248,8 @@ export function planScreen(): HTMLElement {
     const id = `task-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`;
     if (!saveTyped({ id, entity: "task", createdAt: new Date().toISOString(),
       values: { "task.title": typed(name), "task.minutes": m, "task.priority": typed(prio.value), ...(sizeSel.value ? { "task.size": typed(sizeSel.value) } : {}) },
-      ...(afterSel.value || goalSel.value ? { links: { ...(afterSel.value ? { after: afterSel.value } : {}), ...(goalSel.value ? { goal: goalSel.value } : {}) } } : {}) })) { err.textContent = saveBlockedText(lang); return; }
+      ...(afterSel.value || goalSel.value || roleSel.value ? { links: { ...(afterSel.value ? { after: afterSel.value } : {}), ...(goalSel.value ? { goal: goalSel.value } : {}), ...(roleSel.value ? { role: roleSel.value } : {}) } } : {}) })) { err.textContent = saveBlockedText(lang); return; }
+    syncDelegationNow();
     rerender();
   });
   const afterTitle = (id: string) => cp.titles.get(id) || "";
@@ -259,7 +266,8 @@ export function planScreen(): HTMLElement {
     return h("div", { class: "card", "data-task": r.id }, h("div", { class: "row" },
       h("div", {}, nsTag(r.ns, lang), h("h2", { class: "card-h", }, cp.titles.get(r.id) ?? ""), h("p", { class: "muted" }, mv && mv.state === "value" ? valueEl(t("task.minutes", lang, { n: num(Number(mv.value), lang) }), mv.label, lang) : t("plan.task.minutes.later", lang)),
         r.links?.after ? h("p", { class: "muted", "data-after": r.links.after }, t("plan.after.shown", lang, { title: afterTitle(r.links.after) })) : null,
-        r.links?.goal && goalRecs.some((g) => g.id === r.links!.goal) ? h("p", { class: "muted", "data-goal": r.links.goal }, t("plan.goal.shown", lang, { title: goalTitle(goalRecs.find((g) => g.id === r.links!.goal)!) })) : null),
+        r.links?.goal && goalRecs.some((g) => g.id === r.links!.goal) ? h("p", { class: "muted", "data-goal": r.links.goal }, t("plan.goal.shown", lang, { title: goalTitle(goalRecs.find((g) => g.id === r.links!.goal)!) })) : null,
+        r.links?.role && roleRecs.some((g) => g.id === r.links!.role) ? h("p", { class: "muted", "data-role-of": r.links.role }, t("plan.role.shown", lang, { title: roleTitle(roleRecs.find((g) => g.id === r.links!.role)!) }), r.values["task.delegated_on"]?.state === "value" && r.values["task.done_on"]?.state !== "value" ? h("span", { class: "tag off", "data-delegated": r.id }, ` ${t("team.step.delegated", lang)}`) : null, " ", link("#/diary/team", "crumb", t("plan.role.open", lang))) : null),
       r.values["task.done_on"]?.state === "value" ? h("span", { class: "tag ok" }, t("reward.done", lang))
         : isParkedTask(r) ? h("div", {}, h("span", { class: "tag off", "data-parked": r.id }, t("rl.parked.tag", lang, { date: String((r.values["task.parked_on"] as { value?: unknown }).value) })), h("p", { class: "muted" }, t("rl.parked.note", lang)), link("#/journey/reality", "crumb", t("rl.parked.open", lang)))
         : r.values["task.not_true_on"]?.state === "value" ? h("div", {}, h("span", { class: "tag off" }, t("reality.tag", lang, { date: String((r.values["task.not_true_on"] as { value?: unknown }).value) })), h("p", { class: "muted" }, t("reality.note", lang)), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => { storeOf(r).delete(r.id); rerender(); } }, t("plan.task.remove", lang)))
@@ -533,6 +541,7 @@ export function reportScreen(): HTMLElement {
     kpiSection("week", lang), kpiSection("days90", lang),
     portfolioCard(lang, "report"),
     northStarCard(lang, "report"),
+    teamCard(lang, "report"),
     realityReportCard(lang),
     items.length && repCompact ? compactBody : items.length ? h("div", { "data-view": "full" },
       sec("report.decisions", s.decisions.length ? h("ul", { style: "padding-inline-start:20px" }, ...s.decisions.map((x) => h("li", { "data-decision": "1" }, x))) : h("p", { class: "muted" }, t("report.empty", lang))),
@@ -875,6 +884,7 @@ export function today(): HTMLElement {
     homeCountCards(lang),
     kpiTodayCard(lang),
     northStarCard(lang, "today"),
+    teamCard(lang, "today"),
     realityTodayCard(lang),
     homeSummaryCards(lang),
     portfolioCard(lang, "today"),

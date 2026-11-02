@@ -41,6 +41,6 @@ export function weeklySummary(recs: readonly TMRecord[], today: string): WeeklyS
   const habitCheckins = recs.filter((r) => r.entity === "habit_log" && typeof val(r.values["habit_log.date"]) === "string" && inWin(String(val(r.values["habit_log.date"]))) && Number(val(r.values["habit_log.count"]) ?? 0) > 0).length;
   const journeyNotes = recs.filter((r) => (r.entity === "journey_log" || r.entity === "stage_pass") && Number.isFinite(Date.parse(r.createdAt)) && inWin(dayOf(new Date(r.createdAt)))).length;
   const tasks = recs.filter((r) => r.entity === "task");
-  const open = tasks.filter((r) => typeof val(r.values["task.done_on"]) !== "string" && !val(r.values["task.not_true_on"]) && !val(r.values["task.parked_on"])).length;
+  const open = tasks.filter((r) => typeof val(r.values["task.done_on"]) !== "string" && !val(r.values["task.not_true_on"]) && !val(r.values["task.parked_on"]) && !val(r.values["task.delegated_on"])).length;
   return { from, to, tasksDone: orNull(tasksDone), focusMinutes: known > 0 ? minutes : null, focusUnknown: unknown, habitCheckins: orNull(habitCheckins), journeyNotes: orNull(journeyNotes), stillOpen: tasks.length ? open : null };
 }

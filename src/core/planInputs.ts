@@ -23,8 +23,10 @@ export function freeWindow(a: RecordValues): WindowResult {
 const PRIORITY: Record<string, number> = { high: 3, normal: 2, low: 1 };
 
 /** A plan step the scheduler may still place: not finished and not marked “no longer true” (O6). */
-export const isOpenTask = (r: TMRecord): boolean => r.entity === "task" && r.values["task.done_on"]?.state !== "value" && r.values["task.not_true_on"]?.state !== "value" && r.values["task.parked_on"]?.state !== "value";
+export const isOpenTask = (r: TMRecord): boolean => r.entity === "task" && r.values["task.done_on"]?.state !== "value" && r.values["task.not_true_on"]?.state !== "value" && r.values["task.parked_on"]?.state !== "value" && r.values["task.delegated_on"]?.state !== "value";
 /** A step the user parked with "Reduce scope" (M12): it stays on record, waits outside the schedule, and can be brought back. */
+/** A step that belongs to a role covered by someone else (M10). It stays on record and counts toward its goal, but it does not use the user's free time. */
+export const isDelegatedTask = (r: TMRecord): boolean => r.entity === "task" && r.values["task.delegated_on"]?.state === "value" && r.values["task.done_on"]?.state !== "value" && r.values["task.not_true_on"]?.state !== "value";
 export const isParkedTask = (r: TMRecord): boolean => r.entity === "task" && r.values["task.parked_on"]?.state === "value" && r.values["task.done_on"]?.state !== "value" && r.values["task.not_true_on"]?.state !== "value";
 
 export function tasksFrom(records: TMRecord[]): PlanTask[] {

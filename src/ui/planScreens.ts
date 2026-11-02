@@ -5,13 +5,15 @@ import { t, tb, fmtNumber } from "../i18n/t";
 import type { Key } from "../i18n/packs";
 import { prefs, store } from "./state";
 import { withView } from "./viewBar";
-import { activeNs, allRecs, consentOn, consentPrompt, nsTag, saveBlockedText, saveTyped } from "./entry";
+import { activeNs, allRecs, consentOn, consentPrompt, inNs, nsTag, putMode, saveBlockedText, saveTyped } from "./entry";
 import { disclaimers, num, valueEl } from "./components";
 import { checkFreeText } from "../core/safety";
 import { fieldById } from "../catalog/fields";
-import type { FieldValue } from "../core/types";
+import type { FieldValue, TMRecord } from "../core/types";
 import { riskRows, validateRisk, withoutStopRule, type Likelihood } from "../core/risk";
-import { looksLikePersonContact, roleRows, roleSummary, type Holder } from "../core/team";
+import { assignTask, completeHandover, looksLikePersonContact, roleSummary, roleViews, validateHandover, withHolder, type Holder } from "../core/team";
+import { analysisLines, syncDelegationNow, teamAnalysis } from "./teamCard";
+import { loopLogRecord } from "../core/realityLoop";
 import { parseAmount, parseOwnership, ventureViews } from "../core/ventures";
 import { bdt, estimateLabel, moneyEl, portfolioCard } from "./ventureCard";
 import { overallProgress, parseWeight, starRows, starViews } from "../core/northStar";
@@ -240,7 +242,7 @@ function ventureScreenInner(): HTMLElement {
     h("p", { class: "muted" }, t("ven.note", lang)), h("p", { class: "muted" }, t("ven.remove.note", lang)), modeMark(lang), disclaimers(lang, ["advice"]));
 }
 
-// ---- M10 team roles (roles only) ----
+// ---- M10 team roles: who covers each role, the steps tied to it, hand-over, a hiring step, and the gap analysis (roles only, no names) ----
 export function teamScreen(): HTMLElement { return withView("team", L(), teamScreenInner()); }
 function teamScreenInner(): HTMLElement {
   const lang = L();
@@ -261,17 +263,89 @@ function teamScreenInner(): HTMLElement {
     rerender();
   });
   const all = allRecs();
-  const rows = roleRows(all);
-  const s = roleSummary(rows);
+  const views = roleViews(all);
+  const s = roleSummary(views.map((v) => v.row));
+  const stepsFree = all.filter((r) => r.entity === "task" && r.values["task.done_on"]?.state !== "value" && r.values["task.not_true_on"]?.state !== "value" && !(r.links?.role && views.some((v) => v.row.id === r.links!.role)));
+  const titleOf = (r: TMRecord) => String((r.values["task.title"] as { value?: unknown } | undefined)?.value ?? "");
+  const today = todayIsoKpi();
+
+  // Every change of holder, link or hand-over goes through here, then the delegation marks are brought in step with the roles.
+  const commit = (puts: TMRecord[]) => { if (!entryNs()) return false; for (const r of puts) storeOf(r).put(inNs(r, r.ns)); syncDelegationNow(); return true; };
+
+  const card = (v: ReturnType<typeof roleViews>[number]) => {
+    const r = v.row; const rec = store[activeNs()].get(r.id)!;
+    const msg = h("p", { class: "err", role: "alert" });
+    // holder
+    const hsel = h("select", { id: `tm-h-${r.id}` }, h("option", { value: "" }, t("unknown.unknown", lang)),
+      ...(["me", "someone", "open"] as const).map((c) => h("option", { value: c, ...(r.holder === c ? { selected: true } : {}) }, choiceLabel("team_role.holder", c, lang))));
+    const hform = h("form", { novalidate: true, "data-team-holder": r.id }, h("label", { for: `tm-h-${r.id}` }, t("team.holder", lang)), hsel,
+      h("button", { class: "btn ghost", type: "submit", style: "width:auto;margin:0;min-height:44px" }, t("team.holder.save", lang)));
+    hform.addEventListener("submit", (e) => { e.preventDefault(); msg.textContent = ""; if (!commit([withHolder(rec, (hsel.value || null) as Holder | null)])) { msg.textContent = saveBlockedText(lang); return; } rerender(); });
+    // steps tied to the role
+    const stepLis = v.tasks.map((x) => h("li", { "data-role-step": x.id },
+      h("strong", {}, x.title || "—"), " · ", x.minutes === null ? t("plan.task.minutes.later", lang) : t("task.minutes", lang, { n: num(x.minutes, lang) }),
+      x.delegated ? h("span", { class: "tag off", "data-delegated": x.id }, ` ${t("team.step.delegated", lang)}`) : null, x.parked ? h("span", { class: "tag off" }, ` ${t("rl.state.parked", lang)}`) : null, " ",
+      h("button", { class: "btn ghost", type: "button", "data-untie": x.id, style: "width:auto;margin:0;min-height:44px", onclick: () => { const tr = store[activeNs()].get(x.id); if (tr && commit([assignTask(tr, null)])) rerender(); } }, t("team.step.untie", lang))));
+    const assignSel = stepsFree.length ? h("select", { id: `tm-as-${r.id}` }, ...stepsFree.map((x) => h("option", { value: x.id }, titleOf(x) || x.id))) : null;
+    const assignBtn = assignSel ? h("button", { class: "btn ghost", type: "button", "data-assign": r.id, style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => {
+      const tr = store[activeNs()].get((assignSel as HTMLSelectElement).value); if (tr && commit([assignTask(tr, r.id)])) rerender(); else if (!entryNs()) { msg.textContent = saveBlockedText(lang); } } }, t("team.step.assign", lang)) : null;
+    // hand-over
+    const note = h("input", { id: `ho-n-${r.id}`, type: "text", maxlength: "200", autocomplete: "off" });
+    const due = h("input", { id: `ho-d-${r.id}`, type: "date" });
+    const hoForm = h("form", { novalidate: true, "data-handover": r.id },
+      h("label", { for: `ho-n-${r.id}` }, labelOf("handover.note", lang)), note, h("label", { for: `ho-d-${r.id}` }, labelOf("handover.due", lang)), due,
+      h("button", { class: "btn ghost", type: "submit", style: "width:auto;margin:6px 0 0;min-height:44px" }, t("team.ho.save", lang)));
+    hoForm.addEventListener("submit", (e) => {
+      e.preventDefault(); msg.textContent = "";
+      if (!checkFreeText(note.value).ok || looksLikePersonContact(note.value)) { msg.textContent = t("team.err.contact", lang); return; }
+      const bad = validateHandover({ note: note.value, due: due.value }, v); if (bad) { msg.textContent = t(`team.ho.err.${bad}` as Key, lang); return; }
+      const values: Record<string, FieldValue> = { "handover.status": txt("planned") };
+      if (note.value.trim()) values["handover.note"] = txt(note.value.trim()); if (due.value) values["handover.due"] = txt(due.value);
+      const id = `ho-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`;
+      if (!saveTyped({ id, entity: "handover", createdAt: new Date().toISOString(), values, links: { role: r.id } })) { msg.textContent = saveBlockedText(lang); return; }
+      rerender();
+    });
+    const plannedBox = v.planned ? h("div", { "data-handover-planned": v.planned.id },
+      h("p", {}, h("strong", {}, t("team.ho.planned", lang))),
+      v.planned.note ? h("p", { class: "muted" }, v.planned.note) : null, v.planned.due ? h("p", { class: "muted" }, t("team.ho.due", lang, { d: v.planned.due })) : null,
+      h("p", { class: "muted" }, t("team.ho.effect", lang, { n: num(v.tasks.length, lang) })),
+      h("button", { class: "btn", type: "button", "data-act": "handover-done", style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => {
+        const res = completeHandover(allRecs(), v.planned!.id, today); if (!res) return;
+        if (!commit(res.puts)) { msg.textContent = saveBlockedText(lang); return; }
+        putMode(loopLogRecord({ id: `hlog-${Date.now().toString(36)}`, eventId: null, createdAt: new Date().toISOString(), text: t("team.ho.logged", lang, { role: r.role, date: today }) }));
+        rerender(); } }, t("team.ho.done", lang)), " ",
+      h("button", { class: "btn ghost", type: "button", "data-act": "handover-cancel", style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => { store[activeNs()].delete(v.planned!.id); rerender(); } }, t("team.ho.cancel", lang)))
+      : r.holder !== "someone" ? h("details", { class: "help" }, h("summary", {}, t("team.ho.plan", lang)), hoForm) : null;
+    // hiring step
+    const hireTitle = t("team.hire.title", lang, { role: r.role });
+    const hasHire = v.tasks.some((x) => x.title === hireTitle);
+    const hireBtn = (r.holder === "open" || r.holder === null) && !hasHire ? h("button", { class: "btn ghost", type: "button", "data-act": "hire", style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => {
+      const id = `task-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`;
+      if (!saveTyped({ id, entity: "task", createdAt: new Date().toISOString(), values: { "task.title": txt(hireTitle), "task.minutes": { state: "later" }, "task.priority": txt("normal") }, links: { role: r.id } })) { msg.textContent = saveBlockedText(lang); return; }
+      rerender(); } }, t("team.hire.btn", lang)) : null;
+    const gapText = t(`team.gap.${v.gap}` as Key, lang, { n: num(v.tasks.length, lang) });
+    return h("div", { class: "card", "data-role": r.id, "data-gap": v.gap }, h("div", { class: "row" }, h("div", {},
+      modeMark(lang), h("h2", { class: "card-h" }, r.role),
+      h("p", { class: "muted" }, r.holder ? choiceLabel("team_role.holder", r.holder as Holder, lang) : t("unknown.unknown", lang)),
+      h("p", { "data-gap-text": v.gap }, gapText),
+      v.tasks.length ? h("p", { class: "muted", "data-role-load": "1" }, t("team.load", lang, { s: num(v.tasks.length, lang), m: num(v.knownMinutes, lang) }), v.unknownEstimates ? ` ${t("team.an.noest", lang, { n: num(v.unknownEstimates, lang) })}` : "") : null,
+      v.tasks.length ? h("ul", { class: "plain" }, ...stepLis) : h("p", { class: "muted" }, t("team.nosteps", lang)),
+      hform,
+      assignSel ? h("div", {}, h("label", { for: `tm-as-${r.id}` }, t("team.step.assignLabel", lang)), assignSel, assignBtn) : null,
+      plannedBox, hireBtn,
+      v.done.length ? h("ul", { class: "plain", "data-handed-over": String(v.done.length) }, ...v.done.map((d) => h("li", {}, t("team.ho.was", lang, { d: d.doneOn ?? "—" })))) : null, msg),
+      h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0;min-height:44px", "data-remove": r.id, onclick: () => {
+        if (entryNs()) for (const x of allRecs()) if (x.entity === "task" && x.links?.role === r.id) storeOf(x).put(inNs(assignTask(x, null), x.ns));
+        store[activeNs()].delete(r.id); syncDelegationNow(); rerender(); } }, t("risk.remove", lang))));
+  };
   return h("main", { class: "scr scr-team" },
     link("#/diary", "crumb", `← ${t("diary.title", lang)}`),
     h("h1", {}, t("team.title", lang)), h("p", { class: "sub" }, t("team.intro", lang)),
     h("p", { class: "muted", "data-team-summary": "1" }, t("team.summary", lang, { total: num(s.total, lang), open: num(s.open, lang), unknown: num(s.unknown, lang) })),
+    views.length ? h("section", { "data-team-analysis": "1" }, ...analysisLines(teamAnalysis(), lang)) : null,
     form,
-    rows.length ? h("div", {}, ...rows.map((r) => h("div", { class: "card", "data-role": r.id }, h("div", { class: "row" }, h("div", {},
-      modeMark(lang), h("h2", { class: "card-h" }, r.role),
-      h("p", { class: "muted" }, r.holder ? choiceLabel("team_role.holder", r.holder as Holder, lang) : t("unknown.unknown", lang))),
-      removeBtn(r.id, lang))))) : h("p", { class: "muted" }, t("team.empty", lang)),
+    views.length ? h("div", {}, ...views.map(card)) : h("p", { class: "muted" }, t("team.empty", lang)),
+    link("#/diary/plan", "crumb", t("team.plan.link", lang)),
     h("p", { class: "muted" }, t("team.note", lang)), modeMark(lang), disclaimers(lang, ["advice"]));
 }
 

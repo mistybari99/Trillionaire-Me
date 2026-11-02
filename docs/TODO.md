@@ -103,6 +103,7 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 - [x] Step 3: M09 venture value and income/expense: value + edit on `#/diary/ventures`, venture-linked money lines (`links.venture`), Money venture picker, portfolio card on page/Today/report (`src/core/ventures.ts`, `src/ui/ventureCard.ts`, `tests/venture_value.test.ts`). Unit economics still missing.
 - [x] Step 4: M12 full reality-changed loop: `#/journey/reality` (event, impact, 3 options, old/new plan-diff, approval, plan versions, Resume gently), history, Today, report; `src/core/realityLoop.ts`, `src/ui/realityUi.ts`, `tests/reality_loop.test.ts`; schema additive (catalog 6).
 - [x] Step 5: M03 North Star "where I am now" (typed, or from Money net worth / ventures), progress, steps passed, metric weights, one weighted overall (page, Journey, Today, report), edit form; `src/core/northStar.ts`, `src/ui/northStarCard.ts`, `tests/north_star.test.ts`; schema additive (catalog 7).
+- [x] Step 6: M10 steps tied to roles, hand-over (plan, mark done, delegated steps leave the schedule), hiring step, gap analysis (team page, Today, report); `src/core/team.ts`, `src/ui/teamCard.ts`, `tests/team_handover.test.ts`; schema additive (catalog 8).
 
 ## Part B — Owner-only tasks
 - [ ] Phone offline test: open online once, visit all pages, airplane mode, reopen (O1).
