@@ -22,6 +22,7 @@ import { overallEl, starRowView } from "./northStarCard";
 import { planHistory } from "../core/planHistory";
 import { KPI_MEASURES, KPI_PERIODS, kpiStatus, parseActual, parseTarget, validateKpi, type KpiError } from "../core/kpi";
 import { kpiRowView, todayIsoKpi } from "./kpiUi";
+import { printLink } from "./printLink";
 import { entryNs, labelFor, storeOf } from "./entry";
 import { historySections } from "./realityUi";
 import type { Locale } from "../i18n/registry";
@@ -342,7 +343,7 @@ function teamScreenInner(): HTMLElement {
   };
   return h("main", { class: "scr scr-team" },
     link("#/diary", "crumb", `← ${t("diary.title", lang)}`),
-    h("h1", {}, t("team.title", lang)), h("p", { class: "sub" }, t("team.intro", lang)),
+    h("h1", {}, t("team.title", lang)), h("p", { class: "sub" }, t("team.intro", lang)), printLink("handover", lang),
     h("p", { class: "muted", "data-team-summary": "1" }, t("team.summary", lang, { total: num(s.total, lang), open: num(s.open, lang), unknown: num(s.unknown, lang) })),
     views.length ? h("section", { "data-team-analysis": "1" }, ...analysisLines(teamAnalysis(), lang)) : null,
     form,

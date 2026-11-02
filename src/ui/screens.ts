@@ -52,6 +52,7 @@ import { realityReportCard, realityTodayCard } from "./realityUi";
 import { northStarCard } from "./northStarCard";
 import { syncDelegationNow, teamCard } from "./teamCard";
 import { riskDueCard } from "./riskCard";
+import { printLink } from "./printLink";
 import { portfolioCard } from "./ventureCard";
 import { ventureRows } from "../core/ventures";
 import { backupReminderCard } from "./snapshotsUi";
@@ -307,7 +308,7 @@ export function planScreen(): HTMLElement {
     ...byDay(d).map((p) => h("p", { "data-placement": p.taskId }, `${fmtClock(p.start)}–${fmtClock(p.end)} · ${cp.titles.get(p.taskId) ?? ""}`))));
   return h("main", { class: "scr scr-plan" },
     link("#/diary", "crumb", `← ${t("diary.title", lang)}`),
-    h("h1", {}, t("plan.title", lang)), h("p", { class: "sub" }, t("plan.intro", lang)),
+    h("h1", {}, t("plan.title", lang)), h("p", { class: "sub" }, t("plan.intro", lang)), printLink("plan", lang),
     h("div", { class: "card", "data-capacity": cp.state }, h("h2", { class: "card-h", }, t("plan.free", lang)), h("p", {}, free)),
     feasibilityNote(cp, lang),
     planFlow(cp, lang),
@@ -555,8 +556,9 @@ export function captureScreen(): HTMLElement {
     h("label", { for: "cap-note" }, tb(fieldById("capture.note")!.label, lang)), ta, err, understand, out, fieldHelp(fieldById("capture.note")!, lang), disclaimers(lang));
 }
 
-export function reportScreen(): HTMLElement {
-  const lang = L(); const capRecs = allRecs().filter((r) => r.entity === "capture_item").sort((a, b) => a.id.localeCompare(b.id)); const items = capRecs.map(itemOf); const s = summarize(items);
+/** The report's cards, in order. The report screen and the print page (Save as PDF) draw the same list. */
+export function reportContent(lang: Locale): Array<Node | null> {
+  const capRecs = allRecs().filter((r) => r.entity === "capture_item").sort((a, b) => a.id.localeCompare(b.id)); const items = capRecs.map(itemOf); const s = summarize(items);
   const repCompact = screenView("report") === "compact";
   const entryText = (i: Item) => i.text ?? (typeof i.number === "number" ? `${fmtNum(i.number, lang)}${i.unit ? ` ${i.unit}` : ""}` : i.date ?? "");
   const entries = h("ul", { class: "list-compact", "data-entries": "1" }, ...capRecs.map((r, k) => h("li", { "data-item": r.id }, nsTag(r.ns, lang), " ", h("span", { class: "muted" }, t(`capture.kind.${items[k]!.kind}` as Key, lang)), " · ", entryText(items[k]!))));
@@ -564,8 +566,7 @@ export function reportScreen(): HTMLElement {
     h("p", {}, s.amountCount ? valueEl(t("report.amountTotal", lang, { n: num(s.amountCount, lang), v: t("money.bdt", lang, { v: fmtNum(s.amountTotal, lang) }) }), "ESTIMATE", lang) : t("report.empty", lang)),
     h("h2", { class: "card-h" }, t("report.entries", lang)), entries);
   const sec = (title: Key, ...kids: Array<Node | string | null>) => h("div", { class: "card" }, h("h2", { class: "card-h", }, t(title, lang)), ...kids);
-  return h("main", {}, link("#/journey", "crumb", `← ${t("journey.title", lang)}`), h("h1", {}, t("report.title", lang)), h("p", { class: "sub" }, t("report.intro", lang)),
-    viewBar("report", lang),
+  return [
     goalRingsChart(allRecs(), lang),
     kpiSection("week", lang), kpiSection("days90", lang),
     portfolioCard(lang, "report"),
@@ -579,7 +580,13 @@ export function reportScreen(): HTMLElement {
       sec("report.durations", s.durationMinutes ? valueEl(t("report.minutes", lang, { m: fmtNum(s.durationMinutes, lang) }), "INFERENCE", lang) : h("p", { class: "muted" }, t("report.empty", lang))),
       sec("report.dates", s.dates.length ? h("div", {}, ...s.dates.map((d) => h("p", {}, valueEl(d, "DEMO", lang)))) : h("p", { class: "muted" }, t("report.empty", lang))),
       sec("report.entries", entries)) : h("p", { class: "muted" }, t("report.empty", lang)),
-    disclaimers(lang));
+  ];
+}
+
+export function reportScreen(): HTMLElement {
+  const lang = L();
+  return h("main", {}, link("#/journey", "crumb", `← ${t("journey.title", lang)}`), h("h1", {}, t("report.title", lang)), h("p", { class: "sub" }, t("report.intro", lang)),
+    viewBar("report", lang), printLink("report", lang), ...reportContent(lang), disclaimers(lang));
 }
 
 

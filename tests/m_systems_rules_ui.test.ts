@@ -152,8 +152,8 @@ describe("capability status matches evidence for M19 and M24", () => {
       expect(EVIDENCE[id]!.routes.length && EVIDENCE[id]!.fns.length && EVIDENCE[id]!.tests.length, id).toBeGreaterThan(0);
     }
   });
-  it("the AI and sync rows stay honest (blocked / partly)", () => {
+  it("the AI row stays blocked; M20 is complete for the local part (cloud sync is off and outside the card)", () => {
     expect(buildLabel(MODULES.find((x) => x.id === "M23")!)).toBe("blocked");
-    expect(buildLabel(MODULES.find((x) => x.id === "M20")!)).toBe("partial");
+    expect(buildLabel(MODULES.find((x) => x.id === "M20")!)).toBe("complete");
   });
 });

@@ -27,7 +27,7 @@ export const EVIDENCE: Record<string, Evidence> = {
   M17: ev(["#/cards", "#/topics"], ["src/ui/screens.ts#cardsScreen", "src/core/cards.ts#dueCards"], ["src/library/topics.ts"], ["tests/focus_habits_cards.test.ts", "tests/topics_rewards.test.ts"]),
   M18: ev(["#/journey/art"], ["src/ui/rewardArt.ts#journeyArt", "src/ui/diagram.ts#diagram"], [], ["tests/r4_motion.test.ts"]),
   M19: ev(["#/settings/plan/automation", "#/today"], ["src/core/rules.ts#evaluateRules"], [], ["tests/rules.test.ts", "tests/m_systems_rules_ui.test.ts"]),
-  M20: ev(["#/settings/backup", "#/settings/data"], ["src/core/backup.ts#createBackup", "src/core/backup.ts#restoreBackup", "src/core/restore.ts#restoreBackupAtomic"], [], ["tests/g2.test.ts", "tests/restore_safety.test.ts", "tests/restore_ui.test.ts"]),
+  M20: ev(["#/settings/backup", "#/settings/data", "#/journey/print"], ["src/core/backup.ts#createBackup", "src/core/backup.ts#restoreBackup", "src/core/restore.ts#restoreBackupAtomic", "src/core/printDoc.ts#planDoc"], [], ["tests/g2.test.ts", "tests/restore_safety.test.ts", "tests/restore_ui.test.ts", "tests/print_pdf.test.ts"]),
   M21: ev(["#/more/safety", "#/settings/privacy"], ["src/core/safety.ts#checkFreeText"], [], ["tests/g1.test.ts", "tests/o8_notify_privacy.test.ts"]),
   M22: ev(["#/more/status"], ["src/ui/screens.ts#status"], [], ["tests/g1.test.ts"]),
   M23: ev([], [], ["src/core/ports.ts", "src/adapters/connectedStubs.ts"], ["tests/connections.test.ts"]),

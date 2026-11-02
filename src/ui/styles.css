@@ -450,3 +450,15 @@ textarea[data-swot]{width:100%;box-sizing:border-box;font:inherit;padding:8px}
 .scr-settings .seg{gap:8px} .scr-settings .seg button{flex:1 1 0;min-width:0;padding-inline:8px}
 .scr-settings .set-delete{margin-top:24px;background:transparent}
 .set-hl{outline:3px solid var(--primary);outline-offset:2px}
+/* Print / Save as PDF (M20): paper layout. Chrome, buttons and links that only make sense on a screen are hidden; system colours on a light page; cards do not split across pages. */
+@media print{
+  :root{color-scheme:light}
+  html,body{background:Canvas !important;color:CanvasText !important}
+  .top,nav,.skip,.drawer,.no-print,.crumb,.btn,.seg,.banner{display:none !important}
+  main{max-width:none !important;padding:0 !important;margin:0 !important}
+  .card,article.card{box-shadow:none !important;background:Canvas !important;border:1px solid GrayText !important;break-inside:avoid;margin:6px 0 !important}
+  .muted,.sub{color:GrayText !important}
+  a{color:CanvasText !important;text-decoration:none !important}
+  .ov-bar,.bar{border:1px solid GrayText}
+  @page{margin:14mm}
+}

@@ -289,6 +289,18 @@ await ctx.setOffline(false);
   for (const id of ["emerald-obsidian", "broadsheet"]) { await page.click(`[data-design-opt=${id}]`); await page.waitForTimeout(100); const dd = await page.evaluate(() => document.documentElement.dataset.design); check("DESIGN-VER", `${id} applies`, dd === id, dd); }
   await page.click("[data-design-opt=light-futuristic]"); await page.waitForTimeout(100);
 }
+// Save as PDF (M20): the print page opens the phone's print window, and the paper layout hides the tabs and the buttons.
+{
+  await page.evaluate(() => { window.__printed = 0; window.print = () => { window.__printed++; }; });
+  await page.goto("http://localhost:4174/#/journey/print/plan"); await page.waitForSelector("[data-print-kind=plan]");
+  await page.evaluate(() => { window.__printed = 0; window.print = () => { window.__printed++; }; });
+  await page.click("[data-act=print-save]");
+  const printed = await page.evaluate(() => window.__printed);
+  await page.emulateMedia({ media: "print" });
+  const hidden = await page.evaluate(() => getComputedStyle(document.querySelector("nav")).display === "none" && getComputedStyle(document.querySelector("[data-act=print-save]")).display === "none");
+  await page.emulateMedia({ media: "screen" });
+  check("PDF-PRINT", "Save as PDF opens the print window; the paper layout hides tabs and buttons", printed === 1 && hidden, `printed=${printed} hidden=${hidden}`);
+}
 check("SEC-CSP", "page policy (CSP meta) blocks nothing the app needs: 0 violations in the whole run", cspHits.length === 0, JSON.stringify(cspHits));
 check("G1-NONET", "0 third-party/external requests during all of the above", external.length === 0, JSON.stringify(external));
 

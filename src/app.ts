@@ -12,6 +12,7 @@ import * as IM from "./ui/importUi";
 import * as RL from "./ui/realityUi";
 import { viaLazy } from "./ui/lazy";
 import { CONN, DECIDE, HALAL, LEGS, PLAN } from "./ui/lazyScreens";
+import { printScreen } from "./ui/printUi";
 import { onboardScreen } from "./ui/onboardUi";
 import { settingsScreen } from "./ui/settingsUi";
 import { demoPanels, firstRunScreen, trackDemoDay } from "./ui/modeUi";
@@ -39,6 +40,7 @@ export const ROUTES: Array<[RegExp, (m: RegExpMatchArray) => HTMLElement, string
   [/^\/diary\/money$/, () => S.moneyScreen(), "diary"],
   [/^\/capture$/, () => S.captureScreen(), "today"],
   [/^\/journey\/report$/, () => S.reportScreen(), "journey"],
+  [/^\/journey\/print(?:\/([a-z]+))?$/, (m) => printScreen(m[1]), "journey"],
   [/^\/journey\/week$/, () => S.weeklyScreen(), "journey"],
   [/^\/journey\/decide$/, () => viaLazy(DECIDE, (m) => m.decisionScreen()), "journey"],
   [/^\/journey\/mine$/, () => viaLazy(DECIDE, (m) => m.triageScreen()), "journey"],

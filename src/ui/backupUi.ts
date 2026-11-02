@@ -13,6 +13,8 @@ import { encBackupCard } from "./encBackup";
 import { markBackupFile, snapshotsCard, whenText } from "./snapshotsUi";
 import { restoreHost, startRestore } from "./restoreUi";
 import { csvCard } from "./csvUi";
+import { printLink } from "./printLink";
+import { PRINT_KINDS } from "../core/printDoc";
 import { importCard } from "./importUi";
 import { settingsHash } from "./settingsRegistry";
 
@@ -63,6 +65,8 @@ export function backupPage(row: string | undefined, lang: Locale): HTMLElement {
     h("section", { "data-setting-row": "storage" }, storageCard(lang)),
     h("details", { "data-setting-row": "snapshots" }, h("summary", { style: "min-height:44px" }, t("bak.fold.snap", lang)), snapshotsCard(lang, "settings")),
     h("details", { "data-setting-row": "csv" }, h("summary", { style: "min-height:44px" }, t("bak.fold.csv", lang)), csvCard(realOn, lang), importCard(lang)),
+    h("section", { class: "card", "data-card": "pdf", "aria-label": t("print.title", lang) }, h("h2", { class: "card-h" }, t("print.title", lang)), h("p", { class: "muted" }, t("print.card.note", lang)),
+      h("div", { class: "actions" }, ...PRINT_KINDS.map((k) => printLink(k, lang)))),
     h("p", { class: "muted", "data-bak": "settings-note" }, t("bak.settingsNote", lang)));
   // folds that hold the row being opened start open
   if (row === "snapshots" || row === "csv") main.querySelector<HTMLDetailsElement>(`details[data-setting-row=${row}]`)?.setAttribute("open", "");
