@@ -155,19 +155,24 @@ describe("screen (More > Demo & real data)", () => {
     expect(app().querySelector("[data-snapshot]")!.textContent).toMatch(/manual · 1 demo, 0 real/);
     store.demo.put(rec("demo", "b"));
     (app().querySelector("[data-act=snap-restore]") as HTMLElement).click();
-    expect(app().querySelector("[data-snap=confirm-box]")!.textContent).toMatch(/replaces your current demo data/); expect(store.demo.list().length).toBe(2);
+    await settle();
+    expect(app().querySelector("[data-restore=preview]")!.textContent).toMatch(/Replace my 2 entries with the 1 in this file/); expect(store.demo.list().length).toBe(2);
     (app().querySelector("[data-act=snap-confirm]") as HTMLElement).click(); await settle(120);
     expect(store.demo.list().map((r) => r.id)).toEqual(["a"]);
     expect((await snapshotRepo!.list()).some((x) => x.reason === "before_restore" && x.demo.count === 2)).toBe(true);
-    render(); // the app redraws on the hash event; the restore message survives the redraw
-    expect(app().querySelector("[data-snap=msg]")!.textContent).toMatch(/Restored: 1 demo and 0 real/);
+    render(); // the app redraws on the hash event; the result and Go back survive the redraw
+    expect(app().querySelector("[data-restore=msg]")!.textContent).toMatch(/Done. 1 entries restored/);
+    (app().querySelector("[data-act=restore-goback]") as HTMLElement).click(); await settle(120);
+    expect(store.demo.list().map((r) => r.id).sort()).toEqual(["a", "b"]);
   });
   it("cancel leaves everything as it was; nothing to save says so", async () => {
     go("#/more/data"); (app().querySelector("[data-act=snap-take]") as HTMLElement).click(); await settle();
     expect(app().querySelector("[data-snap=msg]")!.textContent).toMatch(/nothing to save/); expect(app().querySelectorAll("[data-snapshot]").length).toBe(0);
     store.demo.put(rec("demo", "a")); go("#/more/data"); (app().querySelector("[data-act=snap-take]") as HTMLElement).click(); await settle();
-    (app().querySelector("[data-act=snap-restore]") as HTMLElement).click(); (app().querySelector("[data-act=snap-cancel]") as HTMLElement).click();
-    expect(app().querySelector("[data-snap=confirm-box]")).toBeNull(); expect(store.demo.list().length).toBe(1);
+    (app().querySelector("[data-act=snap-restore]") as HTMLElement).click(); await settle();
+    expect(document.activeElement?.getAttribute("data-act")).toBe("snap-cancel"); // Cancel is the default focus
+    (app().querySelector("[data-act=snap-cancel]") as HTMLElement).click();
+    expect(app().querySelector("[data-restore=preview]")).toBeNull(); expect(store.demo.list().length).toBe(1);
   });
   it("runAutoSnapshot: takes one when due, skips when switched off or too soon", async () => {
     store.demo.put(rec("demo", "a")); prefs.snapAuto = false; expect(await runAutoSnapshot()).toBeNull(); prefs.snapAuto = true;

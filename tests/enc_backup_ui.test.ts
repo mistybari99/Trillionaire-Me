@@ -73,17 +73,16 @@ describe("encrypted backup card", () => {
     expect(store.demo.list().every((r) => r.ns === "demo")).toBe(true); expect(store.real.list().every((r) => r.ns === "real")).toBe(true);
   });
 
-  it("cancel keeps everything; real part is skipped without the real-data tick", async () => {
+  it("real data in the file without the real-data tick: nothing is written, plain message, cancel keeps everything", async () => {
     store.real.put(mk("real", "oldr", "task", { "task.title": "oldr" }));
     const text = await fileFor([mk("demo", "d1", "task", { "task.title": "a" })], [mk("real", "r1", "task", { "task.title": "b" })], "right-pass-1");
     revokeConsent(consentKv);
     go("#/more/data");
     setFile(q("#enc-file"), text); q<HTMLInputElement>("#enc-rpass").value = "right-pass-1"; q<HTMLButtonElement>("[data-act=enc-open]").click();
-    await until(() => !!q("[data-act=enc-cancel]")); q<HTMLButtonElement>("[data-act=enc-cancel]").click();
+    await until(() => !!q("[data-restore=blocked]"));
+    expect(q("[data-restore=blocked]").textContent).toMatch(/needs your permission first. Nothing was changed/); expect(q("[data-act=enc-confirm]")).toBeNull();
+    q<HTMLButtonElement>("[data-act=enc-cancel]").click();
     expect(store.demo.list()).toHaveLength(0); expect(store.real.list().map((r) => r.id)).toEqual(["oldr"]);
-    q<HTMLInputElement>("#enc-rpass").value = "right-pass-1"; q<HTMLButtonElement>("[data-act=enc-open]").click(); await until(() => !!q("[data-act=enc-confirm]")); q<HTMLButtonElement>("[data-act=enc-confirm]").click();
-    await until(() => store.demo.list().length === 1);
-    expect(store.real.list().map((r) => r.id)).toEqual(["oldr"]); expect(q("#enc-msg").textContent).toMatch(/real-data tick is off/);
   });
 
   it("has Bangla copy with Latin digits", () => {

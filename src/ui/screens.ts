@@ -20,7 +20,8 @@ import { checkFreeText } from "../core/safety";
 import { type FieldValue, type TMRecord, type UnknownState } from "../core/types";
 import type { FieldDef } from "../catalog/types";
 import { StoreRepo } from "../adapters/storeRepo";
-import { createBackup, restoreBackup } from "../core/backup";
+import { createBackup, parseBackup } from "../core/backup";
+import { restoreHost, startRestore } from "./restoreUi";
 import { exportCsv } from "../core/csv";
 import { goalReminders } from "../core/goalStatus";
 import { freshnessOf } from "../core/freshness";
@@ -1475,14 +1476,17 @@ export function dataScreen(): HTMLElement {
       const a = h("a", { href: URL.createObjectURL(new Blob([JSON.stringify(b)], { type: "application/json" })), download: `tm-demo-backup-${b.createdAt.slice(0, 10)}.json` });
       document.body.append(a); a.click(); a.remove();
     } }, t("backup.save", lang)),
+    h("p", { class: "muted", "data-backup": "contains" }, t("backup.contains.demo", lang)),
     h("label", { class: "btn ghost", style: "cursor:pointer" }, t("backup.restore", lang),
       h("input", { type: "file", accept: "application/json,.json", "data-act": "restore", class: "sr-only", onchange: async (e: Event) => {
         const f = (e.target as HTMLInputElement).files?.[0]; if (!f) return;
         const out = document.getElementById("backup-msg")!;
-        try { const n = await restoreBackup(new StoreRepo(store), await f.text()); out.className = "ok-msg"; out.textContent = t("backup.ok", lang, { n: num(n, lang) }); }
+        try { const b = parseBackup(await f.text()); out.textContent = ""; await startRestore("json", { demo: b.ns === "demo" ? b : null, real: b.ns === "real" ? b : null, createdAt: b.createdAt }, lang); }
         catch (err) { out.className = "err"; out.textContent = t("backup.bad", lang, { why: (err as Error).message }); }
+        (e.target as HTMLInputElement).value = "";
       } })),
     h("p", { id: "backup-msg", role: "status" }),
+    restoreHost(lang),
     encBackupCard(lang),
     snapshotsCard(lang),
     disclaimers(lang));

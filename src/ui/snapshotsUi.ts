@@ -8,7 +8,8 @@ import { consentKv, prefs, snapshotRepo, store } from "./state";
 import { num } from "./components";
 import { readConsent } from "../core/consent";
 import { StoreRepo } from "../adapters/storeRepo";
-import { KEEP_CHOICES, autoDue, newestFirst, parseSnapshotFile, pruneSnapshots, reminderDue, restoreSnapshot, snapshotToFile, takeSnapshot, type Snapshot } from "../core/snapshots";
+import { startRestore } from "./restoreUi";
+import { KEEP_CHOICES, autoDue, newestFirst, parseSnapshotFile, pruneSnapshots, reminderDue, snapshotToFile, takeSnapshot, type Snapshot } from "../core/snapshots";
 
 const rerender = () => window.dispatchEvent(new HashChangeEvent("hashchange"));
 const pad = (n: number) => String(n).padStart(2, "0");
@@ -40,7 +41,6 @@ export function snapshotsCard(lang: Locale): HTMLElement {
   const say = (key: Key, bad: boolean, args?: Record<string, string | number>) => { msg.className = bad ? "err" : "ok-msg"; msg.textContent = t(key, lang, args); };
   if (note) { say(note.key, note.bad, note.args); note = null; }
   const list = h("div", { "data-snap": "list" });
-  const confirmBox = h("div", { "data-snap": "confirm" });
   const realOk = () => readConsent(consentKv);
 
   const fileFor = (s: Snapshot) => {
@@ -48,22 +48,7 @@ export function snapshotsCard(lang: Locale): HTMLElement {
     prefs.fileBackupAt = new Date().toISOString();
     say("snap.fileSaved", false, { d: num(s.demo.count, lang), r: num(s.real?.count ?? 0, lang) });
   };
-  const askRestore = (s: Snapshot) => {
-    confirmBox.replaceChildren(h("div", { class: "note", role: "alertdialog", "aria-label": t("snap.confirm.title", lang), "data-snap": "confirm-box" },
-      h("h3", {}, t("snap.confirm.title", lang)), h("p", {}, t("snap.confirm.warn", lang)),
-      s.real && !realOk() ? h("p", { class: "muted" }, t("snap.realSkipped", lang)) : null,
-      h("p", { class: "muted" }, t("snap.row", lang, { when: whenText(s.createdAt), why: t(`snap.why.${s.reason}` as Key, lang), d: num(s.demo.count, lang), r: num(s.real?.count ?? 0, lang) })),
-      h("button", { class: "btn", type: "button", "data-act": "snap-confirm", onclick: () => doRestore(s) }, t("snap.confirm.yes", lang)),
-      h("button", { class: "btn ghost", type: "button", "data-act": "snap-cancel", onclick: () => confirmBox.replaceChildren() }, t("snap.confirm.no", lang))));
-  };
-  const doRestore = async (s: Snapshot) => {
-    try {
-      // Check first (nothing changes if the snapshot is damaged), then save today's data, then replace.
-      await takeSnapshot(records(), repo, { reason: "before_restore", keep: prefs.snapKeep + 1, realOk: realOk() }).catch(() => null);
-      const r = await restoreSnapshot(records(), s, realOk());
-      note = { key: "snap.done", args: { d: num(r.demo, lang), r: num(r.real, lang) }, bad: false }; rerender();
-    } catch { confirmBox.replaceChildren(); say("snap.bad", true); }
-  };
+  const askRestore = (s: Snapshot) => { void startRestore("snap", { demo: s.demo, real: s.real, createdAt: s.createdAt }, lang); };
   const paint = async () => {
     const all = newestFirst(await repo.list());
     list.replaceChildren(...(all.length ? [h("ul", { class: "snap-list" }, ...all.map((s) => h("li", { "data-snapshot": s.id, "data-reason": s.reason },
@@ -73,7 +58,6 @@ export function snapshotsCard(lang: Locale): HTMLElement {
         h("button", { class: "btn ghost", type: "button", "data-act": "snap-file-one", onclick: () => fileFor(s) }, t("snap.file", lang))))))] : [h("p", { class: "muted", "data-snap": "none" }, t("snap.none", lang))]));
   };
   const take = async () => {
-    confirmBox.replaceChildren();
     const s = await takeSnapshot(records(), repo, { reason: "manual", keep: prefs.snapKeep, realOk: realOk() });
     if (!s) say("snap.nothing", true); else say("snap.taken", false);
     await paint();
@@ -85,7 +69,7 @@ export function snapshotsCard(lang: Locale): HTMLElement {
   };
   const file = h("input", { id: "snap-file", type: "file", accept: "application/json,.json", "data-snap": "file" }) as HTMLInputElement;
   const openFile = async () => {
-    confirmBox.replaceChildren(); const f = file.files?.[0]; if (!f) return say("snap.fileChoose", true);
+    const f = file.files?.[0]; if (!f) return say("snap.fileChoose", true);
     try { askRestore(parseSnapshotFile(await f.text())); } catch { say("snap.fileBad", true); }
   };
   const auto = h("input", { type: "checkbox", id: "snap-auto", "data-snap": "auto", ...(prefs.snapAuto ? { checked: true } : {}), onchange: (e: Event) => { prefs.snapAuto = (e.target as HTMLInputElement).checked; } });
@@ -101,7 +85,7 @@ export function snapshotsCard(lang: Locale): HTMLElement {
     h("button", { class: "btn", type: "button", "data-act": "snap-take", onclick: () => void take() }, t("snap.take", lang)),
     h("button", { class: "btn ghost", type: "button", "data-act": "snap-file", onclick: () => void saveFile() }, t("snap.file", lang)),
     h("p", { class: "muted" }, t("snap.fileNote", lang)),
-    msg, list, confirmBox,
+    msg, list,
     h("label", { for: "snap-file" }, t("snap.loadFile", lang)), file,
     h("button", { class: "btn ghost", type: "button", "data-act": "snap-open-file", onclick: () => void openFile() }, t("snap.restore", lang)));
 }
