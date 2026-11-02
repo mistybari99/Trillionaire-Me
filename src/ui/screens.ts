@@ -53,6 +53,7 @@ import { northStarCard } from "./northStarCard";
 import { syncDelegationNow, teamCard } from "./teamCard";
 import { riskDueCard } from "./riskCard";
 import { printLink } from "./printLink";
+import { exitConds, gateDueCard, gateReportCard, stageRulesBlock } from "./gateCard";
 import { portfolioCard } from "./ventureCard";
 import { ventureRows } from "../core/ventures";
 import { backupReminderCard } from "./snapshotsUi";
@@ -455,7 +456,7 @@ function stageData() {
   const recs = allRecs();
   const passed = recs.filter((r) => r.entity === "stage_pass").map((r) => String((r.values["stage_pass.stage_code"] as { value?: unknown })?.value ?? ""));
   const goalCount = recs.filter((r) => r.entity === "goal" && r.values["goal.title"]?.state === "value").length;
-  return { recs, passed, ctx: { answers: loadAnswers(), goalCount } };
+  return { recs, passed, ctx: { answers: loadAnswers(), goalCount, exits: exitConds() } };
 }
 const lastProgress = (recs: TMRecord[]) => recs.filter((r) => r.entity === "journey_log").map((r) => Number((r.values["stage_pass.progress_pct"] as { value?: unknown })?.value ?? 0)).pop() ?? 0;
 
@@ -463,7 +464,7 @@ function stagePanel(lang: Locale): HTMLElement {
   const sd = stageData(); const cur = currentIndex(sd.passed);
   if (cur >= STAGE_CODES.length) return h("div", { class: "card" }, h("p", {}, t("stage.alldone", lang)));
   const code = STAGE_CODES[cur] as StageCode; const cs = conditions(sd.ctx, code); const names = stagesFor(prefs.stageTemplate);
-  const manual = !cs.some((c) => c.auto);
+  const manual = code !== "A";
   const ev = h("textarea", { id: "st-evidence", rows: "3", maxlength: "300" }) as HTMLTextAreaElement;
   const err = h("p", { class: "err", role: "alert" });
   const autoMet = cs.filter((c) => c.auto).every((c) => c.met);
@@ -486,6 +487,7 @@ function stagePanel(lang: Locale): HTMLElement {
     h("p", { class: "muted" }, t("stage.conditions", lang)),
     h("ul", { style: "padding-inline-start:20px" }, ...cs.map((c) => h("li", { "data-cond": c.id, "data-met": String(c.met) }, `${tb(c.text, lang)} — `, h("b", {}, c.auto ? t(c.met ? "stage.met" : "stage.open", lang) : ""))).map((li) => li)),
     left ? h("p", { class: "muted" }, t("stage.leftNote", lang)) : null,
+    stageRulesBlock(code, lang),
     manual ? h("div", {}, h("label", { for: "st-evidence" }, t("stage.evidence", lang)), ev) : null, err, btn);
 }
 
@@ -573,6 +575,7 @@ export function reportContent(lang: Locale): Array<Node | null> {
     northStarCard(lang, "report"),
     teamCard(lang, "report"),
     riskDueCard(lang, "report"),
+    gateReportCard(lang),
     realityReportCard(lang),
     items.length && repCompact ? compactBody : items.length ? h("div", { "data-view": "full" },
       sec("report.decisions", s.decisions.length ? h("ul", { style: "padding-inline-start:20px" }, ...s.decisions.map((x) => h("li", { "data-decision": "1" }, x))) : h("p", { class: "muted" }, t("report.empty", lang))),
@@ -926,6 +929,7 @@ export function today(): HTMLElement {
     northStarCard(lang, "today"),
     teamCard(lang, "today"),
     riskDueCard(lang, "today"),
+    gateDueCard(lang, stageData().passed, "today"),
     realityTodayCard(lang),
     homeSummaryCards(lang),
     portfolioCard(lang, "today"),

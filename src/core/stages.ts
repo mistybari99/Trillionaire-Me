@@ -6,8 +6,10 @@ import type { Bi } from "../i18n/registry";
 export const STAGE_CODES = ["A", "B", "C", "D", "E", "F", "G", "H"] as const;
 export type StageCode = (typeof STAGE_CODES)[number];
 
-export interface StageCtx { answers: Answers; goalCount: number }
-export interface Condition { id: string; text: Bi; met: boolean; auto: boolean }
+/** A measurable exit condition the user wrote for a stage (M05). `met` is computed from their own records by src/core/stageGate.ts. */
+export interface ExitCond { code: string; id: string; name: string; met: boolean }
+export interface StageCtx { answers: Answers; goalCount: number; exits?: readonly ExitCond[] }
+export interface Condition { id: string; text: Bi; met: boolean; auto: boolean; /** true for an exit condition the user wrote, read from their own records */ exit?: boolean }
 
 export class StageError extends Error {}
 
@@ -20,7 +22,8 @@ export function conditions(ctx: StageCtx, code: StageCode): Condition[] {
       { id: "A2", auto: true, met: ctx.goalCount >= 1, text: { bn: "অন্তত একটি লক্ষ্য লেখা হয়েছে", en: "At least one goal is written" } },
     ];
   }
-  return [{ id: `${code}1`, auto: false, met: false, text: { bn: "এই স্টেজের শর্ত পূরণের প্রমাণ আপনি নিজের ভাষায় লিখেছেন", en: "You wrote your own evidence that this stage’s condition is met" } }];
+  const own: Condition[] = (ctx.exits ?? []).filter((x) => x.code === code).map((x) => ({ id: x.id, auto: true, exit: true, met: x.met, text: { bn: x.name, en: x.name } }));
+  return [...own, { id: `${code}1`, auto: false, met: false, text: { bn: "এই স্টেজের শর্ত পূরণের প্রমাণ আপনি নিজের ভাষায় লিখেছেন", en: "You wrote your own evidence that this stage’s condition is met" } }];
 }
 
 export const currentIndex = (passed: readonly string[]): number => {
@@ -37,7 +40,8 @@ export function passStage(ctx: StageCtx, passed: readonly string[], code: StageC
   const cs = conditions(ctx, code);
   if (!cs.filter((c) => c.auto).every((c) => c.met)) throw new StageError("conditions are not met yet");
   const ev = evidence.trim();
-  if (!cs.some((c) => c.auto) && ev.length < 3) throw new StageError("evidence is needed");
+  // Stage A checks itself. Every later stage also needs the user's own evidence, on top of any measurable exit they wrote.
+  if (code !== "A" && ev.length < 3) throw new StageError("evidence is needed");
   return { code, evidence: ev, progressPct: completeness(ctx.answers).pct, at: now.toISOString() };
 }
 

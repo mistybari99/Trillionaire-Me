@@ -107,6 +107,7 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 - [x] Step 7: M15 review-date trigger: due/soon tags, Today and report cards, stop-rule question ("Not yet" sets next date; "It has happened" starts a reality event); `src/core/risk.ts`, `src/ui/riskCard.ts`, `tests/risk_review.test.ts`; no schema change.
 - [x] Step 8: M06 goal tree (level, parent, branch progress, goal page), goal measure, step edit, habit days a week, SWOT literals, skill example and resource shown back; `src/core/goalTree.ts`, `src/ui/lifeUi.ts`, `tests/goal_tree.test.ts`; no schema change. Still open (no approval needed): `constraint.hours_per_week`, profile birth year / name / time zone readers, M02 extra question sets. Needs approval: Deen forms (D-D), health track.
 - [x] Run 2, step 9 (M20): Save as PDF for report, plan and hand-over through the phone's print window (`src/core/printDoc.ts`, `src/ui/printUi.ts`, `tests/print_pdf.test.ts`, e2e PDF-PRINT); no library, no network.
+- [x] Run 2, step 10 (M05): stage rules page, measurable exit conditions B-H read from own records, review date card on Today, report, stage panel (`src/core/stageGates.ts`, `src/ui/gateCard.ts`, `tests/stage_gates.test.ts`); schema additive (catalog 8).
 
 ## Part B — Owner-only tasks
 - [ ] Phone offline test: open online once, visit all pages, airplane mode, reopen (O1).

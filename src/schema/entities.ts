@@ -46,6 +46,8 @@ export const ENTITIES: EntityDef[] = [
   e("card", "FAM-04", "কার্ড", "Flashcard", "M17", "personal"),
   e("journey_log", "FAM-39", "যাত্রা-লগ", "Journey log", "M05", "personal"),
   e("stage_pass", "FAM-39", "স্টেজ পাস", "Stage pass", "M05", "personal"),
+  e("stage_gate", "FAM-39", "স্টেজের নিয়ম", "Stage rules", "M05", "personal"),
+  e("stage_exit", "FAM-39", "স্টেজের বের-শর্ত", "Stage exit condition", "M05", "personal"),
   e("risk", "FAM-03", "রিস্ক", "Risk", "M15", "personal"),
   e("team_role", "FAM-03", "কাজের রোল", "Team role", "M10", "third_party"),
   e("handover", "FAM-03", "রোল হস্তান্তর", "Role hand-over", "M10", "third_party"),

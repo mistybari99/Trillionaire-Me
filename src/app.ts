@@ -51,6 +51,7 @@ export const ROUTES: Array<[RegExp, (m: RegExpMatchArray) => HTMLElement, string
   [/^\/journey\/history$/, () => viaLazy(PLAN, (m) => m.planHistoryScreen()), "journey"],
   [/^\/journey\/northstar$/, () => viaLazy(PLAN, (m) => m.northStarScreen()), "journey"],
   [/^\/journey\/reality$/, () => RL.realityScreen(), "journey"],
+  [/^\/journey\/gates$/, () => viaLazy(PLAN, (m) => m.gatesScreen()), "journey"],
   [/^\/journey\/kpi$/, () => viaLazy(PLAN, (m) => m.kpiScreen()), "journey"],
   [/^\/diary\/ventures$/, () => viaLazy(PLAN, (m) => m.ventureScreen()), "diary"],
   [/^\/diary\/team$/, () => viaLazy(PLAN, (m) => m.teamScreen()), "diary"],

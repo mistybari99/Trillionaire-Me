@@ -22,6 +22,8 @@ import { overallEl, starRowView } from "./northStarCard";
 import { planHistory } from "../core/planHistory";
 import { KPI_MEASURES, KPI_PERIODS, kpiStatus, parseActual, parseTarget, validateKpi, type KpiError } from "../core/kpi";
 import { kpiRowView, todayIsoKpi } from "./kpiUi";
+import { EXIT_MEASURES, exitStatuses, gateIsEmpty, gateRows, summariseExits, validateExit, validateGate, type GateRow } from "../core/stageGates";
+import { exitRowView, stageName } from "./gateCard";
 import { printLink } from "./printLink";
 import { entryNs, labelFor, storeOf } from "./entry";
 import { historySections } from "./realityUi";
@@ -528,4 +530,92 @@ export function kpiScreen(): HTMLElement {
     rows.length ? h("div", {}, ...cards) : h("p", { class: "muted", "data-kpi-empty": "page" }, t("kpi.empty", lang)),
     link("#/journey/week", "crumb", t("week.link", lang)), " ", link("#/journey/review", "crumb", t("review.link", lang)),
     h("p", { class: "muted" }, t("kpi.note", lang)), modeMark(lang), disclaimers(lang, ["advice"]));
+}
+
+// ---- M05 stage rules: entry condition, measurable exit conditions, review date, pause rule for stages B-H ----
+export function gatesScreen(): HTMLElement {
+  const lang = L(); const recs = allRecs(); const today = todayIsoKpi();
+  const rows = gateRows(recs); const lv = (v: number | string, l: ReturnType<typeof labelFor>): FieldValue => ({ state: "value", value: v, label: l });
+  const stageCard = (g: GateRow) => {
+    const code = g.code;
+    const entry = h("textarea", { id: `sg-entry-${code}`, rows: "2", maxlength: "300" }) as HTMLTextAreaElement; entry.value = g.entry ?? "";
+    const review = h("input", { id: `sg-review-${code}`, type: "date", value: g.reviewOn ?? "" }) as HTMLInputElement;
+    const pause = h("textarea", { id: `sg-pause-${code}`, rows: "2", maxlength: "300" }) as HTMLTextAreaElement; pause.value = g.pauseRule ?? "";
+    const err = h("p", { class: "err", role: "alert" }), ok = h("p", { class: "ok-msg", role: "status", "data-saved": `gate-${code}` });
+    const form = h("form", { novalidate: true, "data-form": `gate-${code}` }, gateFor(lang),
+      h("label", { for: `sg-entry-${code}` }, labelOf("stage_gate.entry_condition", lang)), entry,
+      h("label", { for: `sg-review-${code}` }, labelOf("stage_gate.review_on", lang)), review,
+      h("label", { for: `sg-pause-${code}` }, labelOf("stage_gate.pause_rule", lang)), pause, err, ok,
+      h("button", { class: "btn", type: "submit" }, t("gate.save", lang)));
+    form.addEventListener("submit", (ev) => {
+      ev.preventDefault(); err.textContent = ""; ok.textContent = "";
+      const bad = validateGate({ entry: entry.value, reviewOn: review.value, pauseRule: pause.value });
+      if (bad) { err.textContent = t(`gate.err.${bad}` as Key, lang); return; }
+      if (!checkFreeText(entry.value).ok || !checkFreeText(pause.value).ok) { err.textContent = t("intake.secretRejected", lang); return; }
+      const values: Record<string, FieldValue> = { "stage_gate.stage_code": txt(code) };
+      if (entry.value.trim()) values["stage_gate.entry_condition"] = txt(entry.value.trim());
+      if (review.value.trim()) values["stage_gate.review_on"] = txt(review.value.trim());
+      if (pause.value.trim()) values["stage_gate.pause_rule"] = txt(pause.value.trim());
+      if (!saveTyped({ id: `gate-${code}`, entity: "stage_gate", createdAt: new Date().toISOString(), values })) { err.textContent = saveBlockedText(lang); return; }
+      rerender();
+    });
+    // exit conditions of this stage
+    const list = exitStatuses(recs, today, code);
+    const editForm = (st: ReturnType<typeof exitStatuses>[number]) => {
+      const r = st.row;
+      const tIn = h("input", { id: `se-t-${r.id}`, type: "text", inputmode: "decimal", autocomplete: "off", value: r.target === null ? "" : String(r.target) });
+      const aIn = r.measure === "own" ? h("input", { id: `se-a-${r.id}`, type: "text", inputmode: "decimal", autocomplete: "off", value: r.ownActual === null ? "" : String(r.ownActual) }) : null;
+      const msg = h("p", { class: "err", role: "alert" });
+      const f = h("form", { novalidate: true, class: "kpi-edit", "data-exit-edit": r.id },
+        h("label", { for: `se-t-${r.id}` }, t("kpi.edit.target", lang)), tIn,
+        ...(aIn ? [h("label", { for: `se-a-${r.id}` }, t("kpi.edit.actual", lang)), aIn] : []), msg,
+        h("button", { class: "btn ghost", type: "submit", style: "width:auto;margin:0;min-height:44px" }, t("kpi.update", lang)));
+      f.addEventListener("submit", (ev) => {
+        ev.preventDefault(); msg.textContent = "";
+        const tg = parseTarget(tIn.value); if (tg === null) { msg.textContent = t("kpi.err.target_invalid", lang); return; }
+        const ac = aIn ? parseActual(aIn.value) : null; if (aIn && ac === null) { msg.textContent = t("kpi.err.actual_invalid", lang); return; }
+        if (!entryNs()) { msg.textContent = saveBlockedText(lang); return; }
+        const rec = allRecs().find((x) => x.id === r.id); if (!rec) return; const lb = labelFor(rec.ns);
+        const values: Record<string, FieldValue> = { ...rec.values, "stage_exit.target": tg.state === "value" ? lv(tg.value, lb) : UNKNOWN };
+        if (aIn && ac) { values["stage_exit.actual"] = ac.state === "value" ? lv(ac.value, lb) : UNKNOWN; values["stage_exit.actual_on"] = ac.state === "value" ? lv(today, lb) : UNKNOWN; }
+        storeOf(rec).put({ ...rec, values }); rerender();
+      });
+      return f;
+    };
+    // add one exit condition
+    const name = h("input", { id: `sx-name-${code}`, type: "text", maxlength: "80", autocomplete: "off" });
+    const measure = h("select", { id: `sx-measure-${code}` }, ...EXIT_MEASURES.map((m) => h("option", { value: m }, choiceLabel("stage_exit.measure", m, lang))));
+    const target = h("input", { id: `sx-target-${code}`, type: "text", inputmode: "decimal", autocomplete: "off" });
+    const unit = h("input", { id: `sx-unit-${code}`, type: "text", maxlength: "40", autocomplete: "off" });
+    const xerr = h("p", { class: "err", role: "alert" });
+    const xform = h("form", { novalidate: true, "data-form": `exit-${code}` }, gateFor(lang),
+      h("label", { for: `sx-name-${code}` }, labelOf("stage_exit.name", lang)), name,
+      h("label", { for: `sx-measure-${code}` }, labelOf("stage_exit.measure", lang)), measure,
+      h("label", { for: `sx-target-${code}` }, labelOf("stage_exit.target", lang)), target,
+      h("label", { for: `sx-unit-${code}` }, labelOf("stage_exit.unit", lang)), unit, xerr,
+      h("button", { class: "btn", type: "submit" }, t("gate.exit.add", lang)));
+    xform.addEventListener("submit", (ev) => {
+      ev.preventDefault(); xerr.textContent = "";
+      const bad = validateExit({ name: name.value, unit: unit.value, target: target.value }, parseTarget);
+      if (bad) { xerr.textContent = t(`gate.err.${bad}` as Key, lang); return; }
+      if (!checkFreeText(name.value).ok || !checkFreeText(unit.value).ok) { xerr.textContent = t("intake.secretRejected", lang); return; }
+      const tg = parseTarget(target.value)!;
+      const values: Record<string, FieldValue> = { "stage_exit.stage_code": txt(code), "stage_exit.name": txt(name.value.trim()), "stage_exit.measure": txt(measure.value), "stage_exit.target": tg.state === "value" ? num_(tg.value) : UNKNOWN };
+      if (unit.value.trim()) values["stage_exit.unit"] = txt(unit.value.trim());
+      if (!putRecord("stage_exit", "exit", values)) { xerr.textContent = saveBlockedText(lang); return; }
+      rerender();
+    });
+    const sum = summariseExits(list);
+    return h("details", { class: "card", "data-gate-stage": code, ...(code === "B" || !gateIsEmpty(g) || list.length ? { open: true } : {}) },
+      h("summary", { style: "min-height:44px" }, h("strong", {}, t("gate.stage", lang, { c: code, n: stageName(code, lang) })),
+        sum.total ? h("span", { class: "muted" }, ` · ${t("gate.report.exits", lang, { m: fmtNumber(sum.met, lang), n: fmtNumber(sum.total, lang) })}`) : null),
+      h("h3", { class: "card-h" }, t("gate.rules.h", lang)), form,
+      h("h3", { class: "card-h" }, t("gate.exits.h", lang)),
+      list.length ? h("div", {}, ...list.map((st) => h("div", { class: "card", "data-exit-card": st.row.id }, h("div", { class: "row" }, h("div", {}, modeMark(lang), exitRowView(st, lang), h("p", { class: "muted" }, choiceLabel("stage_exit.measure", st.row.measure, lang)), editForm(st)), removeBtn(st.row.id, lang)))))
+        : h("p", { class: "muted", "data-exit-none": code }, t("gate.exit.none", lang)),
+      xform);
+  };
+  return h("main", { class: "scr scr-gates" }, link("#/journey", "crumb", `← ${t("journey.title", lang)}`),
+    h("h1", {}, t("gate.title", lang)), h("p", { class: "sub" }, t("gate.intro", lang)),
+    ...rows.map(stageCard), h("p", { class: "muted" }, t("gate.note", lang)), modeMark(lang), disclaimers(lang, ["advice"]));
 }
