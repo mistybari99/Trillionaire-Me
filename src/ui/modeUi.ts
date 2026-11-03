@@ -60,7 +60,7 @@ export function switchMode(m: DataMode): void {
 }
 
 const tickRow = (lang: Locale) => h("label", { style: "display:flex;gap:8px;align-items:center;margin:8px 0" },
-  h("input", { type: "checkbox", id: "mode-tick", style: "width:24px;margin:0" }), t("mode.real.confirm.tick", lang));
+  h("input", { type: "checkbox", id: "mode-tick", style: "width:24px;margin:0" }), t("data.consent.tick", lang));
 const ticked = () => (document.getElementById("mode-tick") as HTMLInputElement | null)?.checked === true;
 
 function langButtons(): HTMLElement {
@@ -72,8 +72,8 @@ function langButtons(): HTMLElement {
 export function firstRunScreen(): HTMLElement {
   const lang = L();
   const body = firstRealStep
-    ? h("div", { class: "card", "data-first": "real-confirm" }, h("h2", { class: "card-h" }, t("mode.real.confirm.title", lang)), h("p", {}, t("mode.real.confirm.p", lang)), tickRow(lang),
-        needTick ? h("p", { class: "err", role: "alert" }, t("mode.real.needTick", lang)) : null,
+    ? h("div", { class: "card", "data-first": "real-confirm" }, h("h2", { class: "card-h" }, t("mode.real.confirm.title", lang)), ...(["p1", "p2", "p3", "p4"] as const).map((k) => h("p", {}, t(`data.consent.${k}`, lang))), tickRow(lang),
+        needTick ? h("p", { class: "err", role: "alert" }, t("data.consent.needTick", lang)) : null,
         h("button", { class: "btn", type: "button", "data-act": "first-real-yes", onclick: () => {
           if (!ticked()) { needTick = true; rerender(); return; }
           if (!realConsent()) { grantRealConsent(); }
@@ -92,7 +92,7 @@ function confirmCard(lang: Locale): HTMLElement {
   return h("div", { class: "card", role: "alertdialog", "aria-label": t("mode.del.title", lang), "data-mode-confirm": "1" },
     h("h2", { class: "card-h" }, t("mode.del.title", lang)), h("p", {}, t("mode.del.p", lang)),
     realConsent() ? null : tickRow(lang),
-    needTick ? h("p", { class: "err", role: "alert" }, t("mode.real.needTick", lang)) : null,
+    needTick ? h("p", { class: "err", role: "alert" }, t("data.consent.needTick", lang)) : null,
     h("button", { class: "btn", type: "button", "data-act": "demo-delete-confirm", onclick: () => { confirmStartReal(realConsent() || ticked()); } }, t("mode.del.btn", lang)),
     h("button", { class: "btn ghost", type: "button", "data-act": "demo-delete-cancel", onclick: cancelStartReal }, t("mode.del.cancel", lang)));
 }

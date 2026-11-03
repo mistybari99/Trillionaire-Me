@@ -1206,7 +1206,7 @@ function suggestPanel(f: FieldDef, lang: Locale, getInput: () => HTMLInputElemen
   const saveOwn = h("button", { class: "btn ghost", type: "button", "data-act": "suggest-save-own", onclick: () => {
     let res: ReturnType<typeof saveOwnOption> | "locked";
     try { res = saveOwnOption(listStore(), f.id, getInput().value, new Date()); } catch { res = "locked"; }
-    saveNote.textContent = res === "locked" ? t("mode.real.needTick", lang) : res === "empty" ? t("suggest.empty", lang) : res === "secret" ? t("suggest.secret", lang) : t("suggest.ownSaved", lang);
+    saveNote.textContent = res === "locked" ? t("data.consent.needTick", lang) : res === "empty" ? t("suggest.empty", lang) : res === "secret" ? t("suggest.secret", lang) : t("suggest.ownSaved", lang);
     if (res === "saved" || res === "duplicate_updated") renderOwn();
   } }, t("suggest.saveOwn", lang));
   const go = h("button", { class: "btn ghost", type: "button", "data-act": "suggest-go" }, t("suggest.go", lang));

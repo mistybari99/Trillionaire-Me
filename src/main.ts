@@ -6,6 +6,7 @@ import { startPrayerAlerts } from "./ui/prayerAlerts";
 import { ensureContentPacks } from "./library/packs";
 import { initLock } from "./ui/lockUi";
 import { persistIfReal } from "./ui/storageCard";
+import { installCrossTab } from "./ui/crossTab";
 import { runAutoSnapshot } from "./ui/snapshotsUi";
 
 const onRoute = () => {
@@ -15,6 +16,7 @@ const onRoute = () => {
 };
 window.addEventListener("hashchange", onRoute);
 saveMonitor.subscribe(() => onRoute());
+installCrossTab(onRoute);
 window.addEventListener("online", () => updateNetBadge());
 window.addEventListener("offline", () => updateNetBadge());
 initStorage().finally(() => { repairListNamespaces(); onRoute(); startPrayerAlerts(); void runAutoSnapshot(); persistIfReal(); initLock(); });

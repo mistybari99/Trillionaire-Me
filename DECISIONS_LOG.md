@@ -639,3 +639,8 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 - Not built (capability card keeps M18 "partial"): drawn goal tree, resource map, readiness map, drawn plan-diff.
 - Schema: none. Undo: revert this commit (route, two source files, one test file, `bd.*` keys, the Journey link, the three exports in `charts.ts`).
 
+
+## Settings gaps closed (plan keeper G-04, G-06, G-07), 3 Nov 2026
+- What: (1) one consent wording: first-run and Start-real now show the same four consent sentences and the same tick as `consentGate()` (keys `data.consent.*`); the old `mode.real.confirm.p/tick` and `mode.real.needTick` keys are removed. (2) `src/ui/crossTab.ts`: a `storage` event for the consent key, the lock key or the data mode redraws the open tab (SET-6.04); it only redraws, never writes. (3) New `tests/settings_gaps.test.ts`: Cancel by name, refusal on every real write path after Withdraw, wording scan across all en/bn/mix keys, tap-target rules, one consent wording.
+- Why: the keeper found these as open in check #2. Alternatives: keep the logged wording deviation (rejected: the final decision asked for one wording). jsdom has no layout, so 44/48 px is checked by CSS rule and inline style, not by measuring; the screenshot pass in (d) covers the rest.
+- Undo: revert this commit (restore the three removed pack keys, delete `crossTab.ts` and its line in `main.ts`).
