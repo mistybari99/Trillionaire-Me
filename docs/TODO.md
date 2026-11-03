@@ -124,6 +124,9 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 - [x] Prayer times update automatically when online (owner request 3 Nov 2026): `src/core/prayerSource.ts`, `src/adapters/aladhan.ts`, `src/ui/prayerSync.ts`, `tests/prayer_sync.test.ts`; off until ticked, Withdraw works, local fallback, DECISIONS_LOG entry.
 - [x] Settings gaps (plan keeper G-04/G-06/G-07): cross-tab refresh, one consent wording, Cancel / Withdraw / wording / tap-target tests (`tests/settings_gaps.test.ts`).
 
+- [x] Audit weeks 3-4 (3 Nov 2026): welcome-back card and monthly then-vs-now (`tests/welcome_back.test.ts`), Bangla apply-back script (`tests/bangla_apply_back.test.ts`), Bangla "Where we are" page (`docs/owner/WHERE_WE_ARE_BN.md`), M13 Hijri date and Ramadan view, calculated and approximate (`tests/hijri.test.ts`).
+- [x] Hosting files and CI (3 Nov 2026): `public/_headers`, stale-while-revalidate, `.github/workflows/ci.yml` (green on GitHub), tests no longer rewrite `evidence/`.
+
 ## Part B — Owner-only tasks
 - [ ] (optional, later) A scholar reviews the hadith entries and the halal-check flags; a named reviewer then marks entries reviewed.
 - [ ] Phone offline test: open online once, visit all pages, airplane mode, reopen (O1).

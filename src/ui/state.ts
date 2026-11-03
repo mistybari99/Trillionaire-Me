@@ -11,6 +11,7 @@ import { DEFAULT_KEEP, isKeep, reminderEnabled, takeSnapshot, type SnapshotRepo 
 import { parseNotifyPrefs, type NotifyPrefs } from "../core/notify";
 import { DHAKA_COORDS, validCoords, type Coords } from "../core/prayer";
 import { DEFAULT_ALERT_PREFS, parseAlertPrefs, type AlertPrefs } from "../core/prayerAlerts";
+import { parseVisit, type Visit } from "../core/welcomeBack";
 import { parseSyncSettings, type SyncSettings } from "../core/prayerSource";
 import { parsePrayerSettings, type PrayerSettings } from "../core/prayerMethod";
 import { isDataMode, type DataMode } from "../core/dataMode";
@@ -78,6 +79,9 @@ export type GridRange = "days31" | "weeks12" | "months12";
 export const prefs = {
   /** Reduce motion: follow the phone (default) or always reduce. The CSS already follows the phone setting. */
   /** One-time "what moved" note: "" = not shown yet, an ISO time = first shown, "done" = dismissed. Additive key. */
+  /** Last day the app was opened and the "welcome back" decision for today (src/core/welcomeBack.ts). Nothing leaves the phone. */
+  get visit(): Visit { try { return parseVisit(JSON.parse(get("tm:ui:visit") ?? "null")); } catch { return parseVisit(null); } },
+  set visit(v: Visit) { set("tm:ui:visit", JSON.stringify(parseVisit(v))); },
   get movedNote(): string { return get("tm:ui:movedNote") ?? ""; },
   set movedNote(v: string) { set("tm:ui:movedNote", v); },
   get reduceMotion(): ReduceMotion { return get("tm:ui:reduceMotion") === "always" ? "always" : "system"; },

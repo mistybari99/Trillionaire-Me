@@ -31,6 +31,8 @@ import { reviewSummary } from "../core/review";
 import { stagesFor } from "../core/stageTemplates";
 import { planChip, pauseChip } from "./planSettings";
 import { movedNoteCard } from "./settingsUi";
+import { welcomeBackCard } from "./welcomeUi";
+import { hijriCard } from "./hijriUi";
 import { prayerLinkRow } from "./prayerSettingsUi";
 import { STAGE_CODES, StageError, conditions, currentIndex, passStage, stageStates, type StageCode } from "../core/stages";
 import { LAYERS, TOPICS, topicById, relatedTips, type Tip } from "../library/topics";
@@ -989,6 +991,7 @@ export function today(): HTMLElement {
       h("div", { class: "n" }, num(curStage + 1, lang), h("span", { style: "font-size:22px;color:var(--muted)" }, ` / ${num(STAGES.length, lang)}`)),
       rungs),
     movedNoteCard(lang),
+    welcomeBackCard(lang),
     pausedCard(lang),
     pauseChip(lang),
     overallProgressCard(lang, "today"),
@@ -1341,6 +1344,7 @@ export function deen(): HTMLElement {
     link("#/deen/plans", "btn", t("dp.title", lang)),
     fastCard(lang),
     prayerTimesCard(lang),
+    hijriCard(lang),
     prayerLinkRow(lang),
     ...ents.map((e) => {
       const fs = FIELDS.filter((f) => f.entity === e.id);

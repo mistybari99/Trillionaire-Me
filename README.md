@@ -4,7 +4,9 @@ A Bangla-first, phone-first planning app (installable PWA) for one person's goal
 
 Spec of record: `docs/spec/`. Rules for every session: `CLAUDE.md`. Decisions and undo steps: `DECISIONS_LOG.md`. Current plan: `docs/TODO.md`. Latest audit: `docs/audit/FULL_AUDIT_2026-11-01.md`.
 
-## Where we are (1 Nov 2026)
+## Where we are (3 Nov 2026)
+Bangla one-page summary for the owner: `docs/owner/WHERE_WE_ARE_BN.md`.
+
 - Work gates G1 to G4 are built and tested in demo mode; real data is allowed on the device only, behind a per-device consent tick (D-B, approved 25 Oct 2026).
 - Data safety: save-failed banner, storage persist request, weekly backup reminder, optional PIN lock, record migration with a copy saved first.
 - Default look: **Light / Colorful / Futuristic** (D-E, updated 25 Oct 2026). Three more looks are options under More > Display: Ink & Paper, Emerald/Obsidian, Classic/Broadsheet. Dark mode follows the phone.

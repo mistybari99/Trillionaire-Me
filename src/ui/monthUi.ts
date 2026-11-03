@@ -14,6 +14,7 @@ import { bdt, estimateLabel } from "./ventureCard";
 import { kpiSection, todayIsoKpi } from "./kpiUi";
 import { activityChart } from "./charts";
 import { loadAnswers } from "./screens";
+import { thenNowCard } from "./welcomeUi";
 
 const rerender = () => window.dispatchEvent(new HashChangeEvent("hashchange"));
 const link = (href: string, cls: string, ...kids: Array<Node | string>) => h("a", { href, class: cls }, ...kids);
@@ -89,7 +90,7 @@ export function monthScreen(): HTMLElement {
     activityChart(recs, today, lang),
     ...measures.map(([id, title, v]) => h("section", { class: "card", "data-month": id }, h("h2", { class: "card-h" }, t(title, lang)),
       v === null ? h("p", { class: "muted", "data-month-empty": id }, t("month.notEnough", lang)) : valueEl(v, "INFERENCE", lang))),
-    kpiSection("days90", lang), moneyReviewCard(lang), riskReviewCard(lang),
+    thenNowCard(lang), kpiSection("days90", lang), moneyReviewCard(lang), riskReviewCard(lang),
     h("section", { class: "card", "data-assumptions": "1", "aria-label": t("mo.asm.title", lang) }, h("h2", { class: "card-h" }, t("mo.asm.title", lang)), h("p", { class: "muted" }, t("mo.asm.intro", lang)),
       h("ul", { class: "plain" }, ...items.map((it) => assumptionRow(it, lang)))),
     s.focusUnknown > 0 ? h("p", { class: "muted" }, t("month.unknownFocus", lang, { n: num(s.focusUnknown, lang) })) : null,

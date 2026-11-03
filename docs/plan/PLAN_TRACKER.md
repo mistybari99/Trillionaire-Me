@@ -182,7 +182,7 @@ All items below are ticked `[x]` in the file unless noted. Evidence is what TODO
 |---|---|---|---|---|---|---|---|
 | AU-01 | audit W1-1 | Q1 save-failed, persist, reminder | builder | Built | Block 9 s1-3, commits `3a1a24e`.. `10e9e81` range | Banner, `/more/data` | TS Y · LK ? |
 | AU-02 | W1-2 | Q4 namespaced lists | builder | Built | `34c6436`; `tests/lists_namespace.test.ts` | saved lists | TS Y |
-| AU-03 | W1-3 | Q2 doc refresh + one Bangla "Where we are" page | builder | In progress | docs refreshed (`096fa17`); **Bangla "Where we are" page not found** | README, PLAN | partial, see GAP-09 |
+| AU-03 | W1-3 | Q2 doc refresh + one Bangla "Where we are" page | builder | Built+Linked+Tested | docs refreshed; `docs/owner/WHERE_WE_ARE_BN.md` (counts checked by tests/where_we_are.test.ts), linked from README | README, PLAN | partial, see GAP-09 |
 | AU-04 | W1-4 | Q7 CI workflow (tsc, vitest, build, e2e) | builder | Built+Linked+Tested | `.github/workflows/ci.yml` (tsc, vitest, build, e2e; read-only, no secrets); tests/hosting_headers.test.ts. First green run happens when pushed to GitHub | repo | N |
 | AU-05 | W1-4 | S6: stop tests writing into `evidence/` | builder | Built+Linked+Tested | tests/g1.test.ts writes to a temp folder unless TM_WRITE_EVIDENCE=1 (set by tools/evidence.mjs); tests/hosting_headers.test.ts | git hygiene (can be committed by accident) | N |
 | AU-06 | W1-5 | Q6 owner phone checklist | builder / owner | Built (checklist) / owner run Not started | `docs/owner/PHONE_TEST_CHECKLIST.md`, `73e77e1` | owner | - |
@@ -191,12 +191,12 @@ All items below are ticked `[x]` in the file unless noted. Evidence is what TODO
 | AU-09 | W2-8 | Q3/P8 `public/_headers`, manifest, theme colour | builder | Built+Linked+Tested | `public/_headers` (CSP = page policy + frame-ancestors, nosniff, DENY, permissions, cache rules); tests/hosting_headers.test.ts. Not tried on the real host (owner hosting step) | hosting day | N |
 | AU-10 | W2-9 | M3 Capacitor test build (only if phone test fails closed-app alerts) | builder + owner | Blocked | waits for TD-O.1 result | alerts | - |
 | AU-11 | W3-10 | M1 3-screen onboarding | builder | Built | `1d8a007`; `tests/onboarding.test.ts` | `#/start`; no re-run entry (SET-3h.1) | TS Y · LK partial |
-| AU-12 | W3-11 | M8 Bangla sheet + **apply-back script** | builder / reviewer | In progress | sheet built (`57cdc50`); DECISIONS_LOG says apply-back script not done | TM-TST-161 | partial |
+| AU-12 | W3-11 | M8 Bangla sheet + **apply-back script** | builder / reviewer | Built (reviewer sign-off Not started) | `tools/bangla_apply_back.mjs` + `tools/banglaApplyBack.ts`; tests/bangla_apply_back.test.ts; TM-TST-161 stays Partial until a named reviewer signs | TM-TST-161 | partial |
 | AU-13 | W3-12 | P2 stale-while-revalidate shell cache | builder | Built+Linked+Tested | public/sw.js staleWhileRevalidate for files not in the saved list; fake-worker test in tests/hosting_headers.test.ts; e2e offline 0 FAIL | offline | N |
 | AU-14 | W3-12 | M10 route splitting | builder | Built | `b5cb1f5`; `tests/lazy_screens.test.ts` | precache | TS Y |
 | AU-15 | W3-13 | M4 Bangladesh starter pack | builder | Built | `e1c6f5c`; `tests/bd_pack.test.ts` | Topics | TS Y; reviewer pending |
 | AU-16 | W4-14 | M9 usability kit; 5 sessions | builder / owner | Built (kit) / sessions Not started | `docs/owner/USABILITY_KIT.md` | TM-TST-010/066/067/171 | owner |
-| AU-17 | W4-15 | M2 "welcome back" and monthly then-vs-now (no streaks) | builder | Not started | grep finds no such feature in `src/` | Today, Review | N |
+| AU-17 | W4-15 | M2 "welcome back" and monthly then-vs-now (no streaks) | builder | Built+Linked+Tested | `src/core/welcomeBack.ts`, `src/ui/welcomeUi.ts` (Today card, monthly "Then and now"); tests/welcome_back.test.ts | Today, Review | N |
 | AU-18 | W4-16 | Re-run owner-demand audit + Register mapping; republish audit numbers | builder | In progress | `owner-demand-audit.md` last full re-check 31 Oct; Block 7-10 not re-audited (audit says 44-47 %) | Register Change Log | stale |
 | AU-19 | W4-17 | Owner decision round: hosting (O4), D-D, D-C, cloud copy | needs-approval | Blocked | owner | Connections | - |
 | AU-20 | audit 5.2 M5 | Halal-check flags (MR-31) | builder | Built | `src/library/halalFlags.ts` | More | scholar review owner |
@@ -279,7 +279,7 @@ Module labels come from `src/modules/capability.ts` (six boxes: Input, Storage, 
 | B12-17 | r2 s17 / M02 | Skippable way-of-working questions | builder | Built+Linked+Tested | 2e99444; tests/approach.test.ts; complete | - |
 | B12-18 | r2 s18 / M14 | Health and family, separate consent tick, no scores | builder | Built+Linked+Tested | dce0e63; tests/health.test.ts; complete. Owner-approved | - |
 | B12-19 | r2 s19 / D-D | Hadith reader structure, off by default | builder | Built | 6b77b8f; tests/hadith.test.ts | scripture is D-D; reviewer pending |
-| B12-20 | r2 s20 / M13 | Deen plans, reminders, one-tap marks, private notes, zakat from own numbers | builder | Built | 7975af7; tests/deen_plans.test.ts, deen_wording.test.ts; M13 label **partial (Calculation missing)** | Hijri date, Ramadan view |
+| B12-20 | r2 s20 / M13 | Deen plans, reminders, one-tap marks, private notes, zakat from own numbers | builder | Built+Linked+Tested | 7975af7 + Hijri/Ramadan (src/core/hijri.ts, tests/hijri.test.ts); M13 now complete (calculated, approximate) | Hijri date, Ramadan view |
 | B12-21 | s21 / D-D | Hadith pack 212 entries (HadeethEnc.com, unchanged), importer, read-only verifier | builder | Built | c2d2d35; tests/hadith.test.ts; docs/design/hadith-pack.md | default off, "unreviewed" label; scholar review is owner task (TODO Part B); thin topics: time, patience, halal earning |
 | B12-22 | s22 / M18 | Drawn timeline, task board, option board `#/journey/boards` | builder | Built | 045f1d4; tests/boards.test.ts; M18 label **partial (Output missing)** | drawn goal tree, resource map, readiness map, plan-diff |
 | B12-23 | m-list | M21 Security & privacy | builder / owner | Blocked | M21 partial: Storage missing = at-rest encryption (DL-03, owner decision) | owner |
@@ -287,21 +287,21 @@ Module labels come from `src/modules/capability.ts` (six boxes: Input, Storage, 
 | B12-24 | m-list | M23 AI layer | needs-approval | Blocked | D-C | - |
 | B12-25 | m-list | M11, M19, M22, M24, M25 complete | builder | Built+Linked+Tested | m_list_status table | - |
 
-Module summary (m-list-status.md, 2 Nov): complete 20, partial 4 (M09, M13, M18, M21), not-built 0, blocked 1 (M23) of 25. The m-list file header says "generated 2 Nov"; boards/M13/M09 counts match the capability source I read at check #2. Regenerate with `npx vite-node tools/m_l...` after each module step.
+Module summary (m-list-status.md, 3 Nov): complete 21, partial 3 (M09, M18, M21), not-built 0, blocked 1 (M23) of 25.
 
 ## G. Gaps and risks (check #2, 3 Nov 2026 00:15 UTC)
 
 **Closed since check #1:** GAP-01 (link-check test now exists: `tests/link_check.test.ts`), GAP-02 (Block 11 and 12 in TODO), GAP-03 (Settings entries in DECISIONS_LOG), GAP-07 (restoreUi link), GAP-08/09 (restore UI tests, Contains labels, status line, tick), GAP-10 (evidence.ts lists restore.ts and `#/settings/*`), GAP-13/14 (only content routes and the redirect test still use `#/more`; `nav.more` removed), GAP-15 (habit grid via prefs), GAP-06 not checked.
 
 **Still missing / dropped from the plan**
-- G-01 Audit week-1/2 items still not built: CI workflow (no `.github/`), `public/_headers`, stale-while-revalidate (`sw.js`), Bangla "Where we are" page, apply-back script for the Bangla sheet (AU-04, AU-09, AU-13, AU-03, AU-12). 3 Nov: CI, `_headers`, stale-while-revalidate built; Bangla "Where we are" page and apply-back script still to do (see (c)).
+- G-01 Audit week-1/2 items still not built: CI workflow (no `.github/`), `public/_headers`, stale-while-revalidate (`sw.js`), Bangla "Where we are" page, apply-back script for the Bangla sheet (AU-04, AU-09, AU-13, AU-03, AU-12). 3 Nov: CI, `_headers`, stale-while-revalidate built; Bangla "Where we are" page and apply-back script still to do (see (c)). 3 Nov: Bangla "Where we are" page and apply-back script built too (G-01 closed).
 - G-02 `tests/g1.test.ts:111` still writes `evidence/catalog-report.json` (AU-05); the file keeps showing modified in `git status`. CLOSED 3 Nov.
-- G-03 Audit ideas never scheduled: M2 welcome-back / then-vs-now (AU-17), M6 plan "what changed" with up to 3 options (partly covered by M12 loop; confirm), M7 goal tree screen (covered by M06 goal tree; backward-planning wizard not seen), Q5 calmer prompt colour (AU-21..23).
+- G-03 Audit ideas never scheduled: M2 welcome-back / then-vs-now (AU-17), M6 plan "what changed" with up to 3 options (partly covered by M12 loop; confirm), M7 goal tree screen (covered by M06 goal tree; backward-planning wizard not seen), Q5 calmer prompt colour (AU-21..23). 3 Nov: M2 welcome-back and then-vs-now built (AU-17). M6 plan-diff beyond M12 loop, backward-planning wizard, calmer prompt colour still open.
 - G-04 SET-6.04 `storage`-event refresh of consent/lock across browser tabs: not found in src. CLOSED 3 Nov: `src/ui/crossTab.ts`.
 - G-05 PR6 screenshots cover 360 px in 2 languages only. Owner rule needs 4 looks, 200 % text, mix, dark mode (SET-6.07). Same 4-looks risk applies to every new page (none of the Settings/Block 12 tests assert 4 looks; `tests/a11y_looks.test.ts` exists, scope not checked).
 - G-06 Tests not found for: restore Cancel by name (SET-1.T5), snapshot restore UI (SET-1.05), refusal on EVERY real write path after Withdraw (capture, restore, prayer place) and the no score/rank/streak string scan of Settings+Deen (SET-3b.T), Quick card visible without scrolling at 360 px in demo (SET-2.T3), 44/48 px targets (SET-6.03), single undo-map test (SET-R.09). CLOSED 3 Nov for Cancel, Withdraw paths, wording scan, 44/48 rules (tests/settings_gaps.test.ts). Still open: snapshot restore UI, Quick card without scrolling, single undo-map test.
 - G-07 `consentGate()` is used on Privacy and Data only. First-run and Start-real keep their own tick text (logged in DECISIONS_LOG PR3b). Final decision §3.3 said one wording everywhere; this is a logged deviation, but the owner/judge should confirm. CLOSED 3 Nov: first-run and Start-real now show the single consent wording (no deviation left).
-- G-08 Module gaps: M09 unit economics, M13 Hijri/Ramadan, M18 goal tree/resource map/readiness map/plan-diff boards, M21 at-rest encryption (owner), M23 AI (owner). TD-1.4 (Block 1 visual check) still unticked.
+- G-08 Module gaps: M09 unit economics, M13 Hijri/Ramadan, M18 goal tree/resource map/readiness map/plan-diff boards, M21 at-rest encryption (owner), M23 AI (owner). TD-1.4 (Block 1 visual check) still unticked. 3 Nov: M13 Hijri/Ramadan built (approximate, offline).
 - G-09 Hadith pack (D-D): content comes from a third-party site; reviewer sign-off and the licence note must stay visible ("unreviewed" label, default off). Owner task: scholar review. Keep it in the owner list.
 - G-10 Owner-demand audit (44-47 %) and the audit's completion estimate are stale after ~25 build steps; re-run (AU-18). Register v2_1 copy: confirm regenerated after Block 12.
 - G-11 Owner-only list unchanged: O1 phone offline test, O8 lock-screen, prayer times vs timetable, Bangla reviewer (TM-TST-161 now covers many more strings), Bangla keyboard typed-word test, pick design, usability sessions.
