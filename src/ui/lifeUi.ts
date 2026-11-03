@@ -11,7 +11,7 @@ import { allRecs, consentOn, consentPrompt, entryNs, findRec, labelFor, nsTag, s
 import { AREAS, MAX_RATING, lifeAreaRecord, wedgePath, wheelData, type Area } from "../core/lifeWheel";
 import { smartFunnel } from "./smartFunnel";
 import { SMART_PARTS, SWOT_KEYS, goalProgress, listValue, milestoneOf, parseList, readList, smartFilled, swotField, type GoalProgress, type SwotKey } from "../core/goalPlan";
-import { overallProgress, nextProgressMemory, progressTrend } from "../core/overallProgress";
+import { goalWeighting, overallProgress, nextProgressMemory, progressTrend } from "../core/overallProgress";
 import { planChip } from "./planSettings";
 import { checkFreeText } from "../core/safety";
 import { GOAL_STATUSES, goalStatusOf, withGoalStatus, type GoalStatus } from "../core/goalStatus";
@@ -133,6 +133,8 @@ function newGoalForm(lang: Locale): HTMLElement {
   const kind = h("select", { id: "gn-kind" }, ...GOAL_KINDS.map((k) => h("option", { value: k }, kindLabel(k, lang))));
   const parent = h("select", { id: "gn-parent" });
   const metric = h("input", { id: "gn-metric", type: "text", maxlength: "80", autocomplete: "off" });
+  // Per-goal weighting: the choice starts on the device setting (Settings > Plan), so a new goal behaves as the person already chose.
+  const weight = h("select", { id: "gn-weight" }, ...(["equal", "size"] as const).map((m) => h("option", { value: m, ...(prefs.progressMode === m ? { selected: true } : {}) }, t(m === "size" ? "overall.mode.size" : "overall.mode.equal", lang)))) as HTMLSelectElement;
   const date = h("input", { id: "gn-date", type: "date" });
   const err = h("p", { class: "err", role: "alert" });
   const fillParents = () => {
@@ -146,6 +148,7 @@ function newGoalForm(lang: Locale): HTMLElement {
     h("label", { for: "gn-kind" }, tb(fieldById("goal.kind")!.label, lang)), kind,
     h("label", { for: "gn-parent" }, t("gt.parent.label", lang)), parent,
     h("label", { for: "gn-metric" }, tb(fieldById("goal.metric_label")!.label, lang)), metric,
+    h("label", { for: "gn-weight" }, tb(fieldById("goal.weighting")!.label, lang)), weight,
     h("label", { for: "gn-date" }, tb(fieldById("goal.target_date")!.label, lang)), date, err,
     h("button", { class: "btn", type: "submit" }, t("gt.add", lang)));
   form.addEventListener("submit", (ev) => {
@@ -156,7 +159,7 @@ function newGoalForm(lang: Locale): HTMLElement {
     if (bad) { err.textContent = placeErrText(bad, lang); return; }
     if (date.value && !validDate(date.value)) { err.textContent = t("intake.invalidNumber", lang); return; }
     const typed = (value: unknown): FieldValue => ({ state: "value", value, label: "FACT" });
-    const values: Record<string, FieldValue> = { "goal.title": typed(title.value.trim()), "goal.kind": typed(k) };
+    const values: Record<string, FieldValue> = { "goal.title": typed(title.value.trim()), "goal.kind": typed(k), "goal.weighting": typed(weight.value === "size" ? "size" : "equal") };
     if (metric.value.trim()) values["goal.metric_label"] = typed(metric.value.trim());
     if (date.value) values["goal.target_date"] = typed(date.value);
     const id = `goal-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`;
@@ -341,7 +344,19 @@ export function goalScreen(id: string): HTMLElement {
   // Read-only SWOT summary so the four lists are visible as text; unknown lists say so.
   const swotView = h("section", { class: "card", "data-swot-view": "1" }, h("h2", { class: "card-h" }, t("swot.title", lang)),
     h("div", { class: "swot-grid" }, ...SWOT_KEYS.map((k) => { const items = readList(rec.values[swotField(k)]); return h("div", { "data-swot-box": k }, h("h3", {}, t(`swot.${k}` as Key, lang)), items ? h("ul", {}, ...items.map((i) => h("li", {}, i))) : h("p", { class: "muted", "data-swot-empty": k }, t("swot.empty", lang))); })));
-  return h("main", {}, back, h("h1", {}, textOf(rec, "goal.title")), progress, stepsCard(rec, lang), placeCard(rec, lang), statusCard(rec, lang), goalAreaCard(rec, lang), smartForm, swotView, swotForm, goalDeleteCard(rec, lang));
+  return h("main", {}, back, h("h1", {}, textOf(rec, "goal.title")), progress, stepsCard(rec, lang), weightCard(rec, lang), placeCard(rec, lang), statusCard(rec, lang), goalAreaCard(rec, lang), smartForm, swotView, swotForm, goalDeleteCard(rec, lang));
+}
+
+// Weighting of this goal's steps: equal or by size. Changing it never changes the overall percent (each step is counted once there).
+function weightCard(rec: TMRecord, lang: Locale): HTMLElement {
+  const cur = goalWeighting(rec);
+  const seg = (m: "equal" | "size") => h("button", { type: "button", "data-goal-weight": m, "aria-pressed": String(cur === m), onclick: () => {
+    if (!entryNs()) return; const latest = findRec(rec.id); if (!latest) return;
+    storeOf(latest).put({ ...latest, values: { ...latest.values, "goal.weighting": typedFor(latest, m) } }); rerender();
+  } }, t(m === "size" ? "overall.mode.size" : "overall.mode.equal", lang));
+  return h("section", { class: "card", "data-goal-weighting": cur }, h("h2", { class: "card-h" }, tb(fieldById("goal.weighting")!.label, lang)),
+    h("div", { class: "seg", role: "group", "aria-label": tb(fieldById("goal.weighting")!.label, lang) }, seg("equal"), seg("size")),
+    h("p", { class: "muted" }, t("gl.weight.note", lang)));
 }
 
 // ---- Overall progress card (Today and Journey) ----

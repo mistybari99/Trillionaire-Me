@@ -2,6 +2,7 @@
 // so a loop is impossible. Progress of a branch pools the steps of the whole branch: done steps over all steps. No step anywhere means Unknown, never 0.
 // A goal whose progress mode is "I will enter it myself" keeps its own percent. Overall progress elsewhere keeps counting each step once, on its own goal.
 import { goalProgress } from "./goalPlan";
+import { goalWeighting, isCountedTask, weightedShare, type GoalWeighting } from "./overallProgress";
 import type { FieldValue, TMRecord } from "./types";
 
 export const GOAL_KINDS = ["goal", "subgoal", "project"] as const;
@@ -33,6 +34,7 @@ export interface TreeNode {
   branch: { done: number; total: number; percent: number | null };
   /** "manual": the user's own percent for this goal (the branch figure is not used) */
   mode: "auto" | "manual"; manualPercent: number | null;
+  /** how this goal weighs the steps of its branch */ weighting: GoalWeighting;
 }
 
 export function buildTree(recs: readonly TMRecord[]): TreeNode[] {
@@ -45,8 +47,9 @@ export function buildTree(recs: readonly TMRecord[]): TreeNode[] {
     const ok = !!par && canBeChild(kind, kindOf(par));
     nodes.set(g.id, { id: g.id, title: str(g.values["goal.title"])!, kind, ns: g.ns, parentId: ok ? pid : null, orphan: kind !== "goal" && !ok, depth: 0, children: [],
       metricLabel: str(g.values["goal.metric_label"]), own: { done: p.done, total: p.total }, stepIds: [...p.ids], doneIds: [...p.doneIds], branch: { done: p.done, total: p.total, percent: null },
-      mode: p.mode === "manual" ? "manual" : "auto", manualPercent: p.mode === "manual" ? p.percent : null });
+      mode: p.mode === "manual" ? "manual" : "auto", manualPercent: p.mode === "manual" ? p.percent : null, weighting: goalWeighting(g) });
   }
+  const taskById = new Map(recs.filter(isCountedTask).map((r) => [r.id, r] as const));
   const roots: TreeNode[] = [];
   for (const n of nodes.values()) (n.parentId ? nodes.get(n.parentId)!.children : roots).push(n);
   const order = (a: TreeNode, b: TreeNode) => cmp(a.title.toLowerCase(), b.title.toLowerCase()) || cmp(a.id, b.id);
@@ -56,7 +59,9 @@ export function buildTree(recs: readonly TMRecord[]): TreeNode[] {
     const all = new Set(n.stepIds), done = new Set(n.doneIds);
     for (const c of n.children) { walk(c, depth + 1); c.stepIds.forEach((x) => all.add(x)); c.doneIds.forEach((x) => done.add(x)); }
     n.stepIds = [...all]; n.doneIds = [...done]; n.branch.done = done.size; n.branch.total = all.size;
-    n.branch.percent = n.mode === "manual" ? n.manualPercent : n.branch.total ? Math.round((n.branch.done / n.branch.total) * 100) : null;
+    n.branch.percent = n.mode === "manual" ? n.manualPercent : !n.branch.total ? null
+      : n.weighting === "size" ? (() => { const s = weightedShare(n.stepIds.map((id) => taskById.get(id)).filter((x): x is TMRecord => !!x), "size"); return Math.round((s.doneW / s.totalW) * 100); })()
+      : Math.round((n.branch.done / n.branch.total) * 100);
   };
   roots.sort(order); for (const r of roots) walk(r, 0);
   return roots;

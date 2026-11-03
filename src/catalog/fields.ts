@@ -2,7 +2,7 @@ import type { Bi } from "../i18n/registry";
 import { UNKNOWN_STATES, type UnknownState } from "../core/types";
 import type { AccessRule, ChoiceOption, FieldDef, FieldType, Importance, PrivacyClass, Purpose, Requirement } from "./types";
 
-export const CATALOG_VERSION = 17;
+export const CATALOG_VERSION = 18;
 
 const bi = (bn: string, en: string): Bi => ({ bn, en });
 const opt = (code: string, bn: string, en: string): ChoiceOption => ({ code, label: bi(bn, en) });
@@ -303,6 +303,12 @@ export const FIELDS: FieldDef[] = [
     what: bi("এই লক্ষ্যের প্রোগ্রেস যুক্ত কাজ থেকে গোনা হবে, নাকি আপনি নিজে পার্সেন্ট দেবেন।", "Whether progress is counted from linked tasks or you enter the percent yourself."),
     why: bi("কিছু লক্ষ্য কাজের লিস্টে মাপা যায় না। না বাছলে কাজ থেকে গোনা হয়।", "Some goals cannot be measured by tasks. If you do not choose, it is counted from tasks."),
     example: bi("কাজ থেকে নিজে গোনা", "Counted from tasks") }),
+  f({ id: "goal.weighting", entity: "goal", family: "FAM-03", type: "choice", purpose: "planning", importance: "optional",
+    options: [opt("equal", "প্রতিটি ধাপ সমান", "Every step equal"), opt("size", "ধাপের আকার অনুযায়ী", "By step size")],
+    label: bi("এই লক্ষ্যের ধাপ কীভাবে গোনা হবে", "How this goal weighs its steps"),
+    what: bi("এই লক্ষ্যের শতাংশে প্রতিটি ধাপ সমান ধরা হবে, নাকি আপনার লেখা সময়/আকার (S, M, L) অনুযায়ী। মোট শতাংশ আলাদা: সেখানে প্রতিটি ধাপ একবারই গোনা হয়।", "Whether this goal's percent counts every step the same, or by the minutes or size (S, M, L) you entered. The overall percent is separate: it counts each step once."),
+    why: bi("না বাছলে প্রতিটি ধাপ সমান। ধাপের আকার না লেখা থাকলে অন্য ধাপের গড় ধরা হয়, শূন্য নয়।", "If you do not choose, every step counts the same. A step with no entered size takes the average of the others, never zero."),
+    example: bi("প্রতিটি ধাপ সমান", "Every step equal") }),
   f({ id: "goal.manual_percent", entity: "goal", family: "FAM-03", type: "number", unit: "percent", purpose: "planning", step: 6, importance: "optional",
     label: bi("নিজের দেওয়া পার্সেন্ট (০ থেকে ১০০)", "Your own percent (0 to 100)"),
     what: bi("শুধু “আমি নিজে দেব” বাছলে কাজে লাগে। না জানলে ফাঁকা রাখুন।", "Used only if you chose “I will enter it myself”. Leave it empty if unknown."),

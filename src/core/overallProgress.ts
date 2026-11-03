@@ -42,6 +42,12 @@ export function enteredWeight(r: TMRecord): number | null {
 export function overallProgress(recs: readonly TMRecord[], mode: ProgressMode = "equal"): OverallProgress {
   const tasks = recs.filter(isCountedTask);
   if (!tasks.length) return { percent: null, done: 0, total: 0, mode, withoutSize: 0 };
+  const s = weightedShare(tasks, mode);
+  return { percent: Math.round((s.doneW / s.totalW) * 100), done: s.done, total: tasks.length, mode, withoutSize: s.withoutSize };
+}
+
+/** Done weight over total weight of the given counted steps. The one rule for "equal" (every step 1) and "size" (minutes or S/M/L; no entered size takes the average of the known ones, or 1). */
+export function weightedShare(tasks: readonly TMRecord[], mode: ProgressMode): { doneW: number; totalW: number; done: number; withoutSize: number } {
   const known = tasks.map(enteredWeight).filter((x): x is number => x !== null);
   const avg = known.length ? known.reduce((a, b) => a + b, 0) / known.length : 1;
   let doneW = 0, totalW = 0, done = 0, withoutSize = 0;
@@ -51,7 +57,7 @@ export function overallProgress(recs: readonly TMRecord[], mode: ProgressMode = 
     totalW += w;
     if (isDoneTask(t)) { doneW += w; done++; }
   }
-  return { percent: Math.round((doneW / totalW) * 100), done, total: tasks.length, mode, withoutSize };
+  return { doneW, totalW, done, withoutSize };
 }
 
 export type ProgressTrend = "unknown" | "first" | "up" | "same" | "down";
@@ -68,6 +74,11 @@ export type GoalProgressMode = "auto" | "manual";
 export function goalProgressMode(goal: TMRecord): GoalProgressMode {
   return strVal(goal.values["goal.progress_mode"]) === "manual" ? "manual" : "auto";
 }
+// ---- per-goal weighting (owner rule, 3 Nov 2026: equal or by size, chosen for each goal) ----
+export type GoalWeighting = ProgressMode;
+/** Chosen for this goal when it is made (the form starts on the device choice). A goal without the field keeps counting steps equally, as before. */
+export const goalWeighting = (goal: TMRecord): GoalWeighting => (strVal(goal.values["goal.weighting"]) === "size" ? "size" : "equal");
+
 /** Manual percent typed by the user: whole 0..100, or null (Unknown) when not entered. Never 0 by default. */
 export function manualPercent(goal: TMRecord): number | null {
   const v = goal.values["goal.manual_percent"];

@@ -1,6 +1,6 @@
 // Goal helpers (pure): SMART parts, SWOT lists, progress and milestones. Unknown is never 0.
 import type { FieldValue, TMRecord } from "./types";
-import { goalProgressMode, isCountedTask, manualPercent } from "./overallProgress";
+import { goalProgressMode, goalWeighting, isCountedTask, manualPercent, weightedShare, type GoalWeighting } from "./overallProgress";
 import { goalIdsOf } from "./taskGoals";
 
 export const SWOT_KEYS = ["strengths", "weaknesses", "opportunities", "threats"] as const;
@@ -35,7 +35,8 @@ export const smartFilled = (g: TMRecord): Record<SmartPart, boolean> =>
   Object.fromEntries(SMART_PARTS.map((p) => [p, SMART_FIELDS[p].some((f) => hasValue(g, f))])) as Record<SmartPart, boolean>;
 
 export interface GoalProgress { id: string; title: string; done: number; total: number; /** whole percent 0..100, or null when no task is linked */ percent: number | null; /** "manual": the percent was typed by the user, not counted */ mode?: "auto" | "manual";
-  /** ids of the counted steps that serve this goal (a shared step is listed under every goal it serves), and which of them are done */ ids: string[]; doneIds: string[] }
+  /** ids of the counted steps that serve this goal (a shared step is listed under every goal it serves), and which of them are done */ ids: string[]; doneIds: string[];
+  /** how this goal weighs its steps: every step equal, or by entered size (the count "5 of 8" stays a count either way) */ weighting?: GoalWeighting }
 const strVal = (v: FieldValue | undefined): string | null => (v && v.state === "value" && typeof v.value === "string" ? v.value : null);
 
 /**
@@ -50,8 +51,10 @@ export function goalProgress(recs: readonly TMRecord[]): GoalProgress[] {
     const ids = mine.map((x) => x.id);
     const done = doneIds.length;
     const title = strVal(g.values["goal.title"])!;
-    if (goalProgressMode(g) === "manual") return { id: g.id, title, done, total: mine.length, percent: manualPercent(g), mode: "manual" as const, ids, doneIds };
-    return { id: g.id, title, done, total: mine.length, percent: mine.length ? Math.round((done / mine.length) * 100) : null, ids, doneIds };
+    const weighting = goalWeighting(g);
+    const pct = !mine.length ? null : weighting === "size" ? Math.round((weightedShare(mine, "size").doneW / weightedShare(mine, "size").totalW) * 100) : Math.round((done / mine.length) * 100);
+    if (goalProgressMode(g) === "manual") return { id: g.id, title, done, total: mine.length, percent: manualPercent(g), mode: "manual" as const, ids, doneIds, weighting };
+    return { id: g.id, title, done, total: mine.length, percent: pct, ids, doneIds, weighting };
   });
 }
 
