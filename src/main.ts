@@ -15,10 +15,12 @@ import { runAutoSnapshot } from "./ui/snapshotsUi";
 applyPrefs();
 
 const onRoute = () => {
-  renderApp();
+  renderApp(); hideSplash();
   // Content packs load the first time a topic page is opened (bundled files, no network).
   if (location.hash.startsWith("#/topic")) ensureContentPacks(() => { if (location.hash.startsWith("#/topic")) render(); });
 };
+/** The brand splash in index.html (pre-JS) goes away once the first screen is drawn. */
+const hideSplash = () => { const el = document.getElementById("tm-splash"); if (!el) return; el.classList.add("tm-out"); setTimeout(() => el.remove(), 300); };
 window.addEventListener("hashchange", onRoute);
 saveMonitor.subscribe(() => onRoute());
 installCrossTab(onRoute);

@@ -38,3 +38,6 @@ Findings
 - Modules: complete 21, partial 3 (M09 unit economics, M18 four boards, M21 at-rest encryption), blocked 1 (M23).
 - Still open: backward-planning wizard (AU-22), calmer prompt colour (AU-23), Quick-card 360 px fold test, snapshot-restore UI test, undo-map test, 4-looks pixel check not personally inspected, prayer auto-update never tested live, old audit files carry stale statements, Where-we-are is a doc not an in-app page, owner tasks and branding.
 - Dropped/at risk: none new dropped; AU-23 has no owner and no evidence.
+
+## Builder update - 3 Nov 2026 (after check #3, owner "start the remaining work now")
+Closed: G3-01 (M18 boards), G3-02 (backward wizard, calm colour), G3-03 (three tests), G3-04 (looks evidence, images opened), G3-06 (in-app Where we are), G3-08 (superseded audit files), branding (N3-23). Rows SET-1.05, SET-2.T3, SET-R.09, AU-21, AU-22, AU-23, B12-22, N3-06, N3-10 moved to Built+Linked+Tested. The 59 "Built" rows and every "4L ?" row now carry a looks reference or "n/a (no screen)" or "not in matrix". New rows N4-01..N4-08. Modules: 22 complete, 2 partial (M09, M21), 1 blocked (M23). Still open: M09 unit economics (no fields in the documents), M21 encryption (owner), M23 AI (D-C), owner-only tasks (G3-10).

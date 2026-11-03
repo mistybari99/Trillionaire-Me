@@ -6,8 +6,9 @@ import type { Locale } from "../i18n/registry";
 
 // Brand colours from the design board: Obsidian #0B1216, Champagne Gold #C9A96E.
 const OBSIDIAN = ["#1E2A31", "#0B1216"], GOLD = ["#F1E3BC", "#C9A96E", "#8F7440"], GOLD_DEEP = "#5E4B28";
-const T_BAR = "M24 20 H96 V31 H24 Z";
-const M_MARK = "M28 100 V45 H38 L60 77 L82 45 H92 V100 H83 V61 L64 89 H56 L37 61 V100 Z";
+/** One geometry for every use of the T + M monogram (logo, icons, splash): tests/branding.test.ts checks they agree. */
+export const T_BAR = "M24 20 H96 V31 H24 Z";
+export const M_MARK = "M28 100 V45 H38 L60 77 L82 45 H92 V100 H83 V61 L64 89 H56 L37 61 V100 Z";
 
 /** size in px. animate: true on the splash only (a single shine pass, never looping, off under reduced motion). */
 export function logo3d(size: number, lang: Locale, opts: { animate?: boolean } = {}): SVGSVGElement {

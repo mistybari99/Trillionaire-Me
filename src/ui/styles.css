@@ -6,6 +6,8 @@
 @import "@fontsource/fraunces/400.css";
 @import "@fontsource/fraunces/600.css";
 
+/* Brand palette (design board, T-ME): the same in every look and in light and dark. Used by the logo, the splash and the icons; a hairline of it sits under the logo row in the looks other than Light Futuristic (themes.ts). */
+html{--brand-obsidian:#0B1216;--brand-champagne:#C9A96E;--brand-emerald:#1B6F57}
 /* Theme tokens — "Ink and Paper" (D-E approved). Swap this block to change theme. */
 :root{
   --paper:#F5F1E8; --card:#FBF8F1; --ink:#14181F; --muted:#5B6270; --rule:#8A8470;
@@ -60,9 +62,9 @@ nav{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px
 .tab[aria-current]{color:var(--ink);font-weight:600;box-shadow:inset 0 3px var(--primary)}
 .card{background:var(--card);border:1px solid var(--rule);padding:12px 14px;margin:10px 0}
 .card.link{display:block;color:inherit;text-decoration:none}
+main a:where(:not([class]),[class=""]){color:var(--primary);text-decoration:underline}
 .row{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
 .tag{font-size:0.75rem;border:1px solid var(--rule);padding:0 8px;white-space:normal;max-width:100%}
-main a:where(:not([class]),[class=""]){color:var(--primary);text-decoration:underline}
 .tag.ok{border-color:var(--moss);color:var(--moss)} .tag.warn{border-color:var(--demo);color:var(--demo)} .tag.off{color:var(--muted)}
 .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
 .note{border-inline-start:3px solid var(--rule);padding:4px 12px;margin:24px 0 0;font-size:0.8125rem;color:var(--muted);line-height:1.5}
@@ -71,12 +73,12 @@ main a:where(:not([class]),[class=""]){color:var(--primary);text-decoration:unde
 input,select,textarea{width:100%;min-height:48px;font:inherit;padding:8px 10px;background:var(--card);color:var(--ink);border:1.5px solid var(--ink);border-radius:0;margin-top:6px}
 .unk{margin-top:6px}
 .err{color:var(--danger);font-size:0.875rem;margin-top:6px;font-weight:600}
+.need{color:var(--calm);font-size:0.875rem;margin-top:6px;font-weight:600;border-inline-start:3px solid var(--calm);padding-inline-start:8px}
 .ok-msg{color:var(--moss);font-weight:600}
 .bar{height:10px;background:var(--rule);margin:8px 0}.bar>i{display:block;height:100%;background:var(--moss)}
 .need{color:var(--calm);font-size:0.875rem;margin-top:6px;font-weight:600;border-inline-start:3px solid var(--calm);padding-inline-start:8px}
 details.help{margin-top:6px;font-size:0.875rem} details.help summary{cursor:pointer;color:var(--primary);min-height:44px;display:flex;align-items:center}
 dl{margin:6px 0} .hrow{display:grid;grid-template-columns:96px 1fr;gap:8px;padding:3px 0} dt{color:var(--muted)} dd{margin:0}
-.need{color:var(--calm);font-size:0.875rem;margin-top:6px;font-weight:600;border-inline-start:3px solid var(--calm);padding-inline-start:8px}
 .seg{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px} .seg button{min-height:44px;padding:4px 14px;font:inherit;background:var(--card);color:var(--ink);border:1.5px solid var(--ink)} .seg button[aria-pressed="true"]{background:var(--primary);color:var(--on-primary)}
 .crumb{display:inline-flex;align-items:center;min-height:44px;margin-top:8px;color:var(--primary)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
@@ -287,9 +289,9 @@ h2.card-h{font:600 1.0625rem/1.4 "Hind Siliguri",sans-serif;margin:0 0 2px}
 .chart-svg{display:block;width:100%;height:auto;max-width:360px;margin:6px 0}
 .chart .chart-t{font:500 0.8125rem "Hind Siliguri",system-ui,sans-serif;fill:var(--ink)}
 .chart .chart-h{font:600 0.875rem "Hind Siliguri",system-ui,sans-serif;fill:var(--ink)}
+.chart text{paint-order:stroke;stroke:var(--card);stroke-width:3px;stroke-linejoin:round}
 .chart .chart-s{font:400 0.6875rem "Hind Siliguri",system-ui,sans-serif;fill:var(--muted)}
 .chart .chart-mid{text-anchor:middle}.chart .chart-end{text-anchor:end}
-.chart text{paint-order:stroke;stroke:var(--card);stroke-width:3px;stroke-linejoin:round}
 .chart .chart-in{fill:var(--primary)}.chart .chart-out{fill:var(--ember)}
 .chart .chart-axis{stroke:var(--rule);stroke-width:1.5}
 .chart .chart-unk{fill:none;stroke:var(--muted);stroke-width:1.5}

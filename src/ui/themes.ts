@@ -60,16 +60,20 @@ export const DESIGNS: Design[] = [
   },
 ];
 
+/** Brand accent for the three looks other than the default: a thin champagne-to-emerald line under the logo row. Light Futuristic (the default) is left exactly as it was. */
+export const BRAND_LINE_CSS = `:root:not([data-design="light-futuristic"]) .logo-row{padding-bottom:6px;border-bottom:2px solid transparent;border-image:linear-gradient(90deg,var(--brand-champagne),var(--brand-emerald)) 1}`;
+
 export const isDesignId = (v: unknown): v is string => typeof v === "string" && DESIGNS.some((d) => d.id === v);
 export const designOf = (id: string): Design => DESIGNS.find((d) => d.id === id) ?? DESIGNS[0]!;
 
 const block = (t: Tokens) => Object.entries(t).map(([k, v]) => `--${k}:${v}`).join(";");
 /** CSS for every version that has tokens. Light first, then dark (explicit dark, then phone dark in auto). */
 export function designCss(list: Design[] = DESIGNS): string {
+  if (!list.some((d) => d.light && d.dark)) return "";
   return list.filter((d) => d.light && d.dark).map((d) => {
     const s = `:root[data-design="${d.id}"]`;
     return `${s}:not([data-theme="dark"]){${block(d.light!)}}\n${s}[data-theme="dark"]{${block(d.dark!)}}\n@media (prefers-color-scheme:dark){${s}[data-theme="auto"]{${block(d.dark!)}}}${d.extraCss ?? ""}`;
-  }).join("\n");
+  }).join("\n") + `\n${BRAND_LINE_CSS}`;
 }
 
 /** Put the version CSS in the page once, and set data-design on the root. Safe to call repeatedly. */

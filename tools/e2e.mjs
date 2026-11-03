@@ -24,6 +24,8 @@ const passOf = (...ids) => { const r = results.filter((x) => ids.includes(x.id))
 await page.goto("http://localhost:4174/#/today");
 // First run: the choice comes before anything else. Explore with demo data first (empty start check below).
 await page.waitForSelector("[data-first=demo]");
+await page.waitForFunction(() => !document.getElementById("tm-splash"), null, { timeout: 3000 }).catch(() => {});
+check("BRAND-SPLASH", "the brand splash is gone once the first screen is drawn, and the page links the app icons", (await page.locator("#tm-splash").count()) === 0 && (await page.locator('link[rel="apple-touch-icon"]').count()) === 1 && (await page.evaluate(() => fetch("./icon-maskable-512.png").then((r) => r.ok)))); 
 check("MODE-FIRST", "first run shows the demo / real choice and no tabs", (await page.locator("[data-first=real]").count()) === 1 && (await page.locator("nav").count()) === 0);
 await page.click("[data-act=first-demo]");
 await page.waitForSelector("[data-demo-banner]");
@@ -242,8 +244,6 @@ check("G1-OFFLINE", "status screen renders offline", (await page.locator("[data-
   await page.click("[data-act=search-open]"); await page.fill("[data-search=input]", "dark");
   check("SET-SEARCH", "search finds Theme offline", (await page.locator("[data-search-hit=theme]").count()) === 1);
   await page.evaluate(() => { document.documentElement.style.fontSize = ""; });
-}
-await ctx.setOffline(false);
   // SET-2.T3: the Quick card (language, theme, text size) is fully visible on the first screen at 360 px, in demo mode, in English and Bangla, without scrolling.
   for (const lang of ["en", "bn", "mix"]) {
     await page.evaluate((l) => { localStorage.setItem("tm:ui:lang", l); }, lang); await page.goto("http://localhost:4174/#/settings"); await page.reload(); await page.waitForSelector("[data-card=quick]");
@@ -251,6 +251,8 @@ await ctx.setOffline(false);
     check("SET-QUICK-FOLD", `Settings Quick card fits above the tab bar at 360 px without scrolling (${lang})`, fit.bottom <= fit.nav && fit.scrolled === 0 && fit.top >= 0, JSON.stringify(fit));
   }
   await page.evaluate(() => { localStorage.setItem("tm:ui:lang", "en"); });
+}
+await ctx.setOffline(false);
 
 // Text size (owner report 3 Nov 2026): each size on Settings really scales body text, headings, buttons, tab bar and form fields, in English and Bangla,
 // and 200% shows no sideways scroll and no clipped text at 360 px.

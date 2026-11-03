@@ -131,6 +131,8 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 
 - [x] Multi-goal shared steps (owner 3 Nov 2026, ruling docs/design/multi-goal-final-decision.md): steps 1-11 plus per-goal weighting; paperwork step 12. Tests: task_goals, goal_credit, goal_picker, goal_overview, task_trace, goal_delete, multi_goal_print, habit_goals, goal_weighting.
 
+- [x] Remaining work run (3 Nov 2026, owner "start the remaining work now"): (1) looks evidence: 4 looks x en/bn x light/dark x 100/200% text x 28 screens opened as contact sheets, three real faults fixed (tab labels broke inside words at 200%, ghost buttons on the Light Futuristic gradient, default-blue links in dark mode), `docs/audit/LOOKS_EVIDENCE_2026-11-03.md`, `tests/looks_matrix.test.ts`; (2) open tests: Quick card fold (e2e SET-QUICK-FOLD), `tests/snapshot_restore_ui.test.ts`, `tests/undo_map.test.ts`; (3) "Where we are" is an in-app page `#/more/where` (`src/ui/whereUi.ts`, `tests/where_page.test.ts`); (4) stale audit files marked superseded (`tests/audit_superseded.test.ts`); (5) backward-planning wizard `#/journey/backward` (`src/core/backwardPlan.ts`, `tests/backward_plan.test.ts`, field `task.plan_by`, catalog 19) and the calm `--calm` colour for "please tick" prompts (`showNeed`, `.need`); (6) M18 complete: drawn goal tree, resource map, readiness map, plan-change board (`src/core/maps.ts`, `src/ui/mapsUi.ts`, `tests/maps.test.ts`); (7) branding: T + M emblem icons (any + maskable), pre-JS splash, brand tokens (`tests/branding.test.ts`). Still open here: M09 unit economics (document gives no fields), M21 at-rest encryption (owner), M23 AI (D-C).
+
 ## Part B — Owner-only tasks
 - [ ] (optional, later) A scholar reviews the hadith entries and the halal-check flags; a named reviewer then marks entries reviewed.
 - [ ] Open the app online once and check Settings > About shows the new build line; text size 150% should visibly grow the text (3 Nov fix).
@@ -138,7 +140,7 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 - [ ] Lock-screen privacy check on a real device (O8).
 - [ ] Verify prayer times against the official Bangladesh timetable (Islamic Foundation Bangladesh). Check both: the phone's own calculation and the new automatic update (Settings > Prayer; source Aladhan, UNTESTED live from the build sandbox).
 - [ ] Bangla reviewer sign-off (TM-TST-161).
-- [ ] Look at the 4 Design versions on the phone (More > Display) and say which to keep.
+- [ ] Look at the 4 Design versions on the phone (Settings > Look) and say which to keep. Also say whether you like the new icon and the short splash (champagne T + M on obsidian).
 - [ ] Approvals still closed: D-C (AI / online suggestions / cost), cloud sync, Google/Supabase keys, D-D (scripture/licensed content), any paid service.
 
 ## Done so far (reference)
