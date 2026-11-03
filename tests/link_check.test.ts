@@ -30,7 +30,7 @@ describe("link check: links drawn on every screen", () => {
       }
       expect(seen).toBeGreaterThan(100);
       expect(broken).toEqual([]);
-    });
+    }, 60_000); // renders every route; it grows with each feature, so the 5 s default is too tight on a busy runner
   }
   it("every route in the table is reached by at least one link or is a tab, a redirect target or a deliberate entry point", () => {
     const linked = new Set<string>(); const lang = "en";

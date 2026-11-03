@@ -1,5 +1,5 @@
 // "Where does this step go?" (multi-goal ruling): for one step, the path of every goal it serves and what marking it done changes, in the same
-// numbers the progress screens use. Pure. No advice, no ranking: facts only.
+// numbers the progress screens use. Pure. Facts only, no advice.
 import { goalProgress } from "./goalPlan";
 import { buildTree, flatten } from "./goalTree";
 import { isCountedTask, overallProgress } from "./overallProgress";
