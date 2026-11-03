@@ -2,10 +2,10 @@
   "keys": 2406,
   "perFile": {
     "src/i18n/packs.ts": 2395,
-    "src/catalog/fields.ts": 1022,
+    "src/catalog/fields.ts": 1063,
     "src/catalog/glossary.ts": 68,
     "src/modules/capability.ts": 53,
-    "src/schema/entities.ts": 46,
+    "src/schema/entities.ts": 47,
     "src/library/topics.ts": 151,
     "src/library/paths.ts": 106,
     "src/library/inspiration.ts": 19,

@@ -17,6 +17,8 @@ export const MIGRATIONS: Record<number, Step> = {
     const g = r.links?.goal; if (!g) return r;
     return { ...r, values: { ...r.values, "task.goals": { state: "value", value: [g], label: r.ns === "real" ? "FACT" : "DEMO" } } };
   },
+  // 2 to 3 (reminders): additive. The new entity `reminder` has no old records, so nothing is rewritten; the number only goes up.
+  2: (r) => r,
 };
 
 export type MigrateStatus = "current" | "migrated" | "newer" | "failed";

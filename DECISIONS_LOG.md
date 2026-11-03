@@ -731,3 +731,9 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 - Alternatives: keep লক্ষ্য and ডেটা (rejected by the owner); change every formal word including ব্যক্তিগত, গোনা, মাপকাঠি, বিরতি (kept, they are everyday words); hand-edit 4,700 strings (rejected: errors, no log).
 - CLAUDE.md section 2b now points to the guide. All Bangla stays "যাচাই হয়নি" until TM-TST-161; this does not change the Register status of any requirement.
 - How to undo: `git revert` the step commits (one per step); or edit the rules file and run the tool again.
+
+## Reminders: build started, step 1 core + schema (3 Nov 2026, per docs/design/reminders-final-decision.md)
+- What: new entity `reminder` (family FAM-REM, 7 fields: `target_entity`, `target_id`, `at`, `time_of_day`, `lead_days`, `state`, `snoozed_until`), catalog 19 to 20. `SCHEMA_VERSION` 2 to 3 with `MIGRATIONS[2]` (additive, no data rewrite: the number only goes up), kept fixture `records_v3.json`, fingerprint file updated. Pure core `src/core/reminders.ts` (prefs that fail closed and default off, expand, quiet-hour / block / prayer-spacing holds, 6-per-day cap, 15-minute merge, once-only ledger, missed list, snooze / done / skip, neutral notification text through the existing O8 rule). No UI yet.
+- Why: the ruling (section 2, 13) wants one reminder record pointing at an existing item, no copied title or time, so a re-plan or an edit moves the reminder with it.
+- Alternatives: a field on each task / habit / bill (rejected in the ruling, five entities to change); no schema bump (the fingerprint test allows it for additive fields, but the ruling asked for the bump so old backups are clearly marked).
+- Undo: revert the commit; no stored record changes shape, and `reminder` records simply stay unread.

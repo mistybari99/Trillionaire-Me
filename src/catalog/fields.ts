@@ -2,7 +2,7 @@ import type { Bi } from "../i18n/registry";
 import { UNKNOWN_STATES, type UnknownState } from "../core/types";
 import type { AccessRule, ChoiceOption, FieldDef, FieldType, Importance, PrivacyClass, Purpose, Requirement } from "./types";
 
-export const CATALOG_VERSION = 19;
+export const CATALOG_VERSION = 20;
 
 const bi = (bn: string, en: string): Bi => ({ bn, en });
 const opt = (code: string, bn: string, en: string): ChoiceOption => ({ code, label: bi(bn, en) });
@@ -913,6 +913,45 @@ export const FIELDS: FieldDef[] = [
     what: bi("নিজের সংখ্যাটি যেদিন লিখেছেন বা বদলেছেন।", "The day you typed or changed your own number."),
     why: bi("পুরোনো সংখ্যা চেনা যায়।", "It shows how old your number is."),
     example: bi("২০২৬-১১-০২", "2026-11-02"), format: bi("বছর-মাস-দিন", "YYYY-MM-DD") }),
+
+  // ── reminders (FAM-REM, catalog 20, docs/design/reminders-final-decision.md): one reminder is tied to one existing item; no copied title or time ──
+  f({ id: "reminder.target_entity", entity: "reminder", family: "FAM-REM", type: "choice", purpose: "planning", importance: "core",
+    options: [opt("task", "কাজ", "Task"), opt("plan_step", "প্ল্যানের ধাপ", "Plan step"), opt("habit", "অভ্যাস", "Habit"), opt("bill", "বিল", "Bill"), opt("goal", "গোল", "Goal"), opt("review", "রিভিউ", "Review")],
+    label: bi("কিসের রিমাইন্ডার", "What it reminds about"),
+    what: bi("আপনার নিজের কোন আইটেমের জন্য রিমাইন্ডার।", "Which of your own items the reminder is for."),
+    why: bi("রিমাইন্ডার সবসময় একটি আইটেমের সঙ্গে জোড়া থাকে; আলাদা লেখা নেই।", "A reminder is always tied to one item; there is no free text."),
+    example: bi("কাজ", "Task") }),
+  f({ id: "reminder.target_id", entity: "reminder", family: "FAM-REM", type: "text", purpose: "planning", importance: "core",
+    label: bi("আইটেমের আইডি (অ্যাপ লেখে)", "Item id (written by the app)"),
+    what: bi("যে আইটেমের জন্য রিমাইন্ডার, তার আইডি। আপনি লেখেন না।", "The id of the item the reminder is for. You do not type it."),
+    why: bi("সময় বা নাম কপি হয় না, তাই আইটেম বদলালে রিমাইন্ডার সঙ্গে সঙ্গে বদলায়।", "No time or name is copied, so the reminder follows the item when it changes."),
+    example: bi("(অ্যাপের নিজের লেখা)", "(written by the app)") }),
+  f({ id: "reminder.at", entity: "reminder", family: "FAM-REM", type: "text", purpose: "planning", importance: "useful",
+    label: bi("কখন (তারিখ ও সময়)", "When (date and time)"),
+    what: bi("কাজ, প্ল্যানের ধাপ বা রিভিউয়ের জন্য আপনার বাছা তারিখ ও সময়, বাংলাদেশের সময়ে।", "The date and time you pick for a task, plan step or review, in Bangladesh time."),
+    why: bi("তারিখ না থাকলে রিমাইন্ডার বাজে না; অ্যাপ নিজে থেকে এখন ধরে না।", "With no date the reminder does not fire; the app never assumes now."),
+    example: bi("২০২৬-১১-০৫ 09:30", "2026-11-05 09:30"), format: bi("বছর-মাস-দিন ও ঘণ্টা:মিনিট", "YYYY-MM-DDTHH:MM") }),
+  f({ id: "reminder.time_of_day", entity: "reminder", family: "FAM-REM", type: "text", purpose: "planning", importance: "useful",
+    label: bi("দিনের কোন সময়", "Time of day"),
+    what: bi("অভ্যাস, বিল ও গোলের তারিখের জন্য ঘণ্টা:মিনিট।", "Hour and minute, for a habit, a bill or a goal date."),
+    why: bi("তারিখ আইটেম থেকে আসে, শুধু সময় এখানে বাছেন।", "The date comes from the item; you only pick the time here."),
+    example: bi("সকাল 09:00", "09:00"), format: bi("ঘণ্টা:মিনিট", "HH:MM") }),
+  f({ id: "reminder.lead_days", entity: "reminder", family: "FAM-REM", type: "number", purpose: "planning", importance: "optional",
+    label: bi("কত দিন আগে (0 বা 1)", "Days before (0 or 1)"),
+    what: bi("বিল বা গোলের তারিখের দিনে (0) নাকি আগের দিন (1)।", "On the day of the bill or goal date (0) or the day before (1)."),
+    why: bi("শুধু দুটি পছন্দ, যাতে ফর্ম ছোট থাকে।", "Only two choices, so the form stays short."),
+    example: bi("1 দিন আগে", "1 day before"), format: bi("0 বা 1", "0 or 1") }),
+  f({ id: "reminder.state", entity: "reminder", family: "FAM-REM", type: "choice", purpose: "planning", importance: "core",
+    options: [opt("on", "চালু", "On"), opt("done", "হয়ে গেছে", "Done"), opt("skipped", "বাদ", "Skipped")],
+    label: bi("অবস্থা", "State"),
+    what: bi("রিমাইন্ডার চালু আছে, হয়ে গেছে নাকি বাদ দিয়েছেন।", "Whether the reminder is on, done or skipped."),
+    why: bi("হয়ে গেলে বা বাদ দিলে আর বাজে না।", "Once done or skipped it does not fire again."),
+    example: bi("চালু", "On") }),
+  f({ id: "reminder.snoozed_until", entity: "reminder", family: "FAM-REM", type: "text", purpose: "planning", importance: "optional",
+    label: bi("পরে মনে করানো (কখন)", "Remind later (when)"),
+    what: bi("‘এক ঘণ্টা পরে’ বা ‘কাল সকালে’ বাছলে অ্যাপ নতুন সময় লেখে।", "When you pick ‘In 1 hour’ or ‘Tomorrow morning’ the app writes the new time."),
+    why: bi("কাজটি হয়ে গেছে ধরা ছাড়াই শান্তভাবে পরে মনে করাতে।", "A calm ‘not now’ that does not mark the item done."),
+    example: bi("(অ্যাপের নিজের লেখা)", "(written by the app)"), format: bi("বছর-মাস-দিন ও ঘণ্টা:মিনিট", "YYYY-MM-DDTHH:MM") }),
 ];
 
 export const fieldById = (id: string): FieldDef | undefined => FIELDS.find((x) => x.id === id);
