@@ -1,5 +1,6 @@
 // M10 team roles (demo namespace). Roles only: no people's names are stored or needed.
 // Unknown holder is shown as unknown, never counted as "covered" or as "open".
+import { goalIdsOf } from "./taskGoals";
 import { isDelegatedTask } from "./planInputs";
 import type { FieldValue, TMRecord } from "./types";
 
@@ -46,7 +47,8 @@ export function handoverRows(recs: readonly TMRecord[]): HandoverRow[] {
 }
 
 export type RoleGap = "gap" | "open_no_steps" | "unanswered" | "covered" | "mine";
-export interface RoleTask { id: string; title: string; minutes: number | null; delegated: boolean; parked: boolean }
+/** `goals` = titles of the goals this step serves (sorted). The hand-over document prints only the NUMBER unless the person ticks "Include goal names". */
+export interface RoleTask { id: string; title: string; minutes: number | null; delegated: boolean; parked: boolean; goals: string[] }
 export interface RoleView {
   row: RoleRow; tasks: RoleTask[];
   /** sum of the known estimates, and how many steps have no estimate yet (never counted as 0 minutes) */
@@ -62,7 +64,8 @@ export function roleViews(recs: readonly TMRecord[]): RoleView[] {
   const hos = handoverRows(recs);
   return roleRows(recs as TMRecord[]).map((row): RoleView => {
     const mine = recs.filter((r) => stillOpen(r) && r.links?.role === row.id).sort((a, b) => (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
-    const tasks = mine.map((r): RoleTask => ({ id: r.id, title: txt(r.values["task.title"]) ?? "", minutes: numOf(r.values["task.minutes"]), delegated: isDelegatedTask(r), parked: r.values["task.parked_on"]?.state === "value" }));
+    const goalTitle = new Map(recs.filter((g) => g.entity === "goal").map((g) => [g.id, txt(g.values["goal.title"]) ?? ""] as const));
+    const tasks = mine.map((r): RoleTask => ({ id: r.id, title: txt(r.values["task.title"]) ?? "", minutes: numOf(r.values["task.minutes"]), delegated: isDelegatedTask(r), parked: r.values["task.parked_on"]?.state === "value", goals: goalIdsOf(r).filter((g) => goalTitle.has(g)).map((g) => goalTitle.get(g)!).sort((a, b) => a.localeCompare(b)) }));
     const known = tasks.filter((x) => x.minutes !== null);
     const gap: RoleGap = row.holder === null ? "unanswered" : row.holder === "open" ? (tasks.length ? "gap" : "open_no_steps") : row.holder === "me" ? "mine" : "covered";
     const mineHo = hos.filter((h) => h.roleId === row.id);

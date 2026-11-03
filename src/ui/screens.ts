@@ -84,6 +84,7 @@ import { sourceLine } from "./prayerSyncUi";
 import { markedOn, prayerLogId, prayerLogRecord } from "../core/prayerLog";
 import { fastLogId, fastLogRecord, isFastMarked } from "../core/fastLog";
 import { goalIdsOf, validateLinks, withGoals } from "../core/taskGoals";
+import { linkStats } from "../core/goalPlan";
 import { goalChips, goalPicker, whereThisGoes } from "./goalLinks";
 import { activeNs, allRecs, asReal, entryNs, putMode, consentOn, consentPrompt, findRec, inNs, labelFor, nsTag, ownerOf, saveBlockedText, saveTyped, storeOf, typed, valueLabel } from "./entry";
 import { SCHEMA_VERSION } from "../schema/entities";
@@ -636,6 +637,10 @@ export function captureScreen(): HTMLElement {
 }
 
 /** The report's cards, in order. The report screen and the print page (Save as PDF) draw the same list. */
+function linkFactLine(lang: Locale): HTMLElement | null {
+  const st = linkStats(allRecs()); if (!st.steps) return null;
+  return h("p", { class: "muted", "data-link-stats": "report" }, t("gl.report.fact", lang, { n: num(st.steps, lang), s: num(st.shared, lang), u: num(st.unlinked, lang) }));
+}
 export function reportContent(lang: Locale): Array<Node | null> {
   const capRecs = allRecs().filter((r) => r.entity === "capture_item").sort((a, b) => a.id.localeCompare(b.id)); const items = capRecs.map(itemOf); const s = summarize(items);
   const repCompact = screenView("report") === "compact";
@@ -646,7 +651,7 @@ export function reportContent(lang: Locale): Array<Node | null> {
     h("h2", { class: "card-h" }, t("report.entries", lang)), entries);
   const sec = (title: Key, ...kids: Array<Node | string | null>) => h("div", { class: "card" }, h("h2", { class: "card-h", }, t(title, lang)), ...kids);
   return [
-    goalRingsChart(allRecs(), lang),
+    goalRingsChart(allRecs(), lang), linkFactLine(lang),
     kpiSection("week", lang), kpiSection("days90", lang),
     portfolioCard(lang, "report"),
     northStarCard(lang, "report"),

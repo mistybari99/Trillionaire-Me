@@ -15,7 +15,8 @@ export const printFileName = (kind: PrintKind, ns: TMRecord["ns"], day: string):
 const str = (v: FieldValue | undefined): string | null => (v?.state === "value" && typeof v.value === "string" && v.value.trim() ? v.value.trim() : null);
 const num = (v: FieldValue | undefined): number | null => (v?.state === "value" && typeof v.value === "number" && Number.isFinite(v.value) && v.value > 0 ? v.value : null);
 
-export interface PlanStep { id: string; title: string; minutes: number | null }
+/** `also` = titles of the OTHER goals this step serves (sorted), so a shared step prints under each goal with "(also: ...)". */
+export interface PlanStep { id: string; title: string; minutes: number | null; also: string[] }
 export interface PlanDocRow { id: string; title: string; kind: GoalKind; depth: number; date: string | null; percent: number | null; steps: PlanStep[] }
 
 /** Goals as a tree (in reading order) with the steps still open under each one. */
@@ -25,6 +26,6 @@ export function planDoc(recs: readonly TMRecord[]): PlanDocRow[] {
   const goalRec = new Map(recs.filter((r) => r.entity === "goal").map((r) => [r.id, r] as const));
   return flatten(buildTree(recs)).map((n) => ({
     id: n.id, title: n.title, kind: n.kind, depth: n.depth, date: str(goalRec.get(n.id)?.values["goal.target_date"]), percent: n.branch.percent,
-    steps: tasks.filter((x) => goalIdsOf(x).includes(n.id)).sort((a, b) => (a.id < b.id ? -1 : 1)).map((x) => ({ id: x.id, title: str(x.values["task.title"]) ?? "", minutes: num(x.values["task.minutes"]) })),
+    steps: tasks.filter((x) => goalIdsOf(x).includes(n.id)).sort((a, b) => (a.id < b.id ? -1 : 1)).map((x) => ({ id: x.id, title: str(x.values["task.title"]) ?? "", minutes: num(x.values["task.minutes"]), also: goalIdsOf(x).filter((g) => g !== n.id && goalRec.has(g)).map((g) => str(goalRec.get(g)!.values["goal.title"]) ?? "").filter(Boolean).sort((a, b) => a.localeCompare(b)) })),
   }));
 }
