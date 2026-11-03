@@ -18,7 +18,7 @@ import { toPlannerBlocks } from "../core/timeBlocks";
 import { notifyText } from "../core/notify";
 import {
   addDaysIso, applyLimits, dueReminders, expandReminders, markHeld, markShown, missedReminders, remindersFromRecords, reminderNotification, weekdayOf,
-  type BusyBlock, type Notice, type Placed, type PrayerMoment, type Reminder, type ReminderTarget, type TargetInfo, type TargetLookup,
+  type BusyBlock, type Notice, type Placed, type PrayerMoment, type Reminder, type ReminderTarget, type Slot, type TargetInfo, type TargetLookup,
 } from "../core/reminders";
 import type { FieldValue, TMRecord } from "../core/types";
 
@@ -39,8 +39,11 @@ export function buildLookup(recs: readonly TMRecord[], placements: ReadonlyMap<s
     if (target === "review") return id === "weekly" || id === "monthly" ? { ...base, title: t(id === "weekly" ? "rem.review.weekly" : "rem.review.monthly", lang), privacy: "personal" } : null;
     const r = byId.get(id); if (!r) return null;
     const untitled = t("next.task.untitled", lang);
+    if (target === "task" && r.entity === "handover") // opt-in check-in on a hand-over: neutral third-party text; nothing is sent to anyone
+      return { ...base, title: t("rem.checkin.title", lang), privacy: "third_party" };
     if (target === "task" || target === "plan_step") {
       if (r.entity !== "task") return null;
+      if (str(r.values["task.delegated_on"]) !== null || r.values["task.delegated_on"]?.state === "value") return { ...base, title: str(r.values["task.title"]) ?? untitled, privacy: "third_party", placed: placements.get(id) ?? null, deferred: deferred.has(id) };
       return { ...base, title: str(r.values["task.title"]) ?? untitled, privacy: privacyOf(r), placed: placements.get(id) ?? null, deferred: deferred.has(id) };
     }
     if (target === "habit") {
@@ -58,22 +61,39 @@ export function buildLookup(recs: readonly TMRecord[], placements: ReadonlyMap<s
 }
 
 export interface Built { reminders: Reminder[]; schedule: Placed[]; held: Placed[]; today: string }
-/** Slots for the last 7 days and the next day, after the hold rules. Pure given its inputs (the clock is `nowMs`). */
-export function buildSchedule(nowMs: number, lang: Locale): Built {
-  const p = prefs.reminders; const today = isoDate(dhakaNow(nowMs).date);
+function context(nowMs: number, lang: Locale) {
+  const today = isoDate(dhakaNow(nowMs).date);
   const recs = allRecs(); const reminders = remindersFromRecords(recs);
-  const mode: CapacityMode = prefs.mode;
   const wk = currentBlocks().week.blocks;
   // plan placements: the planner starts on today's weekday; weekday d lands on the date `(d - start + 7) % 7` days after today
   const startDay = weekdayOf(today);
   const placements = new Map<string, { date: string; minute: number }>(); const deferred = new Set<string>();
-  if (reminders.some((x) => x.target === "plan_step")) {
-    const plan = schedule(buildPlanInput(loadAnswers(), recs, mode, startDay, toPlannerBlocks(wk)));
+  if (prefs.reminders.planStart || reminders.some((x) => x.target === "plan_step")) {
+    const plan = schedule(buildPlanInput(loadAnswers(), recs, prefs.mode, startDay, toPlannerBlocks(wk)));
     for (const pl of plan.placements) placements.set(pl.taskId, { date: addDaysIso(today, (pl.day - startDay + 7) % 7), minute: pl.start });
     for (const d of plan.deferred) deferred.add(d.taskId);
   }
+  // "Remind me at the start of each planned step" (global switch): one virtual reminder per placed step that has no reminder of its own.
+  // They are not stored; acting on one (done, later, skip) stores a normal reminder record for it (see actOnSlot).
+  const withOwn = new Set(reminders.filter((x) => x.target === "plan_step" || x.target === "task").map((x) => x.targetId));
+  const all = prefs.reminders.planStart ? [...reminders, ...[...placements.keys()].filter((id) => !deferred.has(id) && !withOwn.has(id)).sort().map((id): Reminder => virtualPlanStep(id))] : reminders;
+  return { today, reminders: all, wk, lookup: buildLookup(recs, placements, deferred, lang) };
+}
+export const virtualPlanStep = (taskId: string): Reminder => ({ id: `rem-plan_step-${taskId}`, target: "plan_step", targetId: taskId, at: null, timeOfDay: null, leadDays: 0, state: "on", snoozedUntil: null });
+
+/** Calendar-file slots for the next `days` days (default 30): the plain times, with no quiet-hour or cap changes. Works with the master switch off. */
+export function calendarSlots(nowMs: number, lang: Locale, days = 30, reminderId?: string): Slot[] {
+  const c = context(nowMs, lang);
+  const list = c.reminders.filter((r) => !reminderId || r.id === reminderId);
+  return expandReminders(list, c.today, addDaysIso(c.today, days), prefs.reminders, c.lookup);
+}
+
+/** Slots for the last 7 days and the next day, after the hold rules. Pure given its inputs (the clock is `nowMs`). */
+export function buildSchedule(nowMs: number, lang: Locale): Built {
+  const p = prefs.reminders; const mode: CapacityMode = prefs.mode;
+  const c = context(nowMs, lang); const { today, reminders, wk } = c;
   const from = addDaysIso(today, -7), to = addDaysIso(today, 1);
-  const slots = expandReminders(reminders, from, to, p, buildLookup(recs, placements, deferred, lang));
+  const slots = expandReminders(reminders, from, to, p, c.lookup);
   const prayers: PrayerMoment[] = [];
   const a = prefs.prayerAlerts;
   if (a.preAlert || a.azan) for (const d of [today, addDaysIso(today, 1)]) {

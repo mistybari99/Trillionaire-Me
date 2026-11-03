@@ -1,5 +1,6 @@
 // Step 5 screens: life wheel, goal list with progress, SMART guide and SWOT card, micro-animations.
 // Everything reads and writes the active mode only (allRecs / findRec / saveTyped). Unknown is shown as unknown, never as zero.
+import { remindRow } from "./remindUi";
 import { h } from "./dom";
 import { t } from "../i18n/t";
 import type { Key } from "../i18n/packs";
@@ -347,7 +348,7 @@ export function goalScreen(id: string): HTMLElement {
   // Read-only SWOT summary so the four lists are visible as text; unknown lists say so.
   const swotView = h("section", { class: "card", "data-swot-view": "1" }, h("h2", { class: "card-h" }, t("swot.title", lang)),
     h("div", { class: "swot-grid" }, ...SWOT_KEYS.map((k) => { const items = readList(rec.values[swotField(k)]); return h("div", { "data-swot-box": k }, h("h3", {}, t(`swot.${k}` as Key, lang)), items ? h("ul", {}, ...items.map((i) => h("li", {}, i))) : h("p", { class: "muted", "data-swot-empty": k }, t("swot.empty", lang))); })));
-  return h("main", {}, back, h("h1", {}, textOf(rec, "goal.title")), progress, stepsCard(rec, lang), weightCard(rec, lang), placeCard(rec, lang), statusCard(rec, lang), goalAreaCard(rec, lang), smartForm, swotView, swotForm, goalDeleteCard(rec, lang));
+  return h("main", {}, back, h("h1", {}, textOf(rec, "goal.title")), progress, textOf(rec, "goal.target_date") ? remindRow("goal", id, lang) : null, stepsCard(rec, lang), weightCard(rec, lang), placeCard(rec, lang), statusCard(rec, lang), goalAreaCard(rec, lang), smartForm, swotView, swotForm, goalDeleteCard(rec, lang));
 }
 
 // Weighting of this goal's steps: equal or by size. Changing it never changes the overall percent (each step is counted once there).

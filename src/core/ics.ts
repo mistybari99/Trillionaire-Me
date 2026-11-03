@@ -66,7 +66,7 @@ export function toIcs(slots: readonly Slot[], o: IcsOptions): string {
     const detailed = showsDetails(s.privacy, o.details);
     const title = icsEscape(eventTitle(s, o));
     lines.push(
-      "BEGIN:VEVENT", `UID:${s.id.replace(/[^A-Za-z0-9:~._-]/g, "_")}@trillionaire-me`, `DTSTAMP:${stamp(o.nowMs)}`,
+      "BEGIN:VEVENT", `UID:${`${s.reminderId}:${s.date}${s.snooze ? "~z" : ""}`.replace(/[^A-Za-z0-9:~._-]/g, "_")}@trillionaire-me`, `DTSTAMP:${stamp(o.nowMs)}`,
       `DTSTART;TZID=Asia/Dhaka:${local(s.when)}`, `DTEND;TZID=Asia/Dhaka:${local(s.when + mins * 60_000)}`, `SUMMARY:${title}`,
       ...(detailed ? [`DESCRIPTION:${icsEscape(pick(FROM_APP, o.lang))}`] : []),
       "BEGIN:VALARM", "ACTION:DISPLAY", `DESCRIPTION:${title}`, "TRIGGER:PT0S", "END:VALARM", "END:VEVENT",

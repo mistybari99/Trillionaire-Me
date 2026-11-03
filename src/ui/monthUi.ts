@@ -1,5 +1,6 @@
 // M16 monthly review and the money / risk blocks shared by the weekly, monthly and 90-day reviews.
 // Own records only; unknown is never 0; a gap is "more to go", never a failure. The assumptions check only asks: the user decides.
+import { remindRow } from "./remindUi";
 import { h } from "./dom";
 import { t, fmtNumber } from "../i18n/t";
 import type { Key } from "../i18n/packs";
@@ -85,7 +86,7 @@ export function monthScreen(): HTMLElement {
   const free = buildPlanInput(loadAnswers(), recs, prefs.mode).weeklyFreeMinutes;
   const items = assumptionItems(recs, free);
   return h("main", { class: "scr scr-month" }, link("#/journey", "crumb", `← ${t("journey.title", lang)}`),
-    h("h1", {}, t("month.title", lang)), h("p", { class: "sub" }, t("month.intro", lang)),
+    h("h1", {}, t("month.title", lang)), h("p", { class: "sub" }, t("month.intro", lang)), remindRow("review", "monthly", lang),
     h("p", { class: "muted", "data-month-period": "1" }, valueEl(t("review.period", lang, { from: s.from, to: s.to }), activeNs() === "real" ? "FACT" : "DEMO", lang)),
     activityChart(recs, today, lang),
     ...measures.map(([id, title, v]) => h("section", { class: "card", "data-month": id }, h("h2", { class: "card-h" }, t(title, lang)),

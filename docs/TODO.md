@@ -141,7 +141,21 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 - [ ] Verify prayer times against the official Bangladesh timetable (Islamic Foundation Bangladesh). Check both: the phone's own calculation and the new automatic update (Settings > Prayer; source Aladhan, UNTESTED live from the build sandbox).
 - [ ] Bangla reviewer sign-off (TM-TST-161).
 - [ ] Look at the 4 Design versions on the phone (Settings > Look) and say which to keep. Also say whether you like the new icon and the short splash (champagne T + M on obsidian).
+- [ ] Reminders phone test (physical phone, `docs/design/reminders-final-decision.md` section 11). Write the result of each step; either result is fine for steps 3 and 4:
+  1. Android: Settings > Prayer & alerts > Reminders: master on, Allow. Tap "Test notification": it appears. Lock the phone: only the plain line shows.
+  2. Make a task reminder 2 minutes ahead (Plan > Remind me), app open: the card appears on Today.
+  3. Same, then switch to another app for 1 minute: write down if it arrives.
+  4. Same, then swipe the app away: write down if it arrives (usually no, which is the honest limit). Open the app: the calm "These were waiting for you" card shows; Done / Later / Skip work.
+  5. Tap "Add to phone calendar" on one reminder: the calendar asks to add it; with the app fully closed the calendar alarm rings on time.
+  6. iPhone: Add to Home Screen, open from the icon, allow, repeat step 2. Before install the app says to add it first.
+  7. Quiet hours: a reminder at 23:00 stays silent; it shows after 07:00.
+  8. Bill reminder: lock screen plain line only; calendar title "Reminder" only. Turn on the money detail tick (Settings > Privacy > Lock screen): the line shows.
+  9. A reminder and a prayer alert within 3 minutes: two buzzes do not land together.
+  10. Master off: no notifications and no permission prompt on next open.
 - [ ] Approvals still closed: D-C (AI / online suggestions / cost), cloud sync, Google/Supabase keys, D-D (scripture/licensed content), any paid service.
+
+## Reminders (3 Nov 2026, built; closed-app delivery needs the phone test in Part B)
+- [x] Steps 1 to 9 of `docs/design/reminders-final-decision.md` section 13: engine, .ics, Settings, delivery, Remind me rows, missed card, calendar buttons, interactions. Master switch is off by default.
 
 ## Done so far (reference)
 Content packs (21 topics), Connections ports, language menu, Design version chooser + 4 looks, overall progress %, Goal Universe, Home money cards, Next best action, reward animation, bundled logo, local auto-snapshots, full offline cache, prayer times, ready systems, charts, encrypted backup, demo/real switch.

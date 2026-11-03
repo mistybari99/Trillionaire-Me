@@ -149,3 +149,8 @@ Test edits for the mapping were titles and moving tests into their own describe 
 - `python3 tools/update_register.py` rebuilt `..._v2_1_evidence_refresh.xlsx` from the untouched v2_0 (sha256 unchanged); Change Log line "Evidence" written by the tool.
 - The raw `evidence/*.json` run output was not committed (churn).
 - Final run of Block 8: vitest 1087/1087, 47 rows linked, browser e2e 0 FAIL. TM-TST-153 now cites `tests/csv_import.test.ts` (still Partial: no PDF). v2_1 copy rebuilt again; v2_0 sha256 unchanged (a65616a8...).
+
+## Reminders (3 Nov 2026)
+- Built and tested in CI: engine, settings, delivery while the app is open, in-app cards, missed card, .ics export (`tests/reminders*.test.ts`, `tests/ics.test.ts`, e2e `UI-SPACING`). Linked to module M08 (`src/modules/evidence.ts`).
+- No requirement was marked Verified from these: closed-app delivery depends on the phone and needs the owner phone test (`docs/TODO.md` Part B). The Register xlsx copy is refreshed with `python3 tools/update_register.py` at the next full evidence run; a Change Log line "Reminders built; real-phone test open" belongs there.
+- Decision-log entries: "Reminders: build started, step 1", "Reminders step 3 (REVERSAL for reminders only)".

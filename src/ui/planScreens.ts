@@ -1,5 +1,6 @@
 // Register screens for G3 items: risks & stop rules (M15), ventures (M09), team roles (M10), plan history (M12),
 // North Star measures (M03). Demo data only; same pattern as the money screen. Pure rules live in src/core.
+import { remindRow } from "./remindUi";
 import { h } from "./dom";
 import { t, tb, fmtNumber } from "../i18n/t";
 import type { Key } from "../i18n/packs";
@@ -315,6 +316,7 @@ function teamScreenInner(): HTMLElement {
       h("p", {}, h("strong", {}, t("team.ho.planned", lang))),
       v.planned.note ? h("p", { class: "muted" }, v.planned.note) : null, v.planned.due ? h("p", { class: "muted" }, t("team.ho.due", lang, { d: v.planned.due })) : null,
       h("p", { class: "muted" }, t("team.ho.effect", lang, { n: num(v.tasks.length, lang) })),
+      v.planned.due ? remindRow("task", v.planned.id, lang, { checkin: true, date: v.planned.due }) : null,
       h("button", { class: "btn", type: "button", "data-act": "handover-done", style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => {
         const res = completeHandover(allRecs(), v.planned!.id, today); if (!res) return;
         if (!commit(res.puts)) { msg.textContent = saveBlockedText(lang); return; }

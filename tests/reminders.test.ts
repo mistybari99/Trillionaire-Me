@@ -58,7 +58,7 @@ describe("reminder records", () => {
 describe("expandReminders", () => {
   it("task, review: one slot at the picked date and time (Dhaka); outside the range gives none", () => {
     const s = plan([rem({ id: "a", target: "task", targetId: "t", at: "2026-11-06T09:30" }), rem({ id: "b", target: "review", targetId: "weekly", at: "2026-11-20T10:00" })], { "task:t": info(), "review:weekly": info({ title: "Weekly review" }) });
-    expect(s.map((x) => [x.id, x.date, x.minute])).toEqual([["a:2026-11-06", "2026-11-06", 570]]);
+    expect(s.map((x) => [x.id, x.date, x.minute])).toEqual([["a:2026-11-06@570", "2026-11-06", 570]]);
     expect(s[0]!.when).toBe(Date.UTC(2026, 10, 6, 3, 30));
   });
   it("plan step follows the planner's placement and gets none when deferred or unplaced", () => {
@@ -96,6 +96,17 @@ describe("expandReminders", () => {
     const r = rem({ id: "a", target: "task", targetId: "t", at: "2026-11-06T09:30", snoozedUntil: "2026-11-06T10:30" });
     const s = plan([r], { "task:t": info() });
     expect(s).toHaveLength(2); expect(s.filter((x) => x.snooze)).toHaveLength(1); expect(s[1]!.minute).toBe(630);
+  });
+});
+
+describe("slot ids", () => {
+  it("a changed time on the same day is a new slot, so it is delivered again (editing a reminder or re-planning resets it)", () => {
+    const a = plan([rem({ id: "a", target: "task", targetId: "t", at: "2026-11-06T09:30" })], { "task:t": info() })[0]!;
+    const b = plan([rem({ id: "a", target: "task", targetId: "t", at: "2026-11-06T11:00" })], { "task:t": info() })[0]!;
+    expect(a.id).not.toBe(b.id); expect(sched([b], { ledger: [{ id: a.id, at: 1, s: "shown" }] }).schedule).toHaveLength(1);
+    const p1 = plan([rem({ id: "p", target: "plan_step", targetId: "s" })], { "plan_step:s": info({ placed: { date: "2026-11-07", minute: 600 } }) })[0]!;
+    const p2 = plan([rem({ id: "p", target: "plan_step", targetId: "s" })], { "plan_step:s": info({ placed: { date: "2026-11-07", minute: 660 } }) })[0]!;
+    expect(p1.id).not.toBe(p2.id);
   });
 });
 
@@ -233,8 +244,8 @@ describe("snooze, done, skip", () => {
   const r = rem({ id: "a", target: "task", targetId: "t", at: "2026-11-06T09:30" });
   const now = at("2026-11-06", "09:31");
   it("snooze in 1 hour makes one new slot and closes the old one; the item is not done", () => {
-    const res = snooze(r, "a:2026-11-06", "hour", [], now, P);
-    expect(res.reminder.state).toBe("on"); expect(res.reminder.snoozedUntil).toBe("2026-11-06T10:31"); expect(res.ledger).toEqual([{ id: "a:2026-11-06", at: now, s: "snoozed" }]);
+    const res = snooze(r, "a:2026-11-06@570", "hour", [], now, P);
+    expect(res.reminder.state).toBe("on"); expect(res.reminder.snoozedUntil).toBe("2026-11-06T10:31"); expect(res.ledger).toEqual([{ id: "a:2026-11-06@570", at: now, s: "snoozed" }]);
     const slots = plan([res.reminder], { "task:t": info() });
     const sc = sched(slots, { ledger: res.ledger }).schedule;
     expect(sc).toHaveLength(1); expect(sc[0]!.snooze).toBe(true); expect(sc[0]!.showAt).toBe(at("2026-11-06", "10:31"));
@@ -244,16 +255,16 @@ describe("snooze, done, skip", () => {
     expect(snooze(r, "x", "tomorrow", [], at("2026-11-06", "23:30"), { ...P, defaultTime: "08:15" }).reminder.snoozedUntil).toBe("2026-11-07T08:15");
   });
   it("a snooze that is shown once is not shown again; snoozing again replaces the time", () => {
-    const a = snooze(r, "a:2026-11-06", "hour", [], now, P);
-    const b = snooze(a.reminder, "a:2026-11-06~z631", "tomorrow", a.ledger, at("2026-11-06", "10:32"), P);
+    const a = snooze(r, "a:2026-11-06@570", "hour", [], now, P);
+    const b = snooze(a.reminder, "a:2026-11-06@631~z", "tomorrow", a.ledger, at("2026-11-06", "10:32"), P);
     expect(b.reminder.snoozedUntil).toBe("2026-11-07T09:00"); expect(b.ledger.map((e) => e.s)).toEqual(["snoozed", "snoozed"]);
   });
   it("done and skip finish a one-time reminder; a habit keeps its other days", () => {
     expect(markDone(r, "s", [], now).reminder.state).toBe("done");
     expect(markSkipped(r, "s", [], now).reminder.state).toBe("skipped");
     const h = rem({ id: "h", target: "habit", targetId: "h1", timeOfDay: "06:00" });
-    expect(markDone(h, "h:2026-11-06", [], now).reminder.state).toBe("on");
-    expect(markDone(h, "h:2026-11-06", [], now).ledger).toEqual([{ id: "h:2026-11-06", at: now, s: "done" }]);
+    expect(markDone(h, "h:2026-11-06@390", [], now).reminder.state).toBe("on");
+    expect(markDone(h, "h:2026-11-06@390", [], now).ledger).toEqual([{ id: "h:2026-11-06@390", at: now, s: "done" }]);
   });
 });
 

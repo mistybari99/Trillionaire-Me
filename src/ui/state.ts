@@ -152,6 +152,9 @@ export const prefs = {
   /** Reminder settings (all off by default; the parser fails closed). */
   get reminders(): ReminderPrefs { try { return parseReminderPrefs(JSON.parse(get("tm:ui:reminders") ?? "null")); } catch { return { ...DEFAULT_REMINDER_PREFS }; } },
   set reminders(v: ReminderPrefs) { set("tm:ui:reminders", JSON.stringify(parseReminderPrefs(v))); },
+  /** The person tapped "continue" on the one-time calendar line (the phone calendar may copy a reminder to its own account). */
+  get icsConsent(): boolean { return get("tm:ui:icsConsent") === "1"; },
+  set icsConsent(v: boolean) { set("tm:ui:icsConsent", v ? "1" : "0"); },
   /** What was shown, held, done or snoozed in the last 7 days: ids and times only, never titles. */
   get remindersFired(): LedgerEntry[] { try { return parseLedger(JSON.parse(get("tm:ui:remindersFired") ?? "null"), Date.now()); } catch { return []; } },
   set remindersFired(v: LedgerEntry[]) { set("tm:ui:remindersFired", JSON.stringify(parseLedger(v, Date.now()))); },

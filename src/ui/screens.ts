@@ -65,6 +65,7 @@ import { exitConds, gateDueCard, gateReportCard, stageRulesBlock } from "./gateC
 import { portfolioCard } from "./ventureCard";
 import { ventureRows } from "../core/ventures";
 import { backupReminderCard } from "./snapshotsUi";
+import { missedTodayCard, remindRow, remindersTodayCard } from "./remindUi";
 import { overallProgress } from "../core/overallProgress";
 import * as Focus from "../core/focus";
 import * as Habits from "../core/habits";
@@ -322,7 +323,7 @@ export function planScreen(): HTMLElement {
         : isParkedTask(r) ? h("div", {}, h("span", { class: "tag off", "data-parked": r.id }, t("rl.parked.tag", lang, { date: String((r.values["task.parked_on"] as { value?: unknown }).value) })), h("p", { class: "muted" }, t("rl.parked.note", lang)), link("#/journey/reality", "crumb", t("rl.parked.open", lang)))
         : r.values["task.not_true_on"]?.state === "value" ? h("div", {}, h("span", { class: "tag off" }, t("reality.tag", lang, { date: String((r.values["task.not_true_on"] as { value?: unknown }).value) })), h("p", { class: "muted" }, t("reality.note", lang)), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => { storeOf(r).delete(r.id); rerender(); } }, t("plan.task.remove", lang)))
         : h("div", {}, doneBtn(r.id, lang), focusBtn(r.id, lang), h("button", { class: "btn ghost", type: "button", "data-act": "reality-changed", "data-task-id": r.id, style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => markRealityChanged(r.id, lang) }, t("reality.btn", lang)), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => { storeOf(r).delete(r.id); rerender(); } }, t("plan.task.remove", lang)))));
-    if (r.values["task.done_on"]?.state !== "value") el.append(taskEditForm(r, lang));
+    if (r.values["task.done_on"]?.state !== "value") { el.append(remindRow("task", r.id, lang, { planned: cp.plan.placements.some((p) => p.taskId === r.id) }), taskEditForm(r, lang)); }
     return el;
   });
   const byDay = (d: number) => cp.plan.placements.filter((p) => p.day === d).sort((a, b) => a.start - b.start);
@@ -464,6 +465,7 @@ export function moneyScreen(): HTMLElement {
     return h("div", { class: "card", "data-fin": r.id }, h("div", { class: "row" }, h("div", {}, nsTag(r.ns, lang),
       h("h2", { class: "card-h", }, fv.labels.get(r.id) ?? String((r.values["finance.label"] as { value?: unknown })?.value ?? "")),
       h("p", { class: "muted" }, amountView(r)), periodTag(r), rateForm(r),
+      r.values["finance.on"]?.state === "value" && ["expense", "liability"].includes(String((r.values["finance.kind"] as { value?: unknown } | undefined)?.value)) ? remindRow("bill", r.id, lang) : null,
       r.links?.venture && vRows.some((v) => v.id === r.links!.venture) ? h("p", { class: "muted", "data-fin-venture": r.links.venture }, t("ven.money.tag", lang, { v: vRows.find((v) => v.id === r.links!.venture)!.name })) : null),
       h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0;min-height:44px", onclick: () => { storeOf(r).delete(r.id); rerender(); } }, t("money.remove", lang))));
   });
@@ -907,7 +909,7 @@ export function habitsScreen(): HTMLElement {
       h("span", { class: "muted", "data-consistency": "1" }, c.planned ? valueEl(t("habits.month", lang, { d: num(c.done, lang), p: num(c.planned, lang) }), "INFERENCE", lang) : t("habits.noPlanned", lang)));
     return h("div", { class: "card", "data-habit-card": hb.id },
       h("div", { class: "row" }, h("div", {}, nsTag(findRec(hb.id)?.ns ?? activeNs(), lang), h("h2", { class: "card-h", }, hb.title)), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0;min-height:44px", onclick: () => { removeHabit(hb.id); rerender(); } }, t("habits.remove", lang))),
-      main, dots, habitChart(hb, logs, today, lang), habitGoalsRow(hb.id, lang),
+      main, dots, habitChart(hb, logs, today, lang), habitGoalsRow(hb.id, lang), remindRow("habit", hb.id, lang),
       h("p", { class: "muted", "data-per-week": String(perWeek(hb)) }, t("habits.perWeek", lang, { n: num(perWeek(hb), lang) })),
       h("p", { class: "muted", "data-consistency": "1" }, c.planned ? valueEl(t("habits.month", lang, { d: num(c.done, lang), p: num(c.planned, lang) }), "INFERENCE", lang) : t("habits.noPlanned", lang)),
       Habits.restartPlan(hb, logs, today) === "smallest_version" ? h("p", { class: "note", "data-restart": "1" }, t("habits.restart", lang)) : null);
@@ -1031,6 +1033,8 @@ export function today(): HTMLElement {
     deenTodayCard(lang),
     gateDueCard(lang, stageData().passed, "today"),
     realityTodayCard(lang),
+    remindersTodayCard(lang),
+    missedTodayCard(lang),
     homeSummaryCards(lang),
     portfolioCard(lang, "today"),
     nextActionCard(lang),
@@ -1102,7 +1106,7 @@ export function weeklyScreen(): HTMLElement {
     : measures.map(([id, title, v]) => h("section", { class: "card", "data-week": id }, h("h2", { class: "card-h" }, t(title, lang)), cell(id, v)));
   return h("main", {}, link("#/journey", "crumb", `← ${t("journey.title", lang)}`),
     h("h1", {}, t("week.title", lang)),
-    h("p", { class: "sub" }, t("week.intro", lang)),
+    h("p", { class: "sub" }, t("week.intro", lang)), remindRow("review", "weekly", lang),
     h("p", { class: "muted", "data-week-period": "1" }, valueEl(t("review.period", lang, { from: w.from, to: w.to }), "DEMO", lang)),
     viewBar("weekly", lang),
     ...body,

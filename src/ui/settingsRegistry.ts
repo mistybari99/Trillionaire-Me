@@ -42,7 +42,7 @@ export const ROWS: SettingRow[] = [
   R("prayersync", "prayer", "set.row.prayersync", "#/settings/prayer/prayersync", ["automatic", "auto update", "online", "internet", "aladhan", "timetable", "sync"], ["prayerSync"], ["tm:ui:prayerSync"]),
   R("prayerplace", "prayer", "set.row.prayerplace", "#/settings/prayer/prayerplace", ["place", "location", "city", "dhaka", "coordinates", "latitude"], ["prayerCoords"], ["tm:ui:prayerCoords", "tm:ui:prayerCoords:real"]),
   R("prayeralerts", "prayer", "set.row.prayeralerts", "#/settings/prayer/prayeralerts", ["alert", "azan", "adhan", "reminder", "sound", "volume", "notification"], ["prayerAlerts", "prayerFired"], ["tm:ui:prayerAlerts", "tm:ui:prayerFired"]),
-  R("reminders", "prayer", "set.row.reminders", "#/settings/prayer/reminders", ["reminder", "remind", "alert", "notification", "calendar", "ics", "quiet hours", "snooze", "phone"], ["reminders", "remindersFired"], ["tm:ui:reminders", "tm:ui:remindersFired"]),
+  R("reminders", "prayer", "set.row.reminders", "#/settings/prayer/reminders", ["reminder", "remind", "alert", "notification", "calendar", "ics", "quiet hours", "snooze", "phone"], ["reminders", "remindersFired", "icsConsent"], ["tm:ui:reminders", "tm:ui:remindersFired", "tm:ui:icsConsent"]),
 
   R("reminder", "backup", "set.row.reminder", "#/settings/backup/reminder", ["backup", "reminder", "weekly", "remind"], ["backupRemind", "backupRemindChoice", "remindSnoozedOn", "fileBackupAt", "realBackupAt"], ["tm:ui:backupRemind", "tm:ui:remindSnoozedOn", "tm:ui:fileBackupAt", "tm:ui:realBackupAt"]),
   R("storage", "backup", "set.row.storage", "#/settings/backup/storage", ["storage", "persist", "keep data", "safe"], [], []),

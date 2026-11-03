@@ -146,7 +146,7 @@ export interface Slot {
 
 const slot = (rem: Reminder, info: TargetInfo, date: string, minute: number, suffix = ""): Slot | null => {
   const when = dhakaMs(date, minute); if (!Number.isFinite(when)) return null;
-  return { id: `${rem.id}:${date}${suffix}`, reminderId: rem.id, target: rem.target, targetId: rem.targetId, title: info.title, privacy: info.privacy, when, date, minute, snooze: suffix !== "" };
+  return { id: `${rem.id}:${date}@${minute}${suffix}`, reminderId: rem.id, target: rem.target, targetId: rem.targetId, title: info.title, privacy: info.privacy, when, date, minute, snooze: suffix !== "" };
 };
 
 /** Every slot of every reminder whose Dhaka date is in [from, to]. A reminder that is not on, or whose item has no date, gives none. */
@@ -160,14 +160,14 @@ export function expandReminders(list: readonly Reminder[], from: string, to: str
     // A snooze is one extra slot at the new time. The first slot is closed in the ledger when the person snoozes it.
     if (rem.snoozedUntil) {
       const ms = atToMs(rem.snoozedUntil);
-      if (Number.isFinite(ms)) { const x = dateMinuteOf(ms); const s = rem.state === "on" && inRange(x.date) ? slot(rem, info, x.date, x.minute, `~z${x.minute}`) : null; if (s) out.push(s); }
+      if (Number.isFinite(ms)) { const x = dateMinuteOf(ms); const s = rem.state === "on" && inRange(x.date) ? slot(rem, info, x.date, x.minute, "~z") : null; if (s) out.push(s); }
     }
     if (rem.state !== "on") continue;
     const add = (date: string, minute: number) => { if (!inRange(date)) return; const s = slot(rem, info, date, minute); if (s) out.push(s); };
     if (rem.target === "task" || rem.target === "review") {
       if (!rem.at) continue; const ms = atToMs(rem.at); if (!Number.isFinite(ms)) continue; const x = dateMinuteOf(ms); add(x.date, x.minute);
     } else if (rem.target === "plan_step") {
-      if (info.deferred || !info.placed) continue; add(info.placed.date, info.placed.minute);
+      if (info.deferred || !info.placed) continue; add(info.placed.date, Math.max(0, info.placed.minute - prefs.planLead));
     } else if (rem.target === "habit") {
       if (!info.days.length) continue;
       const minute = rem.timeOfDay ? hhmmToMin(rem.timeOfDay) : defMin;

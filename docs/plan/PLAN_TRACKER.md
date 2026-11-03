@@ -347,3 +347,17 @@ Module summary (m-list-status.md, 3 Nov): complete 21, partial 3 (M09, M18, M21)
 Contact sheets: `evidence/looks-sheets/<look>-<screen>.jpg`, looks `light-futuristic`, `ink-paper`, `emerald-obsidian`, `broadsheet`. Each sheet has 8 tiles: top row 100 % text, bottom row 200 % text; in each row English light, English dark, Bangla light, Bangla dark. Report: `evidence/matrix-report.json` (checked by `tests/looks_matrix.test.ts`). Summary and the faults found: `docs/audit/LOOKS_EVIDENCE_2026-11-03.md`.
 Screens (28): today, journey, journey_goal_shot-goal, journey_month, deen, settings, settings_prayer, settings_privacy, settings_backup, diary_plan, journey_boards, journey_backward_shot-goal, more_where, settings_look, settings_data, settings_data_start-real, settings_plan, settings_connections, settings_delete, settings_about, settings_backup_restore, journey_risks, diary_team, diary_ventures, diary_money, habits, journey_goals, more_status.
 Mix text is checked by tests (Mix is Bangla text with English words swapped in, no layout of its own); the screenshots cover English and Bangla.
+
+
+## K. Reminders (3 Nov 2026, `docs/design/reminders-final-decision.md`)
+| Step | What | Evidence | Status |
+|---|---|---|---|
+| 1 | Core engine, FAM-REM, catalog 20, schema 3 (additive) | `src/core/reminders.ts`; `tests/reminders.test.ts`; `tests/schema_migration.test.ts`; commit 9d9be73 | Built+Tested |
+| 2 | .ics export core, neutral titles | `src/core/ics.ts`; `tests/ics.test.ts`; 0e6a1ff | Built+Tested |
+| 3 | Settings section, master off by default, permission only on Allow tap | `src/ui/remindersSettingsUi.ts`; `tests/reminders_settings.test.ts`; e78dea6 | Built+Tested |
+| 4 | Delivery in the existing timer, ledger, notificationclick | `src/ui/reminders.ts`; `public/sw.js`; `tests/reminders_delivery.test.ts`; 11d8ac7 | Built+Tested |
+| 5-6 | Remind me rows (task, plan step, habit, bill, goal, review), due card with Done / Later / Skip | `src/ui/remindUi.ts`; `tests/reminders_ui.test.ts` | Built+Tested |
+| 7 | Calm missed card on Today | `missedTodayCard`; same test file | Built+Tested |
+| 8 | Add to phone calendar (one, next 30 days), one-time consent line | `calendarButton`; same test file | Built+Tested |
+| 9 | Prayer spacing, quiet hours, block hold, overload hold, plan-start switch, hand-over check-in, real-data clear | same test file; `tests/reminders.test.ts` | Built+Tested |
+| 10 | Real phone test (closed-app delivery, calendar alarm, iPhone) | `docs/TODO.md` Part B checklist | OPEN (owner, physical device). Closed-app delivery is never Verified from CI. |

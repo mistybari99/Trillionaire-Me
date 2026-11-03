@@ -9,6 +9,7 @@ import { prefs } from "./state";
 import { canNotify, notifyState, showPhone } from "./prayerAlerts";
 import { notifyText } from "../core/notify";
 import { HHMM, parseReminderPrefs, type ReminderPrefs } from "../core/reminders";
+import { calendarButton } from "./remindUi";
 import { settingsHash } from "./settingsRegistry";
 const rerender = () => window.dispatchEvent(new HashChangeEvent("hashchange"));
 
@@ -29,6 +30,7 @@ export function remindersCard(lang: Locale): HTMLElement {
     h("h3", {}, t("rem.master", lang)),
     seg("data-rem-master", cur.master, "deen.set.off", "deen.set.on", (v) => save({ ...cur, master: v })),
     h("p", { class: "muted" }, t("rem.master.help", lang)));
+  card.append(calendarButton(lang)); // works with the master switch off: it needs no permission
   if (!cur.master) return card;
 
   card.append(h("p", { class: "note", "data-rem-limits": "1" }, `${t("rem.limits", lang)} ${t("rem.limits2", lang)}`));

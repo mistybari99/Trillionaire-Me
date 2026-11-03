@@ -22,7 +22,7 @@ describe("toIcs", () => {
   it("uid is stable for the same reminder and date, and differs per date", () => {
     const a = toIcs([slot()], base), b = toIcs([slot()], { ...base, nowMs: NOW + 99999 });
     expect(a.match(/UID:.*/)![0]).toBe(b.match(/UID:.*/)![0]);
-    expect(toIcs([slot({ id: "r1:2026-11-07" })], base).match(/UID:.*/)![0]).not.toBe(a.match(/UID:.*/)![0]);
+    expect(toIcs([slot({ date: "2026-11-07" })], base).match(/UID:.*/)![0]).not.toBe(a.match(/UID:.*/)![0]);
     expect(a).toContain("UID:r1:2026-11-06@trillionaire-me");
   });
   it("escapes commas, semicolons, backslashes and newlines in titles", () => {
