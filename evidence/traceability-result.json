@@ -1,6 +1,6 @@
 {
-  "generated": "2026-10-24T09:30:47.183Z",
-  "totalTests": 259,
+  "generated": "2026-11-03T01:20:00.917Z",
+  "totalTests": 1649,
   "failed": 0,
   "results": {
     "TM-TST-006": {
@@ -10,7 +10,7 @@
         "tests/g1.test.ts",
         "evidence/screenshot-report.json"
       ],
-      "tests": 5,
+      "tests": 7,
       "e2e": 0,
       "evidenceOk": true,
       "finalOutcome": "Pass"
@@ -39,13 +39,15 @@
     },
     "TM-TST-021": {
       "outcome": "Pass",
-      "scope": "G1 automated: 1000-case property test + browser e2e (blank and 'don't know' never stored as 0)",
+      "scope": "G1 automated: 1000-case property test + browser e2e (blank and 'don't know' never stored as 0); goal form blank horizon and B9 plan blank inputs stay unset, never 0 (unit)",
       "artifacts": [
         "tests/g1.test.ts",
         "tools/e2e.mjs",
-        "evidence/e2e-report.json"
+        "evidence/e2e-report.json",
+        "tests/goal_form.test.ts",
+        "tests/b9_plan_flow.test.ts"
       ],
-      "tests": 7,
+      "tests": 12,
       "e2e": 2,
       "evidenceOk": true,
       "finalOutcome": "Pass"
@@ -157,11 +159,13 @@
     },
     "TM-TST-161": {
       "outcome": "Partial",
-      "scope": "Bangla glossary (30 terms) + field help exist. Human reviewer sign-off NOT done",
+      "scope": "Bangla glossary (30 terms) + field help exist. Human reviewer sign-off NOT done; every key present and non-empty in en, bn and mix (unit parity). Settings strings: en/bn/mix parity, Latin digits, loanword avoid list",
       "artifacts": [
-        "src/catalog/glossary.ts"
+        "src/catalog/glossary.ts",
+        "tests/i18n_modes.test.ts",
+        "tests/settings_a11y_i18n.test.ts"
       ],
-      "tests": 1,
+      "tests": 8,
       "e2e": 0,
       "evidenceOk": true,
       "finalOutcome": "Partial"
@@ -173,19 +177,7 @@
         "tests/g3.test.ts",
         "src/core/planner.ts"
       ],
-      "tests": 6,
-      "e2e": 0,
-      "evidenceOk": true,
-      "finalOutcome": "Pass"
-    },
-    "TM-TST-037": {
-      "outcome": "Pass",
-      "scope": "G3 core: 200 random split/merge/delete ops, every task still reaches its goal, 0 orphans",
-      "artifacts": [
-        "tests/g3.test.ts",
-        "src/core/goals.ts"
-      ],
-      "tests": 3,
+      "tests": 1,
       "e2e": 0,
       "evidenceOk": true,
       "finalOutcome": "Pass"
@@ -237,6 +229,305 @@
         "tools/e2e.mjs"
       ],
       "tests": 6,
+      "e2e": 0,
+      "evidenceOk": true,
+      "finalOutcome": "Partial"
+    },
+    "TM-TST-053": {
+      "outcome": "Partial",
+      "scope": "O7 own options + saved offline search list: save, cap 20 per field, add-own, source snapshot kept for offline reuse, secrets refused. Select/compare/customize/reject/defer and replace-history not covered",
+      "artifacts": [
+        "tests/o7_own_saved_lists.test.ts"
+      ],
+      "tests": 12,
+      "e2e": 0,
+      "evidenceOk": true,
+      "finalOutcome": "Partial"
+    },
+    "TM-TST-146": {
+      "outcome": "Partial",
+      "scope": "Research contract via Wikipedia provider: 2-3 options with source and date, HTTP error never crashes, saved term read first. UI select/compare/reject/defer actions not covered; research contract: 0 calls without click, <2 results invents nothing (unit)",
+      "artifacts": [
+        "tests/wikipedia.test.ts",
+        "tests/research.test.ts"
+      ],
+      "tests": 9,
+      "e2e": 0,
+      "evidenceOk": true,
+      "finalOutcome": "Partial"
+    },
+    "TM-TST-165": {
+      "outcome": "Partial",
+      "scope": "O5 scoring and path fit keep unknown as unknown (not_enough_data, no guess, no 0). 'incomplete' label on early path suggestions and the full assessment flow not covered",
+      "artifacts": [
+        "tests/o5_assessment_fit.test.ts"
+      ],
+      "tests": 11,
+      "e2e": 0,
+      "evidenceOk": true,
+      "finalOutcome": "Partial"
+    },
+    "TM-TST-041": {
+      "outcome": "Pass",
+      "scope": "Automated: banned-word scan over every key in en, bn and mix; habits screen after two missed days shows only a kind restart offer (no red, no run-count) and creates no task, log or reminder (no catch-up backlog). The word list is a fixed list, so a human copy review is still advised",
+      "artifacts": [
+        "tests/copy_review.test.ts",
+        "tests/focus_habits_cards_ui.test.ts"
+      ],
+      "tests": 8,
+      "e2e": 0,
+      "evidenceOk": true,
+      "finalOutcome": "Pass"
+    },
+    "TM-TST-043": {
+      "outcome": "Partial",
+      "scope": "O6 90-day review: no records gives 'not enough data' (null, never 0); only in-window records counted. Weekly review itself not covered",
+      "artifacts": [
+        "tests/o6_reality_review_templates.test.ts"
+      ],
+      "tests": 5,
+      "e2e": 0,
+      "evidenceOk": true,
+      "finalOutcome": "Partial"
+    },
+    "TM-TST-088": {
+      "outcome": "Partial",
+      "scope": "G2 backup/restore round-trip into a clean database; damaged or tampered file rejected; demo backup never restored as real; newer schema refused. Device-level checksum and attachments not covered. Settings redesign: restore shows a preview, saves a Before restore copy, replaces without emptying first and rolls back on failure, Go back for 7 days, PIN asked again, real data without the tick writes nothing",
+      "artifacts": [
+        "tests/g2.test.ts",
+        "tests/restore_safety.test.ts",
+        "tests/restore_ui.test.ts",
+        "tests/backup_page.test.ts"
+      ],
+      "tests": 5,
+      "e2e": 0,
+      "evidenceOk": true,
+      "finalOutcome": "Partial"
+    },
+    "TM-TST-116": {
+      "outcome": "Pass",
+      "scope": "Automated: no shame/judging words in any key (en, bn, mix) and in the rendered stuck screen in overload; overload modes add 0 tasks (scheduler minimum_week and pause, stuck flow, browser e2e). Word list is fixed; Bangla wording still awaits reviewer sign-off (TM-TST-161)",
+      "artifacts": [
+        "tests/copy_review.test.ts",
+        "tests/r5_stuck_log.test.ts",
+        "tests/g3.test.ts",
+        "tests/stuck.test.ts",
+        "tools/e2e.mjs",
+        "evidence/e2e-report.json"
+      ],
+      "tests": 10,
+      "e2e": 0,
+      "evidenceOk": true,
+      "finalOutcome": "Pass"
+    },
+    "TM-TST-117": {
+      "outcome": "Partial",
+      "scope": "Automated part: focus rings, 44px targets, skip link, label and heading checks on every route in en and bn. TalkBack, 200% font on device and small-viewport device runs NOT done",
+      "artifacts": [
+        "tests/a11y.test.ts"
+      ],
+      "tests": 65,
+      "e2e": 0,
+      "evidenceOk": true,
+      "finalOutcome": "Partial"
+    },
+    "TM-TST-148": {
+      "outcome": "Partial",
+      "scope": "Habits: two missed days gives a kind restart offer, never red or run-count copy; no run-count or score function. Cue/frequency/goal link not covered",
+      "artifacts": [
+        "tests/focus_habits_cards_ui.test.ts",
+        "tests/focus_habits_cards.test.ts"
+      ],
+      "tests": 11,
+      "e2e": 0,
+      "evidenceOk": true,
+      "finalOutcome": "Partial"
+    },
+    "TM-TST-151": {
+      "outcome": "Partial",
+      "scope": "Sensitive topics (emotions, health, money, deen) carry a sensitive flag; app links are real routes. Advice-boundary note and expert-review flag on each finance/legal/tax/medical/religious screen NOT covered",
+      "artifacts": [
+        "tests/topics_rewards.test.ts"
+      ],
+      "tests": 1,
+      "e2e": 0,
+      "evidenceOk": true,
+      "finalOutcome": "Partial"
+    },
+    "TM-TST-155": {
+      "outcome": "Partial",
+      "scope": "Lock-screen text hidden by default for worship, health, money and third-party; per-category 'Show details' opt-in; neutral en/bn/mix text. On-device lock-screen check, app lock and passphrase recovery NOT done (Owner). Settings redesign: Privacy page read-out computed from state, Withdraw revokes only, Show asks first, typed-word Delete page",
+      "artifacts": [
+        "src/core/notify.ts",
+        "tests/o8_notify_privacy.test.ts",
+        "tests/notify.test.ts",
+        "tests/privacy_page.test.ts",
+        "tests/delete_page.test.ts"
+      ],
+      "tests": 13,
+      "e2e": 0,
+      "evidenceOk": true,
+      "finalOutcome": "Partial"
+    },
+    "TM-TST-158": {
+      "outcome": "Partial",
+      "scope": "Horizon view places goals from stored data; unset goals kept apart; empty horizons are empty, not zero. Gantt, kanban, resource and readiness maps and text-equivalent check NOT covered",
+      "artifacts": [
+        "tests/horizon.test.ts"
+      ],
+      "tests": 2,
+      "e2e": 0,
+      "evidenceOk": true,
+      "finalOutcome": "Partial"
+    },
+    "TM-TST-039": {
+      "outcome": "Partial",
+      "scope": "Planner: a task with an unmet prerequisite is not placed and is deferred as waiting_for_prerequisite; it follows its prerequisite, cycles and missing ids are safe. About 8 cases, not 20 fixtures; the screen shows the link but not the word blocked",
+      "artifacts": [
+        "tests/m_dependency.test.ts"
+      ],
+      "tests": 8,
+      "e2e": 0,
+      "evidenceOk": true,
+      "finalOutcome": "Partial"
+    },
+    "TM-TST-040": {
+      "outcome": "Partial",
+      "scope": "Automated: 200 random plans (and 100 in g3.test.ts) place 0 steps on hard blocks. The hand-placement override code was removed on 2 Nov 2026 (nothing in the app used it); no screen offers an override, so only the 'scheduler never uses hard blocks' half is evidenced",
+      "artifacts": [
+        "tests/g3.test.ts"
+      ],
+      "tests": 1,
+      "e2e": 0,
+      "evidenceOk": true,
+      "finalOutcome": "Partial"
+    },
+    "TM-TST-047": {
+      "outcome": "Partial",
+      "scope": "Overload adds 0 tasks: minimum_week is a subset of the normal plan, pause places nothing (50 plans), tired/overloaded never offers a tiny step (500 answer sets), choosing Minimum week adds no task (unit and browser). Reduce Scope and Resume Gently are not offered or tested",
+      "artifacts": [
+        "tests/g3.test.ts",
+        "tests/stuck.test.ts",
+        "tools/e2e.mjs",
+        "evidence/e2e-report.json"
+      ],
+      "tests": 3,
+      "e2e": 0,
+      "evidenceOk": true,
+      "finalOutcome": "Partial"
+    },
+    "TM-TST-084": {
+      "outcome": "Partial",
+      "scope": "Headless Chromium with the network off: shell, status screen and cold-start screens open, every saved file readable, service worker source checks. NOT a real-device airplane run (owner task O1). Settings pages open offline (e2e SET-OFFLINE, SET-200, SET-SEARCH)",
+      "artifacts": [
+        "tests/precache.test.ts",
+        "tools/e2e.mjs",
+        "evidence/e2e-report.json",
+        "tests/settings_search.test.ts",
+        "tests/settings_shell.test.ts"
+      ],
+      "tests": 4,
+      "e2e": 0,
+      "evidenceOk": true,
+      "finalOutcome": "Partial"
+    },
+    "TM-TST-089": {
+      "outcome": "Partial",
+      "scope": "Unit: an existing version-1 IndexedDB database keeps its records after the upgrade. No failed-migration case and no device",
+      "artifacts": [
+        "tests/snapshots.test.ts"
+      ],
+      "tests": 1,
+      "e2e": 0,
+      "evidenceOk": true,
+      "finalOutcome": "Partial"
+    },
+    "TM-TST-093": {
+      "outcome": "Partial",
+      "scope": "Unit: no consent means real forms save nothing and real writes are refused; demo works without consent; missing, broken or old consent is none; grant then revoke. A fuller check that every unrelated feature still works is not written",
+      "artifacts": [
+        "tests/real_entry.test.ts",
+        "tests/real_data.test.ts"
+      ],
+      "tests": 6,
+      "e2e": 0,
+      "evidenceOk": true,
+      "finalOutcome": "Partial"
+    },
+    "TM-TST-119": {
+      "outcome": "Partial",
+      "scope": "Unit: demo mode shows no real data and real mode shows no demo data on any screen; totals never add demo and real. KPI reconciliation to source records is covered only for the money cards, not all KPIs",
+      "artifacts": [
+        "tests/data_mode.test.ts"
+      ],
+      "tests": 5,
+      "e2e": 0,
+      "evidenceOk": true,
+      "finalOutcome": "Partial"
+    },
+    "TM-TST-126": {
+      "outcome": "Partial",
+      "scope": "Unit: every facility is off by default with a null adapter, no network call while off, enabling needs approval and states cost, withdraw switches it off, connected stubs call nothing. No real integration exists yet, so scoped revoke of a live integration is untested",
+      "artifacts": [
+        "tests/connections.test.ts"
+      ],
+      "tests": 10,
+      "e2e": 0,
+      "evidenceOk": true,
+      "finalOutcome": "Partial"
+    },
+    "TM-TST-015": {
+      "outcome": "Pass",
+      "scope": "Automated: 20 generated plans needing more than the weekly capacity are flagged infeasible by feasibility() before schedule() runs; fits, unknown capacity and unknown estimates are not flagged; calm notice on the plan screen removes nothing",
+      "artifacts": [
+        "tests/infeasible_plan.test.ts"
+      ],
+      "tests": 3,
+      "e2e": 0,
+      "evidenceOk": true,
+      "finalOutcome": "Pass"
+    },
+    "TM-TST-005": {
+      "outcome": "Partial",
+      "scope": "Automated: runway returns baseline_needed with no asset line or an unknown asset amount, ignores business and demo lines, and the Money screen shows a prompt (never 0). Emergency-fund and investment calculators do not exist, so the full criterion is not proven",
+      "artifacts": [
+        "tests/baseline_runway.test.ts"
+      ],
+      "tests": 4,
+      "e2e": 0,
+      "evidenceOk": true,
+      "finalOutcome": "Partial"
+    },
+    "TM-TST-007": {
+      "outcome": "Partial",
+      "scope": "Automated: 20 of 20 expired items classified stale and the badge says Old, never recent; unknown dates are unknown. The badge is wired to Wikipedia option cards but the full card flow is not rendered in this test",
+      "artifacts": [
+        "tests/stale_badge.test.ts"
+      ],
+      "tests": 5,
+      "e2e": 0,
+      "evidenceOk": true,
+      "finalOutcome": "Partial"
+    },
+    "TM-TST-009": {
+      "outcome": "Pass",
+      "scope": "Automated: 20 paused/retired goals with passed dates give 0 reminders while the same goals active give 20; Today shows no reminder after pausing and the goal page (title, progress, status) stays readable; demo goals never remind in real mode",
+      "artifacts": [
+        "tests/goal_status_reminders.test.ts"
+      ],
+      "tests": 4,
+      "e2e": 0,
+      "evidenceOk": true,
+      "finalOutcome": "Pass"
+    },
+    "TM-TST-153": {
+      "outcome": "Partial",
+      "scope": "Automated: CSV export reads back with every record and value, unknown stays unknown, demo and real in separate files, health/worship excluded, secrets redacted, formula cells neutralised. CSV re-import round-trips a small fixture (values, unknown states, formula-guarded text), refuses mixed or restricted files, needs the real consent tick, skips existing ids, and the last import can be undone. A data dictionary page lists every catalog field. Still open: PDF export, a downloadable dictionary file, links between records (not in CSV), and a larger fixture, so the full criterion is not proven",
+      "artifacts": [
+        "tests/csv_export.test.ts",
+        "tests/csv_import.test.ts"
+      ],
+      "tests": 7,
       "e2e": 0,
       "evidenceOk": true,
       "finalOutcome": "Partial"

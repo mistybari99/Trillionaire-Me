@@ -1,0 +1,21 @@
+{
+  "viewport": "360x740",
+  "generated": "2026-11-03T01:15:10.432Z",
+  "combos": 32,
+  "screens": 320,
+  "problems": 0,
+  "bad": [],
+  "routes": [
+    "today",
+    "journey",
+    "journey/goal/shot-goal",
+    "journey/month",
+    "deen",
+    "settings",
+    "settings/prayer",
+    "settings/privacy",
+    "settings/backup",
+    "diary/plan"
+  ],
+  "matrix": "4 looks x en/bn x light/dark x 100%/200% text"
+}

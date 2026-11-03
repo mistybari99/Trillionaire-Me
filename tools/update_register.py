@@ -40,5 +40,6 @@ sm = wb["Summary"]
 if sm["A46"].value and "by design at specification stage" in str(sm["A46"].value):
     sm["A46"].value = "Note: origin counts overlap (a row can carry two tags). 'Implemented (verified)' counts only rows whose linked automated checks passed in a real run (see Change Log); it was 0 in the v2.0 original."
 wb["Change Log"].append(["Docs", "1 Nov 2026: copy only. Decisions sheet D-B now APPROVED (25 Oct) and D-E updated (Light/Colorful/Futuristic default); Start Here and Summary note no longer say nothing is implemented. Original v2_0 file untouched."])
+wb["Change Log"].append(["Docs", "3 Nov 2026: copy only. Evidence rerun after Settings gaps, automatic prayer times, hosting files and CI, welcome back, Hijri, text-size fix and update banner. Owner-demand audit summary refreshed in docs/audit/OWNER_DEMAND_AUDIT_2026-11-03.md (DONE 35, PARTIAL 57, MISSING 40 of 132). Screenshot matrix (4 looks x EN/BN x light/dark x 100/200 percent text, 320 screens) in evidence/matrix-report.json: 0 problems. Rows stay Partial where an owner or device step is pending."])
 wb.save(dst)
 print("updated", len(req_of), "requirement rows")

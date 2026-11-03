@@ -69,7 +69,7 @@ describe("CI workflow and evidence hygiene", () => {
     expect(readFileSync("tools/evidence.mjs", "utf8")).toContain("TM_WRITE_EVIDENCE");
   });
   it("a normal test run leaves tracked evidence files unchanged", () => {
-    if (!existsSync(".git")) return;
+    if (!existsSync(".git") || process.env.TM_WRITE_EVIDENCE === "1") return; // the evidence tool rewrites evidence on purpose
     const before = execFileSync("git", ["status", "--porcelain", "--", "evidence/catalog-report.json"]).toString();
     execFileSync("npx", ["vitest", "run", "tests/g1.test.ts"], { stdio: "ignore" });
     expect(execFileSync("git", ["status", "--porcelain", "--", "evidence/catalog-report.json"]).toString()).toBe(before);
