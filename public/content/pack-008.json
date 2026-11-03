@@ -42,7 +42,7 @@
         "en": "Too many goals at once"
       },
       "how": {
-        "bn": "অনেক গোল একসাথে ধরলে কোনোটিতেই পর্যাপ্ত সময় থাকে না। এখন একটা-দুটো বাছুন, বাকিগুলো ‘পরে’ লিস্টে রাখুন।",
+        "bn": "অনেক গোল একসাথে ধরলে কোনোটিতেই যথেষ্ট সময় থাকে না। এখন একটা-দুটো বাছুন, বাকিগুলো ‘পরে’ লিস্টে রাখুন।",
         "en": "With many goals at once, none gets enough time. Pick one or two now and keep the rest on a “later” list."
       },
       "diagram": {
@@ -349,7 +349,7 @@
         "meaning"
       ],
       "title": {
-        "bn": "ভারসাম্য মানে সমান ভাগ নয়",
+        "bn": "ব্যালেন্স মানে সমান ভাগ নয়",
         "en": "Balance does not mean equal parts"
       },
       "how": {
@@ -401,7 +401,7 @@
         "en": "Keep worship plans small and private"
       },
       "how": {
-        "bn": "নিজের সামর্থ্য অনুযায়ী ছোট একটি নিয়মিত অভ্যাস ঠিক করুন, যেমন নির্দিষ্ট সময়ে একটি কাজ। এটা শুধু আপনার স্মরণ করার সহায়ক; কোনো গণনা বা তুলনা নেই।",
+        "bn": "নিজের সাধ্য মতো ছোট একটি নিয়মিত অভ্যাস ঠিক করুন, যেমন নির্দিষ্ট সময়ে একটি কাজ। এটা শুধু আপনার মনে করিয়ে দেয়; কোনো গণনা বা তুলনা নেই।",
         "en": "Pick one small regular habit that fits your ability, at a set time. It is only a reminder aid for you; nothing is counted or compared."
       },
       "diagram": {
@@ -546,7 +546,7 @@
         "en": "Pause a rushed decision"
       },
       "how": {
-        "bn": "বড় সিদ্ধান্তে অন্তত একটি রাত সময় নিন। তখন লিখুন কী জানা আছে, কী জানা নেই, আর ফেরানো যাবে কি না।",
+        "bn": "বড় সিদ্ধান্তে অন্তত একটি রাত সময় নিন। তখন লিখুন কী জানা আছে, কী জানা নেই, আর ফিরিয়ে নেওয়া যাবে কি না।",
         "en": "For a big decision, take at least one night. Write what you know, what you do not know, and whether it can be undone."
       },
       "diagram": {
@@ -566,7 +566,7 @@
         "feedback"
       ],
       "title": {
-        "bn": "ভদ্রভাবে মতামত চাওয়া",
+        "bn": "ভদ্রভাবে মতামত নেওয়া",
         "en": "Asking for feedback kindly"
       },
       "how": {

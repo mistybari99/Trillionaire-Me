@@ -18,7 +18,7 @@
         "en": "Measuring is not judging"
       },
       "how": {
-        "bn": "মাপার উদ্দেশ্য শেখা, নম্বর দেওয়া নয়। একটা-দুটো সহজ বিষয় দেখুন, যেমন কতদিন কাজ হলো বা কী আটকাল। যা মাপা যায়নি তা ‘জানি না’ রাখুন।",
+        "bn": "মাপার কারণ শেখা, নম্বর দেওয়া নয়। একটা-দুটো সহজ বিষয় দেখুন, যেমন কতদিন কাজ হলো বা কী আটকাল। যা মাপা যায়নি তা ‘জানি না’ রাখুন।",
         "en": "The aim of measuring is to learn, not to give marks. Watch one or two simple things, such as which days work happened or what got in the way. Keep unmeasured things as “don't know”."
       },
       "diagram": {
@@ -231,7 +231,7 @@
         "en": "Learn more about confidence"
       },
       "how": {
-        "bn": "‘আত্মবিশ্বাস’ ও ‘সিরিয়ালে সংস্পর্শ’ (ধাপে ধাপে ভয়ের মুখোমুখি হওয়া) নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অতিরিক্ত ভয় বা দুশ্চিন্তা হলে যোগ্য কাউন্সেলরের কাছে যান। রিভিউয়ারের অপেক্ষায়।",
+        "bn": "‘আত্মবিশ্বাস’ ও ‘একটু একটু করে ভয়ের মুখোমুখি হওয়া’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অতিরিক্ত ভয় বা দুশ্চিন্তা হলে যোগ্য কাউন্সেলরের কাছে যান। রিভিউয়ারের অপেক্ষায়।",
         "en": "Read general explainers on “self-confidence” and “gradual exposure” (facing fears step by step). For overwhelming fear or worry, see a qualified counsellor. Reviewer pending."
       },
       "diagram": {
@@ -251,11 +251,11 @@
         "priorities"
       ],
       "title": {
-        "bn": "জীবনের ভারসাম্য মানে কী",
+        "bn": "জীবনের ব্যালেন্স মানে কী",
         "en": "What life balance means"
       },
       "how": {
-        "bn": "ভারসাম্য মানে সব দিকে সমান সময় নয়। মানে, যা আপনার কাছে গুরুত্বপূর্ণ তার জন্য জায়গা রাখা। কোনো সময় কাজ বেশি, কোনো সময় পরিবার বেশি, তাতে সমস্যা নেই।",
+        "bn": "ব্যালেন্স মানে সব দিকে সমান সময় নয়। মানে, যা আপনার কাছে গুরুত্বপূর্ণ তার জন্য জায়গা রাখা। কোনো সময় কাজ বেশি, কোনো সময় পরিবার বেশি, তাতে সমস্যা নেই।",
         "en": "Balance does not mean equal time everywhere. It means making room for what matters to you. Some seasons need more work, others more family, and that is fine."
       },
       "diagram": {
@@ -323,16 +323,16 @@
         "energy"
       ],
       "title": {
-        "bn": "ভারসাম্যে যা এড়িয়ে চলবেন",
+        "bn": "ব্যালেন্সে যা এড়িয়ে চলবেন",
         "en": "Balance slips to avoid"
       },
       "how": {
-        "bn": "নিখুঁত ভারসাম্য খুঁজবেন না। বিশ্রামকে সবার শেষে রাখবেন না। অন্যের জীবনের সাথে নিজেরটা মেলাবেন না। সবকিছুতে হ্যাঁ বললে নিজের জন্য সময় থাকে না।",
+        "bn": "নিখুঁত ব্যালেন্স খুঁজবেন না। বিশ্রামকে সবার শেষে রাখবেন না। অন্যের জীবনের সাথে নিজেরটা মেলাবেন না। সবকিছুতে হ্যাঁ বললে নিজের জন্য সময় থাকে না।",
         "en": "Do not chase perfect balance. Do not put rest last. Do not compare your life with others'. Saying yes to everything leaves no time for yourself."
       },
       "diagram": {
         "type": "matrix",
-        "bn": "নিখুঁত ভারসাম্য: এই মাসে একটা|বিশ্রাম সবার শেষে: আগে বসাই|তুলনা: নিজের দাম দেখি|সবকিছুতে হ্যাঁ: ‘না’ বলি",
+        "bn": "নিখুঁত ব্যালেন্স: এই মাসে একটা|বিশ্রাম সবার শেষে: আগে বসাই|তুলনা: নিজের দাম দেখি|সবকিছুতে হ্যাঁ: ‘না’ বলি",
         "en": "Perfect balance: one thing this month|Rest last: place it early|Comparing: own values|Yes to all: say no"
       },
       "appLink": "#/diary/plan",
@@ -347,11 +347,11 @@
         "learning"
       ],
       "title": {
-        "bn": "ভারসাম্য নিয়ে আরও শিখতে",
+        "bn": "ব্যালেন্স নিয়ে আরও শিখতে",
         "en": "Learn more about balance"
       },
       "how": {
-        "bn": "‘কাজ-জীবনের ভারসাম্য’ ও ‘জীবনের অর্থ’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। নিজের মূল্যবোধ ও পরিবারের সাথে আলোচনা করুন। এটা পরামর্শ নয়; রিভিউয়ারের অপেক্ষায়।",
+        "bn": "‘কাজ-জীবনের ব্যালেন্স’ ও ‘জীবনের অর্থ’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। নিজের মূল্যবোধ ও পরিবারের সাথে আলোচনা করুন। এটা পরামর্শ নয়; রিভিউয়ারের অপেক্ষায়।",
         "en": "Read general explainers on “work-life balance” and “meaning in life”. Talk about your own values with family. This is not advice; reviewer pending."
       },
       "diagram": {

@@ -7,7 +7,7 @@ import { loadAll, isProtected, applyWordRules, toLatinDigits, hasPlaceholders, T
 
 const rules = JSON.parse(readFileSync("tools/bangla_plain_rules.json", "utf8"));
 const banned = JSON.parse(readFileSync("tests/fixtures/bangla_banned.json", "utf8"));
-const log: Array<{ group: string; file: string; key: string | null; before: string; after: string; protected?: boolean }> = existsSync("docs/design/bangla-plain-change-log.json") ? JSON.parse(readFileSync("docs/design/bangla-plain-change-log.json", "utf8")) : [];
+const log: Array<{ rules?: string[]; group: string; file: string; key: string | null; before: string; after: string; protected?: boolean }> = existsSync("docs/design/bangla-plain-change-log.json") ? JSON.parse(readFileSync("docs/design/bangla-plain-change-log.json", "utf8")) : [];
 const applied = new Set(log.map((l) => l.group));
 type Seg = { file: string; key: string | null; text: string };
 const segs: Seg[] = loadAll(".");
@@ -81,7 +81,7 @@ describe("Bangla plain: protected strings", () => {
     for (const l of log.filter((x) => x.protected)) {
       // spelling rules, plus the wording swaps of pass 2 that are marked allowProtected (সাথে, বা, অঙ্ক, এটা, দরকার, রিভিউয়ার, হিসাব) and never change meaning
       const spelled = applyWordRules(l.before, rules.rules, l.group, { file: l.file, key: l.key, line: undefined, protected: true }).text;
-      const allowed = rules.rewrites.some((r: { file: string; key: string; allowProtected?: boolean }) => r.file === l.file && r.key === l.key && r.allowProtected);
+      const allowed = rules.rewrites.some((r: { id: string; file: string; key: string; allowProtected?: boolean }) => r.allowProtected && ((r.file === l.file && r.key === l.key) || (l as { rules?: string[] }).rules?.includes(r.id)));
       if (!allowed) expect(l.after, `${l.file}#${l.key}`).toBe(spelled);
     }
   });

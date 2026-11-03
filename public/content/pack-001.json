@@ -28,7 +28,7 @@
       "id": "p1-mo5",
       "topic": "money",
       "tags": ["money", "spending", "focus"],
-      "title": { "bn": "24 ঘণ্টার বিরতি", "en": "The 24-hour pause" },
+      "title": { "bn": "24 ঘণ্টা থেমে ভাবুন", "en": "The 24-hour pause" },
       "how": { "bn": "বড় বা আগে থেকে ঠিক না করা কেনাকাটার আগে 24 ঘণ্টা অপেক্ষা করুন। তারপর দেখুন এটা দরকার, নাকি শুধু ইচ্ছা।", "en": "Before a big or unplanned purchase, wait 24 hours. Then check whether it is a need or just a wish." },
       "diagram": { "type": "cycle", "bn": "ইচ্ছা জাগে|24 ঘণ্টা অপেক্ষা|দরকার না ইচ্ছা দেখি|সিদ্ধান্ত নিই", "en": "Urge comes|Wait 24 hours|Need or wish?|Decide" },
       "appLink": "#/diary/money"
@@ -38,7 +38,7 @@
       "topic": "money",
       "tags": ["money", "savings", "emergency"],
       "title": { "bn": "হঠাৎ খরচের জন্য আলাদা খাম", "en": "A separate place for surprise costs" },
-      "how": { "bn": "হঠাৎ খরচের জন্য আলাদা একটা জায়গা রাখুন, যেমন আলাদা হিসাব বা খাম। ছোট অঙ্ক দিয়ে শুরু করুন এবং নিয়মিত জমা দিন। এটা জরুরি খরচের জন্য, খেলার জন্য নয়।", "en": "Keep a separate place for sudden costs, such as a separate account or envelope. Start small and add regularly. It is for emergencies, not for fun." },
+      "how": { "bn": "হঠাৎ খরচের জন্য আলাদা একটা জায়গা রাখুন, যেমন আলাদা হিসাব বা খাম। ছোট অঙ্ক দিয়ে শুরু করুন এবং নিয়মিত জমান। এটা জরুরি খরচের জন্য, শখের জন্য নয়।", "en": "Keep a separate place for sudden costs, such as a separate account or envelope. Start small and add regularly. It is for emergencies, not for fun." },
       "diagram": { "type": "steps", "bn": "আলাদা জায়গা|ছোট শুরু|নিয়মিত জমা|শুধু জরুরি খরচে", "en": "Separate place|Start small|Add regularly|Only for emergencies" },
       "appLink": "#/diary/money"
     },
@@ -55,8 +55,8 @@
       "id": "p1-mo8",
       "topic": "money",
       "tags": ["money", "budget", "fun"],
-      "title": { "bn": "খেলার টাকার নির্দিষ্ট সীমা", "en": "A fixed fun-money limit" },
-      "how": { "bn": "মাসে নিজের জন্য একটা নির্দিষ্ট ‘খেলার টাকা’ রাখুন। সীমা শেষ হলে সেটাই নিয়ম। দরকারের খরচ আগে মিটিয়ে নিন, তারপর বাকিটা খোলাখুলি রাখুন।", "en": "Keep one fixed monthly “fun money” amount. When the limit is reached, that is the rule. Pay needs first, then keep the rest open and visible." },
+      "title": { "bn": "শখের টাকার সীমা", "en": "A fixed fun-money limit" },
+      "how": { "bn": "মাসে নিজের জন্য একটা ‘শখের টাকা’ রাখুন। সীমা শেষ হলে সেটাই নিয়ম। দরকারের খরচ আগে মিটিয়ে নিন, তারপর বাকিটা খোলাখুলি রাখুন।", "en": "Keep one fixed monthly “fun money” amount. When the limit is reached, that is the rule. Pay needs first, then keep the rest open and visible." },
       "diagram": { "type": "steps", "bn": "সীমা ঠিক করি|সীমা শেষ হলে থামি|আগে দরকারের খরচ|মাসে একবার দেখি", "en": "Set the limit|Stop when it is used up|Needs come first|Check monthly" },
       "appLink": "#/diary/money"
     },
@@ -92,7 +92,7 @@
       "topic": "time",
       "tags": ["time", "focus", "batching"],
       "title": { "bn": "ছোট কাজ একসাথে করুন", "en": "Batch small tasks together" },
-      "how": { "bn": "ফোন কল, মেসেজের উত্তর, ছোট হিসাব, এগুলো আলাদা আলাদা না করে একটা সময়ে একসাথে করুন। প্রসঙ্গ বদলালে যে সময় যায়, সেটা বাঁচবে।", "en": "Do calls, message replies and small admin in one block, not one by one. Switching topics wastes time; batching saves it." },
+      "how": { "bn": "ফোন কল, মেসেজের উত্তর, ছোট হিসাব, এগুলো আলাদা আলাদা না করে একটা সময়ে একসাথে করুন। এক কাজ থেকে আরেক কাজে গেলে যে সময় যায়, সেটা বাঁচবে।", "en": "Do calls, message replies and small admin in one block, not one by one. Switching topics wastes time; batching saves it." },
       "diagram": { "type": "cycle", "bn": "একই ধরনের কাজ জমাই|একটা ব্লকে করি|ছোট ব্রেক|পরের ব্লক", "en": "Collect similar tasks|Do them in one block|Short break|Next block" },
       "appLink": "#/diary/plan"
     },
@@ -119,7 +119,7 @@
       "topic": "time",
       "tags": ["time", "delegation", "people"],
       "title": { "bn": "কাজ অন্যকে দিন", "en": "Hand off what others can do" },
-      "how": { "bn": "নিজে না করলেও চলে এমন কাজ কাউকে দিন, বা স্পষ্ট নির্দেশ লিখে দিন। কাজ দেওয়ার সময় বলুন কী, কখন, আর কেমন হলে ভালো হয়।", "en": "Give away tasks you do not need to do yourself, or write clear instructions. When delegating, say what, by when, and what good looks like." },
+      "how": { "bn": "নিজে না করলেও চলে এমন কাজ কাউকে দিন, বা পরিষ্কার করে লিখে দিন। কাজ দেওয়ার সময় বলুন কী, কখন, আর কেমন হলে ভালো হয়।", "en": "Give away tasks you do not need to do yourself, or write clear instructions. When delegating, say what, by when, and what good looks like." },
       "diagram": { "type": "steps", "bn": "কাজ বাছি|কাকে দেব?|কী, কখন, কেমন|পরে খোঁজ নিই", "en": "Pick the task|Who can do it?|What, when, how good|Follow up" },
       "appLink": "#/diary/plan"
     },
@@ -146,7 +146,7 @@
       "topic": "habits",
       "tags": ["habits", "environment"],
       "title": { "bn": "সংকেত একই রাখুন", "en": "Keep the cue the same" },
-      "how": { "bn": "অভ্যাস তৈরির সময় একই জায়গা, একই সময় বা একই আগের কাজ সংকেত হিসেবে রাখুন। সংকেত স্থির থাকলে কাজটা ধীরে ধীরে নিজে থেকে শুরু হয়।", "en": "While building a habit, keep the same place, time or earlier action as its cue. When the cue is steady, the action starts more and more on its own." },
+      "how": { "bn": "অভ্যাস তৈরির সময় একই জায়গা, একই সময় বা একই আগের কাজ সংকেত হিসেবে রাখুন। সংকেত একই থাকলে কাজটা ধীরে ধীরে নিজে থেকে শুরু হয়।", "en": "While building a habit, keep the same place, time or earlier action as its cue. When the cue is steady, the action starts more and more on its own." },
       "diagram": { "type": "cycle", "bn": "সংকেত|কাজ|ছোট পুরস্কার|আবার সংকেত", "en": "Cue|Action|Small reward|Cue again" },
       "appLink": "#/habits"
     },

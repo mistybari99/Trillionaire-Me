@@ -18,7 +18,7 @@
         "en": "The core of time planning"
       },
       "how": {
-        "bn": "সময় বাড়ানো যায় না, শুধু কীভাবে বসাবেন তা ঠিক করা যায়। আগে স্থির কাজ (ঘুম, খাওয়া, পরিবার) বসান, তারপর বাকি ফাঁকা সময়ে নিজের গুরুত্বপূর্ণ কাজ।",
+        "bn": "সময় বাড়ানো যায় না, শুধু কীভাবে বসাবেন তা ঠিক করা যায়। আগে ঠিক করা কাজ (ঘুম, খাওয়া, পরিবার) বসান, তারপর বাকি ফাঁকা সময়ে নিজের গুরুত্বপূর্ণ কাজ।",
         "en": "You cannot make more time, only choose where it goes. Place the fixed things first (sleep, meals, family), then put your important work in the free time that remains."
       },
       "diagram": {
@@ -90,7 +90,7 @@
         "en": "Time-planning slips to avoid"
       },
       "how": {
-        "bn": "একদিনে অনেক কাজ ঠাসবেন না। কাজের সময় বেশি কম ধরবেন না; অনুমানে বাড়তি সময় রাখুন। ‘না’ বলার সময় না রাখলে অন্যের কাজেই দিন শেষ হয়ে যায়।",
+        "bn": "একদিনে অনেক কাজ ঠাসবেন না। কাজের সময় বেশি কম ধরবেন না; আন্দাজের সাথে বাড়তি সময় রাখুন। ‘না’ বলার সময় না রাখলে অন্যের কাজেই দিন শেষ হয়ে যায়।",
         "en": "Do not pack a day full. Do not underestimate how long things take; add extra time. If you keep no room to say no, the day fills with other people's tasks."
       },
       "diagram": {
@@ -114,7 +114,7 @@
         "en": "Learn more about time management"
       },
       "how": {
-        "bn": "‘সময় ম্যানেজমেন্ট’ ও ‘অগ্রাধিকার’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। কয়েকটা মেথড পড়ে একটাই এক সপ্তাহ চালিয়ে দেখুন। উইকিপিডিয়ার পরিচিতি অ্যাপের ব্যাকগ্রাউন্ডে সেভ হয়।",
+        "bn": "‘সময় ম্যানেজমেন্ট’ ও ‘কোনটা আগে’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। কয়েকটা মেথড পড়ে একটাই এক সপ্তাহ চালিয়ে দেখুন। উইকিপিডিয়ার পরিচিতি অ্যাপের ব্যাকগ্রাউন্ডে সেভ হয়।",
         "en": "Read general explainers on “time management” and “prioritisation”. Read a few methods, then try just one for a week. Wikipedia overviews are saved in the app background."
       },
       "diagram": {
@@ -256,7 +256,7 @@
         "memory"
       ],
       "title": {
-        "bn": "শেখার সবচেয়ে কার্যকর কথা",
+        "bn": "শেখার সবচেয়ে কাজের কথা",
         "en": "What makes learning stick"
       },
       "how": {
@@ -356,7 +356,7 @@
         "en": "How to choose learning sources"
       },
       "how": {
-        "bn": "একটা বিষয়ে দুই-তিন ধরনের সোর্স দেখুন: সাধারণ জ্ঞানের লেখা, উইকিপিডিয়ার পরিচিতি, আর বিষয়টা জানা কারও কথা। যেখানে মিল নেই, সেটা ‘যাচাই বাকি’ লিখে রাখুন।",
+        "bn": "একটা বিষয়ে দুই-তিন ধরনের সোর্স দেখুন: সাধারণ জ্ঞানের লেখা, উইকিপিডিয়ার পরিচিতি, আর বিষয়টা জানা কারও কথা। যেখানে মিল নেই, সেটা ‘চেক বাকি’ লিখে রাখুন।",
         "en": "On one subject, check two or three kinds of source: general explainers, a Wikipedia overview, and a person who knows it. Where they differ, note it as “to be checked”."
       },
       "diagram": {
@@ -477,7 +477,7 @@
         "en": "Learn more about goal setting"
       },
       "how": {
-        "bn": "‘গোল নির্ধারণ’ ও ‘স্মার্ট গোল’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অ্যাপের Plan পেজে নিজের গোল লিখে দেখুন। রিভিউয়ারের অপেক্ষায়।",
+        "bn": "‘গোল ঠিক করা’ ও ‘স্মার্ট গোল’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অ্যাপের Plan পেজে নিজের গোল লিখে দেখুন। রিভিউয়ারের অপেক্ষায়।",
         "en": "Read general explainers on “goal setting” and “SMART goals”. Try writing your own goal on the app's Plan page. Reviewer pending."
       },
       "diagram": {
@@ -574,7 +574,7 @@
         "en": "Decision slips to avoid"
       },
       "how": {
-        "bn": "ক্লান্ত বা রাগের সময় বড় সিদ্ধান্ত নেবেন না। শুধু একটা অপশন দেখে থামবেন না। সবার মত পাওয়ার অপেক্ষায় অনন্তকাল বসে থাকবেন না; শেষ তারিখ রাখুন।",
+        "bn": "ক্লান্ত বা রাগের সময় বড় সিদ্ধান্ত নেবেন না। শুধু একটা অপশন দেখে থামবেন না। সবার মত পাওয়ার অপেক্ষায় বসে থাকবেন না; শেষ তারিখ রাখুন।",
         "en": "Do not make big decisions when tired or angry. Do not stop after seeing only one option. Do not wait forever for everyone's agreement; set a deadline."
       },
       "diagram": {
@@ -598,7 +598,7 @@
         "en": "Learn more about decision making"
       },
       "how": {
-        "bn": "‘সিদ্ধান্ত গ্রহণ’ ও ‘সমস্যা সমাধান’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। উইকিপিডিয়ার পরিচিতি অ্যাপে সেভ হয়। পুরোনো সিদ্ধান্তের খাতা ঘেঁটে নিজের ধরন দেখুন।",
+        "bn": "‘সিদ্ধান্ত নেওয়া’ ও ‘সমস্যা সমাধান’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। উইকিপিডিয়ার পরিচিতি অ্যাপে সেভ হয়। পুরোনো সিদ্ধান্তের খাতা ঘেঁটে নিজের ধরন দেখুন।",
         "en": "Read general explainers on “decision making” and “problem solving”. Wikipedia overviews are saved in the app. Review your own past decision notes to see your patterns."
       },
       "diagram": {

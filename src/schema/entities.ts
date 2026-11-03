@@ -24,7 +24,7 @@ export const ENTITIES: EntityDef[] = [
   e("strength", "FAM-35", "শক্তি", "Strength", "M02", "personal"),
   e("value", "FAM-35", "মূল্যবোধ", "Value", "M02", "personal"),
   e("skill", "FAM-35", "স্কিল", "Skill", "M02", "personal"),
-  e("approach", "FAM-35", "কাজের ধরন (অভিজ্ঞতা, ঝুঁকির ঝোঁক, শেখার ধরন)", "Way of working (experience, risk preference, learning style)", "M02", "personal"),
+  e("approach", "FAM-35", "কাজের ধরন (অভিজ্ঞতা, রিস্কের ঝোঁক, শেখার ধরন)", "Way of working (experience, risk preference, learning style)", "M02", "personal"),
   e("health_entry", "FAM-02", "স্বাস্থ্য ও পরিবারের এন্ট্রি", "Health & family entry", "M14", "health"),
   e("path_weights", "FAM-35", "পথ মেলানোর ওজন", "Path-fit weights", "M04", "personal"),
   e("resource", "FAM-35", "সম্পদ/সুবিধা", "Resource", "M02", "personal"),

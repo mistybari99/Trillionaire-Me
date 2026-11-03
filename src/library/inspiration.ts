@@ -4,7 +4,7 @@ export interface Inspiration { readonly bn: string; readonly en: string; readonl
 
 export const INSPIRATIONS: readonly Inspiration[] = [
   { theme: "motivation", bn: "ছোট একটা পদক্ষেপও আজকের জন্য যথেষ্ট।", en: "One small step is enough for today." },
-  { theme: "discipline", bn: "নিয়মিত অল্প কাজই বড় পরিবর্তন আনে।", en: "Small, regular work builds big change." },
+  { theme: "discipline", bn: "নিয়মিত অল্প কাজই বড় বদল আনে।", en: "Small, regular work builds big change." },
   { theme: "patience", bn: "ধৈর্য মানে থেমে যাওয়া নয়, ধীরে এগিয়ে যাওয়া।", en: "Patience is not stopping; it is moving slowly forward." },
   { theme: "care", bn: "নিজের প্রতি একটু দয়া রাখো, তুমি এখানেই আছ।", en: "Be a little kind to yourself. You are still here." },
   { theme: "motivation", bn: "আজ যা করতে পারো, সেটাই করো।", en: "Do what you can today." },

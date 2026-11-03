@@ -16,7 +16,7 @@ const LEARNING: StageDef[] = [
   s("C", { bn: "প্র্যাকটিস — নিয়মিত কাজ", en: "Practice — regular exercises" }, { bn: "নিজের হাতে তৈরি একটি কাজ শেষ", en: "One piece of your own work finished" }),
   s("D", { bn: "ধারাবাহিকতা — ঠিক করা মাস", en: "Consistency — set months" }, { bn: "ঠিক করা মাস ধরে নিয়মিত চর্চার লগ", en: "Practice log kept over the set months" }),
   s("E", { bn: "ভাগ করা — অন্যকে শেখানো", en: "Share — teach others" }, { bn: "অন্তত একজনকে শেখানো বা লেখা", en: "Taught or wrote for at least one other person" }),
-  s("F", { bn: "স্বীকৃতি — প্রমাণপত্র", en: "Recognition — proof" }, { bn: "বাইরের যাচাইয়ের প্রমাণ", en: "Proof from an outside check" }),
+  s("F", { bn: "স্বীকৃতি — প্রমাণপত্র", en: "Recognition — proof" }, { bn: "বাইরের কারও রিভিউয়ের প্রমাণ", en: "Proof from an outside check" }),
   s("G", { bn: "প্রয়োগ — বাস্তব কাজে ব্যবহার", en: "Apply — use it in real work" }, { bn: "বাস্তব কাজের ফল লেখা", en: "Real-work results written down" }),
   s("H", { bn: "স্কিল পূর্ণ — নিজস্ব পথ", en: "Mastery — your own path" }, { bn: "মালিক-অনুমোদিত সীমা", en: "Owner-approved threshold" }),
 ];
@@ -24,7 +24,7 @@ const LEARNING: StageDef[] = [
 const BUSINESS: StageDef[] = [
   s("A", { bn: "স্পষ্টতা — ক্রেতা ও সমস্যা চেনা", en: "Clarity — know your buyer and problem" }, { bn: "কে কিনবে ও কেন, তা লেখা", en: "Who buys and why, written down" }),
   s("B", { bn: "প্রথম বিক্রি — ছোট টেস্ট", en: "First sale — small test" }, { bn: "প্রথম বিক্রি বা অর্ডারের প্রমাণ", en: "Proof of a first sale or order" }),
-  s("C", { bn: "যাচাইকৃত প্রস্তাব", en: "Validated offer" }, { bn: "বারবার কেনার আগ্রহের প্রমাণ", en: "Proof that people buy again" }),
+  s("C", { bn: "চেক করা প্রস্তাব", en: "Validated offer" }, { bn: "বারবার কেনার আগ্রহের প্রমাণ", en: "Proof that people buy again" }),
   s("D", { bn: "স্থির ইনকাম — স্থানীয়", en: "Steady income — local" }, { bn: "ঠিক করা মাস ধরে স্থির ইনকামের হিসাব", en: "Income record steady over set months" }),
   s("E", { bn: "নিয়মে আনা — সহজ ধাপ", en: "Systemised — simple steps" }, { bn: "কাজের ধাপ লেখা, অন্যকেও দেওয়া যায়", en: "Steps written so someone else can do them" }),
   s("F", { bn: "বড় পরিসর — আঞ্চলিক", en: "Wider reach — regional" }, { bn: "পরিসর বাড়ানোর প্ল্যান ও হিসাব", en: "Scale plan and numbers ready" }),

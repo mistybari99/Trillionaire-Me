@@ -38,7 +38,7 @@
         "reflection"
       ],
       "title": {
-        "bn": "সপ্তাহে 5 মিনিটের আত্ম-পর্যবেক্ষণ",
+        "bn": "সপ্তাহে 5 মিনিটের নিজেকে দেখা",
         "en": "A 5-minute weekly self-check"
       },
       "how": {
@@ -86,16 +86,16 @@
         "beliefs"
       ],
       "title": {
-        "bn": "আত্ম-সচেতনতায় যা এড়াবেন",
+        "bn": "নিজেকে চেনায় যা এড়াবেন",
         "en": "Self-awareness slips to avoid"
       },
       "how": {
-        "bn": "একদিনের অনুভূতি দিয়ে নিজের পরিচয় ঠিক করবেন না। নিজের সম্পর্কে কড়া বিশেষণ (অযোগ্য, বেকার) লিখবেন না; ঘটনা লিখুন। অন্যের কমেন্ট এক-দুটো ধরনের সাথে মিলিয়ে দেখুন।",
+        "bn": "একদিনের অনুভূতি দিয়ে নিজের পরিচয় ঠিক করবেন না। নিজের সম্পর্কে কড়া কথা (অযোগ্য, বেকার) লিখবেন না; ঘটনা লিখুন। অন্যের কমেন্ট এক-দুটো ধরনের সাথে মিলিয়ে দেখুন।",
         "en": "Do not define yourself from one day's feeling. Avoid harsh labels for yourself; write the facts instead. Check others' remarks against a pattern before you accept them."
       },
       "diagram": {
         "type": "matrix",
-        "bn": "একদিনের মেজাজ: কয়েক সপ্তাহ দেখি|কড়া বিশেষণ: ঘটনা লিখি|একজনের কমেন্ট: ধরন মেলাই|জানা নেই: ‘জানি না’",
+        "bn": "একদিনের মেজাজ: কয়েক সপ্তাহ দেখি|কড়া কথা: ঘটনা লিখি|একজনের কমেন্ট: ধরন মেলাই|জানা নেই: ‘জানি না’",
         "en": "One day's mood: look over weeks|Harsh label: write facts|One remark: match patterns|Don't know: say so"
       },
       "appLink": "#/diary/intake/2",
@@ -135,11 +135,11 @@
         "time"
       ],
       "title": {
-        "bn": "গভীর কাজ কী",
+        "bn": "একমনে কাজ কী",
         "en": "What deep work is"
       },
       "how": {
-        "bn": "গভীর কাজ মানে বিঘ্ন ছাড়া একটা কঠিন কাজে মন দেওয়া। এটা ঘণ্টার পর ঘণ্টা হতে হবে না; 25–50 মিনিট একটাই কাজই অনেক। মন সরে গেলে ফিরে আসাই আসল স্কিল।",
+        "bn": "একমনে কাজ মানে কোনো ডিস্টার্ব ছাড়া একটা কঠিন কাজে মন দেওয়া। এটা ঘণ্টার পর ঘণ্টা হতে হবে না; 25–50 মিনিট একটাই কাজই অনেক। মন সরে গেলে ফিরে আসাই আসল স্কিল।",
         "en": "Deep work means giving full attention to one demanding task without interruption. It need not last hours; 25–50 minutes on one task is plenty. Coming back when attention drifts is the real skill."
       },
       "diagram": {
@@ -284,12 +284,12 @@
         "en": "Steps to start when stuck"
       },
       "how": {
-        "bn": "1) কাজটার প্রথম শারীরিক কাজ কী লিখুন (যেমন ফাইল খোলা)। 2) শুধু সেটা করুন। 3) 2 মিনিট টাইমার দিন। 4) পরে থামুন বা চালান, দুটোই ঠিক।",
+        "bn": "1) কাজটার প্রথম হাতের কাজ কী লিখুন (যেমন ফাইল খোলা)। 2) শুধু সেটা করুন। 3) 2 মিনিট টাইমার দিন। 4) পরে থামুন বা চালান, দুটোই ঠিক।",
         "en": "1) Write the first physical action (for example open the file). 2) Do just that. 3) Set a 2-minute timer. 4) Then stop or continue, both are fine."
       },
       "diagram": {
         "type": "steps",
-        "bn": "প্রথম শারীরিক কাজ লিখি|শুধু সেটা করি|2 মিনিট টাইমার|থামি বা চালাই",
+        "bn": "প্রথম হাতের কাজ লিখি|শুধু সেটা করি|2 মিনিট টাইমার|থামি বা চালাই",
         "en": "Write first action|Do only that|2-minute timer|Stop or continue"
       },
       "appLink": "#/stuck",
@@ -356,7 +356,7 @@
         "en": "Learn more about putting things off"
       },
       "how": {
-        "bn": "‘দীর্ঘসূত্রতা’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অ্যাপের ‘আটকে গেছি’ পেজে নিজের কারণ বেছে দেখুন। অনেকদিন ধরে ভারী লাগলে যোগ্য কারও সাথে কথা বলুন।",
+        "bn": "‘কাজ ফেলে রাখা’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অ্যাপের ‘আটকে গেছি’ পেজে নিজের কারণ বেছে দেখুন। অনেকদিন ধরে ভারী লাগলে যোগ্য কারও সাথে কথা বলুন।",
         "en": "Read general explainers on “procrastination”. Try the app's “I'm stuck” page and pick your reason. If it feels heavy for a long time, talk to a qualified person."
       },
       "diagram": {
@@ -381,7 +381,7 @@
         "en": "Why emotions show up"
       },
       "how": {
-        "bn": "আবেগ আমাদের জানায় কী গুরুত্বপূর্ণ বা কী ঠিক লাগছে না। তা ঠিক বা অন্যায় নয়, শুধু তথ্য। নাম দিয়ে বললে অনেক সময় একটু শান্ত লাগে। এটা সাধারণ কথা, চিকিৎসা নয়।",
+        "bn": "আবেগ আমাদের জানায় কী গুরুত্বপূর্ণ বা কী ঠিক লাগছে না। তা ঠিক-বেঠিক কিছু নয়, শুধু একটা খবর। নাম দিয়ে বললে অনেক সময় একটু শান্ত লাগে। এটা সাধারণ কথা, চিকিৎসা নয়।",
         "en": "Emotions tell us what matters or what feels off. They are neither right nor wrong, just information. Naming one often brings a little calm. This is general talk, not treatment."
       },
       "diagram": {
@@ -565,7 +565,7 @@
         "review"
       ],
       "title": {
-        "bn": "বাস্তবায়নে যা এড়িয়ে চলবেন",
+        "bn": "কাজে নামার সময় যা এড়াবেন",
         "en": "Execution slips to avoid"
       },
       "how": {
@@ -589,7 +589,7 @@
         "learning"
       ],
       "title": {
-        "bn": "প্রজেক্ট পরিচালনা নিয়ে আরও শিখতে",
+        "bn": "প্রজেক্ট ম্যানেজমেন্ট নিয়ে আরও শিখতে",
         "en": "Learn more about running projects"
       },
       "how": {
@@ -734,7 +734,7 @@
         "experiment"
       ],
       "title": {
-        "bn": "সৃজনশীলতা অভ্যাসে বাড়ে",
+        "bn": "ক্রিয়েটিভ হওয়া অভ্যাসে বাড়ে",
         "en": "Creativity grows with practice"
       },
       "how": {

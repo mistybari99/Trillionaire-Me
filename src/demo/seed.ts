@@ -6,7 +6,7 @@ export interface StageDef { code: string; name: Bi; exit: Bi }
 export const STAGES: StageDef[] = [
   { code: "A", name: { bn: "স্পষ্টতা — নিজেকে চেনা", en: "Clarity — know yourself" }, exit: { bn: "মূল্যায়নের ঠিক করা অংশ সম্পূর্ণ; গোল ঠিক", en: "Assessment section complete; goal chosen" } },
   { code: "B", name: { bn: "ভিত্তি — স্কিল ও প্রাথমিক ইনকাম", en: "Foundation — skills & first income" }, exit: { bn: "নির্বাচিত স্কিলের প্রমাণ; প্রথম ফল", en: "Evidence for chosen skill; first result" } },
-  { code: "C", name: { bn: "যাচাইকৃত প্রস্তাব", en: "Validated offer" }, exit: { bn: "প্রকৃত চাহিদার প্রমাণ", en: "Proof of real demand" } },
+  { code: "C", name: { bn: "চেক করা প্রস্তাব", en: "Validated offer" }, exit: { bn: "প্রকৃত চাহিদার প্রমাণ", en: "Proof of real demand" } },
   { code: "D", name: { bn: "পুনরাবৃত্তিযোগ্য (স্থানীয়)", en: "Repeatable (local)" }, exit: { bn: "ঠিক করা মাস ধরে স্থির ফল", en: "Steady results over set months" } },
   { code: "E", name: { bn: "সিস্টেমে আনা", en: "Systemised" }, exit: { bn: "কাজ হ্যান্ডওভারযোগ্য", en: "Work can be handed over" } },
   { code: "F", name: { bn: "আঞ্চলিক / জাতীয়", en: "Regional / national" }, exit: { bn: "স্কেল-স্টেজ পূরণ", en: "Scale stage met" } },

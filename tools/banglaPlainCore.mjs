@@ -108,7 +108,7 @@ export function applyWordRules(text, rules, group, ctx) {
     if (r.notText && new RegExp(r.notText, "u").test(text)) continue; // optional: skip strings that match (for example the no-fatwa line)
     if (ctx.protected && !r.allowProtected && group !== "spelling") continue;
     const before = cur;
-    if (r.type === "digits") { if (/[অ-হ]/.test(cur)) cur = toLatinDigits(cur); } // digit-only values stay (the screen converts them; the catalog check needs Bangla script)
+    if (r.type === "digits") { if (r.all || /[অ-হ]/.test(cur)) cur = toLatinDigits(cur); } // digit-only values stay (the screen converts them; the catalog check needs Bangla script)
     else for (const { re, to } of expandRule(r)) cur = cur.replace(re, to);
     if (cur !== before) ids.push(r.id);
   }

@@ -110,7 +110,7 @@
         "en": "Learn more about daily health"
       },
       "how": {
-        "bn": "সাধারণ স্বাস্থ্য-অভ্যাস নিয়ে সরকারি স্বাস্থ্য কেন্দ্র বা নিবন্ধিত ডাক্তারের কথা শুনুন। আমাদের লেখা শুধু সাধারণ জ্ঞান ও রিভিউয়ারের অপেক্ষায়; চিকিৎসা-সংক্রান্ত সিদ্ধান্তের জন্য নয়।",
+        "bn": "সাধারণ স্বাস্থ্য-অভ্যাস নিয়ে সরকারি স্বাস্থ্য কেন্দ্র বা রেজিস্টার্ড ডাক্তারের কথা শুনুন। আমাদের লেখা শুধু সাধারণ কথা আর রিভিউয়ারের অপেক্ষায়; চিকিৎসা-সংক্রান্ত সিদ্ধান্তের জন্য নয়।",
         "en": "For daily health habits, listen to a public health centre or a registered doctor. Our text is only general knowledge and pending a reviewer. It is not meant for medical decisions."
       },
       "diagram": {
@@ -370,11 +370,11 @@
         "systems"
       ],
       "title": {
-        "bn": "পরিবেশ আচরণকে কীভাবে টানে",
+        "bn": "আশপাশ আমাদের অভ্যাসকে কীভাবে টানে",
         "en": "How surroundings pull behaviour"
       },
       "how": {
-        "bn": "আমরা যেটা সামনে দেখি সেটাই বেশি করি। ফোন হাতের কাছে থাকলে দেখব, বই টেবিলে থাকলে পড়ব। তাই ইচ্ছাশক্তির চেয়ে সাজানো ব্যবস্থা বেশি কাজ করে।",
+        "bn": "আমরা যেটা সামনে দেখি সেটাই বেশি করি। ফোন হাতের কাছে থাকলে দেখব, বই টেবিলে থাকলে পড়ব। তাই ইচ্ছাশক্তির চেয়ে সাজানো জায়গা বেশি কাজ করে।",
         "en": "We tend to do what is in front of us. A phone within reach gets picked up, a book on the table gets read. So how you arrange things often works better than willpower."
       },
       "diagram": {
@@ -462,11 +462,11 @@
         "learning"
       ],
       "title": {
-        "bn": "পরিবেশ ও ব্যবস্থা নিয়ে আরও শিখতে",
+        "bn": "আশপাশ সাজানো নিয়ে আরও শিখতে",
         "en": "Learn more about environment and systems"
       },
       "how": {
-        "bn": "‘পরিবেশ আচরণকে প্রভাবিত করে’ বিষয়ে সাধারণ জ্ঞানের লেখা পড়ুন। নিজের কাজের জায়গার ছবি তুলে আগে-পরে মিলিয়ে দেখুন। আমাদের লেখা রিভিউয়ারের অপেক্ষায়।",
+        "bn": "‘আশপাশ অভ্যাসে প্রভাব ফেলে’ বিষয়ে সাধারণ জ্ঞানের লেখা পড়ুন। নিজের কাজের জায়গার ছবি তুলে আগে-পরে মিলিয়ে দেখুন। আমাদের লেখা রিভিউয়ারের অপেক্ষায়।",
         "en": "Read general explainers on how surroundings shape behaviour. Take before-and-after photos of your workspace to compare. Our text is waiting for a reviewer."
       },
       "diagram": {
@@ -486,11 +486,11 @@
         "privacy"
       ],
       "title": {
-        "bn": "ডিজিটাল নিরাপত্তার মূল কথা",
+        "bn": "ডিজিটাল সেফটির মূল কথা",
         "en": "The basics of digital safety"
       },
       "how": {
-        "bn": "ডিজিটাল নিরাপত্তা মানে নিজের তথ্য, অ্যাকাউন্ট আর ফোন অন্যের হাতে যাওয়া থেকে বাঁচানো। কয়েকটা সরল অভ্যাস, যেমন আলাদা পাসওয়ার্ড আর সতর্কতা, অনেক বিপদ কমায়।",
+        "bn": "ডিজিটাল সেফটি মানে নিজের তথ্য, অ্যাকাউন্ট আর ফোন অন্যের হাতে যাওয়া থেকে বাঁচানো। কয়েকটা সহজ অভ্যাস, যেমন আলাদা পাসওয়ার্ড আর সতর্কতা, অনেক বিপদ কমায়।",
         "en": "Digital safety means keeping your information, accounts and devices out of the wrong hands. A few simple habits, such as separate passcodes and caution, remove many risks."
       },
       "diagram": {
@@ -513,12 +513,12 @@
         "en": "Steps to secure your accounts"
       },
       "how": {
-        "bn": "1) গুরুত্বপূর্ণ অ্যাকাউন্ট (ইমেইল, ব্যাংক) আগে ঠিক করুন। 2) প্রতিটার আলাদা ও লম্বা পাসওয়ার্ড দিন। 3) দ্বিতীয় ধাপের যাচাই চালু করুন। 4) ফোনে স্ক্রিন-লক রাখুন।",
+        "bn": "1) গুরুত্বপূর্ণ অ্যাকাউন্ট (ইমেইল, ব্যাংক) আগে ঠিক করুন। 2) প্রতিটার আলাদা ও লম্বা পাসওয়ার্ড দিন। 3) টু-স্টেপ ভেরিফিকেশন চালু করুন। 4) ফোনে স্ক্রিন-লক রাখুন।",
         "en": "1) Start with key accounts (email, bank). 2) Give each a different, long password. 3) Turn on two-step verification. 4) Keep a screen lock on your phone."
       },
       "diagram": {
         "type": "steps",
-        "bn": "ইমেইল ও ব্যাংক আগে|আলাদা লম্বা পাসওয়ার্ড|দুই ধাপের যাচাই|ফোনে লক",
+        "bn": "ইমেইল ও ব্যাংক আগে|আলাদা লম্বা পাসওয়ার্ড|টু-স্টেপ ভেরিফিকেশন|ফোনে লক",
         "en": "Email and bank first|Different long passwords|Two-step check|Phone lock"
       },
       "kind": "steps",
@@ -536,7 +536,7 @@
         "en": "Example: a suspicious message"
       },
       "how": {
-        "bn": "ফারজানার কাছে ব্যাংকের নামে একটা মেসেজ এল, ‘এখনই লিঙ্কে ক্লিক করুন’। সে ক্লিক না করে নিজে ব্যাংকের অ্যাপ খুলে দেখল, আর মেসেজটা ডিলিট করে দিল। ওটিপি সে কাউকে বলে না।",
+        "bn": "ফারজানার কাছে ব্যাংকের নামে একটা মেসেজ এল, ‘এখনই লিঙ্কে ক্লিক করুন’। সে ক্লিক না করে নিজে ব্যাংকের অ্যাপ খুলে দেখল, আর মেসেজটা ডিলিট করে দিল। OTP সে কাউকে বলে না।",
         "en": "Farzana got a message in a bank's name saying “click now”. She did not click. She opened the bank's own app to check, and deleted the message. She never tells anyone her one-time codes."
       },
       "diagram": {
@@ -578,11 +578,11 @@
         "learning"
       ],
       "title": {
-        "bn": "ডিজিটাল নিরাপত্তা নিয়ে আরও শিখতে",
+        "bn": "ডিজিটাল সেফটি নিয়ে আরও শিখতে",
         "en": "Learn more about digital safety"
       },
       "how": {
-        "bn": "‘ফিশিং’, ‘পাসওয়ার্ড ম্যানেজার’ ও ‘দুই ধাপের যাচাই’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অ্যাপে উইকিপিডিয়া খুঁজলে পরিচিতি সেভ হয়। নিজের ব্যাংকের নিরাপত্তা নির্দেশনাও দেখুন।",
+        "bn": "‘ফিশিং’, ‘পাসওয়ার্ড ম্যানেজার’ ও ‘টু-স্টেপ ভেরিফিকেশন’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অ্যাপে উইকিপিডিয়া খুঁজলে পরিচিতি সেভ হয়। নিজের ব্যাংকের নিরাপত্তা নির্দেশনাও দেখুন।",
         "en": "Read general explainers on “phishing”, “password managers” and “two-step verification”. A Wikipedia search in the app saves an overview. Also read your own bank's safety guidance."
       },
       "diagram": {
