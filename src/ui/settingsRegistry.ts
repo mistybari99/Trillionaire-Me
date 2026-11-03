@@ -99,7 +99,7 @@ export const settingsHash = (cat: Cat, row?: string): string => (cat === "home" 
 /** Extra Bangla search words (what people really type). Labels themselves are searched in all three languages. */
 export const SEARCH_BN: Record<string, string[]> = {
   language: ["ভাষা", "বাংলা", "ইংরেজি"], theme: ["থিম", "অন্ধকার", "আলো", "রাত", "ডার্ক"], textsize: ["ফন্ট", "লেখা", "বড়", "সাইজ", "আকার"],
-  design: ["ডিজাইন", "রং", "লুক"], density: ["বিস্তারিত", "ছোট", "কমপ্যাক্ট"], horizon: ["হরাইজন", "লেআউট"], universe: ["ইউনিভার্স", "ম্যাপ"], habitgrid: ["হ্যাবিট", "গ্রিড"],
+  design: ["ডিজাইন", "রং", "লুক"], density: ["বিস্তারিত", "ছোট", "কমপ্যাক্ট"], horizon: ["হরাইজন", "লেআউট"], universe: ["ইউনিভার্স", "ম্যাপ"], habitgrid: ["অভ্যাস", "গ্রিড"],
   motion: ["অ্যানিমেশন", "নড়াচড়া", "মোশন"], resetlook: ["রিসেট", "আগের মতো"],
   prayersync: ["নামাজের সময়", "আপডেট", "ইন্টারনেট", "অনলাইন", "নিজে থেকে"], prayermethod: ["নামাজ", "আসর", "ফজর", "পদ্ধতি"], prayerplace: ["জায়গা", "শহর", "ঢাকা", "লোকেশন"], prayeralerts: ["অ্যালার্ট", "আজান", "নামাজ", "সাউন্ড"],
   reminder: ["রিমাইন্ডার", "ব্যাকআপ"], storage: ["স্টোরেজ", "নিরাপদ"], savebackup: ["ব্যাকআপ", "সেভ", "পাসফ্রেজ"], restore: ["ফেরান", "রিস্টোর", "ব্যাকআপ"], snapshots: ["স্ন্যাপশট", "কপি"], csv: ["স্প্রেডশিট", "এক্সেল"],

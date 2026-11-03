@@ -26,7 +26,7 @@
     { "word": "পরীক্ষা", "use": "টেস্ট", "group": "meaning" },
     { "word": "হ্যাবিট", "use": "অভ্যাস", "group": "meaning" },
     { "word": "ডেডলাইনের আর্ক", "use": "কত দূরের গোল", "group": "meaning" },
-    { "word": "পরের সেরা কাজ", "use": "এখন কোন কাজ করবেন?", "group": "meaning" },
+    { "word": "পরের সেরা কাজ", "use": "এখন কোন কাজ করবেন?", "group": "stiff" },
     { "word": "লিক অডিট", "use": "লিক খোঁজা", "group": "meaning" },
     { "word": "চুপ করান", "use": "মিউট করুন", "group": "meaning" },
     { "word": "লম্বা দৃশ্য", "use": "আগের দিনগুলো", "group": "meaning" },

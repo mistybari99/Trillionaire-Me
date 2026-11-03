@@ -66,7 +66,7 @@ export const PATHS: PathEntry[] = [
     { bn: "এক মাসের নিজের খরচ একটি সহজ খাতায় লিখে যোগফল করুন।", en: "Keep one month of your own spending in a simple ledger and total it." },
     { bn: "ক্লায়েন্টের টাকা ও রেকর্ড গোপন। ব্যাংকের পাসওয়ার্ড বা আইডি নম্বর অ্যাপে রাখবেন না।", en: "Client money and records are private. Never store bank passwords or ID numbers in the app." }),
   P("tutoring", { bn: "শিক্ষা সহায়তা (পড়ানো)", en: "Tutoring" },
-    { bn: "একটি বিষয় এক-এক করে পড়ানো, সরাসরি বা অনলাইনে।", en: "Teaching a subject one-to-one, in person or online." },
+    { bn: "একটি বিষয় এক-এক করে পড়ানো, সামনাসামনি বা অনলাইনে।", en: "Teaching a subject one-to-one, in person or online." },
     ["people", "language", "learning"],
     { bn: "একটি বিষয়ে জ্ঞান, সপ্তাহে একটি শান্ত সময়, স্টুডেন্ট খোঁজার উপায়", en: "Knowledge of a subject, a quiet hour each week, a way to meet learners" },
     { bn: "একজন বন্ধুকে 30 মিনিটের একটি ক্লাস নিয়ে উন্নতির 3টি বিষয় চান।", en: "Teach one 30-minute lesson to one friend and ask for 3 things to improve." }),

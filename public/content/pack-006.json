@@ -114,7 +114,7 @@
         "en": "Learn more about self-awareness"
       },
       "how": {
-        "bn": "‘আত্ম-সচেতনতা’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। বিশ্বস্ত দুজনকে জিজ্ঞেস করুন তাঁরা আপনার কোন শক্তি দেখেন। এটা কোনো পরীক্ষা বা রায় নয়; যাচাইকারীর অপেক্ষায়।",
+        "bn": "‘আত্ম-সচেতনতা’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। বিশ্বস্ত দুজনকে জিজ্ঞেস করুন তাঁরা আপনার কোন শক্তি দেখেন। এটা কোনো টেস্ট বা রায় নয়; যাচাইকারীর অপেক্ষায়।",
         "en": "Read general explainers on “self-awareness”. Ask two trusted people which strengths they see in you. This is not a test or a verdict. Reviewer pending."
       },
       "diagram": {
@@ -666,12 +666,12 @@
         "en": "Example: a supplier is late"
       },
       "how": {
-        "bn": "শামীম জানল তার সাপ্লায়ার এক সপ্তাহ দেরি করবে। সে ক্রেতাদের আগে জানাল, একটা অপশন সাপ্লায়ারের সঙ্গে ছোট অর্ডার দিয়ে পরীক্ষা করল, আর পরে কী শিখল লিখে রাখল।",
+        "bn": "শামীম জানল তার সাপ্লায়ার এক সপ্তাহ দেরি করবে। সে ক্রেতাদের আগে জানাল, একটা অপশন সাপ্লায়ারের সঙ্গে ছোট অর্ডার দিয়ে টেস্ট করল, আর পরে কী শিখল লিখে রাখল।",
         "en": "Shamim learned his supplier would be a week late. He told customers early, tested a small order with an alternative supplier, and later noted what he learned."
       },
       "diagram": {
         "type": "steps",
-        "bn": "ক্রেতাদের জানাই|অপশন পরীক্ষা|শিক্ষা লিখি",
+        "bn": "ক্রেতাদের জানাই|অপশন টেস্ট|শিক্ষা লিখি",
         "en": "Tell customers|Test an alternative|Note the lesson"
       },
       "kind": "example",
@@ -738,12 +738,12 @@
         "en": "Creativity grows with practice"
       },
       "how": {
-        "bn": "সৃজনশীলতা শুধু প্রতিভা নয়, অভ্যাসও। অনেক আইডিয়া লিখলে ভালো আইডিয়ার সুযোগ বাড়ে। আগে সংখ্যা, পরে বাছাই। ছোট পরীক্ষা করে দেখলে আইডিয়া কাজের হয়ে ওঠে।",
+        "bn": "সৃজনশীলতা শুধু প্রতিভা নয়, অভ্যাসও। অনেক আইডিয়া লিখলে ভালো আইডিয়ার সুযোগ বাড়ে। আগে সংখ্যা, পরে বাছাই। ছোট টেস্ট করে দেখলে আইডিয়া কাজের হয়ে ওঠে।",
         "en": "Creativity is not only talent but also practice. Writing many ideas raises the chance of a good one. Quantity first, selection later. Small tests turn ideas into something useful."
       },
       "diagram": {
         "type": "cycle",
-        "bn": "অনেক আইডিয়া|একটা বাছি|ছোট পরীক্ষা|শিখি",
+        "bn": "অনেক আইডিয়া|একটা বাছি|ছোট টেস্ট|শিখি",
         "en": "Many ideas|Pick one|Small test|Learn"
       },
       "kind": "explain",
@@ -757,16 +757,16 @@
         "experiment"
       ],
       "title": {
-        "bn": "আইডিয়া থেকে পরীক্ষায়",
+        "bn": "আইডিয়া থেকে টেস্টে",
         "en": "From idea to test"
       },
       "how": {
-        "bn": "1) সমস্যাটা এক লাইনে লিখুন। 2) 10টা সমাধান লিখুন, ভালো-মন্দ বিচার ছাড়া। 3) একটা বাছুন। 4) এই সপ্তাহে সবচেয়ে সস্তা পরীক্ষা করুন। 5) ফল দেখুন।",
+        "bn": "1) সমস্যাটা এক লাইনে লিখুন। 2) 10টা সমাধান লিখুন, ভালো-মন্দ বিচার ছাড়া। 3) একটা বাছুন। 4) এই সপ্তাহে সবচেয়ে সস্তা টেস্ট করুন। 5) ফল দেখুন।",
         "en": "1) Write the problem in one line. 2) List 10 solutions without judging. 3) Pick one. 4) Run the cheapest test this week. 5) Look at the result."
       },
       "diagram": {
         "type": "steps",
-        "bn": "সমস্যা লিখি|10টা সমাধান|একটা বাছি|সস্তা পরীক্ষা",
+        "bn": "সমস্যা লিখি|10টা সমাধান|একটা বাছি|সস্তা টেস্ট",
         "en": "Write the problem|10 solutions|Pick one|Cheap test"
       },
       "kind": "steps",
@@ -784,12 +784,12 @@
         "en": "Example: a waiting-time problem"
       },
       "how": {
-        "bn": "ফাতেমার দোকানে ক্রেতারা অপেক্ষা করে বিরক্ত হত। সে 10টা উপায় লিখল, তার মধ্যে ‘নম্বর দিয়ে ডাকা’ বেছে নিল। এক শনিবার কাগজের টোকেন দিয়ে পরীক্ষা করে দেখল ক্রেতারা কেমন বলে।",
+        "bn": "ফাতেমার দোকানে ক্রেতারা অপেক্ষা করে বিরক্ত হত। সে 10টা উপায় লিখল, তার মধ্যে ‘নম্বর দিয়ে ডাকা’ বেছে নিল। এক শনিবার কাগজের টোকেন দিয়ে টেস্ট করে দেখল ক্রেতারা কেমন বলে।",
         "en": "Customers got restless waiting at Fatema's shop. She listed 10 ideas and chose “call by number”. One Saturday she tested it with paper tokens and asked customers what they thought."
       },
       "diagram": {
         "type": "steps",
-        "bn": "10টা উপায়|একটা বাছি|কাগজের টোকেনে পরীক্ষা|ক্রেতাকে জিজ্ঞেস",
+        "bn": "10টা উপায়|একটা বাছি|কাগজের টোকেনে টেস্ট|ক্রেতাকে জিজ্ঞেস",
         "en": "10 ideas|Pick one|Test with paper tokens|Ask customers"
       },
       "kind": "example",
@@ -807,12 +807,12 @@
         "en": "Creativity slips to avoid"
       },
       "how": {
-        "bn": "আইডিয়া লেখার সময় বিচার করবেন না। নিখুঁত না হলে লুকিয়ে রাখবেন না। অন্যের কাজ হুবহু নকল করবেন না, তা থেকে শিখে নিজের মতো করুন। বড় খরচের আগে ছোট পরীক্ষা করুন।",
+        "bn": "আইডিয়া লেখার সময় বিচার করবেন না। নিখুঁত না হলে লুকিয়ে রাখবেন না। অন্যের কাজ হুবহু নকল করবেন না, তা থেকে শিখে নিজের মতো করুন। বড় খরচের আগে ছোট টেস্ট করুন।",
         "en": "Do not judge ideas while listing them. Do not hide work because it is not perfect. Do not copy others exactly; learn from them and make it your own. Test small before spending big."
       },
       "diagram": {
         "type": "matrix",
-        "bn": "লেখার সময় বিচার: পরে বাছি|নিখুঁত না: দেখাই|হুবহু নকল: নিজের মতো|বড় খরচ আগে: ছোট পরীক্ষা",
+        "bn": "লেখার সময় বিচার: পরে বাছি|নিখুঁত না: দেখাই|হুবহু নকল: নিজের মতো|বড় খরচ আগে: ছোট টেস্ট",
         "en": "Judging while listing: select later|Not perfect: show it|Exact copying: make it yours|Big spend first: test small"
       },
       "kind": "watchout",

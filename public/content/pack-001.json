@@ -227,7 +227,7 @@
       "topic": "knowledge",
       "tags": ["learning", "practice"],
       "title": { "bn": "ছোট কাজ বানিয়ে শেখা", "en": "Learn by building something small" },
-      "how": { "bn": "শুধু পড়ার বদলে একটা ছোট কাজ বানান: একটা ছোট হিসাব, একটা ছোট লেখা, বা একটা ছোট পরীক্ষা। কাজ করতে যা লাগে, তা-ই শিখুন।", "en": "Instead of only reading, build something small: a short calculation, a short piece of writing, or a small test. Learn what the work needs." },
+      "how": { "bn": "শুধু পড়ার বদলে একটা ছোট কাজ বানান: একটা ছোট হিসাব, একটা ছোট লেখা, বা একটা ছোট টেস্ট। কাজ করতে যা লাগে, তা-ই শিখুন।", "en": "Instead of only reading, build something small: a short calculation, a short piece of writing, or a small test. Learn what the work needs." },
       "diagram": { "type": "steps", "bn": "ছোট গোল|কাজ করি|যা লাগে শিখি|আবার চেষ্টা", "en": "Small goal|Do the work|Learn what is needed|Try again" },
       "appLink": "#/diary/intake/3"
     },

@@ -49,7 +49,7 @@ export const MODULES: ModuleDef[] = [
     "Step-by-step entry, consent tick, save and resume are all built. Name, birth year (and an estimated age) and time zone show on the diary's 'About you' card; the name is used in the greeting on Today. If not written, Unknown.",
     "", ""),
   m("M02", "নিজেকে চেনা (মূল্যায়ন)", "Discover (assessment)", "journey", "BBBBBB", ["offline", "private"], null, "G3",
-    "আগ্রহ, শক্তি, মূল্যবোধ ও স্কিল লিখে প্ল্যান পাতায় মিলিয়ে কার্ড দেখা যায়। অভিজ্ঞতা, ঝুঁকি নিয়ে ঝোঁক ও শেখার ধরনের তিনটি প্রশ্ন আছে; যেকোনোটি বাদ দেওয়া যায় (বাদ দিলে ‘জানা নেই’), আর উত্তর পথের কার্ডে ফিরিয়ে দেখানো হয়। এটি পরীক্ষা নয়।",
+    "আগ্রহ, শক্তি, মূল্যবোধ ও স্কিল লিখে প্ল্যান পাতায় মিলিয়ে কার্ড দেখা যায়। অভিজ্ঞতা, ঝুঁকি নিয়ে ঝোঁক ও শেখার ধরনের তিনটি প্রশ্ন আছে; যেকোনোটি বাদ দেওয়া যায় (বাদ দিলে ‘জানা নেই’), আর উত্তর পথের কার্ডে ফিরিয়ে দেখানো হয়। এটি টেস্ট নয়।",
     "Enter interests, strengths, values and skills; the Plan screen shows matching cards. Three questions on experience, leaning on risk and how you like to learn can each be skipped (skipped means Unknown) and your answers are shown back on the path cards. It is not a test.",
     "", ""),
   m("M03", "মূল গোল ও ধাপ-সিঁড়ি", "North Star & ladder", "journey", "BBBBBB", ["offline"], null, "G3",
