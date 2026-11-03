@@ -109,6 +109,10 @@ describe("Bangla plain: Mix", () => {
     for (const k of keys) for (const [b] of nonLegacy) if (new RegExp(`(?<![${BNL}])${b}(ের|ে|র|তে|টি|টা|গুলোর|গুলোতে|গুলো|কে|ও|ই)?(?![${BNL}/])`, "u").test(PACKS.mix[k as keyof typeof PACKS.mix]) && !(["badge.demo"].includes(k))) left.push(`${k}: ${b}`);
     expect(left).toEqual([]);
   });
+  it("Mix never prints the word undefined (old bug: legacy whole-word terms printed Backup-undefined)", () => {
+    expect(keys.filter((k) => /undefined|NaN/.test(PACKS.mix[k as keyof typeof PACKS.mix])).map((k) => k)).toEqual([]);
+    expect(swapMixTerms("একটি ব্যাকআপ ফাইল")).toBe("একটি Backup ফাইল");
+  });
   it("suffix forms: Goal-এর, Goal-গুলোর, Data-এ, Data-তে", () => {
     expect(swapMixTerms("গোলের তালিকা")).toBe("Goal-এর তালিকা");
     expect(swapMixTerms("গোলগুলোর মধ্যে")).toBe("Goal-গুলোর মধ্যে");

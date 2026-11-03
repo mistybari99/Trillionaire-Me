@@ -14,7 +14,7 @@ Owner intent in one line: Bangla must read like normal spoken and written Bangla
 | live | **লাইভ** (not সরাসরি সম্প্রচার). Nothing in the app says it today; the banned list keeps it that way. |
 | app | **অ্যাপ** (never এপ, এ্যাপ, এপ্স). |
 | address form | **আপনি** everywhere. Verbs end in -ুন (করুন, দেখুন). No তুমি, no slang, no emoji. |
-| digits | Latin digits 0-9 only. |
+| digits | Latin digits 0-9 only. Values with no Bangla letter at all (for example a bare range) are left as they are: the screen converts them and the field check needs Bangla script. |
 | real data | One name: **আসল** (আসল ডাটা). Not রিয়েল, not আসল তথ্য. |
 | demo data | **ডেমো** in Bangla text. The DEMO badge and its label stay Latin ("DEMO"); Mix shows "Demo". |
 
@@ -122,13 +122,13 @@ These keep their exact meaning. Only the rules in section 3 that are spelling or
 
 ## 6. The exact list of changes
 
-Each rule changes the Bangla value only (never the English text, ids, keys or code). Placeholders such as {n} are checked before and after. Counts are the dry-run counts on the 3 Nov branch. They are applied in three steps (see section 9).
+Each rule changes the Bangla value only (never the English text, ids, keys or code). Placeholders such as {n} are checked before and after. Counts are the strings actually changed on the 3 Nov branch (from the change log). They are applied in three steps (see section 9).
 
 ### 6.1 Word rules
 
 | ID | Step | Change | Strings | Scope | Why |
 |---|---|---|---|---|---|
-| S01 | spelling | ০-৯ → 0-9 | 217 | all in-scope files | Latin digits 0-9 everywhere (owner rule); the screen already converts, the source now matches. |
+| S01 | spelling | ০-৯ → 0-9 (only in strings that also have Bangla letters) | 146 | all in-scope files | Latin digits 0-9 everywhere (owner rule); the screen already converts, the source now matches. |
 | S02 | spelling | ডেটা → ডাটা | 118 | all in-scope files | Owner spelling (A and B disagreed). |
 | S04 | spelling | কেন্দ্রীয় লক্ষ্য → মূল গোল | 4 | all in-scope files |  |
 | S04b | spelling | মূল লক্ষ্য → মূল গোল | 3 | all in-scope files |  |
@@ -178,7 +178,7 @@ Applied after the word rules of the same step. Each rewrite also checks that the
 
 #### First start and consent
 
-| ID | Group | Key | New text | Why |
+| ID | Step | Key | New text | Why |
 |---|---|---|---|---|
 | P1-01 | stiff | `mode.banner.start` | আসল ডাটা শুরু করুন |  |
 | P1-02 | stiff | `mode.start.btn` | আসল ডাটা শুরু করুন |  |
@@ -189,7 +189,7 @@ Applied after the word rules of the same step. Each rewrite also checks that the
 
 #### Today
 
-| ID | Group | Key | New text | Why |
+| ID | Step | Key | New text | Why |
 |---|---|---|---|---|
 | P2-01 | stiff | `home.cnt.note` | শুধু আপনার লেখা ডাটা থেকে গোনা। গোলের ধাপ মানে গোলের সঙ্গে লিংক করা কাজ। |  |
 | P2-02 | stiff | `home.sum.open` | টাকার হিসাব খুলুন |  |
@@ -216,7 +216,7 @@ Applied after the word rules of the same step. Each rewrite also checks that the
 
 #### Money
 
-| ID | Group | Key | New text | Why |
+| ID | Step | Key | New text | Why |
 |---|---|---|---|---|
 | P5-01 | stiff | `money.baselineNeeded` | আগে শুরুর হিসাব লাগবে। এখন হাতে যা আছে (ক্যাশ ও সেভিংস) তা সম্পদ লাইন হিসেবে যোগ করুন। তার আগে কত মাস চলবে, তা অজানা থাকবে। |  |
 | P5-02 | stiff | `money.empty` | এখনো কিছু যোগ করা হয়নি। |  |
@@ -231,7 +231,7 @@ Applied after the word rules of the same step. Each rewrite also checks that the
 
 #### Journey
 
-| ID | Group | Key | New text | Why |
+| ID | Step | Key | New text | Why |
 |---|---|---|---|---|
 | P6-01 | meaning | `arc.title` | কত দূরের গোল | Horizon is 'how far ahead', not a deadline. |
 | P6-02 | meaning | `arc.marker` | যেখানে গোল আছে তার মধ্যে সবচেয়ে কাছেরটা: {h} |  |
@@ -263,7 +263,7 @@ Applied after the word rules of the same step. Each rewrite also checks that the
 
 #### Diary
 
-| ID | Group | Key | New text | Why |
+| ID | Step | Key | New text | Why |
 |---|---|---|---|---|
 | P7-01 | stiff | `diary.completeness` | কতটা লেখা হয়েছে |  |
 | P7-02 | stiff | `diary.next.required_missing` | আগে লিখুন: {field}। কেন দরকার: {why} |  |
@@ -273,16 +273,17 @@ Applied after the word rules of the same step. Each rewrite also checks that the
 | P7-06 | stiff | `intake.done` | আপাতত এইটুকুই |  |
 | P7-07 | stiff | `imp.err.entity` | এই রেকর্ডের ধরন চেনা যায়নি। |  |
 | P7-08 | stiff | `imp.err.field` | এই রেকর্ডে এমন ফিল্ড নেই। |  |
+| P7-09 | stiff | `team.ho.save` | হ্যান্ডওভার প্ল্যান সেভ করুন | Keeps the button at 28 characters after হস্তান্তর became হ্যান্ডওভার. |
 
 #### Deen
 
-| ID | Group | Key | New text | Why |
+| ID | Step | Key | New text | Why |
 |---|---|---|---|---|
 | P8-01 | meaning | `deen.set.dhaka` | ঢাকায় রিসেট করুন |  |
 
 #### Settings and data
 
-| ID | Group | Key | New text | Why |
+| ID | Step | Key | New text | Why |
 |---|---|---|---|---|
 | P9-01 | meaning | `enc.restore` | এনক্রিপ্টেড ব্যাকআপ থেকে রিস্টোর করুন |  |
 | P9-02 | meaning | `backup.restore` | ব্যাকআপ ফাইল থেকে রিস্টোর করুন |  |

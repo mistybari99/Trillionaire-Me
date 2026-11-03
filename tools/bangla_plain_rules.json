@@ -147,6 +147,8 @@
     { "id": "P7-07", "group": "stiff", "screen": "Diary", "file": "src/i18n/packs.ts", "key": "imp.err.entity", "expect": "অজানা", "allowGuard": "unknown", "to": "এই রেকর্ডের ধরন চেনা যায়নি।" },
     { "id": "P7-08", "group": "stiff", "screen": "Diary", "file": "src/i18n/packs.ts", "key": "imp.err.field", "expect": "অজানা", "allowGuard": "unknown", "to": "এই রেকর্ডে এমন ফিল্ড নেই।" },
 
+    { "id": "P7-09", "group": "stiff", "screen": "Diary", "file": "src/i18n/packs.ts", "key": "team.ho.save", "expect": "হ্যান্ডওভারের", "to": "হ্যান্ডওভার প্ল্যান সেভ করুন", "note": "Keeps the button at 28 characters after হস্তান্তর became হ্যান্ডওভার." },
+
     { "id": "P8-01", "group": "meaning", "screen": "Deen", "file": "src/i18n/packs.ts", "key": "deen.set.dhaka", "expect": "ফিরুন", "to": "ঢাকায় রিসেট করুন" },
 
     { "id": "P9-01", "group": "meaning", "screen": "Settings and data", "file": "src/i18n/packs.ts", "key": "enc.restore", "expect": "ফেরান", "to": "এনক্রিপ্টেড ব্যাকআপ থেকে রিস্টোর করুন" },

@@ -114,7 +114,7 @@
         "en": "Learn more about self-awareness"
       },
       "how": {
-        "bn": "‘আত্ম-সচেতনতা’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। বিশ্বস্ত দুজনকে জিজ্ঞেস করুন তাঁরা আপনার কোন শক্তি দেখেন। এটা কোনো টেস্ট বা রায় নয়; যাচাইকারীর অপেক্ষায়।",
+        "bn": "‘আত্ম-সচেতনতা’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। ভরসার দুজনকে জিজ্ঞেস করুন তাঁরা আপনার কোন শক্তি দেখেন। এটা কোনো টেস্ট বা রায় নয়; যাচাইকারীর অপেক্ষায়।",
         "en": "Read general explainers on “self-awareness”. Ask two trusted people which strengths they see in you. This is not a test or a verdict. Reviewer pending."
       },
       "diagram": {
@@ -356,12 +356,12 @@
         "en": "Learn more about putting things off"
       },
       "how": {
-        "bn": "‘দীর্ঘসূত্রতা’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অ্যাপের ‘আটকে গেছি’ পাতায় নিজের কারণ বেছে দেখুন। অনেকদিন ধরে ভারী লাগলে যোগ্য কারও সঙ্গে কথা বলুন।",
+        "bn": "‘দীর্ঘসূত্রতা’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অ্যাপের ‘আটকে গেছি’ পেজে নিজের কারণ বেছে দেখুন। অনেকদিন ধরে ভারী লাগলে যোগ্য কারও সঙ্গে কথা বলুন।",
         "en": "Read general explainers on “procrastination”. Try the app's “I'm stuck” page and pick your reason. If it feels heavy for a long time, talk to a qualified person."
       },
       "diagram": {
         "type": "steps",
-        "bn": "সাধারণ লেখা পড়ি|‘আটকে গেছি’ পাতা দেখি|প্রয়োজনে কথা বলি",
+        "bn": "সাধারণ লেখা পড়ি|‘আটকে গেছি’ পেজ দেখি|প্রয়োজনে কথা বলি",
         "en": "Read general explainers|Open the stuck page|Talk if needed"
       },
       "appLink": "#/stuck",
@@ -541,11 +541,11 @@
         "planning"
       ],
       "title": {
-        "bn": "উদাহরণ: ছোট দোকানের পাতা",
+        "bn": "উদাহরণ: ছোট দোকানের পেজ",
         "en": "Example: a small shop page"
       },
       "how": {
-        "bn": "পলাশ নিজের ছোট দোকানের জন্য একটা অনলাইন পাতা চাইল। সে ধাপ করল: নাম ঠিক, প্রোডাক্টের ছবি, দাম লেখা, বন্ধুকে দেখানো। এই সপ্তাহে শুধু ছবি তোলা বসাল।",
+        "bn": "পলাশ নিজের ছোট দোকানের জন্য একটা অনলাইন পেজ চাইল। সে ধাপ করল: নাম ঠিক, প্রোডাক্টের ছবি, দাম লেখা, বন্ধুকে দেখানো। এই সপ্তাহে শুধু ছবি তোলা বসাল।",
         "en": "Palash wanted an online page for his small shop. He made stages: name, product photos, prices, show a friend. This week he scheduled only taking photos."
       },
       "diagram": {

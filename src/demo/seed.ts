@@ -8,7 +8,7 @@ export const STAGES: StageDef[] = [
   { code: "B", name: { bn: "ভিত্তি — স্কিল ও প্রাথমিক ইনকাম", en: "Foundation — skills & first income" }, exit: { bn: "নির্বাচিত স্কিলের প্রমাণ; প্রথম ফল", en: "Evidence for chosen skill; first result" } },
   { code: "C", name: { bn: "যাচাইকৃত প্রস্তাব", en: "Validated offer" }, exit: { bn: "প্রকৃত চাহিদার প্রমাণ", en: "Proof of real demand" } },
   { code: "D", name: { bn: "পুনরাবৃত্তিযোগ্য (স্থানীয়)", en: "Repeatable (local)" }, exit: { bn: "নির্ধারিত মাস ধরে স্থির ফল", en: "Steady results over set months" } },
-  { code: "E", name: { bn: "সিস্টেমে আনা", en: "Systemised" }, exit: { bn: "কাজ হস্তান্তরযোগ্য", en: "Work can be handed over" } },
+  { code: "E", name: { bn: "সিস্টেমে আনা", en: "Systemised" }, exit: { bn: "কাজ হ্যান্ডওভারযোগ্য", en: "Work can be handed over" } },
   { code: "F", name: { bn: "আঞ্চলিক / জাতীয়", en: "Regional / national" }, exit: { bn: "স্কেল-স্টেজ পূরণ", en: "Scale stage met" } },
   { code: "G", name: { bn: "আন্তর্জাতিক পাইলট", en: "International pilot" }, exit: { bn: "পাইলটের ফল", en: "Pilot results" } },
   { code: "H", name: { bn: "আন্তর্জাতিক স্কেল", en: "International scale" }, exit: { bn: "মালিক-অনুমোদিত সীমা", en: "Owner-approved threshold" } },

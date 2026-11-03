@@ -161,7 +161,7 @@
         "en": "When to ask for help"
       },
       "how": {
-        "bn": "কষ্ট অনেক দিন ধরে থাকলে বা দৈনন্দিন কাজে বাধা দিলে বিশ্বস্ত কারও সাথে বা যোগ্য সহায়তাকারীর সাথে কথা বলুন। অ্যাপ কোনো রোগ নির্ণয় করে না।",
+        "bn": "কষ্ট অনেক দিন ধরে থাকলে বা দৈনন্দিন কাজে বাধা দিলে ভরসার কারও সাথে বা যোগ্য সহায়তাকারীর সাথে কথা বলুন। অ্যাপ কোনো রোগ নির্ণয় করে না।",
         "en": "If a hard feeling lasts for many days or blocks daily life, talk to someone you trust or a qualified helper. The app does not give medical opinions."
       },
       "diagram": {
@@ -304,7 +304,7 @@
         "en": "Learn more about handling setbacks"
       },
       "how": {
-        "bn": "‘সমস্যা সমাধানের ধাপ’ নিয়ে সাধারণ লেখা পড়ুন। শেষ আটকে যাওয়া কাজটি অ্যাপের ‘আটকে আছি’ পাতায় লিখে দেখুন। যাচাইকারীর অপেক্ষায়।",
+        "bn": "‘সমস্যা সমাধানের ধাপ’ নিয়ে সাধারণ লেখা পড়ুন। শেষ আটকে যাওয়া কাজটি অ্যাপের ‘আটকে আছি’ পেজে লিখে দেখুন। যাচাইকারীর অপেক্ষায়।",
         "en": "Read general explainers on “problem-solving steps”. Then log your last stuck task on the app's stuck page. Reviewer pending."
       },
       "diagram": {
@@ -454,7 +454,7 @@
       },
       "diagram": {
         "type": "steps",
-        "bn": "বিশ্বস্ত শিক্ষক|প্রশ্ন লিখি|নিয়মিত শিখি",
+        "bn": "ভরসার শিক্ষক|প্রশ্ন লিখি|নিয়মিত শিখি",
         "en": "Trusted teacher|Write questions|Learn regularly"
       },
       "appLink": "#/deen",
@@ -570,7 +570,7 @@
         "en": "Asking for feedback kindly"
       },
       "how": {
-        "bn": "বিশ্বস্ত একজনকে জিজ্ঞেস করুন: আমি কোন একটি জিনিস বদলালে ভালো হয়? শুনুন, ধন্যবাদ বলুন, আর তর্ক করবেন না।",
+        "bn": "ভরসার একজনকে জিজ্ঞেস করুন: আমি কোন একটি জিনিস বদলালে ভালো হয়? শুনুন, ধন্যবাদ বলুন, আর তর্ক করবেন না।",
         "en": "Ask someone you trust: what is one thing I could change? Listen, say thanks, and do not argue."
       },
       "diagram": {

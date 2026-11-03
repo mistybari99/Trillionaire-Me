@@ -187,12 +187,12 @@
         "en": "Example: water and reading in the morning"
       },
       "how": {
-        "bn": "তানভীর ঘুম থেকে উঠে এক গ্লাস পানি খাওয়ার পর একটা পাতা পড়ে। যেদিন সময় থাকে না, সে শুধু বই খুলে রাখে। পরদিন আবার স্বাভাবিকভাবে শুরু করে।",
+        "bn": "তানভীর ঘুম থেকে উঠে এক গ্লাস পানি খাওয়ার পর একটা পেজ পড়ে। যেদিন সময় থাকে না, সে শুধু বই খুলে রাখে। পরদিন আবার স্বাভাবিকভাবে শুরু করে।",
         "en": "After waking and drinking a glass of water, Tanvir reads one page. On busy days he just opens the book. The next day he carries on as normal."
       },
       "diagram": {
         "type": "steps",
-        "bn": "উঠে পানি খাই|একটা পাতা পড়ি|ব্যস্ত দিনে বই খুলি",
+        "bn": "উঠে পানি খাই|একটা পেজ পড়ি|ব্যস্ত দিনে বই খুলি",
         "en": "Wake and drink water|Read one page|Busy day: open the book"
       },
       "appLink": "#/habits",
@@ -477,12 +477,12 @@
         "en": "Learn more about goal setting"
       },
       "how": {
-        "bn": "‘গোল নির্ধারণ’ ও ‘স্মার্ট গোল’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অ্যাপের Plan পাতায় নিজের গোল লিখে দেখুন। যাচাইকারীর অপেক্ষায়।",
+        "bn": "‘গোল নির্ধারণ’ ও ‘স্মার্ট গোল’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অ্যাপের Plan পেজে নিজের গোল লিখে দেখুন। যাচাইকারীর অপেক্ষায়।",
         "en": "Read general explainers on “goal setting” and “SMART goals”. Try writing your own goal on the app's Plan page. Reviewer pending."
       },
       "diagram": {
         "type": "steps",
-        "bn": "সাধারণ লেখা পড়ি|Plan পাতায় লিখি|এক সপ্তাহ পরে দেখি",
+        "bn": "সাধারণ লেখা পড়ি|Plan পেজে লিখি|এক সপ্তাহ পরে দেখি",
         "en": "Read general explainers|Write on Plan page|Review after a week"
       },
       "appLink": "#/diary/plan",

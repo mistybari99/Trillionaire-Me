@@ -349,12 +349,12 @@
         "en": "Learn more about career and skills"
       },
       "how": {
-        "bn": "নিজের ক্ষেত্রের কাজের বিবরণ, চাকরির নোটিফিকেশন আর অভিজ্ঞ কারও সঙ্গে কথা থেকে জানুন কোন স্কিল লাগে। সাধারণ জ্ঞানের লেখাও পড়তে পারেন। যাচাইকারীর অপেক্ষায়।",
+        "bn": "নিজের ক্ষেত্রের কাজের ডিটেইল, চাকরির নোটিফিকেশন আর অভিজ্ঞ কারও সঙ্গে কথা থেকে জানুন কোন স্কিল লাগে। সাধারণ জ্ঞানের লেখাও পড়তে পারেন। যাচাইকারীর অপেক্ষায়।",
         "en": "Learn which skills matter from job descriptions in your field, job notices and a chat with an experienced person. General explainers help too. Reviewer pending."
       },
       "diagram": {
         "type": "steps",
-        "bn": "কাজের বিবরণ দেখি|অভিজ্ঞের সঙ্গে কথা|স্কিলের লিস্ট বানাই",
+        "bn": "কাজের ডিটেইল দেখি|অভিজ্ঞের সঙ্গে কথা|স্কিলের লিস্ট বানাই",
         "en": "Read job descriptions|Talk to someone experienced|Make a skill list"
       },
       "appLink": "#/diary/intake/3",
@@ -490,7 +490,7 @@
         "en": "The basics of digital safety"
       },
       "how": {
-        "bn": "ডিজিটাল নিরাপত্তা মানে নিজের তথ্য, অ্যাকাউন্ট আর ডিভাইস অন্যের হাতে যাওয়া থেকে বাঁচানো। কয়েকটা সরল অভ্যাস, যেমন আলাদা পাসওয়ার্ড আর সতর্কতা, অনেক বিপদ কমায়।",
+        "bn": "ডিজিটাল নিরাপত্তা মানে নিজের তথ্য, অ্যাকাউন্ট আর ফোন অন্যের হাতে যাওয়া থেকে বাঁচানো। কয়েকটা সরল অভ্যাস, যেমন আলাদা পাসওয়ার্ড আর সতর্কতা, অনেক বিপদ কমায়।",
         "en": "Digital safety means keeping your information, accounts and devices out of the wrong hands. A few simple habits, such as separate passcodes and caution, remove many risks."
       },
       "diagram": {

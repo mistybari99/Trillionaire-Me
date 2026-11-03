@@ -30,7 +30,7 @@ export const THEME_KEYWORDS: Record<Theme, string[]> = {
 };
 
 /** Where the built-in path entries come from. They are the builder's own drafts: no outside source, no figures. Spec 3.3: every entry carries a source and a date, and goes stale when old. */
-export const PATH_SOURCE: Bi = { bn: "অ্যাপের ভেতরের খসড়া (নির্মাতার লেখা), বাইরের কোনো সূত্র নেই", en: "Built-in draft written by the builder; no outside source" };
+export const PATH_SOURCE: Bi = { bn: "অ্যাপের ভেতরের ড্রাফট (নির্মাতার লেখা), বাইরের কোনো সূত্র নেই", en: "Built-in draft written by the builder; no outside source" };
 export const PATH_WRITTEN_ON = "2026-10-24";
 /** After this many days an entry is shown as old and the person is asked to check it again. */
 export const PATH_STALE_DAYS = 180;
@@ -82,10 +82,10 @@ export const PATHS: PathEntry[] = [
     { bn: "পরিষ্কার লেখা, কয়েকটি স্যাম্পল, খোঁজার সময়", en: "Clear writing, a few samples, time to research" },
     { bn: "যে বিষয় জানেন তাতে 5টি ছোট লেখা লিখে একটি পেজে রাখুন।", en: "Write 5 short pieces on one topic you know and post them on one page." }),
   P("simple-web", { bn: "সহজ ওয়েবসাইট", en: "Simple websites" },
-    { bn: "স্থানীয় ব্যবসার জন্য সহজ ওয়েবসাইট বা এক পাতার পরিচিতি।", en: "Simple websites or one-page profiles for local businesses." },
+    { bn: "স্থানীয় ব্যবসার জন্য সহজ ওয়েবসাইট বা এক পেজের পরিচিতি।", en: "Simple websites or one-page profiles for local businesses." },
     ["tech", "creative"],
     { bn: "কম্পিউটারের মূল জ্ঞান, একটি পেজ বানানোর টুল শেখার আগ্রহ, ল্যাপটপ", en: "Basic computer skill, willingness to learn a page builder, a laptop" },
-    { bn: "নিজের বা বন্ধুর দোকানের এক পাতার পরিচিতি বানিয়ে 3 জনকে দেখান।", en: "Make a one-page profile for yourself or a friend's shop and show it to 3 people." }),
+    { bn: "নিজের বা বন্ধুর দোকানের এক পেজের পরিচিতি বানিয়ে 3 জনকে দেখান।", en: "Make a one-page profile for yourself or a friend's shop and show it to 3 people." }),
   P("event-planning", { bn: "অনুষ্ঠান প্ল্যান", en: "Small event planning" },
     { bn: "পরিবার বা সমাজের ছোট অনুষ্ঠান প্ল্যান ও পরিচালনা।", en: "Planning and running small family or community events." },
     ["organising", "people"],

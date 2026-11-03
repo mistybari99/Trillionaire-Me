@@ -46,9 +46,9 @@
       "id": "p1-mo7",
       "topic": "money",
       "tags": ["money", "bills", "review"],
-      "title": { "bn": "নিয়মিত বিল এক পাতায়", "en": "List your recurring bills on one page" },
-      "how": { "bn": "প্রতি মাসে যা নিয়মিত বের হয়, যেমন ভাড়া, মোবাইল, ইন্টারনেট, সাবস্ক্রিপশন, সব এক পাতায় লিখুন। যেটা আর দরকার নেই, সেটা বন্ধ করার তারিখ দিন।", "en": "Write every regular monthly payment, such as rent, mobile, internet and subscriptions, on one page. For anything you no longer need, set a date to stop it." },
-      "diagram": { "type": "steps", "bn": "সব নিয়মিত খরচ|এক পাতায়|দরকার আছে কি?|বন্ধের তারিখ", "en": "All regular costs|One page|Still needed?|Stop date" },
+      "title": { "bn": "নিয়মিত বিল এক পেজে", "en": "List your recurring bills on one page" },
+      "how": { "bn": "প্রতি মাসে যা নিয়মিত বের হয়, যেমন ভাড়া, মোবাইল, ইন্টারনেট, সাবস্ক্রিপশন, সব এক পেজে লিখুন। যেটা আর দরকার নেই, সেটা বন্ধ করার তারিখ দিন।", "en": "Write every regular monthly payment, such as rent, mobile, internet and subscriptions, on one page. For anything you no longer need, set a date to stop it." },
+      "diagram": { "type": "steps", "bn": "সব নিয়মিত খরচ|এক পেজে|দরকার আছে কি?|বন্ধের তারিখ", "en": "All regular costs|One page|Still needed?|Stop date" },
       "appLink": "#/diary/money"
     },
     {
@@ -218,8 +218,8 @@
       "topic": "knowledge",
       "tags": ["learning", "reading"],
       "title": { "bn": "প্রশ্ন নিয়ে পড়া", "en": "Read with questions in hand" },
-      "how": { "bn": "পড়ার আগে তিনটি প্রশ্ন লিখুন। পড়তে পড়তে উত্তর খুঁজুন। শেষে যা মনে আছে তা এক পাতায় লিখুন।", "en": "Before reading, write three questions. Look for the answers as you read. At the end, write what you remember on one page." },
-      "diagram": { "type": "steps", "bn": "প্রশ্ন লিখি|উত্তর খুঁজি|এক পাতায় সার", "en": "Write questions|Look for answers|One-page summary" },
+      "how": { "bn": "পড়ার আগে তিনটি প্রশ্ন লিখুন। পড়তে পড়তে উত্তর খুঁজুন। শেষে যা মনে আছে তা এক পেজে লিখুন।", "en": "Before reading, write three questions. Look for the answers as you read. At the end, write what you remember on one page." },
+      "diagram": { "type": "steps", "bn": "প্রশ্ন লিখি|উত্তর খুঁজি|এক পেজে সার", "en": "Write questions|Look for answers|One-page summary" },
       "appLink": "#/cards"
     },
     {
@@ -315,8 +315,8 @@
       "topic": "relationships",
       "tags": ["communication", "calm"],
       "title": { "bn": "রাগের মুহূর্তে উত্তর দেরিতে", "en": "Pause before a heated reply" },
-      "how": { "bn": "রেগে থাকলে উত্তর পাঠানোর আগে 10 মিনিট দূরে যান। বার্তাটা খসড়ায় রাখুন। আবার পড়ে যা সত্য ও দরকারি, শুধু সেটুকু পাঠান।", "en": "When you are angry, step away for 10 minutes before replying. Keep the message as a draft. Read it again and send only what is true and needed." },
-      "diagram": { "type": "steps", "bn": "খসড়া লিখি|10 মিনিট দূরে|আবার পড়ি|দরকারি অংশ পাঠাই", "en": "Write a draft|10 minutes away|Read it again|Send the needed part" }
+      "how": { "bn": "রেগে থাকলে উত্তর পাঠানোর আগে 10 মিনিট দূরে যান। বার্তাটা ড্রাফটয় রাখুন। আবার পড়ে যা সত্য ও দরকারি, শুধু সেটুকু পাঠান।", "en": "When you are angry, step away for 10 minutes before replying. Keep the message as a draft. Read it again and send only what is true and needed." },
+      "diagram": { "type": "steps", "bn": "ড্রাফট লিখি|10 মিনিট দূরে|আবার পড়ি|দরকারি অংশ পাঠাই", "en": "Write a draft|10 minutes away|Read it again|Send the needed part" }
     },
     {
       "id": "p1-re6",
