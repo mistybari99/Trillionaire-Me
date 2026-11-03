@@ -4,11 +4,11 @@ import { h } from "./dom";
 import { t } from "../i18n/t";
 import type { Key } from "../i18n/packs";
 import type { Locale } from "../i18n/registry";
-import { allRecs } from "./entry";
+import { allRecs, findRec, storeOf } from "./entry";
 import { buildTree, flatten, type TreeNode } from "../core/goalTree";
 import { goalStatusOf } from "../core/goalStatus";
 import { taskTrace } from "../core/taskTrace";
-import { MAX_GOALS, goalIdsOf } from "../core/taskGoals";
+import { MAX_GOALS, danglingGoalIdsOf, goalIdsOf, withGoals } from "../core/taskGoals";
 import type { TMRecord } from "../core/types";
 
 const short = (s: string, n = 14): string => (s.length > n ? `${s.slice(0, n - 1)}…` : s);
@@ -66,11 +66,16 @@ export function goalChips(step: TMRecord, lang: Locale, recs: readonly TMRecord[
   const goals = new Map(recs.filter((r) => r.entity === "goal").map((g) => [g.id, g] as const));
   const title = (g: TMRecord) => String((g.values["goal.title"] as { value?: unknown } | undefined)?.value ?? "");
   const live = goalIdsOf(step).filter((id) => goals.has(id) && id !== opts.exclude).map((id) => goals.get(id)!).sort((a, b) => title(a).localeCompare(title(b)) || a.id.localeCompare(b.id));
-  if (!live.length) return opts.exclude ? null : h("a", { href: "#/diary/plan", class: "chip-link muted", "data-link-goal": step.id }, t("gl.chip.link", lang));
+  const gone = opts.exclude ? [] : danglingGoalIdsOf(step, new Set(goals.keys()));
+  const goneEl = gone.length ? h("span", { class: "muted", "data-dangling": step.id }, t("gl.dangling", lang), " ", h("button", { type: "button", class: "btn ghost", "data-act": "remove-dangling", style: "width:auto;margin:0;min-height:44px", onclick: () => {
+    const cur = findRec(step.id); if (!cur) return; storeOf(cur).put(withGoals(cur, goalIdsOf(cur).filter((x) => !gone.includes(x)))); window.dispatchEvent(new HashChangeEvent("hashchange"));
+  } }, t("gl.dangling.fix", lang))) : null;
+  if (!live.length) return opts.exclude ? null : h("span", { class: "goal-chips" }, gone.length ? goneEl : h("a", { href: "#/diary/plan", class: "chip-link muted", "data-link-goal": step.id }, t("gl.chip.link", lang)));
   const word = (g: TMRecord) => { const s = goalStatusOf(g); return s === "retired" ? ` ${t("gl.chip.retired", lang)}` : s === "paused" ? ` ${t("gl.chip.paused", lang)}` : ""; };
   const shownGoals = live.slice(0, 2);
   return h("span", { class: "goal-chips", "data-goal-chips": step.id },
     ...shownGoals.map((g) => h("a", { href: goalHash(g.id), class: "tag", "data-goal-chip-link": g.id, title: title(g), "aria-label": title(g) + word(g) }, (opts.prefix ? t(opts.prefix, lang, { title: short(title(g)) }) : short(title(g))) + word(g))),
+    goneEl,
     live.length > 2 ? h("span", { class: "tag", "data-goal-more": String(live.length - 2), title: live.slice(2).map(title).join(", ") }, t("gl.chip.more", lang, { n: String(live.length - 2) })) : null);
 }
 

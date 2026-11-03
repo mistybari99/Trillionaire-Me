@@ -12,7 +12,7 @@ export const EVENT_KINDS = ["income_change", "expense_change", "time_less", "new
 export type EventKind = (typeof EVENT_KINDS)[number];
 export const LOOP_OPTIONS = ["move_dates", "reduce_scope", "change_path", "pause"] as const;
 export type LoopOption = (typeof LOOP_OPTIONS)[number];
-export type VersionOption = LoopOption | "resume";
+export type VersionOption = LoopOption | "resume" | "goal_delete";
 export const MOVE_DAYS = [7, 14, 30] as const;
 export type MoveDays = (typeof MOVE_DAYS)[number];
 export type EventStatus = "open" | "decided" | "noted";
@@ -87,6 +87,7 @@ export interface Impact {
   money: { lines: number; ventures: Array<{ id: string; name: string }> } | null;
   risks: Array<{ id: string; text: string }>;
   assumptions: Assumption[]; markedNotTrue: number;
+  /** goals OTHER than the chosen one that the affected steps also serve (a shared step is touched for each of them) */ alsoHelps: Array<{ id: string; title: string }>;
 }
 
 const activeGoals = (recs: readonly TMRecord[]): TMRecord[] => recs.filter((r) => r.entity === "goal" && str(r.values["goal.title"]) && goalStatusOf(r) === "active").sort((a, b) => cmp(a.id, b.id));
@@ -125,7 +126,11 @@ export function impactOf(recs: readonly TMRecord[], ev: Pick<EventRow, "kind" | 
   const money = isMoney ? { lines: lines.length, ventures: recs.filter((r) => r.entity === "venture" && ventureIds.has(r.id)).map((r) => ({ id: r.id, name: titleOf(r, "venture.name") })).sort((a, b) => cmp(a.name, b.name) || cmp(a.id, b.id)) } : null;
   const risks = isMoney || ev.kind === "setback"
     ? recs.filter((r) => r.entity === "risk" && str(r.values["risk.text"])).map((r) => ({ id: r.id, text: titleOf(r, "risk.text") })).sort((a, b) => cmp(a.text, b.text) || cmp(a.id, b.id)) : [];
-  return { kind: ev.kind, scopeGoalId: scope?.id ?? null, goals, tasks, dates, money, risks, assumptions: ASSUMPTIONS[ev.kind],
+  const taskIds = new Set(tasks.map((x) => x.id)); const allGoals = new Map(recs.filter((r) => r.entity === "goal" && str(r.values["goal.title"])).map((g) => [g.id, titleOf(g, "goal.title")] as const));
+  const impacted = new Set(goals.map((g) => g.id)); const also = new Map<string, string>();
+  for (const r of open) if (taskIds.has(r.id)) for (const gid of goalIdsOf(r)) if (!impacted.has(gid) && allGoals.has(gid)) also.set(gid, allGoals.get(gid)!);
+  const alsoHelps = [...also.entries()].map(([id, title]) => ({ id, title })).sort((a, b) => cmp(a.title, b.title) || cmp(a.id, b.id));
+  return { kind: ev.kind, scopeGoalId: scope?.id ?? null, goals, tasks, dates, money, risks, assumptions: ASSUMPTIONS[ev.kind], alsoHelps,
     markedNotTrue: recs.filter((r) => r.entity === "task" && r.values["task.not_true_on"]?.state === "value").length };
 }
 /** True when the event touches nothing in the plan. The user can still note it. */
@@ -205,29 +210,31 @@ export function applyToRecords(recs: readonly TMRecord[], ch: PlanChange): TMRec
 // ---------------------------------------------------------------- snapshots and plan-diff
 
 export interface SnapGoal { id: string; title: string; status: GoalStatus; date: string | null }
-export interface SnapTask { id: string; title: string; state: "open" | "parked" }
-export interface Snapshot { v: 1; mode: CapacityMode; goals: SnapGoal[]; tasks: SnapTask[] }
+/** `goalIds` (snapshot version 2) = the goals the step served at that time. Missing (version 1) means UNKNOWN, so no false "link removed" row is ever made. */
+export interface SnapTask { id: string; title: string; state: "open" | "parked"; goalIds?: string[] }
+export interface Snapshot { v: 1 | 2; mode: CapacityMode; goals: SnapGoal[]; tasks: SnapTask[] }
 
 /** The plan as it stands: goals (title, status, date), steps still ahead (open or parked) and the plan mode. */
 export function snapshotOf(recs: readonly TMRecord[], mode: CapacityMode): Snapshot {
   const goals = recs.filter((r) => r.entity === "goal" && str(r.values["goal.title"])).sort((a, b) => cmp(a.id, b.id))
     .map((g): SnapGoal => ({ id: g.id, title: titleOf(g, "goal.title"), status: goalStatusOf(g), date: (() => { const d = str(g.values["goal.target_date"]); return d && validDay(d) ? d : null; })() }));
   const tasks = recs.filter((r) => isOpenTask(r) || isParkedTask(r)).sort((a, b) => cmp(a.id, b.id))
-    .map((r): SnapTask => ({ id: r.id, title: titleOf(r, "task.title"), state: isParkedTask(r) ? "parked" : "open" }));
-  return { v: 1, mode, goals, tasks };
+    .map((r): SnapTask => ({ id: r.id, title: titleOf(r, "task.title"), state: isParkedTask(r) ? "parked" : "open", goalIds: [...goalIdsOf(r)].sort() }));
+  return { v: 2, mode, goals, tasks };
 }
 export function parseSnapshot(text: string | null): Snapshot | null {
   if (!text) return null;
   try {
     const s = JSON.parse(text) as Partial<Snapshot>;
-    if (s?.v !== 1 || !["normal", "minimum_week", "pause"].includes(String(s.mode)) || !Array.isArray(s.goals) || !Array.isArray(s.tasks)) return null;
+    if ((s?.v !== 1 && s?.v !== 2) || !["normal", "minimum_week", "pause"].includes(String(s.mode)) || !Array.isArray(s.goals) || !Array.isArray(s.tasks)) return null;
     const goals = s.goals.filter((g): g is SnapGoal => !!g && typeof g.id === "string" && typeof g.title === "string" && (GOAL_STATUSES as readonly string[]).includes(String(g.status)) && (g.date === null || typeof g.date === "string"));
-    const tasks = s.tasks.filter((t): t is SnapTask => !!t && typeof t.id === "string" && typeof t.title === "string" && (t.state === "open" || t.state === "parked"));
-    return { v: 1, mode: s.mode as CapacityMode, goals, tasks };
+    const tasks = s.tasks.filter((t): t is SnapTask => !!t && typeof t.id === "string" && typeof t.title === "string" && (t.state === "open" || t.state === "parked"))
+      .map((t) => (s.v === 2 && Array.isArray(t.goalIds) ? { ...t, goalIds: t.goalIds.filter((x): x is string => typeof x === "string").sort() } : { id: t.id, title: t.title, state: t.state }));
+    return { v: s.v, mode: s.mode as CapacityMode, goals, tasks };
   } catch { return null; }
 }
 
-export interface DiffRow { kind: "mode" | "goal" | "task"; id: string; title: string; field: "mode" | "date" | "status" | "state"; from: string | null; to: string | null }
+export interface DiffRow { kind: "mode" | "goal" | "task"; id: string; title: string; field: "mode" | "date" | "status" | "state" | "link"; from: string | null; to: string | null }
 /** Old against new, changed rows only. `null` on one side means the item is not in that plan. */
 export function planDiff(before: Snapshot, after: Snapshot): DiffRow[] {
   const rows: DiffRow[] = [];
@@ -243,6 +250,8 @@ export function planDiff(before: Snapshot, after: Snapshot): DiffRow[] {
   for (const id of [...new Set([...bt.keys(), ...at.keys()])].sort()) {
     const b = bt.get(id), a = at.get(id), title = (a ?? b)!.title;
     if (b?.state !== a?.state) rows.push({ kind: "task", id, title, field: "state", from: b?.state ?? null, to: a?.state ?? null });
+    // A link row only when BOTH sides know the goals (snapshot version 2); a version 1 side is unknown, never "removed".
+    else if (b?.goalIds && a?.goalIds && b.goalIds.join(",") !== a.goalIds.join(",")) rows.push({ kind: "task", id, title, field: "link", from: b.goalIds.join(","), to: a.goalIds.join(",") });
   }
   return rows;
 }
@@ -275,7 +284,7 @@ export function loopLogRecord(p: { id: string; eventId: string | null; text: str
 }
 
 export interface VersionRow { id: string; number: number; option: VersionOption; on: string | null; eventId: string | null; before: Snapshot | null; after: Snapshot | null; diff: DiffRow[] | null }
-const VERSION_OPTIONS: readonly string[] = [...LOOP_OPTIONS, "resume"];
+const VERSION_OPTIONS: readonly string[] = [...LOOP_OPTIONS, "resume", "goal_delete"];
 /** Saved plan versions, newest first. The diff is old (before) against new (after); null when a snapshot cannot be read. */
 export function versionRows(recs: readonly TMRecord[]): VersionRow[] {
   const out: VersionRow[] = [];

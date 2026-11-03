@@ -25,7 +25,8 @@ const listText = (names: string[], lang: Locale, max = 4): string => (names.leng
 
 // ---------------------------------------------------------------- diff and impact views
 
-function diffText(r: DiffRow, lang: Locale): string {
+const titlesOf = (recs: readonly TMRecord[]): ReadonlyMap<string, string> => new Map(recs.filter((r) => r.entity === "goal").map((g) => [g.id, String((g.values["goal.title"] as { value?: unknown } | undefined)?.value ?? "")] as const));
+function diffText(r: DiffRow, lang: Locale, titles: ReadonlyMap<string, string> = new Map()): string {
   const state = (x: string | null) => (x === null ? t("rl.state.none", lang) : t(`rl.state.${x}` as Key, lang));
   if (r.kind === "mode") return t("rl.diff.mode", lang, { a: t(`plan.mode.${r.from}` as Key, lang), b: t(`plan.mode.${r.to}` as Key, lang) });
   if (r.kind === "goal") {
@@ -33,11 +34,12 @@ function diffText(r: DiffRow, lang: Locale): string {
     if (r.field === "status") return t("rl.diff.goal.status", lang, { t: r.title, a: opt("goal.status", r.from ?? "", lang), b: opt("goal.status", r.to ?? "", lang) });
     return t("rl.diff.goal.listed", lang, { t: r.title, a: r.from ? t("rl.state.listed", lang) : t("rl.state.none", lang), b: r.to ? t("rl.state.listed", lang) : t("rl.state.none", lang) });
   }
+  if (r.field === "link") { const names = (x: string | null) => (x ? x.split(",").map((id) => titles.get(id) ?? id).join(", ") : t("rl.state.none", lang)); return t("rl.diff.link", lang, { t: r.title || "—", a: names(r.from), b: names(r.to) }); }
   return t("rl.diff.task", lang, { t: r.title || "—", a: state(r.from), b: state(r.to) });
 }
-export function diffList(rows: DiffRow[], lang: Locale): HTMLElement {
+export function diffList(rows: DiffRow[], lang: Locale, titles: ReadonlyMap<string, string> = new Map()): HTMLElement {
   return rows.length
-    ? h("ul", { class: "plain", "data-diff": String(rows.length) }, ...rows.map((r) => h("li", { "data-diff-row": `${r.kind}:${r.field}` }, diffText(r, lang))))
+    ? h("ul", { class: "plain", "data-diff": String(rows.length) }, ...rows.map((r) => h("li", { "data-diff-row": `${r.kind}:${r.field}` }, diffText(r, lang, titles))))
     : h("p", { class: "muted", "data-diff": "0" }, t("rl.diff.none", lang));
 }
 
@@ -46,6 +48,7 @@ function impactView(imp: Impact, lang: Locale): HTMLElement {
   const items: HTMLElement[] = [];
   if (imp.goals.length) items.push(line("goals", t("rl.impact.goals", lang, { list: listText(imp.goals.map((g) => g.title), lang) })));
   if (imp.tasks.length) items.push(line("tasks", t("rl.impact.tasks", lang, { n: num(imp.tasks.length, lang), d: num(imp.tasks.filter((x) => x.viaDependency).length, lang) })));
+  if (imp.alsoHelps.length) items.push(line("also", t("rl.impact.also", lang, { list: listText(imp.alsoHelps.map((g) => g.title), lang) })));
   if (imp.dates.length) items.push(line("dates", t("rl.impact.dates", lang, { list: listText(imp.dates.map((d) => `${d.title} (${d.date})`), lang) })));
   const undated = imp.goals.length - imp.dates.length;
   if (undated > 0) items.push(h("li", { class: "muted", "data-impact": "undated" }, t("rl.impact.undated", lang, { n: num(undated, lang) })));
@@ -75,7 +78,7 @@ export function commitChange(p: { ch: PlanChange; option: VersionOption; event: 
   putMode(versionRecord({ id: `pv-${suffix}`, number, option, on: day, eventId: event?.id ?? null, before, after, createdAt: now.toISOString() }));
   const optName = t(`rl.opt.${option}` as Key, lang);
   putMode(loopLogRecord({ id: `rlog-${suffix}`, eventId: event?.id ?? null, createdAt: now.toISOString(), text: t("rl.logged", lang, { n: num(number, lang), opt: optName, date: day }) }));
-  if (event) storeOf(event).put(inNs(decidedEvent(event, option === "resume" ? null : option), event.ns));
+  if (event) storeOf(event).put(inNs(decidedEvent(event, option === "resume" || option === "goal_delete" ? null : option), event.ns));
   return number;
 }
 
@@ -116,7 +119,7 @@ function optionBlock(ev: EventRow, evRec: TMRecord, imp: Impact, option: LoopOpt
       h("h3", { class: "card-h" }, t(`rl.opt.${option}` as Key, lang)),
       h("p", { class: "muted" }, t(`rl.opt.${option}.why` as Key, lang)),
       daySel,
-      h("p", {}, h("strong", {}, t("rl.diff.title", lang))), diffList(diff, lang),
+      h("p", {}, h("strong", {}, t("rl.diff.title", lang))), diffList(diff, lang, titlesOf(allRecs())),
       ch.big ? h("div", {}, tick, " ", h("label", { for: `rl-tick-${ev.id}-${option}` }, t("rl.big.tick", lang))) : null,
       msg, approve].filter((x): x is HTMLElement => !!x));
   };
@@ -188,7 +191,7 @@ function resumeCard(lang: Locale): HTMLElement | null {
   return h("section", { class: "card", "data-resume": "1", "aria-label": t("rl.resume.title", lang) },
     h("h2", { class: "card-h" }, t("rl.resume.title", lang)),
     h("p", { class: "muted" }, t("rl.resume.p", lang, { n: num(RESUME_STEPS, lang) })),
-    diffList(diff, lang), msg, diff.length ? btn : null);
+    diffList(diff, lang, titlesOf(allRecs())), msg, diff.length ? btn : null);
 }
 
 function parkedList(lang: Locale): HTMLElement {
@@ -238,7 +241,7 @@ export function historySections(lang: Locale): HTMLElement {
       ? h("div", { "data-versions": String(versions.length) }, ...versions.map((v) => h("details", { class: "card", "data-version": String(v.number) },
         h("summary", {}, t("rl.version", lang, { n: num(v.number, lang) }), " · ", t(`rl.opt.${v.option}` as Key, lang), " · ", v.on ?? t("rl.date.none", lang)),
         v.eventId && evName.get(v.eventId) ? h("p", { class: "muted" }, t("rl.version.for", lang, { e: evName.get(v.eventId)! })) : null,
-        v.diff ? h("div", {}, h("p", {}, h("strong", {}, t("rl.diff.title", lang))), diffList(v.diff, lang)) : h("p", { class: "muted" }, t("rl.version.unreadable", lang)))))
+        v.diff ? h("div", {}, h("p", {}, h("strong", {}, t("rl.diff.title", lang))), diffList(v.diff, lang, new Map([...(v.before?.goals ?? []), ...(v.after?.goals ?? [])].map((g) => [g.id, g.title] as const)))) : h("p", { class: "muted" }, t("rl.version.unreadable", lang)))))
       : h("p", { class: "muted" }, t("rl.hist.noVersions", lang)),
     link("#/journey/reality", "crumb", t("rl.link", lang)));
 }
