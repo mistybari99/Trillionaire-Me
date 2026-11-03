@@ -1,10 +1,14 @@
 // App-shell cache. Same-origin GET only, no third-party calls.
 // Install saves the whole app (the list is stamped in at build time by tools/precache.ts), so every screen, font, content pack and
-// image works offline after the first visit. While online, pages are fetched fresh and the latest copy is kept as well.
+// image works offline after the first visit. While online, saved app files are fetched fresh and the latest copy is kept as well.
+// Anything that is NOT in the saved list (a file added later, a copy with a query string) uses stale-while-revalidate: the saved copy
+// answers at once and a fresh copy is fetched in the background for next time. Without a saved copy the network answers.
 const VERSION = /*PRECACHE_VERSION*/"dev";
 const PRECACHE = /*PRECACHE_LIST*/[];
 const SHELL = `tm-shell-${VERSION}`;
 const RUNTIME = "tm-runtime-v1";
+const SAVED = new Set(PRECACHE.map((u) => new URL(u, self.registration.scope).href));
+const isSaved = (url) => { const u = new URL(url); u.search = ""; u.hash = ""; return SAVED.has(u.href); };
 self.addEventListener("install", (e) => {
   self.skipWaiting();
   e.waitUntil(caches.open(SHELL).then((c) => Promise.allSettled(PRECACHE.map((u) => c.add(new Request(u, { cache: "reload" }))))));
@@ -17,6 +21,7 @@ self.addEventListener("fetch", (e) => {
   if (req.method !== "GET" || new URL(req.url).origin !== location.origin) return;
   // Audio is played with Range requests. Online: let the browser talk to the network. Offline: answer the range from the saved copy.
   if (req.headers.has("range")) { e.respondWith(rangeFromCache(req).then((r) => r || fetch(req))); return; }
+  if (!isSaved(req.url)) { e.respondWith(staleWhileRevalidate(e, req)); return; }
   e.respondWith(
     fetch(req).then((res) => { if (res.ok) { const c = res.clone(); caches.open(RUNTIME).then((x) => x.put(req, c)); } return res; })
       .catch(() => caches.match(req).then((m) => m || caches.match(req, { ignoreSearch: true })).then((m) => m || caches.match("./")))
@@ -33,4 +38,11 @@ async function rangeFromCache(req) {
   const start = mt && mt[1] ? Number(mt[1]) : 0;
   const end = mt && mt[2] ? Math.min(Number(mt[2]), buf.byteLength - 1) : buf.byteLength - 1;
   return new Response(buf.slice(start, end + 1), { status: 206, headers: { "Content-Type": m.headers.get("Content-Type") || "audio/mpeg", "Content-Range": `bytes ${start}-${end}/${buf.byteLength}`, "Content-Length": String(end - start + 1) } });
+}
+
+// Not-saved content: answer from the runtime copy at once, refresh it in the background, never block on the network when a copy exists.
+function staleWhileRevalidate(e, req) {
+  const refresh = fetch(req).then((res) => { if (res.ok) { const c = res.clone(); caches.open(RUNTIME).then((x) => x.put(req, c)); } return res; });
+  e.waitUntil(refresh.catch(() => undefined));
+  return caches.match(req).then((hit) => hit || refresh.catch(() => caches.match(req, { ignoreSearch: true }).then((m) => m || caches.match("./"))));
 }

@@ -3,7 +3,7 @@ import { execFileSync } from "node:child_process";
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 
 const trace = JSON.parse(readFileSync("tools/traceability.json", "utf8"));
-execFileSync("npx", ["vitest", "run", "--reporter=json", "--outputFile=evidence/vitest.json"], { stdio: "inherit" });
+execFileSync("npx", ["vitest", "run", "--reporter=json", "--outputFile=evidence/vitest.json"], { stdio: "inherit", env: { ...process.env, TM_WRITE_EVIDENCE: "1" } });
 const v = JSON.parse(readFileSync("evidence/vitest.json", "utf8"));
 const e2e = existsSync("evidence/e2e-report.json") ? JSON.parse(readFileSync("evidence/e2e-report.json", "utf8")).results : [];
 const byId = {};

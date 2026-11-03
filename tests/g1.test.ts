@@ -1,6 +1,8 @@
 import { readFileSync } from "node:fs";
 import { beforeEach, describe, expect, it } from "vitest";
-import { writeFileSync, existsSync, mkdirSync } from "node:fs";
+import { writeFileSync, existsSync, mkdirSync, mkdtempSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import { FIELDS, intakeSteps } from "../src/catalog/fields";
 import { validateCatalog } from "../src/catalog/validate";
 import { GLOSSARY } from "../src/catalog/glossary";
@@ -107,8 +109,10 @@ describe("TM-TST-143 demo/real isolation", () => {
 describe("TM-TST-092/066 field catalog completeness", () => {
   const rep = validateCatalog();
   it("100% of fields have help, privacy, purpose, access, bn+en text", () => {
-    mkdirSync("evidence", { recursive: true });
-    writeFileSync("evidence/catalog-report.json", JSON.stringify(rep, null, 2));
+    // A test run never rewrites tracked evidence. Set TM_WRITE_EVIDENCE=1 (or run `npm run evidence`) to refresh evidence/catalog-report.json on purpose.
+    const outDir = process.env.TM_WRITE_EVIDENCE === "1" ? "evidence" : mkdtempSync(join(tmpdir(), "tm-catalog-"));
+    mkdirSync(outDir, { recursive: true });
+    writeFileSync(join(outDir, "catalog-report.json"), JSON.stringify(rep, null, 2));
     expect(rep.problems).toEqual([]);
     for (const k of ["withHelp", "withPrivacy", "withPurposeAndAccess", "withBilingualLabel", "withUnknownRule"] as const) expect(rep[k]).toBe(rep.fields);
     expect(rep.fields).toBeGreaterThanOrEqual(40);

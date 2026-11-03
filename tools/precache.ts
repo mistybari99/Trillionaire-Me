@@ -5,7 +5,7 @@ import { existsSync, readdirSync, readFileSync, statSync, writeFileSync } from "
 import { join, relative, sep } from "node:path";
 import type { Plugin } from "vite";
 
-const SKIP = (p: string) => p === "sw.js" || p === "precache.json" || p.endsWith(".map") || p.endsWith(".DS_Store") || p.endsWith(".gitkeep");
+const SKIP = (p: string) => p === "sw.js" || p === "precache.json" || p === "_headers" || p.endsWith(".map") || p.endsWith(".DS_Store") || p.endsWith(".gitkeep");
 
 /** Relative URLs ("./x") of the files to save, sorted. The page itself is saved under "./" and "./index.html"; sw.js, source maps and old-format fonts are left out. */
 export function precacheList(files: readonly string[]): string[] {

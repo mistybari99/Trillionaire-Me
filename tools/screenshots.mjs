@@ -1,4 +1,6 @@
 // Screenshot report: every route at 360 px, Bangla and English (G1 definition of done).
+import { existsSync } from "node:fs";
+const SANDBOX_CHROME = "/opt/pw-browsers/chromium-1194/chrome-linux/chrome";
 import { chromium } from "playwright";
 import { preview } from "vite";
 import { mkdirSync, writeFileSync } from "node:fs";
@@ -9,7 +11,7 @@ const SEED_TASK = { id: "shot-task", entity: "task", ns: "demo", ownerId: "demo-
 const out = "evidence/screenshots";
 mkdirSync(out, { recursive: true });
 const server = await preview({ preview: { port: 4173, strictPort: true } });
-const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || "/opt/pw-browsers/chromium-1194/chrome-linux/chrome" });
+const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || (existsSync(SANDBOX_CHROME) ? SANDBOX_CHROME : undefined) });
 const report = [];
 // Look matrix (TM_SHOT_LOOKS=1): all 4 Design versions x light/dark x normal/reduced motion at 360 px, English, with a seeded DEMO goal and tasks.
 const LOOKS = process.env.TM_SHOT_LOOKS === "1";
