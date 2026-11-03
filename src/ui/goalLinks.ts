@@ -7,6 +7,7 @@ import type { Locale } from "../i18n/registry";
 import { allRecs } from "./entry";
 import { buildTree, flatten, type TreeNode } from "../core/goalTree";
 import { goalStatusOf } from "../core/goalStatus";
+import { taskTrace } from "../core/taskTrace";
 import { MAX_GOALS, goalIdsOf } from "../core/taskGoals";
 import type { TMRecord } from "../core/types";
 
@@ -71,4 +72,19 @@ export function goalChips(step: TMRecord, lang: Locale, recs: readonly TMRecord[
   return h("span", { class: "goal-chips", "data-goal-chips": step.id },
     ...shownGoals.map((g) => h("a", { href: goalHash(g.id), class: "tag", "data-goal-chip-link": g.id, title: title(g), "aria-label": title(g) + word(g) }, (opts.prefix ? t(opts.prefix, lang, { title: short(title(g)) }) : short(title(g))) + word(g))),
     live.length > 2 ? h("span", { class: "tag", "data-goal-more": String(live.length - 2), title: live.slice(2).map(title).join(", ") }, t("gl.chip.more", lang, { n: String(live.length - 2) })) : null);
+}
+
+/** The "Where does this go?" section of the step edit sheet: for each goal the path and what Done changes, plus the overall (counted once). */
+export function whereThisGoes(step: TMRecord, lang: Locale, recs: readonly TMRecord[] = allRecs()): HTMLElement {
+  const tr = taskTrace(recs, step.id); const n = (x: number) => String(x);
+  const lines: HTMLElement[] = [];
+  if (!tr) return h("section", { "data-where-goes": step.id });
+  if (!tr.counted) lines.push(h("p", { class: "muted" }, t("gl.where.off", lang)));
+  else if (!tr.goals.length) lines.push(h("p", { class: "muted", "data-where-none": "1" }, t("gl.where.none", lang)));
+  else for (const g of tr.goals) {
+    const path = g.path.join(" > ");
+    lines.push(h("p", { "data-where-goal": g.id }, g.manual ? t("gl.where.manual", lang, { path }) : tr.alreadyDone ? t("gl.where.done", lang, { path, d: n(g.done), n: n(g.total) }) : t("gl.where.line", lang, { path, d: n(g.done), n: n(g.total), d2: n(g.doneAfter) })));
+  }
+  if (tr.overall) lines.push(h("p", { class: "muted", "data-where-overall": "1" }, tr.alreadyDone ? t("gl.where.overallDone", lang, { d: n(tr.overall.done), n: n(tr.overall.total) }) : t("gl.where.overall", lang, { d: n(tr.overall.done), n: n(tr.overall.total), d2: n(tr.overall.doneAfter) })));
+  return h("section", { "data-where-goes": step.id }, h("h3", {}, t("gl.where.title", lang)), ...lines);
 }

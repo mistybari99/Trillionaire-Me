@@ -84,7 +84,7 @@ import { sourceLine } from "./prayerSyncUi";
 import { markedOn, prayerLogId, prayerLogRecord } from "../core/prayerLog";
 import { fastLogId, fastLogRecord, isFastMarked } from "../core/fastLog";
 import { goalIdsOf, validateLinks, withGoals } from "../core/taskGoals";
-import { goalChips, goalPicker } from "./goalLinks";
+import { goalChips, goalPicker, whereThisGoes } from "./goalLinks";
 import { activeNs, allRecs, asReal, entryNs, putMode, consentOn, consentPrompt, findRec, inNs, labelFor, nsTag, ownerOf, saveBlockedText, saveTyped, storeOf, typed, valueLabel } from "./entry";
 import { SCHEMA_VERSION } from "../schema/entities";
 
@@ -239,7 +239,7 @@ function taskEditForm(r: TMRecord, lang: Locale): HTMLElement {
   const pick = goalPicker(allRecs(), goalIdsOf(r), lang, `edit-${r.id}`);
   const f = h("form", { novalidate: true, "data-task-edit": r.id },
     h("label", { for: `te-t-${r.id}` }, t("plan.task.title", lang)), title, h("label", { for: `te-m-${r.id}` }, t("plan.task.minutes", lang)), mins,
-    h("label", { for: `te-p-${r.id}` }, t("plan.task.priority", lang)), prio, h("p", {}, h("strong", {}, t("gl.pick.label", lang))), pick.el, msg, h("button", { class: "btn ghost", type: "submit", style: "width:auto;margin:6px 0 0;min-height:44px" }, t("plan.task.update", lang)));
+    h("label", { for: `te-p-${r.id}` }, t("plan.task.priority", lang)), prio, h("p", {}, h("strong", {}, t("gl.pick.label", lang))), pick.el, whereThisGoes(r, lang), msg, h("button", { class: "btn ghost", type: "submit", style: "width:auto;margin:6px 0 0;min-height:44px" }, t("plan.task.update", lang)));
   f.addEventListener("submit", (ev) => {
     ev.preventDefault(); msg.textContent = "";
     if (!entryNs()) { msg.textContent = saveBlockedText(lang); return; }
