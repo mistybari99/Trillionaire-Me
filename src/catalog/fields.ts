@@ -2,7 +2,7 @@ import type { Bi } from "../i18n/registry";
 import { UNKNOWN_STATES, type UnknownState } from "../core/types";
 import type { AccessRule, ChoiceOption, FieldDef, FieldType, Importance, PrivacyClass, Purpose, Requirement } from "./types";
 
-export const CATALOG_VERSION = 16;
+export const CATALOG_VERSION = 17;
 
 const bi = (bn: string, en: string): Bi => ({ bn, en });
 const opt = (code: string, bn: string, en: string): ChoiceOption => ({ code, label: bi(bn, en) });
@@ -412,6 +412,11 @@ export const FIELDS: FieldDef[] = [
     what: bi("নিয়মিত করতে চান এমন ছোট কাজ।", "A small action you want to repeat."),
     why: bi("ধারাবাহিকতা দেখতে; মিস হলে শাস্তির ভাষা নেই।", "To see consistency; a missed day carries no punishment."),
     example: bi("১০ মিনিট পড়া", "Read for 10 minutes"), format: bi("এক লাইন", "One line") }),
+  f({ id: "habit.goals", entity: "habit", family: "FAM-06", type: "list", purpose: "habit", importance: "useful",
+    label: bi("এই অভ্যাস কোন কোন লক্ষ্যে সাহায্য করে", "Goals this habit helps"),
+    what: bi("এক বা একাধিক লক্ষ্য (সর্বোচ্চ ৫টি)। অভ্যাস কোনো শতাংশে গোনা হয় না, শুধু লক্ষ্যের পাতায় দেখা যায়।", "One or more goals (up to 5). A habit is never counted in a percent; it is only shown on the goal page."),
+    why: bi("কোন অভ্যাস কোন লক্ষ্যে কাজ করছে তা দেখতে।", "To see which habit works for which goal."),
+    example: bi("স্বাস্থ্য", "Health"), format: bi("লক্ষ্যের নামের বোতামে ট্যাপ", "Tap the goal names") }),
   f({ id: "habit.days_per_week", entity: "habit", family: "FAM-06", type: "number", unit: "days", purpose: "habit", importance: "optional",
     label: bi("সপ্তাহে কত দিন", "Days per week"),
     what: bi("সপ্তাহে কত দিন করতে চান।", "How many days a week you aim for."),

@@ -855,6 +855,13 @@ export function focusScreen(taskId: string | undefined): HTMLElement {
 const focusBtn = (taskId: string, lang: Locale) => link(`#/focus/${taskId}`, "btn ghost", t("focus.link", lang));
 
 // ---- habits ----
+/** Chips for the goals a habit helps, and a small sheet to change them. A habit is traced to goals, never counted in a percent. */
+function habitGoalsRow(id: string, lang: Locale): HTMLElement {
+  const r = findRec(id); if (!r) return h("span", {});
+  const pick = goalPicker(allRecs(), goalIdsOf(r), lang, `habit-${id}`); const ok = h("p", { class: "ok-msg", role: "status" });
+  return h("div", { "data-habit-goals": id }, goalChips(r, lang) ?? "", h("details", { class: "help" }, h("summary", {}, t("gl.habit.goals", lang)), pick.el,
+    h("button", { class: "btn ghost", type: "button", "data-act": "habit-goals-save", style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => { saveGoalLinks(id, pick.ids()); ok.textContent = t("gl.habit.saved", lang); rerender(); } }, t("gl.habit.save", lang)), ok));
+}
 function habitsFromStore() {
   const recs = allRecs(); const g = (r: TMRecord, k: string) => (r.values[k] as { value?: unknown } | undefined)?.value;
   const habits: Habits.Habit[] = recs.filter((r) => r.entity === "habit" && r.values["habit.title"]?.state === "value").sort((a, b) => a.id.localeCompare(b.id)).map((r) => ({
@@ -900,7 +907,7 @@ export function habitsScreen(): HTMLElement {
       h("span", { class: "muted", "data-consistency": "1" }, c.planned ? valueEl(t("habits.month", lang, { d: num(c.done, lang), p: num(c.planned, lang) }), "INFERENCE", lang) : t("habits.noPlanned", lang)));
     return h("div", { class: "card", "data-habit-card": hb.id },
       h("div", { class: "row" }, h("div", {}, nsTag(findRec(hb.id)?.ns ?? activeNs(), lang), h("h2", { class: "card-h", }, hb.title)), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0;min-height:44px", onclick: () => { removeHabit(hb.id); rerender(); } }, t("habits.remove", lang))),
-      main, dots, habitChart(hb, logs, today, lang),
+      main, dots, habitChart(hb, logs, today, lang), habitGoalsRow(hb.id, lang),
       h("p", { class: "muted", "data-per-week": String(perWeek(hb)) }, t("habits.perWeek", lang, { n: num(perWeek(hb), lang) })),
       h("p", { class: "muted", "data-consistency": "1" }, c.planned ? valueEl(t("habits.month", lang, { d: num(c.done, lang), p: num(c.planned, lang) }), "INFERENCE", lang) : t("habits.noPlanned", lang)),
       Habits.restartPlan(hb, logs, today) === "smallest_version" ? h("p", { class: "note", "data-restart": "1" }, t("habits.restart", lang)) : null);
@@ -912,15 +919,18 @@ export function habitsScreen(): HTMLElement {
   const target = h("input", { id: "hb-target", type: "text", inputmode: "numeric" }) as HTMLInputElement; const unit = h("input", { id: "hb-unit", type: "text", maxlength: "20" }) as HTMLInputElement;
   const err = h("p", { class: "err", role: "alert" });
   const gate = consentOn() ? null : consentPrompt(lang);
+  const hbPick = goalPicker(allRecs(), [], lang, "habit-new");
   const form = h("form", { novalidate: true, "data-form": "habit" }, gate, h("label", { for: "hb-name" }, t("habits.name", lang)), name, h("label", {}, t("habits.days", lang)), chips,
-    h("label", { for: "hb-target" }, t("habits.target", lang)), target, h("label", { for: "hb-unit" }, t("habits.unit", lang)), unit, err, h("button", { class: "btn", type: "submit" }, t("habits.save", lang)));
+    h("label", { for: "hb-target" }, t("habits.target", lang)), target, h("label", { for: "hb-unit" }, t("habits.unit", lang)), unit, h("p", {}, h("strong", {}, t("gl.habit.goals", lang))), hbPick.el, err, h("button", { class: "btn", type: "submit" }, t("habits.save", lang)));
   form.addEventListener("submit", (ev) => {
     ev.preventDefault(); err.textContent = ""; const nm = name.value.trim(); if (!nm) return;
     if (!checkFreeText(nm).ok || !checkFreeText(unit.value).ok) { err.textContent = t("intake.secretRejected", lang); return; }
     const raw = target.value.trim().replace(/[০-৯]/g, (c) => String(c.charCodeAt(0) - 0x09e6)); let tv: FieldValue | null = null;
     if (raw !== "") { const n = Number(raw); if (!Number.isFinite(n) || n <= 0 || n > 1000) { err.textContent = t("intake.invalidNumber", lang); return; } tv = typed(Math.round(n)); }
-    if (!saveTyped({ id: `habit-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 4)}`, entity: "habit", createdAt: new Date().toISOString(),
+    const habitId = `habit-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 4)}`;
+    if (!saveTyped({ id: habitId, entity: "habit", createdAt: new Date().toISOString(),
       values: { "habit.title": typed(nm), "habit.days": typed([...chosen].sort().join(",")), "habit.days_per_week": typed(chosen.size), ...(tv ? { "habit.target": tv, "habit.unit": typed(unit.value.trim()) } : {}) } })) { err.textContent = saveBlockedText(lang); return; }
+    saveGoalLinks(habitId, hbPick.ids());
     rerender();
   });
   return h("main", {}, link("#/today", "crumb", `← ${t("nav.today", lang)}`), h("h1", {}, t("habits.title", lang)), h("p", { class: "sub" }, t("habits.intro", lang)),

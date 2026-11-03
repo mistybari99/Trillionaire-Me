@@ -22,6 +22,7 @@ import { tb } from "../i18n/t";
 import { progressRing } from "./ring";
 import { goalChips } from "./goalLinks";
 import { goalDeleteCard } from "./goalDelete";
+import { habitLines } from "../core/habitGoals";
 import { goalIdsOf } from "../core/taskGoals";
 import { linkStats } from "../core/goalPlan";
 import { HORIZONS } from "../core/horizon";
@@ -197,12 +198,19 @@ function goalsScreenInner(): HTMLElement {
 }
 
 // ---- One goal: steps grouped by node (the goal, then each part). A shared step appears under every goal it serves, with an "Also" chip. ----
+function habitRows(n: TreeNode, recs: readonly TMRecord[], lang: Locale): HTMLElement[] {
+  const d = new Date(); const today = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+  return habitLines(recs, new Set([n.id]), today).map((x) => h("p", { class: "muted", "data-goal-habit": x.id },
+    !x.started ? t("gl.habit.none", lang, { title: x.title }) : x.planned === 0 ? t("gl.habit.noplan", lang, { title: x.title }) : t("gl.habit.week", lang, { title: x.title, d: num(x.done, lang), p: num(x.planned, lang) })));
+}
+
 function stepsCard(rec: TMRecord, lang: Locale): HTMLElement {
   const recs = allRecs(); const node = nodeById(buildTree(recs), rec.id)!; const all = recs.filter((r) => r.entity === "task");
   const doneOf = (r: TMRecord) => r.values["task.done_on"]?.state === "value";
   const block = (n: TreeNode) => {
     const mine = all.filter((r) => r.values["task.not_true_on"]?.state !== "value" && goalIdsOf(r).includes(n.id)).sort((a, b) => a.id.localeCompare(b.id));
     return h("div", { "data-steps-of": n.id }, h("h3", {}, n.depth === 0 ? n.title : `${"· ".repeat(n.depth)}${n.title}`),
+      ...habitRows(n, recs, lang),
       mine.length ? h("ul", { class: "plain" }, ...mine.map((r) => h("li", { "data-step": r.id }, h("strong", {}, textOf(r, "task.title")), doneOf(r) ? h("span", { class: "tag ok" }, ` ${t("gl.steps.done", lang)}`) : null, " ", goalChips(r, lang, recs, { exclude: n.id, prefix: "gl.also" }))))
         : h("p", { class: "muted" }, t("gl.steps.none", lang)));
   };
