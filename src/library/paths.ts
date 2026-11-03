@@ -7,7 +7,7 @@ export type Theme = "creative" | "tech" | "people" | "numbers" | "trade" | "maki
 export const THEME_LABEL: Record<Theme, Bi> = {
   creative: { bn: "সৃজনশীল কাজ", en: "Creative work" },
   tech: { bn: "প্রযুক্তি", en: "Technology" },
-  people: { bn: "মানুষের সঙ্গে কাজ", en: "Working with people" },
+  people: { bn: "মানুষের সাথে কাজ", en: "Working with people" },
   numbers: { bn: "হিসাব ও সংখ্যা", en: "Numbers & accounts" },
   trade: { bn: "কেনাবেচা", en: "Buying & selling" },
   making: { bn: "হাতে বানানো", en: "Making things" },

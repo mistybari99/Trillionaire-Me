@@ -42,17 +42,20 @@ for (const group of groups) {
     const edits = [];
     for (const s of segs) {
       const prot = isProtected(cfg.protected, file, s.key, s.text);
-      const { text: afterRules, ids } = applyWordRules(s.text, cfg.rules, group, { file, key: s.key, en: file === "src/i18n/packs.ts" ? enOf(s.key) : undefined, protected: prot });
+      const { text: afterRules, ids } = applyWordRules(s.text, cfg.rules, group, { file, key: s.key, line: lineOf(src, s.start), en: file === "src/i18n/packs.ts" ? enOf(s.key) : undefined, protected: prot });
       let next = afterRules; const why = [...ids];
-      const rw = rewrites.find((r) => r.file === file && r.key === s.key);
-      if (rw) {
-        used.add(rw.id);
-        if (!afterRules.includes(rw.expect)) refused.push({ id: rw.id, file, key: s.key, why: `expected text '${rw.expect}' not found now` });
-        else if (prot && !rw.allowProtected) refused.push({ id: rw.id, file, key: s.key, why: "protected string" });
-        else { next = rw.to; why.push(rw.id); }
+      // rewrites: by packs.ts key (whole line, or `partial` = replace only the expected part), or key null = partial edit of any string of that file that contains `expect`
+      const cands = rewrites.filter((r) => r.file === file && ((r.key != null && r.key === s.key) || (r.key == null && afterRules.includes(r.expect))));
+      let rw = null;
+      for (const c of cands) {
+        used.add(c.id); rw = c;
+        const partial = c.partial || c.key == null;
+        if (!next.includes(c.expect)) refused.push({ id: c.id, file, key: s.key, why: `expected text '${c.expect}' not found now` });
+        else if (prot && !c.allowProtected) refused.push({ id: c.id, file, key: s.key, why: "protected string" });
+        else { next = partial ? next.split(c.expect).join(c.to) : c.to; why.push(c.id); }
       }
       if (next === s.text) continue;
-      const g = guardReason(s.text, next, rw && rw.allowGuard);
+      const g = guardReason(s.text, next, cands.map((c) => c.allowGuard).find(Boolean));
       if (g) { refused.push({ id: why.join("+"), file, key: s.key, why: g }); continue; }
       for (const id of why) perRule[id] = (perRule[id] || 0) + 1;
       changes.push({ group, file, key: s.key, line: lineOf(src, s.start), before: s.text, after: next, rules: why, protected: prot });

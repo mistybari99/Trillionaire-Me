@@ -151,6 +151,6 @@ describe("O5 render on the Plan screen (en and bn)", () => {
     localStorage.setItem("tm:ui:lang", "bn");
     seed();
     go("#/diary/plan");
-    expect(document.querySelector("[data-assessment] [data-path='bookkeeping']")!.textContent).toMatch(/আপনার স্কিল “Excel” থেকে: হিসাব ও সংখ্যা-এর সঙ্গে মিলছে/);
+    expect(document.querySelector("[data-assessment] [data-path='bookkeeping']")!.textContent).toMatch(/আপনার স্কিল “Excel” থেকে: হিসাব ও সংখ্যা-এর সাথে মিলছে/);
   });
 });

@@ -42,7 +42,7 @@
         "en": "Plan the week in 10 minutes"
       },
       "how": {
-        "bn": "1) আগামী সপ্তাহের স্থির কাজ লিখুন। 2) গুরুত্বপূর্ণ 3টি কাজ বাছুন। 3) প্রতিটির জন্য একটা সময় ঠিক করুন। 4) প্রতিটির পাশে খালি জায়গা রাখুন।",
+        "bn": "1) আগামী সপ্তাহের স্থির কাজ লিখুন। 2) গুরুত্বপূর্ণ 3টি কাজ বাছুন। 3) প্রতিটার জন্য একটা সময় ঠিক করুন। 4) প্রতিটার পাশে খালি জায়গা রাখুন।",
         "en": "1) Write next week's fixed commitments. 2) Choose 3 important tasks. 3) Give each one a time slot. 4) Leave spare room around each."
       },
       "diagram": {
@@ -114,12 +114,12 @@
         "en": "Learn more about time management"
       },
       "how": {
-        "bn": "‘সময় ম্যানেজমেন্ট’ ও ‘অগ্রাধিকার’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। কয়েকটা পদ্ধতি পড়ে একটাই এক সপ্তাহ চালিয়ে দেখুন। উইকিপিডিয়ার পরিচিতি অ্যাপের ব্যাকগ্রাউন্ডে সেভ হয়।",
+        "bn": "‘সময় ম্যানেজমেন্ট’ ও ‘অগ্রাধিকার’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। কয়েকটা মেথড পড়ে একটাই এক সপ্তাহ চালিয়ে দেখুন। উইকিপিডিয়ার পরিচিতি অ্যাপের ব্যাকগ্রাউন্ডে সেভ হয়।",
         "en": "Read general explainers on “time management” and “prioritisation”. Read a few methods, then try just one for a week. Wikipedia overviews are saved in the app background."
       },
       "diagram": {
         "type": "steps",
-        "bn": "কয়েকটা পদ্ধতি পড়ি|একটা বাছি|এক সপ্তাহ চালাই",
+        "bn": "কয়েকটা মেথড পড়ি|একটা বাছি|এক সপ্তাহ চালাই",
         "en": "Read a few methods|Pick one|Try for a week"
       },
       "appLink": "#/cards",
@@ -211,7 +211,7 @@
         "en": "Habit slips to avoid"
       },
       "how": {
-        "bn": "একসঙ্গে অনেক অভ্যাস শুরু করবেন না। একদিন বাদ গেলে ‘সব শেষ’ ভাববেন না; পরদিন সবচেয়ে ছোট ধাপ করুন। অন্যের অভ্যাসের সঙ্গে তুলনা করবেন না।",
+        "bn": "একসঙ্গে অনেক অভ্যাস শুরু করবেন না। একদিন বাদ গেলে ‘সব শেষ’ ভাববেন না; পরদিন সবচেয়ে ছোট ধাপ করুন। অন্যের অভ্যাসের সাথে তুলনা করবেন না।",
         "en": "Do not start many habits at once. If a day is missed, do not think “all is gone”; do the smallest step the next day. Do not compare with other people's habits."
       },
       "diagram": {
@@ -235,12 +235,12 @@
         "en": "Learn more about habits"
       },
       "how": {
-        "bn": "‘অভ্যাস গঠন’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অ্যাপে উইকিপিডিয়া খুঁজলে পরিচিতি সেভ হয়। আমাদের লেখা যাচাইকারীর অপেক্ষায়, তাই নিজের অভিজ্ঞতা দিয়েও মিলিয়ে দেখুন।",
+        "bn": "‘অভ্যাস গঠন’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অ্যাপে উইকিপিডিয়া খুঁজলে পরিচিতি সেভ হয়। আমাদের লেখা রিভিউয়ারের অপেক্ষায়, তাই নিজের অভিজ্ঞতা দিয়েও মিলিয়ে দেখুন।",
         "en": "Read general explainers on “habit formation”. A Wikipedia search in the app saves an overview. Our text is waiting for a reviewer, so check it against your own experience too."
       },
       "diagram": {
         "type": "steps",
-        "bn": "সাধারণ লেখা পড়ি|উইকিপিডিয়া খুঁজি|নিজের অভিজ্ঞতার সঙ্গে মেলাই",
+        "bn": "সাধারণ লেখা পড়ি|উইকিপিডিয়া খুঁজি|নিজের অভিজ্ঞতার সাথে মেলাই",
         "en": "Read general explainers|Search Wikipedia|Match with my experience"
       },
       "appLink": "#/cards",
@@ -477,7 +477,7 @@
         "en": "Learn more about goal setting"
       },
       "how": {
-        "bn": "‘গোল নির্ধারণ’ ও ‘স্মার্ট গোল’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অ্যাপের Plan পেজে নিজের গোল লিখে দেখুন। যাচাইকারীর অপেক্ষায়।",
+        "bn": "‘গোল নির্ধারণ’ ও ‘স্মার্ট গোল’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অ্যাপের Plan পেজে নিজের গোল লিখে দেখুন। রিভিউয়ারের অপেক্ষায়।",
         "en": "Read general explainers on “goal setting” and “SMART goals”. Try writing your own goal on the app's Plan page. Reviewer pending."
       },
       "diagram": {
@@ -526,7 +526,7 @@
         "en": "Steps for a hard decision"
       },
       "how": {
-        "bn": "1) সিদ্ধান্তটা এক লাইনে লিখুন। 2) 2–3টা অপশন লিখুন। 3) প্রতিটির সুবিধা, রিস্ক আর জানা-নেই লিখুন। 4) একটা ছোট টেস্ট করা যায় কিনা দেখুন। 5) দিন ঠিক করে সিদ্ধান্ত নিন।",
+        "bn": "1) সিদ্ধান্তটা এক লাইনে লিখুন। 2) 2–3টা অপশন লিখুন। 3) প্রতিটার সুবিধা, রিস্ক আর জানা-নেই লিখুন। 4) একটা ছোট টেস্ট করা যায় কিনা দেখুন। 5) দিন ঠিক করে সিদ্ধান্ত নিন।",
         "en": "1) Write the decision in one line. 2) List 2–3 options. 3) For each: benefits, risks, unknowns. 4) See if a small test is possible. 5) Set a day and decide."
       },
       "diagram": {

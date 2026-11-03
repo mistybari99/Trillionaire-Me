@@ -90,12 +90,12 @@
         "en": "Measurement slips to avoid"
       },
       "how": {
-        "bn": "অনেক কিছু একসঙ্গে মাপবেন না। অজানা সংখ্যাকে শূন্য ধরবেন না। কম হলে নিজেকে নিয়ে কড়া কথা লিখবেন না; কারণ দেখুন। অন্যের সঙ্গে নিজের সংখ্যা মেলাবেন না।",
+        "bn": "অনেক কিছু একসঙ্গে মাপবেন না। অজানা সংখ্যাকে শূন্য ধরবেন না। কম হলে নিজেকে নিয়ে কড়া কথা লিখবেন না; কারণ দেখুন। অন্যের সাথে নিজের সংখ্যা মেলাবেন না।",
         "en": "Do not measure many things at once. Do not treat unknown numbers as zero. If the number is low, do not write harsh words about yourself; look at causes. Do not compare numbers with others."
       },
       "diagram": {
         "type": "matrix",
-        "bn": "অনেক কিছু মাপা: একটা-দুটো|অজানা শূন্য: ‘জানি না’|কম হলে নিজেকে দোষ: কারণ দেখি|অন্যের সঙ্গে তুলনা: নিজের আগে-পরে",
+        "bn": "অনেক কিছু মাপা: একটা-দুটো|অজানা শূন্য: ‘জানি না’|কম হলে নিজেকে দোষ: কারণ দেখি|অন্যের সাথে তুলনা: নিজের আগে-পরে",
         "en": "Measuring too much: one or two|Unknown as zero: “don't know”|Low number, self-blame: see causes|Comparing with others: own before-after"
       },
       "appLink": "#/journey/log",
@@ -114,7 +114,7 @@
         "en": "Learn more about measuring and reviewing"
       },
       "how": {
-        "bn": "‘আত্ম-রিভিউ’ ও ‘ফিডব্যাক লুপ’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অ্যাপের জার্নি লগে সপ্তাহের শেষে 3 লাইন লিখে দেখুন। যাচাইকারীর অপেক্ষায়।",
+        "bn": "‘আত্ম-রিভিউ’ ও ‘ফিডব্যাক লুপ’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অ্যাপের জার্নি লগে সপ্তাহের শেষে 3 লাইন লিখে দেখুন। রিভিউয়ারের অপেক্ষায়।",
         "en": "Read general explainers on “self-reflection” and “feedback loops”. Try writing 3 lines at week's end in the app's journey log. Reviewer pending."
       },
       "diagram": {
@@ -181,16 +181,16 @@
         "people"
       ],
       "title": {
-        "bn": "উদাহরণ: সভায় প্রথমবার কথা বলা",
+        "bn": "উদাহরণ: মিটিংয়ে প্রথমবার কথা বলা",
         "en": "Example: speaking up in a meeting"
       },
       "how": {
-        "bn": "সাইফুল সভায় কথা বলতে ভয় পেত। প্রথমে সে শুধু একটা প্রশ্ন আগে লিখে নিয়ে গেল, পরের সভায় সেটা পড়ে শোনাল। কয়েক সভা পর নিজের মত বলা সহজ হয়ে এল।",
+        "bn": "সাইফুল মিটিংয়ে কথা বলতে ভয় পেত। প্রথমে সে শুধু একটা প্রশ্ন আগে লিখে নিয়ে গেল, পরের মিটিংয়ে সেটা পড়ে শোনাল। কয়েক মিটিং পর নিজের মত বলা সহজ হয়ে এল।",
         "en": "Saiful was afraid of speaking in meetings. First he took one written question and read it out. A few meetings later, giving his own view felt easier."
       },
       "diagram": {
         "type": "steps",
-        "bn": "প্রশ্ন লিখে যাই|সভায় পড়ি|পরেরবার নিজের মত",
+        "bn": "প্রশ্ন লিখে যাই|মিটিংয়ে পড়ি|পরেরবার নিজের মত",
         "en": "Write a question|Read it in the meeting|Next time own view"
       },
       "kind": "example",
@@ -231,12 +231,12 @@
         "en": "Learn more about confidence"
       },
       "how": {
-        "bn": "‘আত্মবিশ্বাস’ ও ‘ক্রমে সংস্পর্শ’ (ধাপে ধাপে ভয়ের মুখোমুখি হওয়া) নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অতিরিক্ত ভয় বা দুশ্চিন্তা হলে যোগ্য কাউন্সেলরের কাছে যান। যাচাইকারীর অপেক্ষায়।",
+        "bn": "‘আত্মবিশ্বাস’ ও ‘সিরিয়ালে সংস্পর্শ’ (ধাপে ধাপে ভয়ের মুখোমুখি হওয়া) নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অতিরিক্ত ভয় বা দুশ্চিন্তা হলে যোগ্য কাউন্সেলরের কাছে যান। রিভিউয়ারের অপেক্ষায়।",
         "en": "Read general explainers on “self-confidence” and “gradual exposure” (facing fears step by step). For overwhelming fear or worry, see a qualified counsellor. Reviewer pending."
       },
       "diagram": {
         "type": "steps",
-        "bn": "সাধারণ লেখা পড়ি|একটা ছোট ধাপ|প্রয়োজনে কাউন্সেলর",
+        "bn": "সাধারণ লেখা পড়ি|একটা ছোট ধাপ|দরকারে কাউন্সেলর",
         "en": "Read general explainers|One small step|Counsellor if needed"
       },
       "kind": "learn",
@@ -255,7 +255,7 @@
         "en": "What life balance means"
       },
       "how": {
-        "bn": "ভারসাম্য মানে সব ক্ষেত্রে সমান সময় নয়। মানে, যা আপনার কাছে গুরুত্বপূর্ণ তার জন্য জায়গা রাখা। কোনো সময় কাজ বেশি, কোনো সময় পরিবার বেশি, তাতে সমস্যা নেই।",
+        "bn": "ভারসাম্য মানে সব দিকে সমান সময় নয়। মানে, যা আপনার কাছে গুরুত্বপূর্ণ তার জন্য জায়গা রাখা। কোনো সময় কাজ বেশি, কোনো সময় পরিবার বেশি, তাতে সমস্যা নেই।",
         "en": "Balance does not mean equal time everywhere. It means making room for what matters to you. Some seasons need more work, others more family, and that is fine."
       },
       "diagram": {
@@ -279,12 +279,12 @@
         "en": "Steps to look at your life areas"
       },
       "how": {
-        "bn": "1) জীবনের 5–7টা ক্ষেত্র লিখুন। 2) প্রতিটিতে এখন কেমন লাগছে এক শব্দে লিখুন। 3) এই মাসে একটা ক্ষেত্রে ছোট একটা কাজ বাছুন। 4) জানা না থাকলে ফাঁকা রাখুন।",
+        "bn": "1) জীবনের 5–7টা দিক লিখুন। 2) প্রতিটাতে এখন কেমন লাগছে এক শব্দে লিখুন। 3) এই মাসে একটা দিকে ছোট একটা কাজ বাছুন। 4) জানা না থাকলে ফাঁকা রাখুন।",
         "en": "1) List 5–7 life areas. 2) Write how each feels now in one word. 3) Pick one small action in one area this month. 4) Leave blank what you do not know."
       },
       "diagram": {
         "type": "steps",
-        "bn": "ক্ষেত্রগুলো লিখি|এক শব্দে লিখি|একটা ক্ষেত্রে ছোট কাজ|অজানা ফাঁকা",
+        "bn": "দিকগুলো লিখি|এক শব্দে লিখি|একটা দিকে ছোট কাজ|অজানা ফাঁকা",
         "en": "List areas|One word each|One small action|Leave unknown blank"
       },
       "appLink": "#/diary/plan",
@@ -327,12 +327,12 @@
         "en": "Balance slips to avoid"
       },
       "how": {
-        "bn": "নিখুঁত ভারসাম্য খুঁজবেন না। বিশ্রামকে সবার শেষে রাখবেন না। অন্যের জীবনের সঙ্গে নিজেরটা মেলাবেন না। সবকিছুতে হ্যাঁ বললে নিজের জন্য সময় থাকে না।",
+        "bn": "নিখুঁত ভারসাম্য খুঁজবেন না। বিশ্রামকে সবার শেষে রাখবেন না। অন্যের জীবনের সাথে নিজেরটা মেলাবেন না। সবকিছুতে হ্যাঁ বললে নিজের জন্য সময় থাকে না।",
         "en": "Do not chase perfect balance. Do not put rest last. Do not compare your life with others'. Saying yes to everything leaves no time for yourself."
       },
       "diagram": {
         "type": "matrix",
-        "bn": "নিখুঁত ভারসাম্য: এই মাসে একটা|বিশ্রাম সবার শেষে: আগে বসাই|তুলনা: নিজের মূল্য দেখি|সবকিছুতে হ্যাঁ: ‘না’ বলি",
+        "bn": "নিখুঁত ভারসাম্য: এই মাসে একটা|বিশ্রাম সবার শেষে: আগে বসাই|তুলনা: নিজের দাম দেখি|সবকিছুতে হ্যাঁ: ‘না’ বলি",
         "en": "Perfect balance: one thing this month|Rest last: place it early|Comparing: own values|Yes to all: say no"
       },
       "appLink": "#/diary/plan",
@@ -351,12 +351,12 @@
         "en": "Learn more about balance"
       },
       "how": {
-        "bn": "‘কাজ-জীবনের ভারসাম্য’ ও ‘জীবনের অর্থ’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। নিজের মূল্যবোধ ও পরিবারের সঙ্গে আলোচনা করুন। এটা পরামর্শ নয়; যাচাইকারীর অপেক্ষায়।",
+        "bn": "‘কাজ-জীবনের ভারসাম্য’ ও ‘জীবনের অর্থ’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। নিজের মূল্যবোধ ও পরিবারের সাথে আলোচনা করুন। এটা পরামর্শ নয়; রিভিউয়ারের অপেক্ষায়।",
         "en": "Read general explainers on “work-life balance” and “meaning in life”. Talk about your own values with family. This is not advice; reviewer pending."
       },
       "diagram": {
         "type": "steps",
-        "bn": "সাধারণ লেখা পড়ি|নিজের মূল্যবোধ লিখি|পরিবারের সঙ্গে কথা",
+        "bn": "সাধারণ লেখা পড়ি|নিজের মূল্যবোধ লিখি|পরিবারের সাথে কথা",
         "en": "Read general explainers|Write my values|Talk with family"
       },
       "appLink": "#/diary/plan",
@@ -372,7 +372,7 @@
         "balance"
       ],
       "title": {
-        "bn": "ব্যক্তিগত চর্চাকে সহজ রাখা",
+        "bn": "প্রাইভেট চর্চাকে সহজ রাখা",
         "en": "Keeping a personal practice simple"
       },
       "how": {
@@ -381,7 +381,7 @@
       },
       "diagram": {
         "type": "steps",
-        "bn": "ব্যক্তিগত রাখি|সময়ে জায়গা রাখি|নিজের মতো চলি",
+        "bn": "প্রাইভেট রাখি|সময়ে জায়গা রাখি|নিজের মতো চলি",
         "en": "Keep it private|Make room in the day|Go at my own pace"
       },
       "appLink": "#/deen",
@@ -424,12 +424,12 @@
         "en": "Example: arranging a working day"
       },
       "how": {
-        "bn": "আনোয়ার আগে নিজের স্থির সময়গুলো ক্যালেন্ডারে বসাল। তারপর সভার সময় তার চারপাশে রাখল। এক ব্যস্ত সপ্তাহে সে সময় বদলাতে হলে শান্তভাবে ঠিক করে নিল, নিজেকে কিছু বলল না।",
+        "bn": "আনোয়ার আগে নিজের স্থির সময়গুলো ক্যালেন্ডারে বসাল। তারপর মিটিংয়ের সময় তার চারপাশে রাখল। এক ব্যস্ত সপ্তাহে সে সময় বদলাতে হলে শান্তভাবে ঠিক করে নিল, নিজেকে কিছু বলল না।",
         "en": "Anwar first placed his fixed times on the calendar and set meetings around them. In one busy week he had to shift a time, did so calmly and did not scold himself."
       },
       "diagram": {
         "type": "steps",
-        "bn": "স্থির সময় বসাই|সভা চারপাশে|বদলাতে হলে শান্তভাবে",
+        "bn": "স্থির সময় বসাই|মিটিং চারপাশে|বদলাতে হলে শান্তভাবে",
         "en": "Place fixed times|Meetings around|If it shifts, calmly"
       },
       "appLink": "#/deen",
@@ -448,7 +448,7 @@
         "en": "Slips to avoid in this area"
       },
       "how": {
-        "bn": "নিজের চর্চাকে সংখ্যা বা লিস্টে মাপবেন না, অন্যের সঙ্গে তুলনাও নয়। অ্যাপের লেখাকে বিধান ভাববেন না। বিধান বা প্রশ্নের জন্য যোগ্য আলেমকে জিজ্ঞেস করুন। তথ্য ব্যক্তিগত রাখুন।",
+        "bn": "নিজের চর্চাকে সংখ্যা বা লিস্টে মাপবেন না, অন্যের সাথে তুলনাও নয়। অ্যাপের লেখাকে বিধান ভাববেন না। বিধান বা প্রশ্নের জন্য যোগ্য আলেমকে জিজ্ঞেস করুন। তথ্য প্রাইভেট রাখুন।",
         "en": "Do not measure your practice with numbers or lists, and do not compare it with others. Do not take the app's text as a ruling. For rulings or questions, ask a qualified scholar. Keep it private."
       },
       "diagram": {
@@ -477,7 +477,7 @@
       },
       "diagram": {
         "type": "steps",
-        "bn": "নির্ভরযোগ্য ব্যক্তিকে জিজ্ঞেস|নিজের প্রশ্ন লিখি|ব্যক্তিগত রাখি",
+        "bn": "নির্ভরযোগ্য ব্যক্তিকে জিজ্ঞেস|নিজের প্রশ্ন লিখি|প্রাইভেট রাখি",
         "en": "Ask a trusted person|Write my questions|Keep it private"
       },
       "appLink": "#/deen",

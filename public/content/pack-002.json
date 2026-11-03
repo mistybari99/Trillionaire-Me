@@ -61,7 +61,7 @@
         "en": "Write three options"
       },
       "how": {
-        "bn": "একটি সিদ্ধান্তের জন্য তিনটি অপশন লিখুন। প্রতিটির একটি সুবিধা আর একটি রিস্ক লিখুন।",
+        "bn": "একটি সিদ্ধান্তের জন্য তিনটি অপশন লিখুন। প্রতিটার একটি সুবিধা আর একটি রিস্ক লিখুন।",
         "en": "For one decision, write three options. Note one benefit and one risk for each."
       },
       "diagram": {
@@ -253,7 +253,7 @@
         "en": "List the blockers"
       },
       "how": {
-        "bn": "যা আটকে আছে তার পাঁচটি কারণ লিখুন। প্রতিটির পাশে একটি ছোট সমাধান লিখুন।",
+        "bn": "যা আটকে আছে তার পাঁচটি কারণ লিখুন। প্রতিটার পাশে একটি ছোট সমাধান লিখুন।",
         "en": "Write five reasons something is stuck. Next to each, write one small fix."
       },
       "diagram": {

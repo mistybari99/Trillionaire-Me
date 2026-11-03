@@ -18,7 +18,7 @@
         "en": "How mobile money works"
       },
       "how": {
-        "bn": "মোবাইল মানি অ্যাকাউন্টে (যেমন bKash বা Nagad) আপনার ফোন নম্বরের সঙ্গে টাকা জমা থাকে। PIN দিয়ে পাঠান, নিন বা পেমেন্ট করুন; PIN শুধু আপনি জানবেন। পাঠানোর আগে অ্যাপে চার্জ দেখে নিন।",
+        "bn": "মোবাইল মানি অ্যাকাউন্টে (যেমন bKash বা Nagad) আপনার ফোন নম্বরের সাথে টাকা জমা থাকে। PIN দিয়ে পাঠান, নিন বা পেমেন্ট করুন; PIN শুধু আপনি জানবেন। পাঠানোর আগে অ্যাপে চার্জ দেখে নিন।",
         "en": "A mobile money account (such as bKash or Nagad) holds money linked to your phone number. You send, receive and pay by confirming with a PIN that only you know. Check the charge shown in the app before you send."
       },
       "diagram": {
@@ -165,7 +165,7 @@
       },
       "diagram": {
         "type": "steps",
-        "bn": "বর্তমান শর্ত দেখুন|নিজের প্ল্যানের সঙ্গে মেলান|তারপর সিদ্ধান্ত",
+        "bn": "বর্তমান শর্ত দেখুন|নিজের প্ল্যানের সাথে মেলান|তারপর সিদ্ধান্ত",
         "en": "Check current terms|Match your plan|Then decide"
       },
       "kind": "learn",
@@ -207,7 +207,7 @@
         "en": "Before taking a loan"
       },
       "how": {
-        "bn": "লিখিতভাবে জেনে নিন: মোট কত ফেরত দিতে হবে, মাসে কত, শেষ তারিখ কী, কোনো ফি আছে কি না। অন্তত আরেকটি অফারের সঙ্গে মিলিয়ে দেখুন। যে অঙ্ক নিজের আসা-যাওয়ার টাকা থেকে শোধ করতে পারবেন, সেটুকুই নিন।",
+        "bn": "লিখিতভাবে জেনে নিন: মোট কত ফেরত দিতে হবে, মাসে কত, শেষ তারিখ কী, কোনো ফি আছে কি না। অন্তত আরেকটি অফারের সাথে মিলিয়ে দেখুন। যে অঙ্ক নিজের আসা-যাওয়ার টাকা থেকে শোধ করতে পারবেন, সেটুকুই নিন।",
         "en": "Get these in writing: the total you will pay back, the monthly amount, the end date and any fees. Compare with at least one other offer. Borrow only an amount you can repay from the money you already expect to come in."
       },
       "diagram": {
@@ -372,7 +372,7 @@
         "en": "Slow down when you hear 'surely double'"
       },
       "how": {
-        "bn": "যে অফারে বলা হয় টাকা দ্রুত নিশ্চিত দ্বিগুণ হবে, সেখানে তাড়াহুড়ো নয়, থামার কারণ আছে। একদিন অপেক্ষা করুন, বিশ্বস্ত দুইজনকে জিজ্ঞেস করুন, আর কে এটি তদারক করে তা জানুন।",
+        "bn": "যে অফারে বলা হয় টাকা দ্রুত নিশ্চিত দ্বিগুণ হবে, সেখানে তাড়াহুড়ো নয়, থামার কারণ আছে। একদিন অপেক্ষা করুন, বিশ্বস্ত দুইজনকে জিজ্ঞেস করুন, আর কে এটা তদারক করে তা জানুন।",
         "en": "An offer that says your money will quickly and surely double is a reason to slow down, not to hurry. Wait one day, ask two people you trust, and find out who regulates the offer."
       },
       "diagram": {

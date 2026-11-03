@@ -90,7 +90,7 @@ describe("life wheel: screen", () => {
   });
   it("Bangla copy has Latin digits and all seven names", () => {
     localStorage.setItem("tm:ui:lang", "bn"); go("#/journey/wheel");
-    expect(app().textContent).toContain("জীবনের চক্র"); expect(app().textContent).not.toMatch(/[০-৯]/); expect(AREAS).toHaveLength(7);
+    expect(app().textContent).toContain("জীবনের চাকা"); expect(app().textContent).not.toMatch(/[০-৯]/); expect(AREAS).toHaveLength(7);
   });
 });
 

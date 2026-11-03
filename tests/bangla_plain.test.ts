@@ -46,7 +46,7 @@ describe("Bangla plain: placeholders", () => {
 });
 
 describe("Bangla plain: banned words and required spellings", () => {
-  for (const group of ["spelling", "meaning", "stiff"]) {
+  for (const group of ["spelling", "meaning", "stiff", "p2words", "p2screens", "p2left"]) {
     it(`banned words are gone (${group})${applied.has(group) ? "" : " [step not applied yet: skipped]"}`, () => {
       if (!applied.has(group)) return;
       const hits: string[] = [];
@@ -79,7 +79,8 @@ describe("Bangla plain: protected strings", () => {
   });
   it("tool changes to protected strings were spelling and naming only", () => {
     for (const l of log.filter((x) => x.protected)) {
-      const spelled = applyWordRules(l.before, rules.rules, "spelling", { file: l.file, key: l.key, protected: true }).text;
+      // spelling rules, plus the wording swaps of pass 2 that are marked allowProtected (সাথে, বা, অঙ্ক, এটা, দরকার, রিভিউয়ার, হিসাব) and never change meaning
+      const spelled = applyWordRules(l.before, rules.rules, l.group, { file: l.file, key: l.key, line: undefined, protected: true }).text;
       const allowed = rules.rewrites.some((r: { file: string; key: string; allowProtected?: boolean }) => r.file === l.file && r.key === l.key && r.allowProtected);
       if (!allowed) expect(l.after, `${l.file}#${l.key}`).toBe(spelled);
     }
@@ -95,6 +96,16 @@ describe("Bangla plain: protected strings", () => {
   });
   it("unreviewed Bangla keeps the যাচাই হয়নি tag", () => {
     expect(PACKS.bn["glossary.tag" as keyof typeof PACKS.bn] ?? PACKS.bn["advice.draft" as keyof typeof PACKS.bn]).toContain("যাচাই হয়নি");
+  });
+});
+
+describe("Bangla plain: the owner page WHERE_WE_ARE_BN.md (shown in the app)", () => {
+  it("has none of the banned spellings or words", () => {
+    if (!applied.has("p2left")) return; // the leftovers step cleans this page
+    const text = readFileSync("docs/owner/WHERE_WE_ARE_BN.md", "utf8");
+    const hits: string[] = [];
+    for (const w of banned.words) { if (re(w.word, w.mode).test(text)) hits.push(`${w.word} (use ${w.use})`); }
+    expect(hits).toEqual([]);
   });
 });
 

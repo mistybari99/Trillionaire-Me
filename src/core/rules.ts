@@ -12,8 +12,8 @@ export type RuleId = (typeof RULE_IDS)[number];
 export interface RuleDef { id: RuleId; calm: boolean; name: Bi; desc: Bi }
 export const RULES: Record<RuleId, RuleDef> = {
   smaller_step: { id: "smaller_step", calm: true,
-    name: { bn: "দুইটি নির্ধারিত দিন বাদ গেলে ছোট ধাপ", en: "Smaller step after two planned days" },
-    desc: { bn: "অভ্যাসের শেষ দুইটি নির্ধারিত দিন না হলে, তার সবচেয়ে ছোট রূপ দেখানো হবে।", en: "If the last two planned days of a habit were not done, its smallest version is offered." } },
+    name: { bn: "দুইটি ঠিক করা দিন বাদ গেলে ছোট ধাপ", en: "Smaller step after two planned days" },
+    desc: { bn: "অভ্যাসের শেষ দুইটি ঠিক করা দিন না হলে, তার সবচেয়ে ছোট রূপ দেখানো হবে।", en: "If the last two planned days of a habit were not done, its smallest version is offered." } },
   next_stage: { id: "next_stage", calm: true,
     name: { bn: "স্টেজ পার হলে পরের স্টেজ", en: "Next stage after a pass" },
     desc: { bn: "একটি স্টেজ পার হলে, পরের স্টেজটি কোনটি তা দেখানো হবে।", en: "After a stage is passed, the next stage is shown." } },

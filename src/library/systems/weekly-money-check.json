@@ -6,7 +6,7 @@
   "name": { "en": "Weekly money check", "bn": "সাপ্তাহিক টাকার হিসাব" },
   "summary": { "en": "Once a week: what came in, what went out, and what is still unknown. Blank means unknown, not zero.", "bn": "সপ্তাহে একবার: কী এসেছে, কী গেছে, আর কোনটা এখনো জানা নেই। ফাঁকা মানে জানা নেই, শূন্য নয়।" },
   "goals": [
-    { "key": "g1", "title": { "en": "Weekly money check done", "bn": "সাপ্তাহিক টাকার হিসাব সম্পন্ন" }, "horizon": "week" }
+    { "key": "g1", "title": { "en": "Weekly money check done", "bn": "সাপ্তাহিক টাকার হিসাব শেষ" }, "horizon": "week" }
   ],
   "tasks": [
     { "key": "t1", "goal": "g1", "title": { "en": "Write this week's income (or 'unknown')", "bn": "এই সপ্তাহের ইনকাম লিখুন (না জানলে 'জানা নেই')" }, "minutes": 15, "priority": "high" },

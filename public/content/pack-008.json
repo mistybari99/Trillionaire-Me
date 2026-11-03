@@ -66,7 +66,7 @@
         "en": "Learn more about setting goals"
       },
       "how": {
-        "bn": "‘SMART গোল’ নিয়ে সাধারণ ব্যাখ্যা পড়ুন। পড়ে একটি নিজের গোল অ্যাপে লিখে দেখুন। যাচাইকারীর অপেক্ষায়।",
+        "bn": "‘SMART গোল’ নিয়ে সাধারণ ব্যাখ্যা পড়ুন। পড়ে একটি নিজের গোল অ্যাপে লিখে দেখুন। রিভিউয়ারের অপেক্ষায়।",
         "en": "Read general explainers on “SMART goals”. Then write one of your own goals in the app. Reviewer pending."
       },
       "diagram": {
@@ -138,7 +138,7 @@
         "en": "Name the feeling"
       },
       "how": {
-        "bn": "কঠিন সময়ে থেমে একটি শব্দে বলুন আপনি কী অনুভব করছেন, যেমন চিন্তিত বা ক্লান্ত। নাম দিলে অনুভূতি সামলানো সহজ হয়। এটি চিকিৎসা নয়।",
+        "bn": "কঠিন সময়ে থেমে একটি শব্দে বলুন আপনি কী অনুভব করছেন, যেমন চিন্তিত বা ক্লান্ত। নাম দিলে অনুভূতি সামলানো সহজ হয়। এটা চিকিৎসা নয়।",
         "en": "In a hard moment, pause and say in one word what you feel, such as worried or tired. Naming a feeling makes it easier to handle. This is not treatment."
       },
       "diagram": {
@@ -208,7 +208,7 @@
         "en": "Learn more about building skills"
       },
       "how": {
-        "bn": "‘ইচ্ছাকৃত প্র্যাকটিস’ নিয়ে সাধারণ লেখা পড়ুন, তারপর এই সপ্তাহে একটি ছোট প্র্যাকটিস ঠিক করুন। যাচাইকারীর অপেক্ষায়।",
+        "bn": "‘ইচ্ছাকৃত প্র্যাকটিস’ নিয়ে সাধারণ লেখা পড়ুন, তারপর এই সপ্তাহে একটি ছোট প্র্যাকটিস ঠিক করুন। রিভিউয়ারের অপেক্ষায়।",
         "en": "Read general explainers on “deliberate practice”, then choose one small practice for this week. Reviewer pending."
       },
       "diagram": {
@@ -304,7 +304,7 @@
         "en": "Learn more about handling setbacks"
       },
       "how": {
-        "bn": "‘সমস্যা সমাধানের ধাপ’ নিয়ে সাধারণ লেখা পড়ুন। শেষ আটকে যাওয়া কাজটি অ্যাপের ‘আটকে আছি’ পেজে লিখে দেখুন। যাচাইকারীর অপেক্ষায়।",
+        "bn": "‘সমস্যা সমাধানের ধাপ’ নিয়ে সাধারণ লেখা পড়ুন। শেষ আটকে যাওয়া কাজটি অ্যাপের ‘আটকে আছি’ পেজে লিখে দেখুন। রিভিউয়ারের অপেক্ষায়।",
         "en": "Read general explainers on “problem-solving steps”. Then log your last stuck task on the app's stuck page. Reviewer pending."
       },
       "diagram": {
@@ -353,12 +353,12 @@
         "en": "Balance does not mean equal parts"
       },
       "how": {
-        "bn": "জীবনের সব ক্ষেত্রে সমান সময় দিতে হবে না। এই সময়ে কোনটি বেশি জরুরি ঠিক করুন, আর বাকিগুলো ন্যূনতম স্তরে চালু রাখুন।",
+        "bn": "জীবনের সব দিকে সমান সময় দিতে হবে না। এই সময়ে কোনটি বেশি জরুরি ঠিক করুন, আর বাকিগুলো মিনিমাম লেভেলে চালু রাখুন।",
         "en": "You do not need equal time for every area of life. Decide which matters most right now and keep the others running at a basic level."
       },
       "diagram": {
         "type": "steps",
-        "bn": "এখন কোনটি জরুরি|বাকি ন্যূনতম|মাসে ফিরে দেখি",
+        "bn": "এখন কোনটি জরুরি|বাকি কমপক্ষে|মাসে ফিরে দেখি",
         "en": "What matters now|Others basic|Review monthly"
       },
       "appLink": "#/journey/wheel",
@@ -377,7 +377,7 @@
         "en": "Rest is part of the plan"
       },
       "how": {
-        "bn": "সপ্তাহে অন্তত একটি সময় রাখুন যেখানে কোনো গোলের কাজ নেই। বিশ্রাম নিলে পরের কাজ ভালো হয়, এটি সময় নষ্ট নয়।",
+        "bn": "সপ্তাহে অন্তত একটি সময় রাখুন যেখানে কোনো গোলের কাজ নেই। বিশ্রাম নিলে পরের কাজ ভালো হয়, এটা সময় নষ্ট নয়।",
         "en": "Keep at least one slot in the week with no goal work. Rest helps the next task go better; it is not wasted time."
       },
       "diagram": {
@@ -397,11 +397,11 @@
         "planning"
       ],
       "title": {
-        "bn": "ইবাদতের প্ল্যান ছোট ও ব্যক্তিগত রাখুন",
+        "bn": "ইবাদতের প্ল্যান ছোট ও প্রাইভেট রাখুন",
         "en": "Keep worship plans small and private"
       },
       "how": {
-        "bn": "নিজের সামর্থ্য অনুযায়ী ছোট একটি নিয়মিত অভ্যাস ঠিক করুন, যেমন নির্দিষ্ট সময়ে একটি কাজ। এটি শুধু আপনার স্মরণ করার সহায়ক; কোনো গণনা বা তুলনা নেই।",
+        "bn": "নিজের সামর্থ্য অনুযায়ী ছোট একটি নিয়মিত অভ্যাস ঠিক করুন, যেমন নির্দিষ্ট সময়ে একটি কাজ। এটা শুধু আপনার স্মরণ করার সহায়ক; কোনো গণনা বা তুলনা নেই।",
         "en": "Pick one small regular habit that fits your ability, at a set time. It is only a reminder aid for you; nothing is counted or compared."
       },
       "diagram": {
@@ -449,7 +449,7 @@
         "en": "Where to learn about Deen"
       },
       "how": {
-        "bn": "শেখার জন্য নির্ভরযোগ্য আলেম বা প্রতিষ্ঠিত শিক্ষা প্রতিষ্ঠানের সাথে যোগাযোগ করুন। অ্যাপ কোনো ফতোয়া বা ধর্মীয় নির্দেশ দেয় না। যাচাইকারীর অপেক্ষায়।",
+        "bn": "শেখার জন্য নির্ভরযোগ্য আলেম বা প্রতিষ্ঠিত শিক্ষা প্রতিষ্ঠানের সাথে যোগাযোগ করুন। অ্যাপ কোনো ফতোয়া বা ধর্মীয় নির্দেশ দেয় না। রিভিউয়ারের অপেক্ষায়।",
         "en": "For learning, reach out to a trusted scholar or an established school. The app gives no rulings or religious instructions. Reviewer pending."
       },
       "diagram": {
@@ -498,7 +498,7 @@
         "en": "Make a habit too small to refuse"
       },
       "how": {
-        "bn": "নতুন অভ্যাস দুই মিনিটের মতো ছোট করে শুরু করুন। পরিচিত একটি কাজের পরপর জুড়ে দিন, যেমন চা খাওয়ার পর। ধীরে বাড়ান।",
+        "bn": "নতুন অভ্যাস দুই মিনিটের মতো ছোট করে শুরু করুন। পরিচিত একটি কাজের পরপর লিংক করে দিন, যেমন চা খাওয়ার পর। ধীরে বাড়ান।",
         "en": "Start a new habit at about two minutes. Attach it right after something you already do, such as after tea. Grow it slowly."
       },
       "diagram": {

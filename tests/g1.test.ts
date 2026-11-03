@@ -255,7 +255,7 @@ describe("TM-TST-144/171 UI status and home structure", () => {
   });
   it("deen screen has no scoring widgets; every entity card is marked private", () => {
     document.body.innerHTML = '<div id="app"></div>'; location.hash = "#/deen"; render();
-    for (const c of document.querySelectorAll("[data-entity]")) expect(c.textContent).toMatch(/ব্যক্তিগত|Private/);
+    for (const c of document.querySelectorAll("[data-entity]")) expect(c.textContent).toMatch(/প্রাইভেট|ব্যক্তিগত|Private/);
     expect(WORSHIP_ENTITIES.length).toBe(document.querySelectorAll("[data-entity]").length);
   });
 });

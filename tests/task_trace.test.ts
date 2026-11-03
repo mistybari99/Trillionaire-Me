@@ -43,5 +43,5 @@ describe("in the edit sheet", () => {
     expect(sec.textContent).not.toMatch(/should|better|behind|ahead|best/i);
     expect(app().querySelector('[data-where-goes="u"] [data-where-none]')).not.toBeNull();
   });
-  it("Bangla has the section", () => { localStorage.setItem("tm:ui:lang", "bn"); location.hash = "#/diary/plan"; render(); expect(app().querySelector('[data-where-goes="t"]')!.textContent).toContain("এটি কোথায় যায়?"); });
+  it("Bangla has the section", () => { localStorage.setItem("tm:ui:lang", "bn"); location.hash = "#/diary/plan"; render(); expect(app().querySelector('[data-where-goes="t"]')!.textContent).toContain("এটা কোথায় যায়?"); });
 });

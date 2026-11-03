@@ -72,15 +72,15 @@ export const hasPlaceholders = (s) => (s.match(/\{\w+\}/g) ?? []).sort().join(",
 const BNL = "\\u0980-\\u09FF";
 export const YA = "\u09AF\u09BC"; // য় as the repo writes it (য + nukta)
 const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-function pat(from, mode) {
-  const f = esc(from);
-  if (mode === "latin") return new RegExp(`(?<![A-Za-z${BNL}])${f}(?![A-Za-z])`, "gu");
-  if (mode === "exact") return new RegExp(`(?<![${BNL}A-Za-z])${f}(?![${BNL}])`, "gu");
-  return new RegExp(`(?<![${BNL}A-Za-z])${f}`, "gu");
+function pat(from, mode, notAfter, notBefore) {
+  const f = esc(from); const na = notAfter ? `(?!${notAfter})` : ""; const nb = notBefore ? `(?<!${notBefore})` : "";
+  if (mode === "latin") return new RegExp(`${nb}(?<![A-Za-z${BNL}])${f}(?![A-Za-z])${na}`, "gu");
+  if (mode === "exact") return new RegExp(`${nb}(?<![${BNL}A-Za-z])${f}(?![${BNL}])${na}`, "gu");
+  return new RegExp(`${nb}(?<![${BNL}A-Za-z])${f}${na}`, "gu");
 }
 /** One rule -> ordered list of {re,to}. endFix handles the Bangla suffix when the last letter kind changes (া -> consonant etc.). */
 export function expandRule(rule) {
-  const out = []; const add = (from, to, m) => out.push({ re: pat(from, m), to });
+  const out = []; const add = (from, to, m) => out.push({ re: pat(from, m, rule.notAfter, rule.notBefore), to });
   const { from, to } = rule; const mode = rule.mode || "start";
   if (rule.endFix === "a>c") { add(from + "র", to + "ের", "exact"); add(from + YA, to + "ে", "exact"); add(from + "য়", to + "ে", "exact"); add(from + "তে", to + "ে", "exact"); }
   if (rule.endFix === "c>a") { add(from + "ের", to + "র", "exact"); add(from + "ে", to + YA, "exact"); }
@@ -103,6 +103,9 @@ export function applyWordRules(text, rules, group, ctx) {
     if (r.group !== group) continue;
     if (r.files && !r.files.includes(ctx.file)) continue;
     if (r.enMatch && !(ctx.en && new RegExp(r.enMatch, "i").test(ctx.en))) continue;
+    if (r.keys && !(ctx.key && new RegExp(r.keys).test(ctx.key))) continue; // optional: only for these packs.ts keys (regex)
+    if (r.lines && !(ctx.line && r.lines.includes(ctx.line))) continue; // optional: only on these source lines (strings without a key)
+    if (r.notText && new RegExp(r.notText, "u").test(text)) continue; // optional: skip strings that match (for example the no-fatwa line)
     if (ctx.protected && !r.allowProtected && group !== "spelling") continue;
     const before = cur;
     if (r.type === "digits") { if (/[অ-হ]/.test(cur)) cur = toLatinDigits(cur); } // digit-only values stay (the screen converts them; the catalog check needs Bangla script)
@@ -125,7 +128,7 @@ export function guardReason(oldText, newText, allow) {
   for (const w of DEEN_WORDS) if (wcount(oldText, w) !== wcount(newText, w)) return `Deen word '${w}' count changed`;
   const u = (s) => UNKNOWN_WORDS.reduce((n, w) => n + count(s, w), 0);
   if (allow !== "unknown" && u(oldText) > 0 && u(newText) === 0) return "Unknown-not-0 wording lost";
-  if (!PUNISH.test(oldText) && PUNISH.test(newText)) return "punishing wording introduced";
+  if (allow !== "punish" && !PUNISH.test(oldText) && PUNISH.test(newText)) return "punishing wording introduced";
   if (/[০-৯]/.test(newText)) return "Bangla digits";
   return null;
 }

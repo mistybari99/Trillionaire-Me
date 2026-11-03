@@ -66,7 +66,7 @@
         "en": "Example: before a role change"
       },
       "how": {
-        "bn": "আরিফ তিন সপ্তাহ লিখে দেখল সে মানুষের সঙ্গে সমস্যা মেটানোর কাজে সবচেয়ে সতেজ থাকে। তাই সে নতুন রোল বাছার সময় এ ধরনের কাজ থাকা কিনা জিজ্ঞেস করল।",
+        "bn": "আরিফ তিন সপ্তাহ লিখে দেখল সে মানুষের সাথে সমস্যা মেটানোর কাজে সবচেয়ে সতেজ থাকে। তাই সে নতুন রোল বাছার সময় এ ধরনের কাজ থাকা কিনা জিজ্ঞেস করল।",
         "en": "For three weeks Arif noted that he felt freshest when solving problems with people. So when choosing a new role he asked whether that kind of work was included."
       },
       "diagram": {
@@ -90,7 +90,7 @@
         "en": "Self-awareness slips to avoid"
       },
       "how": {
-        "bn": "একদিনের অনুভূতি দিয়ে নিজের পরিচয় ঠিক করবেন না। নিজের সম্পর্কে কড়া বিশেষণ (অযোগ্য, বেকার) লিখবেন না; ঘটনা লিখুন। অন্যের কমেন্ট এক-দুটো ধরনের সঙ্গে মিলিয়ে দেখুন।",
+        "bn": "একদিনের অনুভূতি দিয়ে নিজের পরিচয় ঠিক করবেন না। নিজের সম্পর্কে কড়া বিশেষণ (অযোগ্য, বেকার) লিখবেন না; ঘটনা লিখুন। অন্যের কমেন্ট এক-দুটো ধরনের সাথে মিলিয়ে দেখুন।",
         "en": "Do not define yourself from one day's feeling. Avoid harsh labels for yourself; write the facts instead. Check others' remarks against a pattern before you accept them."
       },
       "diagram": {
@@ -114,12 +114,12 @@
         "en": "Learn more about self-awareness"
       },
       "how": {
-        "bn": "‘আত্ম-সচেতনতা’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। ভরসার দুজনকে জিজ্ঞেস করুন তাঁরা আপনার কোন শক্তি দেখেন। এটা কোনো টেস্ট বা রায় নয়; যাচাইকারীর অপেক্ষায়।",
+        "bn": "‘আত্ম-সচেতনতা’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। ভরসার দুজনকে জিজ্ঞেস করুন তাঁরা আপনার কোন শক্তি দেখেন। এটা কোনো টেস্ট বা রায় নয়; রিভিউয়ারের অপেক্ষায়।",
         "en": "Read general explainers on “self-awareness”. Ask two trusted people which strengths they see in you. This is not a test or a verdict. Reviewer pending."
       },
       "diagram": {
         "type": "steps",
-        "bn": "সাধারণ লেখা পড়ি|দুজনকে জিজ্ঞেস|নিজের নোটের সঙ্গে মেলাই",
+        "bn": "সাধারণ লেখা পড়ি|দুজনকে জিজ্ঞেস|নিজের নোটের সাথে মেলাই",
         "en": "Read general explainers|Ask two people|Compare with my notes"
       },
       "appLink": "#/diary/intake/2",
@@ -356,12 +356,12 @@
         "en": "Learn more about putting things off"
       },
       "how": {
-        "bn": "‘দীর্ঘসূত্রতা’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অ্যাপের ‘আটকে গেছি’ পেজে নিজের কারণ বেছে দেখুন। অনেকদিন ধরে ভারী লাগলে যোগ্য কারও সঙ্গে কথা বলুন।",
+        "bn": "‘দীর্ঘসূত্রতা’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অ্যাপের ‘আটকে গেছি’ পেজে নিজের কারণ বেছে দেখুন। অনেকদিন ধরে ভারী লাগলে যোগ্য কারও সাথে কথা বলুন।",
         "en": "Read general explainers on “procrastination”. Try the app's “I'm stuck” page and pick your reason. If it feels heavy for a long time, talk to a qualified person."
       },
       "diagram": {
         "type": "steps",
-        "bn": "সাধারণ লেখা পড়ি|‘আটকে গেছি’ পেজ দেখি|প্রয়োজনে কথা বলি",
+        "bn": "সাধারণ লেখা পড়ি|‘আটকে গেছি’ পেজ দেখি|দরকারে কথা বলি",
         "en": "Read general explainers|Open the stuck page|Talk if needed"
       },
       "appLink": "#/stuck",
@@ -450,7 +450,7 @@
         "en": "Emotion slips to avoid"
       },
       "how": {
-        "bn": "আবেগ চেপে রাখবেন না, আবার তার ঝোঁকে বড় সিদ্ধান্তও নেবেন না। নিজেকে ‘এমন হওয়া উচিত নয়’ বলবেন না। মন অনেকদিন ভারী থাকলে ডাক্তার বা কাউন্সেলরের সঙ্গে কথা বলুন।",
+        "bn": "আবেগ চেপে রাখবেন না, আবার তার ঝোঁকে বড় সিদ্ধান্তও নেবেন না। নিজেকে ‘এমন হওয়া উচিত নয়’ বলবেন না। মন অনেকদিন ভারী থাকলে ডাক্তার বা কাউন্সেলরের সাথে কথা বলুন।",
         "en": "Do not bottle emotions up, and do not make big decisions in their grip. Do not tell yourself you “should not” feel something. If you feel heavy for long, talk to a doctor or counsellor."
       },
       "diagram": {
@@ -473,12 +473,12 @@
         "en": "Learn more about emotions"
       },
       "how": {
-        "bn": "‘আবেগ’ ও ‘চাপ সামলানো’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। এগুলো সাধারণ কথা, রোগ নির্ণয় বা চিকিৎসা নয়। কষ্ট বেশি হলে যোগ্য স্বাস্থ্যকর্মীর সাহায্য নিন। যাচাইকারীর অপেক্ষায়।",
+        "bn": "‘আবেগ’ ও ‘চাপ সামলানো’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। এগুলো সাধারণ কথা, রোগ নির্ণয় বা চিকিৎসা নয়। কষ্ট বেশি হলে যোগ্য স্বাস্থ্যকর্মীর সাহায্য নিন। রিভিউয়ারের অপেক্ষায়।",
         "en": "Read general explainers on “emotions” and “coping with stress”. These are general words, not diagnosis or treatment. If it is hard, seek a qualified health worker. Reviewer pending."
       },
       "diagram": {
         "type": "steps",
-        "bn": "সাধারণ লেখা পড়ি|নিজের অনুভূতির নোট|প্রয়োজনে সাহায্য নিই",
+        "bn": "সাধারণ লেখা পড়ি|নিজের অনুভূতির নোট|দরকারে সাহায্য নিই",
         "en": "Read general explainers|Note my feelings|Get help if needed"
       },
       "kind": "learn",
@@ -521,7 +521,7 @@
         "en": "Breaking a project into tasks"
       },
       "how": {
-        "bn": "1) প্রজেক্টের শেষ ফল লিখুন। 2) 5–8টা ধাপে ভাঙুন। 3) প্রতিটি ধাপে ছোট কাজ লিখুন। 4) এই সপ্তাহের 3টি কাজ প্ল্যানে বসান। 5) বাকিগুলো পরে।",
+        "bn": "1) প্রজেক্টের শেষ ফল লিখুন। 2) 5–8টা ধাপে ভাঙুন। 3) প্রতিটা ধাপে ছোট কাজ লিখুন। 4) এই সপ্তাহের 3টি কাজ প্ল্যানে বসান। 5) বাকিগুলো পরে।",
         "en": "1) Write the project's end result. 2) Break it into 5–8 stages. 3) Write small tasks under each. 4) Place this week's 3 tasks in the plan. 5) Leave the rest for later."
       },
       "diagram": {
@@ -666,7 +666,7 @@
         "en": "Example: a supplier is late"
       },
       "how": {
-        "bn": "শামীম জানল তার সাপ্লায়ার এক সপ্তাহ দেরি করবে। সে ক্রেতাদের আগে জানাল, একটা অপশন সাপ্লায়ারের সঙ্গে ছোট অর্ডার দিয়ে টেস্ট করল, আর পরে কী শিখল লিখে রাখল।",
+        "bn": "শামীম জানল তার সাপ্লায়ার এক সপ্তাহ দেরি করবে। সে ক্রেতাদের আগে জানাল, একটা অপশন সাপ্লায়ারের সাথে ছোট অর্ডার দিয়ে টেস্ট করল, আর পরে কী শিখল লিখে রাখল।",
         "en": "Shamim learned his supplier would be a week late. He told customers early, tested a small order with an alternative supplier, and later noted what he learned."
       },
       "diagram": {
@@ -689,7 +689,7 @@
         "en": "Setback slips to avoid"
       },
       "how": {
-        "bn": "নিজেকে দোষ দেবেন না, আবার অন্যকেও না; কী হয়েছে দেখুন। বাধা লুকাবেন না। যে পথ কাজ করছে না, সেটাতেই জোর বাড়াবেন না। প্রয়োজনে সাহায্য চান।",
+        "bn": "নিজেকে দোষ দেবেন না, আবার অন্যকেও না; কী হয়েছে দেখুন। বাধা লুকাবেন না। যে পথ কাজ করছে না, সেটাতেই জোর বাড়াবেন না। দরকারে সাহায্য চান।",
         "en": "Do not blame yourself or others; look at what happened. Do not hide a setback. Do not push harder on a route that is not working. Ask for help if needed."
       },
       "diagram": {
@@ -713,7 +713,7 @@
         "en": "Learn more about setbacks and uncertainty"
       },
       "how": {
-        "bn": "‘সহনশীলতা’ ও ‘অনিশ্চয়তা’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। নিজের পুরোনো কঠিন সময় থেকে কী কাজে লেগেছিল লিখে রাখুন। যাচাইকারীর অপেক্ষায়।",
+        "bn": "‘সহনশীলতা’ ও ‘অনিশ্চয়তা’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। নিজের পুরোনো কঠিন সময় থেকে কী কাজে লেগেছিল লিখে রাখুন। রিভিউয়ারের অপেক্ষায়।",
         "en": "Read general explainers on “resilience” and “uncertainty”. Write down what helped in your own past hard times. Reviewer pending."
       },
       "diagram": {
@@ -830,7 +830,7 @@
         "en": "Learn more about creativity"
       },
       "how": {
-        "bn": "‘সৃজনশীল চিন্তা’ ও ‘ব্রেনস্টর্মিং’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অ্যাপে উইকিপিডিয়া খুঁজলে পরিচিতি সেভ হয়। পড়া কোনো পদ্ধতি নিজের ভাষায় লিখে ছোট করে চেষ্টা করুন।",
+        "bn": "‘সৃজনশীল চিন্তা’ ও ‘ব্রেনস্টর্মিং’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অ্যাপে উইকিপিডিয়া খুঁজলে পরিচিতি সেভ হয়। পড়া কোনো মেথড নিজের ভাষায় লিখে ছোট করে চেষ্টা করুন।",
         "en": "Read general explainers on “creative thinking” and “brainstorming”. A Wikipedia search in the app saves an overview. Rewrite one method in your own words and try it small."
       },
       "diagram": {
