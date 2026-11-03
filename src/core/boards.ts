@@ -1,6 +1,7 @@
 // M18 visual layer, part 2 (pure): data for the drawn timeline, the task board (Kanban) and the option board. Everything is the person's own data.
 // Unknown stays unknown: a goal with no date is listed as "no date yet", never placed on the line; no tasks means "no tasks", never a zero.
 // Past dates are shown plainly (no red, no warning). Nothing is ordered by worth or compared.
+import { goalIdsOf } from "./taskGoals";
 import type { FieldValue, TMRecord } from "./types";
 import { goalStatusOf, type GoalStatus } from "./goalStatus";
 import type { PathFit, PathMatch } from "./assessment";
@@ -33,7 +34,7 @@ export function timeline(recs: readonly TMRecord[], today: string): Timeline {
 // ---------------------------------------------------------------- task board
 export const BOARD_COLUMNS = ["open", "parked", "delegated", "done"] as const;
 export type BoardColumn = (typeof BOARD_COLUMNS)[number];
-export interface BoardCard { id: string; ns: TMRecord["ns"]; title: string; goalId: string | null; goalTitle: string | null; doneOn: string | null }
+export interface BoardCard { id: string; ns: TMRecord["ns"]; title: string; goalId: string | null; goalTitle: string | null; /** every existing goal this step serves, by title */ goals: Array<{ id: string; title: string }>; doneOn: string | null }
 export interface TaskBoard { columns: Record<BoardColumn, BoardCard[]>; totals: Record<BoardColumn, number>; hiddenDone: number; anyTask: boolean }
 export const DONE_SHOWN = 12;
 
@@ -50,8 +51,9 @@ export function taskBoard(recs: readonly TMRecord[]): TaskBoard {
   const columns: Record<BoardColumn, BoardCard[]> = { open: [], parked: [], delegated: [], done: [] };
   for (const r of recs) {
     const col = columnOf(r); const title = str(r.values["task.title"]); if (!col || !title) continue;
-    const gid = r.links?.goal ?? null;
-    columns[col].push({ id: r.id, ns: r.ns, title, goalId: gid && goals.has(gid) ? gid : null, goalTitle: gid ? goals.get(gid) ?? null : null, doneOn: str(r.values["task.done_on"]) });
+    const ids = goalIdsOf(r); const gid = ids.find((x) => goals.has(x)) ?? ids[0] ?? null;
+    const serves = ids.filter((x) => goals.has(x)).map((x) => ({ id: x, title: goals.get(x) ?? "" })).sort((a, b) => a.title.localeCompare(b.title) || a.id.localeCompare(b.id));
+    columns[col].push({ id: r.id, ns: r.ns, title, goalId: gid && goals.has(gid) ? gid : null, goalTitle: gid ? goals.get(gid) ?? null : null, goals: serves, doneOn: str(r.values["task.done_on"]) });
   }
   for (const c of BOARD_COLUMNS) columns[c].sort((a, b) => (c === "done" ? (b.doneOn ?? "").localeCompare(a.doneOn ?? "") : 0) || a.title.localeCompare(b.title) || a.id.localeCompare(b.id));
   const totals = Object.fromEntries(BOARD_COLUMNS.map((c) => [c, columns[c].length])) as Record<BoardColumn, number>;

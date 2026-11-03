@@ -49,8 +49,10 @@ export function universeData(recs: readonly TMRecord[]): Universe {
     const mine = goals.filter((g) => goalAreaOf(g) === area);
     if (!mine.length) return { area, isPrivate: false, goals: null, tasks: null, done: null, percent: null };
     // Counted from linked tasks only, even for manual-percent goals (a typed percent has no task count behind it).
-    let tasks = 0, done = 0;
-    for (const g of mine) { const p = prog.get(g.id); if (p) { tasks += p.total; done += p.done; } }
+    // A step shared by two goals of one area counts once in the area.
+    const ids = new Set<string>(), doneIds = new Set<string>();
+    for (const g of mine) { const p = prog.get(g.id); if (p) { p.ids.forEach((x) => ids.add(x)); p.doneIds.forEach((x) => doneIds.add(x)); } }
+    const tasks = ids.size, done = doneIds.size;
     return { area, isPrivate: false, goals: mine.length, tasks: tasks || null, done: tasks ? done : null, percent: tasks ? Math.round((done / tasks) * 100) : null };
   });
   const unassigned = goals.filter((g) => goalAreaOf(g) === null).length;

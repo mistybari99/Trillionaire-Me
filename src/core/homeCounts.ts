@@ -1,5 +1,6 @@
 // Home counts (pure): the user's own tasks and goal steps. Nothing entered = Unknown (never 0). Counts only; no percent, no forecast.
 // A task is done only with a done date. A goal step is a task linked to a goal the user entered.
+import { goalIdsOf } from "./taskGoals";
 import type { TMRecord } from "./types";
 
 export type Count = { state: "unknown" } | { state: "value"; done: number; total: number };
@@ -12,5 +13,5 @@ export const taskCount = (recs: readonly TMRecord[]): Count => count(recs.filter
 /** Tasks linked to a goal that exists in this mode. */
 export function goalStepCount(recs: readonly TMRecord[]): Count {
   const goals = new Set(recs.filter((r) => r.entity === "goal").map((r) => r.id));
-  return count(recs.filter((r) => r.entity === "task" && !!r.links?.goal && goals.has(r.links.goal)));
+  return count(recs.filter((r) => r.entity === "task" && goalIdsOf(r).some((id) => goals.has(id)))); // one step is one count, however many goals it serves
 }

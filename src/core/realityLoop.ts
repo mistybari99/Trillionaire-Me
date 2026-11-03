@@ -4,6 +4,7 @@
 import type { CapacityMode } from "./planner";
 import { isOpenTask, isParkedTask } from "./planInputs";
 import { GOAL_STATUSES, goalStatusOf, withGoalStatus, type GoalStatus } from "./goalStatus";
+import { goalIdsOf } from "./taskGoals";
 import type { FieldValue, TMRecord } from "./types";
 import { SCHEMA_VERSION } from "../schema/entities";
 
@@ -111,12 +112,12 @@ export function impactOf(recs: readonly TMRecord[], ev: Pick<EventRow, "kind" | 
   const open = recs.filter(isOpenTask);
   const isMoney = MONEY_KINDS.includes(ev.kind);
   let tasks: ImpactTask[] = [];
-  if (scope) tasks = withDownstream(open.filter((r) => r.links?.goal === scope.id), open);
+  if (scope) tasks = withDownstream(open.filter((r) => goalIdsOf(r).includes(scope.id)), open);
   else if (!isMoney && ev.kind !== "opportunity") tasks = withDownstream(open, open);
   const goalIds = new Set<string>();
   if (scope) goalIds.add(scope.id);
   else if (isMoney) { for (const g of goalsAll) if (MONEY_AREAS.includes(str(g.values["goal.area"]) ?? "")) goalIds.add(g.id); }
-  else if (TIME_KINDS.includes(ev.kind)) { for (const t of tasks) { const gid = open.find((r) => r.id === t.id)?.links?.goal; if (gid) goalIds.add(gid); } }
+  else if (TIME_KINDS.includes(ev.kind)) { for (const t of tasks) { const rec = open.find((r) => r.id === t.id); if (rec) for (const gid of goalIdsOf(rec)) goalIds.add(gid); } }
   const goals = goalsAll.filter((g) => goalIds.has(g.id)).map((g): ImpactGoal => ({ id: g.id, title: titleOf(g, "goal.title"), targetDate: (() => { const d = str(g.values["goal.target_date"]); return d && validDay(d) ? d : null; })() }));
   const dates = goals.filter((g) => g.targetDate).map((g) => ({ goalId: g.id, title: g.title, date: g.targetDate! }));
   const lines = recs.filter((r) => r.entity === "finance_item" && ["income", "expense"].includes(str(r.values["finance.kind"]) ?? ""));

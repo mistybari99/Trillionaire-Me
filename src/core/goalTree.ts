@@ -28,6 +28,8 @@ export interface TreeNode {
   metricLabel: string | null;
   /** own steps, then the whole branch (this goal and everything below it) */
   own: { done: number; total: number };
+  /** the distinct steps of this goal and everything below it (a step shared by two parts of one branch is listed once), and which are done */
+  stepIds: string[]; doneIds: string[];
   branch: { done: number; total: number; percent: number | null };
   /** "manual": the user's own percent for this goal (the branch figure is not used) */
   mode: "auto" | "manual"; manualPercent: number | null;
@@ -42,7 +44,7 @@ export function buildTree(recs: readonly TMRecord[]): TreeNode[] {
     const kind = kindOf(g); const p = prog.get(g.id)!; const pid = g.links?.parent ?? null; const par = pid ? byId.get(pid) : undefined;
     const ok = !!par && canBeChild(kind, kindOf(par));
     nodes.set(g.id, { id: g.id, title: str(g.values["goal.title"])!, kind, ns: g.ns, parentId: ok ? pid : null, orphan: kind !== "goal" && !ok, depth: 0, children: [],
-      metricLabel: str(g.values["goal.metric_label"]), own: { done: p.done, total: p.total }, branch: { done: p.done, total: p.total, percent: null },
+      metricLabel: str(g.values["goal.metric_label"]), own: { done: p.done, total: p.total }, stepIds: [...p.ids], doneIds: [...p.doneIds], branch: { done: p.done, total: p.total, percent: null },
       mode: p.mode === "manual" ? "manual" : "auto", manualPercent: p.mode === "manual" ? p.percent : null });
   }
   const roots: TreeNode[] = [];
@@ -50,7 +52,10 @@ export function buildTree(recs: readonly TMRecord[]): TreeNode[] {
   const order = (a: TreeNode, b: TreeNode) => cmp(a.title.toLowerCase(), b.title.toLowerCase()) || cmp(a.id, b.id);
   const walk = (n: TreeNode, depth: number): void => {
     n.depth = depth; n.children.sort(order);
-    for (const c of n.children) { walk(c, depth + 1); n.branch.done += c.branch.done; n.branch.total += c.branch.total; }
+    // The branch is the UNION of step ids, so a step linked to a project and to its parent goal, or to two sub-goals, counts once in the branch.
+    const all = new Set(n.stepIds), done = new Set(n.doneIds);
+    for (const c of n.children) { walk(c, depth + 1); c.stepIds.forEach((x) => all.add(x)); c.doneIds.forEach((x) => done.add(x)); }
+    n.stepIds = [...all]; n.doneIds = [...done]; n.branch.done = done.size; n.branch.total = all.size;
     n.branch.percent = n.mode === "manual" ? n.manualPercent : n.branch.total ? Math.round((n.branch.done / n.branch.total) * 100) : null;
   };
   roots.sort(order); for (const r of roots) walk(r, 0);

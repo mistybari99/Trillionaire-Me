@@ -2,6 +2,7 @@
 // window turns them into a PDF file. Nothing is sent anywhere. Pure helpers only (no UI, no network).
 // Unknown is never 0: a goal with no date, a step with no estimate and a branch with no steps say so.
 import { buildTree, flatten, type GoalKind } from "./goalTree";
+import { goalIdsOf } from "./taskGoals";
 import type { FieldValue, TMRecord } from "./types";
 
 export const PRINT_KINDS = ["report", "plan", "handover"] as const;
@@ -24,6 +25,6 @@ export function planDoc(recs: readonly TMRecord[]): PlanDocRow[] {
   const goalRec = new Map(recs.filter((r) => r.entity === "goal").map((r) => [r.id, r] as const));
   return flatten(buildTree(recs)).map((n) => ({
     id: n.id, title: n.title, kind: n.kind, depth: n.depth, date: str(goalRec.get(n.id)?.values["goal.target_date"]), percent: n.branch.percent,
-    steps: tasks.filter((x) => x.links?.goal === n.id).sort((a, b) => (a.id < b.id ? -1 : 1)).map((x) => ({ id: x.id, title: str(x.values["task.title"]) ?? "", minutes: num(x.values["task.minutes"]) })),
+    steps: tasks.filter((x) => goalIdsOf(x).includes(n.id)).sort((a, b) => (a.id < b.id ? -1 : 1)).map((x) => ({ id: x.id, title: str(x.values["task.title"]) ?? "", minutes: num(x.values["task.minutes"]) })),
   }));
 }
