@@ -62,7 +62,7 @@ export function categorySummary(cat: CatKey | "about", lang: Locale): string {
     case "privacy": return t("set.sum.privacy", lang, { l: onOff(lockEnabled(consentKv), lang), c: t(readConsent(consentKv) ? "set.allowed" : "set.notAllowed", lang) });
     case "data": return t("set.sum.data", lang, { m: t(prefs.dataMode === "real" ? "set.real" : "set.demo", lang) });
     case "plan": return t("set.sum.plan", lang, { m: t(`plan.mode.${prefs.mode}` as Key, lang) });
-    case "connections": { const n = connectionsOn(); return t(n === 0 ? "set.sum.connections" : "set.sum.connections.on", lang, { n: num(n, lang) }); }
+    case "connections": { const n = connectionsOn(); return t(prefs.prayerSync.on ? "set.sum.connections.sync" : n === 0 ? "set.sum.connections" : "set.sum.connections.on", lang, { n: num(n, lang) }); }
     case "delete": return t("set.sum.delete", lang);
     case "about": return t("set.sum.about", lang);
   }

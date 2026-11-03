@@ -6,6 +6,7 @@ import { startPrayerAlerts } from "./ui/prayerAlerts";
 import { ensureContentPacks } from "./library/packs";
 import { initLock } from "./ui/lockUi";
 import { persistIfReal } from "./ui/storageCard";
+import { maybeSyncPrayerTimes, startPrayerSync } from "./ui/prayerSync";
 import { installCrossTab } from "./ui/crossTab";
 import { runAutoSnapshot } from "./ui/snapshotsUi";
 
@@ -17,8 +18,9 @@ const onRoute = () => {
 window.addEventListener("hashchange", onRoute);
 saveMonitor.subscribe(() => onRoute());
 installCrossTab(onRoute);
-window.addEventListener("online", () => updateNetBadge());
+window.addEventListener("online", () => { updateNetBadge(); void maybeSyncPrayerTimes(); });
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") void maybeSyncPrayerTimes(); });
 window.addEventListener("offline", () => updateNetBadge());
-initStorage().finally(() => { repairListNamespaces(); onRoute(); startPrayerAlerts(); void runAutoSnapshot(); persistIfReal(); initLock(); });
+initStorage().finally(() => { repairListNamespaces(); onRoute(); startPrayerAlerts(); void startPrayerSync(); void runAutoSnapshot(); persistIfReal(); initLock(); });
 
 if ("serviceWorker" in navigator && import.meta.env.PROD) navigator.serviceWorker.register("./sw.js").catch(() => { /* shell still works without it */ });

@@ -2,7 +2,7 @@
 // Prayer blocks are TIMES ONLY: each prayer time worked out on this phone (src/core/prayer.ts) plus a length in minutes the user types.
 // The documents give no length, so none is assumed: with no length typed there is no prayer block. No scripture text.
 // Other kinds use a daily window the user types. Hours a week are the user's own number; Unknown is never 0.
-import { PRAYER_KEYS, prayerTimes, type CalDate, type Coords, type PrayerKey } from "./prayer";
+import { PRAYER_KEYS, prayerTimes, type CalDate, type Coords, type PrayerKey, type PrayerTimes } from "./prayer";
 import type { PrayerSettings } from "./prayerMethod";
 import type { Block } from "./planner";
 import { parseClock } from "./planInputs";
@@ -40,14 +40,14 @@ export interface WeekBlocks { blocks: TimeBlock[]; /** prayer times that could n
 const iso = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 
 /** Blocks for the 7 days from `from` (a calendar date). A weekday occurs once, so a block carries the weekday the planner uses. */
-export function weekBlocks(rows: readonly CommitRow[], from: CalDate, coords: Coords, settings: PrayerSettings, days = 7): WeekBlocks {
+export function weekBlocks(rows: readonly CommitRow[], from: CalDate, coords: Coords, settings: PrayerSettings, days = 7, timesFor?: (d: CalDate) => PrayerTimes): WeekBlocks {
   const blocks: TimeBlock[] = []; let unknownPrayer = 0;
   for (let i = 0; i < days; i++) {
     const d = new Date(from.y, from.m - 1, from.d + i); const cd: CalDate = { y: d.getFullYear(), m: d.getMonth() + 1, d: d.getDate() }; const day = d.getDay();
     let times: ReturnType<typeof prayerTimes> | null = null;
     for (const r of rows) {
       if (r.kind === "prayer" && r.prayerMinutes !== null) {
-        times ??= prayerTimes(cd, coords, settings);
+        times ??= timesFor ? timesFor(cd) : prayerTimes(cd, coords, settings);
         for (const k of PRAYER_KEYS) {
           const at = times[k]; if (at === null) { unknownPrayer++; continue; }
           blocks.push({ kind: "prayer", day, start: at, end: Math.min(1440, at + r.prayerMinutes), prayer: k, rowId: r.id, date: iso(d) });

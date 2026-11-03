@@ -76,7 +76,9 @@ import { research, safeQuery } from "../core/research";
 import { ownOptions, saveOwnOption, saveSearchResults, savedSearchResults } from "../core/savedLists";
 import { wikipedia } from "../adapters/wikipedia";
 import { GLOSSARY } from "../catalog/glossary";
-import { PRAYER_KEYS, dhakaNow, prayerClock, isoDate, prayerTimes, type PrayerKey } from "../core/prayer";
+import { PRAYER_KEYS, dhakaNow, prayerClock, isoDate, type PrayerKey } from "../core/prayer";
+import { resolvedPrayerTimes } from "./prayerSync";
+import { sourceLine } from "./prayerSyncUi";
 import { markedOn, prayerLogId, prayerLogRecord } from "../core/prayerLog";
 import { fastLogId, fastLogRecord, isFastMarked } from "../core/fastLog";
 import { kindOf } from "../core/goalTree";
@@ -1309,12 +1311,13 @@ function fastCard(lang: Locale): HTMLElement {
 
 function prayerTimesCard(lang: Locale): HTMLElement {
   const now = dhakaNow(Date.now()); const day = isoDate(now.date);
-  const ps = prefs.prayerSettings; const times = prayerTimes(now.date, prefs.prayerCoords, ps);
+  const ps = prefs.prayerSettings; const res = resolvedPrayerTimes(now.date); const times = res.times;
   const marked = markedOn(allRecs(), day);
   return h("div", { class: "card", "data-prayer-times": day },
     h("h2", { class: "card-h" }, t("deen.prayer.title", lang)),
     h("p", { class: "muted" }, day),
     h("p", { class: "muted", "data-prayer-method": "1" }, t("deen.set.methodLine", lang, { m: t(`deen.method.${ps.method}` as Key, lang), a: t(ps.asr === "hanafi" ? "deen.asr.hanafi" : "deen.asr.standard", lang) })),
+    sourceLine(res, lang),
     h("p", { class: "muted" }, t("deen.prayer.hint", lang)),
     ...PRAYER_KEYS.map((k) => {
       const at = times[k]; const isMarked = marked.has(k);

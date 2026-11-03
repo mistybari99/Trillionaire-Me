@@ -1,6 +1,7 @@
 // M08 time blocks on the Plan screen and Today: the committed time the user typed (prayer, family, rest, work, other), how it sits in the week,
 // and the weekly hours it adds up to. Times only. Prayer times are worked out on this phone; the length of each prayer block is the user's number.
 import { h } from "./dom";
+import { resolvedPrayerTimes } from "./prayerSync";
 import { t, tb, fmtNumber } from "../i18n/t";
 import type { Key } from "../i18n/packs";
 import type { Locale } from "../i18n/registry";
@@ -21,7 +22,7 @@ const dayName = (d: number, lang: Locale) => new Intl.DateTimeFormat(intlLocale(
 /** Rows and the 7 days of blocks from today, for the active mode. The scheduler gets the same blocks, so a task never lands in one. */
 export function currentBlocks(): { rows: CommitRow[]; week: WeekBlocks } {
   const rows = commitRows(allRecs()); const n = new Date();
-  return { rows, week: weekBlocks(rows, { y: n.getFullYear(), m: n.getMonth() + 1, d: n.getDate() }, prefs.prayerCoords, prefs.prayerSettings) };
+  return { rows, week: weekBlocks(rows, { y: n.getFullYear(), m: n.getMonth() + 1, d: n.getDate() }, prefs.prayerCoords, prefs.prayerSettings, 7, (cd) => resolvedPrayerTimes(cd).times) };
 }
 
 const blockText = (b: TimeBlock, lang: Locale) => `${fmtClock(b.start)}–${fmtClock(b.end)} · ${b.prayer ? t(`deen.prayer.name.${b.prayer}` as Key, lang) : kindLabel(b.kind, lang)}`;

@@ -48,7 +48,7 @@ describe("no network at runtime", () => {
       const s = read(f);
       expect(s, f).not.toMatch(/XMLHttpRequest|WebSocket|sendBeacon|EventSource|importScripts|navigator\.share|gtag\(|analytics/);
       const usesFetch = /\bfetch\b/.test(s.replace(/\/\/.*$/gm, ""));
-      if (usesFetch) expect(["src/adapters/wikipedia.ts", "src/ui/prayerAlerts.ts"], f).toContain(f);
+      if (usesFetch) expect(["src/adapters/wikipedia.ts", "src/adapters/aladhan.ts", "src/ui/prayerAlerts.ts"], f).toContain(f);
     }
   });
   it("the azan check only asks for the app's own relative files", () => {
@@ -59,7 +59,7 @@ describe("no network at runtime", () => {
   it("the only absolute web address in the code is the Wikipedia host; no remote scripts, styles, fonts or images in the page", () => {
     for (const f of files) {
       const s = read(f).replace(/xmlns|http:\/\/www\.w3\.org\/2000\/svg/g, "");
-      for (const m of s.matchAll(/https?:\/\/[^\s"'`)]+/g)) { const ok = /wikipedia\.org/.test(m[0]) || /^https?:\/\/(?:\$\{|localhost)/.test(m[0]); if (!ok) expect(`${f}: ${m[0]}`, "external address").toMatch(/^$/); }
+      for (const m of s.matchAll(/https?:\/\/[^\s"'`)]+/g)) { const ok = /wikipedia\.org|api\.aladhan\.com/.test(m[0]) || /^https?:\/\/(?:\$\{|localhost)/.test(m[0]); if (!ok) expect(`${f}: ${m[0]}`, "external address").toMatch(/^$/); }
     }
     const html = read("index.html");
     expect(html).not.toMatch(/(?:src|href)=["']https?:/);
@@ -70,7 +70,7 @@ describe("no network at runtime", () => {
     expect(m).not.toBeNull();
     const dirs = Object.fromEntries(m![1]!.split(";").map((x) => x.trim().split(/\s+/)).filter((x) => x[0]).map((x) => [x[0]!, x.slice(1)]));
     expect(dirs["default-src"]).toEqual(["'self'"]); expect(dirs["script-src"]).toEqual(["'self'"]); expect(dirs["object-src"]).toEqual(["'none'"]);
-    expect(dirs["connect-src"]).toEqual(["'self'", "https://en.wikipedia.org", "https://bn.wikipedia.org"]);
+    expect(dirs["connect-src"]).toEqual(["'self'", "https://en.wikipedia.org", "https://bn.wikipedia.org", "https://api.aladhan.com"]);
     expect(dirs["media-src"]).toEqual(["'self'"]);
   });
   it("the service worker only handles same-origin GET requests", () => {

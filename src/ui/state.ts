@@ -11,6 +11,7 @@ import { DEFAULT_KEEP, isKeep, reminderEnabled, takeSnapshot, type SnapshotRepo 
 import { parseNotifyPrefs, type NotifyPrefs } from "../core/notify";
 import { DHAKA_COORDS, validCoords, type Coords } from "../core/prayer";
 import { DEFAULT_ALERT_PREFS, parseAlertPrefs, type AlertPrefs } from "../core/prayerAlerts";
+import { parseSyncSettings, type SyncSettings } from "../core/prayerSource";
 import { parsePrayerSettings, type PrayerSettings } from "../core/prayerMethod";
 import { isDataMode, type DataMode } from "../core/dataMode";
 import { applyDesign, migrateDesignId } from "./themes";
@@ -139,6 +140,9 @@ export const prefs = {
   /** Prayer-time method, Asr rule and minute offsets (M13). A calculation setting, not personal data. Missing or broken = Karachi, standard Asr, no offsets. */
   get prayerSettings(): PrayerSettings { try { return parsePrayerSettings(JSON.parse(get("tm:ui:prayerSettings") ?? "null")); } catch { return parsePrayerSettings(null); } },
   set prayerSettings(v: PrayerSettings) { set("tm:ui:prayerSettings", JSON.stringify(parsePrayerSettings(v))); },
+  /** Automatic prayer-time update (owner request 3 Nov 2026). OFF until the user ticks; Withdraw turns it off. Holds the city and country that are sent. */
+  get prayerSync(): SyncSettings { try { return parseSyncSettings(JSON.parse(get("tm:ui:prayerSync") ?? "null")); } catch { return parseSyncSettings(null); } },
+  set prayerSync(v: SyncSettings) { set("tm:ui:prayerSync", JSON.stringify(parseSyncSettings(v))); },
   /** Pre-prayer and azan alerts (M13). Both off by default. */
   get prayerAlerts(): AlertPrefs { try { return parseAlertPrefs(JSON.parse(get("tm:ui:prayerAlerts") ?? "null")); } catch { return { ...DEFAULT_ALERT_PREFS }; } },
   set prayerAlerts(v: AlertPrefs) { set("tm:ui:prayerAlerts", JSON.stringify(parseAlertPrefs(v))); },

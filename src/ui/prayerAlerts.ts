@@ -1,6 +1,7 @@
 // Delivers prayer alerts while the app is open (M13). Phone notification when permission is granted, otherwise an in-app card.
 // Lock-screen text goes through the existing O8 rule (buildNotification): neutral unless "show details" is on for worship.
-import { dhakaNow, isoDate, prayerTimes, type PrayerKey, type PrayerTimes } from "../core/prayer";
+import { resolvedPrayerTimes } from "./prayerSync";
+import { dhakaNow, isoDate, type PrayerKey, type PrayerTimes } from "../core/prayer";
 import { alertSlots, dueSlots, type AlertSlot } from "../core/prayerAlerts";
 import { NO_AZAN, VIBRATE_PATTERN, azanFileFor, detectAzan, soundPlan, type AzanAvailability } from "../core/prayerSound";
 import { buildNotification, notifyText, type NotifyPrefs } from "../core/notify";
@@ -106,8 +107,9 @@ export async function checkPrayerAlerts(nowMs: number = Date.now()): Promise<voi
   const day = isoDate(date);
   const coords = prefs.prayerCoords;
   const settings = prefs.prayerSettings;
-  const key = `${coords.lat},${coords.lon},${JSON.stringify(settings)}`;
-  if (!cache || cache.date !== day || cache.key !== key) cache = { date: day, times: prayerTimes(date, coords, settings), key };
+  const res = resolvedPrayerTimes(date);
+  const key = `${coords.lat},${coords.lon},${JSON.stringify(settings)},${res.source},${res.fetchedAt}`;
+  if (!cache || cache.date !== day || cache.key !== key) cache = { date: day, times: res.times, key };
   const slots = alertSlots(day, cache.times, alerts);
   const saved = prefs.prayerFired;
   const delivered = new Set(saved.date === day ? saved.ids : []);

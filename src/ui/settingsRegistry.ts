@@ -39,6 +39,7 @@ export const ROWS: SettingRow[] = [
   R("resetlook", "look", "set.row.resetlook", "#/settings/look/resetlook", ["reset", "default look", "layout", "restore defaults"], [], []),
 
   R("prayermethod", "prayer", "set.row.prayermethod", "#/settings/prayer/prayermethod", ["prayer", "method", "namaz", "salah", "asr", "offset", "fajr"], ["prayerSettings"], ["tm:ui:prayerSettings"]),
+  R("prayersync", "prayer", "set.row.prayersync", "#/settings/prayer/prayersync", ["automatic", "auto update", "online", "internet", "aladhan", "timetable", "sync"], ["prayerSync"], ["tm:ui:prayerSync"]),
   R("prayerplace", "prayer", "set.row.prayerplace", "#/settings/prayer/prayerplace", ["place", "location", "city", "dhaka", "coordinates", "latitude"], ["prayerCoords"], ["tm:ui:prayerCoords", "tm:ui:prayerCoords:real"]),
   R("prayeralerts", "prayer", "set.row.prayeralerts", "#/settings/prayer/prayeralerts", ["alert", "azan", "adhan", "reminder", "sound", "volume", "notification"], ["prayerAlerts", "prayerFired"], ["tm:ui:prayerAlerts", "tm:ui:prayerFired"]),
 
@@ -99,7 +100,7 @@ export const SEARCH_BN: Record<string, string[]> = {
   language: ["ভাষা", "বাংলা", "ইংরেজি"], theme: ["থিম", "অন্ধকার", "আলো", "রাত", "ডার্ক"], textsize: ["ফন্ট", "লেখা", "বড়", "সাইজ", "আকার"],
   design: ["ডিজাইন", "রং", "লুক"], density: ["বিস্তারিত", "ছোট", "কমপ্যাক্ট"], horizon: ["হরাইজন", "লেআউট"], universe: ["ইউনিভার্স", "ম্যাপ"], habitgrid: ["হ্যাবিট", "গ্রিড"],
   motion: ["অ্যানিমেশন", "নড়াচড়া", "মোশন"], resetlook: ["রিসেট", "আগের মতো"],
-  prayermethod: ["নামাজ", "আসর", "ফজর", "পদ্ধতি"], prayerplace: ["জায়গা", "শহর", "ঢাকা", "লোকেশন"], prayeralerts: ["অ্যালার্ট", "আজান", "নামাজ", "সাউন্ড"],
+  prayersync: ["নামাজের সময়", "আপডেট", "ইন্টারনেট", "অনলাইন", "নিজে থেকে"], prayermethod: ["নামাজ", "আসর", "ফজর", "পদ্ধতি"], prayerplace: ["জায়গা", "শহর", "ঢাকা", "লোকেশন"], prayeralerts: ["অ্যালার্ট", "আজান", "নামাজ", "সাউন্ড"],
   reminder: ["রিমাইন্ডার", "ব্যাকআপ"], storage: ["স্টোরেজ", "নিরাপদ"], savebackup: ["ব্যাকআপ", "সেভ", "পাসফ্রেজ"], restore: ["ফেরান", "রিস্টোর", "ব্যাকআপ"], snapshots: ["স্ন্যাপশট", "কপি"], csv: ["স্প্রেডশিট", "এক্সেল"],
   lockscreen: ["লক স্ক্রিন", "নোটিফিকেশন"], consent: ["পারমিশন", "রিয়েল", "অনুমতি"], applock: ["পিন", "লক", "পাসওয়ার্ড"],
   mode: ["ডেমো", "রিয়েল", "মোড"], startreal: ["রিয়েল শুরু", "শুরু"],

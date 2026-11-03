@@ -121,11 +121,14 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 - [x] Run 2 step 20: M13 Deen plan/reminder forms (owner approved 2 Nov 2026): `#/deen/plans`, `src/core/deenPlans.ts`, `src/ui/deenPlansUi.ts`, `tests/deen_plans.test.ts`. M13 stays partial: Hijri date and Ramadan view not built.
 - [x] Run 2 step 22: M18 drawn timeline, task board (Kanban) and option board: `#/journey/boards`, `src/core/boards.ts`, `src/ui/boardsUi.ts`, `tests/boards.test.ts`. Still open for M18: drawn goal tree, resource map, readiness map, plan-diff.
 
+- [x] Prayer times update automatically when online (owner request 3 Nov 2026): `src/core/prayerSource.ts`, `src/adapters/aladhan.ts`, `src/ui/prayerSync.ts`, `tests/prayer_sync.test.ts`; off until ticked, Withdraw works, local fallback, DECISIONS_LOG entry.
+- [x] Settings gaps (plan keeper G-04/G-06/G-07): cross-tab refresh, one consent wording, Cancel / Withdraw / wording / tap-target tests (`tests/settings_gaps.test.ts`).
+
 ## Part B — Owner-only tasks
 - [ ] (optional, later) A scholar reviews the hadith entries and the halal-check flags; a named reviewer then marks entries reviewed.
 - [ ] Phone offline test: open online once, visit all pages, airplane mode, reopen (O1).
 - [ ] Lock-screen privacy check on a real device (O8).
-- [ ] Verify prayer times against the official Bangladesh timetable.
+- [ ] Verify prayer times against the official Bangladesh timetable (Islamic Foundation Bangladesh). Check both: the phone's own calculation and the new automatic update (Settings > Prayer; source Aladhan, UNTESTED live from the build sandbox).
 - [ ] Bangla reviewer sign-off (TM-TST-161).
 - [ ] Look at the 4 Design versions on the phone (More > Display) and say which to keep.
 - [ ] Approvals still closed: D-C (AI / online suggestions / cost), cloud sync, Google/Supabase keys, D-D (scripture/licensed content), any paid service.
