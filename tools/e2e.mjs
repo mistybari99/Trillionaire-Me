@@ -244,6 +244,13 @@ check("G1-OFFLINE", "status screen renders offline", (await page.locator("[data-
   await page.evaluate(() => { document.documentElement.style.fontSize = ""; });
 }
 await ctx.setOffline(false);
+  // SET-2.T3: the Quick card (language, theme, text size) is fully visible on the first screen at 360 px, in demo mode, in English and Bangla, without scrolling.
+  for (const lang of ["en", "bn", "mix"]) {
+    await page.evaluate((l) => { localStorage.setItem("tm:ui:lang", l); }, lang); await page.goto("http://localhost:4174/#/settings"); await page.reload(); await page.waitForSelector("[data-card=quick]");
+    const fit = await page.evaluate(() => { const q = document.querySelector("[data-card=quick]").getBoundingClientRect(); const nav = document.querySelector("nav").getBoundingClientRect(); return { top: Math.round(q.top), bottom: Math.round(q.bottom), nav: Math.round(nav.top), scrolled: window.scrollY }; });
+    check("SET-QUICK-FOLD", `Settings Quick card fits above the tab bar at 360 px without scrolling (${lang})`, fit.bottom <= fit.nav && fit.scrolled === 0 && fit.top >= 0, JSON.stringify(fit));
+  }
+  await page.evaluate(() => { localStorage.setItem("tm:ui:lang", "en"); });
 
 // Text size (owner report 3 Nov 2026): each size on Settings really scales body text, headings, buttons, tab bar and form fields, in English and Bangla,
 // and 200% shows no sideways scroll and no clipped text at 360 px.
