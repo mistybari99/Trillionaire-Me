@@ -39,7 +39,7 @@ describe("service worker: stale-while-revalidate for content that is not saved",
   const sw = readFileSync("public/sw.js", "utf8");
   it("saved app files keep the fresh-first behaviour with offline fallback, others answer from the copy and refresh in the background", () => {
     expect(sw).toMatch(/staleWhileRevalidate/); expect(sw).toMatch(/isSaved\(req\.url\)/); expect(sw).toMatch(/e\.waitUntil\(refresh/);
-    expect(sw).toMatch(/caches\.match\("\.\/"\)/); expect(sw).toMatch(/Promise\.allSettled\(PRECACHE\.map/);
+    expect(sw).toMatch(/caches\.match\("\.\/", MATCH\)/); expect(sw).toMatch(/Promise\.allSettled\(PRECACHE\.map/);
   });
   it("behaves as written: a fake worker answers the saved copy first and refreshes it, and still serves offline", async () => {
     const store = new Map<string, string>(); const handlers: Record<string, (e: unknown) => void> = {}; let fetchCalls = 0; let net = "v1";

@@ -8,6 +8,7 @@ const PRECACHE = /*PRECACHE_LIST*/[];
 const SHELL = `tm-shell-${VERSION}`;
 const RUNTIME = "tm-runtime-v1";
 const SAVED = new Set(PRECACHE.map((u) => new URL(u, self.registration.scope).href));
+const MATCH = { ignoreVary: true };
 const isSaved = (url) => { const u = new URL(url); u.search = ""; u.hash = ""; return SAVED.has(u.href); };
 self.addEventListener("install", (e) => {
   self.skipWaiting();
@@ -22,9 +23,12 @@ self.addEventListener("fetch", (e) => {
   // Audio is played with Range requests. Online: let the browser talk to the network. Offline: answer the range from the saved copy.
   if (req.headers.has("range")) { e.respondWith(rangeFromCache(req).then((r) => r || fetch(req))); return; }
   if (!isSaved(req.url)) { e.respondWith(staleWhileRevalidate(e, req)); return; }
+  // Hashed files under /assets/ never change under the same name: the saved copy answers first (works the same on every browser version,
+  // does not wait for the network to fail), the network is only the fallback. Other saved files (the page, icons) stay fresh-first.
+  if (new URL(req.url).pathname.includes("/assets/")) { e.respondWith(caches.match(req, MATCH).then((m) => m || fetch(req).then((res) => { if (res.ok) { const c = res.clone(); caches.open(RUNTIME).then((x) => x.put(req, c)); } return res; }))); return; }
   e.respondWith(
     fetch(req).then((res) => { if (res.ok) { const c = res.clone(); caches.open(RUNTIME).then((x) => x.put(req, c)); } return res; })
-      .catch(() => caches.match(req).then((m) => m || caches.match(req, { ignoreSearch: true })).then((m) => m || caches.match("./")))
+      .catch(() => caches.match(req, MATCH).then((m) => m || caches.match(req, { ignoreSearch: true, ignoreVary: true })).then((m) => m || caches.match("./", MATCH)))
   );
 });
 
@@ -44,5 +48,5 @@ async function rangeFromCache(req) {
 function staleWhileRevalidate(e, req) {
   const refresh = fetch(req).then((res) => { if (res.ok) { const c = res.clone(); caches.open(RUNTIME).then((x) => x.put(req, c)); } return res; });
   e.waitUntil(refresh.catch(() => undefined));
-  return caches.match(req).then((hit) => hit || refresh.catch(() => caches.match(req, { ignoreSearch: true }).then((m) => m || caches.match("./"))));
+  return caches.match(req, MATCH).then((hit) => hit || refresh.catch(() => caches.match(req, { ignoreSearch: true, ignoreVary: true }).then((m) => m || caches.match("./", MATCH))));
 }

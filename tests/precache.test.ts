@@ -38,5 +38,6 @@ describe("TM-TST-084 service worker source", () => {
     expect(sw).toMatch(/k !== SHELL && k !== RUNTIME/); expect(sw).toMatch(/origin !== location\.origin\) return/);
     expect(sw).not.toMatch(/https?:\/\//); expect(sw).not.toMatch(/importScripts/);
   });
-  it("falls back offline to the saved copy, then to the page", () => { expect(sw).toMatch(/caches\.match\(req\)[\s\S]*caches\.match\("\.\/"\)/); });
+  it("falls back offline to the saved copy, then to the page", () => { expect(sw).toMatch(/caches\.match\(req, MATCH\)[\s\S]*caches\.match\("\.\/", MATCH\)/); expect(sw).toMatch(/ignoreVary: true/); });
+  it("hashed files under /assets/ are answered from the saved copy first, so a slow or odd offline network cannot stall a lazy screen", () => { expect(sw).toMatch(/includes\("\/assets\/"\)\) \{ e\.respondWith\(caches\.match\(req, MATCH\)\.then\(\(m\) => m \|\| fetch\(req\)/); });
 });
