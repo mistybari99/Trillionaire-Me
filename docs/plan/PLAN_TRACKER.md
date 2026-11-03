@@ -200,8 +200,8 @@ All items below are ticked `[x]` in the file unless noted. Evidence is what TODO
 | AU-18 | W4-16 | Re-run owner-demand audit + Register mapping; republish audit numbers | builder | Built | docs/audit/OWNER_DEMAND_AUDIT_2026-11-03.md; tests/audit_counts.test.ts; Register v2_1 copy regenerated | Register Change Log | stale |
 | AU-19 | W4-17 | Owner decision round: hosting (O4), D-D, D-C, cloud copy | needs-approval | Blocked | owner | Connections | - |
 | AU-20 | audit 5.2 M5 | Halal-check flags (MR-31) | builder | Built | `src/library/halalFlags.ts` | More | scholar review owner |
-| AU-21 | audit 5.2 M6 | Plan versions + "what changed" diff with max 3 options | builder | Not started | audit lists it, not in 30-day table | Plan | - |
-| AU-22 | audit 5.2 M7 | Goal tree screen + backward-planning wizard | builder | Not started | not in 30-day table | Plan | - |
+| AU-21 | audit 5.2 M6 | Plan versions + "what changed" diff with max 3 options | builder | Built (diff); wizard Not started | plan versions + diff incl. link rows (tests/goal_delete.test.ts, reality_loop.test.ts) | Plan | - |
+| AU-22 | audit 5.2 M7 | Goal tree screen + backward-planning wizard | builder | Built+Linked+Tested | goal page per goal tree + steps section (tests/goal_overview.test.ts); backward-planning wizard still not built | Plan | - |
 | AU-23 | audit 5.1 Q5 | Calmer colour for "please tick" prompts | builder | Not started | not in 30-day table, no evidence | forms | - |
 | AU-24 | audit 5.3 B1-B8 | Big bets (AI, Google search, encrypted cloud, Deen content, public edition, staff edition, opportunity engine, pilot) | needs-approval | Blocked | D-C, D-D, G8 | - | - |
 | AU-25 | audit 5.4 | Real-user testing sequence (owner 7 days on real data after Q1; then M9) | owner | Not started | - | Register | - |
@@ -285,6 +285,7 @@ Module labels come from `src/modules/capability.ts` (six boxes: Input, Storage, 
 | B12-23 | m-list | M21 Security & privacy | builder / owner | Blocked | M21 partial: Storage missing = at-rest encryption (DL-03, owner decision) | owner |
 | B12-26 | owner 3 Nov | Prayer times auto-update when online (Aladhan, off until ticked, cache, local fallback, source line) | builder | Built+Linked+Tested (live UNTESTED) | tests/prayer_sync.test.ts (26); DECISIONS_LOG "Automatic prayer times" | owner compares with Islamic Foundation timetable |
 | B12-27 | owner 3 Nov | Text size scales (rem), saved size applied before first paint; app update banner + build stamp in About | builder | Built+Linked+Tested | tests/text_size.test.ts, tests/update_flow.test.ts, e2e TEXTSIZE / UPDATE-* | owner confirms on his phone after one fresh open |
+| B12-28 | owner 3 Nov | Multi-goal shared steps (12-step ruling) + per-goal weighting | builder | Built+Linked+Tested | commits c57969e..76773a6; tests task_goals, goal_credit, goal_picker, goal_overview, task_trace, goal_delete, multi_goal_print, habit_goals, goal_weighting; docs/design/multi-goal-final-decision.md | no single-step delete screen exists |
 | B12-24 | m-list | M23 AI layer | needs-approval | Blocked | D-C | - |
 | B12-25 | m-list | M11, M19, M22, M24, M25 complete | builder | Built+Linked+Tested | m_list_status table | - |
 

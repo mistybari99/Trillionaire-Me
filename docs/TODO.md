@@ -129,6 +129,8 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 
 - [x] Text size fix (px to rem) and reliable updates: banner "A new version is ready", build stamp in Settings > About (3 Nov 2026).
 
+- [x] Multi-goal shared steps (owner 3 Nov 2026, ruling docs/design/multi-goal-final-decision.md): steps 1-11 plus per-goal weighting; paperwork step 12. Tests: task_goals, goal_credit, goal_picker, goal_overview, task_trace, goal_delete, multi_goal_print, habit_goals, goal_weighting.
+
 ## Part B — Owner-only tasks
 - [ ] (optional, later) A scholar reviews the hadith entries and the halal-check flags; a named reviewer then marks entries reviewed.
 - [ ] Open the app online once and check Settings > About shows the new build line; text size 150% should visibly grow the text (3 Nov fix).
