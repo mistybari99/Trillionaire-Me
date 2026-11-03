@@ -1,5 +1,7 @@
 # Trillionaire Me: Full Independent Audit
 
+> **SUPERSEDED (3 Nov 2026).** This is the 1 Nov audit and is kept as history. Several statements are no longer true (for example: no CI, no `_headers`, the 40 percent headline). Current documents: `docs/plan/PLAN_TRACKER.md` (every step and its status), `docs/audit/OWNER_DEMAND_AUDIT_2026-11-03.md` (owner-demand counts), `docs/design/m-list-status.md` (module build status), `docs/owner/WHERE_WE_ARE_BN.md` (owner summary in Bangla).
+
 Date: 1 Nov 2026 · Branch: `ccr-8b686ba2-vitt45` · Audited commit: `ba586f1` (HEAD at the time) · Auditor: independent, read-only (no code, test, tool or existing doc was edited).
 
 **Scope:** everything from the first Spec (22 Oct 2026) to today: 131 commits, 22 Oct to 1 Nov 2026.

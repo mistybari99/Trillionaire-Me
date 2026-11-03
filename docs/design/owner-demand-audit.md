@@ -1,5 +1,7 @@
 # Owner demand audit (read-only)
 
+> **Status (3 Nov 2026): the row table below is still the source table, but the summary text, counts and "next steps" in this file are older than the current summary.** Current summary: `docs/audit/OWNER_DEMAND_AUDIT_2026-11-03.md`. Current plan status: `docs/plan/PLAN_TRACKER.md`; module status: `docs/design/m-list-status.md`.
+
 Date: 25 Oct 2026 (full re-check 31 Oct 2026, see the end) · Branch: `ccr-8b686ba2-vitt45` · Method: read the owner sources (ROADMAP, PLAN, early-plan and M-list status, visual-references batches 1–9, life-system brief, content-first brief, DECISIONS_LOG, CLAUDE §8–9), then checked each demand against `src/` and `tests/`. `npx vitest run` on the 25 Oct reading: 44 files, 606 tests, all passing. The 31 Oct full re-check is described in section 4.
 
 Status rules used:

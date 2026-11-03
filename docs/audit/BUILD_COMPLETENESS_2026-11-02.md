@@ -1,5 +1,7 @@
 # Trillionaire Me: Build-Completeness Audit (structure, not data)
 
+> **SUPERSEDED (3 Nov 2026).** This is the 2 Nov structure audit and is kept as history. Statements such as "goal tree is imported by nothing" are no longer true (goal tree is used by the goal page, print and the goals overview). Current documents: `docs/design/m-list-status.md` (generated module status, six boxes), `docs/plan/PLAN_TRACKER.md` section H, `docs/audit/OWNER_DEMAND_AUDIT_2026-11-03.md`.
+
 Date: 2 Nov 2026 · Branch `ccr-8b686ba2-vitt45` · Auditor: independent, read-only on `src/`, `tests/`, `tools/`. Working tree had the builder's uncommitted Settings-tab edits (`src/app.ts`, `src/ui/screens.ts`, `src/i18n/packs.ts` and others); the audit ran on that live tree.
 
 The question asked: ignore whether the user has typed anything. If a user did give all the data, is every step built end to end (input form, storage, rules or calculation, every output view, export, links to dependent screens)?
