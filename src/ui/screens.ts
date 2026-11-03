@@ -1091,6 +1091,7 @@ export function journey(): HTMLElement {
     h("div", { class: "actions" },
       link("#/journey/universe", "btn ghost", t("univ.link", lang)),
       link("#/journey/art", "btn ghost", t("reward.see", lang)),
+      link("#/journey/boards", "btn ghost", t("bd.link", lang)),
       link("#/journey/log", "btn ghost", t("log.link", lang)),
       link("#/journey/horizon", "btn ghost", t("horizon.link", lang)),
       link("#/journey/report", "btn ghost", t("report.link", lang)),

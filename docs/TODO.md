@@ -119,7 +119,7 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 - [x] Run 2, step 19 (D-D): hadith reader structure, off by default, importer, tests (`src/core/hadith.ts`, `src/ui/hadithUi.ts`, `tools/hadith_import.mjs`, `tests/hadith.test.ts`). Pack EMPTY: licence of translations unclear (see `docs/design/hadith-pack.md`).
 - [x] Fill the hadith pack (2 Nov 2026): 212 entries copied unchanged from HadeethEnc.com (Arabic, English, Bangla), `tools/hadith_import_hadeethenc.mjs`, read-only check `tools/hadith_verify.mjs`, details in `docs/design/hadith-pack.md`. Still thin: time, patience, halal earning.
 - [x] Run 2 step 20: M13 Deen plan/reminder forms (owner approved 2 Nov 2026): `#/deen/plans`, `src/core/deenPlans.ts`, `src/ui/deenPlansUi.ts`, `tests/deen_plans.test.ts`. M13 stays partial: Hijri date and Ramadan view not built.
-- [ ] Run 2: M18 drawn timeline / Kanban / option board NOT built in this run.
+- [x] Run 2 step 22: M18 drawn timeline, task board (Kanban) and option board: `#/journey/boards`, `src/core/boards.ts`, `src/ui/boardsUi.ts`, `tests/boards.test.ts`. Still open for M18: drawn goal tree, resource map, readiness map, plan-diff.
 
 ## Part B — Owner-only tasks
 - [ ] (optional, later) A scholar reviews the hadith entries and the halal-check flags; a named reviewer then marks entries reviewed.

@@ -12,19 +12,19 @@ import type { TMRecord } from "../core/types";
 
 const NS = "http://www.w3.org/2000/svg";
 type A = Record<string, string | number>;
-function s<K extends keyof SVGElementTagNameMap>(tag: K, attrs: A = {}, ...kids: Array<Node | string | null>): SVGElementTagNameMap[K] {
+export function s<K extends keyof SVGElementTagNameMap>(tag: K, attrs: A = {}, ...kids: Array<Node | string | null>): SVGElementTagNameMap[K] {
   const el = document.createElementNS(NS, tag);
   for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, String(v));
   for (const c of kids) if (c !== null) el.append(typeof c === "string" ? document.createTextNode(c) : c);
   return el;
 }
-const svgRoot = (w: number, hgt: number, label: string, desc: string): SVGSVGElement => {
+export const svgRoot = (w: number, hgt: number, label: string, desc: string): SVGSVGElement => {
   const el = s("svg", { viewBox: `0 0 ${w} ${hgt}`, class: "chart-svg", role: "img", "aria-label": label, focusable: "false" }, s("title", {}, label), s("desc", {}, desc));
   return el;
 };
 
 /** Title + drawing + hidden summary + visible "Show as text". `lines` are the text equivalent, one per data point. */
-function box(kind: string, title: string, summary: string, lines: string[], lang: Locale, ...drawing: Array<Node | null>): HTMLElement {
+export function box(kind: string, title: string, summary: string, lines: string[], lang: Locale, ...drawing: Array<Node | null>): HTMLElement {
   return h("section", { class: "card chart", "data-chart": kind },
     h("h2", { class: "card-h" }, title),
     ...drawing,

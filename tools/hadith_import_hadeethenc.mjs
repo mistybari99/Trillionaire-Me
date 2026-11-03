@@ -75,6 +75,8 @@ const QUOTA = { intention: 60, time: 60, purpose: 60, life: 60, halal_earning: 6
 // ids a human skimmed as off-topic or unsuitable for a one-line card (listed here so the choice is visible and repeatable)
 const EXCLUDE = new Set(["3062", "3145", "3110", "3350", "3383", "3390", "3407", "3438", "3480", "3591", "3718", "6014", "6093", "6379", "8886", "8904", "8914", "8945", "11169", "11220",
   "66204", "3330", "5379", "5347", "8315", "65105", "8918", "6761", "6762", "10647", "65086", "65087", "8902", "3063", "3220", "3030", "8888", "65009", "65011", "65013", "65022", "65031", "65037", "65058", "65059", "65061", "65062", "65075", "65114", "65426", "65468", "65783", "5020", "5331", "6615", "3574", "65049", "66219"]);
+// Topic tags the separate verification session found loose (2 Nov 2026): fixed here by hand, visible and repeatable. Tags are our labels, not text from the source.
+const RETAG = { "3358": ["family"], "5377": ["purpose"], "4314": ["halal_earning"], "3779": ["character"], "65063": ["purpose"], "65002": ["character"] };
 const MAX = { en: 1500, bn: 2800, ar: 1900 };
 
 const cands = [];
@@ -103,7 +105,7 @@ for (const tp of ORDER) {
   for (const c of cands) { if (n >= QUOTA[tp]) break; if (!c.topics.includes(tp)) continue; if (chosen.has(c.id) && chosen.get(c.id).length >= 3) continue; const cur = chosen.get(c.id) ?? []; if (cur.includes(tp)) { n++; continue; } chosen.set(c.id, [...cur, tp]); n++; }
 }
 const byId = new Map(cands.map((c) => [c.id, c]));
-const selection = [...chosen.entries()].map(([id, topics]) => ({ id, topics })).sort((x, y) => Number(x.id) - Number(y.id));
+const selection = [...chosen.entries()].map(([id, topics]) => ({ id, topics: RETAG[id] ?? topics })).sort((x, y) => Number(x.id) - Number(y.id));
 
 // ---- build entries: every text field is the source cell, untouched ----
 const SOURCE = `HadeethEnc.com (Encyclopedia of Translated Prophetic Hadiths): Arabic v${AR.ver}, English v${EN.ver}, Bangla v${BN.ver}`;
