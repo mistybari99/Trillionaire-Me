@@ -31,7 +31,7 @@ export const DESIGNS: Design[] = [
     extraCss: `
 :root[data-design="light-futuristic"] body{background:radial-gradient(120% 60% at 100% 0,color-mix(in srgb,var(--primary) 16%,transparent),transparent 60%),radial-gradient(90% 50% at 0 8%,color-mix(in srgb,var(--ember) 12%,transparent),transparent 60%),var(--paper)}
 :root[data-design="light-futuristic"] .card{background:color-mix(in srgb,var(--card) 86%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-radius:16px;box-shadow:0 6px 22px color-mix(in srgb,var(--primary) 14%,transparent)}
-:root[data-design="light-futuristic"] .cta,:root[data-design="light-futuristic"] .btn{background:linear-gradient(135deg,var(--primary),color-mix(in srgb,var(--primary) 70%,var(--ink)));border-radius:14px}
+:root[data-design="light-futuristic"] .cta,:root[data-design="light-futuristic"] .btn:not(.ghost){background:linear-gradient(135deg,var(--primary),color-mix(in srgb,var(--primary) 70%,var(--ink)));border-radius:14px}
 :root[data-design="light-futuristic"] nav{background:color-mix(in srgb,var(--card) 90%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
 :root[data-design="light-futuristic"] .seg button{border-radius:12px}
 @media (prefers-reduced-motion:no-preference){:root[data-design="light-futuristic"] .card,:root[data-design="light-futuristic"] .cta{transition:box-shadow .2s ease}}`,

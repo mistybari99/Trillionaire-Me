@@ -23,7 +23,7 @@
   --demo:#E3C566; --demo-bg:#2C2610; --danger:#F08A56;}}
 
 *{box-sizing:border-box;margin:0}
-body{background:var(--paper);color:var(--ink);font:400 1.0625rem/1.7 "Hind Siliguri",system-ui,sans-serif;max-width:480px;margin:0 auto;padding:16px 16px 96px;overflow-wrap:anywhere}
+body{background:var(--paper);color:var(--ink);font:400 1.0625rem/1.7 "Hind Siliguri",system-ui,sans-serif;max-width:480px;margin:0 auto;padding:16px 16px max(96px,8rem);overflow-wrap:anywhere}
 .top{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:0.875rem;color:var(--muted);flex-wrap:wrap}
 .top .right{display:flex;gap:6px;align-items:center}
 .badge{font-size:0.75rem;font-weight:600;padding:2px 10px;border:1px solid var(--demo);background:var(--demo-bg);color:var(--demo);border-radius:2px}
@@ -55,13 +55,14 @@ label.btn:focus-within{outline:3px solid var(--ember);outline-offset:2px}
 .skip{position:absolute;inset-inline-start:16px;top:8px;z-index:50;padding:10px 14px;background:var(--primary);color:var(--on-primary);font:600 1rem "Hind Siliguri",system-ui;transform:translateY(-200%)}
 .skip:focus{transform:none;outline:3px solid var(--ember);outline-offset:2px}
 .sr-only{position:absolute;width:1px;height:1px;min-height:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;margin:-1px;padding:0;border:0}
-nav{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--rule);display:flex;max-width:480px;margin:0 auto}
-.tab{flex:1;min-height:56px;display:grid;place-items:center;font:inherit;font-size:0.8125rem;color:var(--muted);background:none;border:0;text-decoration:none}
+nav{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--rule);display:flex;flex-wrap:wrap;max-width:480px;margin:0 auto}
+.tab{flex:1 1 0;min-width:max-content;min-height:56px;display:grid;place-items:center;font:inherit;font-size:0.8125rem;overflow-wrap:normal;word-break:keep-all;padding-inline:4px;text-align:center;color:var(--muted);background:none;border:0;text-decoration:none}
 .tab[aria-current]{color:var(--ink);font-weight:600;box-shadow:inset 0 3px var(--primary)}
 .card{background:var(--card);border:1px solid var(--rule);padding:12px 14px;margin:10px 0}
 .card.link{display:block;color:inherit;text-decoration:none}
 .row{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
-.tag{font-size:0.75rem;border:1px solid var(--rule);padding:0 8px;white-space:nowrap}
+.tag{font-size:0.75rem;border:1px solid var(--rule);padding:0 8px;white-space:normal;max-width:100%}
+main a:where(:not([class]),[class=""]){color:var(--primary);text-decoration:underline}
 .tag.ok{border-color:var(--moss);color:var(--moss)} .tag.warn{border-color:var(--demo);color:var(--demo)} .tag.off{color:var(--muted)}
 .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
 .note{border-inline-start:3px solid var(--rule);padding:4px 12px;margin:24px 0 0;font-size:0.8125rem;color:var(--muted);line-height:1.5}
@@ -215,7 +216,7 @@ dl{margin:6px 0} .hrow{display:grid;grid-template-columns:96px 1fr;gap:8px;paddi
 .scr-more .card:not(.link){margin:10px 0}
 .scr-more .card:not(.link) .seg{margin-top:8px}
 .scr-more .seg{gap:8px}
-.scr-more .seg button{flex:1 1 0;min-width:0;padding-inline:8px}
+.scr-more .seg button{flex:1 1 0;min-width:max-content;padding-inline:8px}
 .scr-more .card .tags{margin-top:8px}
 /* Card titles are h2 for heading order (screens have no h3 directly under h1); they keep the h3 look. */
 h2.card-h{font:600 1.0625rem/1.4 "Hind Siliguri",sans-serif;margin:0 0 2px}
@@ -447,7 +448,7 @@ textarea[data-swot]{width:100%;box-sizing:border-box;font:inherit;padding:8px}
 /* Settings area */
 .scr-settings .card.link{padding:14px 16px;margin:10px 0}
 .scr-settings .card.link h3.card-h{margin:0 0 2px}
-.scr-settings .seg{gap:8px} .scr-settings .seg button{flex:1 1 0;min-width:0;padding-inline:8px}
+.scr-settings .seg{gap:8px} .scr-settings .seg button{flex:1 1 0;min-width:max-content;padding-inline:8px}
 .scr-settings .set-delete{margin-top:24px;background:transparent}
 .set-hl{outline:3px solid var(--primary);outline-offset:2px}
 /* Print / Save as PDF (M20): paper layout. Chrome, buttons and links that only make sense on a screen are hidden; system colours on a light page; cards do not split across pages. */

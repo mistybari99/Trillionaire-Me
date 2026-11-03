@@ -1,8 +1,8 @@
 {
   "viewport": "360x740",
-  "generated": "2026-11-03T01:15:10.432Z",
+  "generated": "2026-11-03T09:37:44.047Z",
   "combos": 32,
-  "screens": 320,
+  "screens": 896,
   "problems": 0,
   "bad": [],
   "routes": [
@@ -15,7 +15,25 @@
     "settings/prayer",
     "settings/privacy",
     "settings/backup",
-    "diary/plan"
+    "diary/plan",
+    "journey/boards",
+    "journey/backward/shot-goal",
+    "more/where",
+    "settings/look",
+    "settings/data",
+    "settings/data/start-real",
+    "settings/plan",
+    "settings/connections",
+    "settings/delete",
+    "settings/about",
+    "settings/backup/restore",
+    "journey/risks",
+    "diary/team",
+    "diary/ventures",
+    "diary/money",
+    "habits",
+    "journey/goals",
+    "more/status"
   ],
   "matrix": "4 looks x en/bn x light/dark x 100%/200% text"
 }

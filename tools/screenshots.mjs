@@ -10,7 +10,8 @@ const routes = ["today", "journey", "diary", "diary/intake/1", "diary/intake/2",
 const SEED_TASK = { id: "shot-task", entity: "task", ns: "demo", ownerId: "demo-user", schemaVersion: 1, createdAt: new Date().toISOString(), values: { "task.title": { state: "value", value: "Write the report outline", label: "DEMO" }, "task.minutes": { state: "value", value: 25, label: "DEMO" }, "task.priority": { state: "value", value: "high", label: "DEMO" } } };
 const out = "evidence/screenshots";
 mkdirSync(out, { recursive: true });
-const server = await preview({ preview: { port: 4173, strictPort: true } });
+const PORT = Number(process.env.TM_SHOT_PORT || 4173);
+const server = await preview({ preview: { port: PORT, strictPort: true } });
 const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || (existsSync(SANDBOX_CHROME) ? SANDBOX_CHROME : undefined) });
 const report = [];
 // Look matrix (TM_SHOT_LOOKS=1): all 4 Design versions x light/dark x normal/reduced motion at 360 px, English, with a seeded DEMO goal and tasks.
@@ -23,8 +24,18 @@ const SEED = [mkRec("shot-goal", "goal", { "goal.title": "Save for a laptop", "g
 // Matrix (TM_SHOT_MATRIX=1): 4 Design versions x English/Bangla x light/dark x normal/200% text at 360 px over the main screens, with a seeded DEMO goal and tasks.
 // Writes evidence/matrix-report.json (numbers) and keeps pictures only for screens that overflow or have a too-small target, in evidence/screenshots-matrix/.
 // 200% text is set the same way the e2e check does it (root font size), so the page shows what a person with large text sees.
+// TM_SHOT_MATRIX_MERGE=1: merge the four per-look parts (run each with TM_SHOT_ONLY_DESIGN=<id> in parallel) into evidence/matrix-report.json.
+if (process.env.TM_SHOT_MATRIX_MERGE === "1") {
+  const { readFileSync: rf, unlinkSync } = await import("node:fs");
+  const parts = ["light-futuristic", "ink-paper", "emerald-obsidian", "broadsheet"].map((d) => JSON.parse(rf(`evidence/matrix-part-${d}.json`, "utf8")));
+  const bad = parts.flatMap((p) => p.bad);
+  writeFileSync("evidence/matrix-report.json", JSON.stringify({ viewport: "360x740", generated: new Date().toISOString(), combos: parts.reduce((a, p) => a + p.combos, 0), screens: parts.reduce((a, p) => a + p.screens, 0), problems: bad.length, bad, routes: parts[0].routes, matrix: "4 looks x en/bn x light/dark x 100%/200% text" }, null, 2));
+  for (const d of ["light-futuristic", "ink-paper", "emerald-obsidian", "broadsheet"]) unlinkSync(`evidence/matrix-part-${d}.json`);
+  console.log("merged", parts.length, "parts;", bad.length, "problems"); process.exit(0);
+}
 if (process.env.TM_SHOT_MATRIX === "1") {
-  const routes = ["today", "journey", "journey/goal/shot-goal", "journey/month", "deen", "settings", "settings/prayer", "settings/privacy", "settings/backup", "diary/plan"];
+  const routes = ["today", "journey", "journey/goal/shot-goal", "journey/month", "deen", "settings", "settings/prayer", "settings/privacy", "settings/backup", "diary/plan", "journey/boards", "journey/backward/shot-goal", "more/where",
+    "settings/look", "settings/data", "settings/data/start-real", "settings/plan", "settings/connections", "settings/delete", "settings/about", "settings/backup/restore", "journey/risks", "diary/team", "diary/ventures", "diary/money", "habits", "journey/goals", "more/status"];
   const mdir = "evidence/screenshots-matrix"; mkdirSync(mdir, { recursive: true });
   const visit = new Date(Date.now() - 6 * 86400000); const lastOpen = `${visit.getFullYear()}-${String(visit.getMonth() + 1).padStart(2, "0")}-${String(visit.getDate()).padStart(2, "0")}`;
   for (const design of DESIGNS) for (const lang of ["en", "bn"]) for (const scheme of ["light", "dark"]) for (const big of [false, true]) {
@@ -32,16 +43,17 @@ if (process.env.TM_SHOT_MATRIX === "1") {
     await ctx.addInitScript(([d, l, recs, lo]) => { try { localStorage.setItem("tm:ui:lang", l); localStorage.setItem("tm:ui:design", d); localStorage.setItem("tm:ui:dataMode", "demo"); localStorage.setItem("tm:ui:visit", JSON.stringify({ lastOpen: lo, welcome: null })); for (const r of recs) localStorage.setItem(`tm:demo:${r.id}`, JSON.stringify(r)); } catch { /* storage blocked */ } }, [design, lang, SEED, lastOpen]);
     const page = await ctx.newPage();
     for (const r of routes) {
-      await page.goto("about:blank"); await page.goto(`http://localhost:4173/#/${r}`);
+      await page.goto("about:blank"); await page.goto(`http://localhost:${PORT}/#/${r}`);
       await page.waitForSelector("main"); if (big) await page.evaluate(() => { document.documentElement.style.fontSize = "200%"; }); await page.waitForTimeout(500);
       const m = await page.evaluate(() => {
         const vw = window.innerWidth; const vis = (e) => { const b = e.getBoundingClientRect(); return b.width > 0 && b.height > 0; };
         const wide = [...document.querySelectorAll("main *")].filter((e) => vis(e) && e.getBoundingClientRect().right > vw + 1 && !e.closest("svg, .sr-only, [aria-hidden=true], pre, table")).length;
         const small = [...document.querySelectorAll("main button, main a.btn, main select, main input:not([type=checkbox]):not([type=radio]):not([type=hidden])")].filter((e) => vis(e) && e.getBoundingClientRect().height < 43).length;
-        return { overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth, wide, small, tabsInView: [...document.querySelectorAll("nav a.tab")].every((a) => a.getBoundingClientRect().right <= vw + 1) };
+        return { overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth, wide, small, tabsInView: [...document.querySelectorAll("nav a.tab")].every((a) => a.getBoundingClientRect().right <= vw + 1) && [...document.querySelectorAll("nav a.tab")].every((a) => { const r = document.createRange(); r.selectNodeContents(a); return r.getClientRects().length <= 1; }) };
       });
       const id = `${design}/${lang}/${scheme}/${big ? "200" : "100"}`;
       let file = null;
+      if (process.env.TM_SHOT_KEEP) { mkdirSync(process.env.TM_SHOT_KEEP, { recursive: true }); await page.screenshot({ path: `${process.env.TM_SHOT_KEEP}/${id.replace(/\//g, "-")}-${r.replace(/\//g, "_")}.png` }); }
       if (m.overflow || m.wide || m.small || !m.tabsInView) { file = `${mdir}/${id.replace(/\//g, "-")}-${r.replace(/\//g, "_")}.png`; await page.screenshot({ path: file, fullPage: true }); }
       report.push({ combo: id, route: r, ...m, file });
     }
@@ -49,7 +61,7 @@ if (process.env.TM_SHOT_MATRIX === "1") {
   }
   await browser.close(); await server.close();
   const bad = report.filter((x) => x.overflow || x.wide || x.small || !x.tabsInView);
-  writeFileSync(process.env.TM_SHOT_ONLY_DESIGN ? `evidence/matrix-part-${process.env.TM_SHOT_ONLY_DESIGN}.json` : "evidence/matrix-report.json", JSON.stringify({ viewport: "360x740", generated: new Date().toISOString(), combos: DESIGNS.length * 2 * 2 * 2, screens: report.length, problems: bad.length, bad }, null, 2));
+  writeFileSync(process.env.TM_SHOT_ONLY_DESIGN ? `evidence/matrix-part-${process.env.TM_SHOT_ONLY_DESIGN}.json` : "evidence/matrix-report.json", JSON.stringify({ viewport: "360x740", generated: new Date().toISOString(), combos: DESIGNS.length * 2 * 2 * 2, screens: report.length, problems: bad.length, bad, routes, matrix: "4 looks x en/bn x light/dark x 100%/200% text" }, null, 2));
   console.log(report.length, "matrix screens;", bad.length, "with a problem;", report.filter((x) => x.overflow).length, "overflow,", report.filter((x) => x.wide).length, "wide elements,", report.filter((x) => x.small).length, "small targets");
   process.exit(0);
 }
@@ -60,7 +72,7 @@ if (LOOKS) {
     await ctx.addInitScript(([d, th, recs]) => { try { localStorage.setItem("tm:ui:lang", "en"); localStorage.setItem("tm:ui:design", d); localStorage.setItem("tm:ui:theme", th); localStorage.setItem("tm:ui:dataMode", "demo"); for (const r of recs) localStorage.setItem(`tm:demo:${r.id}`, JSON.stringify(r)); } catch { /* storage blocked */ } }, [design, scheme, SEED]);
     const page = await ctx.newPage();
     for (const r of lookRoutes) {
-      await page.goto("about:blank"); await page.goto(`http://localhost:4173/#/${r}`);
+      await page.goto("about:blank"); await page.goto(`http://localhost:${PORT}/#/${r}`);
       await page.waitForSelector("main"); await page.waitForTimeout(1300);
       const file = `${out}/look-${design}-${scheme}-${motion === "reduce" ? "rm" : "mo"}-${r.replace(/\//g, "_")}.png`;
       await page.screenshot({ path: file, fullPage: true });
@@ -82,7 +94,7 @@ for (const lang of ["bn", "en"]) {
   const page = await ctx.newPage();
   for (const r of routes) {
     if (r.startsWith("focus/")) await page.goto("about:blank"); // fresh document so the init script seeds the task
-    await page.goto(`http://localhost:4173/#/${r.replace("shot-task", SEED_TASK.id)}`);
+    await page.goto(`http://localhost:${PORT}/#/${r.replace("shot-task", SEED_TASK.id)}`);
     await page.waitForSelector("main");
     await page.waitForTimeout(1500); // let fade-in and journey micro-animations settle before capture
     const file = `${out}/${lang}-${r.replace(/\//g, "_")}.png`;
