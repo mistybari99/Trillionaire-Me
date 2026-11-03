@@ -40,6 +40,6 @@ export const GLOSSARY: Term[] = [
   g("halal", "islamic", "হালাল", "Halal", "ইসলামে বৈধ; টুল রায় দেয় না, যাচাইয়ের পথ দেখায়।", "Permissible in Islam; the tool gives no rulings, only a way to verify."),
   g("riba", "islamic", "সুদ (রিবা)", "Interest (riba)", "লোনের ওপর অতিরিক্ত নেওয়া; নিষিদ্ধ বলে চিহ্নিত হয়।", "Excess charged on loans; flagged as prohibited."),
   g("gharar", "islamic", "গারার", "Gharar", "অতিরিক্ত অনিশ্চয়তাপূর্ণ লেনদেন।", "Excessive uncertainty in a transaction."),
-  g("akhirah", "islamic", "আখিরাত", "Akhirah", "পরকাল; জীবনের লক্ষ্যের অংশ, কোনো পরিমাপের বিষয় নয়।", "The hereafter; part of life goals, never a measure to chase."),
+  g("akhirah", "islamic", "আখিরাত", "Akhirah", "পরকাল; জীবনের গোলের অংশ, কোনো পরিমাপের বিষয় নয়।", "The hereafter; part of life goals, never a measure to chase."),
   g("ibadah", "islamic", "ইবাদত", "Ibadah", "আল্লাহর উদ্দেশ্যে করা উপাসনা ও কাজ; ব্যক্তিগত।", "Worship and acts done for Allah; private."),
 ];

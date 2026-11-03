@@ -19,7 +19,7 @@ export function conditions(ctx: StageCtx, code: StageCode): Condition[] {
     const c = completeness(ctx.answers);
     return [
       { id: "A1", auto: true, met: c.requiredAddressed === c.requiredTotal, text: { bn: "ডায়েরির আবশ্যক প্রশ্নগুলোর সবকটির উত্তর দেওয়া হয়েছে (“পরে” চলবে)", en: "Every required diary question is answered (“Later” counts)" } },
-      { id: "A2", auto: true, met: ctx.goalCount >= 1, text: { bn: "অন্তত একটি লক্ষ্য লেখা হয়েছে", en: "At least one goal is written" } },
+      { id: "A2", auto: true, met: ctx.goalCount >= 1, text: { bn: "অন্তত একটি গোল লেখা হয়েছে", en: "At least one goal is written" } },
     ];
   }
   const own: Condition[] = (ctx.exits ?? []).filter((x) => x.code === code).map((x) => ({ id: x.id, auto: true, exit: true, met: x.met, text: { bn: x.name, en: x.name } }));

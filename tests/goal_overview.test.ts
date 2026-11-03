@@ -49,7 +49,7 @@ describe("overview", () => {
   });
   it("English, Bangla and Mix all carry the new text", () => {
     for (const k of Object.keys(PACKS.en).filter((k) => /^gl\.(ov|card|steps|also|unlinked|paused|status)/.test(k))) for (const l of ["en", "bn", "mix"] as const) expect((PACKS[l] as Record<string, string>)[k], `${l}:${k}`).toBeTruthy();
-    store.demo.put(goal("a", "Shop")); store.demo.put(step("t1", ["a"])); localStorage.setItem("tm:ui:lang", "bn"); go("#/journey/goals"); expect(q("[data-root-goal=a]").textContent).toContain("এই লক্ষ্য খুলুন");
+    store.demo.put(goal("a", "Shop")); store.demo.put(step("t1", ["a"])); localStorage.setItem("tm:ui:lang", "bn"); go("#/journey/goals"); expect(q("[data-root-goal=a]").textContent).toContain("এই গোল খুলুন");
     localStorage.setItem("tm:ui:lang", "mix"); go("#/journey/goals"); expect(q("[data-root-goal=a]")).not.toBeNull();
   });
 });

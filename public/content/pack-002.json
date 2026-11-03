@@ -66,7 +66,7 @@
       },
       "diagram": {
         "type": "matrix",
-        "bn": "অপশন ১|অপশন ২|অপশন ৩|তুলনা করি",
+        "bn": "অপশন 1|অপশন 2|অপশন 3|তুলনা করি",
         "en": "Option 1|Option 2|Option 3|Compare"
       },
       "appLink": "#/capture"
@@ -258,7 +258,7 @@
       },
       "diagram": {
         "type": "matrix",
-        "bn": "কারণ ১|কারণ ২|সমাধান ১|সমাধান ২",
+        "bn": "কারণ 1|কারণ 2|সমাধান 1|সমাধান 2",
         "en": "Reason 1|Reason 2|Fix 1|Fix 2"
       },
       "appLink": "#/stuck"

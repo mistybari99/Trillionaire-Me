@@ -141,7 +141,7 @@ describe("O5 render on the Plan screen (en and bn)", () => {
     go("#/diary/plan");
     const sec = document.querySelector("[data-assessment]")!;
     for (const d of ["interests", "skills", "strengths"]) expect(sec.querySelector(`[data-dim='${d}']`)?.getAttribute("data-status")).toBe("not_enough_data");
-    expect(sec.textContent).toMatch(/এখনো ডেটা কম/);
+    expect(sec.textContent).toMatch(/এখনো ডাটা কম/);
     expect(sec.querySelectorAll("[data-path]").length).toBe(0);
     expect(sec.querySelector("[data-fit='not_enough_data']")).not.toBeNull();
     expect(sec.querySelector(".err")).toBeNull();

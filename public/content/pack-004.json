@@ -86,7 +86,7 @@
         "planning"
       ],
       "title": {
-        "bn": "সময়ের হিসাবে যা এড়াবেন",
+        "bn": "সময়ের হিসেবে যা এড়াবেন",
         "en": "Time-planning slips to avoid"
       },
       "how": {
@@ -216,7 +216,7 @@
       },
       "diagram": {
         "type": "matrix",
-        "bn": "অনেকগুলো একসাথে: একটা করি|একদিন বাদ: কাল ছোট ধাপ|তুলনা: নিজের গতি|কঠিন লক্ষ্য: ছোট করি",
+        "bn": "অনেকগুলো একসাথে: একটা করি|একদিন বাদ: কাল ছোট ধাপ|তুলনা: নিজের গতি|কঠিন গোল: ছোট করি",
         "en": "Many at once: do one|Missed day: small step tomorrow|Comparing: own pace|Hard target: shrink it"
       },
       "appLink": "#/habits",
@@ -377,11 +377,11 @@
         "planning"
       ],
       "title": {
-        "bn": "ভালো লক্ষ্য কেমন হয়",
+        "bn": "ভালো গোল কেমন হয়",
         "en": "What a workable goal looks like"
       },
       "how": {
-        "bn": "ভালো লক্ষ্য নির্দিষ্ট, নিজের হাতে করা যায় এবং তারিখসহ। ‘ভালো থাকতে চাই’ না লিখে লিখুন ‘এই মাসে সপ্তাহে 3 দিন 20 মিনিট হাঁটব’। জানা না থাকলে ‘জানি না’ রাখুন।",
+        "bn": "ভালো গোল নির্দিষ্ট, নিজের হাতে করা যায় এবং তারিখসহ। ‘ভালো থাকতে চাই’ না লিখে লিখুন ‘এই মাসে সপ্তাহে 3 দিন 20 মিনিট হাঁটব’। জানা না থাকলে ‘জানি না’ রাখুন।",
         "en": "A workable goal is specific, within your control, and has a date. Instead of “be well”, write “walk 20 minutes, 3 days a week this month”. Keep unknowns as “don't know”."
       },
       "diagram": {
@@ -401,7 +401,7 @@
         "planning"
       ],
       "title": {
-        "bn": "লক্ষ্য ঠিক করার ধাপ",
+        "bn": "গোল ঠিক করার ধাপ",
         "en": "Steps to set a goal"
       },
       "how": {
@@ -425,7 +425,7 @@
         "planning"
       ],
       "title": {
-        "bn": "উদাহরণ: ইংরেজি বলার লক্ষ্য",
+        "bn": "উদাহরণ: ইংরেজি বলার গোল",
         "en": "Example: a spoken-English goal"
       },
       "how": {
@@ -434,7 +434,7 @@
       },
       "diagram": {
         "type": "steps",
-        "bn": "3 মাসের লক্ষ্য|এই মাসের ধাপ|এই সপ্তাহের কাজ|আজকের কাজ",
+        "bn": "3 মাসের গোল|এই মাসের ধাপ|এই সপ্তাহের কাজ|আজকের কাজ",
         "en": "3-month goal|This month|This week|Today"
       },
       "appLink": "#/diary/plan",
@@ -449,16 +449,16 @@
         "planning"
       ],
       "title": {
-        "bn": "লক্ষ্যে যা এড়িয়ে চলবেন",
+        "bn": "গোলে যা এড়িয়ে চলবেন",
         "en": "Goal-setting slips to avoid"
       },
       "how": {
-        "bn": "একসঙ্গে অনেক লক্ষ্য রাখবেন না। অস্পষ্ট শব্দ (ভালো, বেশি) এড়ান। লক্ষ্য এমন রাখবেন না যা অন্যের হাতে। পরিস্থিতি বদলালে লক্ষ্য শোধরানো ঠিক আছে।",
+        "bn": "একসঙ্গে অনেক গোল রাখবেন না। অস্পষ্ট শব্দ (ভালো, বেশি) এড়ান। গোল এমন রাখবেন না যা অন্যের হাতে। পরিস্থিতি বদলালে গোল শোধরানো ঠিক আছে।",
         "en": "Do not hold too many goals at once. Avoid vague words (better, more). Do not set goals that depend on others. Adjusting a goal when life changes is normal."
       },
       "diagram": {
         "type": "matrix",
-        "bn": "অনেক লক্ষ্য: 2–3টা রাখি|অস্পষ্ট শব্দ: সংখ্যা ও তারিখ|অন্যের হাতে: নিজের কাজ বাছি|পরিস্থিতি বদলেছে: শোধরাই",
+        "bn": "অনেক গোল: 2–3টা রাখি|অস্পষ্ট শব্দ: সংখ্যা ও তারিখ|অন্যের হাতে: নিজের কাজ বাছি|পরিস্থিতি বদলেছে: শোধরাই",
         "en": "Many goals: keep 2–3|Vague words: number and date|Depends on others: choose own action|Life changed: adjust"
       },
       "appLink": "#/journey",
@@ -473,11 +473,11 @@
         "learning"
       ],
       "title": {
-        "bn": "লক্ষ্য নিয়ে আরও শিখতে",
+        "bn": "গোল নিয়ে আরও শিখতে",
         "en": "Learn more about goal setting"
       },
       "how": {
-        "bn": "‘লক্ষ্য নির্ধারণ’ ও ‘স্মার্ট লক্ষ্য’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অ্যাপের Plan পাতায় নিজের লক্ষ্য লিখে দেখুন। যাচাইকারীর অপেক্ষায়।",
+        "bn": "‘গোল নির্ধারণ’ ও ‘স্মার্ট গোল’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অ্যাপের Plan পাতায় নিজের গোল লিখে দেখুন। যাচাইকারীর অপেক্ষায়।",
         "en": "Read general explainers on “goal setting” and “SMART goals”. Try writing your own goal on the app's Plan page. Reviewer pending."
       },
       "diagram": {
@@ -550,12 +550,12 @@
         "en": "Example: a new job offer"
       },
       "how": {
-        "bn": "রফিক নতুন কাজের প্রস্তাব পেল। সে দুটো অপশন লিখল, যা জানে না (কাজের সময়) তা জিজ্ঞাসা করল, আর তিন দিন সময় চাইল। এরপর কারণসহ সিদ্ধান্ত লিখে রাখল।",
+        "bn": "রফিক নতুন কাজের প্রস্তাব পেল। সে দুটো অপশন লিখল, যা জানে না (কাজের সময়) তা জিজ্ঞেস করল, আর তিন দিন সময় চাইল। এরপর কারণসহ সিদ্ধান্ত লিখে রাখল।",
         "en": "Rafiq got a new job offer. He listed two options, asked about what he did not know (working hours), and asked for three days. Then he wrote down his decision with reasons."
       },
       "diagram": {
         "type": "steps",
-        "bn": "অপশন লিখি|অজানা জিজ্ঞাসা করি|সময় চাই|কারণসহ লিখি",
+        "bn": "অপশন লিখি|অজানা জিজ্ঞেস করি|সময় চাই|কারণসহ লিখি",
         "en": "List options|Ask unknowns|Ask for time|Write reasons"
       },
       "appLink": "#/capture",

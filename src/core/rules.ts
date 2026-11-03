@@ -19,10 +19,10 @@ export const RULES: Record<RuleId, RuleDef> = {
     desc: { bn: "একটি স্টেজ পার হলে, পরের স্টেজটি কোনটি তা দেখানো হবে।", en: "After a stage is passed, the next stage is shown." } },
   break_after_focus: { id: "break_after_focus", calm: true,
     name: { bn: "ফোকাসের পর ছোট ব্রেক", en: "Short break after a focus block" },
-    desc: { bn: "ফোকাস ব্লক শেষ হলে ৩০ মিনিট পর্যন্ত ৫ মিনিটের ব্রেকের পরামর্শ।", en: "After a focus block ends, a 5-minute rest is suggested for 30 minutes." } },
+    desc: { bn: "ফোকাস ব্লক শেষ হলে 30 মিনিট পর্যন্ত 5 মিনিটের ব্রেকের পরামর্শ।", en: "After a focus block ends, a 5-minute rest is suggested for 30 minutes." } },
   focus_again: { id: "focus_again", calm: false,
     name: { bn: "আরেকটি ফোকাস ব্লক", en: "Another focus block" },
-    desc: { bn: "১০ মিনিট বা বেশি ফোকাস শেষ হলে আরেকটি ব্লকের পরামর্শ। ডিফল্টে বন্ধ।", en: "After a focus block of 10 minutes or more, another one is offered. Off by default." } },
+    desc: { bn: "10 মিনিট বা বেশি ফোকাস শেষ হলে আরেকটি ব্লকের পরামর্শ। ডিফল্টে বন্ধ।", en: "After a focus block of 10 minutes or more, another one is offered. Off by default." } },
 };
 
 export const isRuleId = (v: unknown): v is RuleId => typeof v === "string" && (RULE_IDS as readonly string[]).includes(v);

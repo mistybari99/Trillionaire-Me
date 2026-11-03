@@ -29,7 +29,7 @@ check("BRAND-SPLASH", "the brand splash is gone once the first screen is drawn, 
 check("MODE-FIRST", "first run shows the demo / real choice and no tabs", (await page.locator("[data-first=real]").count()) === 1 && (await page.locator("nav").count()) === 0);
 await page.click("[data-act=first-demo]");
 await page.waitForSelector("[data-demo-banner]");
-check("MODE-DEMO", "exploring demo shows the Demo mode banner", /Demo mode|Demo মোড/.test(await page.textContent("[data-demo-banner]")));
+check("MODE-DEMO", "exploring demo shows the Demo mode banner", /Demo mode|Demo মোড|ডেমো মোড/.test(await page.textContent("[data-demo-banner]")));
 check("ONB-OFFER", "after the choice the 3-screen start is offered (step 2 of 3) and can be skipped", (await page.locator("[data-onboard=goal]").count()) === 1 && /2 of 3|2 \/ 3|ধাপ 2/.test(await page.textContent("[data-onb-step]")));
 await page.click("[data-act=onb-skip]");
 await page.waitForSelector("[data-onboard]", { state: "detached" });

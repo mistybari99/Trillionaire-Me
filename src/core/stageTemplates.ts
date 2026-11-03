@@ -11,7 +11,7 @@ export const isTemplateId = (v: unknown): v is TemplateId => (TEMPLATE_IDS as re
 const s = (code: string, name: Bi, exit: Bi): StageDef => ({ code, name, exit });
 
 const LEARNING: StageDef[] = [
-  s("A", { bn: "শুরু — লক্ষ্য ও সময় ঠিক", en: "Start — goal and time set" }, { bn: "লক্ষ্য লেখা ও সময়ের সীমা ঠিক", en: "Goal written and time limits set" }),
+  s("A", { bn: "শুরু — গোল ও সময় ঠিক", en: "Start — goal and time set" }, { bn: "গোল লেখা ও সময়ের সীমা ঠিক", en: "Goal written and time limits set" }),
   s("B", { bn: "বোঝা — প্রথম বই বা কোর্স", en: "Understand — first book or course" }, { bn: "প্রথম বিষয়ের নিজের নোট ও ছোট পরীক্ষা", en: "Own notes and a small test on the first topic" }),
   s("C", { bn: "প্র্যাকটিস — নিয়মিত কাজ", en: "Practice — regular exercises" }, { bn: "নিজের হাতে তৈরি একটি কাজ শেষ", en: "One piece of your own work finished" }),
   s("D", { bn: "ধারাবাহিকতা — নির্ধারিত মাস", en: "Consistency — set months" }, { bn: "নির্ধারিত মাস ধরে নিয়মিত চর্চার লগ", en: "Practice log kept over the set months" }),

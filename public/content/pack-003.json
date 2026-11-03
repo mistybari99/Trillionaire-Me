@@ -221,7 +221,7 @@
       },
       "diagram": {
         "type": "matrix",
-        "bn": "মেশানো: আলাদা রাখি|বড় লক্ষ্য: ছোট থেকে শুরু|তুলনা: নিজের গতি|ব্যবহারের নিয়ম: লিখে রাখি",
+        "bn": "মেশানো: আলাদা রাখি|বড় গোল: ছোট থেকে শুরু|তুলনা: নিজের গতি|ব্যবহারের নিয়ম: লিখে রাখি",
         "en": "Mixing: keep it apart|Big target: start small|Comparing: own pace|Use rule: write it down"
       },
       "appLink": "#/diary/money",
@@ -246,7 +246,7 @@
       },
       "diagram": {
         "type": "steps",
-        "bn": "সাধারণ লেখা পড়ি|ব্যাংকে জিজ্ঞাসা|নিজের নোট লিখি",
+        "bn": "সাধারণ লেখা পড়ি|ব্যাংকে জিজ্ঞেস|নিজের নোট লিখি",
         "en": "Read general explainers|Ask my bank|Write my own note"
       },
       "kind": "learn",
@@ -438,7 +438,7 @@
         "en": "Example: starting from home cooking"
       },
       "how": {
-        "bn": "নাসরিন প্রতিবেশীদের জিজ্ঞাসা করল কে সপ্তাহে দুদিন টিফিন নিতে চায়। প্রথমে পাঁচজনকে দিল, কত খরচ হলো লিখে রাখল, আর কারা আবার চাইল তা দেখে পরের ধাপ ঠিক করল।",
+        "bn": "নাসরিন প্রতিবেশীদের জিজ্ঞেস করল কে সপ্তাহে দুদিন টিফিন নিতে চায়। প্রথমে পাঁচজনকে দিল, কত খরচ হলো লিখে রাখল, আর কারা আবার চাইল তা দেখে পরের ধাপ ঠিক করল।",
         "en": "Nasrin asked neighbours who wanted a tiffin twice a week. She served five people first, wrote down what it cost, and saw who asked again before choosing her next step."
       },
       "diagram": {
@@ -488,7 +488,7 @@
         "en": "Learn more about small business"
       },
       "how": {
-        "bn": "‘ছোট ব্যবসা’ ও ‘কাস্টমারের সমস্যা’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অ্যাপে উইকিপিডিয়া খুঁজলে পরিচিতি ব্যাকগ্রাউন্ডে সেভ হয়। স্থানীয় নিয়ম ও লাইসেন্স স্থানীয় অফিসে জিজ্ঞাসা করুন।",
+        "bn": "‘ছোট ব্যবসা’ ও ‘কাস্টমারের সমস্যা’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। অ্যাপে উইকিপিডিয়া খুঁজলে পরিচিতি ব্যাকগ্রাউন্ডে সেভ হয়। স্থানীয় নিয়ম ও লাইসেন্স স্থানীয় অফিসে জিজ্ঞেস করুন।",
         "en": "Read general explainers on “small business” and “customer problems”. A Wikipedia search in the app saves an overview in the background. Ask the local office about rules and licences."
       },
       "diagram": {

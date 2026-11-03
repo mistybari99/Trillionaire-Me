@@ -21,7 +21,7 @@ If two files conflict: Spec > Register > Brief > Preview. Fix the lower one and 
 
 ## 2b. Language rule (owner, 26 Oct 2026)
 Whatever style the owner writes in, every reply and every in-app text stays professional, polite and simple. No slang or imitation of the owner's casual wording. Bangla is plain standard Bangla; English is plain and short.
-Loanword rule (owner, 1 Nov 2026): in Bangla and Mix text, common everyday words that people already say in English use the English word in Bangla script (e.g. স্টাফ, not কর্মী); Mix keeps it in English. Keep Deen terms and words people really say (নামাজ, রোজা, যাকাত, দিন, টাকা). List and exceptions: `docs/design/bangla-loanword-swaps.md`.
+Loanword rule (owner, 1 Nov 2026): in Bangla and Mix text, common everyday words that people already say in English use the English word in Bangla script (e.g. স্টাফ, not কর্মী); Mix keeps it in English. Keep Deen terms and words people really say (নামাজ, রোজা, যাকাত, দিন, টাকা). List and exceptions: `docs/design/bangla-loanword-swaps.md`. Spelling and style are binding in `docs/design/bangla-plain-final-decision.md` (owner, 3 Nov 2026): one spelling per word (গোল not লক্ষ্য, ডাটা not ডেটা, টেস্ট, লাইভ, অ্যাপ, আসল ডাটা, ডেমো), আপনি form, Latin digits; it wins over the swaps file where they differ.
 
 ## 3. Work style (autonomous)
 - Work gate by gate: G1 → G2 → … Finish a gate only with evidence (tests, screenshots, logs). Never mark a requirement Verified without a linked test artifact.

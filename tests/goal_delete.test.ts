@@ -48,7 +48,7 @@ describe("delete a goal (step 8)", () => {
     expect(goalIdsOf(store.demo.get("t4")!)).toEqual(["a", "gone"]); q<HTMLButtonElement>("[data-dangling=t4] [data-act=remove-dangling]").click();
     expect(goalIdsOf(store.demo.get("t4")!)).toEqual(["a"]); render(); expect(app().querySelector("[data-dangling=t4]")).toBeNull();
   });
-  it("Bangla confirm text exists", () => { seed(); localStorage.setItem("tm:ui:lang", "bn"); go("#/journey/goal/a"); expect(q("[data-goal-delete]").textContent).toContain("এই লক্ষ্য ডিলিট করুন"); });
+  it("Bangla confirm text exists", () => { seed(); localStorage.setItem("tm:ui:lang", "bn"); go("#/journey/goal/a"); expect(q("[data-goal-delete]").textContent).toContain("এই গোল ডিলিট করুন"); });
 });
 
 describe("plan snapshot v2 (step 9)", () => {

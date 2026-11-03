@@ -81,6 +81,6 @@ describe("build status matches evidence (computed from six boxes, never typed by
   });
 
   it("build status does not depend on data: no note talks about demo data", () => {
-    for (const m of MODULES) { expect(m.note.en, m.id).not.toMatch(/demo data/i); expect(m.note.bn, m.id).not.toMatch(/Demo data|ডেমো ডেটা/); }
+    for (const m of MODULES) { expect(m.note.en, m.id).not.toMatch(/demo data/i); expect(m.note.bn, m.id).not.toMatch(/Demo data|ডেমো ডাটা/); }
   });
 });

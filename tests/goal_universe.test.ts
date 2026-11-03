@@ -95,7 +95,7 @@ describe("Goal Universe screen", () => {
   it("Bangla and Mix use Latin digits and Bangla area names", () => {
     store.demo.put(goal("g1", "L", { "goal.area": "health" })); store.demo.put(task("t1", "g1", true));
     for (const l of ["bn", "mix"]) { localStorage.setItem("tm:ui:lang", l); go("#/journey/universe"); expect(app().textContent).not.toMatch(/[০-৯]/); expect(app().textContent).toMatch(/স্বাস্থ্য/); }
-    expect(PACKS.mix["univ.title"]).toBe(PACKS.bn["univ.title"]);
+    expect(PACKS.bn["univ.title"]).toBe("গোলের জগৎ"); expect(PACKS.mix["univ.title"]).toBe("Goal-এর জগৎ");
   });
   it("Journey links to it; the goal page saves a life area (and an empty choice stores Unknown)", () => {
     store.demo.put(goal("g1", "G"));

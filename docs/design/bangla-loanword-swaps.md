@@ -1,5 +1,7 @@
 # Bangla loanword swaps (owner rule, 1 Nov 2026)
 
+> Updated 3 Nov 2026: the binding spelling guide is now `bangla-plain-final-decision.md`. Where this file differs (গোল replaces লক্ষ্য, ডাটা replaces ডেটা, "Demo" is written ডেমো, "রিয়েল" is আসল), the final decision wins. The table below is kept as history.
+
 Rule: in Bangla and Mix text, a common everyday word that people already say in English is written as the English word in Bangla script (for example স্টাফ, not কর্মী). In Mix mode the English word is kept as English (Staff). Deen terms and plain Bangla words people really say stay Bangla. Latin digits stay. Bangla text is still unreviewed until TM-TST-161.
 
 Applied with a one-time script over every Bangla string in the app. Total: **1088 word swaps** in **25 files**.

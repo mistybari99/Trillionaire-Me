@@ -115,7 +115,7 @@
       },
       "diagram": {
         "type": "steps",
-        "bn": "সাধারণ লেখা পড়ি|ডাক্তারকে জিজ্ঞাসা|নিজের নোট রাখি",
+        "bn": "সাধারণ লেখা পড়ি|ডাক্তারকে জিজ্ঞেস|নিজের নোট রাখি",
         "en": "Read general explainers|Ask a doctor|Keep my own note"
       },
       "kind": "learn",
@@ -329,7 +329,7 @@
       },
       "diagram": {
         "type": "matrix",
-        "bn": "অনেক কোর্স: একটা বাছি|শুধু সার্টিফিকেট: কাজে দেখাই|তুলনা: নিজের গতি|মতামত নেই: একজনকে জিজ্ঞাসা",
+        "bn": "অনেক কোর্স: একটা বাছি|শুধু সার্টিফিকেট: কাজে দেখাই|তুলনা: নিজের গতি|মতামত নেই: একজনকে জিজ্ঞেস",
         "en": "Many courses: pick one|Certificate only: show in work|Comparing: own pace|No feedback: ask one person"
       },
       "appLink": "#/diary/intake/3",

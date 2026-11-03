@@ -14,16 +14,16 @@
         "why"
       ],
       "title": {
-        "bn": "একটি লক্ষ্য, একটি কারণ",
+        "bn": "একটি গোল, একটি কারণ",
         "en": "One goal, one reason"
       },
       "how": {
-        "bn": "লক্ষ্যের পাশে এক লাইনে কারণ লিখুন: কেন এটা আমার জন্য জরুরি। কারণ পরিষ্কার থাকলে কঠিন দিনে ফিরে আসা সহজ হয়।",
+        "bn": "গোলের পাশে এক লাইনে কারণ লিখুন: কেন এটা আমার জন্য জরুরি। কারণ পরিষ্কার থাকলে কঠিন দিনে ফিরে আসা সহজ হয়।",
         "en": "Write one line beside the goal: why it matters to you. A clear reason makes it easier to come back on hard days."
       },
       "diagram": {
         "type": "steps",
-        "bn": "লক্ষ্য|কারণ|ফিরে দেখি",
+        "bn": "গোল|কারণ|ফিরে দেখি",
         "en": "Goal|Reason|Look back"
       },
       "appLink": "#/journey/goals",
@@ -38,11 +38,11 @@
         "focus"
       ],
       "title": {
-        "bn": "একসাথে অনেক লক্ষ্য",
+        "bn": "একসাথে অনেক গোল",
         "en": "Too many goals at once"
       },
       "how": {
-        "bn": "অনেক লক্ষ্য একসাথে ধরলে কোনোটিতেই পর্যাপ্ত সময় থাকে না। এখন একটা-দুটো বাছুন, বাকিগুলো ‘পরে’ লিস্টে রাখুন।",
+        "bn": "অনেক গোল একসাথে ধরলে কোনোটিতেই পর্যাপ্ত সময় থাকে না। এখন একটা-দুটো বাছুন, বাকিগুলো ‘পরে’ লিস্টে রাখুন।",
         "en": "With many goals at once, none gets enough time. Pick one or two now and keep the rest on a “later” list."
       },
       "diagram": {
@@ -62,16 +62,16 @@
         "learning"
       ],
       "title": {
-        "bn": "লক্ষ্য নির্ধারণ নিয়ে আরও শিখতে",
+        "bn": "গোল নির্ধারণ নিয়ে আরও শিখতে",
         "en": "Learn more about setting goals"
       },
       "how": {
-        "bn": "‘SMART লক্ষ্য’ নিয়ে সাধারণ ব্যাখ্যা পড়ুন। পড়ে একটি নিজের লক্ষ্য অ্যাপে লিখে দেখুন। যাচাইকারীর অপেক্ষায়।",
+        "bn": "‘SMART গোল’ নিয়ে সাধারণ ব্যাখ্যা পড়ুন। পড়ে একটি নিজের গোল অ্যাপে লিখে দেখুন। যাচাইকারীর অপেক্ষায়।",
         "en": "Read general explainers on “SMART goals”. Then write one of your own goals in the app. Reviewer pending."
       },
       "diagram": {
         "type": "steps",
-        "bn": "পড়ি|একটি লক্ষ্য লিখি|ফিরে দেখি",
+        "bn": "পড়ি|একটি গোল লিখি|ফিরে দেখি",
         "en": "Read|Write one goal|Look back"
       },
       "appLink": "#/journey/goals",
@@ -377,7 +377,7 @@
         "en": "Rest is part of the plan"
       },
       "how": {
-        "bn": "সপ্তাহে অন্তত একটি সময় রাখুন যেখানে কোনো লক্ষ্যের কাজ নেই। বিশ্রাম নিলে পরের কাজ ভালো হয়, এটি সময় নষ্ট নয়।",
+        "bn": "সপ্তাহে অন্তত একটি সময় রাখুন যেখানে কোনো গোলের কাজ নেই। বিশ্রাম নিলে পরের কাজ ভালো হয়, এটি সময় নষ্ট নয়।",
         "en": "Keep at least one slot in the week with no goal work. Rest helps the next task go better; it is not wasted time."
       },
       "diagram": {
@@ -570,7 +570,7 @@
         "en": "Asking for feedback kindly"
       },
       "how": {
-        "bn": "বিশ্বস্ত একজনকে জিজ্ঞাসা করুন: আমি কোন একটি জিনিস বদলালে ভালো হয়? শুনুন, ধন্যবাদ বলুন, আর তর্ক করবেন না।",
+        "bn": "বিশ্বস্ত একজনকে জিজ্ঞেস করুন: আমি কোন একটি জিনিস বদলালে ভালো হয়? শুনুন, ধন্যবাদ বলুন, আর তর্ক করবেন না।",
         "en": "Ask someone you trust: what is one thing I could change? Listen, say thanks, and do not argue."
       },
       "diagram": {

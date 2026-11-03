@@ -66,12 +66,12 @@
         "en": "Example: before a role change"
       },
       "how": {
-        "bn": "আরিফ তিন সপ্তাহ লিখে দেখল সে মানুষের সঙ্গে সমস্যা মেটানোর কাজে সবচেয়ে সতেজ থাকে। তাই সে নতুন রোল বাছার সময় এ ধরনের কাজ থাকা কিনা জিজ্ঞাসা করল।",
+        "bn": "আরিফ তিন সপ্তাহ লিখে দেখল সে মানুষের সঙ্গে সমস্যা মেটানোর কাজে সবচেয়ে সতেজ থাকে। তাই সে নতুন রোল বাছার সময় এ ধরনের কাজ থাকা কিনা জিজ্ঞেস করল।",
         "en": "For three weeks Arif noted that he felt freshest when solving problems with people. So when choosing a new role he asked whether that kind of work was included."
       },
       "diagram": {
         "type": "steps",
-        "bn": "তিন সপ্তাহ লিখি|ধরন দেখি|প্রশ্ন তৈরি করি|রোলে জিজ্ঞাসা",
+        "bn": "তিন সপ্তাহ লিখি|ধরন দেখি|প্রশ্ন তৈরি করি|রোলে জিজ্ঞেস",
         "en": "Note for 3 weeks|See pattern|Form a question|Ask about the role"
       },
       "appLink": "#/diary/intake/2",
@@ -114,12 +114,12 @@
         "en": "Learn more about self-awareness"
       },
       "how": {
-        "bn": "‘আত্ম-সচেতনতা’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। বিশ্বস্ত দুজনকে জিজ্ঞাসা করুন তাঁরা আপনার কোন শক্তি দেখেন। এটা কোনো পরীক্ষা বা রায় নয়; যাচাইকারীর অপেক্ষায়।",
+        "bn": "‘আত্ম-সচেতনতা’ নিয়ে সাধারণ জ্ঞানের লেখা পড়ুন। বিশ্বস্ত দুজনকে জিজ্ঞেস করুন তাঁরা আপনার কোন শক্তি দেখেন। এটা কোনো পরীক্ষা বা রায় নয়; যাচাইকারীর অপেক্ষায়।",
         "en": "Read general explainers on “self-awareness”. Ask two trusted people which strengths they see in you. This is not a test or a verdict. Reviewer pending."
       },
       "diagram": {
         "type": "steps",
-        "bn": "সাধারণ লেখা পড়ি|দুজনকে জিজ্ঞাসা|নিজের নোটের সঙ্গে মেলাই",
+        "bn": "সাধারণ লেখা পড়ি|দুজনকে জিজ্ঞেস|নিজের নোটের সঙ্গে মেলাই",
         "en": "Read general explainers|Ask two people|Compare with my notes"
       },
       "appLink": "#/diary/intake/2",
@@ -618,7 +618,7 @@
         "en": "An obstacle is not the end"
       },
       "how": {
-        "bn": "বাধা আসা স্বাভাবিক। দরকার হলে পথ বদলান, লক্ষ্য নয়। বাধাকে ছোট প্রশ্নে বদলান: কোনটা আমার হাতে, কোনটা নয়? অনিশ্চয়তা থাকলে তা লিখে রাখুন।",
+        "bn": "বাধা আসা স্বাভাবিক। দরকার হলে পথ বদলান, গোল নয়। বাধাকে ছোট প্রশ্নে বদলান: কোনটা আমার হাতে, কোনটা নয়? অনিশ্চয়তা থাকলে তা লিখে রাখুন।",
         "en": "Obstacles are normal. Change the route, not the goal, when needed. Turn the obstacle into a small question: what is in my hands and what is not? Write down uncertainty."
       },
       "diagram": {
@@ -789,7 +789,7 @@
       },
       "diagram": {
         "type": "steps",
-        "bn": "10টা উপায়|একটা বাছি|কাগজের টোকেনে পরীক্ষা|ক্রেতাকে জিজ্ঞাসা",
+        "bn": "10টা উপায়|একটা বাছি|কাগজের টোকেনে পরীক্ষা|ক্রেতাকে জিজ্ঞেস",
         "en": "10 ideas|Pick one|Test with paper tokens|Ask customers"
       },
       "kind": "example",

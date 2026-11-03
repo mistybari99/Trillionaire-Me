@@ -9,7 +9,7 @@ export const INSPIRATIONS: readonly Inspiration[] = [
   { theme: "care", bn: "নিজের প্রতি একটু দয়া রাখো, তুমি এখানেই আছ।", en: "Be a little kind to yourself. You are still here." },
   { theme: "motivation", bn: "আজ যা করতে পারো, সেটাই করো।", en: "Do what you can today." },
   { theme: "discipline", bn: "সময় বাঁধো, কাজ নিজে থেকেই শুরু হবে।", en: "Set a time, and the work will start on its own." },
-  { theme: "motivation", bn: "লক্ষ্য বড় হোক, কিন্তু প্রথম ধাপ ছোট হোক।", en: "Keep the goal big and the first step small." },
+  { theme: "motivation", bn: "গোল বড় হোক, কিন্তু প্রথম ধাপ ছোট হোক।", en: "Keep the goal big and the first step small." },
   { theme: "patience", bn: "ফল পেতে সময় লাগে, তবু প্রতিদিনের কাজ গোনা হয়।", en: "Results take time, but each day's work still counts." },
   { theme: "discipline", bn: "মন না চাইলেও পাঁচ মিনিট শুরু করো।", en: "Even when you do not feel like it, start for five minutes." },
   { theme: "care", bn: "ক্লান্ত লাগলে বিশ্রাম নেওয়াও একটি কাজ।", en: "When tired, resting is also work." },

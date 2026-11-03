@@ -132,6 +132,6 @@ describe("Bangla", () => {
     localStorage.setItem("tm:ui:lang", "bn"); store.demo.put(fin("demo", "pay", "income", 5000)); go("#/diary/money");
     const c = chart("money")!; expect(c.textContent).toContain("মাসিক ইনকাম ও খরচ"); expect(c.querySelector("summary")!.textContent).toBe("লেখা আকারে দেখুন");
     expect(c.textContent).not.toMatch(/[০-৯]/);
-    go("#/journey/review"); expect(chart("activity")!.textContent).toContain("ডেটা এখনো নেই");
+    go("#/journey/review"); expect(chart("activity")!.textContent).toContain("ডাটা এখনো নেই");
   });
 });

@@ -62,16 +62,16 @@
         "goal"
       ],
       "title": {
-        "bn": "উদাহরণ: হাঁটার লক্ষ্য",
+        "bn": "উদাহরণ: হাঁটার গোল",
         "en": "Example: a walking goal"
       },
       "how": {
-        "bn": "ইকবাল সপ্তাহে 3 দিন হাঁটার লক্ষ্য রেখেছিল। এক সপ্তাহে 2 দিন হলো। সে লিখল, বৃষ্টির দিনে আটকেছে। পরের সপ্তাহে বৃষ্টির দিনের জন্য ঘরের ভেতরে 10 মিনিটের অপশন রাখল।",
+        "bn": "ইকবাল সপ্তাহে 3 দিন হাঁটার গোল রেখেছিল। এক সপ্তাহে 2 দিন হলো। সে লিখল, বৃষ্টির দিনে আটকেছে। পরের সপ্তাহে বৃষ্টির দিনের জন্য ঘরের ভেতরে 10 মিনিটের অপশন রাখল।",
         "en": "Iqbal aimed to walk 3 days a week. One week it was 2 days. He noted that rainy days got in the way. Next week he added a 10-minute indoor option for rain."
       },
       "diagram": {
         "type": "steps",
-        "bn": "লক্ষ্য 3 দিন|হলো 2 দিন|কারণ: বৃষ্টি|ঘরের ভেতরে অপশন",
+        "bn": "গোল 3 দিন|হলো 2 দিন|কারণ: বৃষ্টি|ঘরের ভেতরে অপশন",
         "en": "Goal: 3 days|Did 2 days|Reason: rain|Indoor backup"
       },
       "appLink": "#/journey/log",
@@ -400,12 +400,12 @@
         "en": "Making room for practice in the day"
       },
       "how": {
-        "bn": "1) আপনার জন্য স্থির সময়গুলো আগে লিখুন। 2) তার আশপাশে কাজ বসান। 3) ভ্রমণ বা ব্যস্ত দিনের জন্য ছোট অপশন ঠিক করুন। 4) কিছু জানার থাকলে যোগ্য ব্যক্তিকে জিজ্ঞাসা করুন।",
+        "bn": "1) আপনার জন্য স্থির সময়গুলো আগে লিখুন। 2) তার আশপাশে কাজ বসান। 3) ভ্রমণ বা ব্যস্ত দিনের জন্য ছোট অপশন ঠিক করুন। 4) কিছু জানার থাকলে যোগ্য ব্যক্তিকে জিজ্ঞেস করুন।",
         "en": "1) Write your fixed times first. 2) Place tasks around them. 3) Plan a smaller option for travel or busy days. 4) Ask a qualified person if you need to know something."
       },
       "diagram": {
         "type": "steps",
-        "bn": "স্থির সময় আগে|কাজ আশপাশে|ছোট অপশন|জানার থাকলে জিজ্ঞাসা",
+        "bn": "স্থির সময় আগে|কাজ আশপাশে|ছোট অপশন|জানার থাকলে জিজ্ঞেস",
         "en": "Fixed times first|Tasks around them|Smaller option|Ask if unsure"
       },
       "appLink": "#/deen",
@@ -448,7 +448,7 @@
         "en": "Slips to avoid in this area"
       },
       "how": {
-        "bn": "নিজের চর্চাকে সংখ্যা বা লিস্টে মাপবেন না, অন্যের সঙ্গে তুলনাও নয়। অ্যাপের লেখাকে বিধান ভাববেন না। বিধান বা প্রশ্নের জন্য যোগ্য আলেমকে জিজ্ঞাসা করুন। তথ্য ব্যক্তিগত রাখুন।",
+        "bn": "নিজের চর্চাকে সংখ্যা বা লিস্টে মাপবেন না, অন্যের সঙ্গে তুলনাও নয়। অ্যাপের লেখাকে বিধান ভাববেন না। বিধান বা প্রশ্নের জন্য যোগ্য আলেমকে জিজ্ঞেস করুন। তথ্য ব্যক্তিগত রাখুন।",
         "en": "Do not measure your practice with numbers or lists, and do not compare it with others. Do not take the app's text as a ruling. For rulings or questions, ask a qualified scholar. Keep it private."
       },
       "diagram": {
@@ -477,7 +477,7 @@
       },
       "diagram": {
         "type": "steps",
-        "bn": "নির্ভরযোগ্য ব্যক্তিকে জিজ্ঞাসা|নিজের প্রশ্ন লিখি|ব্যক্তিগত রাখি",
+        "bn": "নির্ভরযোগ্য ব্যক্তিকে জিজ্ঞেস|নিজের প্রশ্ন লিখি|ব্যক্তিগত রাখি",
         "en": "Ask a trusted person|Write my questions|Keep it private"
       },
       "appLink": "#/deen",

@@ -28,9 +28,9 @@
       "id": "p1-mo5",
       "topic": "money",
       "tags": ["money", "spending", "focus"],
-      "title": { "bn": "২৪ ঘণ্টার বিরতি", "en": "The 24-hour pause" },
-      "how": { "bn": "বড় বা আগে থেকে ঠিক না করা কেনাকাটার আগে ২৪ ঘণ্টা অপেক্ষা করুন। তারপর দেখুন এটা প্রয়োজন, নাকি শুধু ইচ্ছা।", "en": "Before a big or unplanned purchase, wait 24 hours. Then check whether it is a need or just a wish." },
-      "diagram": { "type": "cycle", "bn": "ইচ্ছা জাগে|২৪ ঘণ্টা অপেক্ষা|প্রয়োজন না ইচ্ছা দেখি|সিদ্ধান্ত নিই", "en": "Urge comes|Wait 24 hours|Need or wish?|Decide" },
+      "title": { "bn": "24 ঘণ্টার বিরতি", "en": "The 24-hour pause" },
+      "how": { "bn": "বড় বা আগে থেকে ঠিক না করা কেনাকাটার আগে 24 ঘণ্টা অপেক্ষা করুন। তারপর দেখুন এটা প্রয়োজন, নাকি শুধু ইচ্ছা।", "en": "Before a big or unplanned purchase, wait 24 hours. Then check whether it is a need or just a wish." },
+      "diagram": { "type": "cycle", "bn": "ইচ্ছা জাগে|24 ঘণ্টা অপেক্ষা|প্রয়োজন না ইচ্ছা দেখি|সিদ্ধান্ত নিই", "en": "Urge comes|Wait 24 hours|Need or wish?|Decide" },
       "appLink": "#/diary/money"
     },
     {
@@ -127,9 +127,9 @@
       "id": "p1-ti9",
       "topic": "time",
       "tags": ["time", "planning", "review"],
-      "title": { "bn": "সপ্তাহের শুরুতে ১০ মিনিট", "en": "Ten minutes to plan the week" },
-      "how": { "bn": "সপ্তাহের শুরুতে ১০ মিনিট বসুন। গত সপ্তাহের বড় কাজগুলো দেখুন, এই সপ্তাহের তিনটি লক্ষ্য লিখুন, আর শিডিউলে বসান।", "en": "Sit for 10 minutes at the start of the week. Look at last week’s big tasks, write three goals for this week, and place them in your schedule." },
-      "diagram": { "type": "steps", "bn": "গত সপ্তাহ দেখি|তিনটি লক্ষ্য|শিডিউলে বসাই", "en": "Look at last week|Three goals|Place them in the schedule" },
+      "title": { "bn": "সপ্তাহের শুরুতে 10 মিনিট", "en": "Ten minutes to plan the week" },
+      "how": { "bn": "সপ্তাহের শুরুতে 10 মিনিট বসুন। গত সপ্তাহের বড় কাজগুলো দেখুন, এই সপ্তাহের তিনটি গোল লিখুন, আর শিডিউলে বসান।", "en": "Sit for 10 minutes at the start of the week. Look at last week’s big tasks, write three goals for this week, and place them in your schedule." },
+      "diagram": { "type": "steps", "bn": "গত সপ্তাহ দেখি|তিনটি গোল|শিডিউলে বসাই", "en": "Look at last week|Three goals|Place them in the schedule" },
       "appLink": "#/diary/plan"
     },
     {
@@ -200,8 +200,8 @@
       "topic": "knowledge",
       "tags": ["learning", "memory"],
       "title": { "bn": "ফাঁক রেখে মনে করা", "en": "Recall with gaps in between" },
-      "how": { "bn": "যা শিখেছেন তা ১ দিন, ৩ দিন, আর ১ সপ্তাহ পরে আবার মনে করার চেষ্টা করুন। প্রতিবার দুই-তিন মিনিট যথেষ্ট। কঠিন অংশ বেশি বার করুন।", "en": "Try to recall what you learned after 1 day, 3 days and 1 week. Two or three minutes each time is enough. Practise the hard parts more often." },
-      "diagram": { "type": "cycle", "bn": "শিখি|১ দিন পরে|৩ দিন পরে|১ সপ্তাহ পরে", "en": "Learn|After 1 day|After 3 days|After 1 week" },
+      "how": { "bn": "যা শিখেছেন তা 1 দিন, 3 দিন, আর 1 সপ্তাহ পরে আবার মনে করার চেষ্টা করুন। প্রতিবার দুই-তিন মিনিট যথেষ্ট। কঠিন অংশ বেশি বার করুন।", "en": "Try to recall what you learned after 1 day, 3 days and 1 week. Two or three minutes each time is enough. Practise the hard parts more often." },
+      "diagram": { "type": "cycle", "bn": "শিখি|1 দিন পরে|3 দিন পরে|1 সপ্তাহ পরে", "en": "Learn|After 1 day|After 3 days|After 1 week" },
       "appLink": "#/cards"
     },
     {
@@ -209,7 +209,7 @@
       "topic": "knowledge",
       "tags": ["learning", "understanding"],
       "title": { "bn": "সহজ ভাষায় বুঝিয়ে লেখা", "en": "Explain it in simple words" },
-      "how": { "bn": "একটা ধারণা এমনভাবে লিখুন যেন একজন ১২ বছরের শিশুকে বোঝাচ্ছেন। যেখানে আটকে যান, সেটাই ফাঁক। আবার সেই অংশটা পড়ুন।", "en": "Write an idea as if explaining it to a 12-year-old. Where you get stuck is the gap. Go back and read that part again." },
+      "how": { "bn": "একটা ধারণা এমনভাবে লিখুন যেন একজন 12 বছরের শিশুকে বোঝাচ্ছেন। যেখানে আটকে যান, সেটাই ফাঁক। আবার সেই অংশটা পড়ুন।", "en": "Write an idea as if explaining it to a 12-year-old. Where you get stuck is the gap. Go back and read that part again." },
       "diagram": { "type": "steps", "bn": "ধারণা লিখি|সহজ করে বলি|যেখানে আটকাই|ওই অংশ আবার পড়ি", "en": "Write the idea|Explain it simply|Where I get stuck|Read that part again" },
       "appLink": "#/cards"
     },
@@ -228,7 +228,7 @@
       "tags": ["learning", "practice"],
       "title": { "bn": "ছোট কাজ বানিয়ে শেখা", "en": "Learn by building something small" },
       "how": { "bn": "শুধু পড়ার বদলে একটা ছোট কাজ বানান: একটা ছোট হিসাব, একটা ছোট লেখা, বা একটা ছোট পরীক্ষা। কাজ করতে যা লাগে, তা-ই শিখুন।", "en": "Instead of only reading, build something small: a short calculation, a short piece of writing, or a small test. Learn what the work needs." },
-      "diagram": { "type": "steps", "bn": "ছোট লক্ষ্য|কাজ করি|যা লাগে শিখি|আবার চেষ্টা", "en": "Small goal|Do the work|Learn what is needed|Try again" },
+      "diagram": { "type": "steps", "bn": "ছোট গোল|কাজ করি|যা লাগে শিখি|আবার চেষ্টা", "en": "Small goal|Do the work|Learn what is needed|Try again" },
       "appLink": "#/diary/intake/3"
     },
     {
@@ -254,8 +254,8 @@
       "topic": "health",
       "tags": ["energy", "sleep"],
       "title": { "bn": "সকালের আলো ও একটু হাঁটা", "en": "Morning light and a short walk" },
-      "how": { "bn": "সকালে কিছুক্ষণ বাইরের আলোয় থাকুন, সম্ভব হলে ১০ মিনিট হাঁটুন। এতে ঘুম আর মেজাজ দুটোতেই সাহায্য হতে পারে।", "en": "Spend a few minutes in daylight in the morning and, if you can, walk for 10 minutes. This may help both sleep and mood. General tip, not medical advice." },
-      "diagram": { "type": "steps", "bn": "সকালের আলো|১০ মিনিট হাঁটা|দিনের কাজ শুরু", "en": "Morning light|10-minute walk|Start the day's work" },
+      "how": { "bn": "সকালে কিছুক্ষণ বাইরের আলোয় থাকুন, সম্ভব হলে 10 মিনিট হাঁটুন। এতে ঘুম আর মেজাজ দুটোতেই সাহায্য হতে পারে।", "en": "Spend a few minutes in daylight in the morning and, if you can, walk for 10 minutes. This may help both sleep and mood. General tip, not medical advice." },
+      "diagram": { "type": "steps", "bn": "সকালের আলো|10 মিনিট হাঁটা|দিনের কাজ শুরু", "en": "Morning light|10-minute walk|Start the day's work" },
       "appLink": "#/today"
     },
     {
@@ -272,15 +272,15 @@
       "topic": "health",
       "tags": ["energy", "focus"],
       "title": { "bn": "চোখের ছোট ব্রেক", "en": "A short break for your eyes" },
-      "how": { "bn": "প্রায় এক ঘণ্টা স্ক্রিনে কাজ করার পর ২০ সেকেন্ড দূরের কিছুর দিকে তাকান। চোখ শুকনো বা ক্লান্ত লাগলে আরেকটু ব্রেক নিন।", "en": "After about an hour of screen work, look at something far away for 20 seconds. Take a longer break when your eyes feel dry or tired." },
-      "diagram": { "type": "steps", "bn": "এক ঘণ্টা কাজ|২০ সেকেন্ড দূরে তাকাই|চোখ ক্লান্ত হলে ব্রেক", "en": "One hour of work|Look far away for 20 seconds|Longer break when tired" },
+      "how": { "bn": "প্রায় এক ঘণ্টা স্ক্রিনে কাজ করার পর 20 সেকেন্ড দূরের কিছুর দিকে তাকান। চোখ শুকনো বা ক্লান্ত লাগলে আরেকটু ব্রেক নিন।", "en": "After about an hour of screen work, look at something far away for 20 seconds. Take a longer break when your eyes feel dry or tired." },
+      "diagram": { "type": "steps", "bn": "এক ঘণ্টা কাজ|20 সেকেন্ড দূরে তাকাই|চোখ ক্লান্ত হলে ব্রেক", "en": "One hour of work|Look far away for 20 seconds|Longer break when tired" },
       "appLink": "#/today"
     },
     {
       "id": "p1-he6",
       "topic": "health",
       "tags": ["sleep", "habits"],
-      "title": { "bn": "ঘুমের আগের ১০ মিনিটের ক্রম", "en": "A fixed ten minutes before bed" },
+      "title": { "bn": "ঘুমের আগের 10 মিনিটের ক্রম", "en": "A fixed ten minutes before bed" },
       "how": { "bn": "ঘুমের আগে একই ক্রম রাখুন: আলো কমান, পরদিনের লিস্ট এক লাইনে লিখুন, তারপর ফোন দূরে রাখুন। একই ক্রম শরীরকে জানায় ঘুমের সময় এসেছে।", "en": "Before bed, follow the same order: dim the lights, write tomorrow’s list in one line, then put the phone away. A fixed order tells the body that sleep is coming." },
       "diagram": { "type": "steps", "bn": "আলো কমাই|এক লাইনে প্ল্যান|ফোন দূরে", "en": "Dim the lights|One-line plan|Phone away" },
       "appLink": "#/diary/plan"
@@ -290,7 +290,7 @@
       "topic": "health",
       "tags": ["energy", "measurement"],
       "title": { "bn": "দিনে তিনবার শক্তির স্কেল", "en": "Rate your energy three times a day" },
-      "how": { "bn": "দিনে তিনবার ১ থেকে ৫ স্কেলে শক্তি লিখুন: সকালে, দুপুরে, রাতে। কোন সময় শক্তি বেশি থাকে দেখে কঠিন কাজ সেই সময়ে রাখুন। ব্যথা বা অসুস্থতা থাকলে ডাক্তারের পরামর্শ নিন।", "en": "Rate your energy from 1 to 5 three times a day: morning, noon and night. Put hard work in your higher-energy times. For pain or illness, see a doctor." },
+      "how": { "bn": "দিনে তিনবার 1 থেকে 5 স্কেলে শক্তি লিখুন: সকালে, দুপুরে, রাতে। কোন সময় শক্তি বেশি থাকে দেখে কঠিন কাজ সেই সময়ে রাখুন। ব্যথা বা অসুস্থতা থাকলে ডাক্তারের পরামর্শ নিন।", "en": "Rate your energy from 1 to 5 three times a day: morning, noon and night. Put hard work in your higher-energy times. For pain or illness, see a doctor." },
       "diagram": { "type": "steps", "bn": "সকাল|দুপুর|রাত|কাজ সাজাই", "en": "Morning|Noon|Night|Plan the work" },
       "appLink": "#/journey/log"
     },
@@ -315,15 +315,15 @@
       "topic": "relationships",
       "tags": ["communication", "calm"],
       "title": { "bn": "রাগের মুহূর্তে উত্তর দেরিতে", "en": "Pause before a heated reply" },
-      "how": { "bn": "রেগে থাকলে উত্তর পাঠানোর আগে ১০ মিনিট দূরে যান। বার্তাটা খসড়ায় রাখুন। আবার পড়ে যা সত্য ও দরকারি, শুধু সেটুকু পাঠান।", "en": "When you are angry, step away for 10 minutes before replying. Keep the message as a draft. Read it again and send only what is true and needed." },
-      "diagram": { "type": "steps", "bn": "খসড়া লিখি|১০ মিনিট দূরে|আবার পড়ি|দরকারি অংশ পাঠাই", "en": "Write a draft|10 minutes away|Read it again|Send the needed part" }
+      "how": { "bn": "রেগে থাকলে উত্তর পাঠানোর আগে 10 মিনিট দূরে যান। বার্তাটা খসড়ায় রাখুন। আবার পড়ে যা সত্য ও দরকারি, শুধু সেটুকু পাঠান।", "en": "When you are angry, step away for 10 minutes before replying. Keep the message as a draft. Read it again and send only what is true and needed." },
+      "diagram": { "type": "steps", "bn": "খসড়া লিখি|10 মিনিট দূরে|আবার পড়ি|দরকারি অংশ পাঠাই", "en": "Write a draft|10 minutes away|Read it again|Send the needed part" }
     },
     {
       "id": "p1-re6",
       "topic": "relationships",
       "tags": ["people", "network"],
       "title": { "bn": "মাসে একবার ছোট খোঁজ", "en": "A short monthly check-in" },
-      "how": { "bn": "যাঁদের সাথে সম্পর্ক রাখতে চান, তাঁদের জন্য মাসে একবার ১০ মিনিটের কল বা দেখা ঠিক করুন। কোনো কারণ লাগবে না, শুধু খোঁজ নেওয়া।", "en": "For people you want to stay close to, plan a 10-minute call or meeting once a month. No special reason is needed, just a check-in." },
+      "how": { "bn": "যাঁদের সাথে সম্পর্ক রাখতে চান, তাঁদের জন্য মাসে একবার 10 মিনিটের কল বা দেখা ঠিক করুন। কোনো কারণ লাগবে না, শুধু খোঁজ নেওয়া।", "en": "For people you want to stay close to, plan a 10-minute call or meeting once a month. No special reason is needed, just a check-in." },
       "diagram": { "type": "steps", "bn": "নাম লিখি|মাসে একবার ঠিক করি|খোঁজ নিই", "en": "Write the names|Set a monthly slot|Check in" }
     },
     {
@@ -331,7 +331,7 @@
       "topic": "relationships",
       "tags": ["people", "communication", "planning"],
       "title": { "bn": "আলোচনার পরে এক লাইনের সামারি", "en": "A one-line summary after a talk" },
-      "how": { "bn": "সভা বা আলাপের ২৪ ঘণ্টার মধ্যে এক লাইনে লিখুন: কী ঠিক হলো, কে কী করবে, আর কবে। এতে বোঝাবুঝি কমে।", "en": "Within 24 hours of a meeting, send one line: what was agreed, who does what, and by when. This prevents misunderstandings." },
+      "how": { "bn": "সভা বা আলাপের 24 ঘণ্টার মধ্যে এক লাইনে লিখুন: কী ঠিক হলো, কে কী করবে, আর কবে। এতে বোঝাবুঝি কমে।", "en": "Within 24 hours of a meeting, send one line: what was agreed, who does what, and by when. This prevents misunderstandings." },
       "diagram": { "type": "steps", "bn": "কী ঠিক হলো|কে কী করবে|কবে", "en": "What was agreed|Who does what|By when" }
     }
   ]

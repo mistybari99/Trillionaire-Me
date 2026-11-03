@@ -116,6 +116,6 @@ describe("Plan: link a task to a goal", () => {
   });
   it("Bangla labels exist", () => {
     localStorage.setItem("tm:ui:lang", "bn"); store.demo.put(mk("demo", "g1", "goal", { "goal.title": "G" })); go("#/diary/plan");
-    expect(app().textContent).toContain("এই কাজ যে লক্ষ্যগুলোতে সাহায্য করে");
+    expect(app().textContent).toContain("এই কাজ যে গোলগুলোতে সাহায্য করে");
   });
 });
