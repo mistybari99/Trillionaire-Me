@@ -2,6 +2,8 @@
 
 Judge: lead builder, 3 Nov 2026. Inputs: `bangla-plain-A.md`, `bangla-plain-B.md`, `bangla-loanword-swaps.md`, CLAUDE.md section 2b, and the owner's own wording rules given with this task. This file is the single binding guide for every Bangla string in the app. Where A, B, the 1 Nov swaps file or an older note disagree with this file, this file wins. All Bangla stays marked "যাচাই হয়নি" (unreviewed) until TM-TST-161.
 
+**Update 3 Nov 2026 (pass 2):** rulings #6, #11, #12, #13, #14, #15, #16, #17 (partly) and #18 (outside the Deen definitions) in section 2 were reversed by the owner and applied through `docs/design/bangla-plain-pass2.md`: ব্যক্তিগত is now প্রাইভেট / পারসোনাল / নিজের by meaning, বিরতি is পজ, মাপকাঠি is মেট্রিক, গোনা is হিসাব / ধরা, ন্যূনতম is মিনিমাম / কমপক্ষে, সর্বোচ্চ is "বেশি হলে", সর্বশেষ is শেষ, আনুমানিক is আন্দাজ / প্রায়, সম্পন্ন is শেষ. Where this file and the pass 2 file differ, the pass 2 file wins. Bare Bangla digits in the field catalog are now Latin too (section 1, "digits").
+
 Owner intent in one line: Bangla must read like normal spoken and written Bangladeshi Bangla on a phone. Common English words are written in Bangla script with ONE common spelling. Everything else is simple everyday Bangla. Short, polite, professional, no slang.
 
 ## 1. Decisions already made by the owner (not reopened)

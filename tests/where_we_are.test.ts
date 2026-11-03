@@ -8,7 +8,7 @@ describe("docs/owner/WHERE_WE_ARE_BN.md", () => {
   it("is mostly Bangla, with Latin digits only", () => { expect((page.match(/[ঀ-৿]/g) ?? []).length).toBeGreaterThan(500); expect(page).not.toMatch(/[০-৯]/); });
   it("module counts match src/modules/capability.ts", () => {
     const c = (l: string) => MODULES.filter((m) => buildLabel(m) === l).length;
-    expect(page).toContain(`${MODULES.length}টি মডিউলের মধ্যে ${c("complete")}টি পুরো তৈরি, ${c("partial")}টি আংশিক, ${c("blocked")}টি অনুমতির অপেক্ষায়`);
+    expect(page).toContain(`${MODULES.length}টি মডিউলের মধ্যে ${c("complete")}টি পুরো তৈরি, ${c("partial")}টি আংশিক, ${c("blocked")}টি পারমিশনের অপেক্ষায়`);
   });
   it("names the owner-only tasks and the closed approvals, and promises no returns", () => {
     for (const w of ["অফলাইন টেস্ট", "লক-স্ক্রিন", "ইসলামিক ফাউন্ডেশন", "বাংলা রিভিউ", "হোস্টিং", "D-C", "D-D"]) expect(page).toContain(w);

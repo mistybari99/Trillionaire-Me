@@ -5,8 +5,10 @@ import { LOCALES, type Bi } from "../i18n/registry";
 import { PURPOSES } from "./types";
 
 const BN_EXEMPT = /^(Asia\/Dhaka|BDT)$/;
+// A value with no letter at all (a bare number, date, time or range such as 2026-11-02 or 20:00) is the same in every language, so it needs no Bangla script.
+const NO_LETTER = /^[^A-Za-z\u0980-\u09FF]+$/;
 const okText = (b: Bi | undefined, needScript = true) =>
-  !!b && !!b.bn.trim() && !!b.en.trim() && (!needScript || BN_EXEMPT.test(b.bn.trim()) || LOCALES.bn.scripts.test(b.bn)) && (BN_EXEMPT.test(b.en.trim()) || /[A-Za-z0-9]/.test(b.en));
+  !!b && !!b.bn.trim() && !!b.en.trim() && (!needScript || BN_EXEMPT.test(b.bn.trim()) || NO_LETTER.test(b.bn.trim()) || LOCALES.bn.scripts.test(b.bn)) && (BN_EXEMPT.test(b.en.trim()) || /[A-Za-z0-9]/.test(b.en));
 
 export interface CatalogReport { version: number; fields: number; withHelp: number; withPrivacy: number; withPurposeAndAccess: number; withBilingualLabel: number; withUnknownRule: number; problems: string[] }
 

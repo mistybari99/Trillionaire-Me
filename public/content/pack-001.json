@@ -315,7 +315,7 @@
       "topic": "relationships",
       "tags": ["communication", "calm"],
       "title": { "bn": "রাগের মুহূর্তে উত্তর দেরিতে", "en": "Pause before a heated reply" },
-      "how": { "bn": "রেগে থাকলে উত্তর পাঠানোর আগে 10 মিনিট দূরে যান। মেসেজটা ড্রাফটয় রাখুন। আবার পড়ে যা সত্য ও দরকারি, শুধু সেটুকু পাঠান।", "en": "When you are angry, step away for 10 minutes before replying. Keep the message as a draft. Read it again and send only what is true and needed." },
+      "how": { "bn": "রেগে থাকলে উত্তর পাঠানোর আগে 10 মিনিট দূরে যান। মেসেজটা ড্রাফটে রাখুন। আবার পড়ে যা সত্য ও দরকারি, শুধু সেটুকু পাঠান।", "en": "When you are angry, step away for 10 minutes before replying. Keep the message as a draft. Read it again and send only what is true and needed." },
       "diagram": { "type": "steps", "bn": "ড্রাফট লিখি|10 মিনিট দূরে|আবার পড়ি|দরকারি অংশ পাঠাই", "en": "Write a draft|10 minutes away|Read it again|Send the needed part" }
     },
     {

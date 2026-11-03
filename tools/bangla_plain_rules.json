@@ -195,7 +195,13 @@
     { "id": "W3-10", "group": "p2screens", "from": "পরিকল্পিত", "to": "প্ল্যান করা", "mode": "exact", "files": ["src/catalog/fields.ts"], "lines": [680,684] },
     { "id": "W3-11", "group": "p2screens", "from": "পরিবর্তন", "to": "বদল" },
     { "id": "W3-12", "group": "p2screens", "from": "ওয়েব-ঠিকানা", "to": "ওয়েব লিংক" },
-    { "id": "W3-13", "group": "p2screens", "from": "দায়", "to": "দেনা", "mode": "exact", "files": ["src/catalog/glossary.ts"], "lines": [17], "note": "liability = দেনা" }
+    { "id": "W3-13", "group": "p2screens", "from": "দায়", "to": "দেনা", "mode": "exact", "files": ["src/catalog/glossary.ts"], "lines": [17], "note": "liability = দেনা" },
+    { "id": "W4-01", "group": "p2left", "from": "রিভিউের", "to": "রিভিউয়ের", "note": "typo" },
+    { "id": "W4-02", "group": "p2left", "from": "আর সত্য নয়", "to": "আর ঠিক নেই", "note": "One wording with the button 'আর ঠিক নেই'." },
+    { "id": "W4-03", "group": "p2left", "from": "চিহ্নিত করেছেন", "to": "মার্ক করেছেন" },
+    { "id": "W4-04", "group": "p2left", "from": "চিহ্নিত হয়েছে", "to": "মার্ক হয়েছে" },
+    { "id": "W4-05", "group": "p2left", "from": "চিহ্নিত, তাই কোনো গোলে", "to": "মার্ক করা, তাই কোনো গোলে" },
+    { "id": "W4-06", "group": "p2left", "type": "digits", "all": true, "files": ["src/catalog/fields.ts"], "note": "Latin digits also in digit-only example/placeholder values of the field catalog." }
   ],
   "rewrites": [
     { "id": "P1-01", "group": "stiff", "screen": "First start and consent", "file": "src/i18n/packs.ts", "key": "mode.banner.start", "expect": "এখনই", "to": "আসল ডাটা শুরু করুন" },
@@ -666,6 +672,25 @@
     { "id": "P2-359", "group": "p2screens", "screen": "Check, review and glossary words", "file": "src/catalog/glossary.ts", "key": null, "expect": "হিসাবের নিয়ম যাচাই করে পরে যোগ হবে", "to": "হিসাবের নিয়ম মিলিয়ে নিয়ে পরে যোগ হবে" },
     { "id": "P2-360", "group": "p2screens", "screen": "Check, review and glossary words", "file": "src/catalog/glossary.ts", "key": null, "expect": "যাচাইয়ের পথ দেখায়", "to": "মিলিয়ে দেখার পথ দেখায়" },
     { "id": "P2-361", "group": "p2screens", "screen": "Check, review and glossary words", "file": "src/catalog/glossary.ts", "key": null, "expect": "নিষিদ্ধ বলে চিহ্নিত হয়", "to": "নিষিদ্ধ বলে মার্ক করা হয়" },
-    { "id": "P2-362", "group": "p2screens", "screen": "Check, review and glossary words", "file": "src/catalog/glossary.ts", "key": null, "expect": "কোনো পরিমাপের বিষয় নয়", "to": "কোনো মাপের বিষয় নয়" }
+    { "id": "P2-362", "group": "p2screens", "screen": "Check, review and glossary words", "file": "src/catalog/glossary.ts", "key": null, "expect": "কোনো পরিমাপের বিষয় নয়", "to": "কোনো মাপের বিষয় নয়" },
+    { "id": "P2-401", "group": "p2left", "screen": "Typos and leftovers of pass 1", "file": "src/i18n/packs.ts", "key": "mode.today.empty", "expect": "প্ল্যান-য় একটি যোগ করুন।", "to": "প্ল্যানে একটা কাজ যোগ করুন।", "partial": true },
+    { "id": "P2-402", "group": "p2left", "screen": "Typos and leftovers of pass 1", "file": "public/content/pack-001.json", "key": null, "expect": "ড্রাফটয়", "to": "ড্রাফটে" },
+    { "id": "P2-403", "group": "p2left", "screen": "Typos and leftovers of pass 1", "file": "src/modules/capability.ts", "key": null, "expect": "বরাদ্দ সময়", "to": "আলাদা করা সময়", "allowProtected": true },
+    { "id": "P2-404", "group": "p2left", "screen": "Typos and leftovers of pass 1", "file": "src/i18n/packs.ts", "key": "privacy.personal", "expect": "ব্যক্তিগত", "to": "পারসোনাল", "partial": true, "allowProtected": true, "note": "Privacy class 'Personal' = পারসোনাল (matches English and Mix)." },
+    { "id": "P2-405", "group": "p2left", "screen": "Typos and leftovers of pass 1", "file": "public/content/pack-007.json", "key": null, "expect": "ইবাদত সম্পূর্ণ ব্যক্তিগত", "to": "ইবাদত সম্পূর্ণ প্রাইভেট", "allowProtected": true },
+    { "id": "P2-406", "group": "p2left", "screen": "Typos and leftovers of pass 1", "file": "src/catalog/fields.ts", "key": null, "expect": "এটা অ্যাপের হিসাব, তাই “সিদ্ধান্ত” লেবেল।", "to": "এটা অ্যাপের হিসাব, তাই “অ্যাপের হিসাব” লেবেল।" },
+    { "id": "P2-407", "group": "p2left", "screen": "Long buttons and chips (360 px)", "file": "src/i18n/packs.ts", "key": "data.clearDemo.yes", "expect": "ডেমো লেখা", "to": "হ্যাঁ, ডেমো ডিলিট করুন" },
+    { "id": "P2-408", "group": "p2left", "screen": "Long buttons and chips (360 px)", "file": "src/i18n/packs.ts", "key": "fit.w.reset", "expect": "অ্যাপের নিজের", "to": "অ্যাপের ওজন ব্যবহার করুন" },
+    { "id": "P2-409", "group": "p2left", "screen": "Long buttons and chips (360 px)", "file": "src/i18n/packs.ts", "key": "ven.line.add", "expect": "লাইন যোগ", "to": "ইনকাম/খরচ লাইন যোগ করুন" },
+    { "id": "P2-410", "group": "p2left", "screen": "Long buttons and chips (360 px)", "file": "src/i18n/packs.ts", "key": "ns.edit", "expect": "বদলান", "to": "সংখ্যা, সোর্স, ওজন বদলান" },
+    { "id": "P2-411", "group": "p2left", "screen": "Long buttons and chips (360 px)", "file": "src/i18n/packs.ts", "key": "bw.link", "expect": "প্ল্যান", "to": "পেছন থেকে প্ল্যান করুন" },
+    { "id": "P2-412", "group": "p2left", "screen": "Long buttons and chips (360 px)", "file": "src/i18n/packs.ts", "key": "bw.save", "expect": "সেভ", "to": "দিনগুলো সেভ করুন" },
+    { "id": "P2-413", "group": "p2left", "screen": "Long buttons and chips (360 px)", "file": "src/i18n/packs.ts", "key": "rl.hist.link", "expect": "ভার্সন", "to": "হিস্ট্রি ও ভার্সন" },
+    { "id": "P2-414", "group": "p2left", "screen": "Long buttons and chips (360 px)", "file": "src/i18n/packs.ts", "key": "backup.restore", "expect": "রিস্টোর", "to": "ফাইল থেকে রিস্টোর করুন" },
+    { "id": "P2-415", "group": "p2left", "screen": "Long buttons and chips (360 px)", "file": "src/i18n/packs.ts", "key": "set.row.restore", "expect": "রিস্টোর", "to": "ফাইল থেকে রিস্টোর করুন" },
+    { "id": "P2-416", "group": "p2left", "screen": "Long buttons and chips (360 px)", "file": "src/i18n/packs.ts", "key": "enc.restore", "expect": "রিস্টোর", "to": "ফাইল থেকে রিস্টোর করুন" },
+    { "id": "P2-417", "group": "p2left", "screen": "Long buttons and chips (360 px)", "file": "src/i18n/packs.ts", "key": "prayer.sync.btn", "expect": "আপডেট", "to": "অটো আপডেট চালু করুন" },
+    { "id": "P2-418", "group": "p2left", "screen": "Long buttons and chips (360 px)", "file": "src/i18n/packs.ts", "key": "restore.confirm", "expect": "{file}", "to": "আমার {now}টি এন্ট্রি বদলে ফাইলের {file}টি বসান" },
+    { "id": "P2-419", "group": "p2left", "screen": "Long buttons and chips (360 px)", "file": "src/i18n/packs.ts", "key": "stuck.show", "expect": "সাহায্য", "to": "কী সাহায্য করবে দেখুন" }
   ]
 }

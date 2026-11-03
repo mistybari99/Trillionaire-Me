@@ -29,3 +29,6 @@ Owner order 3 Nov 2026 (plan keeper G3-04): open the matrix pictures, fix real l
 - Pages outside the 28 screens (start, topics, hadith, halal flags, weekly review, decide, mine, legs, leak, notes and others) have no 4-look pictures. Their tracker rows say "not in matrix".
 - The pictures are made in a desktop Chromium at 360 px width. A real phone check stays an owner task (TODO Part B).
 - Timeline labels on the Boards page can touch the dashed "today" line (the text now has a halo so it stays readable; the layout is unchanged).
+
+## Re-run after Bangla pass 2 (3 Nov 2026)
+`TM_SHOT_MATRIX=1` over the four looks (one process per look), then `TM_SHOT_MATRIX_MERGE=1`: **896 screens, 0 problems** (page overflow, wide elements, targets under 44 px, tab labels, touching neighbours), including every Bangla screen with the new shorter button texts. Report: `evidence/matrix-report.json`.

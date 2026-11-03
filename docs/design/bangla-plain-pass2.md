@@ -1,6 +1,20 @@
 # Bangla plain language: pass 2 (deeper, spoken Bangla)
 
-Status: proposal only. No source file was changed. Read-only review of `src/i18n/packs.ts` (bn pack, lines 1882-4085), `src/catalog/fields.ts`, `public/content/pack-001..009.json`, `docs/owner/WHERE_WE_ARE_BN.md`, the pass-1 decision, change log and owner note. Date: 3 Nov 2026.
+Status: **APPLIED on 3 Nov 2026** (owner: "make the remaining bookish words plain, spoken Bangla"). Applied by `tools/bangla_plain_apply.mjs` in three commits (groups `p2words`, `p2screens`, `p2left`); every changed string is in `docs/design/bangla-plain-change-log.json`; the owner list is `docs/owner/BANGLA_WHAT_CHANGED.md`; decision and undo steps are in `DECISIONS_LOG.md` ("Bangla plain pass 2"). The text below is the original proposal, kept for reference.
+
+### What was applied, and where it differs from the proposal below
+Owner questions Q1 to Q9 were answered with the file's own recommendation: Q1 yes (বিরতি becomes পজ; ব্রেক for a rest), Q2 yes (মেট্রিক; fallback "মূল KPI" if the owner dislikes it), Q3 yes (প্রাইভেট / পারসোনাল / নিজের), Q4 yes for the Deen-area wording (ধারাবাহিকতা, পদ্ধতি, গোপন) but see the র‍্যাঙ্ক note, Q5 yes (বেশি হলে, কমপক্ষে), Q6 yes (শখের টাকা), Q7 no for the delete and consent lines and yes for the pause word, Q8 neutral voice for the app and keep তুমি in quoted friend speech, Q9 yes (glossary done in this pass).
+
+Deviations (all deliberate, none touches a protected meaning):
+- **র‍্যাঙ্ক, ভুল, রেটিং, streak** are banned by existing tests everywhere (no-shame rule), so the proposal's "র‍্যাঙ্ক" in `deen.fast.hint` became "সিরিয়াল", "ঠিক-ভুল বলে না" became "কোনো রায় দেয় না", "রেটিং" became "নম্বর", "streak-এর" became "নিয়মিত থাকার", "ভুল বা ঠিক" became "ঠিক-বেঠিক".
+- `privacy.personal` became **পারসোনাল** (it is the privacy class "Personal"; the proposal said প্রাইভেট, which would clash with the English label and Mix).
+- Consent text kept as is: `hl.consent.tick`, `hl.consent.on` (only the button `hl.consent.btn` was shortened, word kept), `mode.ask.p`, the delete warnings, `del.real.goes`, `entry.real.note`.
+- Lines that also hold a no-guarantee or no-fatwa sentence were not rewritten (`fit.w` second hint line, `halal.intro`), and "এটি ফতোয়া নয়" keeps the owner's exact wording.
+- Packs 003 and 009 and `conn.*` got only the allowed global swaps (সঙ্গে, অংক, প্রয়োজন, যাচাইকারী); "ব্যক্তিগত" stays in pack-003.
+- Digit-only example values in `fields.ts` (for example 1990, 2026-11-02, 20:00) were converted to Latin digits; the catalog check now treats a value with no letter at all as language-neutral (`src/catalog/validate.ts`).
+- Long buttons: all keys ending `.btn`, `.save`, `.add` are now 24 characters or fewer except the two protected D-B buttons (`mode.real.confirm.btn`, `mode.del.btn`).
+
+(Original header:) Status: proposal only. No source file was changed. Read-only review of `src/i18n/packs.ts` (bn pack, lines 1882-4085), `src/catalog/fields.ts`, `public/content/pack-001..009.json`, `docs/owner/WHERE_WE_ARE_BN.md`, the pass-1 decision, change log and owner note. Date: 3 Nov 2026.
 
 Owner feedback after pass 1: the words kept as "everyday Bangla" (ব্যক্তিগত, গোনা, মাপকাঠি, বিরতি, ন্যূনতম, সর্বোচ্চ, আনুমানিক and similar) still feel bookish. He wants Bangla the way people write on a phone and in business chat: common English words in Bangla script where people really say them, simple spoken Bangla otherwise.
 
