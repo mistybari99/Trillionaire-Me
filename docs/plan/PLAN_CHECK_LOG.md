@@ -29,3 +29,12 @@ Findings
 - Still not built from the audit plan: CI, `_headers`, stale-while-revalidate, Bangla "Where we are" page, apply-back script, welcome-back/then-vs-now, evidence/ churn fix, audit refresh.
 - Hadith pack (212 entries, default off, unreviewed): built; owner scholar review remains.
 Counts: see the report to the coordinator (tracker now has Section H for Block 12).
+
+## Check #3 - 3 Nov 2026 (HEAD `fc16415`)
+Scope: commits 8b869d7..fc16415 (25 commits). Source read-only; no test run this time (checked file existence, test names, commit messages, m-list-status counts, TODO).
+Findings
+- Closed: SET-6.04 cross-tab refresh, Cancel/Withdraw/wording/tap-target tests (settings_gaps), one consent wording, CI workflow, `_headers`, SWR, evidence churn (now opt-in), welcome-back, then-vs-now, apply-back script, Hijri/Ramadan (M13 complete), update banner/build stamp, text size in rem, screenshot matrix (320, 0 problems), audit refresh, Register copy, full multi-goal feature (schema v2 migration, task.goals/habit.goals, picker, overview, trace, delete preview, plan snapshot v2, print/report, per-goal weighting).
+- Stale rows fixed: AU-04, 05, 09, 12, 13, 17, 18, 21, 22, 03; DL-04, DL-06; B12-20.
+- Modules: complete 21, partial 3 (M09 unit economics, M18 four boards, M21 at-rest encryption), blocked 1 (M23).
+- Still open: backward-planning wizard (AU-22), calmer prompt colour (AU-23), Quick-card 360 px fold test, snapshot-restore UI test, undo-map test, 4-looks pixel check not personally inspected, prayer auto-update never tested live, old audit files carry stale statements, Where-we-are is a doc not an in-app page, owner tasks and branding.
+- Dropped/at risk: none new dropped; AU-23 has no owner and no evidence.
