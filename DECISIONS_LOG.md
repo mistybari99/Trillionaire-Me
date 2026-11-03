@@ -737,3 +737,9 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 - Why: the ruling (section 2, 13) wants one reminder record pointing at an existing item, no copied title or time, so a re-plan or an edit moves the reminder with it.
 - Alternatives: a field on each task / habit / bill (rejected in the ruling, five entities to change); no schema bump (the fingerprint test allows it for additive fields, but the ruling asked for the bump so old backups are clearly marked).
 - Undo: revert the commit; no stored record changes shape, and `reminder` records simply stay unread.
+
+## UI spacing, Deen card and Hijri year fixes (3 Nov 2026, owner phone screenshots)
+- What: one global spacing rule at the end of `styles.css` (`--gap` 10px): neighbouring `.btn`/`.cta`, `.row + .row`, `details + details`, and buttons that are direct children of a card are stacked full width with a gap (flex/grid button groups keep their own gap). Inline `margin:0` on ~60 compact buttons is why they touched, so the rule uses `!important` on purpose. Deen prayer card: the disclaimer is shown once (local or external wording, never "calculated on this phone" next to an external source), every unmarked prayer shows "Not marked yet today", the External badge has its own row. Hijri year has no thousands comma.
+- Test: `tools/touching.mjs` finds touching neighbours; e2e `UI-SPACING` runs it on Today, Deen, Settings, Prayer settings, Where we are, Hadith, Notes, Boards, Plan, Habits in en/bn at 100% and 200%; the screenshot matrix counts it as a problem (`touching`). The matrix was not re-run in full (896 screens); it will fail on the next run if any look still has touching items.
+- Not done: the full component kit (docs/design/ui-polish-spec.md) is a later pass.
+- Undo: delete the block at the end of `styles.css`; revert the `prayerTimesCard` / `sourceLine` edits.

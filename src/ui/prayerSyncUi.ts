@@ -13,8 +13,8 @@ const day = (iso: string) => iso.slice(0, 10);
 /** "Times from <source>, updated <date>" with an External label, or "Calculated on this phone." Offsets are named when any is set. */
 export function sourceLine(r: ResolvedTimes, lang: Locale): HTMLElement {
   const offs = Object.values(prefs.prayerSettings.offsets).some((v) => v !== 0);
-  if (r.source === "external") return h("p", { class: "muted", "data-prayer-source": "external" }, h("span", { class: "badge", "data-source-badge": "external" }, t("prayer.src.badge", lang)), " ",
-    t("prayer.src.external", lang, { s: r.name ?? "", d: day(r.fetchedAt ?? "") }), offs ? " " + t("prayer.src.offsets", lang) : "");
+  if (r.source === "external") return h("div", { "data-prayer-source": "external" }, h("p", { class: "muted" }, h("span", { class: "badge", "data-source-badge": "external" }, t("prayer.src.badge", lang))),
+    h("p", { class: "muted" }, t("prayer.src.external", lang, { s: r.name ?? "", d: day(r.fetchedAt ?? "") }), offs ? " " + t("prayer.src.offsets", lang) : ""));
   return h("p", { class: "muted", "data-prayer-source": "local" }, t("prayer.src.local", lang), offs ? " " + t("prayer.src.offsets", lang) : "");
 }
 

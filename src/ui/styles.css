@@ -480,3 +480,16 @@ textarea[data-swot]{width:100%;box-sizing:border-box;font:inherit;padding:8px}
 .goal-chips{display:inline-flex;flex-wrap:wrap;gap:6px;vertical-align:middle}
 .goal-chips .tag{text-decoration:none;color:var(--ink);display:inline-flex;align-items:center;min-height:24px}
 .chip-link{display:inline-flex;align-items:center;min-height:44px;font-size:0.875rem}
+
+/* One vertical rhythm (UI bug fix 3 Nov 2026): stacked buttons, rows and boxes never touch. --gap is the only spacing value used here.
+   Many compact buttons carry inline margin:0, so these rules use !important on purpose; flex/grid button groups (which have their own gap) are excluded below.
+   The full component kit is a later pass (docs/design/ui-polish-spec.md). */
+:root{--gap:10px}
+main :is(.btn,.cta) + :is(.btn,.cta,.row,.card,.next-step,.note){margin-top:var(--gap) !important}
+main :is(.card,.advice-item) > :is(.btn,.cta){display:block;width:100% !important;margin-top:var(--gap) !important;margin-inline:0 !important}
+main .row + .row{margin-top:var(--gap)}
+main details.help + details.help{margin-top:var(--gap) !important}
+main :is(.row,.actions,.snap-btns,.update-banner,.tags,.goal-chips,.btn-row) > .btn + .btn{margin-top:0 !important}
+main :is(.row,.snap-btns,.update-banner) > .btn{width:auto !important}
+.btn-row{display:flex;flex-wrap:wrap;gap:var(--gap)}
+main details + details{margin-top:var(--gap) !important}

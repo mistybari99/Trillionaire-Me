@@ -1,5 +1,6 @@
 // Browser checks on the built app: empty start, secret rejection in the real UI, offline shell, no third-party requests.
 import { existsSync } from "node:fs";
+import { TOUCHING_FN } from "./touching.mjs";
 const SANDBOX_CHROME = "/opt/pw-browsers/chromium-1194/chrome-linux/chrome";
 import { chromium } from "playwright";
 import { preview } from "vite";
@@ -253,6 +254,21 @@ check("G1-OFFLINE", "status screen renders offline", (await page.locator("[data-
   await page.evaluate(() => { localStorage.setItem("tm:ui:lang", "en"); });
 }
 await ctx.setOffline(false);
+
+// Spacing (owner report 3 Nov 2026): neighbouring buttons, rows and boxes never touch, on the screens the owner sent, in English and Bangla, at 100 % and 200 % text.
+{
+  const bad = [];
+  for (const lang of ["en", "bn"]) for (const big of [false, true]) {
+    await page.evaluate(([l, b]) => { localStorage.setItem("tm:ui:lang", l); document.documentElement.style.fontSize = b ? "200%" : ""; }, [lang, big]);
+    for (const r of ["today", "deen", "settings", "settings/prayer", "more/where", "hadith", "notes", "journey/boards", "diary/plan", "habits"]) {
+      await page.goto("http://localhost:4174/#/" + r); await page.reload(); await page.waitForSelector("main");
+      if (big) await page.evaluate(() => { document.documentElement.style.fontSize = "200%"; });
+      for (const x of await page.evaluate(TOUCHING_FN)) bad.push(`${lang}${big ? "/200" : ""} ${r}: ${x.a} | ${x.b}`);
+    }
+  }
+  await page.evaluate(() => { document.documentElement.style.fontSize = ""; localStorage.setItem("tm:ui:lang", "en"); });
+  check("UI-SPACING", "no two neighbouring buttons, rows or boxes touch on Today, Deen, Settings, Where we are, Hadith, Notes, Boards (en, bn, 100 % and 200 %)", bad.length === 0, bad.slice(0, 5).join(" ; "));
+}
 
 // Text size (owner report 3 Nov 2026): each size on Settings really scales body text, headings, buttons, tab bar and form fields, in English and Bangla,
 // and 200% shows no sideways scroll and no clipped text at 360 px.

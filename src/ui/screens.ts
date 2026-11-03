@@ -1350,14 +1350,13 @@ function prayerTimesCard(lang: Locale): HTMLElement {
     h("p", { class: "muted" }, t("deen.prayer.hint", lang)),
     ...PRAYER_KEYS.map((k) => {
       const at = times[k]; const isMarked = marked.has(k);
-      const passedNotMarked = at !== null && now.minute >= at && !isMarked;
       return h("div", { class: "row", "data-prayer-row": k },
         h("span", {}, h("strong", {}, t(`deen.prayer.name.${k}` as Key, lang)), " ", h("span", { "data-prayer-time": k }, prayerClock(at) ?? t("deen.prayer.none", lang)),
-          ...(passedNotMarked ? [h("br"), h("span", { class: "muted", "data-prayer-pending": k }, t("deen.prayer.notYet", lang))] : [])),
+          ...(at !== null && !isMarked ? [h("br"), h("span", { class: "muted", "data-prayer-pending": k }, t("deen.prayer.notYet", lang))] : [])),
         h("button", { class: isMarked ? "btn" : "btn ghost", type: "button", "data-act": "prayer-mark", "data-prayer": k, "aria-pressed": String(isMarked), style: "width:auto;margin:0;min-height:44px",
           ...(at === null ? { disabled: true } : {}), onclick: () => { togglePrayerMark(day, k); rerender(); } }, isMarked ? t("deen.prayer.marked", lang) : t("deen.prayer.mark", lang)));
     }),
-    h("p", { class: "note", "data-prayer-note": "1" }, t("deen.prayer.note", lang), " ", t("deen.set.verify", lang)));
+    h("p", { class: "note", "data-prayer-note": "1" }, t(res.source === "external" ? "deen.prayer.noteExt" : "deen.prayer.note", lang)));
 }
 
 export function deen(): HTMLElement {

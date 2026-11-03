@@ -271,11 +271,11 @@ describe("M13 Deen screen and alerts (UI)", () => {
     location.hash = "#/settings/prayer"; render();
     expect(document.querySelector("[data-prayer-method-card] [data-consent]")).toBeNull();
   });
-  it("a passed prayer that is not marked shows neutral text only", () => {
+  it("every prayer that is not marked shows the same neutral line (passed or not), and marked ones do not", () => {
     vi.setSystemTime(new Date("2026-10-24T08:00:00Z")); // 14:00 Dhaka: Fajr, Dhuhr passed
     location.hash = "#/deen"; render();
     expect(document.querySelector("[data-prayer-pending=fajr]")!.textContent).toBe("Not marked yet today");
-    expect(document.querySelector("[data-prayer-pending=asr]")).toBeNull();
+    for (const k of ["fajr", "dhuhr", "asr", "maghrib", "isha"]) expect(document.querySelector(`[data-prayer-pending=${k}]`)!.textContent).toBe("Not marked yet today");
   });
 
   it("settings: alerts default off, the place can be changed by typing coordinates, bad input is refused", () => {

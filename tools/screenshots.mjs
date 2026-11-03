@@ -1,4 +1,5 @@
 // Screenshot report: every route at 360 px, Bangla and English (G1 definition of done).
+import { TOUCHING_FN } from "./touching.mjs";
 import { existsSync } from "node:fs";
 const SANDBOX_CHROME = "/opt/pw-browsers/chromium-1194/chrome-linux/chrome";
 import { chromium } from "playwright";
@@ -45,6 +46,7 @@ if (process.env.TM_SHOT_MATRIX === "1") {
     for (const r of routes) {
       await page.goto("about:blank"); await page.goto(`http://localhost:${PORT}/#/${r}`);
       await page.waitForSelector("main"); if (big) await page.evaluate(() => { document.documentElement.style.fontSize = "200%"; }); await page.waitForTimeout(500);
+      const touching = await page.evaluate(TOUCHING_FN);
       const m = await page.evaluate(() => {
         const vw = window.innerWidth; const vis = (e) => { const b = e.getBoundingClientRect(); return b.width > 0 && b.height > 0; };
         const wide = [...document.querySelectorAll("main *")].filter((e) => vis(e) && e.getBoundingClientRect().right > vw + 1 && !e.closest("svg, .sr-only, [aria-hidden=true], pre, table")).length;
@@ -54,13 +56,14 @@ if (process.env.TM_SHOT_MATRIX === "1") {
       const id = `${design}/${lang}/${scheme}/${big ? "200" : "100"}`;
       let file = null;
       if (process.env.TM_SHOT_KEEP) { mkdirSync(process.env.TM_SHOT_KEEP, { recursive: true }); await page.screenshot({ path: `${process.env.TM_SHOT_KEEP}/${id.replace(/\//g, "-")}-${r.replace(/\//g, "_")}.png` }); }
-      if (m.overflow || m.wide || m.small || !m.tabsInView) { file = `${mdir}/${id.replace(/\//g, "-")}-${r.replace(/\//g, "_")}.png`; await page.screenshot({ path: file, fullPage: true }); }
+      m.touching = touching.length;
+      if (m.overflow || m.wide || m.small || !m.tabsInView || m.touching) { file = `${mdir}/${id.replace(/\//g, "-")}-${r.replace(/\//g, "_")}.png`; await page.screenshot({ path: file, fullPage: true }); }
       report.push({ combo: id, route: r, ...m, file });
     }
     await ctx.close();
   }
   await browser.close(); await server.close();
-  const bad = report.filter((x) => x.overflow || x.wide || x.small || !x.tabsInView);
+  const bad = report.filter((x) => x.overflow || x.wide || x.small || !x.tabsInView || x.touching);
   writeFileSync(process.env.TM_SHOT_ONLY_DESIGN ? `evidence/matrix-part-${process.env.TM_SHOT_ONLY_DESIGN}.json` : "evidence/matrix-report.json", JSON.stringify({ viewport: "360x740", generated: new Date().toISOString(), combos: DESIGNS.length * 2 * 2 * 2, screens: report.length, problems: bad.length, bad, routes, matrix: "4 looks x en/bn x light/dark x 100%/200% text" }, null, 2));
   console.log(report.length, "matrix screens;", bad.length, "with a problem;", report.filter((x) => x.overflow).length, "overflow,", report.filter((x) => x.wide).length, "wide elements,", report.filter((x) => x.small).length, "small targets");
   process.exit(0);

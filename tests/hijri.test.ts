@@ -32,7 +32,7 @@ describe("on the Deen page", () => {
   it("shows the calculated date, the Ramadan line, the approximate note and no ruling, in English, Bangla and Mix", () => {
     for (const lang of ["en", "bn", "mix"]) {
       localStorage.setItem("tm:ui:lang", lang); location.hash = "#/deen"; render();
-      const c = app().querySelector("[data-hijri-card]")!; expect(c, lang).not.toBeNull(); expect(c.querySelector("[data-hijri=today]")).not.toBeNull(); expect(c.querySelector("[data-ramadan]")).not.toBeNull();
+      const c = app().querySelector("[data-hijri-card]")!; expect(c, lang).not.toBeNull(); expect(c.querySelector("[data-hijri=today]")).not.toBeNull(); expect(c.querySelector("[data-hijri=today]")!.textContent, lang).not.toMatch(/\d,\d{3}/); expect(c.querySelector("[data-ramadan]")).not.toBeNull();
       expect(c.textContent).toMatch(lang === "en" ? /calculated/i : /হিসাব/); expect(c.querySelector(".err, [role=alert]")).toBeNull();
     }
     for (const l of ["en", "bn", "mix"] as const) for (const k of Object.keys(PACKS.en).filter((k) => k.startsWith("deen.hijri."))) expect((PACKS[l] as Record<string, string>)[k]).toBeTruthy();

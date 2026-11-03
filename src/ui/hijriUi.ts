@@ -12,7 +12,7 @@ export function hijriCard(lang: Locale): HTMLElement {
   const body: HTMLElement[] = [];
   if (v.state === "unknown") body.push(h("p", { class: "muted", "data-hijri": "unknown" }, t("deen.hijri.unknown", lang)));
   else {
-    body.push(h("p", { "data-hijri": "today" }, t("deen.hijri.today", lang, { d: num(v.hijri.d, lang), m: month(v.hijri.m), y: num(v.hijri.y, lang) })));
+    body.push(h("p", { "data-hijri": "today" }, t("deen.hijri.today", lang, { d: num(v.hijri.d, lang), m: month(v.hijri.m), y: String(v.hijri.y) })));
     if (v.state === "during") body.push(h("p", { "data-ramadan": "during" }, t("deen.hijri.during", lang, { n: num(v.day, lang) }), v.endsInDays !== null ? " " + t("deen.hijri.ends", lang, { n: num(v.endsInDays, lang) }) : ""));
     else body.push(h("p", { "data-ramadan": "upcoming" }, t("deen.hijri.upcoming", lang, { n: num(v.inDays, lang), d: v.startsAround })));
   }

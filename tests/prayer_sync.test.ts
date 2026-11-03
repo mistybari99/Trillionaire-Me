@@ -155,7 +155,10 @@ describe("shown and linked", () => {
   it("Deen shows the source with an External label and the date, or 'Calculated on this phone'; offsets are named", async () => {
     const f = okFetch(); setup(f); go("#/deen"); expect(q("[data-prayer-source=local]").textContent).toBe("Calculated on this phone.");
     enable(); await maybeSyncPrayerTimes(); const ra = Date.now; Date.now = () => T0; try { render(); } finally { Date.now = ra; }
-    expect(q("[data-prayer-source=external]").textContent).toBe("External Times from Aladhan (aladhan.com), updated 2026-11-03."); expect(q("[data-source-badge]")).not.toBeNull();
+    expect(q("[data-prayer-source=external]").textContent).toBe("ExternalTimes from Aladhan (aladhan.com), updated 2026-11-03."); expect(q("[data-source-badge]")).not.toBeNull();
+    expect(q("[data-source-badge]").closest("p")!.textContent).toBe("External"); // the badge has its own row
+    expect(q("[data-prayer-note]").textContent).not.toMatch(/Calculated on this phone/); // only the true source is named
+    expect(document.body.textContent!.split("Verify with your local timetable").length - 1).toBeLessThanOrEqual(0);
     expect(q("[data-prayer-time=fajr]").textContent).toBe("05:00");
     prefs.prayerSettings = { ...DEFAULT_PRAYER_SETTINGS, offsets: { ...DEFAULT_PRAYER_SETTINGS.offsets, fajr: 2 } }; Date.now = () => T0; try { render(); } finally { Date.now = ra; }
     expect(q("[data-prayer-time=fajr]").textContent).toBe("05:02"); expect(q("[data-prayer-source]").textContent).toMatch(/minute changes are added/);
