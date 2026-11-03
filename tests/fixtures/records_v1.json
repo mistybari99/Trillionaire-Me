@@ -39,6 +39,45 @@
      "state": "later"
     }
    }
+  },
+  {
+   "id": "t1",
+   "entity": "task",
+   "ns": "real",
+   "ownerId": "owner",
+   "schemaVersion": 1,
+   "createdAt": "2026-10-21T08:00:00.000Z",
+   "values": {
+    "task.title": {
+     "state": "value",
+     "value": "Open a ledger",
+     "label": "FACT"
+    },
+    "task.minutes": {
+     "state": "unknown"
+    }
+   },
+   "links": {
+    "goal": "g1"
+   }
+  },
+  {
+   "id": "t2",
+   "entity": "task",
+   "ns": "real",
+   "ownerId": "owner",
+   "schemaVersion": 1,
+   "createdAt": "2026-10-21T08:00:00.000Z",
+   "values": {
+    "task.title": {
+     "state": "value",
+     "value": "Unlinked step",
+     "label": "FACT"
+    },
+    "task.minutes": {
+     "state": "unknown"
+    }
+   }
   }
  ]
 }

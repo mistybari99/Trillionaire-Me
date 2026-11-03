@@ -10,20 +10,21 @@ import { ENTITIES, SCHEMA_VERSION } from "../src/schema/entities";
 import type { TMRecord } from "../src/core/types";
 
 const fx = (n: string) => JSON.parse(readFileSync(`tests/fixtures/${n}`, "utf8")) as { schemaVersion: number; records: TMRecord[] };
-const v1 = fx("records_v1.json").records, v0 = fx("records_v0.json").records;
+const v1all = fx("records_v1.json").records, v2 = fx("records_v2.json").records, v0 = fx("records_v0.json").records;
+const v1 = v1all.filter((r) => r.entity !== "task"); // the version-1 goals the version-0 fixture upgrades to
 const noVersion = (r: TMRecord) => { const { schemaVersion: _s, ...rest } = r; return rest; };
 
 describe("record migration", () => {
   it("an old record (no version) is upgraded to the current version with every value and unknown state intact", () => {
     for (let i = 0; i < v0.length; i++) {
       expect(v0[i]!.schemaVersion).toBeUndefined();
-      const r = migrateRecord(v0[i]!); expect(r.status).toBe("migrated");
-      expect(r.rec.schemaVersion).toBe(SCHEMA_VERSION); expect(r.rec.values).toEqual(v1[i]!.values); expect(noVersion(r.rec)).toEqual(noVersion(v1[i]!));
+      const r = migrateRecord(v0[i]!, 1); expect(r.status).toBe("migrated");
+      expect(r.rec.schemaVersion).toBe(1); expect(r.rec.values).toEqual(v1[i]!.values); expect(noVersion(r.rec)).toEqual(noVersion(v1[i]!));
     }
   });
   it("current records are untouched; records from a newer app are left alone, never downgraded", () => {
-    expect(migrateRecord(v1[0]!)).toEqual({ rec: v1[0], status: "current" });
-    const newer = { ...v1[0]!, schemaVersion: SCHEMA_VERSION + 1 }; expect(migrateRecord(newer)).toEqual({ rec: newer, status: "newer" });
+    expect(migrateRecord(v2[0]!)).toEqual({ rec: v2[0], status: "current" });
+    const newer = { ...v2[0]!, schemaVersion: SCHEMA_VERSION + 1 }; expect(migrateRecord(newer)).toEqual({ rec: newer, status: "newer" });
   });
   it("a chain of steps runs in order and loses nothing; a failing step or missing step keeps the original", () => {
     const steps: Record<number, Step> = { 0: MIGRATIONS[0]!, 1: (r) => ({ ...r, values: { ...r.values, "x.new": { state: "unknown" } } }) };
@@ -37,9 +38,9 @@ describe("record migration", () => {
     const mk = () => { const m = new MemoryKV(); for (const r of v0) m.set(`tm:${r.ns}:${r.id}`, JSON.stringify(r)); return m; };
     const repo = new DexieRepo(`mig-${Math.random()}`, true); let copies = 0;
     const m = mk(); const rep = await migrateAll(m, repo, async (n) => { copies = n; });
-    expect(copies).toBe(2); expect(rep).toMatchObject({ migrated: 2, failed: 0, blocked: false });
+    expect(copies).toBe(v0.length); expect(rep).toMatchObject({ migrated: v0.length, failed: 0, blocked: false });
     expect(JSON.parse(m.get("tm:real:g1")!).schemaVersion).toBe(SCHEMA_VERSION); expect((await repo.list("real"))[0]!.values).toEqual(v1[0]!.values);
-    expect(await migrateAll(m, repo, async () => { throw new Error("no copy"); })).toMatchObject({ current: 2, migrated: 0 }); // second run: nothing to do, no copy needed
+    expect(await migrateAll(m, repo, async () => { throw new Error("no copy"); })).toMatchObject({ current: v0.length, migrated: 0 }); // second run: nothing to do, no copy needed
     const m2 = mk(); const blocked = await migrateAll(m2, null, async () => { throw new Error("no copy"); });
     expect(blocked.blocked).toBe(true); expect(JSON.parse(m2.get("tm:real:g1")!).schemaVersion).toBeUndefined();
   });
@@ -55,5 +56,26 @@ describe("schema version bump check", () => {
   it("every version below the current has a migration step and a kept fixture", () => {
     for (let v = 0; v < SCHEMA_VERSION; v++) { expect(typeof MIGRATIONS[v], `step ${v}`).toBe("function"); expect(readdirSync("tests/fixtures"), `fixture v${v}`).toContain(`records_v${v}.json`); }
     expect(readdirSync("tests/fixtures")).toContain(`records_v${SCHEMA_VERSION}.json`);
+  });
+});
+
+describe("multi-goal step 2: schema 2 (task.goals)", () => {
+  const goalsOf = (r: TMRecord) => r.values["task.goals"];
+  it("a step with one goal link gets it as a one-item list; links.goal stays; a step with no link stays unknown", () => {
+    const t1 = v1all.find((r) => r.id === "t1")!, t2 = v1all.find((r) => r.id === "t2")!;
+    const a = migrateRecord(t1); expect(a.status).toBe("migrated"); expect(goalsOf(a.rec)).toEqual({ state: "value", value: ["g1"], label: "FACT" }); expect(a.rec.links).toEqual({ goal: "g1" }); expect(a.rec.values["task.title"]).toEqual(t1.values["task.title"]);
+    const b = migrateRecord(t2); expect(b.status).toBe("migrated"); expect(goalsOf(b.rec)).toBeUndefined(); expect(b.rec.links).toBeUndefined(); expect(b.rec.schemaVersion).toBe(2);
+  });
+  it("matches the kept version-2 fixture; running it twice changes nothing; goals and other entities are untouched; id, ns, entity stay", () => {
+    expect(v1all.map((r) => migrateRecord(r).rec)).toEqual(v2);
+    for (const r of v2) { expect(MIGRATIONS[1]!(r)).toEqual(r); }
+    const g = v1all.find((r) => r.entity === "goal")!; expect(migrateRecord(g).rec.values).toEqual(g.values);
+  });
+  it("a record that already has task.goals keeps its list", () => {
+    const t = { ...v1all.find((r) => r.id === "t1")!, values: { ...v1all.find((r) => r.id === "t1")!.values, "task.goals": { state: "value", value: ["g1", "g2"], label: "FACT" } } } as TMRecord;
+    expect(goalsOf(migrateRecord(t).rec)).toEqual({ state: "value", value: ["g1", "g2"], label: "FACT" });
+  });
+  it("the catalog lists the new field in English and Bangla with help text", () => {
+    const f = FIELDS.find((x) => x.id === "task.goals")!; expect(f.type).toBe("list"); expect(f.label.en && f.label.bn && f.help.what.en && f.help.what.bn).toBeTruthy();
   });
 });

@@ -10,6 +10,13 @@ export type Step = (r: TMRecord) => TMRecord;
 /** MIGRATIONS[n] upgrades a record from version n to n + 1. Version 0 means "no version written" (the oldest saved records). */
 export const MIGRATIONS: Record<number, Step> = {
   0: (r) => ({ ...r, schemaVersion: 1 }),
+  // 1 to 2 (multi-goal): a step that had a single goal link gets it as a one-item list in `task.goals`. `links.goal` stays (rollback mirror).
+  // Idempotent; a step with no link stays "not linked yet" (unknown), never an empty list; nothing is dropped.
+  1: (r) => {
+    if (r.entity !== "task" || r.values["task.goals"]?.state === "value") return r;
+    const g = r.links?.goal; if (!g) return r;
+    return { ...r, values: { ...r.values, "task.goals": { state: "value", value: [g], label: r.ns === "real" ? "FACT" : "DEMO" } } };
+  },
 };
 
 export type MigrateStatus = "current" | "migrated" | "newer" | "failed";

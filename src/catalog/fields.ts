@@ -2,7 +2,7 @@ import type { Bi } from "../i18n/registry";
 import { UNKNOWN_STATES, type UnknownState } from "../core/types";
 import type { AccessRule, ChoiceOption, FieldDef, FieldType, Importance, PrivacyClass, Purpose, Requirement } from "./types";
 
-export const CATALOG_VERSION = 15;
+export const CATALOG_VERSION = 16;
 
 const bi = (bn: string, en: string): Bi => ({ bn, en });
 const opt = (code: string, bn: string, en: string): ChoiceOption => ({ code, label: bi(bn, en) });
@@ -361,6 +361,11 @@ export const FIELDS: FieldDef[] = [
     what: bi("কাজটি আগে বসানো হবে কি না।", "Whether the task is placed earlier."),
     why: bi("ফাঁকা সময় কম হলে আগে জরুরিগুলো বসে; বাকিগুলো নিরাপদে পরে থাকে।", "When time is short, urgent ones go first; the rest wait safely."),
     example: bi("সাধারণ", "Normal") }),
+  f({ id: "task.goals", entity: "task", family: "FAM-03", type: "list", purpose: "planning", importance: "useful",
+    label: bi("এই কাজ কোন কোন লক্ষ্যে সাহায্য করে", "Goals this step helps"),
+    what: bi("এক বা একাধিক লক্ষ্য (সর্বোচ্চ ৫টি) যেগুলোতে এই কাজ এগিয়ে দেয়। কাজ শেষ হলে জোড়া প্রতিটি লক্ষ্য পুরো হিসাব পায়।", "One or more goals (up to 5) that this step moves forward. When the step is done, every linked goal gets full credit."),
+    why: bi("একটি কাজ প্রায়ই দুই-তিনটি লক্ষ্যে লাগে। মোট শতাংশে কাজটি একবারই গোনা হয়।", "One step often serves two or three goals. In the overall percent the step is counted once."),
+    example: bi("দোকান, শেখা", "Shop, Learn"), format: bi("লক্ষ্যের নামের বোতামে ট্যাপ", "Tap the goal names") }),
   f({ id: "task.done_on", entity: "task", family: "FAM-03", type: "date", purpose: "planning", importance: "optional",
     label: bi("কবে শেষ হয়েছে", "Done on"), what: bi("যে দিন কাজটি সম্পন্ন করেছেন (“সম্পন্ন” চাপলে অ্যাপ নিজে ভরে)।", "The day you finished the task (filled by the app when you tap Done)."),
     why: bi("প্রতিটি সম্পন্ন কাজ আপনার ছবিতে একটি নতুন তারা যোগ করে।", "Each finished task adds a new star to your picture."), example: bi("২০২৬-১০-২৪", "2026-10-24"), format: bi("বছর-মাস-দিন", "YYYY-MM-DD") }),

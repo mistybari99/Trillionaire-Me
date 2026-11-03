@@ -4,7 +4,8 @@ import type { Bi } from "../i18n/registry";
 import { FIELDS } from "../catalog/fields";
 import type { PrivacyClass } from "../catalog/types";
 
-export const SCHEMA_VERSION = 1;
+/** 2 = steps and habits can serve several goals (`task.goals`, `habit.goals`); version 1 records get `task.goals` from `links.goal`. */
+export const SCHEMA_VERSION = 2;
 
 export interface EntityDef {
   id: string; family: string; name: Bi; module: string;
