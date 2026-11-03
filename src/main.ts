@@ -3,6 +3,7 @@ import { render, renderApp } from "./app";
 import { applyPrefs, initStorage, repairListNamespaces, saveMonitor } from "./ui/state";
 import { updateNetBadge } from "./ui/net";
 import { startPrayerAlerts } from "./ui/prayerAlerts";
+import { startReminders } from "./ui/reminders";
 import { ensureContentPacks } from "./library/packs";
 import { initLock } from "./ui/lockUi";
 import { persistIfReal } from "./ui/storageCard";
@@ -27,6 +28,6 @@ installCrossTab(onRoute);
 window.addEventListener("online", () => { updateNetBadge(); void maybeSyncPrayerTimes(); });
 document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") void maybeSyncPrayerTimes(); });
 window.addEventListener("offline", () => updateNetBadge());
-initStorage().finally(() => { repairListNamespaces(); onRoute(); startPrayerAlerts(); void startPrayerSync(); void runAutoSnapshot(); persistIfReal(); initLock(); });
+initStorage().finally(() => { repairListNamespaces(); onRoute(); startReminders(); startPrayerAlerts(); void startPrayerSync(); void runAutoSnapshot(); persistIfReal(); initLock(); });
 
 if (import.meta.env.PROD) installUpdater();

@@ -13,6 +13,16 @@ const isSaved = (url) => { const u = new URL(url); u.search = ""; u.hash = ""; r
 // A new version waits until the person taps "Update now" in the app (message SKIP_WAITING), so nothing changes under a page that is being used.
 // The very first install has nothing to interrupt, so it takes over at once.
 self.addEventListener("message", (e) => { if (e.data && e.data.type === "SKIP_WAITING") self.skipWaiting(); });
+// A tap on a reminder notification opens or focuses the app at the item's screen (the route comes in the notification data). Nothing else runs here.
+self.addEventListener("notificationclick", (e) => {
+  e.notification.close();
+  const hash = (e.notification.data && e.notification.data.url) || "#/today";
+  e.waitUntil(self.clients.matchAll({ type: "window", includeUncontrolled: true }).then((list) => {
+    const c = list.find((w) => "focus" in w);
+    if (c) { c.postMessage({ type: "OPEN_ROUTE", hash }); return c.focus(); }
+    return self.clients.openWindow(new URL("./" + hash, self.registration.scope).href);
+  }));
+});
 self.addEventListener("install", (e) => {
   if (!self.registration.active) self.skipWaiting();
   e.waitUntil(caches.open(SHELL).then((c) => Promise.allSettled(PRECACHE.map((u) => c.add(new Request(u, { cache: "reload" }))))));

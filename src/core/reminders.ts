@@ -44,7 +44,7 @@ export const MERGE_MINUTES = 15;
 export const PRAYER_SPACING_MIN = 3;
 /** a due reminder is shown if the app notices it inside this window; later it moves to the missed card */
 export const DUE_WINDOW_MIN = 5;
-export const MISSED_KEEP_MS = { plan_step: 24 * 3600_000, other: 7 * 24 * 3600_000 } as const;
+export const MISSED_KEEP_MS = { plan_step: 24 * 3600_000, other: 7 * 24 * 3600_000 } as const; // a habit slot also expires after 24 hours
 export const LEDGER_KEEP_MS = 7 * 24 * 3600_000;
 
 const MIN = 60_000;
@@ -298,7 +298,7 @@ export function missedReminders(schedule: readonly Placed[], ledger: Ledger, now
   return schedule.filter((s) => {
     if (done.has(s.id)) return false;
     if (nowMs < s.showAt + DUE_WINDOW_MIN * MIN) return false; // still due or in the future
-    const keep = s.target === "plan_step" ? MISSED_KEEP_MS.plan_step : MISSED_KEEP_MS.other;
+    const keep = s.target === "plan_step" || s.target === "habit" ? MISSED_KEEP_MS.plan_step : MISSED_KEEP_MS.other;
     if (nowMs - s.showAt > keep) return false;
     if (s.privacy === "worship" && opt.notify.worship !== true) return false;
     return true;

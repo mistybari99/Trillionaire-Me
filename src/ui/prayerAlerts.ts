@@ -73,11 +73,11 @@ export function previewAzan(prayer: PrayerKey = "dhuhr"): boolean {
   try { playFile(file, prefs.prayerAlerts.volume); return true; } catch { return false; }
 }
 
-export async function showPhone(title: string, body: string, tag: string, quiet: boolean): Promise<boolean> {
+export async function showPhone(title: string, body: string, tag: string, quiet: boolean, url?: string): Promise<boolean> {
   if (!canNotify()) return false;
   try {
     const reg = "serviceWorker" in navigator ? await navigator.serviceWorker.getRegistration() : undefined;
-    if (reg) { await reg.showNotification(title, { body, tag, icon: "./icon-192.png", silent: quiet }); return true; }
+    if (reg) { await reg.showNotification(title, { body, tag, icon: "./icon-192.png", silent: quiet, ...(url ? { data: { url } } : {}) }); return true; }
     new Notification(title, { body, tag, silent: quiet });
     return true;
   } catch { return false; }
@@ -95,6 +95,11 @@ async function deliver(s: AlertSlot, lang: Locale, showDetails: NotifyPrefs) {
     window.dispatchEvent(new HashChangeEvent("hashchange"));
   }
 }
+
+/** Other checkers (reminders) run inside this one timer and visibility check: there is no second timer. */
+const tickHooks: Array<(nowMs: number) => Promise<void> | void> = [];
+export function onAlertTick(fn: (nowMs: number) => Promise<void> | void) { if (!tickHooks.includes(fn)) tickHooks.push(fn); }
+const runHooks = () => { for (const fn of tickHooks) { try { void Promise.resolve(fn(Date.now())).catch(() => { /* never break the app */ }); } catch { /* ignore */ } } };
 
 let timer: ReturnType<typeof setInterval> | null = null;
 let cache: { date: string; times: PrayerTimes; key: string } | null = null;
@@ -123,8 +128,9 @@ export async function checkPrayerAlerts(nowMs: number = Date.now()): Promise<voi
 export function startPrayerAlerts() {
   if (timer !== null) return;
   void refreshAzanAvailability();
-  timer = setInterval(() => { checkPrayerAlerts().catch(() => { /* never break the app */ }); }, 30_000);
-  document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") checkPrayerAlerts().catch(() => { /* ignore */ }); });
+  timer = setInterval(() => { checkPrayerAlerts().catch(() => { /* never break the app */ }); runHooks(); }, 30_000);
+  document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") { checkPrayerAlerts().catch(() => { /* ignore */ }); runHooks(); } });
   checkPrayerAlerts().catch(() => { /* ignore */ });
+  runHooks();
 }
 
