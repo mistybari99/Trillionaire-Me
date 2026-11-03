@@ -1,14 +1,18 @@
 import "./ui/styles.css";
 import { render, renderApp } from "./app";
-import { initStorage, repairListNamespaces, saveMonitor } from "./ui/state";
+import { applyPrefs, initStorage, repairListNamespaces, saveMonitor } from "./ui/state";
 import { updateNetBadge } from "./ui/net";
 import { startPrayerAlerts } from "./ui/prayerAlerts";
 import { ensureContentPacks } from "./library/packs";
 import { initLock } from "./ui/lockUi";
 import { persistIfReal } from "./ui/storageCard";
 import { maybeSyncPrayerTimes, startPrayerSync } from "./ui/prayerSync";
+import { installUpdater } from "./ui/updater";
 import { installCrossTab } from "./ui/crossTab";
 import { runAutoSnapshot } from "./ui/snapshotsUi";
+
+// Look, language and text size are applied before anything is drawn (and before the saved records load), so the first paint already has them.
+applyPrefs();
 
 const onRoute = () => {
   renderApp();
@@ -23,4 +27,4 @@ document.addEventListener("visibilitychange", () => { if (document.visibilitySta
 window.addEventListener("offline", () => updateNetBadge());
 initStorage().finally(() => { repairListNamespaces(); onRoute(); startPrayerAlerts(); void startPrayerSync(); void runAutoSnapshot(); persistIfReal(); initLock(); });
 
-if ("serviceWorker" in navigator && import.meta.env.PROD) navigator.serviceWorker.register("./sw.js").catch(() => { /* shell still works without it */ });
+if (import.meta.env.PROD) installUpdater();

@@ -284,6 +284,7 @@ Module labels come from `src/modules/capability.ts` (six boxes: Input, Storage, 
 | B12-22 | s22 / M18 | Drawn timeline, task board, option board `#/journey/boards` | builder | Built | 045f1d4; tests/boards.test.ts; M18 label **partial (Output missing)** | drawn goal tree, resource map, readiness map, plan-diff |
 | B12-23 | m-list | M21 Security & privacy | builder / owner | Blocked | M21 partial: Storage missing = at-rest encryption (DL-03, owner decision) | owner |
 | B12-26 | owner 3 Nov | Prayer times auto-update when online (Aladhan, off until ticked, cache, local fallback, source line) | builder | Built+Linked+Tested (live UNTESTED) | tests/prayer_sync.test.ts (26); DECISIONS_LOG "Automatic prayer times" | owner compares with Islamic Foundation timetable |
+| B12-27 | owner 3 Nov | Text size scales (rem), saved size applied before first paint; app update banner + build stamp in About | builder | Built+Linked+Tested | tests/text_size.test.ts, tests/update_flow.test.ts, e2e TEXTSIZE / UPDATE-* | owner confirms on his phone after one fresh open |
 | B12-24 | m-list | M23 AI layer | needs-approval | Blocked | D-C | - |
 | B12-25 | m-list | M11, M19, M22, M24, M25 complete | builder | Built+Linked+Tested | m_list_status table | - |
 

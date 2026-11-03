@@ -3,7 +3,7 @@ import { existsSync } from "node:fs";
 const SANDBOX_CHROME = "/opt/pw-browsers/chromium-1194/chrome-linux/chrome";
 import { chromium } from "playwright";
 import { preview } from "vite";
-import { writeFileSync } from "node:fs";
+import { readFileSync, writeFileSync } from "node:fs";
 
 const server = await preview({ preview: { port: 4174, strictPort: true } });
 const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || (existsSync(SANDBOX_CHROME) ? SANDBOX_CHROME : undefined) });
@@ -245,6 +245,34 @@ check("G1-OFFLINE", "status screen renders offline", (await page.locator("[data-
 }
 await ctx.setOffline(false);
 
+// Text size (owner report 3 Nov 2026): each size on Settings really scales body text, headings, buttons, tab bar and form fields, in English and Bangla,
+// and 200% shows no sideways scroll and no clipped text at 360 px.
+{
+  const probe = () => page.evaluate(() => {
+    const fs = (sel) => { const e = document.querySelector(sel); return e ? parseFloat(getComputedStyle(e).fontSize) : null; };
+    const clipped = [...document.querySelectorAll("main *")].filter((e) => { const cs = getComputedStyle(e); return !e.closest(".sr-only") && (cs.overflow === "hidden" || cs.overflowX === "hidden") && e.scrollWidth > e.clientWidth + 1 && e.clientWidth > 0 && e.textContent.trim(); }).length;
+    return { root: fs("html"), h1: fs("main h1"), p: fs("main .muted, main p"), btn: fs("main .seg button, main .btn"), tab: fs("nav a.tab"), input: fs("main input, main select"), scrollOk: document.documentElement.scrollWidth <= window.innerWidth + 1, clipped };
+  });
+  for (const lang of ["en", "bn"]) {
+    await page.evaluate((l) => localStorage.setItem("tm:ui:lang", l), lang);
+    await page.goto("http://localhost:4174/#/settings"); await page.reload(); await page.waitForSelector("[data-scale]");
+    const sizes = {};
+    for (const n of [100, 125, 150, 200]) { await page.click(`[data-scale="${n}"]`); await page.waitForTimeout(150); sizes[n] = await probe(); }
+    const base = sizes[100];
+    const scales = [125, 150, 200].every((n) => ["root", "h1", "p", "btn", "tab"].every((k) => base[k] && Math.abs(sizes[n][k] / base[k] - n / 100) < 0.03));
+    check("TEXTSIZE", `${lang}: 125, 150 and 200% scale root, heading, text, buttons and tab bar`, scales, JSON.stringify({ base, s200: sizes[200] }));
+    check("TEXTSIZE", `${lang}: 200% has no sideways scroll and no clipped text at 360 px`, sizes[200].scrollOk && sizes[200].clipped === 0, JSON.stringify(sizes[200]));
+    for (const r of ["today", "journey", "deen", "settings/prayer", "diary/plan"]) {
+      await page.goto(`http://localhost:4174/#/${r}`); await page.waitForSelector("main"); await page.waitForTimeout(200);
+      const x = await probe(); check("TEXTSIZE", `${lang}: ${r} at 200% fits`, x.scrollOk && x.clipped === 0 && x.h1 >= 40, JSON.stringify(x));
+    }
+    await page.goto("http://localhost:4174/#/settings"); await page.waitForSelector("[data-scale]"); await page.click('[data-scale="100"]');
+  }
+  await page.evaluate(() => localStorage.setItem("tm:ui:lang", "en")); await page.goto("http://localhost:4174/#/settings"); await page.reload();
+  const reload = await page.evaluate(() => document.documentElement.style.fontSize);
+  check("TEXTSIZE", "the saved size is applied at start", reload === "100%", reload);
+}
+
 // Precache: the service worker saves every file of the build on the first visit, so a cold start with the network off still opens
 // every new screen (Goal Universe, snapshots, logo, topics with content packs) and every saved file can be read offline.
 {
@@ -269,6 +297,24 @@ await ctx.setOffline(false);
   check("PRECACHE", "every saved file can be read with the network off", bad.length === 0, bad.slice(0, 5).join(","));
   await ctx.setOffline(false);
   check("TM-TST-084", "headless Chromium with the network off: shell, status screen and cold-start screens open, every saved file readable (not a real-device run)", passOf("G1-OFFLINE", "PRECACHE"));
+}
+
+// Update flow (owner request 3 Nov 2026): a changed worker file waits, the calm banner appears, Update now reloads once, local data stays.
+{
+  await page.goto("http://localhost:4174/#/settings/about"); await page.waitForSelector("[data-version]");
+  const stamp = await page.textContent("[data-version]");
+  check("UPDATE-STAMP", "Settings > About shows version, build and date", /\d+\.\d+\.\d+.*build \S+ · \d{1,2} [A-Z][a-z]{2} \d{4}/.test(stamp ?? ""), stamp ?? "");
+  await page.evaluate(() => localStorage.setItem("tm:ui:updateProbe", "kept"));
+  const real = readFileSync("dist/sw.js", "utf8"); // the worker file of the build; a changed copy plays the part of the next deploy
+  writeFileSync("dist/sw.js", real + "\n// next version " + Date.now());
+  await page.evaluate(async () => { const reg = await navigator.serviceWorker.getRegistration(); await reg.update(); });
+  const shown = await page.waitForSelector("#update-banner [data-act=update-now]", { timeout: 8000 }).then(() => true).catch(() => false);
+  const controllerBefore = await page.evaluate(() => navigator.serviceWorker.controller?.scriptURL ?? null);
+  check("UPDATE-BANNER", "a changed worker file waits and the calm banner appears (nothing reloads by itself)", shown && controllerBefore !== null && (await page.evaluate(() => !!document.querySelector("[data-version]"))));
+  if (shown) { await Promise.all([page.waitForEvent("load", { timeout: 10000 }).catch(() => null), page.click("#update-banner [data-act=update-now]")]); await page.waitForSelector("main", { timeout: 8000 }).catch(() => {}); }
+  const after = await page.evaluate(() => ({ kept: localStorage.getItem("tm:ui:updateProbe"), banner: !!document.getElementById("update-banner") }));
+  check("UPDATE-APPLY", "Update now reloads once, local data is still there", shown && after.kept === "kept", JSON.stringify(after));
+  writeFileSync("dist/sw.js", real); await page.evaluate(() => localStorage.removeItem("tm:ui:updateProbe"));
 }
 
 // Design version: default light-futuristic, switch to ink-paper and back, persists across reload, dark follows phone; old "classic" saved value migrates

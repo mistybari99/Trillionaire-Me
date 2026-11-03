@@ -127,8 +127,11 @@ How to use: owner says "শুরু করো" (or "start") and the builder run
 - [x] Audit weeks 3-4 (3 Nov 2026): welcome-back card and monthly then-vs-now (`tests/welcome_back.test.ts`), Bangla apply-back script (`tests/bangla_apply_back.test.ts`), Bangla "Where we are" page (`docs/owner/WHERE_WE_ARE_BN.md`), M13 Hijri date and Ramadan view, calculated and approximate (`tests/hijri.test.ts`).
 - [x] Hosting files and CI (3 Nov 2026): `public/_headers`, stale-while-revalidate, `.github/workflows/ci.yml` (green on GitHub), tests no longer rewrite `evidence/`.
 
+- [x] Text size fix (px to rem) and reliable updates: banner "A new version is ready", build stamp in Settings > About (3 Nov 2026).
+
 ## Part B — Owner-only tasks
 - [ ] (optional, later) A scholar reviews the hadith entries and the halal-check flags; a named reviewer then marks entries reviewed.
+- [ ] Open the app online once and check Settings > About shows the new build line; text size 150% should visibly grow the text (3 Nov fix).
 - [ ] Phone offline test: open online once, visit all pages, airplane mode, reopen (O1).
 - [ ] Lock-screen privacy check on a real device (O8).
 - [ ] Verify prayer times against the official Bangladesh timetable (Islamic Foundation Bangladesh). Check both: the phone's own calculation and the new automatic update (Settings > Prayer; source Aladhan, UNTESTED live from the build sandbox).

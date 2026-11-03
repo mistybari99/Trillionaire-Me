@@ -10,8 +10,11 @@ const RUNTIME = "tm-runtime-v1";
 const SAVED = new Set(PRECACHE.map((u) => new URL(u, self.registration.scope).href));
 const MATCH = { ignoreVary: true };
 const isSaved = (url) => { const u = new URL(url); u.search = ""; u.hash = ""; return SAVED.has(u.href); };
+// A new version waits until the person taps "Update now" in the app (message SKIP_WAITING), so nothing changes under a page that is being used.
+// The very first install has nothing to interrupt, so it takes over at once.
+self.addEventListener("message", (e) => { if (e.data && e.data.type === "SKIP_WAITING") self.skipWaiting(); });
 self.addEventListener("install", (e) => {
-  self.skipWaiting();
+  if (!self.registration.active) self.skipWaiting();
   e.waitUntil(caches.open(SHELL).then((c) => Promise.allSettled(PRECACHE.map((u) => c.add(new Request(u, { cache: "reload" }))))));
 });
 self.addEventListener("activate", (e) => {

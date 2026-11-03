@@ -2,6 +2,8 @@
 // Everything listed comes from settingsRegistry.ts. A row opens the place where the setting is changed; the three quick rows
 // (language, theme, text size) are changed right here and nowhere else except the top-bar globe.
 import { h } from "./dom";
+import { BUILD } from "./buildInfo";
+import { stampLine } from "../core/updateBanner";
 import { t } from "../i18n/t";
 import type { Key } from "../i18n/packs";
 import { LOCALES, LOCALE_ORDER, type Locale } from "../i18n/registry";
@@ -130,12 +132,26 @@ function categoryPage(cat: Cat, row: string | undefined, lang: Locale): HTMLElem
   return main;
 }
 
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+/** Which build this phone is running, and the saved app copy. Local data is never touched by an update. */
+function versionCard(lang: Locale): HTMLElement {
+  const saved = h("p", { class: "muted", "data-version-saved": "1" }, t("upd.about.none", lang));
+  if (typeof caches !== "undefined") void caches.keys().then((ks) => { const k = ks.find((x) => x.startsWith("tm-shell-")); if (k) saved.textContent = t("upd.about.saved", lang, { c: k.slice("tm-shell-".length) }); }).catch(() => { /* keep the plain line */ });
+  const msg = h("p", { class: "muted", role: "status", "data-version-msg": "1" });
+  return h("section", { class: "card", "data-card": "version" }, h("h2", { class: "card-h" }, t("upd.about.title", lang)),
+    h("p", { "data-version": "1" }, t("upd.about.line", lang, { v: stampLine(BUILD, MONTHS) })), saved, h("p", { class: "muted" }, t("upd.about.safe", lang)),
+    h("button", { class: "btn ghost", type: "button", "data-act": "check-update", style: "min-height:44px", onclick: async () => {
+      msg.textContent = t("upd.about.checking", lang);
+      try { const reg = await navigator.serviceWorker?.getRegistration(); if (reg) await reg.update(); msg.textContent = t(reg?.waiting ? "upd.about.found" : "upd.about.latest", lang); } catch { msg.textContent = t("upd.about.latest", lang); }
+    } }, t("upd.about.check", lang)), msg);
+}
+
 function aboutPage(row: string | undefined, lang: Locale): HTMLElement {
   const welcome = h("div", { class: "card", "data-setting-row": "welcome" }, h("h3", { class: "card-h" }, t("set.row.welcome", lang)), h("p", { class: "muted" }, t("set.about.welcome", lang)),
     h("button", { class: "btn ghost", type: "button", "data-act": "welcome-again", style: "min-height:44px", onclick: () => { resetOnboard(); prefs.onboard = "pending"; location.hash = "#/start"; rerender(); } }, t("set.open", lang)));
   const main = h("main", { class: "scr scr-settings", "data-settings": "about" },
     link("#/settings", "crumb", `← ${t("nav.settings", lang)}`), h("h1", {}, t(CAT_LABEL.about, lang)), h("p", { class: "muted" }, t("set.about.note", lang)),
-    ...GUIDES.map((g) => link(g.route, "card link", h("h3", { class: "card-h" }, t(g.label, lang)), h("p", { class: "muted" }, t(g.desc, lang)))), welcome);
+    versionCard(lang), ...GUIDES.map((g) => link(g.route, "card link", h("h3", { class: "card-h" }, t(g.label, lang)), h("p", { class: "muted" }, t(g.desc, lang)))), welcome);
   highlight(main, row);
   return main;
 }

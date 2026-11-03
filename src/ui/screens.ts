@@ -988,7 +988,7 @@ export function today(): HTMLElement {
     h("p", { class: "sub" }, t("home.step", lang), " — ", valueEl(t("stage.progress", lang, { now: num(curStage + 1, lang), total: num(STAGES.length, lang) }), activeNs() === "real" ? "ESTIMATE" : "DEMO", lang)),
     h("section", { class: "stage", "aria-label": t("home.stage", lang) },
       h("small", {}, `${t("home.stage", lang)} · ${tb(stage.name, lang)}`),
-      h("div", { class: "n" }, num(curStage + 1, lang), h("span", { style: "font-size:22px;color:var(--muted)" }, ` / ${num(STAGES.length, lang)}`)),
+      h("div", { class: "n" }, num(curStage + 1, lang), h("span", { style: "font-size:1.375rem;color:var(--muted)" }, ` / ${num(STAGES.length, lang)}`)),
       rungs),
     movedNoteCard(lang),
     welcomeBackCard(lang),
