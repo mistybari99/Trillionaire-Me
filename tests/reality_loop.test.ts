@@ -228,7 +228,7 @@ describe("reality screen, demo mode", () => {
   it("change path is a big change: approval needs the tick, then the goal is paused and the old goal state stays in the version", () => {
     seed(); go("#/journey/reality"); set("rl-kind", "setback"); set("rl-goal", "g1"); submit("reality-event");
     const approve = $<HTMLButtonElement>('[data-option="change_path"] [data-act="approve"]')!;
-    approve.click(); expect($('[data-option="change_path"] .err')!.textContent).toBe("Tick the box first.");
+    approve.click(); expect($('[data-option="change_path"] .need')!.textContent).toBe("Tick the box first.");
     expect(store.demo.get("g1")!.values["goal.status"]).toBeUndefined();
     ($('[data-option="change_path"] input[type=checkbox]') as HTMLInputElement).checked = true; approve.click();
     expect(store.demo.get("g1")!.values["goal.status"]).toMatchObject({ value: "paused" });

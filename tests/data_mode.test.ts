@@ -199,7 +199,7 @@ describe("TM-TST-119 Only demo / Only real: the other namespace is hidden everyw
     localStorage.setItem("tm:ui:dataMode", "demo"); seedBoth();
     go("#/settings/data"); click("[data-mode-set=real]");
     expect(prefs.dataMode).toBe("demo");
-    expect(document.querySelector("[data-mode-switch] .err")).not.toBeNull();
+    expect(document.querySelector("[data-mode-switch] .need")).not.toBeNull();
     store.real.clear(); // nothing real was written by the refused switch
     (document.getElementById("consent-tick") as HTMLInputElement).checked = true; click("[data-act=consent]");
     click("[data-mode-set=real]");

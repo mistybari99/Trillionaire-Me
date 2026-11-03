@@ -27,5 +27,5 @@ export function consentGate(lang: Locale): HTMLElement {
       if (!tick?.checked) { missingTick = true; rerender(); return; }
       missingTick = false; grantRealConsent(); rerender();
     } }, t("data.consent.btn", lang)),
-    missingTick ? h("p", { class: "err", role: "alert" }, t("data.consent.needTick", lang)) : null);
+    missingTick ? h("p", { class: "need", role: "alert" }, t("data.consent.needTick", lang)) : null);
 }

@@ -12,6 +12,8 @@ export function valueEl(text: string, label: Label, lang: Locale): HTMLElement {
 }
 
 export const num = (n: number, lang: Locale) => fmtNumber(n, lang);
+/** A calm "please do this first" prompt (tick the box, write a name). Not an error: uses the --calm token, never the danger colour. Real failures keep class "err". */
+export function showNeed(el: HTMLElement, text: string): void { el.className = "need"; el.textContent = text; }
 
 export function demoBadge(lang: Locale) { return h("span", { class: "badge" }, t("badge.demo", lang)); }
 

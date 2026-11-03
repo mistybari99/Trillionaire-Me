@@ -96,3 +96,38 @@ describe("rendered screens use tokens for colour in every look", () => {
     });
   }
 });
+
+describe("calm / ghost / plain-link fixes found by the screenshot matrix (3 Nov 2026)", () => {
+  it("Light/Futuristic gradient buttons never apply to ghost buttons (ghost text is ink, so it would sit on the indigo gradient)", () => {
+    const css = DESIGNS.find((d) => d.id === "light-futuristic")!.extraCss!;
+    expect(css).toMatch(/\.btn:not\(\.ghost\)\{background:linear-gradient/);
+    expect(css).not.toMatch(/\.btn\{background:linear-gradient/);
+  });
+  it("plain links (no class) use the primary token, so they are readable in dark mode in every look", () => {
+    expect(CSS).toMatch(/main a:where\(:not\(\[class\]\),\[class=""\]\)\{color:var\(--primary\)/);
+    for (const L of LOOKS) for (const [mode, t] of L.modes) for (const bg of ["paper", "card"]) expect(cr(t.primary!, t[bg]!), `${L.id} ${mode} primary/${bg}`).toBeGreaterThanOrEqual(4.5);
+  });
+  it("a long tag wraps inside the screen instead of widening the page (found at 200 % text on Capability status)", () => { expect(CSS.match(/^\.tag\{([^}]*)\}/m)![1]).toMatch(/white-space:normal;max-width:100%/); });
+  it("the bottom tab labels keep every word whole and grow with the text size; when they no longer fit in one row the bar wraps into two rows instead of breaking words", () => {
+    const rule = CSS.match(/^\.tab\{([^}]*)\}/m)![1]!; const nav = CSS.match(/^nav\{([^}]*)\}/m)![1]!;
+    expect(rule).toMatch(/font-size:0\.8125rem/); expect(rule).toMatch(/overflow-wrap:normal/); expect(rule).toMatch(/min-width:max-content/); expect(nav).toMatch(/flex-wrap:wrap/);
+    expect(CSS).toMatch(/body\{[^}]*padding:16px 16px max\(96px,8rem\)/);
+  });});
+
+describe("calm prompt colour (--calm, plan tracker AU-23): every look, light and dark, contrast >= 4.5 and never the danger colour", () => {
+  for (const L of LOOKS) for (const [mode, t] of L.modes) {
+    it(`${L.id} ${mode}: --calm is defined and readable on page, card and the demo background`, () => {
+      expect(t.calm, "calm token").toMatch(/^#[0-9A-Fa-f]{6}$/); expect(t.calm!.toLowerCase()).not.toBe(t.danger!.toLowerCase());
+      for (const bg of ["paper", "card", "demo-bg"]) expect(cr(t.calm!, t[bg]!), `${mode} calm/${bg}`).toBeGreaterThanOrEqual(4.5);
+      if (L.id === "light-futuristic") { const glow = mix(t.ember!, mix(t.primary!, t.paper!, 0.16), 0.12); expect(cr(t.calm!, mix(t.card!, glow, 0.86)), `${mode} calm/card-over-glow`).toBeGreaterThanOrEqual(4.5); }
+    });
+  }
+  it("the .need class uses the calm token and a border (not colour alone); .err keeps the danger token", () => {
+    expect(CSS).toMatch(/\.need\{color:var\(--calm\)[^}]*border-inline-start:3px solid var\(--calm\)/); expect(CSS).toMatch(/\.err\{color:var\(--danger\)/);
+  });
+  it("the 'please tick' and 'write something first' prompts use .need; no tick prompt is drawn in the danger style", () => {
+    const files = ["connectionsUi", "consentGate", "healthUi", "hadithUi", "prayerSyncUi", "modeUi"].map((f) => readFileSync(`src/ui/${f}.ts`, "utf8")).join("\n");
+    expect(files).not.toMatch(/class: "err"[^)]*needTick/); expect(files).not.toMatch(/class: "err"[^)]*needConsent/);
+    expect((files.match(/class: "need"/g) ?? []).length).toBeGreaterThanOrEqual(8);
+  });
+});

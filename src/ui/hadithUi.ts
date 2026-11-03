@@ -33,7 +33,7 @@ export function hadithScreen(): HTMLElement {
     return h("main", { class: "scr scr-hadith" }, ...head, h("div", { class: "card", "data-hadith-off": "1" }, h("h2", { class: "card-h" }, t("hd.off.title", lang)), h("p", {}, t("hd.off.p", lang)),
       h("label", { style: "display:flex;gap:8px;align-items:center;margin:8px 0" }, h("input", { type: "checkbox", id: "hadith-tick", style: "width:24px;margin:0" }), t("hd.tick", lang)),
       h("button", { class: "btn", type: "button", "data-act": "hadith-on", style: "min-height:44px", onclick: () => { if (!(document.getElementById("hadith-tick") as HTMLInputElement | null)?.checked) { missing = true; rerender(); return; } missing = false; enableHadith(consentKv, new Date().toISOString()); rerender(); } }, t("hd.on", lang)),
-      missing ? h("p", { class: "err", role: "alert" }, t("data.consent.needTick", lang)) : null), disclaimers(lang, ["noFatwa"]));
+      missing ? h("p", { class: "need", role: "alert" }, t("data.consent.needTick", lang)) : null), disclaimers(lang, ["noFatwa"]));
   }
   const input = h("input", { id: "hd-q", type: "search", autocomplete: "off", value: q }) as HTMLInputElement;
   const chips = h("div", { class: "seg", role: "group", "aria-label": t("hd.topic", lang) }, ...HADITH_TOPICS.map((tp) => h("button", { type: "button", "data-topic": tp, "aria-pressed": String(topic === tp), onclick: () => { topic = topic === tp ? null : tp; rerender(); } }, t(`hd.t.${tp}` as Key, lang))));

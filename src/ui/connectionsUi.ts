@@ -32,7 +32,7 @@ function confirmPanel(id: FacilityId, lang: Locale): HTMLElement {
     } }, t("conn.confirm.btn", lang)),
     " ",
     h("button", { class: "btn ghost", type: "button", "data-conn-cancel": id, onclick: () => { confirming = null; missingTick = null; rerender(); } }, t("conn.confirm.cancel", lang)),
-    missingTick === id ? h("p", { class: "err", role: "alert" }, t("conn.confirm.needTick", lang)) : null);
+    missingTick === id ? h("p", { class: "need", role: "alert" }, t("conn.confirm.needTick", lang)) : null);
 }
 
 function keyBox(id: FacilityId, lang: Locale): HTMLElement {

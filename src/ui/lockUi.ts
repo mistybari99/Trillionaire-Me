@@ -1,5 +1,6 @@
 // Optional app lock UI: lock screen (keypad + keyboard), More > Data card, lock on hide. No network. Off by default.
 import { h } from "./dom";
+import { showNeed } from "./components";
 import { t } from "../i18n/t";
 import type { Key } from "../i18n/packs";
 import type { Locale } from "../i18n/registry";
@@ -65,7 +66,7 @@ function forgotPanel(lang: Locale): HTMLElement {
     can ? h("p", {}, t("lock.forgot.ready", lang)) : h("p", {}, t("lock.forgot.p2", lang, { when: hhmm(ready) })),
     can ? h("label", { for: "lock-forgot-tick" }, tick, " ", t("lock.forgot.tick", lang)) : null,
     can ? h("button", { class: "btn", type: "button", "data-act": "lock-forgot-remove", style: "min-height:44px", onclick: () => {
-      if (!tick.checked) { msg.textContent = t("lock.forgot.needTick", lang); return; }
+      if (!tick.checked) { showNeed(msg, t("lock.forgot.needTick", lang)); return; }
       if (finishForgot(consentKv, Date.now(), true)) { locked = false; forgotOpen = false; rerender(); }
     } }, t("lock.forgot.btn", lang)) : null, msg,
     h("button", { class: "btn ghost", type: "button", "data-act": "lock-forgot-back", style: "min-height:44px", onclick: () => { forgotOpen = false; rerender(); } }, t("lock.forgot.back", lang)));

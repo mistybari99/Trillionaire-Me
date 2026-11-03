@@ -6,7 +6,7 @@ import type { Key } from "../i18n/packs";
 import { prefs, store } from "./state";
 import { withView } from "./viewBar";
 import { activeNs, allRecs, consentOn, consentPrompt, inNs, nsTag, putMode, saveBlockedText, saveTyped } from "./entry";
-import { disclaimers, num, valueEl } from "./components";
+import { disclaimers, num, showNeed, valueEl } from "./components";
 import { checkFreeText } from "../core/safety";
 import { fieldById } from "../catalog/fields";
 import type { FieldValue, TMRecord } from "../core/types";
@@ -132,9 +132,9 @@ function ventureScreenInner(): HTMLElement {
     h("label", { for: "vn-value" }, t("ven.value", lang)), value, err,
     h("button", { class: "btn", type: "submit" }, t("ven.add", lang)));
   form.addEventListener("submit", (ev) => {
-    ev.preventDefault(); err.textContent = "";
+    ev.preventDefault(); err.className = "err"; err.textContent = "";
     const nm = name.value.trim();
-    if (!nm) { err.textContent = t("ven.err.name", lang); return; }
+    if (!nm) { showNeed(err, t("ven.err.name", lang)); return; }
     if (!checkFreeText(nm).ok) { err.textContent = t("intake.secretRejected", lang); return; }
     const o = parseOwnership(own.value);
     if (o === null) { err.textContent = t("ven.err.ownership", lang); return; }
@@ -167,8 +167,8 @@ function ventureScreenInner(): HTMLElement {
       h("label", { for: `ve-o-${id}` }, t("ven.ownership", lang)), ow, h("label", { for: `ve-v-${id}` }, t("ven.value", lang)), va, msg,
       h("button", { class: "btn ghost", type: "submit", style: "width:auto;margin:0;min-height:44px" }, t("ven.edit.save", lang)));
     f.addEventListener("submit", (ev) => {
-      ev.preventDefault(); msg.textContent = "";
-      const nm = n.value.trim(); if (!nm) { msg.textContent = t("ven.err.name", lang); return; }
+      ev.preventDefault(); msg.className = "err"; msg.textContent = "";
+      const nm = n.value.trim(); if (!nm) { showNeed(msg, t("ven.err.name", lang)); return; }
       if (!checkFreeText(nm).ok) { msg.textContent = t("intake.secretRejected", lang); return; }
       const o = parseOwnership(ow.value); if (o === null) { msg.textContent = t("ven.err.ownership", lang); return; }
       const vl = parseAmount(va.value); if (vl === null) { msg.textContent = t("ven.err.value", lang); return; }
@@ -192,8 +192,8 @@ function ventureScreenInner(): HTMLElement {
       h("p", { class: "muted" }, t("money.nameHint", lang)), h("label", { for: `vl-a-${vid}` }, t("ven.line.amount", lang)), amt, msg,
       h("button", { class: "btn ghost", type: "submit", style: "width:auto;margin:0;min-height:44px" }, t("ven.line.save", lang)));
     f.addEventListener("submit", (ev) => {
-      ev.preventDefault(); msg.textContent = "";
-      const lb = label.value.trim(); if (!lb) { msg.textContent = t("ven.line.err.name", lang); return; }
+      ev.preventDefault(); msg.className = "err"; msg.textContent = "";
+      const lb = label.value.trim(); if (!lb) { showNeed(msg, t("ven.line.err.name", lang)); return; }
       if (!checkFreeText(lb).ok) { msg.textContent = t("intake.secretRejected", lang); return; }
       const am = parseAmount(amt.value); if (am === null) { msg.textContent = t("intake.invalidNumber", lang); return; }
       const id = `fin-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`;
@@ -260,9 +260,9 @@ function teamScreenInner(): HTMLElement {
     h("label", { for: "tm-holder" }, t("team.holder", lang)), holder, err,
     h("button", { class: "btn", type: "submit" }, t("team.add", lang)));
   form.addEventListener("submit", (ev) => {
-    ev.preventDefault(); err.textContent = "";
+    ev.preventDefault(); err.className = "err"; err.textContent = "";
     const v = role.value.trim();
-    if (!v) { err.textContent = t("team.err.role", lang); return; }
+    if (!v) { showNeed(err, t("team.err.role", lang)); return; }
     if (looksLikePersonContact(v)) { err.textContent = t("team.err.contact", lang); return; }
     if (!checkFreeText(v).ok) { err.textContent = t("intake.secretRejected", lang); return; }
     if (!putRecord("team_role", "role", { "team_role.role": txt(v), "team_role.holder": holder.value ? txt(holder.value) : UNKNOWN })) { err.textContent = saveBlockedText(lang); return; }
@@ -395,9 +395,9 @@ export function northStarScreen(): HTMLElement {
     h("label", { for: "ns-weight" }, t("ns.weight", lang)), weight, h("p", { class: "muted" }, t("ns.weight.hint", lang)), err,
     h("button", { class: "btn", type: "submit" }, t("ns.add", lang)));
   form.addEventListener("submit", (ev) => {
-    ev.preventDefault(); err.textContent = "";
+    ev.preventDefault(); err.className = "err"; err.textContent = "";
     const m = metric.value.trim();
-    if (!m) { err.textContent = t("ns.err.metric", lang); return; }
+    if (!m) { showNeed(err, t("ns.err.metric", lang)); return; }
     if (!checkFreeText(m).ok || !checkFreeText(unit.value).ok) { err.textContent = t("intake.secretRejected", lang); return; }
     const b = numberInput(base.value), g = numberInput(target.value), c = numberInput(current.value), w = parseWeight(weight.value);
     if (b === null || g === null || c === null) { err.textContent = t("ns.err.number", lang); return; }

@@ -10,6 +10,7 @@ import * as LF from "./ui/lifeUi";
 import * as UV from "./ui/universeUi";
 import * as IM from "./ui/importUi";
 import { whereScreen } from "./ui/whereUi";
+import { backwardListScreen, backwardScreen } from "./ui/backwardUi";
 import * as RL from "./ui/realityUi";
 import { viaLazy } from "./ui/lazy";
 import { CONN, DECIDE, HALAL, LEGS, PLAN } from "./ui/lazyScreens";
@@ -60,6 +61,8 @@ export const ROUTES: Array<[RegExp, (m: RegExpMatchArray) => HTMLElement, string
   [/^\/journey\/northstar$/, () => viaLazy(PLAN, (m) => m.northStarScreen()), "journey"],
   [/^\/journey\/reality$/, () => RL.realityScreen(), "journey"],
   [/^\/journey\/boards$/, () => boardsScreen(), "journey"],
+  [/^\/journey\/backward$/, () => backwardListScreen(), "journey"],
+  [/^\/journey\/backward\/([\w-]+)$/, (m) => backwardScreen(m[1]!), "journey"],
   [/^\/journey\/gates$/, () => viaLazy(PLAN, (m) => m.gatesScreen()), "journey"],
   [/^\/journey\/kpi$/, () => viaLazy(PLAN, (m) => m.kpiScreen()), "journey"],
   [/^\/diary\/ventures$/, () => viaLazy(PLAN, (m) => m.ventureScreen()), "diary"],
@@ -79,10 +82,10 @@ export const ROUTES: Array<[RegExp, (m: RegExpMatchArray) => HTMLElement, string
   [/^\/deen\/plans$/, () => deenPlansScreen(), "deen"],
   [/^\/settings\/connections$/, () => viaLazy(CONN, (m) => m.connectionsScreen(prefs.lang)), "settings"],
   [/^\/settings(?:\/([a-z]+))?(?:\/([a-z-]+))?$/, (m) => settingsScreen(m[1], m[2]), "settings"],
+  [/^\/more\/where$/, () => whereScreen(prefs.lang), "settings"],
   [/^\/more\/status$/, () => S.status(), "settings"],
   [/^\/more\/fields$/, () => S.fieldsGuide(), "settings"],
   [/^\/more\/glossary$/, () => S.glossary(), "settings"],
-  [/^\/more\/where$/, () => whereScreen(prefs.lang), "settings"],
   [/^\/more\/safety$/, () => S.safety(), "settings"],
   [/^\/more\/dictionary$/, () => IM.dictionaryScreen(), "settings"],
   [/^\/more\/library$/, () => LS.systemsLibraryScreen(), "settings"],

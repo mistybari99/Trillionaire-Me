@@ -25,6 +25,7 @@ import { goalDeleteCard } from "./goalDelete";
 import { habitLines } from "../core/habitGoals";
 import { goalIdsOf } from "../core/taskGoals";
 import { linkStats } from "../core/goalPlan";
+import { planByTag } from "./backwardUi";
 import { HORIZONS } from "../core/horizon";
 import type { FieldValue, TMRecord } from "../core/types";
 
@@ -190,6 +191,7 @@ function goalsScreenInner(): HTMLElement {
   const st = linkStats(recs);
   return h("main", {}, link("#/journey", "crumb", `← ${t("journey.title", lang)}`), h("h1", {}, t("goals.title", lang)), h("p", { class: "sub" }, t("goals.intro", lang)),
     overallProgressCard(lang, "journey"),
+    link("#/journey/backward", "btn ghost", t("bw.link", lang)),
     st.steps ? h("p", { class: "muted", "data-link-stats": "1" }, t("gl.ov.fact", lang, { n: num(st.steps, lang), s: num(st.shared, lang), u: num(st.unlinked, lang) }), " ", t("gl.ov.note", lang)) : null,
     ...active.map((n) => rootCard(n, recs, lang)),
     st.unlinked ? h("a", { href: "#/diary/plan", class: "card link", "data-unlinked-card": String(st.unlinked) }, h("p", {}, t("gl.unlinked", lang, { n: num(st.unlinked, lang) }))) : null,
@@ -214,10 +216,11 @@ function stepsCard(rec: TMRecord, lang: Locale): HTMLElement {
     const mine = all.filter((r) => r.values["task.not_true_on"]?.state !== "value" && goalIdsOf(r).includes(n.id)).sort((a, b) => a.id.localeCompare(b.id));
     return h("div", { "data-steps-of": n.id }, h("h3", {}, n.depth === 0 ? n.title : `${"· ".repeat(n.depth)}${n.title}`),
       ...habitRows(n, recs, lang),
-      mine.length ? h("ul", { class: "plain" }, ...mine.map((r) => h("li", { "data-step": r.id }, h("strong", {}, textOf(r, "task.title")), doneOf(r) ? h("span", { class: "tag ok" }, ` ${t("gl.steps.done", lang)}`) : null, " ", goalChips(r, lang, recs, { exclude: n.id, prefix: "gl.also" }))))
+      mine.length ? h("ul", { class: "plain" }, ...mine.map((r) => h("li", { "data-step": r.id }, h("strong", {}, textOf(r, "task.title")), doneOf(r) ? h("span", { class: "tag ok" }, ` ${t("gl.steps.done", lang)}`) : null, " ", planByTag(r, lang), " ", goalChips(r, lang, recs, { exclude: n.id, prefix: "gl.also" }))))
         : h("p", { class: "muted" }, t("gl.steps.none", lang)));
   };
-  return h("section", { class: "card", "data-goal-steps": rec.id }, h("h2", { class: "card-h" }, t("gl.steps.title", lang)), ...flatten([node]).map(block));
+  return h("section", { class: "card", "data-goal-steps": rec.id }, h("h2", { class: "card-h" }, t("gl.steps.title", lang)), ...flatten([node]).map(block),
+    link(`#/journey/backward/${rec.id}`, "btn ghost", t("bw.link", lang)));
 }
 
 // ---- One goal: progress, SMART guide, SWOT card ----

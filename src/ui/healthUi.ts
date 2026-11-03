@@ -29,7 +29,7 @@ function gate(lang: Locale): HTMLElement | null {
     h("button", { class: "btn", type: "button", "data-act": "health-consent", style: "min-height:44px", onclick: () => {
       if (!(document.getElementById("health-tick") as HTMLInputElement | null)?.checked) { missing = true; rerender(); return; }
       missing = false; grantHealthConsent(consentKv, new Date().toISOString()); rerender(); } }, t("hl.consent.btn", lang)),
-    missing ? h("p", { class: "err", role: "alert" }, t("data.consent.needTick", lang)) : null);
+    missing ? h("p", { class: "need", role: "alert" }, t("data.consent.needTick", lang)) : null);
 }
 
 const valueText = (r: HealthRow, lang: Locale) => (r.value === null ? t("unknown.unknown", lang) : `${fmtNumber(r.value, lang)}${r.unit ? ` ${r.unit}` : ""}`);

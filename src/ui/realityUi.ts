@@ -9,7 +9,7 @@ import { prefs } from "./state";
 import { fieldById } from "../catalog/fields";
 import { checkFreeText } from "../core/safety";
 import { activeNs, allRecs, entryNs, findRec, inNs, nsTag, putMode, saveBlockedText, saveTyped, storeOf, consentOn, consentPrompt } from "./entry";
-import { disclaimers, num, valueEl } from "./components";
+import { disclaimers, num, showNeed, valueEl } from "./components";
 import {
   EVENT_KINDS, MOVE_DAYS, RESUME_STEPS, applyToRecords, decidedEvent, eventRecord, eventRows, impactOf, loopLogRecord, nextVersionNumber, noImpact, optionsFor, parkedRows, planChange,
   planDiff, resumeChange, snapshotOf, unparkTask, validateEvent, versionRecord, versionRows, type DiffRow, type EventRow, type Impact, type LoopOption, type MoveDays, type PlanChange, type VersionOption,
@@ -104,7 +104,7 @@ function optionBlock(ev: EventRow, evRec: TMRecord, imp: Impact, option: LoopOpt
     approve.addEventListener("click", () => {
       msg.textContent = "";
       if (!consentOn()) { msg.textContent = saveBlockedText(lang); return; }
-      if (ch.big && !(tick as HTMLInputElement).checked) { msg.textContent = t("rl.big.need", lang); return; }
+      if (ch.big && !(tick as HTMLInputElement).checked) { showNeed(msg, t("rl.big.need", lang)); return; }
       const fresh = allRecs(); const freshEv = findRec(ev.id);
       if (!freshEv) return;
       const real = planChange(fresh, impactOf(fresh, ev), option, { today: iso(), days, mode: prefs.mode });

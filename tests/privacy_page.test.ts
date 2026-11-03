@@ -36,7 +36,7 @@ describe("single consent source", () => {
   });
   it("the gate on Privacy and the gate on the Data page are the same component and need the tick", () => {
     go("#/settings/privacy"); expect(q("[data-consent=real]")).not.toBeNull();
-    q<HTMLButtonElement>("[data-act=consent]").click(); render(); expect(readConsent(consentKv)).toBe(false); expect(q(".err")?.textContent).toMatch(/Tick/);
+    q<HTMLButtonElement>("[data-act=consent]").click(); render(); expect(readConsent(consentKv)).toBe(false); expect(q(".need")?.textContent).toMatch(/Tick/);
     q<HTMLInputElement>("#consent-tick").checked = true; q<HTMLButtonElement>("[data-act=consent]").click(); expect(readConsent(consentKv)).toBe(true);
     go("#/settings/data"); expect(app().querySelector("[data-consent=real]")).toBeNull();
   });
@@ -50,7 +50,7 @@ describe("live read-out", () => {
     expect(line("consent")).toMatch(/allowed since 2026-10-26/); expect(line("applock")).toMatch(/App lock: on/); expect(line("lockscreen")).toMatch(/shows: Health.*Financial|shows: Financial.*Health/);
   });
   it("the weaker state is plain: a Turn on link, no warning styling or alert role", () => {
-    go("#/settings/privacy"); const li = q("[data-priv-line=consent]"); expect(li.textContent).toMatch(/Turn on/); expect(li.querySelector("[role=alert], .err")).toBeNull();
+    go("#/settings/privacy"); const li = q("[data-priv-line=consent]"); expect(li.textContent).toMatch(/Turn on/); expect(li.querySelector("[role=alert], .err, .need")).toBeNull();
   });
 });
 
@@ -88,5 +88,12 @@ describe("lock screen details and app lock", () => {
   });
   it("Settings never reads or shows the PIN data", async () => {
     await setPin(consentKv, "4821", "4821", 1000); go("#/settings/privacy"); const html = app().innerHTML; expect(html).not.toMatch(/tm:secret|salt|hash/i);
+  });
+});
+
+describe("calm prompt (AU-23)", () => {
+  it("asking to turn on real data without the tick shows the calm prompt, not the error style", () => {
+    go("#/settings/privacy"); q<HTMLButtonElement>("[data-act=consent]").click(); render();
+    const p = q("p.need"); expect(p).not.toBeNull(); expect(p.textContent).toMatch(/Tick/); expect(app().querySelector("p.err")).toBeNull(); expect(p.getAttribute("role")).toBe("alert");
   });
 });

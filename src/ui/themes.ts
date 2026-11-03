@@ -4,7 +4,7 @@
 // Default (D-E, owner 26 Oct 2026) is "light-futuristic". "broadsheet" is shown to the user as "Classic".
 import type { Key } from "../i18n/packs";
 
-export type Tokens = Record<"paper" | "card" | "ink" | "muted" | "rule" | "primary" | "on-primary" | "ember" | "moss" | "demo" | "demo-bg" | "danger", string>;
+export type Tokens = Record<"paper" | "card" | "ink" | "muted" | "rule" | "primary" | "on-primary" | "ember" | "moss" | "demo" | "demo-bg" | "danger" | "calm", string>;
 export interface Design {
   id: string;
   label: Key; desc: Key;
@@ -26,8 +26,8 @@ export const DESIGNS: Design[] = [
   {
     id: "light-futuristic", label: "design.lf", desc: "design.lf.desc",
     swatch: ["#EEF2FF", "#4B3FD8", "#C2185B"],
-    light: { paper: "#F2F5FF", card: "#FFFFFF", ink: "#12162B", muted: "#4A5370", rule: "#6B7699", primary: "#4B3FD8", "on-primary": "#FFFFFF", ember: "#B3135A", moss: "#0A7656", demo: "#7A4B00", "demo-bg": "#FFEFC7", danger: "#B3261E" },
-    dark: { paper: "#0B0E1F", card: "#151A33", ink: "#EEF1FF", muted: "#A9B2CF", rule: "#7882A6", primary: "#A9B8FF", "on-primary": "#0B0E1F", ember: "#FF8DB8", moss: "#6EE0B4", demo: "#FFD27A", "demo-bg": "#2E2410", danger: "#FF9A8F" },
+    light: { paper: "#F2F5FF", card: "#FFFFFF", ink: "#12162B", muted: "#4A5370", rule: "#6B7699", primary: "#4B3FD8", "on-primary": "#FFFFFF", ember: "#B3135A", moss: "#0A7656", demo: "#7A4B00", "demo-bg": "#FFEFC7", danger: "#B3261E", calm: "#2D4F9E" },
+    dark: { paper: "#0B0E1F", card: "#151A33", ink: "#EEF1FF", muted: "#A9B2CF", rule: "#7882A6", primary: "#A9B8FF", "on-primary": "#0B0E1F", ember: "#FF8DB8", moss: "#6EE0B4", demo: "#FFD27A", "demo-bg": "#2E2410", danger: "#FF9A8F", calm: "#B9C8FF" },
     extraCss: `
 :root[data-design="light-futuristic"] body{background:radial-gradient(120% 60% at 100% 0,color-mix(in srgb,var(--primary) 16%,transparent),transparent 60%),radial-gradient(90% 50% at 0 8%,color-mix(in srgb,var(--ember) 12%,transparent),transparent 60%),var(--paper)}
 :root[data-design="light-futuristic"] .card{background:color-mix(in srgb,var(--card) 86%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-radius:16px;box-shadow:0 6px 22px color-mix(in srgb,var(--primary) 14%,transparent)}
@@ -40,8 +40,8 @@ export const DESIGNS: Design[] = [
   {
     id: "emerald-obsidian", label: "design.eo", desc: "design.eo.desc",
     swatch: ["#0B1216", "#1B6F57", "#C9A96E"],
-    light: { paper: "#F6F3EA", card: "#FFFFFF", ink: "#0B1216", muted: "#4A5654", rule: "#6D7B77", primary: "#1B6F57", "on-primary": "#FFFFFF", ember: "#7A5C1E", moss: "#1B6F57", demo: "#7A4B00", "demo-bg": "#FFEFC7", danger: "#B3261E" },
-    dark: { paper: "#0B1216", card: "#121D22", ink: "#F2EBDD", muted: "#A9B3B0", rule: "#7C8F8A", primary: "#C9A96E", "on-primary": "#0B1216", ember: "#E3C98F", moss: "#5FCFA5", demo: "#FFD27A", "demo-bg": "#2E2410", danger: "#FF9A8F" },
+    light: { paper: "#F6F3EA", card: "#FFFFFF", ink: "#0B1216", muted: "#4A5654", rule: "#6D7B77", primary: "#1B6F57", "on-primary": "#FFFFFF", ember: "#7A5C1E", moss: "#1B6F57", demo: "#7A4B00", "demo-bg": "#FFEFC7", danger: "#B3261E", calm: "#1D5C6E" },
+    dark: { paper: "#0B1216", card: "#121D22", ink: "#F2EBDD", muted: "#A9B3B0", rule: "#7C8F8A", primary: "#C9A96E", "on-primary": "#0B1216", ember: "#E3C98F", moss: "#5FCFA5", demo: "#FFD27A", "demo-bg": "#2E2410", danger: "#FF9A8F", calm: "#9CD3DA" },
     extraCss: `
 :root[data-design="emerald-obsidian"] .card{border-radius:12px;border-color:color-mix(in srgb,var(--ember) 45%,var(--rule))}
 :root[data-design="emerald-obsidian"] .cta,:root[data-design="emerald-obsidian"] .btn{border-radius:10px}
@@ -51,8 +51,8 @@ export const DESIGNS: Design[] = [
   {
     id: "broadsheet", label: "design.bs", desc: "design.bs.desc",
     swatch: ["#F3F2F2", "#00698A", "#A8135C"],
-    light: { paper: "#F3F2F2", card: "#FAFAFA", ink: "#201E1D", muted: "#55514E", rule: "#77726E", primary: "#00698A", "on-primary": "#FFFFFF", ember: "#A8135C", moss: "#1F6B4A", demo: "#7A4B00", "demo-bg": "#FFEFC7", danger: "#B3261E" },
-    dark: { paper: "#1A1817", card: "#242120", ink: "#F1EFEE", muted: "#B5B0AC", rule: "#8A8480", primary: "#5CC8E8", "on-primary": "#11181B", ember: "#FF8FBF", moss: "#7AD6A6", demo: "#FFD27A", "demo-bg": "#2E2410", danger: "#FF9A8F" },
+    light: { paper: "#F3F2F2", card: "#FAFAFA", ink: "#201E1D", muted: "#55514E", rule: "#77726E", primary: "#00698A", "on-primary": "#FFFFFF", ember: "#A8135C", moss: "#1F6B4A", demo: "#7A4B00", "demo-bg": "#FFEFC7", danger: "#B3261E", calm: "#2F5873" },
+    dark: { paper: "#1A1817", card: "#242120", ink: "#F1EFEE", muted: "#B5B0AC", rule: "#8A8480", primary: "#5CC8E8", "on-primary": "#11181B", ember: "#FF8FBF", moss: "#7AD6A6", demo: "#FFD27A", "demo-bg": "#2E2410", danger: "#FF9A8F", calm: "#A9CFE8" },
     extraCss: `
 :root[data-design="broadsheet"] body{font-family:"Noto Serif Bengali","Fraunces",Georgia,serif}
 :root[data-design="broadsheet"] .card{border-width:1px 0 0;border-radius:0;border-top:2px solid var(--ink)}

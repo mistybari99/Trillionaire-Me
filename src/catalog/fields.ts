@@ -2,7 +2,7 @@ import type { Bi } from "../i18n/registry";
 import { UNKNOWN_STATES, type UnknownState } from "../core/types";
 import type { AccessRule, ChoiceOption, FieldDef, FieldType, Importance, PrivacyClass, Purpose, Requirement } from "./types";
 
-export const CATALOG_VERSION = 18;
+export const CATALOG_VERSION = 19;
 
 const bi = (bn: string, en: string): Bi => ({ bn, en });
 const opt = (code: string, bn: string, en: string): ChoiceOption => ({ code, label: bi(bn, en) });
@@ -802,6 +802,10 @@ export const FIELDS: FieldDef[] = [
   f({ id: "task.parked_on", entity: "task", family: "FAM-03", type: "date", purpose: "planning", importance: "optional",
     label: bi("সরিয়ে রাখা (কবে)", "Parked (since)"), what: bi("‘কাজ কমানো’ অপশনে যে দিন কাজটি সরিয়ে রাখা হয়েছে। কাজটি রেকর্ডে থাকে, আবার ফিরিয়ে আনা যায়।", "The day this step was parked by ‘Reduce scope’. It stays on record and can be brought back."),
     why: bi("কাজ মোছা হয় না; শুধু আপাতত শিডিউলের বাইরে থাকে।", "Nothing is deleted; the step only waits outside the schedule."), example: bi("২০২৬-১১-০২", "2026-11-02"), format: bi("বছর-মাস-দিন", "YYYY-MM-DD") }),
+
+  f({ id: "task.plan_by", entity: "task", family: "FAM-03", type: "date", purpose: "planning", importance: "optional",
+    label: bi("এই দিনের মধ্যে করার পরিকল্পনা", "Planned by"), what: bi("‘পেছন থেকে প্ল্যান’-এ আপনার সাজানো ক্রম থেকে পাওয়া দিন। আপনি চাইলে মুছে ফেলতে পারেন।", "The day this step is planned by, from the order you set in ‘Plan backwards’. You can remove it any time."),
+    why: bi("শেষ তারিখ থেকে আজ পর্যন্ত আপনার নিজের ধাপগুলো কোন দিনের মধ্যে করবেন তা দেখাতে। এটি অনুমান, কথা দেওয়া নয়।", "To show by which day each of your own steps is planned, from the end date back to today. It is a plan, not a promise."), example: bi("২০২৬-১২-০১", "2026-12-01"), format: bi("বছর-মাস-দিন", "YYYY-MM-DD") }),
 
   // ── north star measure & ladder (M03, FAM-03) ──
   f({ id: "north_star.metric", entity: "north_star", family: "FAM-03", type: "text", purpose: "planning", importance: "core",

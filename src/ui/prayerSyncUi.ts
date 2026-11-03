@@ -38,7 +38,7 @@ export function prayerSyncCard(lang: Locale): HTMLElement {
     h("label", { for: "ps-city" }, t("prayer.sync.city", lang)), city, h("label", { for: "ps-country" }, t("prayer.sync.country", lang)), country,
     h("label", { style: "display:flex;gap:8px;align-items:center;margin:8px 0" }, h("input", { type: "checkbox", id: "ps-tick", style: "width:24px;margin:0" }), t("prayer.sync.tick", lang)),
     badPlace ? h("p", { class: "err", role: "alert" }, t("prayer.sync.badPlace", lang)) : null,
-    needTick ? h("p", { class: "err", role: "alert" }, t("data.consent.needTick", lang)) : null,
+    needTick ? h("p", { class: "need", role: "alert" }, t("data.consent.needTick", lang)) : null,
     h("button", { class: "btn", type: "button", "data-act": "prayer-sync-on", style: "min-height:44px", onclick: () => {
       const tick = (document.getElementById("ps-tick") as HTMLInputElement | null)?.checked === true;
       needTick = !tick; badPlace = false;

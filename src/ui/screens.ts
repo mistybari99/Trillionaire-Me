@@ -7,7 +7,7 @@ import { intlLocale, type Locale } from "../i18n/registry";
 import { prefs, screenView, store, type HorizonView } from "./state";
 import { settingsHash } from "./settingsRegistry";
 import { pausedCard } from "./privacyUi";
-import { disclaimers, fieldHelp, num, valueEl } from "./components";
+import { disclaimers, fieldHelp, num, showNeed, valueEl } from "./components";
 import { STAGES, DEMO_DATE, DEMO_TASKS } from "../demo/seed";
 import { MODULES } from "../modules/capability";
 import { buildLegend, moduleCard } from "./capabilityUi";
@@ -242,9 +242,9 @@ function taskEditForm(r: TMRecord, lang: Locale): HTMLElement {
     h("label", { for: `te-t-${r.id}` }, t("plan.task.title", lang)), title, h("label", { for: `te-m-${r.id}` }, t("plan.task.minutes", lang)), mins,
     h("label", { for: `te-p-${r.id}` }, t("plan.task.priority", lang)), prio, h("p", {}, h("strong", {}, t("gl.pick.label", lang))), pick.el, whereThisGoes(r, lang), msg, h("button", { class: "btn ghost", type: "submit", style: "width:auto;margin:6px 0 0;min-height:44px" }, t("plan.task.update", lang)));
   f.addEventListener("submit", (ev) => {
-    ev.preventDefault(); msg.textContent = "";
+    ev.preventDefault(); msg.className = "err"; msg.textContent = "";
     if (!entryNs()) { msg.textContent = saveBlockedText(lang); return; }
-    const name = title.value.trim(); if (!name) { msg.textContent = t("plan.task.err.title", lang); return; }
+    const name = title.value.trim(); if (!name) { showNeed(msg, t("plan.task.err.title", lang)); return; }
     if (!checkFreeText(name).ok) { msg.textContent = t("intake.secretRejected", lang); return; }
     const raw = mins.value.trim().replace(/[০-৯]/g, (c) => String(c.charCodeAt(0) - 0x09e6)); let m: FieldValue;
     if (raw === "") m = { state: "later" }; else { const n = Number(raw); if (!Number.isFinite(n) || n <= 0 || n > 1440) { msg.textContent = t("intake.invalidNumber", lang); return; } m = { state: "value", value: Math.round(n), label: labelFor(r.ns) }; }
@@ -614,7 +614,7 @@ export function captureScreen(): HTMLElement {
   };
   const understand = h("button", { class: "btn", type: "button", "data-act": "capture-find" }, t("capture.understand", lang));
   understand.addEventListener("click", () => {
-    err.textContent = ""; const text = ta.value.trim(); if (!text) { err.textContent = t("capture.empty", lang); return; }
+    err.className = "err"; err.textContent = ""; const text = ta.value.trim(); if (!text) { showNeed(err, t("capture.empty", lang)); return; }
     if (!checkFreeText(text).ok) { err.textContent = t("intake.secretRejected", lang); return; }
     const cands = extract(text); const edits = new Map<string, string>(); const checks = new Map<string, HTMLInputElement>();
     const rows = cands.map((c) => {
@@ -1243,7 +1243,7 @@ function suggestPanel(f: FieldDef, lang: Locale, getInput: () => HTMLInputElemen
   const go = h("button", { class: "btn ghost", type: "button", "data-act": "suggest-go" }, t("suggest.go", lang));
   go.addEventListener("click", async () => {
     const input = getInput(); const q = input.value.trim();
-    if (!q) { out.replaceChildren(h("p", { class: "err" }, t("suggest.empty", lang))); return; }
+    if (!q) { out.replaceChildren(h("p", { class: "need" }, t("suggest.empty", lang))); return; }
     const safe = safeQuery(q);
     if (!safe) { out.replaceChildren(h("p", { class: "err" }, t("suggest.secret", lang))); return; }
     out.replaceChildren(h("p", { class: "muted" }, t("suggest.loading", lang)));

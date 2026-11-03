@@ -82,7 +82,7 @@ describe("consent off sends nothing", () => {
   it("the page shows what is sent and to whom, nothing is sent without the tick, then the tick turns it on", async () => {
     const f = okFetch(); setup(f); go("#/settings/prayer");
     const card = q("[data-prayer-sync=off]"); expect(card.textContent).toMatch(/aladhan\.com/); expect(card.textContent).toMatch(/only your city, your country/); expect(card.textContent).toMatch(/No GPS/);
-    q<HTMLButtonElement>("[data-act=prayer-sync-on]").click(); render(); expect(prefs.prayerSync.on).toBe(false); expect(f).not.toHaveBeenCalled(); expect(q(".err")!.textContent).toMatch(/Tick/);
+    q<HTMLButtonElement>("[data-act=prayer-sync-on]").click(); render(); expect(prefs.prayerSync.on).toBe(false); expect(f).not.toHaveBeenCalled(); expect(q(".need")!.textContent).toMatch(/Tick/);
     q<HTMLInputElement>("#ps-city").value = "12 Road"; q<HTMLInputElement>("#ps-tick").checked = true; q<HTMLButtonElement>("[data-act=prayer-sync-on]").click(); expect(prefs.prayerSync.on).toBe(false); expect(f).not.toHaveBeenCalled();
     render(); q<HTMLInputElement>("#ps-city").value = "Dhaka"; q<HTMLInputElement>("#ps-tick").checked = true; q<HTMLButtonElement>("[data-act=prayer-sync-on]").click();
     expect(prefs.prayerSync.on).toBe(true); await vi.waitFor(() => expect(currentCache()).not.toBeNull());

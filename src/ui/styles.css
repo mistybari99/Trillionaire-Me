@@ -10,17 +10,17 @@
 :root{
   --paper:#F5F1E8; --card:#FBF8F1; --ink:#14181F; --muted:#5B6270; --rule:#8A8470;
   --primary:#243B6B; --on-primary:#FBF8F1; --ember:#B0431A; --moss:#3F6B4A;
-  --demo:#73580F; --demo-bg:#F1E6C4; --danger:#A12A1B;
+  --demo:#73580F; --demo-bg:#F1E6C4; --danger:#A12A1B; --calm:#2A5A7A;
 }
 :root[data-theme="dark"]{
   --paper:#0F1218; --card:#171B24; --ink:#EEE9DC; --muted:#9AA1AE; --rule:#626A7E;
   --primary:#8FA8E6; --on-primary:#0F1218; --ember:#F08A56; --moss:#8BC49A;
-  --demo:#E3C566; --demo-bg:#2C2610; --danger:#F08A56;
+  --demo:#E3C566; --demo-bg:#2C2610; --danger:#F08A56; --calm:#9CC8E4;
 }
 @media (prefers-color-scheme:dark){:root[data-theme="auto"]{
   --paper:#0F1218; --card:#171B24; --ink:#EEE9DC; --muted:#9AA1AE; --rule:#626A7E;
   --primary:#8FA8E6; --on-primary:#0F1218; --ember:#F08A56; --moss:#8BC49A;
-  --demo:#E3C566; --demo-bg:#2C2610; --danger:#F08A56;}}
+  --demo:#E3C566; --demo-bg:#2C2610; --danger:#F08A56; --calm:#9CC8E4;}}
 
 *{box-sizing:border-box;margin:0}
 body{background:var(--paper);color:var(--ink);font:400 1.0625rem/1.7 "Hind Siliguri",system-ui,sans-serif;max-width:480px;margin:0 auto;padding:16px 16px max(96px,8rem);overflow-wrap:anywhere}
@@ -73,8 +73,10 @@ input,select,textarea{width:100%;min-height:48px;font:inherit;padding:8px 10px;b
 .err{color:var(--danger);font-size:0.875rem;margin-top:6px;font-weight:600}
 .ok-msg{color:var(--moss);font-weight:600}
 .bar{height:10px;background:var(--rule);margin:8px 0}.bar>i{display:block;height:100%;background:var(--moss)}
+.need{color:var(--calm);font-size:0.875rem;margin-top:6px;font-weight:600;border-inline-start:3px solid var(--calm);padding-inline-start:8px}
 details.help{margin-top:6px;font-size:0.875rem} details.help summary{cursor:pointer;color:var(--primary);min-height:44px;display:flex;align-items:center}
 dl{margin:6px 0} .hrow{display:grid;grid-template-columns:96px 1fr;gap:8px;padding:3px 0} dt{color:var(--muted)} dd{margin:0}
+.need{color:var(--calm);font-size:0.875rem;margin-top:6px;font-weight:600;border-inline-start:3px solid var(--calm);padding-inline-start:8px}
 .seg{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px} .seg button{min-height:44px;padding:4px 14px;font:inherit;background:var(--card);color:var(--ink);border:1.5px solid var(--ink)} .seg button[aria-pressed="true"]{background:var(--primary);color:var(--on-primary)}
 .crumb{display:inline-flex;align-items:center;min-height:44px;margin-top:8px;color:var(--primary)}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
