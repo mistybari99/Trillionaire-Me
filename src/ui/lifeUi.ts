@@ -20,6 +20,9 @@ import { GOAL_KINDS, buildTree, eligibleParents, flatten, nodeById, validateGoal
 import { fieldById } from "../catalog/fields";
 import { tb } from "../i18n/t";
 import { progressRing } from "./ring";
+import { goalChips } from "./goalLinks";
+import { goalIdsOf } from "../core/taskGoals";
+import { linkStats } from "../core/goalPlan";
 import { HORIZONS } from "../core/horizon";
 import type { FieldValue, TMRecord } from "../core/types";
 
@@ -162,15 +165,47 @@ function newGoalForm(lang: Locale): HTMLElement {
 }
 
 export function goalsScreen(): HTMLElement { return withView("goals", L(), goalsScreenInner()); }
+/** One card per top-level goal: its own tree opens from here. Ordered by title, never by progress. */
+function rootCard(n: TreeNode, recs: readonly TMRecord[], lang: Locale): HTMLElement {
+  const steps = new Set(n.stepIds); const goals = new Set(recs.filter((r) => r.entity === "goal").map((r) => r.id));
+  const shared = recs.filter((r) => r.entity === "task" && steps.has(r.id) && goalIdsOf(r).filter((x) => goals.has(x) && !flatten([n]).some((m) => m.id === x)).length > 0).length;
+  const pc = n.branch.percent;
+  const text = pc === null ? t("gl.card.unknown", lang) : t("gl.card.steps", lang, { d: num(n.branch.done, lang), n: num(n.branch.total, lang) });
+  return h("article", { class: "card", "data-root-goal": n.id, "data-percent": pc === null ? "unknown" : String(pc) }, nsTag(n.ns, lang),
+    h("h2", { class: "card-h" }, n.title),
+    h("div", { class: "pr-row" }, progressRing(pc, `${n.title}: ${text}`, pc === 100), h("p", {}, pc === null ? text : `${num(pc, lang)}% · ${text}`)),
+    shared ? h("p", { class: "muted", "data-shared": String(shared) }, t("gl.card.shared", lang, { n: num(shared, lang) })) : null,
+    link(`#/journey/goal/${n.id}`, "btn ghost", t("gl.card.open", lang)));
+}
+
 function goalsScreenInner(): HTMLElement {
-  const lang = L(); const recs = allRecs(); const list = goalProgress(recs); const ns = new Map(recs.map((r) => [r.id, r.ns] as const));
-  const roots = buildTree(recs); const kinds = new Map(flatten(roots).map((n) => [n.id, n] as const));
+  const lang = L(); const recs = allRecs();
+  const roots = buildTree(recs); const byId = new Map(recs.filter((r) => r.entity === "goal").map((g) => [g.id, g] as const));
+  const active = roots.filter((r) => goalStatusOf(byId.get(r.id)!) === "active"), quiet = roots.filter((r) => goalStatusOf(byId.get(r.id)!) !== "active");
+  const st = linkStats(recs);
   return h("main", {}, link("#/journey", "crumb", `← ${t("journey.title", lang)}`), h("h1", {}, t("goals.title", lang)), h("p", { class: "sub" }, t("goals.intro", lang)),
-    newGoalForm(lang),
+    overallProgressCard(lang, "journey"),
+    st.steps ? h("p", { class: "muted", "data-link-stats": "1" }, t("gl.ov.fact", lang, { n: num(st.steps, lang), s: num(st.shared, lang), u: num(st.unlinked, lang) }), " ", t("gl.ov.note", lang)) : null,
+    ...active.map((n) => rootCard(n, recs, lang)),
+    st.unlinked ? h("a", { href: "#/diary/plan", class: "card link", "data-unlinked-card": String(st.unlinked) }, h("p", {}, t("gl.unlinked", lang, { n: num(st.unlinked, lang) }))) : null,
+    quiet.length ? h("details", { class: "card", "data-quiet-goals": String(quiet.length) }, h("summary", { style: "min-height:44px" }, t("gl.paused.row", lang, { n: num(quiet.length, lang) })),
+      ...quiet.map((n) => h("div", { "data-root-goal": n.id }, h("strong", {}, n.title), " ", h("span", { class: "tag off" }, t(`gl.status.${goalStatusOf(byId.get(n.id)!)}` as Key, lang)), " ", link(`#/journey/goal/${n.id}`, "crumb", t("gl.card.open", lang))))) : null,
+    roots.length ? null : h("p", { class: "muted" }, t("goals.none", lang)),
     treeView(roots, lang),
-    ...(list.length ? list.map((g) => h("article", { class: "card", "data-goal": g.id },
-      nsTag(ns.get(g.id) ?? "demo", lang), kinds.get(g.id) && kinds.get(g.id)!.kind !== "goal" ? h("span", { class: "tag off" }, kindLabel(kinds.get(g.id)!.kind, lang)) : null, h("h2", { class: "card-h" }, g.title), h("p", { class: "muted", "data-progress": g.percent === null ? "unknown" : String(g.percent) }, progressLine(g, lang)),
-      link(`#/journey/goal/${g.id}`, "btn ghost", t("goals.open", lang)))) : [h("p", { class: "muted" }, t("goals.none", lang))]));
+    newGoalForm(lang));
+}
+
+// ---- One goal: steps grouped by node (the goal, then each part). A shared step appears under every goal it serves, with an "Also" chip. ----
+function stepsCard(rec: TMRecord, lang: Locale): HTMLElement {
+  const recs = allRecs(); const node = nodeById(buildTree(recs), rec.id)!; const all = recs.filter((r) => r.entity === "task");
+  const doneOf = (r: TMRecord) => r.values["task.done_on"]?.state === "value";
+  const block = (n: TreeNode) => {
+    const mine = all.filter((r) => r.values["task.not_true_on"]?.state !== "value" && goalIdsOf(r).includes(n.id)).sort((a, b) => a.id.localeCompare(b.id));
+    return h("div", { "data-steps-of": n.id }, h("h3", {}, n.depth === 0 ? n.title : `${"· ".repeat(n.depth)}${n.title}`),
+      mine.length ? h("ul", { class: "plain" }, ...mine.map((r) => h("li", { "data-step": r.id }, h("strong", {}, textOf(r, "task.title")), doneOf(r) ? h("span", { class: "tag ok" }, ` ${t("gl.steps.done", lang)}`) : null, " ", goalChips(r, lang, recs, { exclude: n.id, prefix: "gl.also" }))))
+        : h("p", { class: "muted" }, t("gl.steps.none", lang)));
+  };
+  return h("section", { class: "card", "data-goal-steps": rec.id }, h("h2", { class: "card-h" }, t("gl.steps.title", lang)), ...flatten([node]).map(block));
 }
 
 // ---- One goal: progress, SMART guide, SWOT card ----
@@ -297,7 +332,7 @@ export function goalScreen(id: string): HTMLElement {
   // Read-only SWOT summary so the four lists are visible as text; unknown lists say so.
   const swotView = h("section", { class: "card", "data-swot-view": "1" }, h("h2", { class: "card-h" }, t("swot.title", lang)),
     h("div", { class: "swot-grid" }, ...SWOT_KEYS.map((k) => { const items = readList(rec.values[swotField(k)]); return h("div", { "data-swot-box": k }, h("h3", {}, t(`swot.${k}` as Key, lang)), items ? h("ul", {}, ...items.map((i) => h("li", {}, i))) : h("p", { class: "muted", "data-swot-empty": k }, t("swot.empty", lang))); })));
-  return h("main", {}, back, h("h1", {}, textOf(rec, "goal.title")), progress, placeCard(rec, lang), statusCard(rec, lang), goalAreaCard(rec, lang), smartForm, swotView, swotForm);
+  return h("main", {}, back, h("h1", {}, textOf(rec, "goal.title")), progress, stepsCard(rec, lang), placeCard(rec, lang), statusCard(rec, lang), goalAreaCard(rec, lang), smartForm, swotView, swotForm);
 }
 
 // ---- Overall progress card (Today and Journey) ----
