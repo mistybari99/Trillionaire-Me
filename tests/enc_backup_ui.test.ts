@@ -98,25 +98,24 @@ describe("Plan: link a task to a goal", () => {
     store.demo.put(mk("demo", "g-demo", "goal", { "goal.title": "Demo goal" }));
     localStorage.setItem("tm:ui:dataMode", "real"); store.real.put(mk("real", "g1", "goal", { "goal.title": "Save a reserve" }));
     go("#/diary/plan");
-    const sel = q<HTMLSelectElement>("#pt-goal");
-    expect([...sel.options].map((o) => o.textContent)).toEqual(["No goal", "Save a reserve"]);
-    q<HTMLInputElement>("#pt-title").value = "Open account"; sel.value = "g1";
+    expect([...app().querySelectorAll("[data-goal-picker=new] [data-goal-chip]")].map((o) => o.textContent)).toEqual(["Save a reserve"]);
+    q<HTMLInputElement>("#pt-title").value = "Open account"; q<HTMLButtonElement>("[data-goal-chip=g1]").click(); expect(q("[data-goal-chip=g1]").getAttribute("aria-pressed")).toBe("true");
     q<HTMLFormElement>("form[data-form=task]").dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }));
     const task = store.real.list().find((r) => r.entity === "task")!;
-    expect(task.links).toEqual({ goal: "g1" });
+    expect(task.links).toEqual({ goal: "g1" }); expect(task.values["task.goals"]).toMatchObject({ value: ["g1"] });
     go("#/diary/plan");
-    expect(q("[data-goal=g1]").textContent).toContain("Save a reserve");
+    expect(q("[data-goals] [data-goal-chip-link=g1]").textContent).toContain("Save a reserve");
     const ring = goalRings(store.real.list()).find((g) => g.id === "g1")!;
     expect(ring.total).toBe(1); expect(ring.fraction).toBe(0);
   });
   it("no goal chosen leaves no goal link; no select when there are no goals", () => {
-    go("#/diary/plan"); expect(q("#pt-goal")).toBeNull();
+    go("#/diary/plan"); expect(app().querySelector("[data-goal-chip]")).toBeNull(); expect(q("[data-act=add-goal-first]")).not.toBeNull();
     store.demo.put(mk("demo", "g1", "goal", { "goal.title": "G" })); go("#/diary/plan");
     q<HTMLInputElement>("#pt-title").value = "T"; q<HTMLFormElement>("form[data-form=task]").dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }));
     expect(store.demo.list().find((r) => r.entity === "task")!.links).toBeUndefined();
   });
   it("Bangla labels exist", () => {
     localStorage.setItem("tm:ui:lang", "bn"); store.demo.put(mk("demo", "g1", "goal", { "goal.title": "G" })); go("#/diary/plan");
-    expect(app().textContent).toContain("লক্ষ্যের সাথে যুক্ত করুন");
+    expect(app().textContent).toContain("এই কাজ যে লক্ষ্যগুলোতে সাহায্য করে");
   });
 });

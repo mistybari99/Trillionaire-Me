@@ -466,3 +466,11 @@ textarea[data-swot]{width:100%;box-sizing:border-box;font:inherit;padding:8px}
 /* New-version banner: small, calm, above the tab bar, not a modal. */
 .update-banner{position:fixed;inset-inline:12px;bottom:calc(72px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 12px;background:var(--card);color:var(--ink);border:1.5px solid var(--primary);font-size:0.9375rem}
 .update-banner .btn{width:auto;margin:0;min-height:44px;padding:6px 14px}
+
+/* Goal links on steps */
+.goal-picker .chips{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0}
+.chip-btn{min-height:44px;padding:4px 14px;font:inherit;background:var(--card);color:var(--ink);border:1.5px solid var(--ink);cursor:pointer;max-width:100%}
+.chip-btn[aria-pressed="true"]{background:var(--primary);color:var(--on-primary)}
+.goal-chips{display:inline-flex;flex-wrap:wrap;gap:6px;vertical-align:middle}
+.goal-chips .tag{text-decoration:none;color:var(--ink);display:inline-flex;align-items:center;min-height:24px}
+.chip-link{display:inline-flex;align-items:center;min-height:44px;font-size:0.875rem}

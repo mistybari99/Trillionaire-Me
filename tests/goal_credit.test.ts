@@ -86,7 +86,7 @@ describe("other readers dedupe by step", () => {
 describe("allow-list: who may read links.goal", () => {
   const walk = (d: string): string[] => readdirSync(d).flatMap((f) => { const p = `${d}/${f}`; return statSync(p).isDirectory() ? walk(p) : p.endsWith(".ts") ? [p] : []; });
   it("only the list helpers, the migration, notes, knowledge and onboarding read it (steps go through goalIdsOf)", () => {
-    const allowed = new Set(["src/core/taskGoals.ts", "src/core/migrate.ts", "src/core/knowledge.ts", "src/ui/notesUi.ts", "src/ui/onboardUi.ts", "src/core/realityLoop.ts", "src/ui/screens.ts", "src/schema/entities.ts"]);
+    const allowed = new Set(["src/core/taskGoals.ts", "src/core/migrate.ts", "src/core/knowledge.ts", "src/ui/notesUi.ts", "src/ui/onboardUi.ts", "src/core/realityLoop.ts", "src/schema/entities.ts"]);
     const bad = walk("src").filter((f) => !allowed.has(f) && /links\??\.goal\b/.test(readFileSync(f, "utf8")));
     expect(bad).toEqual([]);
   });

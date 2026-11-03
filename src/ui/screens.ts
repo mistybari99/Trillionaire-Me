@@ -83,7 +83,8 @@ import { resolvedPrayerTimes } from "./prayerSync";
 import { sourceLine } from "./prayerSyncUi";
 import { markedOn, prayerLogId, prayerLogRecord } from "../core/prayerLog";
 import { fastLogId, fastLogRecord, isFastMarked } from "../core/fastLog";
-import { kindOf } from "../core/goalTree";
+import { goalIdsOf, validateLinks, withGoals } from "../core/taskGoals";
+import { goalChips, goalPicker } from "./goalLinks";
 import { activeNs, allRecs, asReal, entryNs, putMode, consentOn, consentPrompt, findRec, inNs, labelFor, nsTag, ownerOf, saveBlockedText, saveTyped, storeOf, typed, valueLabel } from "./entry";
 import { SCHEMA_VERSION } from "../schema/entities";
 
@@ -221,6 +222,13 @@ function feasibilityNote(cp: ReturnType<typeof currentPlan>, lang: Locale): HTML
 }
 
 /** Edit a step after it was made: its words, its estimate (blank = not estimated yet, never 0) and how soon. Real mode needs the consent tick. */
+/** Writes the goal list of a saved step through the one writer (also keeps the old single link as a mirror). Nothing is added to the plan. */
+function saveGoalLinks(id: string, ids: string[]): void {
+  const cur = findRec(id); if (!cur) return;
+  if (validateLinks(allRecs(), cur, ids) !== null) return;
+  const next = withGoals(cur, ids); if (JSON.stringify(next) !== JSON.stringify(cur)) storeOf(cur).put(next);
+}
+
 function taskEditForm(r: TMRecord, lang: Locale): HTMLElement {
   const g = (k: string) => (r.values[k] as { value?: unknown } | undefined)?.value;
   const title = h("input", { id: `te-t-${r.id}`, type: "text", maxlength: "120", autocomplete: "off", value: String(g("task.title") ?? "") });
@@ -228,9 +236,10 @@ function taskEditForm(r: TMRecord, lang: Locale): HTMLElement {
   const mins = h("input", { id: `te-m-${r.id}`, type: "text", inputmode: "numeric", value: typeof mv === "number" ? String(mv) : "" });
   const prio = h("select", { id: `te-p-${r.id}` }, ...fieldById("task.priority")!.options!.map((o) => h("option", { value: o.code, ...(o.code === String(g("task.priority") ?? "normal") ? { selected: true } : {}) }, tb(o.label, lang))));
   const msg = h("p", { class: "err", role: "alert" });
+  const pick = goalPicker(allRecs(), goalIdsOf(r), lang, `edit-${r.id}`);
   const f = h("form", { novalidate: true, "data-task-edit": r.id },
     h("label", { for: `te-t-${r.id}` }, t("plan.task.title", lang)), title, h("label", { for: `te-m-${r.id}` }, t("plan.task.minutes", lang)), mins,
-    h("label", { for: `te-p-${r.id}` }, t("plan.task.priority", lang)), prio, msg, h("button", { class: "btn ghost", type: "submit", style: "width:auto;margin:6px 0 0;min-height:44px" }, t("plan.task.update", lang)));
+    h("label", { for: `te-p-${r.id}` }, t("plan.task.priority", lang)), prio, h("p", {}, h("strong", {}, t("gl.pick.label", lang))), pick.el, msg, h("button", { class: "btn ghost", type: "submit", style: "width:auto;margin:6px 0 0;min-height:44px" }, t("plan.task.update", lang)));
   f.addEventListener("submit", (ev) => {
     ev.preventDefault(); msg.textContent = "";
     if (!entryNs()) { msg.textContent = saveBlockedText(lang); return; }
@@ -240,6 +249,7 @@ function taskEditForm(r: TMRecord, lang: Locale): HTMLElement {
     if (raw === "") m = { state: "later" }; else { const n = Number(raw); if (!Number.isFinite(n) || n <= 0 || n > 1440) { msg.textContent = t("intake.invalidNumber", lang); return; } m = { state: "value", value: Math.round(n), label: labelFor(r.ns) }; }
     const cur = findRec(r.id); if (!cur) return;
     storeOf(cur).put({ ...cur, values: { ...cur.values, "task.title": { state: "value", value: name, label: labelFor(cur.ns) }, "task.minutes": m, "task.priority": { state: "value", value: prio.value, label: labelFor(cur.ns) } } });
+    saveGoalLinks(cur.id, pick.ids());
     rerender();
   });
   return h("details", { class: "help" }, h("summary", {}, t("plan.task.edit", lang)), f);
@@ -259,10 +269,8 @@ export function planScreen(): HTMLElement {
   const sizeSel = h("select", { id: "pt-size" }, h("option", { value: "" }, t("plan.size.none", lang)), ...fieldById("task.size")!.options!.map((o) => h("option", { value: o.code }, tb(o.label, lang))));
   const afterSel = h("select", { id: "pt-after" }, h("option", { value: "" }, t("plan.after.none", lang)),
     ...openTasks.map((r) => h("option", { value: r.id }, cp.titles.get(r.id) ?? r.id)));
-  // Optional link to a goal of the active mode (goal rings on Report read links.goal).
-  const goalRecs = cp.recs.filter((r) => r.entity === "goal" && r.values["goal.title"]?.state === "value").sort((a, b) => a.id.localeCompare(b.id));
-  const goalTitle = (r: TMRecord) => String((r.values["goal.title"] as { value?: unknown }).value ?? "");
-  const goalSel = h("select", { id: "pt-goal" }, h("option", { value: "" }, t("plan.goal.none", lang)), ...goalRecs.map((r) => h("option", { value: r.id }, kindOf(r) === "goal" ? goalTitle(r) : `${t(`gt.kind.${kindOf(r)}` as Key, lang)} · ${goalTitle(r)}`)));
+  // Goals a step helps: a flat set of toggle chips (multi-goal ruling); the single old link is kept only as a mirror by the one writer.
+  const goalPick = goalPicker(cp.recs, [], lang, "new");
   // M10: optional role that does this step. Roles only, no names. A role covered by someone else takes the step out of the user's own schedule.
   const roleRecs = cp.recs.filter((r) => r.entity === "team_role" && r.values["team_role.role"]?.state === "value").sort((a, b) => a.id.localeCompare(b.id));
   const roleTitle = (r: TMRecord) => String((r.values["team_role.role"] as { value?: unknown }).value ?? "");
@@ -275,7 +283,7 @@ export function planScreen(): HTMLElement {
     h("label", { for: "pt-prio" }, t("plan.task.priority", lang)), prio,
     h("label", { for: "pt-size" }, t("plan.size.label", lang)), sizeSel,
     ...(openTasks.length ? [h("label", { for: "pt-after" }, t("plan.after.label", lang)), afterSel] : []),
-    ...(goalRecs.length ? [h("label", { for: "pt-goal" }, t("plan.goal.label", lang)), goalSel] : []),
+    h("p", { class: "label-like" }, h("strong", {}, t("gl.pick.label", lang))), goalPick.el,
     ...(roleRecs.length ? [h("label", { for: "pt-role" }, t("plan.role.label", lang)), roleSel] : []), err,
     h("button", { class: "btn", type: "submit" }, t("plan.task.save", lang)));
   form.addEventListener("submit", (ev) => {
@@ -288,7 +296,8 @@ export function planScreen(): HTMLElement {
     const id = `task-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`;
     if (!saveTyped({ id, entity: "task", createdAt: new Date().toISOString(),
       values: { "task.title": typed(name), "task.minutes": m, "task.priority": typed(prio.value), ...(sizeSel.value ? { "task.size": typed(sizeSel.value) } : {}) },
-      ...(afterSel.value || goalSel.value || roleSel.value ? { links: { ...(afterSel.value ? { after: afterSel.value } : {}), ...(goalSel.value ? { goal: goalSel.value } : {}), ...(roleSel.value ? { role: roleSel.value } : {}) } } : {}) })) { err.textContent = saveBlockedText(lang); return; }
+      ...(afterSel.value || roleSel.value ? { links: { ...(afterSel.value ? { after: afterSel.value } : {}), ...(roleSel.value ? { role: roleSel.value } : {}) } } : {}) })) { err.textContent = saveBlockedText(lang); return; }
+    saveGoalLinks(id, goalPick.ids());
     syncDelegationNow();
     rerender();
   });
@@ -306,7 +315,7 @@ export function planScreen(): HTMLElement {
     const el = h("div", { class: "card", "data-task": r.id }, h("div", { class: "row" },
       h("div", {}, nsTag(r.ns, lang), h("h2", { class: "card-h", }, cp.titles.get(r.id) ?? ""), h("p", { class: "muted" }, mv && mv.state === "value" ? valueEl(t("task.minutes", lang, { n: num(Number(mv.value), lang) }), mv.label, lang) : t("plan.task.minutes.later", lang)),
         r.links?.after ? h("p", { class: "muted", "data-after": r.links.after }, t("plan.after.shown", lang, { title: afterTitle(r.links.after) })) : null,
-        r.links?.goal && goalRecs.some((g) => g.id === r.links!.goal) ? h("p", { class: "muted", "data-goal": r.links.goal }, t("plan.goal.shown", lang, { title: goalTitle(goalRecs.find((g) => g.id === r.links!.goal)!) })) : null,
+        h("p", { class: "muted", "data-goals": r.id }, goalChips(r, lang, cp.recs)),
         r.links?.role && roleRecs.some((g) => g.id === r.links!.role) ? h("p", { class: "muted", "data-role-of": r.links.role }, t("plan.role.shown", lang, { title: roleTitle(roleRecs.find((g) => g.id === r.links!.role)!) }), r.values["task.delegated_on"]?.state === "value" && r.values["task.done_on"]?.state !== "value" ? h("span", { class: "tag off", "data-delegated": r.id }, ` ${t("team.step.delegated", lang)}`) : null, " ", link("#/diary/team", "crumb", t("plan.role.open", lang))) : null),
       r.values["task.done_on"]?.state === "value" ? h("span", { class: "tag ok" }, t("reward.done", lang))
         : isParkedTask(r) ? h("div", {}, h("span", { class: "tag off", "data-parked": r.id }, t("rl.parked.tag", lang, { date: String((r.values["task.parked_on"] as { value?: unknown }).value) })), h("p", { class: "muted" }, t("rl.parked.note", lang)), link("#/journey/reality", "crumb", t("rl.parked.open", lang)))
@@ -954,13 +963,14 @@ function cardsScreenInner(): HTMLElement {
 }
 
 // ---- screens ----
+const todayChips = (id: string, lang: Locale): HTMLElement | null => { const r = findRec(id); return r ? goalChips(r, lang) : null; };
 function todayFromPlan(cp: ReturnType<typeof currentPlan>, lang: Locale): HTMLElement[] {
   const acts = todaysActions(cp.plan, new Date().getDay());
   if (!acts.length) return [h("p", { class: "muted", "data-today": "none" }, t("home.today.none", lang), " ", link("#/diary/plan", "crumb", t("home.today.open", lang)))];
   if (screenView("today") === "compact") return [h("ul", { class: "list-compact", "data-view": "compact" }, ...acts.map((p) => h("li", { "data-placement": p.taskId },
-    valueEl(`${fmtClock(p.start)}–${fmtClock(p.end)}`, labelFor(findRec(p.taskId)?.ns ?? activeNs()), lang), " · ", h("strong", {}, cp.titles.get(p.taskId) ?? ""), " ", doneBtn(p.taskId, lang), focusBtn(p.taskId, lang))))];
+    valueEl(`${fmtClock(p.start)}–${fmtClock(p.end)}`, labelFor(findRec(p.taskId)?.ns ?? activeNs()), lang), " · ", h("strong", {}, cp.titles.get(p.taskId) ?? ""), " ", todayChips(p.taskId, lang), " ", doneBtn(p.taskId, lang), focusBtn(p.taskId, lang))))];
   return acts.map((p, i) => h("div", { class: "task", "data-placement": p.taskId }, h("b", {}, num(i + 1, lang)),
-    h("div", {}, cp.titles.get(p.taskId) ?? "", h("p", {}, valueEl(`${fmtClock(p.start)}–${fmtClock(p.end)}`, labelFor(findRec(p.taskId)?.ns ?? activeNs()), lang)), h("div", { class: "row" }, doneBtn(p.taskId, lang), focusBtn(p.taskId, lang)))));
+    h("div", {}, cp.titles.get(p.taskId) ?? "", " ", todayChips(p.taskId, lang), h("p", {}, valueEl(`${fmtClock(p.start)}–${fmtClock(p.end)}`, labelFor(findRec(p.taskId)?.ns ?? activeNs()), lang)), h("div", { class: "row" }, doneBtn(p.taskId, lang), focusBtn(p.taskId, lang)))));
 }
 
 // TM-REQ-009: calm date reminders for active goals only. Paused and retired goals never appear here.

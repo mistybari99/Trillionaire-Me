@@ -116,9 +116,10 @@ describe("goal tree screens", () => {
   });
   it("Plan screen: the goal picker names the level; a step can be linked to a sub-goal and counts in its branch; a step can be edited", () => {
     for (const r of [goal("g", "Launch"), goal("s", "Site", { kind: "subgoal", parent: "g" })]) store.demo.put(r);
-    go("#/diary/plan"); expect([...($("#pt-goal") as HTMLSelectElement).options].map((o) => o.textContent)).toEqual(["No goal", "Launch", "Sub-goal · Site"]);
-    set("pt-title", "Draw pages"); set("pt-goal", "s"); raw("form[data-form=task]"); render();
-    const t = store.demo.list().find((r) => r.entity === "task")!; expect(t.links).toEqual({ goal: "s" });
+    go("#/diary/plan"); expect([...document.querySelectorAll("[data-goal-picker=new] [data-goal-chip]")].map((o) => o.textContent)).toEqual(["Launch"]);
+    set("pt-title", "Draw pages"); ($("[data-goal-chip=g]") as HTMLButtonElement).click(); expect([...($("[data-goal-part=g]") as HTMLSelectElement).options].map((o) => o.textContent)).toEqual(["Whole goal", "· Site"]);
+    const part = $("[data-goal-part=g]") as HTMLSelectElement; part.value = "s"; part.dispatchEvent(new Event("change")); raw("form[data-form=task]"); render();
+    const t = store.demo.list().find((r) => r.entity === "task")!; expect(t.links).toEqual({ goal: "s" }); expect(t.values["task.goals"]).toMatchObject({ value: ["s"] });
     set(`te-t-${t.id}`, "Draw three pages"); set(`te-m-${t.id}`, "45"); raw(`form[data-task-edit="${t.id}"]`);
     expect(store.demo.get(t.id)!.values["task.title"]).toMatchObject({ value: "Draw three pages" }); expect(store.demo.get(t.id)!.values["task.minutes"]).toMatchObject({ value: 45 });
     render(); set(`te-m-${t.id}`, ""); raw(`form[data-task-edit="${t.id}"]`); expect(store.demo.get(t.id)!.values["task.minutes"]).toEqual({ state: "later" });
