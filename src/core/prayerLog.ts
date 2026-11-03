@@ -2,13 +2,14 @@
 // Tapping once logs the prayer; tapping again removes the record (undo). Nothing is scored, ranked or counted.
 import type { TMRecord } from "./types";
 import { PRAYER_KEYS, type PrayerKey } from "./prayer";
+import { SCHEMA_VERSION } from "../schema/entities";
 
 export const prayerLogId = (date: string, prayer: PrayerKey) => `prayer-${date}-${prayer}`;
 
 /** The record for one marked prayer. Values are DEMO-labelled to match the demo namespace (the real namespace stays closed, D-B). */
 export function prayerLogRecord(date: string, prayer: PrayerKey, nowIso: string): TMRecord {
   return {
-    id: prayerLogId(date, prayer), entity: "prayer_log", ns: "demo", ownerId: "demo-user", schemaVersion: 1, createdAt: nowIso,
+    id: prayerLogId(date, prayer), entity: "prayer_log", ns: "demo", ownerId: "demo-user", schemaVersion: SCHEMA_VERSION, createdAt: nowIso,
     links: { prayer },
     values: { "prayer_log.date": { state: "value", value: date, label: "DEMO" } },
   };

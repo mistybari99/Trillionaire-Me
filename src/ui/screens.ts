@@ -85,6 +85,7 @@ import { markedOn, prayerLogId, prayerLogRecord } from "../core/prayerLog";
 import { fastLogId, fastLogRecord, isFastMarked } from "../core/fastLog";
 import { kindOf } from "../core/goalTree";
 import { activeNs, allRecs, asReal, entryNs, putMode, consentOn, consentPrompt, findRec, inNs, labelFor, nsTag, ownerOf, saveBlockedText, saveTyped, storeOf, typed, valueLabel } from "./entry";
+import { SCHEMA_VERSION } from "../schema/entities";
 
 const L = () => prefs.lang;
 const link = (href: string, cls: string, ...kids: Array<Node | string>) => h("a", { href, class: cls }, ...kids);
@@ -108,7 +109,7 @@ function saveAnswers(step: number, vals: Answers): boolean {
   for (const [entity, values] of byEntity) {
     const id = `intake-${entity}`;
     const prev = store[ns].get(id);
-    const rec: TMRecord = { id, entity, ns, ownerId: ownerOf(ns), schemaVersion: 1, createdAt: prev?.createdAt ?? new Date().toISOString(), values: { ...(prev?.values ?? {}), ...values } };
+    const rec: TMRecord = { id, entity, ns, ownerId: ownerOf(ns), schemaVersion: SCHEMA_VERSION, createdAt: prev?.createdAt ?? new Date().toISOString(), values: { ...(prev?.values ?? {}), ...values } };
     store[ns].put(rec);
   }
   void step;
@@ -542,7 +543,7 @@ function stagePanel(lang: Locale): HTMLElement {
     try {
       const sd2 = stageData(); const rec = passStage(sd2.ctx, sd2.passed, code, ev.value);
       const before = lastProgress(sd2.recs); const d = (x: unknown): FieldValue => ({ state: "value", value: x, label: "DEMO" });
-      const base = { entity: "", ns: "demo" as const, ownerId: "demo-user", schemaVersion: 1, createdAt: rec.at };
+      const base = { entity: "", ns: "demo" as const, ownerId: "demo-user", schemaVersion: SCHEMA_VERSION, createdAt: rec.at };
       putMode({ ...base, id: `stagepass-${code}`, entity: "stage_pass", values: { "stage_pass.stage_code": d(code), "stage_pass.evidence": d(rec.evidence || "—"), "stage_pass.progress_pct": d(rec.progressPct) } });
       putMode({ ...base, id: `log-${Date.now().toString(36)}`, entity: "journey_log", values: { "journey_log.entry": d(t("log.entry", lang, { code, before: num(before, lang), after: num(rec.progressPct, lang) })), "stage_pass.progress_pct": d(rec.progressPct) } });
       sessionStorage.setItem("tm:passed", code); rerender();
@@ -672,7 +673,7 @@ export function stuckScreen(): HTMLElement {
     const row = h("div", { class: "field", "data-q": q.id }, h("p", {}, tb(q.text, lang)), h("div", { class: "seg" }, mk("yes", t("stuck.yes", lang)), mk("no", t("stuck.no", lang)), mk("unknown", t("unknown.unknown", lang))));
     return row;
   });
-  const log = (d: ReturnType<typeof diagnose>, helper: Helper) => putMode({ id: `stuck-${Date.now().toString(36)}`, entity: "stuck_log", ns: "demo", ownerId: "demo-user", schemaVersion: 1, createdAt: new Date().toISOString(),
+  const log = (d: ReturnType<typeof diagnose>, helper: Helper) => putMode({ id: `stuck-${Date.now().toString(36)}`, entity: "stuck_log", ns: "demo", ownerId: "demo-user", schemaVersion: SCHEMA_VERSION, createdAt: new Date().toISOString(),
     values: { "stuck_log.causes": { state: "value", value: d.causes.join(",") || "none", label: "DEMO" }, "stuck_log.action": { state: "value", value: helper, label: "DEMO" } } });
   const show = h("button", { class: "btn", type: "button", "data-act": "stuck-show" }, t("stuck.show", lang));
   show.addEventListener("click", () => {
@@ -684,7 +685,7 @@ export function stuckScreen(): HTMLElement {
         const msg = h("p", { class: "err", role: "alert" });
         add.addEventListener("click", () => {
           const nm = name.value.trim(); if (!nm) return; if (!checkFreeText(nm).ok) { msg.textContent = t("intake.secretRejected", lang); return; }
-          putMode({ id: `task-${Date.now().toString(36)}s`, entity: "task", ns: "demo", ownerId: "demo-user", schemaVersion: 1, createdAt: new Date().toISOString(),
+          putMode({ id: `task-${Date.now().toString(36)}s`, entity: "task", ns: "demo", ownerId: "demo-user", schemaVersion: SCHEMA_VERSION, createdAt: new Date().toISOString(),
             values: { "task.title": { state: "value", value: nm, label: "DEMO" }, "task.minutes": { state: "value", value: 5, label: "DEMO" }, "task.priority": { state: "value", value: "high", label: "DEMO" } } });
           log(d, hp); out.replaceChildren(h("p", { class: "ok-msg", "data-done": hp }, t("stuck.done.tiny_step", lang)), link("#/diary/plan", "btn ghost", t("plan.title", lang)));
         });
@@ -792,7 +793,7 @@ function recordFocus(taskId: string, minutes: number) {
   if (minutes < 1) return;
   // a focus session belongs to its task's namespace: real task, real session
   const ns = findRec(taskId)?.ns ?? activeNs(); const lb = labelFor(ns);
-  store[ns].put({ id: `fs-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 4)}`, entity: "focus_session", ns, ownerId: ownerOf(ns), schemaVersion: 1, createdAt: new Date().toISOString(), links: { task: taskId },
+  store[ns].put({ id: `fs-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 4)}`, entity: "focus_session", ns, ownerId: ownerOf(ns), schemaVersion: SCHEMA_VERSION, createdAt: new Date().toISOString(), links: { task: taskId },
     values: { "focus_session.minutes": { state: "value", value: minutes, label: lb }, "focus_session.date": { state: "value", value: todayIso(), label: lb } } });
 }
 
@@ -854,7 +855,7 @@ function setLog(h0: Habits.Habit, date: string, count: number) {
   const ns = findRec(h0.id)?.ns ?? activeNs(); const lb = labelFor(ns);
   if (count <= 0) { store[ns].delete(id); return; }
   if (ns === "real" && !consentOn()) return;
-  store[ns].put({ id, entity: "habit_log", ns, ownerId: ownerOf(ns), schemaVersion: 1, createdAt: new Date().toISOString(), links: { habit: h0.id },
+  store[ns].put({ id, entity: "habit_log", ns, ownerId: ownerOf(ns), schemaVersion: SCHEMA_VERSION, createdAt: new Date().toISOString(), links: { habit: h0.id },
     values: { "habit_log.date": { state: "value", value: date, label: lb }, "habit_log.count": { state: "value", value: count, label: lb } } });
 }
 function removeHabit(id: string) {

@@ -10,6 +10,7 @@ import { readConsent } from "./consent";
 import { checkFreeText } from "./safety";
 import type { KV, Store } from "./store";
 import { UNKNOWN_STATES, type FieldValue, type Namespace, type TMRecord, type UnknownState } from "./types";
+import { SCHEMA_VERSION } from "../schema/entities";
 
 export const MAX_IMPORT_BYTES = 2_000_000;
 export const MAX_IMPORT_ROWS = 20_000;
@@ -106,7 +107,7 @@ export function planImport(text: string, store: Store): ImportPlan {
       fv = { state: state as UnknownState };
     } else { errors.push({ row: rowNo, code: "state", field: fieldId }); return; }
     let rec = byId.get(id);
-    if (!rec) { rec = { id, entity, ns, ownerId: "", schemaVersion: 1, createdAt: Number.isFinite(Date.parse(createdAt)) ? createdAt : new Date(0).toISOString(), values: {} }; byId.set(id, rec); }
+    if (!rec) { rec = { id, entity, ns, ownerId: "", schemaVersion: SCHEMA_VERSION, createdAt: Number.isFinite(Date.parse(createdAt)) ? createdAt : new Date(0).toISOString(), values: {} }; byId.set(id, rec); }
     else if (rec.entity !== entity) { errors.push({ row: rowNo, code: "entity", field: entity }); return; }
     rec.values[fieldId] = fv;
   });

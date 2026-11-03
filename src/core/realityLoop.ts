@@ -5,6 +5,7 @@ import type { CapacityMode } from "./planner";
 import { isOpenTask, isParkedTask } from "./planInputs";
 import { GOAL_STATUSES, goalStatusOf, withGoalStatus, type GoalStatus } from "./goalStatus";
 import type { FieldValue, TMRecord } from "./types";
+import { SCHEMA_VERSION } from "../schema/entities";
 
 export const EVENT_KINDS = ["income_change", "expense_change", "time_less", "new_duty", "setback", "opportunity", "market_change", "illness"] as const;
 export type EventKind = (typeof EVENT_KINDS)[number];
@@ -248,7 +249,7 @@ export function planDiff(before: Snapshot, after: Snapshot): DiffRow[] {
 // ---------------------------------------------------------------- records (built as demo; the screen puts them in the active mode)
 
 const rec = (id: string, entity: string, createdAt: string, values: Record<string, FieldValue>, links?: Record<string, string>): TMRecord =>
-  ({ id, entity, ns: "demo", ownerId: "demo-user", schemaVersion: 1, createdAt, values, ...(links ? { links } : {}) });
+  ({ id, entity, ns: "demo", ownerId: "demo-user", schemaVersion: SCHEMA_VERSION, createdAt, values, ...(links ? { links } : {}) });
 const dv = (value: unknown): FieldValue => ({ state: "value", value, label: "DEMO" });
 
 export function eventRecord(p: { id: string; kind: EventKind; note: string; on: string; goalId: string | null; createdAt: string }): TMRecord {

@@ -1,6 +1,7 @@
 // O6: "reality changed" loop for one plan step (task). Pure. Nothing is deleted: the step stays on record,
 // it just stops being scheduled, and the change is written as a new journey-log record (append-only).
 import type { TMRecord } from "./types";
+import { SCHEMA_VERSION } from "../schema/entities";
 
 export class RealityError extends Error {}
 const DAY = /^\d{4}-\d{2}-\d{2}$/;
@@ -17,7 +18,7 @@ export function markNotTrue(task: TMRecord, day: string): TMRecord {
 /** The journey-log record for one change. `text` is already localised by the UI. */
 export function realityLogRecord(p: { id: string; taskId: string; text: string; createdAt: string; ownerId?: string }): TMRecord {
   return {
-    id: p.id, entity: "journey_log", ns: "demo", ownerId: p.ownerId ?? "demo-user", schemaVersion: 1, createdAt: p.createdAt,
+    id: p.id, entity: "journey_log", ns: "demo", ownerId: p.ownerId ?? "demo-user", schemaVersion: SCHEMA_VERSION, createdAt: p.createdAt,
     links: { task: p.taskId },
     values: { "journey_log.entry": { state: "value", value: p.text, label: "DEMO" } },
   };

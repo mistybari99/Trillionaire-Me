@@ -8,6 +8,7 @@ import { readConsent } from "../core/consent";
 import { visibleRecords } from "../core/dataMode";
 import type { FieldValue, Label, Namespace, TMRecord } from "../core/types";
 import { consentKv, prefs, store } from "./state";
+import { SCHEMA_VERSION } from "../schema/entities";
 
 /** Owner id on real records. Demo records keep "demo-user". */
 export const REAL_OWNER = "owner";
@@ -56,7 +57,7 @@ export const valueLabel = (v: FieldValue | undefined): Label => (v && v.state ==
 /** Saves a typed entry in the active mode (DEMO label in demo, FACT in real). Returns false (and saves nothing) in real mode without consent. */
 export function saveTyped(rec: Omit<TMRecord, "ns" | "ownerId" | "schemaVersion">): boolean {
   const ns = entryNs(); if (!ns) return false;
-  store[ns].put(inNs({ ...rec, ns, ownerId: ownerOf(ns), schemaVersion: 1 }, ns));
+  store[ns].put(inNs({ ...rec, ns, ownerId: ownerOf(ns), schemaVersion: SCHEMA_VERSION }, ns));
   return true;
 }
 

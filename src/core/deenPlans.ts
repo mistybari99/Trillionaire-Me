@@ -5,6 +5,7 @@ import type { FieldValue, TMRecord } from "./types";
 import { PRAYER_KEYS, type PrayerKey } from "./prayer";
 import { markedOn } from "./prayerLog";
 import { isFastMarked } from "./fastLog";
+import { SCHEMA_VERSION } from "../schema/entities";
 
 export const PLAN_KINDS = ["salah", "fasting", "zakat", "learning", "family", "giving"] as const;
 export type PlanKind = (typeof PLAN_KINDS)[number];
@@ -49,7 +50,7 @@ export function isDueOn(p: PlanRow, day: string): boolean {
 
 export const planMarkId = (planId: string, day: string) => `deenmark-${planId}-${day}`;
 export function planMarkRecord(planId: string, day: string, nowIso: string): TMRecord {
-  return { id: planMarkId(planId, day), entity: "deen_mark", ns: "demo", ownerId: "demo-user", schemaVersion: 1, createdAt: nowIso, links: { plan: planId },
+  return { id: planMarkId(planId, day), entity: "deen_mark", ns: "demo", ownerId: "demo-user", schemaVersion: SCHEMA_VERSION, createdAt: nowIso, links: { plan: planId },
     values: { "deen_mark.date": { state: "value", value: day, label: "DEMO" } } };
 }
 /** How a plan's one-tap mark is kept. A salah plan tied to one of the five prayers and a fasting plan share the marks of the Deen page, so both screens agree. */

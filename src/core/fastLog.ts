@@ -1,13 +1,14 @@
 // M13 fasting marks (content-free): one record per date in the existing `fast` entity.
 // Tap once to mark a fasting day, tap again to undo. Nothing is counted, scored or ranked.
 import type { TMRecord } from "./types";
+import { SCHEMA_VERSION } from "../schema/entities";
 
 export const fastLogId = (date: string) => `fast-${date}`;
 
 /** The record for one marked day. Values are DEMO-labelled to match the demo namespace (the real namespace stays closed, D-B). */
 export function fastLogRecord(date: string, nowIso: string): TMRecord {
   return {
-    id: fastLogId(date), entity: "fast", ns: "demo", ownerId: "demo-user", schemaVersion: 1, createdAt: nowIso,
+    id: fastLogId(date), entity: "fast", ns: "demo", ownerId: "demo-user", schemaVersion: SCHEMA_VERSION, createdAt: nowIso,
     values: { "fast.date": { state: "value", value: date, label: "DEMO" } },
   };
 }

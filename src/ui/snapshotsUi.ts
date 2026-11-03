@@ -54,6 +54,7 @@ export function snapshotsCard(lang: Locale, part: "settings" | "restore" = "sett
   const askRestore = (s: Snapshot) => { void startRestore("snap", { demo: s.demo, real: s.real, createdAt: s.createdAt }, lang); };
   const paint = async () => {
     const all = newestFirst(await repo.list());
+    if (typeof document === "undefined") return; // the page is gone (a test or tab closed while the list was loading): nothing to draw
     list.replaceChildren(...(all.length ? [h("ul", { class: "snap-list" }, ...all.map((s) => h("li", { "data-snapshot": s.id, "data-reason": s.reason },
       h("span", { class: "snap-when" }, t("snap.row", lang, { when: whenText(s.createdAt), why: t(`snap.why.${s.reason}` as Key, lang), d: num(s.demo.count, lang), r: num(s.real?.count ?? 0, lang) })),
       h("span", { class: "snap-btns" },

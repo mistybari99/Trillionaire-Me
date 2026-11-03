@@ -7,6 +7,7 @@ import { latinDigits } from "../i18n/digits";
 import { checkFreeText } from "./safety";
 import { HORIZONS } from "./horizon";
 import type { FieldValue, Label, Namespace, TMRecord } from "./types";
+import { SCHEMA_VERSION } from "../schema/entities";
 
 export const SYSTEM_SCHEMA = "tm-system-template";
 export const SYSTEM_SCHEMA_VERSION = 1;
@@ -139,7 +140,7 @@ export function planSystem(sys: SystemTemplate, opts: PlanOptions): TMRecord[] {
   const lab = (text: Label): Label => (demo ? "DEMO" : text);
   const v = (value: unknown, label: Label): FieldValue => ({ state: "value", value, label: lab(label) });
   const base = (id: string, entity: string, values: Record<string, FieldValue>, links: Record<string, string>): TMRecord =>
-    ({ id, entity, ns: opts.ns, ownerId: opts.ns === "demo" ? "demo-user" : "local", schemaVersion: 1, createdAt: opts.nowIso, values, links: { system: sys.id, ...links } });
+    ({ id, entity, ns: opts.ns, ownerId: opts.ns === "demo" ? "demo-user" : "local", schemaVersion: SCHEMA_VERSION, createdAt: opts.nowIso, values, links: { system: sys.id, ...links } });
   const out: TMRecord[] = [];
   const goalIds = new Map<string, string>();
   for (const g of sys.goals) {

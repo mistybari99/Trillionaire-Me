@@ -6,6 +6,7 @@ import { financeFrom } from "./financeInputs";
 import { riskDue, riskRows, withoutStopRule, type RiskRow } from "./risk";
 import type { EventKind } from "./realityLoop";
 import type { FieldValue, TMRecord } from "./types";
+import { SCHEMA_VERSION } from "../schema/entities";
 
 export const MONTH_DAYS = 30;
 const pad = (n: number) => String(n).padStart(2, "0");
@@ -86,5 +87,5 @@ export function assumptionItems(recs: readonly TMRecord[], freeMinutes: number |
 
 /** The journey-log line written when the user says an assumption is still true. */
 export function assumptionLog(p: { id: string; key: AssumptionKey; text: string; createdAt: string }): TMRecord {
-  return { id: p.id, entity: "journey_log", ns: "demo", ownerId: "demo-user", schemaVersion: 1, createdAt: p.createdAt, values: { "journey_log.entry": { state: "value", value: p.text, label: "DEMO" } }, links: { assume: p.key } };
+  return { id: p.id, entity: "journey_log", ns: "demo", ownerId: "demo-user", schemaVersion: SCHEMA_VERSION, createdAt: p.createdAt, values: { "journey_log.entry": { state: "value", value: p.text, label: "DEMO" } }, links: { assume: p.key } };
 }

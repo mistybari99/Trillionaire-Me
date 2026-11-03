@@ -3,6 +3,7 @@
 import type { Suggestion } from "./research";
 import type { Label, Namespace, TMRecord } from "./types";
 import { detectSecret } from "./safety";
+import { SCHEMA_VERSION } from "../schema/entities";
 
 export const LIST_CAP = 20;
 
@@ -54,7 +55,7 @@ export function saveOwnOption(store: ListStore, field: string, text: string, at:
   const id = `own-${field}-${key}`;
   const existed = store.list().some((r) => r.id === id);
   store.put({
-    id, entity: OWN_ENTITY, ns: nsOf(store), ownerId: ownerOf(nsOf(store)), schemaVersion: 1, createdAt: at.toISOString(),
+    id, entity: OWN_ENTITY, ns: nsOf(store), ownerId: ownerOf(nsOf(store)), schemaVersion: SCHEMA_VERSION, createdAt: at.toISOString(),
     values: {
       "list.field": { state: "value", value: field, label: labelOf(nsOf(store), "typed") },
       "list.text": { state: "value", value: clean, label: labelOf(nsOf(store), "typed") },
@@ -78,7 +79,7 @@ export function saveSearchResults(store: ListStore, field: string, query: string
   if (!key || options.length < 2) return;
   if (detectSecret(key)) return;
   store.put({
-    id: `saved-${field}-${key}`, entity: SAVED_ENTITY, ns: nsOf(store), ownerId: ownerOf(nsOf(store)), schemaVersion: 1, createdAt: at.toISOString(),
+    id: `saved-${field}-${key}`, entity: SAVED_ENTITY, ns: nsOf(store), ownerId: ownerOf(nsOf(store)), schemaVersion: SCHEMA_VERSION, createdAt: at.toISOString(),
     values: {
       "list.field": { state: "value", value: field, label: labelOf(nsOf(store), "typed") },
       "list.query": { state: "value", value: key, label: labelOf(nsOf(store), "typed") },
