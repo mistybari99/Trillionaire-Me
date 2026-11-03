@@ -9,6 +9,7 @@ import * as LS from "./ui/libraryScreens";
 import * as LF from "./ui/lifeUi";
 import * as UV from "./ui/universeUi";
 import * as IM from "./ui/importUi";
+import { whereScreen } from "./ui/whereUi";
 import * as RL from "./ui/realityUi";
 import { viaLazy } from "./ui/lazy";
 import { CONN, DECIDE, HALAL, LEGS, PLAN } from "./ui/lazyScreens";
@@ -81,6 +82,7 @@ export const ROUTES: Array<[RegExp, (m: RegExpMatchArray) => HTMLElement, string
   [/^\/more\/status$/, () => S.status(), "settings"],
   [/^\/more\/fields$/, () => S.fieldsGuide(), "settings"],
   [/^\/more\/glossary$/, () => S.glossary(), "settings"],
+  [/^\/more\/where$/, () => whereScreen(prefs.lang), "settings"],
   [/^\/more\/safety$/, () => S.safety(), "settings"],
   [/^\/more\/dictionary$/, () => IM.dictionaryScreen(), "settings"],
   [/^\/more\/library$/, () => LS.systemsLibraryScreen(), "settings"],
