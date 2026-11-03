@@ -10,6 +10,7 @@ import { StoreRepo } from "../adapters/storeRepo";
 import { DEFAULT_KEEP, isKeep, reminderEnabled, takeSnapshot, type SnapshotRepo } from "../core/snapshots";
 import { parseNotifyPrefs, type NotifyPrefs } from "../core/notify";
 import { DHAKA_COORDS, validCoords, type Coords } from "../core/prayer";
+import { DEFAULT_REMINDER_PREFS, parseLedger, parseReminderPrefs, type LedgerEntry, type ReminderPrefs } from "../core/reminders";
 import { DEFAULT_ALERT_PREFS, parseAlertPrefs, type AlertPrefs } from "../core/prayerAlerts";
 import { parseVisit, type Visit } from "../core/welcomeBack";
 import { parseSyncSettings, type SyncSettings } from "../core/prayerSource";
@@ -148,6 +149,12 @@ export const prefs = {
   get prayerSync(): SyncSettings { try { return parseSyncSettings(JSON.parse(get("tm:ui:prayerSync") ?? "null")); } catch { return parseSyncSettings(null); } },
   set prayerSync(v: SyncSettings) { set("tm:ui:prayerSync", JSON.stringify(parseSyncSettings(v))); },
   /** Pre-prayer and azan alerts (M13). Both off by default. */
+  /** Reminder settings (all off by default; the parser fails closed). */
+  get reminders(): ReminderPrefs { try { return parseReminderPrefs(JSON.parse(get("tm:ui:reminders") ?? "null")); } catch { return { ...DEFAULT_REMINDER_PREFS }; } },
+  set reminders(v: ReminderPrefs) { set("tm:ui:reminders", JSON.stringify(parseReminderPrefs(v))); },
+  /** What was shown, held, done or snoozed in the last 7 days: ids and times only, never titles. */
+  get remindersFired(): LedgerEntry[] { try { return parseLedger(JSON.parse(get("tm:ui:remindersFired") ?? "null"), Date.now()); } catch { return []; } },
+  set remindersFired(v: LedgerEntry[]) { set("tm:ui:remindersFired", JSON.stringify(parseLedger(v, Date.now()))); },
   get prayerAlerts(): AlertPrefs { try { return parseAlertPrefs(JSON.parse(get("tm:ui:prayerAlerts") ?? "null")); } catch { return { ...DEFAULT_ALERT_PREFS }; } },
   set prayerAlerts(v: AlertPrefs) { set("tm:ui:prayerAlerts", JSON.stringify(parseAlertPrefs(v))); },
   /** Alert slots already delivered for one Dhaka date, so each alert fires once. */

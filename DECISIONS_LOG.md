@@ -743,3 +743,9 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 - Test: `tools/touching.mjs` finds touching neighbours; e2e `UI-SPACING` runs it on Today, Deen, Settings, Prayer settings, Where we are, Hadith, Notes, Boards, Plan, Habits in en/bn at 100% and 200%; the screenshot matrix counts it as a problem (`touching`). The matrix was not re-run in full (896 screens); it will fail on the next run if any look still has touching items.
 - Not done: the full component kit (docs/design/ui-polish-spec.md) is a later pass.
 - Undo: delete the block at the end of `styles.css`; revert the `prayerTimesCard` / `sourceLine` edits.
+
+## Reminders step 3: Settings section and the master switch (REVERSAL for reminders only) (3 Nov 2026)
+- What: `Settings > Prayer & alerts > Reminders` (route `#/settings/prayer/reminders`, registry row `reminders`, prefs `reminders` and `remindersFired`). Master switch OFF by default, plan-step switch with 0 or 10 minutes, quiet hours (22:00 to 07:00), "Test notification", the honest closed-app line, a link to the existing Lock screen row. Switching on never asks the browser; only the "Allow phone alerts" tap does; "Use calendar only" is remembered for the session. New loanword pair Calendar in `MIX_TERMS`.
+- REVERSAL: `settings-final-decision.md` listed "notification master switch" under "deliberately not added". That line is reversed for reminders only (the owner asked for reminders, and a per-feature master that starts off is the safest default). Prayer alert switches are unchanged.
+- Alternatives: no switch at all (rejected: reminders would start on); one global switch for prayer and reminders (rejected: it would silently turn off prayer alerts).
+- Undo: remove `remindersCard` from `prayerPage`, delete `src/ui/remindersSettingsUi.ts`, the `reminders` row, the two prefs getters and the `rem.*` keys; stored `tm:ui:reminders` keys are then unread.

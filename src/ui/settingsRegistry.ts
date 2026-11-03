@@ -42,6 +42,7 @@ export const ROWS: SettingRow[] = [
   R("prayersync", "prayer", "set.row.prayersync", "#/settings/prayer/prayersync", ["automatic", "auto update", "online", "internet", "aladhan", "timetable", "sync"], ["prayerSync"], ["tm:ui:prayerSync"]),
   R("prayerplace", "prayer", "set.row.prayerplace", "#/settings/prayer/prayerplace", ["place", "location", "city", "dhaka", "coordinates", "latitude"], ["prayerCoords"], ["tm:ui:prayerCoords", "tm:ui:prayerCoords:real"]),
   R("prayeralerts", "prayer", "set.row.prayeralerts", "#/settings/prayer/prayeralerts", ["alert", "azan", "adhan", "reminder", "sound", "volume", "notification"], ["prayerAlerts", "prayerFired"], ["tm:ui:prayerAlerts", "tm:ui:prayerFired"]),
+  R("reminders", "prayer", "set.row.reminders", "#/settings/prayer/reminders", ["reminder", "remind", "alert", "notification", "calendar", "ics", "quiet hours", "snooze", "phone"], ["reminders", "remindersFired"], ["tm:ui:reminders", "tm:ui:remindersFired"]),
 
   R("reminder", "backup", "set.row.reminder", "#/settings/backup/reminder", ["backup", "reminder", "weekly", "remind"], ["backupRemind", "backupRemindChoice", "remindSnoozedOn", "fileBackupAt", "realBackupAt"], ["tm:ui:backupRemind", "tm:ui:remindSnoozedOn", "tm:ui:fileBackupAt", "tm:ui:realBackupAt"]),
   R("storage", "backup", "set.row.storage", "#/settings/backup/storage", ["storage", "persist", "keep data", "safe"], [], []),
@@ -102,7 +103,7 @@ export const SEARCH_BN: Record<string, string[]> = {
   design: ["ডিজাইন", "রং", "লুক"], density: ["বিস্তারিত", "ছোট", "কমপ্যাক্ট"], horizon: ["হরাইজন", "লেআউট"], universe: ["ইউনিভার্স", "ম্যাপ"], habitgrid: ["অভ্যাস", "গ্রিড"],
   motion: ["অ্যানিমেশন", "নড়াচড়া", "মোশন"], resetlook: ["রিসেট", "আগের মতো"],
   prayersync: ["নামাজের সময়", "আপডেট", "ইন্টারনেট", "অনলাইন", "নিজে থেকে"], prayermethod: ["নামাজ", "আসর", "ফজর", "পদ্ধতি"], prayerplace: ["জায়গা", "শহর", "ঢাকা", "লোকেশন"], prayeralerts: ["অ্যালার্ট", "আজান", "নামাজ", "সাউন্ড"],
-  reminder: ["রিমাইন্ডার", "ব্যাকআপ"], storage: ["স্টোরেজ", "নিরাপদ"], savebackup: ["ব্যাকআপ", "সেভ", "পাসফ্রেজ"], restore: ["ফেরান", "রিস্টোর", "ব্যাকআপ"], snapshots: ["কপি", "কপি"], csv: ["স্প্রেডশিট", "এক্সেল"],
+  reminder: ["রিমাইন্ডার", "ব্যাকআপ"], reminders: ["রিমাইন্ডার", "মনে করান", "অ্যালার্ট", "ক্যালেন্ডার", "শান্ত সময়"], storage: ["স্টোরেজ", "নিরাপদ"], savebackup: ["ব্যাকআপ", "সেভ", "পাসফ্রেজ"], restore: ["ফেরান", "রিস্টোর", "ব্যাকআপ"], snapshots: ["কপি", "কপি"], csv: ["স্প্রেডশিট", "এক্সেল"],
   lockscreen: ["লক স্ক্রিন", "নোটিফিকেশন"], consent: ["পারমিশন", "আসল", "অনুমতি"], applock: ["পিন", "লক", "পাসওয়ার্ড"],
   mode: ["ডেমো", "আসল", "মোড"], startreal: ["আসল শুরু", "শুরু"],
   rules: ["নিয়ম", "অটোমেটিক"], planmode: ["প্ল্যান", "বিরতি", "ন্যূনতম"], stages: ["স্টেজ", "নাম"], weighting: ["প্রোগ্রেস", "ওজন"],

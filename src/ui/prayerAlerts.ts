@@ -73,7 +73,7 @@ export function previewAzan(prayer: PrayerKey = "dhuhr"): boolean {
   try { playFile(file, prefs.prayerAlerts.volume); return true; } catch { return false; }
 }
 
-async function showPhone(title: string, body: string, tag: string, quiet: boolean): Promise<boolean> {
+export async function showPhone(title: string, body: string, tag: string, quiet: boolean): Promise<boolean> {
   if (!canNotify()) return false;
   try {
     const reg = "serviceWorker" in navigator ? await navigator.serviceWorker.getRegistration() : undefined;

@@ -42,6 +42,7 @@ export function rowValue(r: SettingRow, lang: Locale): string | null {
     case "horizon": return prefs.horizonView;
     case "universe": return prefs.universeView;
     case "prayeralerts": { const a = prefs.prayerAlerts; return onOff(a.preAlert || a.azan, lang); }
+    case "reminders": return onOff(prefs.reminders.master, lang);
     case "reminder": return onOff(prefs.backupRemind, lang);
     case "snapshots": return onOff(prefs.snapAuto, lang);
     case "applock": return onOff(lockEnabled(consentKv), lang);

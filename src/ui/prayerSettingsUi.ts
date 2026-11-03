@@ -12,6 +12,7 @@ import { DEFAULT_ALERT_PREFS, parseAlertPrefs } from "../core/prayerAlerts";
 import { azanAvailability, notifyState, previewAzan, refreshAzanAvailability } from "./prayerAlerts";
 import { settingsHash } from "./settingsRegistry";
 import { prayerSyncCard } from "./prayerSyncUi";
+import { remindersCard } from "./remindersSettingsUi";
 const rerender = () => window.dispatchEvent(new HashChangeEvent("hashchange"));
 
 /** Method, Asr rule and per-prayer minute offsets. Saved on change. A calculation setting only; no consent needed. */
@@ -113,7 +114,7 @@ export function prayerPage(row: string | undefined, lang: Locale): HTMLElement {
   const method = prayerMethodCard(lang); method.setAttribute("data-setting-row", "prayermethod");
   const place = prayerSettingsCard(lang); place.setAttribute("data-setting-row", "prayeralerts");
   const main = h("main", { class: "scr scr-settings", "data-settings": "prayer" }, h("a", { href: "#/settings", class: "crumb" }, `← ${t("nav.settings", lang)}`), h("h1", {}, t("set.cat.prayer", lang)),
-    h("a", { href: "#/deen", class: "crumb", "data-prayer-times-link": "1" }, t("deen.title", lang)), prayerSyncCard(lang), method, place);
+    h("a", { href: "#/deen", class: "crumb", "data-prayer-times-link": "1" }, t("deen.title", lang)), prayerSyncCard(lang), method, place, remindersCard(lang));
   const target = row === "prayerplace" ? place.querySelector<HTMLElement>("[data-form=prayer-place]") : row ? main.querySelector<HTMLElement>(`[data-setting-row="${row}"]`) : null;
   if (target) { target.classList.add("set-hl"); setTimeout(() => { try { target.scrollIntoView?.({ block: "center" }); } catch { /* ignore */ } }, 0); }
   return main;
