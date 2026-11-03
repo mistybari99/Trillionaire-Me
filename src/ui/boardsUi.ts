@@ -12,6 +12,7 @@ import { todayIsoKpi } from "./kpiUi";
 import { BOARD_COLUMNS, optionBoard, taskBoard, timeline } from "../core/boards";
 import { assessmentFrom, pathFit, weightsFrom } from "../core/assessment";
 import { THEME_LABEL } from "../library/paths";
+import { goalTreeChart, planChangesChart, readinessChart, resourceMapChart } from "./mapsUi";
 
 const link = (href: string, cls: string, ...kids: Array<Node | string>) => h("a", { href, class: cls }, ...kids);
 const cut = (x: string, n: number) => (x.length > n ? `${x.slice(0, n - 1)}…` : x);
@@ -69,5 +70,5 @@ export function optionBoardView(lang: Locale): HTMLElement {
 export function boardsScreen(): HTMLElement {
   const lang = prefs.lang;
   return h("main", { class: "scr scr-boards" }, link("#/journey", "crumb", `← ${t("journey.title", lang)}`), h("h1", {}, t("bd.title", lang)), h("p", { class: "sub" }, t("bd.intro", lang)),
-    timelineChart(lang), taskBoardView(lang), optionBoardView(lang), disclaimers(lang, ["noGuarantee", "advice"]));
+    timelineChart(lang), goalTreeChart(lang), taskBoardView(lang), optionBoardView(lang), resourceMapChart(lang), readinessChart(lang), planChangesChart(lang), disclaimers(lang, ["noGuarantee", "advice"]));
 }

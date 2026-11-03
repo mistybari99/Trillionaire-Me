@@ -7,7 +7,7 @@ The card answers one question: is the software's own build complete? It does not
 Boxes (order): Input, Storage, Calculation, Output, Export, Links. B = built, M = missing, - = not needed.
 Label: complete = no box missing; partial = some box missing; not-built = no box built; blocked = waits for an owner approval (D-number).
 
-Counts: complete 21, partial 3, not-built 0, blocked 1 (of 25).
+Counts: complete 22, partial 2, not-built 0, blocked 1 (of 25).
 
 | Module | Name | Label | I S C O E L | Missing boxes | Waits for | Routes / functions | Tests |
 |---|---|---|---|---|---|---|---|
@@ -28,7 +28,7 @@ Counts: complete 21, partial 3, not-built 0, blocked 1 (of 25).
 | M15 | Risk & stop criteria | complete | B B B B B B | - | - | `#/journey/risks`; `#/today`; `#/journey/report`; `#/journey/reality`; `src/core/risk.ts#riskRows`; `src/core/risk.ts#riskDue`; `src/core/risk.ts#dueRisks`; `src/core/risk.ts#reviewedRisk` | `tests/risk_review.test.ts`, `tests/m_registers.test.ts` |
 | M16 | Reviews & KPIs | complete | B B B B B B | - | - | `#/journey/review`; `#/journey/report`; `#/journey/week`; `#/journey/month`; `#/journey/kpi`; `src/core/review.ts#reviewSummary`; `src/core/kpi.ts#kpiStatus`; `src/core/monthlyReview.ts#monthlySummary`; `src/core/monthlyReview.ts#moneyReview` | `tests/o6_reality_review_templates.test.ts`, `tests/kpi.test.ts`, `tests/month_review.test.ts` |
 | M17 | Knowledge & sources | complete | B B B B B B | - | - | `#/cards`; `#/topics`; `#/notes`; `src/ui/screens.ts#cardsScreen`; `src/core/cards.ts#dueCards`; `src/core/knowledge.ts#sourceRows`; `src/core/knowledge.ts#sopRows` | `tests/focus_habits_cards.test.ts`, `tests/topics_rewards.test.ts`, `tests/notes_sops.test.ts` |
-| M18 | Visual layer | partial | - - B M - B | output | - | `#/journey/art`; `#/journey/boards`; `#/journey`; `src/ui/rewardArt.ts#journeyArt`; `src/ui/diagram.ts#diagram`; `src/core/boards.ts#timeline`; `src/core/boards.ts#taskBoard`; `src/core/boards.ts#optionBoard` | `tests/r4_motion.test.ts`, `tests/boards.test.ts` |
+| M18 | Visual layer | complete | - - B B - B | - | - | `#/journey/art`; `#/journey/boards`; `#/journey`; `src/ui/rewardArt.ts#journeyArt`; `src/ui/diagram.ts#diagram`; `src/core/boards.ts#timeline`; `src/core/boards.ts#taskBoard`; `src/core/boards.ts#optionBoard`; `src/core/maps.ts#treeRows`; `src/core/maps.ts#resourceMap`; `src/core/maps.ts#readinessMap` | `tests/r4_motion.test.ts`, `tests/boards.test.ts`, `tests/maps.test.ts` |
 | M19 | Automation rules | complete | B B B B B B | - | - | `#/settings/plan/automation`; `#/today`; `src/core/rules.ts#evaluateRules` | `tests/rules.test.ts`, `tests/m_systems_rules_ui.test.ts` |
 | M20 | Sync, backup & export | complete | B B B B B B | - | - | `#/settings/backup`; `#/settings/data`; `#/journey/print`; `src/core/backup.ts#createBackup`; `src/core/backup.ts#restoreBackup`; `src/core/restore.ts#restoreBackupAtomic`; `src/core/printDoc.ts#planDoc` | `tests/g2.test.ts`, `tests/restore_safety.test.ts`, `tests/restore_ui.test.ts`, `tests/print_pdf.test.ts` |
 | M21 | Security & privacy | partial | B M B B B B | store | - | `#/more/safety`; `#/settings/privacy`; `src/core/safety.ts#checkFreeText` | `tests/g1.test.ts`, `tests/o8_notify_privacy.test.ts` |

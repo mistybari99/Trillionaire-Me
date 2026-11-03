@@ -289,6 +289,7 @@ h2.card-h{font:600 1.0625rem/1.4 "Hind Siliguri",sans-serif;margin:0 0 2px}
 .chart .chart-h{font:600 0.875rem "Hind Siliguri",system-ui,sans-serif;fill:var(--ink)}
 .chart .chart-s{font:400 0.6875rem "Hind Siliguri",system-ui,sans-serif;fill:var(--muted)}
 .chart .chart-mid{text-anchor:middle}.chart .chart-end{text-anchor:end}
+.chart text{paint-order:stroke;stroke:var(--card);stroke-width:3px;stroke-linejoin:round}
 .chart .chart-in{fill:var(--primary)}.chart .chart-out{fill:var(--ember)}
 .chart .chart-axis{stroke:var(--rule);stroke-width:1.5}
 .chart .chart-unk{fill:none;stroke:var(--muted);stroke-width:1.5}

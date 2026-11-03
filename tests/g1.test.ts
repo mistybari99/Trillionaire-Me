@@ -193,7 +193,7 @@ describe("TM-TST-144 capability status", () => {
       for (const a of m.attrs) expect(CAP_ATTRS).toContain(a);
       expect(["complete", "partial", "not-built", "blocked"]).toContain(buildLabel(m));
     }
-    expect(MODULES.filter((m) => buildLabel(m) === "complete").map((m) => m.id)).toEqual(["M01", "M02", "M03", "M04", "M05", "M06", "M07", "M08", "M10", "M11", "M12", "M13", "M14", "M15", "M16", "M17", "M19", "M20", "M22", "M24", "M25"]);
+    expect(MODULES.filter((m) => buildLabel(m) === "complete").map((m) => m.id)).toEqual(["M01", "M02", "M03", "M04", "M05", "M06", "M07", "M08", "M10", "M11", "M12", "M13", "M14", "M15", "M16", "M17", "M18", "M19", "M20", "M22", "M24", "M25"]);
   });
 });
 
@@ -218,8 +218,8 @@ describe("i18n parity (completeness gate)", () => {
 });
 
 describe("TM-TST-006 every rendered value is labelled (all routes, both languages)", () => {
-  const paths = ["/start", "/settings", "/settings/look", "/settings/about", "/settings/connections", "/more/library", "/settings/connections", "/settings/plan/automation", "/today", "/journey", "/journey/risks", "/journey/week", "/journey/legs", "/journey/leak", "/journey/decide", "/journey/mine", "/journey/history", "/journey/northstar", "/diary/ventures", "/diary/team", "/diary", "/diary/intake/1", "/diary/intake/2", "/diary/intake/3", "/diary/intake/4", "/diary/intake/5", "/diary/intake/6", "/diary/intake/7", "/diary/plan", "/diary/money", "/journey/log", "/journey/report", "/journey/wheel", "/journey/universe", "/journey/goals", "/journey/goal/g1", "/journey/review", "/capture", "/stuck", "/topics", "/topic/procrastination", "/reward", "/journey/art", "/habits", "/cards", "/focus/none", "/deen", "/deen/plans", "/settings", "/more/status", "/more/fields", "/more/glossary", "/more/safety", "/settings/data", "/more/dictionary", "/more/halal-flags"];
-  it("route table is fully covered", () => { for (const p of paths) expect(ROUTES.some(([re]) => re.test(p)), p).toBe(true); expect(ROUTES.length).toBe(54); });  // 26 + KPI page + 5 G3 register screens (risks, history, North Star, ventures, team) + 2 owner-requested screens (ready-system library, automation rules)
+  const paths = ["/start", "/settings", "/settings/look", "/settings/about", "/settings/connections", "/more/library", "/more/where", "/journey/backward", "/journey/boards", "/settings/connections", "/settings/plan/automation", "/today", "/journey", "/journey/risks", "/journey/week", "/journey/legs", "/journey/leak", "/journey/decide", "/journey/mine", "/journey/history", "/journey/northstar", "/diary/ventures", "/diary/team", "/diary", "/diary/intake/1", "/diary/intake/2", "/diary/intake/3", "/diary/intake/4", "/diary/intake/5", "/diary/intake/6", "/diary/intake/7", "/diary/plan", "/diary/money", "/journey/log", "/journey/report", "/journey/wheel", "/journey/universe", "/journey/goals", "/journey/goal/g1", "/journey/review", "/capture", "/stuck", "/topics", "/topic/procrastination", "/reward", "/journey/art", "/habits", "/cards", "/focus/none", "/deen", "/deen/plans", "/settings", "/more/status", "/more/fields", "/more/glossary", "/more/safety", "/settings/data", "/more/dictionary", "/more/halal-flags"];
+  it("route table is fully covered", () => { for (const p of paths) expect(ROUTES.some(([re]) => re.test(p)), p).toBe(true); expect(ROUTES.length).toBe(57); });  // 3 added 3 Nov 2026 (where-we-are page, backward-planning list and goal screen); before: 26 + KPI page + 5 G3 register screens (risks, history, North Star, ventures, team) + 2 owner-requested screens (ready-system library, automation rules)
   for (const lang of ["bn", "en", "mix"] as const) it(`0 unlabelled values in ${lang}`, () => {
     let seen = 0;
     for (const p of paths) {

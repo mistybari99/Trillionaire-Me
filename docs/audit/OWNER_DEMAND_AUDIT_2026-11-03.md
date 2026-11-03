@@ -13,7 +13,7 @@ Completion by the same simple measure as the first audit (DONE plus half of PART
 ## What moved since 1 Nov
 - Rows that moved status: 5 (see section 6 of the table file).
 - Built since the 1 Nov re-check and counted in the module card, not as separate rows: KPI targets, venture value, reality-changed loop, North Star values, team hand-over, risk review dates, goal tree, PDF through the print window, stage rules, monthly review, yearly and one-off money lines, time blocks, path sources and weights, notes and SOPs, profile read-back, way-of-working questions, boards (timeline, task board, option board), Hijri date and Ramadan view, welcome back and then-vs-now, automatic prayer times (off until ticked), Settings redesign, hosting headers, CI.
-- Modules (m-list): 21 complete, 3 partial (M09 unit economics, M18 drawn goal tree, resource map and readiness map, M21 at-rest encryption), 1 blocked (M23 AI) of 25.
+- Modules (m-list): 22 complete, 2 partial (M09 unit economics, M21 at-rest encryption), 1 blocked (M23 AI) of 25. M18 became complete later on 3 Nov: drawn goal tree, resource map, readiness map and plan-change board are on `#/journey/boards`.
 
 ## What the 40 MISSING rows are made of
 - Owner-only or waiting for an approval (about 12): phone offline test, Bangla review, usability sessions, hosting account, AI coaches (D-C), Google search (D-C), sharing, ambient sound, home-screen widget, scripture text (D-D).

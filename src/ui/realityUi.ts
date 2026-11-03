@@ -26,7 +26,7 @@ const listText = (names: string[], lang: Locale, max = 4): string => (names.leng
 // ---------------------------------------------------------------- diff and impact views
 
 const titlesOf = (recs: readonly TMRecord[]): ReadonlyMap<string, string> => new Map(recs.filter((r) => r.entity === "goal").map((g) => [g.id, String((g.values["goal.title"] as { value?: unknown } | undefined)?.value ?? "")] as const));
-function diffText(r: DiffRow, lang: Locale, titles: ReadonlyMap<string, string> = new Map()): string {
+export function diffText(r: DiffRow, lang: Locale, titles: ReadonlyMap<string, string> = new Map()): string {
   const state = (x: string | null) => (x === null ? t("rl.state.none", lang) : t(`rl.state.${x}` as Key, lang));
   if (r.kind === "mode") return t("rl.diff.mode", lang, { a: t(`plan.mode.${r.from}` as Key, lang), b: t(`plan.mode.${r.to}` as Key, lang) });
   if (r.kind === "goal") {
@@ -102,7 +102,7 @@ function optionBlock(ev: EventRow, evRec: TMRecord, imp: Impact, option: LoopOpt
     const tick = h("input", { type: "checkbox", id: `rl-tick-${ev.id}-${option}` });
     const approve = h("button", { class: "btn", type: "button", "data-act": "approve", "data-option": option, style: "width:auto;margin:6px 0 0;min-height:44px" }, t("rl.approve", lang));
     approve.addEventListener("click", () => {
-      msg.textContent = "";
+      msg.className = "err"; msg.textContent = "";
       if (!consentOn()) { msg.textContent = saveBlockedText(lang); return; }
       if (ch.big && !(tick as HTMLInputElement).checked) { showNeed(msg, t("rl.big.need", lang)); return; }
       const fresh = allRecs(); const freshEv = findRec(ev.id);
