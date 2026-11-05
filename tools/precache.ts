@@ -38,7 +38,7 @@ export function precachePlugin(): Plugin {
     closeBundle() {
       if (!existsSync(join(outDir, "sw.js"))) return;
       const rel = walk(outDir).map((p) => relative(outDir, p));
-      const list = precacheList(rel); const version = precacheVersion(outDir, rel.filter((f) => !SKIP(f.split(sep).join("/"))));
+      const list = precacheList(rel); const version = precacheVersion(outDir, rel.filter((f) => f === "sw.js" || !SKIP(f.split(sep).join("/"))));
       writeFileSync(join(outDir, "sw.js"), stampServiceWorker(readFileSync(join(outDir, "sw.js"), "utf8"), version, list));
       writeFileSync(join(outDir, "precache.json"), JSON.stringify({ version, files: list }));
     },

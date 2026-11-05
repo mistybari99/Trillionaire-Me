@@ -158,3 +158,7 @@ Test edits for the mapping were titles and moving tests into their own describe 
 ## 5 Nov 2026 — Audit evidence, no requirement-status promotion
 
 Application baseline `6136ba8`: types/build pass, 1,941 unit tests pass in 158 files, 88 Chromium checks pass. These are engineering run results, not new human/device acceptance. Two separately injected failure paths reproduced AUD-01/AUD-02; follow-ups and limits are in `docs/audit/REPOSITORY_AUDIT_2026-11-05.md`. Machine-readable observations: `docs/audit/evidence/2026-11-05.json`. No workbook was regenerated and no requirement was marked Verified. The original v2_0 and all existing workbook bytes are unchanged. Physical-device, Bangla, religious/content and usability gates remain open in the active tracker.
+
+## 5 Nov 2026 — Reliability follow-up
+
+AUD-01/AUD-02/AUD-03 remediation: 1,976 unit tests in 162 files, 92 Chromium checks, types/build pass. New failure-path tests include persistent failed compensation, cross-namespace recovery, durable write completion, stale retries and interrupted offline install/retry. See `docs/audit/RELIABILITY_FIXES_2026-11-05.md` and its machine-readable evidence. No workbook or human acceptance status changed; production gate activation and physical-device checks remain open.

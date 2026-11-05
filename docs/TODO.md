@@ -2,12 +2,13 @@
 
 Updated 5 Nov 2026. Status, ownership, acceptance and dependencies live only in the [active tracker](plan/PLAN_TRACKER.md). This page selects order; it does not declare completion.
 
-1. **AUD-01 + AUD-03** — make restore failure and Go back recovery truthful and safe.
-2. **AUD-02** — preserve the working offline app when a required download fails.
-3. **OPS-01** — prepare validation before production deployment.
-4. **VERIFY-01 + VERIFY-02 + VERIFY-03** — reconcile historical behavior, fresh mobile UI and prayer-source evidence.
-5. **DESIGN-01 + OPS-02** — reconcile PR #2's two unique commits and prepare accurate PR #1 integration scope.
-6. **VERIFY-04 + PERF-01** — reconcile requirement evidence and cold-install size; then prioritize BUILD-03.
+1. **OPS-01** — review and activate the prepared exact-commit CI gate after its code is merged; remote activation is still unverified.
+2. **VERIFY-01 + VERIFY-02 + VERIFY-03** — reconcile historical behavior, fresh mobile UI and prayer-source evidence.
+3. **UI-02** — implement the jointly selected Action Desk presentation, preserving the design decision's behavior and accessibility contracts.
+4. **DESIGN-01 + OPS-02** — reconcile PR #2's two unique commits and prepare accurate PR #1 integration scope.
+5. **VERIFY-04 + PERF-01** — reconcile requirement evidence and cold-install size; then prioritize BUILD-03.
+
+AUD-01/02/03 fixes and UI-01 design selection are recorded with evidence in the active tracker; their original audit observations remain historical.
 
 Builder work continues while independent owner/reviewer items wait. Physical phone checks, Bangla/content review and approvals remain in the tracker's OWNER/DECISION rows. BUILD-01 and BUILD-02 need clarified product inputs before implementation.
 

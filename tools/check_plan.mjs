@@ -52,7 +52,10 @@ for (const snapshot of ledger.archives) {
   assert.equal(digest, snapshot.sha256, `Archive changed: ${snapshot.path}`);
 }
 const docs = ['README.md', 'docs/PLAN.md', 'docs/TODO.md', 'docs/ROADMAP.md', 'docs/plan/PLAN_TRACKER.md',
-  'docs/audit/REPOSITORY_AUDIT_2026-11-05.md', 'docs/owner/AUDIT_SUMMARY_2026-11-05_BN.md'];
+  'docs/audit/REPOSITORY_AUDIT_2026-11-05.md', 'docs/audit/RELIABILITY_FIXES_2026-11-05.md',
+  'docs/deployment/CI_GATE.md', 'docs/design/UI_REFRESH_2026-11-05_A.md',
+  'docs/design/UI_REFRESH_2026-11-05_B.md', 'docs/design/UI_REFRESH_2026-11-05_DECISION.md',
+  'docs/owner/AUDIT_SUMMARY_2026-11-05_BN.md', 'docs/owner/RELIABILITY_UI_2026-11-05_BN.md'];
 let links = 0;
 for (const file of docs) {
   const body = text(file);

@@ -39,15 +39,26 @@ export class SaveMonitor {
 }
 
 /** Serialises writes so the repo always ends in the same state as memory. A failed write is never swallowed: it is recorded in the monitor and can be retried. */
-export function mirrorToRepo(repo: RecordRepo, monitor?: SaveMonitor): (k: string, v: string | null) => void {
+export function mirrorToRepo(repo: RecordRepo, monitor?: SaveMonitor): ((k: string, v: string | null) => void) & { flush(): Promise<void> } {
   let chain: Promise<unknown> = Promise.resolve();
+  const failed = new Set<string>();
+  const latest = new Map<string, { value: string | null }>();
   const write = (k: string, v: string | null) => {
     const p = parse(k); if (!p) return;
+    const desired = { value: v }; latest.set(k, desired);
     chain = chain.then(async () => {
-      try { if (v === null) await repo.delete(p.ns, p.id); else await repo.put(JSON.parse(v)); monitor?.ok(k); }
-      catch { monitor?.fail(k, v); /* memory copy stays valid; the monitor keeps it for a retry */ }
+      try {
+        if (v === null) await repo.delete(p.ns, p.id); else await repo.put(JSON.parse(v));
+        failed.delete(k); monitor?.ok(k);
+        if (latest.get(k) === desired) latest.delete(k);
+      }
+      catch { failed.add(k); monitor?.fail(k, latest.get(k)!.value); /* retry the current memory value, including a pending deletion */ }
     });
   };
-  monitor?.bind(() => { for (const [k, v] of monitor.entries()) write(k, v); });
-  return write;
+  monitor?.bind(() => { for (const [k, v] of monitor.entries()) write(k, latest.has(k) ? latest.get(k)!.value : v); });
+  return Object.assign(write, { async flush() {
+    // Include writes added while we were awaiting the previous batch.
+    let pending; do { pending = chain; await pending; } while (pending !== chain);
+    if (failed.size) throw new Error("Could not save on this device");
+  } });
 }

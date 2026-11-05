@@ -25,7 +25,11 @@ self.addEventListener("notificationclick", (e) => {
 });
 self.addEventListener("install", (e) => {
   if (!self.registration.active) self.skipWaiting();
-  e.waitUntil(caches.open(SHELL).then((c) => Promise.allSettled(PRECACHE.map((u) => c.add(new Request(u, { cache: "reload" }))))));
+  e.waitUntil(caches.open(SHELL).then(async (c) => {
+    const results = await Promise.allSettled(PRECACHE.map((u) => c.add(new Request(u, { cache: "reload" }))));
+    // A rejected install never activates, so the complete previous shell stays usable.
+    if (results.some((r) => r.status === "rejected")) throw new Error("Required offline files could not be saved");
+  }));
 });
 self.addEventListener("activate", (e) => {
   e.waitUntil(caches.keys().then((ks) => Promise.all(ks.filter((k) => k !== SHELL && k !== RUNTIME).map((k) => caches.delete(k)))).then(() => self.clients.claim()));

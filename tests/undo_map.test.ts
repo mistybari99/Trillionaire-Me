@@ -25,6 +25,8 @@ const rec = (ns: Namespace, id: string): TMRecord => ({ id, entity: "goal", ns, 
 const app = () => document.getElementById("app")!;
 const q = <T extends Element>(s: string) => app().querySelector(s) as T;
 const go = (hash: string) => { location.hash = hash; render(); };
+// Completion follows durable persistence; memory can change before the result is ready.
+const restoreFinished = () => { render(); return !!q("[data-act=restore-goback]"); };
 const settle = (ms = 80) => new Promise((r) => setTimeout(r, ms));
 const wait = async (fn: () => boolean) => { for (let i = 0; i < 300 && !fn(); i++) await new Promise((r) => setTimeout(r, 10)); };
 const said = (k: Key) => { for (const l of ["en", "bn", "mix"] as const) expect((PACKS[l] as Record<string, string>)[k], `${l}:${k}`).toBeTruthy(); };
@@ -53,8 +55,8 @@ describe("undo map (settings final decision 3.5)", () => {
   it("3 Restore: Go back brings the earlier data back, and the screen says it is kept 7 days", async () => {
     store.demo.put(rec("demo", "x")); const s = await takeSnapshot(new StoreRepo(store), snapshotRepo!, { reason: "manual", keep: 5, realOk: false }); expect(s).not.toBeNull();
     store.demo.put(rec("demo", "later")); go("#/settings/backup/restore"); await settle(); q<HTMLButtonElement>("[data-act=snap-restore]").click(); await wait(() => !!q("[data-restore=preview]"));
-    q<HTMLButtonElement>("[data-act=snap-confirm]").click(); await wait(() => store.demo.list().length === 1); expect(store.demo.list().map((r) => r.id)).toEqual(["x"]);
-    render(); expect(q("[data-restore=result] .muted").textContent).toMatch(/7 days/); q<HTMLButtonElement>("[data-act=restore-goback]").click(); await wait(() => store.demo.list().length === 2);
+    q<HTMLButtonElement>("[data-act=snap-confirm]").click(); await wait(restoreFinished); expect(store.demo.list().map((r) => r.id)).toEqual(["x"]);
+    render(); expect(q("[data-restore=result] .muted").textContent).toMatch(/7 days/); q<HTMLButtonElement>("[data-act=restore-goback]").click(); await wait(() => { render(); return !q("[data-act=restore-goback]"); });
     expect(store.demo.list().map((r) => r.id).sort()).toEqual(["later", "x"]); said("restore.goBack.note");
   });
   it("4 Delete demo: no undo after the confirm, and the page says so and offers a demo copy first", async () => {
