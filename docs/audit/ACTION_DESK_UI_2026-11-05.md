@@ -1,6 +1,6 @@
 # Action Desk implementation — 5 November 2026
 
-The selected [two-agent Action Desk decision](../design/UI_REFRESH_2026-11-05_DECISION.md) is implemented on `feat/action-desk-ui`, based on production source `32bc54b`. UI-02 remains **Needs verification**: fresh browser evidence covers the changed presentation, while physical Android/TalkBack acceptance is still outstanding. This record does not claim deployment of the UI branch.
+The selected [two-agent Action Desk decision](../design/UI_REFRESH_2026-11-05_DECISION.md) is implemented on `feat/action-desk-ui`, based on production source `32bc54b`. UI-02 remains **Needs verification**: fresh browser evidence covers the changed presentation, while physical Android/TalkBack acceptance is still outstanding. The local evidence below was recorded before deployment; the live verification is appended at the end.
 
 ## Changed presentation
 
@@ -37,3 +37,7 @@ Screenshot evidence does not prove screen-reader behavior, comprehensive contras
 OPS-01 remains **Needs verification**. The production Workers build command has been activated and a successful exact-commit gate was observed for the prior reliability deployment `32bc54b`: build `ea8b75fb-7f75-442e-9a9c-9cfc8262c98a` verified [production CI run 41979897074](https://github.com/mistybari99/Trillionaire-Me/actions/runs/41979897074) before deploying. An isolated remote trial proving that failed CI prevents deployment has not been performed. The [gate documentation](../deployment/CI_GATE.md) describes its failure behavior and 19 local success/failure cases; UI browser evidence does not close the remote failure-trial acceptance.
 
 Current task status remains in [PLAN_TRACKER](../plan/PLAN_TRACKER.md); implementation and validation follow-up belong in [PLAN_CHECK_LOG](../plan/PLAN_CHECK_LOG.md).
+
+## Deployment verified after merge
+
+PR #5 merged as `0eca3ea7782b7270a2ef72e89c7c7bbd75aef2e0`. [Production push CI](https://github.com/mistybari99/Trillionaire-Me/actions/runs/42035396218) completed successfully. A fresh browser session on https://trillionaire-me.mistybari99.workers.dev showed build `0eca3ea`, the Action Desk agenda and all 18 Journey tools. Bangla at 200% text had five visible tab labels and no horizontal overflow. The service worker cached all 62 required URLs; offline reload showed the same build with zero page errors (verified 2026-11-05T19:01:19Z). Cloudflare management API status was unavailable because automatic approval review hit a usage limit; the live assertions are independent browser observations, not a claim that the management API returned deployment metadata.

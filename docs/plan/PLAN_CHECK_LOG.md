@@ -79,3 +79,12 @@ The selected two-agent design is implemented on `feat/action-desk-ui`, based on 
 - Physical Android/TalkBack reading order, current-tab announcements, focus/error behavior, device safe areas and comprehensive contrast acceptance remain outstanding. No human/device Register row is promoted.
 - OPS-01 stays Needs verification. The production build command is activated and Cloudflare build `ea8b75fb-7f75-442e-9a9c-9cfc8262c98a` successfully verified exact-commit CI run `41979897074` for `32bc54b` before deployment. An isolated failed remote CI trial remains outstanding; the deployment doc now distinguishes this observed activation from its historical preparation stage.
 - `node tools/check_plan.mjs` passed after the initial documentation edits: 29 active packages, 213 retained task IDs plus 20 reminder/gap references and four exact archives. Final check after validation updates passes with 82 maintained local links and acyclic dependencies.
+
+
+## Check #7 — 5 Nov 2026 (controls and meaningful multiple selections)
+
+- Owner requested independent architecture assessment, useful tools near the front, consistent button styling/sizing and multiple selection where the model supports it. A/B review chose a compact work-first workspace with fixed neutral shortcuts. Technical review recommends incremental domain/UI boundaries; no universal-block or framework rewrite was introduced.
+- UI-03 records implemented controls and independent task/habit goal choices. The selection audit distinguishes the reachable sibling-replacement defect from latent generic-list rendering support and correctly exclusive settings. No schema/catalog/core calculation changed.
+- 128 browser frames and15 functional/update probes passed. A final rebuilt functional-only run passed13/13. Whole-app Chromium regression passed92/92 after correcting an actual Settings flex-wrap regression. Details and limits are linked in the usability implementation report.
+- The local full suite initially passed1,999 of2,006 tests; all seven failures were repaired and74 affected tests then passed. Final chart/range tests passed28/28. The exact-production CI gate requires the complete final suite again before deployment; no local full passing rerun is fabricated.
+- The earlier Action Desk release is verified live as0eca3ea with62 cached required files, offline reload and zero page errors. Physical Android/TalkBack and comprehensive contrast remain unclosed. All four archived plans remain unchanged; plan/link checks pass.

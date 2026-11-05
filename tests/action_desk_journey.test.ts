@@ -27,7 +27,7 @@ describe("Action Desk Journey", () => {
     expect(before(goals, el.querySelector(".journey-tools")!)).toBe(true);
     expect(el.querySelectorAll("[data-journey-goals]")).toHaveLength(1);
     expect(goals.querySelector("[data-journey-goal=shop]")?.getAttribute("data-percent")).toBe("unknown");
-    expect(goals.querySelector('a[href="#/journey/goals"]')).not.toBeNull();
+    expect(el.querySelector('[data-shortcuts="journey"] a[href="#/journey/goals"]')).not.toBeNull();
   });
 
   it("retains all 18 tools exactly once in the selected accessible groups and order", () => {

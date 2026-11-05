@@ -27,7 +27,7 @@ describe("the picker on the task form", () => {
   it("tapping chips links the step to several goals; tapping again unlinks; a flat set, no main goal", () => {
     go("#/diary/plan"); q<HTMLInputElement>("#pt-title").value = "Read a book on selling";
     q<HTMLButtonElement>("[data-goal-picker=new] [data-goal-chip=a]").click(); q<HTMLButtonElement>("[data-goal-picker=new] [data-goal-chip=b]").click(); q<HTMLButtonElement>("[data-goal-picker=new] [data-goal-chip=c]").click();
-    expect(q("[data-goal-picker=new] [data-goal-chip=c]").getAttribute("aria-pressed")).toBe("true"); q<HTMLButtonElement>("[data-goal-picker=new] [data-goal-chip=c]").click(); expect(q("[data-goal-picker=new] [data-goal-chip=c]").getAttribute("aria-pressed")).toBe("false");
+    expect(q<HTMLInputElement>("[data-goal-picker=new] [data-goal-choice=c]").checked).toBe(true); q<HTMLButtonElement>("[data-goal-picker=new] [data-goal-chip=c]").click(); expect(q<HTMLInputElement>("[data-goal-picker=new] [data-goal-choice=c]").checked).toBe(false);
     submit("form[data-form=task]"); const t = tasks()[0]!; expect(goalIdsOf(t)).toEqual(["a", "b"]); expect(t.links).toEqual({ goal: "a" });
     expect(app().textContent).not.toMatch(/main goal|primary|also helps/i);
   });
@@ -44,23 +44,51 @@ describe("the picker on the task form", () => {
     for (const id of ["a", "b", "c", "d", "e"]) q<HTMLButtonElement>(`[data-goal-picker=new] [data-goal-chip=${id}]`).click();
     q<HTMLButtonElement>("[data-goal-picker=new] [data-goal-chip=f]").click();
     const note = q("[data-goal-picker=new] [data-goals-note]"); expect(note.textContent).toBe("One step can help up to 5 goals."); expect(note.getAttribute("role")).toBe("status"); expect(note.className).not.toMatch(/err/);
-    expect(q("[data-goal-picker=new] [data-goal-chip=f]").getAttribute("aria-pressed")).toBe("false");
+    expect(q<HTMLInputElement>("[data-goal-picker=new] [data-goal-choice=f]").checked).toBe(false);
   });
   it("opening the picker or linking adds no step, even in minimum-week mode", () => {
     prefs.mode = "minimum_week"; go("#/diary/plan"); q<HTMLButtonElement>("[data-goal-picker=new] [data-goal-chip=a]").click(); expect(tasks().length).toBe(0);
   });
-  it("touch targets: chips and selects are at least 44 px by rule", () => {
-    go("#/diary/plan"); const b = q<HTMLElement>("[data-goal-chip=a]"); expect(parseInt(b.style.minHeight)).toBeGreaterThanOrEqual(44);
+  it("uses a named native checkbox in a labelled goal group", () => {
+    go("#/diary/plan"); const check = q<HTMLInputElement>("[data-goal-choice=a]"); expect(check.type).toBe("checkbox"); expect(check.closest("label")!.textContent).toBe("Shop"); expect(check.closest("fieldset")!.querySelector("legend")!.textContent).toBe("Shop");
   });
 });
 
-describe("a part of a goal", () => {
-  it("under a linked goal with parts, 'Which part?' stores the part; the whole goal is the default", () => {
-    store.demo.put(goal("a1", "Stock", { "goal.kind": "subgoal" }, { links: { parent: "a" } })); go("#/diary/plan");
-    expect(app().querySelector("[data-goal-part]")).toBeNull(); q<HTMLButtonElement>("[data-goal-picker=new] [data-goal-chip=a]").click();
-    const sel = q<HTMLSelectElement>("[data-goal-part=a]"); expect(sel.value).toBe("a"); expect([...sel.options].map((o) => o.text)).toEqual(["Whole goal", "· Stock"]);
-    sel.value = "a1"; sel.dispatchEvent(new Event("change")); q<HTMLInputElement>("#pt-title").value = "Count stock"; submit("form[data-form=task]");
-    expect(goalIdsOf(tasks()[0]!)).toEqual(["a1"]);
+describe("independent parts of a goal", () => {
+  const parts = () => {
+    store.demo.put(goal("a1", "Stock", { "goal.kind": "subgoal" }, { links: { parent: "a" } }));
+    store.demo.put(goal("a2", "Sales", { "goal.kind": "subgoal" }, { links: { parent: "a" } }));
+  };
+  it("selects sibling parts without auto-selecting their parent and saves both", () => {
+    parts(); go("#/diary/plan");
+    q<HTMLInputElement>("[data-goal-picker=new] [data-goal-choice=a1]").click();
+    q<HTMLInputElement>("[data-goal-picker=new] [data-goal-choice=a2]").click();
+    expect(q<HTMLInputElement>("[data-goal-picker=new] [data-goal-choice=a]").checked).toBe(false);
+    q<HTMLInputElement>("#pt-title").value = "Count stock and sales"; submit("form[data-form=task]");
+    expect(goalIdsOf(tasks()[0]!)).toEqual(["a1", "a2"]);
+  });
+  it("keeps saved siblings on edit; unchecking the parent leaves both children linked", () => {
+    parts(); store.demo.put(rec("t1", "task", { "task.title": "Shared", "task.goals": ["a", "a1", "a2"] }));
+    go("#/diary/plan");
+    q<HTMLInputElement>("[data-goal-picker=edit-t1] [data-goal-choice=a]").click();
+    expect(q<HTMLInputElement>("[data-goal-picker=edit-t1] [data-goal-choice=a1]").checked).toBe(true);
+    expect(q<HTMLInputElement>("[data-goal-picker=edit-t1] [data-goal-choice=a2]").checked).toBe(true);
+    submit('form[data-task-edit="t1"]'); expect(goalIdsOf(store.demo.get("t1")!)).toEqual(["a1", "a2"]);
+    go("#/diary/plan"); expect(q<HTMLInputElement>("[data-goal-picker=edit-t1] [data-goal-choice=a2]").checked).toBe(true);
+  });
+  it("counts parts and hidden IDs toward the same global five-goal limit without losing existing links", () => {
+    parts(); store.demo.put(goal("a3", "Orders", { "goal.kind": "project" }, { links: { parent: "a1" } }));
+    store.demo.put(rec("t1", "task", { "task.title": "Shared", "task.goals": ["gone", "b", "c", "a1", "a2"] }));
+    go("#/diary/plan"); const check = q<HTMLInputElement>("[data-goal-picker=edit-t1] [data-goal-choice=a3]"); check.focus(); check.click();
+    expect(check.checked).toBe(false); expect(document.activeElement).toBe(check);
+    expect(q("[data-goal-picker=edit-t1] [data-goals-note]").textContent).toContain("up to 5");
+    submit('form[data-task-edit="t1"]'); expect(goalIdsOf(store.demo.get("t1")!)).toEqual(["gone", "b", "c", "a1", "a2"]);
+  });
+  it("retains retired linked parts and allows removing just one without clearing its sibling", () => {
+    parts(); setStatus(store.demo, "a1", "retired"); store.demo.put(rec("t1", "task", { "task.title": "Shared", "task.goals": ["a1", "a2"] }));
+    go("#/diary/plan"); expect(q<HTMLInputElement>("[data-goal-picker=edit-t1] [data-goal-choice=a1]").checked).toBe(true);
+    q<HTMLInputElement>("[data-goal-picker=edit-t1] [data-goal-choice=a1]").click(); submit('form[data-task-edit="t1"]');
+    expect(goalIdsOf(store.demo.get("t1")!)).toEqual(["a2"]);
   });
 });
 
@@ -68,7 +96,7 @@ describe("edit sheet", () => {
   const mk = (goals: string[]) => store.demo.put({ ...rec("t1", "task", { "task.title": "Call supplier", "task.goals": goals }), links: { goal: goals[0]! } });
   it("reloads the saved list, and saving changes it; the old single link follows the first item", () => {
     mk(["a", "b"]); go("#/diary/plan");
-    const pick = q("[data-goal-picker=edit-t1]"); expect(pick.querySelector("[data-goal-chip=a]")!.getAttribute("aria-pressed")).toBe("true"); expect(pick.querySelector("[data-goal-chip=c]")!.getAttribute("aria-pressed")).toBe("false");
+    const pick = q("[data-goal-picker=edit-t1]"); expect(pick.querySelector<HTMLInputElement>("[data-goal-choice=a]")!.checked).toBe(true); expect(pick.querySelector<HTMLInputElement>("[data-goal-choice=c]")!.checked).toBe(false);
     (pick.querySelector("[data-goal-chip=a]") as HTMLButtonElement).click(); (pick.querySelector("[data-goal-chip=c]") as HTMLButtonElement).click(); submit('form[data-task-edit="t1"]');
     const t = store.demo.get("t1")!; expect(goalIdsOf(t)).toEqual(["b", "c"]); expect(t.links).toEqual({ goal: "b" });
   });
@@ -99,7 +127,7 @@ describe("chips on step rows and Today", () => {
   });
   it("English, Bangla and Mix texts exist", () => {
     for (const k of Object.keys(PACKS.en).filter((k) => k.startsWith("gl."))) for (const l of ["en", "bn", "mix"] as const) expect((PACKS[l] as Record<string, string>)[k], `${l}:${k}`).toBeTruthy();
-    localStorage.setItem("tm:ui:lang", "bn"); go("#/diary/plan"); expect(q("[data-goal-picker=new]").textContent).toContain("ট্যাপ করুন");
+    localStorage.setItem("tm:ui:lang", "bn"); go("#/diary/plan"); expect(q("[data-goal-picker=new]").textContent).toContain("টিক দিন");
     localStorage.setItem("tm:ui:lang", "mix"); go("#/diary/plan"); expect(q("[data-goal-picker=new]")).not.toBeNull();
   });
 });

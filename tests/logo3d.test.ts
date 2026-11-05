@@ -44,21 +44,22 @@ describe("logo3d", () => {
 });
 
 describe("logo placement", () => {
-  it("splash (first-run choice), Today header (32 px), Journey and Reward show it; only the splash is animated", () => {
+  it("splash, Journey and Reward retain the logo; Today uses a compact title and only the splash is animated", () => {
     renderApp(); expect(app().querySelector("svg.logo3d")).not.toBeNull(); expect(app().querySelector("svg.logo-anim")).not.toBeNull();
     localStorage.setItem("tm:ui:dataMode", "demo");
-    for (const h of ["#/today", "#/journey", "#/reward"]) { location.hash = h; render(); expect(app().querySelector("svg.logo3d"), h).not.toBeNull(); expect(app().querySelector("svg.logo-anim"), h).toBeNull(); }
+    location.hash = "#/today"; render(); expect(app().querySelector(".scr-today svg.logo3d")).toBeNull();
+    for (const h of ["#/journey", "#/reward"]) { location.hash = h; render(); expect(app().querySelector("svg.logo3d"), h).not.toBeNull(); expect(app().querySelector("svg.logo-anim"), h).toBeNull(); }
   });
 });
 
-describe("logo on Today header", () => {
+describe("logo on Journey header", () => {
   it("is a small, inline, local SVG with a text alternative and no network reference", () => {
-    localStorage.setItem("tm:ui:dataMode", "demo"); location.hash = "#/today"; render();
-    const l = app().querySelector<SVGElement>(".scr-today svg.logo3d")!;
-    expect(l.getAttribute("width")).toBe("32"); expect(l.getAttribute("role")).toBe("img"); expect(l.getAttribute("aria-label")!.length).toBeGreaterThan(10);
+    localStorage.setItem("tm:ui:dataMode", "demo"); location.hash = "#/journey"; render();
+    const l = app().querySelector<SVGElement>(".scr-journey svg.logo3d")!;
+    expect(l.getAttribute("width")).toBe("48"); expect(l.getAttribute("role")).toBe("img"); expect(l.getAttribute("aria-label")!.length).toBeGreaterThan(10);
     expect(l.outerHTML).not.toMatch(/https?:|<image|href=/);
     expect(l.querySelector(".logo-shine")).toBeNull(); // static: nothing moves, so reduced-motion needs no fallback
-    expect(app().querySelectorAll(".scr-today h1").length).toBe(1);
+    expect(app().querySelectorAll(".scr-journey h1").length).toBe(1);
   });
 });
 

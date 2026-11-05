@@ -39,6 +39,21 @@ describe("habit lines", () => {
 });
 
 describe("on screen", () => {
+  it("keeps two sibling goal parts through habit save, reopen and independent removal", () => {
+    for (const id of ["g-a", "g-b"]) store.demo.put(rec(id, "goal", { "goal.title": id, "goal.kind": "subgoal" }, { links: { parent: "g" } }));
+    go("#/habits"); q<HTMLInputElement>("#hb-name").value = "Shared habit";
+    q<HTMLInputElement>('[data-goal-picker=habit-new] [data-goal-choice="g-a"]').click();
+    q<HTMLInputElement>('[data-goal-picker=habit-new] [data-goal-choice="g-b"]').click();
+    q<HTMLFormElement>("form[data-form=habit]").dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }));
+    const saved = store.demo.list().find(r => r.entity === "habit")!; expect(goalIdsOf(saved)).toEqual(["g-a", "g-b"]);
+    go("#/habits"); const pick = q(`[data-goal-picker="habit-${saved.id}"]`);
+    expect(pick.querySelector<HTMLInputElement>('[data-goal-choice="g-a"]')!.checked).toBe(true);
+    expect(pick.querySelector<HTMLInputElement>('[data-goal-choice="g-b"]')!.checked).toBe(true);
+    pick.querySelector<HTMLInputElement>('[data-goal-choice="g-a"]')!.click();
+    q<HTMLButtonElement>(`[data-habit-goals="${saved.id}"] [data-act=habit-goals-save]`).click();
+    expect(goalIdsOf(store.demo.get(saved.id)!)).toEqual(["g-b"]);
+  });
+
   it("the habit form has the picker; saving links the habit; the card shows chips; the goal page shows the line", () => {
     go("#/habits"); (q("#hb-name") as HTMLInputElement).value = "Walk"; q<HTMLButtonElement>("[data-goal-picker=habit-new] [data-goal-chip=g]").click();
     q<HTMLFormElement>("form[data-form=habit]").dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }));

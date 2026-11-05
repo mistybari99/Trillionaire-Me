@@ -128,7 +128,7 @@ const STATE_KEY: Record<PeriodState, Key> = { full: "grid.cell.full", some: "gri
 export function habitGridTracker(habits: readonly Habit[], logs: Log[], since: ReadonlyMap<string, string | null>, today: string, range: GridRange, onRange: (r: GridRange) => void, lang: Locale): HTMLElement {
   const title = t("grid.title", lang);
   const bar = h("div", { class: "seg", role: "group", "aria-label": t("grid.range.label", lang), "data-grid-range": range },
-    ...GRID_RANGES.map((r) => h("button", { type: "button", "data-range": r, "aria-pressed": String(r === range), style: "min-height:44px", onclick: () => onRange(r) }, t(`grid.range.${r}` as Key, lang))));
+    ...GRID_RANGES.map((r) => h("button", { type: "button", "data-range": r, "aria-pressed": String(r === range), onclick: () => onRange(r) }, t(`grid.range.${r}` as Key, lang))));
   if (!habits.length) return h("section", { class: "card chart", "data-chart": "habit-grid", "data-chart-empty": "1" }, h("h2", { class: "card-h" }, title), bar, h("p", { class: "muted" }, t("grid.empty", lang)));
   const rows = habits.map((hb) => ({ hb, periods: habitRange(hb, logs, today, range, since.get(hb.id) ?? null) }));
   const n = rows[0]!.periods.length; const pitch = Math.floor(300 / n), sz = Math.max(7, pitch - (n > 20 ? 2 : 6)), RH = 44, W = 320;

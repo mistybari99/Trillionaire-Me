@@ -101,7 +101,7 @@ describe("Plan: link a task to a goal", () => {
     localStorage.setItem("tm:ui:dataMode", "real"); store.real.put(mk("real", "g1", "goal", { "goal.title": "Save a reserve" }));
     go("#/diary/plan");
     expect([...app().querySelectorAll("[data-goal-picker=new] [data-goal-chip]")].map((o) => o.textContent)).toEqual(["Save a reserve"]);
-    q<HTMLInputElement>("#pt-title").value = "Open account"; q<HTMLButtonElement>("[data-goal-chip=g1]").click(); expect(q("[data-goal-chip=g1]").getAttribute("aria-pressed")).toBe("true");
+    q<HTMLInputElement>("#pt-title").value = "Open account"; q<HTMLButtonElement>("[data-goal-chip=g1]").click(); expect(q<HTMLInputElement>("[data-goal-choice=g1]").checked).toBe(true);
     q<HTMLFormElement>("form[data-form=task]").dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }));
     const task = store.real.list().find((r) => r.entity === "task")!;
     expect(task.links).toEqual({ goal: "g1" }); expect(task.values["task.goals"]).toMatchObject({ value: ["g1"] });
