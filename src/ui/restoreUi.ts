@@ -4,12 +4,12 @@ import { h } from "./dom";
 import { t } from "../i18n/t";
 import type { Key } from "../i18n/packs";
 import type { Locale } from "../i18n/registry";
-import { consentKv, snapshotRepo, store } from "./state";
+import { consentKv, snapshotRepo, store, flushStorage, retryStorage } from "./state";
 import { num } from "./components";
 import { readConsent } from "../core/consent";
 import { StoreRepo } from "../adapters/storeRepo";
 import { MemorySnapshotRepo, type SnapshotRepo } from "../core/snapshots";
-import { RealPermissionError, goBack, planRestore, restoreBackupAtomic, type RestoreSource } from "../core/restore";
+import { MissingRecoveryCopyError, RestoreRecoveryError, RealPermissionError, goBack, planRestore, restoreBackupAtomic, type RestoreSource } from "../core/restore";
 import { lockEnabled, verifyPin } from "../core/appLock";
 import { whenText } from "./snapshotsUi";
 
@@ -41,9 +41,13 @@ function showResult(el: HTMLElement, lang: Locale) {
 
 async function doGoBack(id: string, lang: Locale) {
   try {
-    const r = await goBack(new StoreRepo(store), snaps(), id, readConsent(consentKv));
+    await retryStorage();
+    const r = await goBack(new StoreRepo(store, flushStorage), snaps(), id, readConsent(consentKv));
     result = { msg: "restore.goBack.done", args: { n: num(r.demo + r.real, lang) }, goBackId: null, bad: false };
-  } catch { result = { msg: "restore.goneCopy", args: {}, goBackId: null, bad: true }; }
+  } catch (e) {
+    result = e instanceof MissingRecoveryCopyError ? { msg: "restore.goneCopy", args: {}, goBackId: null, bad: true }
+      : { msg: "restore.failed", args: { why: e instanceof RealPermissionError ? t("restore.realBlocked", lang) : t("restore.recoveryNeeded", lang) }, goBackId: id, bad: true };
+  }
   rerender();
 }
 
@@ -51,7 +55,7 @@ async function doGoBack(id: string, lang: Locale) {
 export async function startRestore(kind: RestoreKind, src: RestoreSource, lang: Locale, onCancel?: () => void): Promise<void> {
   const el = hostEl; if (!el) return;
   result = null;
-  const repo = new StoreRepo(store); const realOk = readConsent(consentKv);
+  const repo = new StoreRepo(store, flushStorage); const realOk = readConsent(consentKv);
   let plan;
   try { plan = await planRestore(repo, src, realOk); }
   catch (e) { result = { msg: "restore.failed", args: { why: (e as Error).message }, goBackId: null, bad: true }; showResult(el, lang); return; }
@@ -71,10 +75,13 @@ export async function startRestore(kind: RestoreKind, src: RestoreSource, lang: 
     if (lockOn) { const v = await verifyPin(consentKv, pin.value, Date.now()); if (!v.ok) { pin.value = ""; err.textContent = t("restore.pin.wrong", lang); return; } }
     confirm.disabled = true; cancel.disabled = true;
     try {
+      await flushStorage();
       const r = await restoreBackupAtomic(repo, snaps(), src, readConsent(consentKv));
       result = { msg: "restore.done", args: { n: num(r.demo + r.real, lang) }, goBackId: r.snapshotId, bad: false };
     } catch (e) {
-      result = { msg: "restore.failed", args: { why: e instanceof RealPermissionError ? t("restore.realBlocked", lang) : (e as Error).message }, goBackId: null, bad: true };
+      result = { msg: "restore.failed", args: { why: e instanceof RealPermissionError ? t("restore.realBlocked", lang)
+        : e instanceof RestoreRecoveryError && !e.unchanged ? t("restore.recoveryNeeded", lang) : (e as Error).message },
+        goBackId: e instanceof RestoreRecoveryError ? e.snapshotId : null, bad: true };
     }
     rerender();
   } }, t("restore.confirm", lang, { now: num(plan.nowTotal, lang), file: num(plan.fileTotal, lang) }));

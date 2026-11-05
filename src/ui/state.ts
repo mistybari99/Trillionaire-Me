@@ -28,8 +28,19 @@ const mem = new MemoryKV();
 // Consent lives in the per-device store (localStorage). Real writes to IndexedDB need the same gate as memory.
 const repo = typeof indexedDB !== "undefined" ? new LazyDexieRepo("tm-db", () => REAL_DATA_ENABLED && readConsent(legacy)) : null;
 // With IndexedDB: memory is mirrored to it. Without (private mode/old browser): fall back to the old localStorage store.
-const kv = repo ? new MirrorKV(mem, mirrorToRepo(repo, saveMonitor)) : legacy;
-if (!repo) saveMonitor.bind(() => { for (const [k, v] of saveMonitor.entries()) if (v !== null) legacy.set(k, v); });
+const mirror = repo ? mirrorToRepo(repo, saveMonitor) : null;
+const kv = mirror ? new MirrorKV(mem, mirror) : legacy;
+if (!repo) saveMonitor.bind(() => { for (const [k, v] of saveMonitor.entries()) if (v !== null) legacy.set(k, v); else legacy.remove(k); });
+/** Restore must wait for durable writes rather than reporting only the memory change. */
+export async function flushStorage(): Promise<void> {
+  if (mirror) await mirror.flush();
+  else if (saveMonitor.hasFailure) throw new Error("Could not save on this device");
+}
+/** Retry the current memory values before attempting a recovery operation. */
+export async function retryStorage(): Promise<void> {
+  saveMonitor.retry();
+  await flushStorage();
+}
 export const store = new Store(kv, { consentKv: legacy });
 /** Local snapshot storage (same IndexedDB). null when IndexedDB is not available (private mode, old browser). */
 export const snapshotRepo: SnapshotRepo | null = repo ? repo.snapshots() : null;

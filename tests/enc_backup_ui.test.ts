@@ -18,6 +18,8 @@ const mk = (ns: Namespace, id: string, entity: string, values: Record<string, un
 };
 const app = () => document.getElementById("app")!;
 const go = (hash: string) => { location.hash = hash; render(); };
+// Completion follows durable persistence; memory can change before the result is ready.
+const restoreFinished = () => { render(); return !!q("[data-act=restore-goback]"); };
 const q = <T extends Element>(s: string) => app().querySelector(s) as T;
 const tick = () => new Promise((r) => setTimeout(r, 0));
 async function until(fn: () => boolean) { for (let i = 0; i < 400 && !fn(); i++) await new Promise((r) => setTimeout(r, 10)); }
@@ -70,7 +72,7 @@ describe("encrypted backup card", () => {
     expect(q("#enc-msg").textContent).toMatch(/1 demo and 1 real/);
     expect(store.demo.list().map((r) => r.id)).toEqual(["old"]); expect(store.real.list().map((r) => r.id)).toEqual(["oldr"]); // nothing yet
     q<HTMLButtonElement>("[data-act=enc-confirm]").click();
-    await until(() => store.demo.list().some((r) => r.id === "d1"));
+    await until(restoreFinished);
     expect(store.demo.list().map((r) => r.id)).toEqual(["d1"]); expect(store.real.list().map((r) => r.id)).toEqual(["r1"]);
     expect(store.demo.list().every((r) => r.ns === "demo")).toBe(true); expect(store.real.list().every((r) => r.ns === "real")).toBe(true);
   });

@@ -53,3 +53,17 @@ Owner requested implementation of the audit/organization plan. Cloned the reposi
 - Verified baseline: strict types pass, 1,941 tests / 158 files pass, production build passes (hadith chunk warning), Chromium browser checks 88 pass / 0 fail. Physical phone, reviewer acceptance, live prayer provider and a fresh screenshot matrix remain open. No Register rows promoted.
 - `node tools/check_plan.mjs` passes for IDs, status vocabulary, dependencies, legacy coverage, snapshot hashes and 54 local links. Added this read-only check to CI; it works without git history in shallow clones.
 - Routine browser-generated `evidence/e2e-report.json` restored; dated run observations copied to `docs/audit/evidence/2026-11-05.json` instead. App source, runtime configuration, lockfile, tests and original Register remain unchanged.
+
+## Check #5 — 5 Nov 2026 (reliability follow-up branch)
+
+Owner asked to start fixing the findings, then explicitly requested parallel engineering and two independent UI design agents. Three engineering agents owned offline update, persistence and deployment gating; the parent owned restore/recovery and integration. Two design agents exchanged critiques and selected Action Desk, with both reviewing the final decision.
+
+- AUD-01/AUD-03: failed compensation never asserts unchanged data; Before restore remains reachable, Go back protects both namespaces and its retry action. Restore success awaits durable storage. Persistent-failure, consent and cross-namespace cases covered by new regression tests.
+- AUD-02: failed required download rejects install. Real Chromium/local-server 503 test verifies previous worker/cache and offline app survive; same-deployment retry succeeds, waits for acceptance, activates and works offline. Worker source now changes cache version.
+- Persistence: retries keep newest value/deletion, failed local deletes are surfaced, successful values are dropped from retry bookkeeping. Schema/IndexedDB versions unchanged.
+- OPS-01: exact-commit CI gate script and activation instructions prepared with 19 failure/success tests. Remote Workers setting intentionally remains unchanged until the code reaches production; status Needs verification, not Done.
+- UI-01: independent A/B proposals and final Action Desk decision recorded. UI-02 tracks runtime presentation work; no visual refresh is claimed in this reliability block. Existing saved look IDs and default preserved.
+- Active tracker: 29 packages; 213 old IDs and 20 reminder/gap references retained. The link checker now includes the fix/deployment/design/owner documents and evidence links; maintained local links pass. Four historical snapshots remain unchanged.
+- Verification details and final test totals are recorded in `docs/audit/RELIABILITY_FIXES_2026-11-05.md`. An initial full suite identified the intentional new recovery string count; its fixture was updated explicitly before the final suite. No Register human/device row was promoted.
+
+Final verification: 1,976 tests / 162 files passed, typecheck/build passed, 92 Chromium checks passed. Earlier full-run string fixture and memory-only UI wait failures were corrected; final full rerun passed. No runtime source was changed after that passing run.

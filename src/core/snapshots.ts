@@ -1,7 +1,7 @@
 // Local snapshots (pure, no UI, no network). A snapshot is a copy of the user's records kept in IndexedDB on this device.
 // Same rules as the encrypted backup: only records are copied (never keys, secrets or settings), demo and real stay in their own parts,
 // the real part is included only while the real-data tick is given, and a restore checks every record before it changes anything.
-import { BackupError, createBackup, parseBackup, restoreBackup, type BackupFile } from "./backup";
+import { BackupError, createBackup, parseBackup, replaceNamespaces, type BackupFile } from "./backup";
 import { guardWrite, type RecordRepo } from "./repo";
 
 export type SnapshotReason = "auto" | "manual" | "before_restore" | "before_migrate";
@@ -73,9 +73,8 @@ export async function restoreSnapshot(records: RecordRepo, snap: Snapshot, realO
   const real = useReal ? parseBackup(JSON.stringify(snap.real)) : null; if (real && real.ns !== "real") throw new BackupError("snapshot part is in the wrong place");
   for (const r of demo.records) guardWrite(r, false);
   if (real) for (const r of real.records) guardWrite(r, true);
-  const d = await restoreBackup(records, JSON.stringify(demo), false);
-  const r = real ? await restoreBackup(records, JSON.stringify(real), true) : 0;
-  return { demo: d, real: r, realSkipped: !!snap.real && !realOk };
+  await replaceNamespaces(records, [demo, ...(real ? [real] : [])].map((p) => ({ ns: p.ns, records: p.records })));
+  return { demo: demo.count, real: real?.count ?? 0, realSkipped: !!snap.real && !realOk };
 }
 
 /** After the user deletes their real data: no snapshot may keep a copy of it. Returns how many snapshots changed. */

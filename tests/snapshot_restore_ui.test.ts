@@ -16,6 +16,8 @@ const rec = (ns: Namespace, id: string): TMRecord => ({ id, entity: "goal", ns, 
 const app = () => document.getElementById("app")!;
 const q = <T extends Element>(s: string) => app().querySelector(s) as T;
 const go = (hash: string) => { location.hash = hash; render(); };
+// Completion follows durable persistence; memory can change before the result is ready.
+const restoreFinished = () => { render(); return !!q("[data-act=restore-goback]"); };
 const settle = (ms = 80) => new Promise((r) => setTimeout(r, ms));
 const wait = async (fn: () => boolean) => { for (let i = 0; i < 300 && !fn(); i++) await new Promise((r) => setTimeout(r, 10)); };
 const ids = () => store.demo.list().map((r) => r.id).sort();
@@ -44,7 +46,7 @@ describe("snapshot restore UI", () => {
     Object.defineProperty(q("[data-snap=file]"), "files", { value: [{ text: async () => text }], configurable: true });
     q<HTMLButtonElement>("[data-act=snap-open-file]").click(); await wait(() => !!q("[data-restore=preview]"));
     expect(q("[data-restore=preview]").textContent).toMatch(/Replace my 1 entries with the 2 in this file/); expect(ids()).toEqual(["a"]);
-    q<HTMLButtonElement>("[data-act=snap-confirm]").click(); await wait(() => ids().length === 2);
+    q<HTMLButtonElement>("[data-act=snap-confirm]").click(); await wait(restoreFinished);
     expect(ids()).toEqual(["x", "y"]); expect((await snapshotRepo!.list()).some((x) => x.reason === "before_restore")).toBe(true);
   });
   it("a damaged snapshot file shows a plain message and nothing changes", async () => {
@@ -58,7 +60,7 @@ describe("snapshot restore UI", () => {
     go("#/settings/backup/restore"); await settle(); q<HTMLButtonElement>("[data-act=snap-restore]").click(); await wait(() => !!q("[data-restore=pin]"));
     q<HTMLInputElement>("[data-restore=pin]").value = "0000"; q<HTMLButtonElement>("[data-act=snap-confirm]").click(); await wait(() => !!q("[data-restore=err]").textContent);
     expect(ids()).toEqual(["a"]);
-    q<HTMLInputElement>("[data-restore=pin]").value = "4821"; q<HTMLButtonElement>("[data-act=snap-confirm]").click(); await wait(() => ids()[0] === "x"); expect(ids()).toEqual(["x"]);
+    q<HTMLInputElement>("[data-restore=pin]").value = "4821"; q<HTMLButtonElement>("[data-act=snap-confirm]").click(); await wait(restoreFinished); expect(ids()).toEqual(["x"]);
   });
   it("a copy with real data is blocked without the real-data tick and nothing changes", async () => {
     await oneSnapshotOf(["d"], ["r"]); revokeConsent(consentKv); store.real.clear(); store.demo.clear(); store.demo.put(rec("demo", "a"));

@@ -1,5 +1,7 @@
 # Repository audit — 5 Nov 2026
 
+> Historical findings at the baseline commit below. See [reliability fixes and current limits](RELIABILITY_FIXES_2026-11-05.md) for subsequent remediation and [the active tracker](../plan/PLAN_TRACKER.md) for current status.
+
 Audited application commit: `6136ba861c85ad1630af2443e56d422a6a8a0276` on `ccr-8b686ba2-vitt45`. Audit/organization branch: `audit/repository-organization-2026-11-05`. Evidence is for this commit, not a promise about subsequent changes.
 
 ## Result and limits

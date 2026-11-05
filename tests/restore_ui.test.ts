@@ -14,6 +14,8 @@ const rec = (id: string): TMRecord => ({ id, entity: "goal", ns: "demo", ownerId
 const app = () => document.getElementById("app")!;
 const q = <T extends Element>(s: string) => app().querySelector(s) as T;
 const go = (hash: string) => { location.hash = hash; render(); };
+// Completion follows durable persistence; memory can change before the result is ready.
+const restoreFinished = () => { render(); return !!q("[data-act=restore-goback]"); };
 const wait = async (fn: () => boolean) => { for (let i = 0; i < 300 && !fn(); i++) await new Promise((r) => setTimeout(r, 10)); };
 const setFile = (input: HTMLInputElement, text: string) => Object.defineProperty(input, "files", { value: [{ text: async () => text }], configurable: true });
 async function fileOf(ids: string[]): Promise<string> {
@@ -32,10 +34,10 @@ describe("backup file restore flow", () => {
     await wait(() => !!q("[data-restore=preview]"));
     expect(q("[data-restore=preview]").textContent).toMatch(/your 2 entries on this phone will be replaced by the 3 in this file/);
     expect(q("[data-act=json-confirm]").textContent).toBe("Replace my 2 entries with the 3 in this file"); expect(store.demo.list().length).toBe(2);
-    q<HTMLButtonElement>("[data-act=json-confirm]").click(); await wait(() => store.demo.list().length === 3); render(); // the real app redraws on hashchange
+    q<HTMLButtonElement>("[data-act=json-confirm]").click(); await wait(restoreFinished); // the real app redraws on hashchange
     expect(store.demo.list().map((r) => r.id).sort()).toEqual(["x", "y", "z"]);
     expect(q("[data-restore=msg]").textContent).toMatch(/Done. 3 entries restored/);
-    q<HTMLButtonElement>("[data-act=restore-goback]").click(); await wait(() => store.demo.list().length === 2);
+    q<HTMLButtonElement>("[data-act=restore-goback]").click(); await wait(() => { render(); return !q("[data-act=restore-goback]"); });
     expect(store.demo.list().map((r) => r.id).sort()).toEqual(["a", "b"]);
   });
   it("a damaged file is refused with a plain message and nothing changes", async () => {
@@ -50,7 +52,7 @@ describe("backup file restore flow", () => {
     q<HTMLInputElement>("[data-restore=pin]").value = "0000"; q<HTMLButtonElement>("[data-act=json-confirm]").click();
     await wait(() => !!q("[data-restore=err]").textContent); expect(q("[data-restore=err]").textContent).toMatch(/not right/); expect(store.demo.list().map((r) => r.id)).toEqual(["a"]);
     q<HTMLInputElement>("[data-restore=pin]").value = "4821"; q<HTMLButtonElement>("[data-act=json-confirm]").click();
-    await wait(() => store.demo.list().some((r) => r.id === "x")); expect(store.demo.list().map((r) => r.id)).toEqual(["x"]);
+    await wait(restoreFinished); expect(store.demo.list().map((r) => r.id)).toEqual(["x"]);
   });
   it("the Save buttons say what the file contains", () => {
     go("#/settings/backup"); expect(q("[data-backup=contains]").textContent).toMatch(/demo entries only/); expect(q("[data-enc=contains]").textContent).toMatch(/demo and real/);

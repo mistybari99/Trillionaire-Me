@@ -6,7 +6,21 @@ import { chromium } from "playwright";
 import { preview } from "vite";
 import { readFileSync, writeFileSync } from "node:fs";
 
-const server = await preview({ preview: { port: 4174, strictPort: true } });
+// A real server-side interrupted download reaches service-worker fetches too.
+let interruptInstall = true;
+const installProbe = "/assets/install-retry-probe.js";
+const server = await preview({ preview: { port: 4174, strictPort: true }, plugins: [{
+  name: "e2e-interrupted-install",
+  configurePreviewServer(server) {
+    server.middlewares.use((req, res, next) => {
+      if (req.url !== installProbe) return next();
+      res.statusCode = interruptInstall ? 503 : 200;
+      res.setHeader("Content-Type", "application/javascript");
+      res.setHeader("Cache-Control", "no-store");
+      res.end(interruptInstall ? "download interrupted" : "// complete required download");
+    });
+  },
+}] });
 const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || (existsSync(SANDBOX_CHROME) ? SANDBOX_CHROME : undefined) });
 const ctx = await browser.newContext({ viewport: { width: 360, height: 740 } });
 const page = await ctx.newPage();
@@ -322,6 +336,74 @@ await ctx.setOffline(false);
   check("PRECACHE", "every saved file can be read with the network off", bad.length === 0, bad.slice(0, 5).join(","));
   await ctx.setOffline(false);
   check("TM-TST-084", "headless Chromium with the network off: shell, status screen and cold-start screens open, every saved file readable (not a real-device run)", passOf("G1-OFFLINE", "PRECACHE"));
+}
+
+// A failed required download must leave the old worker and every old offline file intact.
+// Retry the exact same deployment once its missing download is available.
+{
+  const real = readFileSync("dist/sw.js", "utf8");
+  const pre = JSON.parse(readFileSync("dist/precache.json", "utf8"));
+  const version = `${pre.version}-retry-probe`;
+  const required = [...pre.files, `.${installProbe}`];
+  const next = real.replace(/^const VERSION = .*;$/m, `const VERSION = ${JSON.stringify(version)};`)
+    .replace(/^const PRECACHE = .*;$/m, `const PRECACHE = ${JSON.stringify(required)};`);
+  try {
+    writeFileSync("dist/sw.js", next);
+    const failure = await page.evaluate(async (oldVersion) => {
+      const reg = await navigator.serviceWorker.getRegistration();
+      const active = reg.active;
+      const state = await new Promise(async (resolve, reject) => {
+        const timer = setTimeout(() => reject(new Error("failed worker did not settle")), 12000);
+        reg.addEventListener("updatefound", () => {
+          const installing = reg.installing;
+          installing.addEventListener("statechange", () => {
+            if (!["redundant", "installed"].includes(installing.state)) return;
+            clearTimeout(timer); resolve(installing.state);
+          });
+        }, { once: true });
+        try { await reg.update(); } catch (error) { clearTimeout(timer); reject(error); }
+      });
+      const cache = await caches.open(`tm-shell-${oldVersion}`);
+      return { state, sameActive: reg.active === active, waiting: !!reg.waiting,
+        oldFiles: (await cache.keys()).map((request) => new URL(request.url).pathname) };
+    }, pre.version);
+    const oldFiles = pre.files.map((file) => new URL(file, "http://localhost:4174/").pathname);
+    check("UPDATE-INTERRUPTED", "503 on a required asset rejects the new worker and preserves the complete active shell",
+      failure.state === "redundant" && failure.sameActive && !failure.waiting && oldFiles.every((file) => failure.oldFiles.includes(file)), JSON.stringify(failure));
+    await ctx.setOffline(true);
+    await page.reload();
+    const oldOpens = await page.waitForSelector("main", { timeout: 8000 }).then(() => true).catch(() => false);
+    const unreadable = await page.evaluate(async (files) => {
+      const bad = []; for (const file of files) { try { if (!(await fetch(file)).ok) bad.push(file); } catch { bad.push(file); } } return bad;
+    }, pre.files);
+    check("UPDATE-INTERRUPTED", "after the failed update a cold offline reload opens and every previous required file remains readable", oldOpens && unreadable.length === 0, unreadable.join(","));
+    await ctx.setOffline(false);
+    interruptInstall = false;
+    await page.evaluate(async () => { await (await navigator.serviceWorker.getRegistration()).update(); });
+    const waiting = await page.waitForSelector("#update-banner [data-act=update-now]", { timeout: 12000 }).then(() => true).catch(() => false);
+    const complete = await page.evaluate(async ({ version, required }) => {
+      const cache = await caches.open(`tm-shell-${version}`);
+      return (await Promise.all(required.map((file) => cache.match(file)))).every(Boolean);
+    }, { version, required });
+    check("UPDATE-RETRY", "retrying the same deployment waits for approval only after all required assets are cached", waiting && complete);
+    if (waiting) {
+      await Promise.all([page.waitForEvent("load", { timeout: 10000 }).catch(() => null), page.click("#update-banner [data-act=update-now]")]);
+      await page.waitForSelector("main");
+    }
+    await ctx.setOffline(true);
+    await page.reload();
+    const retriedOpens = await page.waitForSelector("main", { timeout: 8000 }).then(() => true).catch(() => false);
+    const retry = await page.evaluate(async ({ version, oldVersion, probe }) => ({
+      current: (await caches.keys()).includes(`tm-shell-${version}`),
+      oldRemoved: !(await caches.keys()).includes(`tm-shell-${oldVersion}`),
+      probeReadable: await fetch(probe).then((r) => r.ok).catch(() => false),
+    }), { version, oldVersion: pre.version, probe: `.${installProbe}` });
+    check("UPDATE-RETRY", "the successful retry activates, retires the old cache and reloads offline with the recovered asset", waiting && retriedOpens && retry.current && retry.oldRemoved && retry.probeReadable, JSON.stringify(retry));
+  } finally {
+    await ctx.setOffline(false);
+    interruptInstall = true;
+    writeFileSync("dist/sw.js", real);
+  }
 }
 
 // Update flow (owner request 3 Nov 2026): a changed worker file waits, the calm banner appears, Update now reloads once, local data stays.
