@@ -166,7 +166,8 @@ check("G3-STAGE", "Stage A passed, Stage B is now current, calm banner shown", (
 await page.goto("http://localhost:4174/#/journey/log"); await page.waitForSelector("main");
 check("G3-STAGE", "journey log has the entry with before/after", (await page.locator("[data-log]").count()) === 1 && /%/.test(await page.locator("[data-log]").innerText()));
 await page.goto("http://localhost:4174/#/today"); await page.waitForSelector(".stage");
-check("G3-STAGE", "Home shows 2 / 8 after passing Stage A", /২ \/ ৮|2 \/ 8/.test(await page.locator(".stage .n").innerText()));
+const currentStageText = await page.locator(".action-desk-stage [data-value]").innerText();
+check("G3-STAGE", "compact Home stage remains 2 of 8 after passing Stage A", /(?:^|\D)2\s*\/\s*8(?:\D|$)/.test(currentStageText), currentStageText);
 // R2 horizon view: 5 sections, 'unset' bucket for goals with no horizon, no shame/red copy
 await page.goto("http://localhost:4174/#/journey/horizon"); await page.waitForSelector("main h1");
 const horizonSecs = await page.locator("[data-horizon]").evaluateAll((e) => e.map((x) => x.getAttribute("data-horizon")));

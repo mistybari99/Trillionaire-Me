@@ -53,6 +53,7 @@ for (const snapshot of ledger.archives) {
 }
 const docs = ['README.md', 'docs/PLAN.md', 'docs/TODO.md', 'docs/ROADMAP.md', 'docs/plan/PLAN_TRACKER.md',
   'docs/audit/REPOSITORY_AUDIT_2026-11-05.md', 'docs/audit/RELIABILITY_FIXES_2026-11-05.md',
+  'docs/audit/ACTION_DESK_UI_2026-11-05.md', 'docs/audit/action-desk-ui/README.md',
   'docs/deployment/CI_GATE.md', 'docs/design/UI_REFRESH_2026-11-05_A.md',
   'docs/design/UI_REFRESH_2026-11-05_B.md', 'docs/design/UI_REFRESH_2026-11-05_DECISION.md',
   'docs/owner/AUDIT_SUMMARY_2026-11-05_BN.md', 'docs/owner/RELIABILITY_UI_2026-11-05_BN.md'];

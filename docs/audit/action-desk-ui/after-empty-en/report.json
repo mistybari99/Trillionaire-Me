@@ -1,0 +1,74 @@
+{
+  "generated": "2026-11-05T13:18:01.262Z",
+  "synthetic": true,
+  "viewport": "360x800",
+  "phase": "after-empty-en",
+  "screens": [
+    {
+      "state": "empty-real",
+      "lang": "en",
+      "route": "today",
+      "scale": 100,
+      "file": "/tmp/action-desk-ui-evidence/after-empty-en/state-empty-real-100-today.png",
+      "overflow": false,
+      "tasks": [],
+      "entryActions": [
+        {
+          "text": "Open Diary",
+          "act": "next-go"
+        }
+      ],
+      "demoLeak": false,
+      "saveWarning": null,
+      "consentWarning": null,
+      "net": "online",
+      "nav": {
+        "top": 743,
+        "bottom": 800,
+        "height": 57,
+        "width": 360
+      },
+      "update": null,
+      "heading": {
+        "top": 118.5,
+        "bottom": 194.09375,
+        "height": 75.59375,
+        "width": 250
+      },
+      "bodyPadding": "81px"
+    },
+    {
+      "state": "empty-real",
+      "lang": "en",
+      "route": "today",
+      "scale": 200,
+      "file": "/tmp/action-desk-ui-evidence/after-empty-en/state-empty-real-200-today.png",
+      "overflow": false,
+      "tasks": [],
+      "entryActions": [
+        {
+          "text": "Open Diary",
+          "act": "next-go"
+        }
+      ],
+      "demoLeak": false,
+      "saveWarning": null,
+      "consentWarning": null,
+      "net": "online",
+      "nav": {
+        "top": 669.40625,
+        "bottom": 800,
+        "height": 130.59375,
+        "width": 360
+      },
+      "update": null,
+      "heading": {
+        "top": 210.390625,
+        "bottom": 588.359375,
+        "height": 377.96875,
+        "width": 250
+      },
+      "bodyPadding": "155px"
+    }
+  ]
+}

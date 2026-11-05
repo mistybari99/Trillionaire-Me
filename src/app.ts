@@ -29,6 +29,9 @@ import { dismissReminder, inAppReminders } from "./ui/prayerAlerts";
 import { isLocked, lockScreen } from "./ui/lockUi";
 import { saveFailedBanner } from "./ui/saveBanner";
 import { notifyText } from "./core/notify";
+import { observeNavLayout } from "./ui/navLayout";
+
+let stopNavLayout: (() => void) | undefined;
 
 const TABS: Array<[string, Key]> = [["today", "nav.today"], ["journey", "nav.journey"], ["diary", "nav.diary"], ["deen", "nav.deen"], ["settings", "nav.settings"]];
 
@@ -104,9 +107,10 @@ function toggleDrawer(open: boolean) { const d = document.getElementById("drawer
 
 /** Entry point for the browser: the first-run choice comes before anything else, once per device. */
 export function renderApp() {
-  if (isLocked()) { applyPrefs(); document.getElementById("app")!.replaceChildren(lockScreen()); return; }
+  if (isLocked()) { stopNavLayout?.(); applyPrefs(); document.getElementById("app")!.replaceChildren(lockScreen()); return; }
   if (prefs.dataModeChoice !== null) { render(); return; }
   applyPrefs();
+  stopNavLayout?.();
   document.getElementById("app")!.replaceChildren(firstRunScreen());
 }
 
@@ -128,14 +132,19 @@ export function render() {
       ...(Object.keys(LAYERS) as (keyof typeof LAYERS)[]).flatMap((ly) => [h("h2", {}, tb(LAYERS[ly], lang)), ...TOPICS.filter((x) => x.layer === ly).map((x) => h("a", { class: "item", href: `#/topic/${x.id}`, "data-topic": x.id, onclick: () => toggleDrawer(false) }, tb(x.name, lang)))])));
   const menuBtn = h("button", { class: "menu-btn", type: "button", "data-act": "drawer-open", "aria-label": t("topics.open", lang), "aria-controls": "drawer", onclick: () => toggleDrawer(true) }, "☰");
   const top = h("div", { class: "top" }, h("span", {}, menuBtn, " ", t("app.title", lang)),
-    h("span", { class: "right" }, h("span", { class: "net", "data-net": online ? "online" : "offline" }, t(online ? "status.online" : "status.offline", lang)), demoBadge(lang), langMenu(lang)));
+    h("span", { class: "right" }, h("span", { class: "net", "data-net": online ? "online" : "offline" }, t(online ? "status.online" : "status.offline", lang)), prefs.dataMode === "demo" ? demoBadge(lang) : h("span", { class: "tag", "data-mode": "real" }, t("mode.switch.real", lang)), langMenu(lang)));
   const nav = h("nav", { "aria-label": t("nav.aria", lang) }, ...TABS.map(([r, k]) => h("a", { class: "tab", href: `#/${r}`, ...(tab === r ? { "aria-current": "page" } : {}) }, t(k, lang))));
   const app = document.getElementById("app")!;
   // Skip link (first Tab stop) jumps past the top bar to the screen content.
   // Keep the screen's own id (the focus timer looks up "focus-root"); only add one when there is none.
   if (!body.id) body.id = "content";
   body.tabIndex = -1;
-  const skip = h("a", { class: "skip", href: `#${body.id}` }, t("a11y.skip", lang));
+  const skip = h("a", { class: "skip", href: `#${body.id}`, onclick: (event: Event) => {
+    // A native fragment would be interpreted as a route by the hash router.
+    event.preventDefault();
+    body.focus({ preventScroll: true });
+    body.scrollIntoView?.({ block: "start" });
+  } }, t("a11y.skip", lang));
   // In-app prayer reminders (M13) show above the screen when the phone cannot show a notification.
   const reminders = inAppReminders().map((r) => h("div", { class: "card", role: "status", "data-inapp-reminder": r.id },
     h("h2", { class: "card-h" }, t("deen.alert.title", lang)), h("p", {}, notifyText(r.text, lang)),
@@ -145,7 +154,9 @@ export function render() {
   const routeChanged = path !== lastRenderedPath;
   const firstLoad = lastRenderedPath === null;
   lastRenderedPath = path;
+  stopNavLayout?.();
   app.replaceChildren(skip, top, ...demoPanels(), ...(saveFailedBanner(lang) ? [saveFailedBanner(lang)!] : []), ...reminders, body, nav, drawer);
+  stopNavLayout = observeNavLayout(nav);
   window.scrollTo(0, routeChanged ? 0 : savedY);
   // After a real screen change (not a re-draw of the same screen, not the first load): the screen name becomes the page title and
   // keyboard / screen-reader focus moves to the new heading, so the change is announced.

@@ -1,0 +1,118 @@
+{
+  "generated": "2026-11-05T13:09:28.818Z",
+  "synthetic": true,
+  "viewport": "360x800",
+  "phase": "after-stress",
+  "screens": [
+    {
+      "state": "long-title",
+      "route": "today",
+      "scale": 100,
+      "file": "/tmp/action-desk-ui-evidence/after-stress/state-long-title-100-today.png",
+      "overflow": false,
+      "tasks": [
+        "shot-t2",
+        "shot-t3"
+      ],
+      "demoLeak": false,
+      "saveWarning": null,
+      "consentWarning": null,
+      "net": "online",
+      "nav": {
+        "top": 743,
+        "bottom": 800,
+        "height": 57,
+        "width": 360
+      },
+      "update": null,
+      "heading": {
+        "top": 231,
+        "bottom": 306.59375,
+        "height": 75.59375,
+        "width": 250
+      },
+      "bodyPadding": "81px"
+    },
+    {
+      "state": "long-title",
+      "route": "today",
+      "scale": 200,
+      "file": "/tmp/action-desk-ui-evidence/after-stress/state-long-title-200-today.png",
+      "overflow": false,
+      "tasks": [
+        "shot-t2",
+        "shot-t3"
+      ],
+      "demoLeak": false,
+      "saveWarning": null,
+      "consentWarning": null,
+      "net": "online",
+      "nav": {
+        "top": 669.40625,
+        "bottom": 800,
+        "height": 130.59375,
+        "width": 360
+      },
+      "update": null,
+      "heading": {
+        "top": 468.390625,
+        "bottom": 846.359375,
+        "height": 377.96875,
+        "width": 250
+      },
+      "bodyPadding": "155px"
+    },
+    {
+      "state": "long-title",
+      "route": "journey/goal/shot-goal",
+      "scale": 100,
+      "file": "/tmp/action-desk-ui-evidence/after-stress/state-long-title-100-journey_goal_shot-goal.png",
+      "overflow": false,
+      "tasks": [],
+      "demoLeak": false,
+      "saveWarning": null,
+      "consentWarning": null,
+      "net": "online",
+      "nav": {
+        "top": 743,
+        "bottom": 800,
+        "height": 57,
+        "width": 360
+      },
+      "update": null,
+      "heading": {
+        "top": 257.5,
+        "bottom": 446.484375,
+        "height": 188.984375,
+        "width": 294
+      },
+      "bodyPadding": "81px"
+    },
+    {
+      "state": "long-title",
+      "route": "journey/goal/shot-goal",
+      "scale": 200,
+      "file": "/tmp/action-desk-ui-evidence/after-stress/state-long-title-200-journey_goal_shot-goal.png",
+      "overflow": false,
+      "tasks": [],
+      "demoLeak": false,
+      "saveWarning": null,
+      "consentWarning": null,
+      "net": "online",
+      "nav": {
+        "top": 669.40625,
+        "bottom": 800,
+        "height": 130.59375,
+        "width": 360
+      },
+      "update": null,
+      "heading": {
+        "top": 483.1875,
+        "bottom": 1239.125,
+        "height": 755.9375,
+        "width": 294
+      },
+      "bodyPadding": "155px"
+    }
+  ]
+}

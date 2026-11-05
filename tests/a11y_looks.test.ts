@@ -108,10 +108,10 @@ describe("calm / ghost / plain-link fixes found by the screenshot matrix (3 Nov 
     for (const L of LOOKS) for (const [mode, t] of L.modes) for (const bg of ["paper", "card"]) expect(cr(t.primary!, t[bg]!), `${L.id} ${mode} primary/${bg}`).toBeGreaterThanOrEqual(4.5);
   });
   it("a long tag wraps inside the screen instead of widening the page (found at 200 % text on Capability status)", () => { expect(CSS.match(/^\.tag\{([^}]*)\}/m)![1]).toMatch(/white-space:normal;max-width:100%/); });
-  it("the bottom tab labels keep every word whole and grow with the text size; when they no longer fit in one row the bar wraps into two rows instead of breaking words", () => {
+  it("bottom tabs grow with text, wrap without truncation, and content reserves measured navigation and update clearance", () => {
     const rule = CSS.match(/^\.tab\{([^}]*)\}/m)![1]!; const nav = CSS.match(/^nav\{([^}]*)\}/m)![1]!;
-    expect(rule).toMatch(/font-size:0\.8125rem/); expect(rule).toMatch(/overflow-wrap:normal/); expect(rule).toMatch(/min-width:max-content/); expect(nav).toMatch(/flex-wrap:wrap/);
-    expect(CSS).toMatch(/body\{[^}]*padding:16px 16px max\(96px,8rem\)/);
+    expect(rule).toMatch(/font-size:0\.875rem/); expect(rule).toMatch(/overflow-wrap:anywhere/); expect(rule).toMatch(/flex:1 1 max-content/); expect(rule).not.toMatch(/text-overflow:ellipsis|white-space:nowrap/); expect(nav).toMatch(/flex-wrap:wrap/);
+    expect(CSS).toMatch(/body\{[^}]*padding:16px 16px calc\(var\(--nav-clearance\) \+ var\(--update-clearance\)\)/);
   });});
 
 describe("calm prompt colour (--calm, plan tracker AU-23): every look, light and dark, contrast >= 4.5 and never the danger colour", () => {

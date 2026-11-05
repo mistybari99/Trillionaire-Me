@@ -1,19 +1,25 @@
 # Production CI gate (AUD-10 / OPS-01)
 
-The existing Workers Builds trigger runs `npm run build`, then `npx wrangler deploy`, independently of GitHub tests. `npm run build:verified` now first verifies successful GitHub CI for the **exact production commit**, then builds. It does not deploy or change an account.
+The audited Workers Builds trigger originally ran `npm run build`, then `npx wrangler deploy`, independently of GitHub tests. It now uses `npm run build:verified`, which first verifies successful GitHub CI for the **exact production commit**, then builds. The npm script itself does not deploy or change an account.
 
-## Reviewed configuration to apply after this code reaches production
+## Activation observed — 5 November 2026
+
+After the reliability code was merged, the existing production trigger's build command was changed to `npm run build:verified`. Cloudflare build `ea8b75fb-7f75-442e-9a9c-9cfc8262c98a` waited for and verified [production CI run 41979897074, attempt 1](https://github.com/mistybari99/Trillionaire-Me/actions/runs/41979897074) for commit `32bc54b7c04a8c08014b864f0507624283073869`, then built and deployed successfully. Deployment `c8b73f9d-2d99-4dd8-81dc-1d63803f6a96` serves version `9c01d08d-8bcf-4303-8018-4bf8c0297ce5` at 100% traffic. The integrating agent's receipt records matching online/offline build stamps at 06:30 UTC. This release preceded the Action Desk UI branch.
+
+OPS-01 remains **Needs verification**: the successful path is observed remotely, but an isolated remote failed-CI blocking trial has not been performed. The 19 local gate cases do not substitute for that remote acceptance.
+
+## Reviewed configuration (now applied)
 
 For Worker `trillionaire-me`, existing trigger `9b487d1f-40dc-4770-8d34-1e39e705e34e`, change only:
 
-| Setting | Existing | Proposed |
+| Setting | Audited original | Applied |
 | --- | --- | --- |
 | Build command | `npm run build` | `npm run build:verified` |
 | Deploy command | `npx wrangler deploy` | `npx wrangler deploy` |
 | Production branch | `ccr-8b686ba2-vitt45` | `ccr-8b686ba2-vitt45` |
 | Root | `/` | `/` |
 
-No remote setting has been changed by this patch. Merge the gate first, then apply the build setting in Workers → `trillionaire-me` → Settings → Build. Keep the account, token, trigger, branch and deploy command. Retrying an existing build uses current build settings; retries of older commits without this npm script fail safely. Verify a successful new commit and a deliberately failing check on an isolated test branch/Worker before claiming the remote gate is active; do not deliberately fail or deploy the production branch for this test. Local gate failure cases are covered by `tests/deployment_gate.test.ts`.
+The original code patch prepared this configuration without changing remote settings; activation was subsequently observed as recorded above. Future changes belong in Workers → `trillionaire-me` → Settings → Build. Keep the account, token, trigger, branch and deploy command. Retrying an existing build uses current build settings; retries of older commits without this npm script fail safely. Verify a deliberately failing check on an isolated test branch/Worker before closing OPS-01; do not deliberately fail or deploy the production branch for this test. Local gate failure cases are covered by `tests/deployment_gate.test.ts`.
 
 ## What authorizes a build
 
