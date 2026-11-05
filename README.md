@@ -2,7 +2,7 @@
 
 A Bangla-first, phone-first planning app (installable PWA) for one person's goals, money and Deen. Personal records stay on the device; AI, cloud record sync and paid services are not enabled. Offline use is supported, with interrupted-install and recovery gaps recorded in the current audit. Wikipedia search runs on user action; prayer-time updates use a separate opt-in.
 
-Current engineering review: [5 Nov audit](docs/audit/REPOSITORY_AUDIT_2026-11-05.md) and [short Bangla audit summary](docs/owner/AUDIT_SUMMARY_2026-11-05_BN.md). Work status lives only in [PLAN_TRACKER](docs/plan/PLAN_TRACKER.md); [TODO](docs/TODO.md) selects next work and [ROADMAP](docs/ROADMAP.md) defines phases. Older reports remain dated historical evidence. Follow-up: [reliability fixes and selected UI direction](docs/audit/RELIABILITY_FIXES_2026-11-05.md).
+Current engineering review: [5 Nov audit](docs/audit/REPOSITORY_AUDIT_2026-11-05.md) and [short Bangla audit summary](docs/owner/AUDIT_SUMMARY_2026-11-05_BN.md). Work status lives only in [PLAN_TRACKER](docs/plan/PLAN_TRACKER.md); [TODO](docs/TODO.md) selects next work and [ROADMAP](docs/ROADMAP.md) defines phases. Older reports remain dated historical evidence. Follow-up: [reliability fixes and selected UI direction](docs/audit/RELIABILITY_FIXES_2026-11-05.md), then [Action Desk UI implementation and evidence](docs/audit/ACTION_DESK_UI_2026-11-05.md).
 
 Spec of record: `docs/spec/`. Rules for every session: `CLAUDE.md`. Decisions and undo steps: `DECISIONS_LOG.md`. Current status: `docs/plan/PLAN_TRACKER.md`. Latest audit: `docs/audit/REPOSITORY_AUDIT_2026-11-05.md`.
 
@@ -31,9 +31,9 @@ python3 -I tools/update_register.py docs/register/Trillionaire_Me_Requirements_R
 The Register v2_0 file is the original and is never edited; v2_1 is a regenerated copy. Do not commit `evidence/` run files from routine test runs.
 
 ## Hosting and deployment
-Hosting is already connected to the existing Cloudflare Worker `trillionaire-me`: https://trillionaire-me.mistybari99.workers.dev . Cloudflare builds `ccr-8b686ba2-vitt45` using `npm run build` and deploys with `npx wrangler deploy`. A merge/push into that branch triggers production deployment; a review branch must stay separate until ready. There is no Pages migration in this audit.
+Hosting is already connected to the existing Cloudflare Worker `trillionaire-me`: https://trillionaire-me.mistybari99.workers.dev . Cloudflare builds `ccr-8b686ba2-vitt45` using `npm run build:verified` and deploys with `npx wrangler deploy`. A merge/push into that branch triggers production deployment; a review branch must stay separate until ready. There is no Pages migration in this audit.
 
-The app is a static site: the build produces `dist/`, and `wrangler.jsonc` serves it as a single-page app. The service worker precaches built files; see AUD-02 for the incomplete-install risk and the tracker for phone acceptance still owed. Build/deployment metadata was checked on 5 Nov; the audit did not deploy or change hosting.
+The app is a static site: the build produces `dist/`, and `wrangler.jsonc` serves it as a single-page app. The service worker precaches built files; required offline download failures now reject installation (AUD-02). Physical phone acceptance remains open in the tracker. The 5 Nov audit itself did not deploy; the subsequent reliability release activated the exact-production-CI build gate. See [deployment gate](docs/deployment/CI_GATE.md).
 
 ## Stack
 PWA, strict TypeScript, no UI framework (D-A approved). Pure core library in `src/core` with adapters in `src/adapters` (IndexedDB through Dexie). Fonts are bundled; external Wikipedia/prayer requests are limited to their user-action/opt-in flows. Look tokens: top of `src/ui/styles.css` and `src/ui/themes.ts`.

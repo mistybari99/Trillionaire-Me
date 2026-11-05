@@ -1,0 +1,62 @@
+{
+  "generated": "2026-11-05T13:18:01.168Z",
+  "firstTab": {
+    "tag": "A",
+    "class": "skip",
+    "text": "Skip to content",
+    "href": "#content"
+  },
+  "skipDestination": {
+    "tag": "BODY",
+    "id": "",
+    "hash": "#/today",
+    "inMain": false
+  },
+  "taskStops": [
+    {
+      "tag": "BUTTON",
+      "act": "task-done",
+      "href": null,
+      "text": "Done ✓",
+      "taskId": "shot-t2"
+    },
+    {
+      "tag": "A",
+      "href": "#/focus/shot-t2",
+      "text": "Focus"
+    },
+    {
+      "tag": "BUTTON",
+      "act": "task-done",
+      "href": null,
+      "text": "Done ✓",
+      "taskId": "shot-t3"
+    },
+    {
+      "tag": "A",
+      "href": "#/focus/shot-t3",
+      "text": "Focus"
+    }
+  ],
+  "toolStops": [
+    "#/journey/boards",
+    "#/journey/horizon",
+    "#/journey/decide",
+    "#/journey/risks",
+    "#/journey/reality",
+    "#/journey/northstar",
+    "#/journey/kpi",
+    "#/journey/log",
+    "#/journey/report",
+    "#/journey/week",
+    "#/journey/month",
+    "#/journey/review",
+    "#/journey/history",
+    "#/journey/universe",
+    "#/journey/art",
+    "#/journey/mine",
+    "#/journey/legs",
+    "#/journey/leak"
+  ],
+  "pass": false
+}

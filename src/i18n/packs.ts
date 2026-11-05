@@ -1,6 +1,12 @@
 // UI string packs. `en` is the source; `bn` is typed against it so a missing key is a compile error (i18n skill §3).
 // Bangla copy is a working draft pending native-reviewer sign-off (TM-TST-161).
 const en = {
+  "desk.tools.plan": "Goals and plan",
+  "desk.tools.review": "Review and history",
+  "desk.tools.explore": "Explore tools",
+  "desk.attention": "Needs attention",
+  "desk.context": "Continue from here",
+  "desk.summary": "Your overview",
   "app.title": "Trillionaire Me",
   "mode.first.title": "Welcome",
   "mode.first.intro": "Choose how to begin. You can change this later in Settings > Demo or real data.",
@@ -1901,6 +1907,12 @@ const en = {
 export type Key = keyof typeof en;
 
 const bn: Record<Key, string> = {
+  "desk.tools.plan": "গোল ও প্ল্যান",
+  "desk.tools.review": "রিভিউ ও হিস্ট্রি",
+  "desk.tools.explore": "টুল দেখুন",
+  "desk.attention": "যা দেখা দরকার",
+  "desk.context": "এখান থেকে এগোন",
+  "desk.summary": "এক নজরে",
   "mode.first.title": "স্বাগতম",
   "mode.first.intro": "কীভাবে শুরু করবেন বেছে নিন। পরে সেটিংস > ডেমো না আসল ডাটা থেকে বদলাতে পারবেন।",
   "mode.first.demo": "ডেমো ডাটা দিয়ে ঘুরে দেখুন",

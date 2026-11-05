@@ -1,6 +1,6 @@
 # UI refresh decision — Action Desk
 
-Date: 2026-11-05. Participants: independent design agents A and B, requested by the owner. Status: jointly selected design recommendation; this document does not claim owner approval, implementation, a live UI audit or deployment.
+Date: 2026-11-05. Participants: independent design agents A and B, requested by the owner. Status: jointly selected design, now implemented on a feature branch; browser and remaining acceptance details are in the [dated implementation record](../audit/ACTION_DESK_UI_2026-11-05.md). UI-02 remains Needs verification; no UI deployment or physical TalkBack acceptance is claimed.
 
 ## Decision and rationale
 
@@ -17,7 +17,7 @@ The strongest finding from inspected source is content order: `today()` construc
 
 Both agreed through direct messages that plan ordering stays unchanged: a recommended task is highlighted/anchored in the existing list, never reranked by presentation code. Both also agreed to preserve 5 labeled navigation routes and allow wrapping at 200% only with measured reserved space. Agent A explicitly approved this joint direction before this record was written; final artifact review is recorded below after inspection.
 
-Proposals: [A](UI_REFRESH_2026-11-05_A.md), [B](UI_REFRESH_2026-11-05_B.md). Both are source-informed recommendations, not generated design screenshots or a completed interaction prototype. No new visual option or mockup has been implemented in this design pass.
+Proposals: [A](UI_REFRESH_2026-11-05_A.md), [B](UI_REFRESH_2026-11-05_B.md). Both are source-informed recommendations, not generated design screenshots or a completed interaction prototype. The original design pass produced recommendations; subsequent runtime implementation and fresh captures are linked in the dated implementation record above.
 
 ## Selected coherent interface
 
@@ -114,4 +114,4 @@ Optional 120–200ms color/opacity feedback respects both OS and app reduced-mot
 
 ## Review record and limits
 
-Joint direction agreed by A and B in direct discussion on 2026-11-05. Final artifact review: A read the complete decision and explicitly approved the final substance, exact Today/Journey mapping and consent-warning priority on 2026-11-05. B accepts the same recorded selection. No unresolved design objection remains between the two agents. No user approval is inferred from agent agreement. Engineering reliability fixes proceed separately; these documents do not claim UI code, preview captures, accessibility tests, Cloudflare connection or deployment completed.
+Joint direction agreed by A and B in direct discussion on 2026-11-05. Final artifact review: A read the complete decision and explicitly approved the final substance, exact Today/Journey mapping and consent-warning priority on 2026-11-05. B accepts the same recorded selection. No unresolved design objection remains between the two agents. No user approval is inferred from agent agreement. This review records the design-selection stage; subsequent UI code and preview evidence are documented in the dated implementation record. Physical accessibility acceptance remains outstanding.

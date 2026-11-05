@@ -59,10 +59,10 @@ export function goalPicker(recs: readonly TMRecord[], initial: readonly string[]
 }
 
 /**
- * Small chips for the goals a step serves: up to 2, then "+N"; each opens that goal's page. Titles shortened to 14 characters (full title in title/aria-label).
+ * Small chips for the goals a step serves: up to 2, then "+N"; each opens that goal's page. Titles shortened to 14 characters by default (full title in title/aria-label); Action Desk opts into full visible titles.
  * Paused or retired goals say so in words. A step with no goal gets a quiet "Link to a goal" link. `recs` defaults to the active mode's records.
  */
-export function goalChips(step: TMRecord, lang: Locale, recs: readonly TMRecord[] = allRecs(), opts: { exclude?: string; prefix?: Key } = {}): HTMLElement | null {
+export function goalChips(step: TMRecord, lang: Locale, recs: readonly TMRecord[] = allRecs(), opts: { exclude?: string; prefix?: Key; fullTitles?: boolean } = {}): HTMLElement | null {
   const goals = new Map(recs.filter((r) => r.entity === "goal").map((g) => [g.id, g] as const));
   const title = (g: TMRecord) => String((g.values["goal.title"] as { value?: unknown } | undefined)?.value ?? "");
   const live = goalIdsOf(step).filter((id) => goals.has(id) && id !== opts.exclude).map((id) => goals.get(id)!).sort((a, b) => title(a).localeCompare(title(b)) || a.id.localeCompare(b.id));
@@ -73,8 +73,9 @@ export function goalChips(step: TMRecord, lang: Locale, recs: readonly TMRecord[
   if (!live.length) return opts.exclude ? null : h("span", { class: "goal-chips" }, gone.length ? goneEl : h("a", { href: "#/diary/plan", class: "chip-link muted", "data-link-goal": step.id }, t("gl.chip.link", lang)));
   const word = (g: TMRecord) => { const s = goalStatusOf(g); return s === "retired" ? ` ${t("gl.chip.retired", lang)}` : s === "paused" ? ` ${t("gl.chip.paused", lang)}` : ""; };
   const shownGoals = live.slice(0, 2);
+  const shownTitle = (g: TMRecord) => opts.fullTitles ? title(g) : short(title(g));
   return h("span", { class: "goal-chips", "data-goal-chips": step.id },
-    ...shownGoals.map((g) => h("a", { href: goalHash(g.id), class: "tag", "data-goal-chip-link": g.id, title: title(g), "aria-label": title(g) + word(g) }, (opts.prefix ? t(opts.prefix, lang, { title: short(title(g)) }) : short(title(g))) + word(g))),
+    ...shownGoals.map((g) => h("a", { href: goalHash(g.id), class: "tag", "data-goal-chip-link": g.id, title: title(g), "aria-label": title(g) + word(g) }, (opts.prefix ? t(opts.prefix, lang, { title: shownTitle(g) }) : shownTitle(g)) + word(g))),
     goneEl,
     live.length > 2 ? h("span", { class: "tag", "data-goal-more": String(live.length - 2), title: live.slice(2).map(title).join(", ") }, t("gl.chip.more", lang, { n: String(live.length - 2) })) : null);
 }
