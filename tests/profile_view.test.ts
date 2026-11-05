@@ -20,11 +20,11 @@ const $ = (s: string) => document.querySelector(s);
 const go = (h: string) => { location.hash = h; render(); };
 beforeEach(() => { localStorage.clear(); store.demo.clear(); store.real.clear(); document.body.innerHTML = '<div id="app"></div>'; localStorage.setItem("tm:ui:lang", "en"); localStorage.setItem("tm:ui:dataMode", "demo"); grantConsent(consentKv, "2026-11-02T00:00:00.000Z"); });
 describe("screens", () => {
-  it("diary card and Today greeting use the typed profile; unknown otherwise", () => {
+  it("diary retains typed profile details while Today keeps its compact workspace header", () => {
     go("#/diary"); expect($('[data-prof="name"] [data-unknown]')).not.toBeNull(); go("#/today"); expect($("[data-greeting]")).toBeNull();
     const r: TMRecord = { id: "intake-profile", entity: "profile", ns: "demo", ownerId: "u", schemaVersion: 1, createdAt: "2026-11-02T00:00:00Z", values: { "profile.display_name": v("Rafi"), "profile.birth_year": v(1990), "profile.timezone": v("Asia/Dhaka") } };
-    store.demo.put(r); go("#/today"); expect($("[data-greeting]")!.textContent).toMatch(/Rafi/);
-    go("#/diary"); expect($('[data-prof="age"]')!.textContent).toMatch(/about \d+ years/); expect($('[data-prof="tz"]')!.textContent).toMatch(/Asia\/Dhaka/);
+    store.demo.put(r); go("#/today"); expect($("[data-greeting]")).toBeNull(); expect($("[data-workspace-header] h1")).not.toBeNull();
+    go("#/diary"); expect($('[data-prof="name"]')!.textContent).toContain("Rafi"); expect($('[data-prof="age"]')!.textContent).toMatch(/about \d+ years/); expect($('[data-prof="tz"]')!.textContent).toMatch(/Asia\/Dhaka/);
   });
   it("keys in all languages", () => { for (const k of Object.keys(PACKS.en).filter((x) => x.startsWith("prof."))) for (const l of ["en", "bn", "mix"] as const) expect((PACKS[l] as Record<string, string>)[k]!.length).toBeGreaterThan(1); });
 });

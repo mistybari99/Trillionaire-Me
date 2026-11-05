@@ -1,6 +1,6 @@
 # UI refresh decision — Action Desk
 
-Date: 2026-11-05. Participants: independent design agents A and B, requested by the owner. Status: jointly selected design, now implemented on a feature branch; browser and remaining acceptance details are in the [dated implementation record](../audit/ACTION_DESK_UI_2026-11-05.md). UI-02 remains Needs verification; no UI deployment or physical TalkBack acceptance is claimed.
+Date: 2026-11-05. Participants: independent design agents A and B, requested by the owner. Status: jointly selected design, now implemented on a feature branch; browser and remaining acceptance details are in the [dated implementation record](../audit/ACTION_DESK_UI_2026-11-05.md). UI-02 remains Needs verification for physical TalkBack acceptance; deployment of the first implementation is verified in the dated record.
 
 ## Decision and rationale
 

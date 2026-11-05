@@ -52,8 +52,8 @@ h3{font:600 1.0625rem/1.4 "Hind Siliguri",sans-serif;margin:0 0 2px}
 .task p{font-size:0.9375rem;color:var(--muted);line-height:1.5}
 .chip{font-size:0.6875rem;font-weight:600;color:var(--muted);border:1px solid var(--rule);padding:0 6px;margin-inline-start:6px;vertical-align:middle}
 .chip-DEMO{color:var(--demo);border-color:var(--demo);background:var(--demo-bg)}
-.cta,.btn{display:block;width:100%;min-height:52px;margin-top:20px;background:var(--primary);color:var(--on-primary);border:0;font:600 1.125rem "Hind Siliguri",system-ui;cursor:pointer;text-align:center;text-decoration:none;padding:12px 16px}
-.btn.ghost{background:none;color:var(--ink);border:1.5px solid var(--ink)}
+.cta,.btn{display:block;width:100%;max-width:100%;min-width:0;min-height:52px;margin-top:12px;background:var(--primary);color:var(--on-primary);border:1px solid transparent;font:600 1.0625rem/1.5 "Hind Siliguri",system-ui;cursor:pointer;text-align:center;text-decoration:none;padding:12px 16px;white-space:normal;overflow-wrap:anywhere}
+.btn.ghost{background:var(--card);color:var(--ink);border:1px solid var(--rule)}
 .cta:focus-visible,.btn:focus-visible,.tab:focus-visible,button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--ember);outline-offset:2px}
 label.btn:focus-within{outline:3px solid var(--ember);outline-offset:2px}
 /* Skip link: hidden until focused, then the first Tab stop */
@@ -169,11 +169,11 @@ dl{margin:6px 0} .hrow{display:grid;grid-template-columns:96px 1fr;gap:8px;paddi
 .next-step{display:flex;gap:10px;align-items:baseline;margin:16px 0 0;padding:14px 16px;background:var(--card)}
 .next-step small{flex:none;font-size:1.125rem;font-weight:600;color:var(--ember)}
 .next-step p{flex:1;margin:0;font-size:0.9375rem}
-/* Action group: primary full width, secondary links in a 2-column grid, last one full width */
+/* Action group: primary full width, secondary actions share a responsive grid. */
 .actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
 .actions .cta,.actions .btn{margin:0;min-height:52px}
-.actions .cta,.actions .btn:last-child{grid-column:1/-1}
-.actions .btn.ghost{font-size:1rem;padding:10px 8px}
+.actions .cta{grid-column:1/-1}
+.actions .btn.ghost{font-size:1.0625rem;padding:12px 16px}
 /* Journey: stage panel and picture get more air, the picture gets a framed caption area */
 .scr-journey .card[data-stage-panel]{padding:16px 16px 14px;margin:14px 0 12px}
 .reward{margin:14px 0 8px;box-shadow:0 2px 0 var(--rule)}
@@ -490,6 +490,7 @@ textarea[data-swot]{width:100%;box-sizing:border-box;font:inherit;padding:8px}
 :root{--gap:10px}
 main :is(.btn,.cta) + :is(.btn,.cta,.row,.card,.next-step,.note){margin-top:var(--gap) !important}
 main :is(.card,.advice-item) > :is(.btn,.cta){display:block;width:100% !important;margin-top:var(--gap) !important;margin-inline:0 !important}
+main :is(.card,.advice-item) > .btn.ghost{width:fit-content !important;max-width:100%}
 main .row + .row{margin-top:var(--gap)}
 main details.help + details.help{margin-top:var(--gap) !important}
 main :is(.row,.actions,.snap-btns,.update-banner,.tags,.goal-chips,.btn-row) > .btn + .btn{margin-top:0 !important}
@@ -543,3 +544,39 @@ main details + details{margin-top:var(--gap) !important}
 :root[data-design="light-futuristic"] :is(.action-desk-recommended,.journey-stage-strip,.journey-tools .tool-grid>a){border-radius:12px}
 :root[data-design="light-futuristic"] .journey-stage-strip{padding:12px 16px;background:var(--card);border:1px solid var(--rule)}
 @media (max-width:380px){.action-desk .actions{grid-template-columns:minmax(0,1fr)}}
+
+/* Shared control family: readable labels and predictable sizes, with layout owned by groups. */
+.btn.ghost,.seg button,.chip-btn,.menu-btn,.lang-btn{border-width:1px;border-color:var(--rule)}
+.seg{gap:8px}
+.seg button,.chip-btn{min-height:48px;max-width:100%;min-width:0;padding:9px 14px;font:500 1rem/1.5 "Hind Siliguri",system-ui;white-space:normal;overflow-wrap:anywhere;cursor:pointer}
+.seg button[aria-pressed="true"],.chip-btn[aria-pressed="true"]{border-color:var(--primary);box-shadow:inset 0 0 0 1px var(--primary);font-weight:600}
+.scr-settings .seg button,.scr-more .seg button{flex:1 1 max-content;min-width:0}
+.menu-btn,.lang-btn{background:var(--card);padding:8px;line-height:1.5}
+main .row:has(>.btn){flex-wrap:wrap;align-items:stretch}
+main :is(.row,.btn-row,.snap-btns)>.btn{flex:1 1 8rem;min-width:0;max-width:100%;min-height:52px !important;margin-top:0 !important;padding:12px 16px;font-size:1.0625rem;line-height:1.5}
+.scr-money [data-fin] .row>.btn{flex:1 1 8rem}
+.action-desk .task :is(.row,.btn-row){gap:10px;margin-top:12px}
+.goal-chips a.tag{min-height:44px;max-width:100%;padding:8px 10px;line-height:1.5;font-size:0.875rem;white-space:normal;overflow-wrap:anywhere}
+.btn:disabled,.cta:disabled,.seg button:disabled,.chip-btn:disabled{opacity:.55;cursor:not-allowed;box-shadow:none}
+
+/* Workspace links are in-flow navigation; the fixed bottom tab bar keeps its own geometry. */
+:root[data-design] .workspace-shortcuts{position:static;inset:auto;z-index:auto;display:block;max-width:none;margin:20px 0 24px;padding:0;border:0;background:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+.workspace-shortcuts h2{margin:0 0 12px;font-size:1rem}
+.quick-access-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,9rem),1fr));gap:12px}
+.shortcut-link{display:flex;align-items:center;min-width:0;min-height:52px;padding:12px 14px;background:var(--card);color:var(--ink);border:1px solid var(--rule);font-size:1rem;line-height:1.5;font-weight:500;text-align:start;text-decoration:none;overflow-wrap:anywhere}
+.goal-pick-group,.field-choices{min-width:0;margin:12px 0;padding:8px 12px 12px;border:1px solid var(--rule)}
+.goal-pick-group legend,.field-choices legend{max-width:100%;padding-inline:6px;font-size:1rem;font-weight:600;overflow-wrap:anywhere}
+:is(.goal-picker,.field-choices) .choice-row{display:flex;align-items:center;gap:12px;min-height:48px;max-width:100%;padding:10px 0;line-height:1.6;cursor:pointer;overflow-wrap:anywhere}
+:is(.goal-picker,.field-choices) .choice-row input[type="checkbox"]{flex:0 0 24px;width:24px;height:24px;min-height:24px;margin:0;padding:0;accent-color:var(--primary)}
+.goal-picker .goal-pick-child{margin-inline-start:16px}
+:root[data-design="light-futuristic"] body :is(.btn:not(.ghost),.cta){background:var(--primary);border-radius:12px}
+:root[data-design="light-futuristic"] body :is(.btn.ghost,.seg button,.chip-btn,.menu-btn,.lang-btn,.shortcut-link,.goal-pick-group){border-radius:12px}
+:root[data-design="light-futuristic"] .btn.ghost{background:color-mix(in srgb,var(--primary) 3%,var(--card))}
+:root[data-design] .action-desk-recommended .btn[data-act="task-done"]{background:var(--primary);color:var(--on-primary);border-color:var(--primary)}
+:root[data-design="emerald-obsidian"] :is(.shortcut-link,.goal-pick-group){border-radius:10px}
+@media (hover:hover){
+  .btn.ghost:hover,.shortcut-link:hover,.seg button:not([aria-pressed="true"]):hover,.chip-btn:not([aria-pressed="true"]):hover{background:color-mix(in srgb,var(--primary) 8%,var(--card))}
+  .btn:not(:disabled):hover,.cta:not(:disabled):hover{border-color:var(--primary)}
+}
+
+.field-choices .choice-row:has(input:checked){font-weight:600}

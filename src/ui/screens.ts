@@ -1,6 +1,7 @@
 import { todaysInspiration, THEME_LABEL } from "../library/inspiration";
 import { groupByHorizon, HORIZONS, type HorizonGoal } from "../core/horizon";
 import { h } from "./dom";
+import { inputFor } from "./fieldInput";
 import { t, tb, fmtNumber } from "../i18n/t";
 import type { Key } from "../i18n/packs";
 import { intlLocale, type Locale } from "../i18n/registry";
@@ -57,7 +58,7 @@ import { riskDueCard } from "./riskCard";
 import { printLink } from "./printLink";
 import { healthCard } from "./healthUi";
 import { deenReportCard, deenTodayCard } from "./deenPlansUi";
-import { greeting, profileCard } from "./profileCard";
+import { profileCard } from "./profileCard";
 import { blocksTodayCard, commitCard, currentBlocks } from "./blocksUi";
 import { toPlannerBlocks } from "../core/timeBlocks";
 import { moneyReviewCard, riskReviewCard } from "./monthUi";
@@ -1003,6 +1004,12 @@ function goalDateReminders(lang: Locale): HTMLElement | null {
     ...list.map((r) => h("p", { "data-goal-reminder": r.goalId }, t("remind.goal", lang, { title: r.title, date: r.targetDate }), " ", link(`#/journey/goal/${r.goalId}`, "crumb", t("remind.goal.open", lang)))));
 }
 
+function workspaceShortcuts(lang: Locale, screen: "today" | "journey", entries: HTMLElement[]): HTMLElement {
+  return h("section", { class: "quick-access workspace-shortcuts", "data-shortcuts": screen, "aria-labelledby": `${screen}-shortcuts-title` },
+    h("h2", { id: `${screen}-shortcuts-title`, class: "card-h" }, t("usability.shortcuts", lang)),
+    h("div", { class: "quick-access-grid" }, ...entries));
+}
+
 export function today(): HTMLElement {
   const lang = L(); const cp = currentPlan();
   const insp = todaysInspiration(new Date());
@@ -1021,9 +1028,15 @@ export function today(): HTMLElement {
     ...STAGES.map((_, i) => h("li", { class: i < curStage ? "done" : i === curStage ? "now" : "" })));
   return h("main", { class: "scr scr-today action-desk" },
     pausedCard(lang),
-    h("header", { class: "action-desk-header" }, greeting(lang),
+    h("header", { class: "action-desk-header", "data-workspace-header": "today" },
+      h("h1", {}, t("home.title", lang)),
       h("p", { class: "muted" }, activeNs() === "real" ? todayIso() : valueEl(tb(DEMO_DATE, lang), "DEMO", lang)),
-      h("div", { class: "logo-row" }, logo3d(32, lang), h("h1", {}, t("home.title", lang))), pauseChip(lang)),
+      pauseChip(lang)),
+    workspaceShortcuts(lang, "today", [
+      link("#/diary/plan", "shortcut-link", t("plan.title", lang)),
+      link("#/journey/goals", "shortcut-link", t("goals.link", lang)),
+      link("#/diary/money", "shortcut-link", t("money.title", lang)),
+      link("#/capture", "shortcut-link", t("capture.link", lang))]),
     // An already-visible recommended task owns its explanation and controls. An unscheduled
     // recommendation keeps one compact navigation band; never invent a placement for it.
     selectedVisible ? null : nextActionCard(lang, selected.action, true),
@@ -1037,8 +1050,7 @@ export function today(): HTMLElement {
       h("div", { class: "actions" },
         hasSetupAction ? null : link("#/diary/intake", "cta", t("home.start", lang)),
         link("#/habits", "btn ghost", t("habits.link", lang)),
-        link("#/stuck", "btn ghost", t("stuck.link", lang)),
-        link("#/capture", "btn ghost", t("capture.link", lang)))),
+        link("#/stuck", "btn ghost", t("stuck.link", lang)))),
     section("attention", "desk.attention", riskDueCard(lang, "today"), gateDueCard(lang, stageData().passed, "today"),
       remindersTodayCard(lang), missedTodayCard(lang), goalDateReminders(lang), backupReminderCard(lang)),
     section("context", "desk.context", welcomeBackCard(lang), movedNoteCard(lang),
@@ -1121,6 +1133,11 @@ export function journey(): HTMLElement {
   const lang = L();
   const cur = currentIndex(stageData().passed);
   const stage = stagesFor(prefs.stageTemplate)[cur];
+  const goalsCard = journeyGoalsCard(lang);
+  // Move the existing launch into the first tools row so Goals stays a single entry.
+  const goalsLink = goalsCard.querySelector<HTMLAnchorElement>('a[href="#/journey/goals"]')
+    ?? link("#/journey/goals", "shortcut-link", t("goals.link", lang));
+  goalsLink.className = "shortcut-link";
   const toolGroup = (group: "plan" | "review" | "explore", routes: Array<[string, Key]>) =>
     h("section", { class: "tool-group", "data-tool-group": group, "aria-labelledby": `journey-tools-${group}` },
       h("h2", { class: "card-h", id: `journey-tools-${group}` }, t(`desk.tools.${group}` as Key, lang)),
@@ -1132,7 +1149,8 @@ export function journey(): HTMLElement {
       h("h2", { class: "card-h" }, t("stage.currentLabel", lang)),
       stage ? valueEl(`${stage.code} · ${tb(stage.name, lang)}`, activeNs() === "real" ? "ESTIMATE" : "DEMO", lang)
         : h("p", {}, t("stage.alldone", lang))),
-    journeyGoalsCard(lang),
+    workspaceShortcuts(lang, "journey", [link("#/diary/plan", "shortcut-link", t("plan.title", lang)), goalsLink]),
+    goalsCard,
     goalFunnelHero(ownHorizonGoals(), (() => { const tk = allRecs().filter((r) => r.entity === "task"); return tk.length ? tk.filter(isOpenTask).length : null; })(), lang),
     h("div", { class: "journey-tools" },
       toolGroup("plan", [["#/journey/boards", "bd.link"], ["#/journey/horizon", "horizon.link"], ["#/journey/decide", "dec.link"], ["#/journey/risks", "risk.link"], ["#/journey/reality", "rl.link"], ["#/journey/northstar", "ns.link"], ["#/journey/kpi", "kpi.link"]]),
@@ -1177,38 +1195,6 @@ export function diary(): HTMLElement {
     disclaimers(lang));
 }
 
-function inputFor(f: FieldDef, lang: Locale, cur: FieldValue | undefined): { el: HTMLElement; read: () => FieldValue | null | "invalid" | "secret" } {
-  const unkSel = h("select", { "aria-label": t("intake.valueFor", lang), "data-role": "state" },
-    h("option", { value: "value" }, t("intake.valueFor", lang)),
-    ...f.unknownStates.map((u) => h("option", { value: u }, t(`unknown.${u}` as Key, lang))));
-  if (cur && cur.state !== "value") unkSel.value = cur.state;
-  let input: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
-  const curVal = cur && cur.state === "value" ? String(cur.value) : "";
-  if (f.options) {
-    input = h("select", { id: `f-${f.id}` }, h("option", { value: "" }, t("intake.choose", lang)), ...f.options.map((o) => h("option", { value: o.code }, tb(o.label, lang))));
-  } else if (f.type === "number" || f.type === "money") {
-    input = h("input", { id: `f-${f.id}`, type: "text", inputmode: "decimal" });
-  } else if (f.type === "date") {
-    input = h("input", { id: `f-${f.id}`, type: "date" });
-  } else {
-    input = h("input", { id: `f-${f.id}`, type: "text", maxlength: /\.(note|entry|evidence)$/.test(f.id) ? "200" : "80", autocomplete: "off" });
-  }
-  input.value = curVal;
-  const el = h("div", {}, input, f.unknownStates.length ? h("div", { class: "unk" }, unkSel) : null);
-  const read = (): FieldValue | null | "invalid" | "secret" => {
-    const st = f.unknownStates.length ? (unkSel.value as UnknownState | "value") : "value";
-    if (st !== "value") return { state: st };
-    const raw = input.value.trim();
-    if (raw === "") return null; // left blank → stays unanswered (never 0)
-    if (f.type === "number" || f.type === "money") {
-      const n = Number(raw.replace(/,/g, "").replace(/[০-৯]/g, (c) => String(c.charCodeAt(0) - 0x09e6)));
-      return Number.isFinite(n) ? { state: "value", value: n, label: "DEMO" } : "invalid";
-    }
-    if (f.type === "text") { if (!checkFreeText(raw).ok) return "secret"; }
-    return { state: "value", value: raw, label: "DEMO" };
-  };
-  return { el, read };
-}
 
 /** Own options and saved results live in the active mode: demo in demo, real in real (writes need the tick). Reads in real mode without the tick find nothing. */
 const listStore = () => (prefs.dataMode === "real" ? store.real : store.demo);
