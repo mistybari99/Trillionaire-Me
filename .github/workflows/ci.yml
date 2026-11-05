@@ -19,6 +19,8 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - name: Work plan integrity
+        run: node tools/check_plan.mjs
       - name: Types
         run: npx tsc --noEmit
       - name: Unit tests

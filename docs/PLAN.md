@@ -1,36 +1,9 @@
-# PLAN (living) — updated 24 Oct 2026
+# Plan and decision entry point
 
-> Master sequence now lives in `docs/ROADMAP.md`. This file keeps owner decisions and gate status.
+Updated 5 Nov 2026. Use the [active tracker](plan/PLAN_TRACKER.md) for status, [next queue](TODO.md) for immediate order, [roadmap](ROADMAP.md) for delivery phases, and [current audit](audit/REPOSITORY_AUDIT_2026-11-05.md) for findings and evidence.
 
-## Owner decisions added this session
-- **Hosting:** static site on a free host (Cloudflare Pages recommended, private repo). Works as installable PWA; offline after first visit; internet only for search/AI/cloud features. Not published yet — owner connects the host account.
-- **Languages:** English / Bangla switch; Bangla keeps common English words (Demo, Backup, Online…).
-- **In-app search:** user taps "suggest" → 2–3 cards inside the app → tap fills the field. Engine order: Wikipedia (no key) first, Google later via Supabase edge function (owner approval for key/cap).
-- **Database:** none needed for personal use (data stays on phone, IndexedDB). Supabase free project = optional cloud backup later (D-B approval).
-- **Staff/customer edition** (owner sees others' entries): separate, later (G8), needs consent + per-user isolation + legal review. Personal edition first.
+Authority: direct owner instructions and approved decisions, then canonical spec, Register, handoff and visual reference. The original [24 Oct plan snapshot](plan/archive/PLAN_2026-11-03.md) is history; its gate counts and hosting instructions are not current status.
 
-## Gate status
-| Gate | State |
-|---|---|
-| G0 | frozen by owner |
-| G1 | built, evidence in `evidence/`; open: usability sessions, Bangla review |
-| G2 | repo+Dexie ✅, backup/restore ✅, op-queue/conflict rules ✅; **next:** app on IndexedDB, PNG install icons, notifications privacy, PWA-vs-native note; owner: real-phone airplane test |
-| G3 | in progress: scheduler, goal tree, finance maths, stage rules + journey log ✅ wired (Time & tasks, Money, Journey, Journey log). Open: assessment scoring, path fit + opportunity library, reality-changed loop, 90-day review, editable stage templates |
-| G4 | in progress: Wikipedia provider ✅, option cards on 5 intake fields ✅; open: own-options list, saved offline list, more screens |
-| G5 | Deen content verification (needs D-D) |
-| G6 | AI/automation (needs D-C) |
-| G7 | privacy/legal/real data (needs D-B) |
-| G8 | pilot, PC, staff edition, public edition |
+Current boundaries: PWA/strict TypeScript; local IndexedDB; real entries only after device consent (D-B approved 25 Oct); Light Futuristic default with other looks selectable. Existing Wikipedia search is user initiated; the separately approved prayer-time update sends limited place/settings only after opt-in. No AI, paid provider, cloud record sync or public/staff edition is enabled by this audit.
 
-## Life Success brief — selective (docs/design/life-system-integration.md)
-Only what fits the running app: "I'm stuck" flow → habits without streaks → weekly review/missed-day reasons → goal tree view/skill gap. The big library/tags/20-category build is parked.
-
-## Status 24 Oct 2026
-- Tests: 163 unit passing, TypeScript clean, build OK, e2e 36 PASS / 0 FAIL, 60 screenshots no horizontal overflow.
-- R1 (ROADMAP §4): daily inspiration card with theme chip, bilingual, calm fade-in (reduced-motion safe) — done. Next-step highlight (B6) still open.
-- Register rows NOT changed in this pass (update_register.py needs input files; evidence JSON only).
-
-## Next actions (updated 1 Nov 2026; see docs/TODO.md for the live list)
-Done: IndexedDB storage, PNG icons and manifest, notification privacy, PWA-vs-native note, hosting guide, G3 and G4 work, data safety (Block 9).
-Now: Block 10 in docs/TODO.md (onboarding, owner phone checklist, usability kit, bundle split, Bangladesh starter pack draft, Bangla review sheet).
-Owner-only: phone offline and lock-screen tests, prayer-time check, Bangla review, approvals D-C and D-D, hosting account.
+Hosting is already connected through an existing Cloudflare Worker, not a pending Pages setup. See the audit's deployment table. Physical phone, language, religious/content and usability acceptance remain separate human gates; no build-gate completion is inferred from feature counts.
