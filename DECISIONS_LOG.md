@@ -760,3 +760,13 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 - Alternatives: keep the pass-1 words (rejected by the owner); one blanket swap for ব্যক্তিগত (rejected: privacy, personal money and "my own note" need different words); hand-edit about 1000 strings (rejected: errors, no log).
 - All Bangla stays "যাচাই হয়নি" until TM-TST-161; no Register status changes.
 - How to undo: `git revert` the three pass-2 commits (newest first). To undo one word: change or delete its rule in `tools/bangla_plain_rules.json` (ids `W2-*`, `W3-*`, `W4-*`, `P2-*`), restore the old text by hand or from `docs/design/bangla-plain-change-log.json` (each entry has before and after), and remove its pair from `MIX_TERMS` and `tests/fixtures/bangla_banned.json`. Rule `W2-17/18` (ব্যক্তিগত) and `W2-29` (মাপকাঠি) are the two the owner may want back first.
+
+## 5 Nov 2026 — Repository audit and a single active work list
+
+- Owner instruction: implement the proposed audit and work-organization plan for this repository, including its existing GitHub work. Scope is audit, documentation, task organization and a separate review PR; feature fixes and production deployment are follow-ups.
+- Decision: `docs/plan/PLAN_TRACKER.md` is the only active status list. TODO selects next work; ROADMAP groups phases. Preserve all previous detailed plans in exact dated snapshots and preserve task IDs through `legacy-task-map.json`. Group repeated descriptions into work packages, retaining every archived acceptance item for later verification.
+- Why: the old introduction/inventory still said Settings/CI were missing, hosting was marked pending, and old PR descriptions no longer represented the delivered code. Current successful tests do not establish owner/reviewer acceptance or cover the reproduced failure paths.
+- Alternatives: keep editing three overlapping checklists (continued drift), or delete old plans (loss of decisions/evidence). Both rejected. Existing module/evidence inventories remain dated evidence; no invented whole-product completion percentage.
+- Evidence: audit of application commit `6136ba8`; 1,941 unit tests and 88 Chromium checks pass; types/build pass. AUD-01/AUD-02 failure paths reproduced separately. No physical-device or live-provider claim.
+- Hosting: read-only verification confirms existing Worker `trillionaire-me` and successful build of `6136ba8`; preserve its branch and connection. No merge, deploy, account/DNS or paid-service change. The audit PR must target the existing app branch, and its merge would auto-deploy.
+- Undo: revert this audit/organization commit. Restore the old plan files from the preserved snapshots if needed. No app data/schema migration, source behavior or original Register v2_0 changes to undo.

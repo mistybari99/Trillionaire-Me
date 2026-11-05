@@ -41,3 +41,15 @@ Findings
 
 ## Builder update - 3 Nov 2026 (after check #3, owner "start the remaining work now")
 Closed: G3-01 (M18 boards), G3-02 (backward wizard, calm colour), G3-03 (three tests), G3-04 (looks evidence, images opened), G3-06 (in-app Where we are), G3-08 (superseded audit files), branding (N3-23). Rows SET-1.05, SET-2.T3, SET-R.09, AU-21, AU-22, AU-23, B12-22, N3-06, N3-10 moved to Built+Linked+Tested. The 59 "Built" rows and every "4L ?" row now carry a looks reference or "n/a (no screen)" or "not in matrix". New rows N4-01..N4-08. Modules: 22 complete, 2 partial (M09, M21), 1 blocked (M23). Still open: M09 unit economics (no fields in the documents), M21 encryption (owner), M23 AI (D-C), owner-only tasks (G3-10).
+
+## Check #4 — 5 Nov 2026 (audited app HEAD `6136ba8`)
+
+Owner requested implementation of the audit/organization plan. Cloned the repository, read source-of-truth spec/Register/handoff/charter, inspected all remote branches and both open PRs, and read Cloudflare build/deployment metadata. No production mutation.
+
+- Found and reproduced restore failed-rollback reassurance (AUD-01) and incomplete required precache install (AUD-02); reviewed cross-namespace Go back gap (AUD-03). Findings and acceptance tasks are in `docs/audit/REPOSITORY_AUDIT_2026-11-05.md`.
+- Moved the previous tracker/TODO/roadmap/plan into byte-identical dated snapshots under `docs/plan/archive/`. Verified all four against `git show 6136ba8:<original path>` before recording SHA-256 hashes. They are historical evidence, not current status lists.
+- Consolidated into 27 active work packages. `legacy-task-map.json` retains all 213 original task IDs and adds explicit references for 10 reminder steps and 10 G3 prose gaps. Work descriptions with multiple old IDs share a package; their acceptance detail is preserved in the archive. Historical completions require re-verification, not automatic promotion.
+- Corrected current documentation for existing Workers hosting and runtime network exceptions. The in-app `WHERE_WE_ARE_BN.md` content was intentionally left unchanged in this documentation-only app scope; its stale hosting item is part of VERIFY-01. The separate dated owner audit summary is current and linked from README.
+- Verified baseline: strict types pass, 1,941 tests / 158 files pass, production build passes (hadith chunk warning), Chromium browser checks 88 pass / 0 fail. Physical phone, reviewer acceptance, live prayer provider and a fresh screenshot matrix remain open. No Register rows promoted.
+- `node tools/check_plan.mjs` passes for IDs, status vocabulary, dependencies, legacy coverage, snapshot hashes and 54 local links. Added this read-only check to CI; it works without git history in shallow clones.
+- Routine browser-generated `evidence/e2e-report.json` restored; dated run observations copied to `docs/audit/evidence/2026-11-05.json` instead. App source, runtime configuration, lockfile, tests and original Register remain unchanged.
