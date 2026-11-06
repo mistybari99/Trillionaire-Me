@@ -1,4 +1,5 @@
 import "./ui/styles.css";
+import "./ui/kit.css";
 import { render, renderApp } from "./app";
 import { applyPrefs, initStorage, repairListNamespaces, saveMonitor } from "./ui/state";
 import { updateNetBadge } from "./ui/net";

@@ -21,8 +21,8 @@ export function consentGate(lang: Locale): HTMLElement {
   return h("div", { class: "card", "data-consent": "real" },
     h("h2", { class: "card-h" }, t("data.consent.title", lang)),
     h("p", {}, t("data.consent.p1", lang)), h("p", {}, t("data.consent.p2", lang)), h("p", {}, t("data.consent.p3", lang)), h("p", {}, t("data.consent.p4", lang)),
-    h("label", { style: "display:flex;gap:8px;align-items:center;margin:8px 0" }, h("input", { type: "checkbox", id: "consent-tick", style: "width:24px;margin:0" }), t("data.consent.tick", lang)),
-    h("button", { class: "btn", type: "button", "data-act": "consent", style: "min-height:44px", onclick: () => {
+    h("label", { class: "k-check" }, h("input", { type: "checkbox", id: "consent-tick" }), t("data.consent.tick", lang)),
+    h("button", { class: "btn", type: "button", "data-act": "consent", onclick: () => {
       const tick = document.getElementById("consent-tick") as HTMLInputElement | null;
       if (!tick?.checked) { missingTick = true; rerender(); return; }
       missingTick = false; grantRealConsent(); rerender();

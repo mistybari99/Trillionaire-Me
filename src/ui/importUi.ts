@@ -19,7 +19,7 @@ export function resetImportState() { pending = null; notice = null; }
 
 export function importCard(lang: typeof prefs.lang): HTMLElement {
   const file = h("input", { id: "csv-file", type: "file", accept: ".csv,text/csv", "data-act": "csv-file" }) as HTMLInputElement;
-  const check = h("button", { class: "btn ghost", type: "button", "data-act": "csv-check", style: "width:auto;min-height:44px", onclick: async () => {
+  const check = h("button", { class: "btn ghost btn-sm", type: "button", "data-act": "csv-check", onclick: async () => {
     const f = file.files?.[0]; if (!f) { notice = { key: "imp.nofile" }; pending = null; rerender(); return; }
     let text = ""; try { text = await f.text(); } catch { notice = { key: "imp.unreadable" }; pending = null; rerender(); return; }
     pending = planImport(text, store); notice = null; rerender();
@@ -33,17 +33,17 @@ export function importCard(lang: typeof prefs.lang): HTMLElement {
     ? h("div", { "data-imp-ready": p.ns },
       h("p", {}, t("imp.ready", lang, { n: num(p.records.length, lang), s: num(p.skipped.length, lang), ns: t(p.ns === "real" ? "badge.real" : "badge.demo", lang) })),
       realBlocked ? h("p", { class: "muted", "data-imp-locked": "1" }, t("imp.locked", lang)) : null,
-      h("button", { class: "btn", type: "button", "data-act": "csv-import", style: "min-height:44px", ...(realBlocked || !p.records.length ? { disabled: true } : {}), onclick: () => {
+      h("button", { class: "btn", type: "button", "data-act": "csv-import", ...(realBlocked || !p.records.length ? { disabled: true } : {}), onclick: () => {
         const r = applyImport(store, p, consentKv, consentKv, p.ns === "real" ? REAL_OWNER : "demo-user");
         pending = null; notice = r.ok ? { key: "imp.done", vars: { n: String(r.added) } } : { key: r.reason === "needs_consent" ? "imp.locked" : "imp.nothing" }; rerender();
       } }, t("imp.go", lang))) : null;
   const last = lastImport(consentKv);
   const undo = last ? h("div", { "data-imp-undo": last.ns }, h("p", { class: "muted" }, t("imp.last", lang, { n: num(last.ids.length, lang), ns: t(last.ns === "real" ? "badge.real" : "badge.demo", lang) })),
-    h("button", { class: "btn ghost", type: "button", "data-act": "csv-undo", style: "width:auto;min-height:44px", onclick: () => { const n = undoImport(store, consentKv); notice = { key: "imp.undone", vars: { n: String(n) } }; rerender(); } }, t("imp.undo", lang))) : null;
+    h("button", { class: "btn ghost btn-sm", type: "button", "data-act": "csv-undo", onclick: () => { const n = undoImport(store, consentKv); notice = { key: "imp.undone", vars: { n: String(n) } }; rerender(); } }, t("imp.undo", lang))) : null;
   return h("section", { class: "card", "data-card": "csv-import" }, h("h2", { class: "card-h" }, t("imp.title", lang)), h("p", { class: "muted" }, t("imp.note", lang)),
     h("label", { for: "csv-file" }, t("imp.file", lang)), file, check, errs, ready,
     notice ? h("p", { role: "status", "data-imp-notice": notice.key }, t(notice.key, lang, notice.vars ?? {})) : null, undo,
-    h("a", { href: "#/more/dictionary", class: "btn ghost", style: "width:auto;min-height:44px" }, t("dict.link", lang)));
+    h("a", { href: "#/more/dictionary", class: "btn ghost btn-sm" }, t("dict.link", lang)));
 }
 
 export function dictionaryScreen(): HTMLElement {

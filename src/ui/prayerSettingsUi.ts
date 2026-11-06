@@ -20,10 +20,10 @@ export function prayerMethodCard(lang: Locale): HTMLElement {
   const cur = parsePrayerSettings(prefs.prayerSettings);
   const save = (next: PrayerSettings) => { prefs.prayerSettings = next; rerender(); };
   const opt = (v: string, label: string, on: boolean) => h("option", { value: v, ...(on ? { selected: true } : {}) }, label);
-  const method = h("select", { id: "pm-method", "data-prayer-method-select": "1", style: "min-height:44px" },
+  const method = h("select", { id: "pm-method", "data-prayer-method-select": "1" },
     ...METHOD_IDS.map((m) => opt(m, t(`deen.method.${m}` as Key, lang), cur.method === m))) as HTMLSelectElement;
   method.addEventListener("change", () => save({ ...cur, method: parsePrayerSettings({ method: method.value }).method }));
-  const asr = h("select", { id: "pm-asr", "data-prayer-asr-select": "1", style: "min-height:44px" },
+  const asr = h("select", { id: "pm-asr", "data-prayer-asr-select": "1" },
     opt("standard", t("deen.asr.standard", lang), cur.asr === "standard"), opt("hanafi", t("deen.asr.hanafi", lang), cur.asr === "hanafi")) as HTMLSelectElement;
   asr.addEventListener("change", () => save({ ...cur, asr: asr.value === "hanafi" ? "hanafi" : "standard" }));
   const offs = PRAYER_KEYS.map((k) => {
@@ -31,7 +31,7 @@ export function prayerMethodCard(lang: Locale): HTMLElement {
     inp.addEventListener("change", () => { const n = Number(inp.value); save({ ...cur, offsets: { ...cur.offsets, [k]: Number.isInteger(n) && Math.abs(n) <= MAX_OFFSET_MIN ? n : 0 } }); });
     return h("div", { class: "row" }, h("label", { for: `pm-off-${k}` }, t(`deen.prayer.name.${k}` as Key, lang)), inp);
   });
-  const reset = h("button", { class: "btn ghost", type: "button", "data-act": "prayer-method-reset", style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => save(parsePrayerSettings(null)) }, t("deen.set.methodReset", lang));
+  const reset = h("button", { class: "btn ghost btn-sm", type: "button", "data-act": "prayer-method-reset", onclick: () => save(parsePrayerSettings(null)) }, t("deen.set.methodReset", lang));
   return h("div", { class: "card", "data-prayer-method-card": "1" },
     h("h2", { class: "card-h" }, t("deen.set.methodTitle", lang)),
     h("p", { class: "note", "data-prayer-verify": "1" }, t("deen.set.verify", lang)),
@@ -57,7 +57,7 @@ export function prayerSettingsCard(lang: Locale): HTMLElement {
     if (!consentOn()) { err.textContent = saveBlockedText(lang); return; } // a typed place is personal data: real mode needs the tick
     save({ lat: la, lon: lo });
   });
-  const dhaka = h("button", { class: "btn ghost", type: "button", "data-act": "prayer-dhaka", style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => save({ ...DHAKA_COORDS }) }, t("deen.set.dhaka", lang));
+  const dhaka = h("button", { class: "btn ghost btn-sm", type: "button", "data-act": "prayer-dhaka", onclick: () => save({ ...DHAKA_COORDS }) }, t("deen.set.dhaka", lang));
   const onOff = (label: Key, active: boolean, on: () => void) => h("button", { type: "button", "aria-pressed": String(active), onclick: on }, t(label, lang));
   const setAlerts = (next: typeof alerts) => { prefs.prayerAlerts = next; rerender(); };
   const toggle = (key: "preAlert" | "azan") => (on: boolean) => {
@@ -93,7 +93,7 @@ export function prayerSettingsCard(lang: Locale): HTMLElement {
     h("p", { class: "muted", "data-sound-note": "1", "data-azan-file": hasAzan ? "yes" : "no" }, t(hasAzan ? "deen.set.soundNote" : "deen.set.soundNoFile", lang)),
     h("label", { for: "azan-vol" }, t("deen.set.volume", lang), ": ", String(alerts.volume)),
     vol,
-    h("button", { class: "btn ghost", type: "button", "data-act": "azan-preview", style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => { if (!previewAzan("dhuhr")) note.textContent = t(hasAzan ? "deen.set.previewSilent" : "deen.set.previewNone", lang); } }, t("deen.set.preview", lang)),
+    h("button", { class: "btn ghost btn-sm", type: "button", "data-act": "azan-preview", onclick: () => { if (!previewAzan("dhuhr")) note.textContent = t(hasAzan ? "deen.set.previewSilent" : "deen.set.previewNone", lang); } }, t("deen.set.preview", lang)),
     note,
     h("p", { class: "muted", "data-azan-doc": "1" }, t("deen.set.azanDoc", lang)),
     h("p", { class: "muted" }, t("deen.set.defaultNote", lang)),

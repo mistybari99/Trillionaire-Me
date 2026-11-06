@@ -56,13 +56,13 @@ function assumptionRow(it: AssumptionItem, lang: Locale): HTMLElement {
   const shown = v.state === "value" ? (v.unit === "hours_week" ? t("mo.asm.hours", lang, { h: fmtNumber(v.value, lang) }) : t("mo.asm.bdt", lang, { v: bdt(v.value, lang) }))
     : t(`mo.asm.why.${v.why}` as Key, lang);
   const msg = h("p", { class: "err", role: "alert" });
-  const still = h("button", { class: "btn ghost", type: "button", "data-act": "asm-still", "data-asm": it.key, style: "width:auto;margin:6px 6px 0 0;min-height:44px" }, t("mo.asm.still", lang));
+  const still = h("button", { class: "btn ghost btn-sm", type: "button", "data-act": "asm-still", "data-asm": it.key }, t("mo.asm.still", lang));
   still.addEventListener("click", () => {
     if (!entryNs()) { msg.textContent = saveBlockedText(lang); return; }
     const base = assumptionLog({ id: `asm-${it.key}-${Date.now().toString(36)}`, key: it.key, text: t("mo.asm.logged", lang, { what: t(`mo.asm.${it.key}` as Key, lang), date: todayIsoKpi() }), createdAt: new Date().toISOString() });
     putMode(base); rerender();
   });
-  const change = h("button", { class: "btn ghost", type: "button", "data-act": "asm-change", "data-asm": it.key, style: "width:auto;margin:6px 0 0;min-height:44px" }, t("mo.asm.change", lang));
+  const change = h("button", { class: "btn ghost btn-sm", type: "button", "data-act": "asm-change", "data-asm": it.key }, t("mo.asm.change", lang));
   change.addEventListener("click", () => {
     const id = `ev-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`;
     const ev = eventRecord({ id, kind: ASSUMPTION_EVENT[it.key], note: t("mo.asm.eventNote", lang, { what: t(`mo.asm.${it.key}` as Key, lang) }).slice(0, 200), on: todayIsoKpi(), goalId: null, createdAt: new Date().toISOString() });

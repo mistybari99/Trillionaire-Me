@@ -72,7 +72,7 @@ export function commitCard(lang: Locale, freeHours: number | null): HTMLElement 
     r.from !== null ? h("span", { class: "muted" }, ` · ${fmtClock(r.from)}–${fmtClock(r.to!)}`) : null,
     r.prayerMinutes !== null ? h("span", { class: "muted" }, ` · ${t("blk.minutes.n", lang, { m: fmtNumber(r.prayerMinutes, lang) })}`) : null,
     r.kind === "prayer" && r.prayerMinutes === null ? h("span", { class: "muted" }, ` · ${t("blk.prayer.nominutes", lang)}`) : null,
-    r.fromDiary ? null : h("button", { class: "btn ghost", type: "button", "data-remove": r.id, style: "width:auto;margin:0 0 0 8px;min-height:44px", onclick: () => { store[activeNs()].delete(r.id); rerender(); } }, t("risk.remove", lang))));
+    r.fromDiary ? null : h("button", { class: "btn ghost btn-sm", type: "button", "data-remove": r.id, onclick: () => { store[activeNs()].delete(r.id); rerender(); } }, t("risk.remove", lang))));
   const days = [0, 1, 2, 3, 4, 5, 6].map((i) => { const d = new Date(); d.setDate(d.getDate() + i); return d; });
   const byDate = new Map<string, TimeBlock[]>(); for (const b of week.blocks) byDate.set(b.date, [...(byDate.get(b.date) ?? []), b]);
   const dateOf = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;

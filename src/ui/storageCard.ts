@@ -14,7 +14,7 @@ export function persistIfReal(): void { if (readConsent(consentKv)) askPersisten
 export function storageCard(lang: Locale): HTMLElement {
   const status = h("p", { "data-storage": "persisted" }, t("store.checking", lang));
   const usage = h("p", { class: "muted", "data-storage": "usage" }, "");
-  const ask = h("button", { class: "btn ghost", type: "button", "data-act": "storage-persist", style: "width:auto;min-height:44px", onclick: async () => { await requestPersist(nav()); void paint(); } }, t("store.ask", lang));
+  const ask = h("button", { class: "btn ghost btn-sm", type: "button", "data-act": "storage-persist", onclick: async () => { await requestPersist(nav()); void paint(); } }, t("store.ask", lang));
   const paint = async () => {
     const s = await readStorageStatus(nav());
     status.textContent = s.persisted === null ? t("store.persist.unknown", lang) : t(s.persisted ? "store.persist.yes" : "store.persist.no", lang);

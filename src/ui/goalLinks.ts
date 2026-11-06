@@ -37,7 +37,7 @@ export function goalPicker(recs: readonly TMRecord[], initial: readonly string[]
       shown.length ? h("div", { class: "chips", role: "group", "aria-label": t("gl.pick.label", lang) }, ...shown.map((r) => {
         const set = inBranch(r); const on = ids.some((x) => set.has(x));
         const status = goalStatusOf(byId.get(r.id)!);
-        return h("button", { type: "button", class: "chip-btn", "aria-pressed": String(on), "data-goal-chip": r.id, style: "min-height:44px", title: r.title, onclick: () => {
+        return h("button", { type: "button", class: "chip-btn", "aria-pressed": String(on), "data-goal-chip": r.id, title: r.title, onclick: () => {
           if (on) ids = ids.filter((x) => !set.has(x));
           else { if (ids.length >= MAX_GOALS) { draw(); note.textContent = t("gl.pick.max", lang, { n: String(MAX_GOALS) }); return; } ids = [...ids, r.id]; }
           draw();
@@ -67,7 +67,7 @@ export function goalChips(step: TMRecord, lang: Locale, recs: readonly TMRecord[
   const title = (g: TMRecord) => String((g.values["goal.title"] as { value?: unknown } | undefined)?.value ?? "");
   const live = goalIdsOf(step).filter((id) => goals.has(id) && id !== opts.exclude).map((id) => goals.get(id)!).sort((a, b) => title(a).localeCompare(title(b)) || a.id.localeCompare(b.id));
   const gone = opts.exclude ? [] : danglingGoalIdsOf(step, new Set(goals.keys()));
-  const goneEl = gone.length ? h("span", { class: "muted", "data-dangling": step.id }, t("gl.dangling", lang), " ", h("button", { type: "button", class: "btn ghost", "data-act": "remove-dangling", style: "width:auto;margin:0;min-height:44px", onclick: () => {
+  const goneEl = gone.length ? h("span", { class: "muted", "data-dangling": step.id }, t("gl.dangling", lang), " ", h("button", { type: "button", class: "btn ghost btn-sm", "data-act": "remove-dangling", onclick: () => {
     const cur = findRec(step.id); if (!cur) return; storeOf(cur).put(withGoals(cur, goalIdsOf(cur).filter((x) => !gone.includes(x)))); window.dispatchEvent(new HashChangeEvent("hashchange"));
   } }, t("gl.dangling.fix", lang))) : null;
   if (!live.length) return opts.exclude ? null : h("span", { class: "goal-chips" }, gone.length ? goneEl : h("a", { href: "#/diary/plan", class: "chip-link muted", "data-link-goal": step.id }, t("gl.chip.link", lang)));

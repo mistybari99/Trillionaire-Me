@@ -15,16 +15,16 @@ export function saveFailedBanner(lang: Locale): HTMLElement | null {
   const rerender = () => window.dispatchEvent(new HashChangeEvent("hashchange"));
   return h("aside", { class: "card", role: "alert", "data-save-failed": "1" },
     h("h2", { class: "card-h" }, t("save.fail.title", lang)), h("p", {}, t("save.fail.text", lang)),
-    h("button", { class: "btn ghost", type: "button", "data-act": "save-retry", style: "width:auto;margin:0 8px 0 0;min-height:44px", onclick: () => {
+    h("button", { class: "btn ghost btn-sm", type: "button", "data-act": "save-retry", onclick: () => {
       saveMonitor.retry();
       setTimeout(() => { if (saveMonitor.hasFailure) { msg.textContent = t("save.fail.retryStill", lang); } else { rerender(); } }, 400);
     } }, t("save.fail.retry", lang)),
-    h("button", { class: "btn", type: "button", "data-act": "save-backup", style: "width:auto;margin:0;min-height:44px", onclick: async () => {
+    h("button", { class: "btn btn-sm", type: "button", "data-act": "save-backup", onclick: async () => {
       const f = await buildSnapshotFile(new StoreRepo(store), readConsent(consentKv));
       const a = h("a", { href: URL.createObjectURL(new Blob([JSON.stringify(f)], { type: "application/json" })), download: `tm-backup-${f.createdAt.slice(0, 10)}.json` });
       document.body.append(a); a.click(); a.remove();
       markBackupFile(f.real?.count ?? 0);
       msg.textContent = t("save.fail.backupDone", lang);
     } }, t("save.fail.backup", lang)),
-    h("a", { href: "#/settings/backup", class: "btn ghost", "data-act": "save-open-backup", style: "width:auto;margin:0 0 0 8px;min-height:44px" }, t("set.cat.backup", lang)), msg);
+    h("a", { href: "#/settings/backup", class: "btn ghost btn-sm", "data-act": "save-open-backup" }, t("set.cat.backup", lang)), msg);
 }

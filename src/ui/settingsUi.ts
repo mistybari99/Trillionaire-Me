@@ -141,7 +141,7 @@ function versionCard(lang: Locale): HTMLElement {
   const msg = h("p", { class: "muted", role: "status", "data-version-msg": "1" });
   return h("section", { class: "card", "data-card": "version" }, h("h2", { class: "card-h" }, t("upd.about.title", lang)),
     h("p", { "data-version": "1" }, t("upd.about.line", lang, { v: stampLine(BUILD, MONTHS) })), saved, h("p", { class: "muted" }, t("upd.about.safe", lang)),
-    h("button", { class: "btn ghost", type: "button", "data-act": "check-update", style: "min-height:44px", onclick: async () => {
+    h("button", { class: "btn ghost", type: "button", "data-act": "check-update", onclick: async () => {
       msg.textContent = t("upd.about.checking", lang);
       try { const reg = await navigator.serviceWorker?.getRegistration(); if (reg) await reg.update(); msg.textContent = t(reg?.waiting ? "upd.about.found" : "upd.about.latest", lang); } catch { msg.textContent = t("upd.about.latest", lang); }
     } }, t("upd.about.check", lang)), msg);
@@ -149,7 +149,7 @@ function versionCard(lang: Locale): HTMLElement {
 
 function aboutPage(row: string | undefined, lang: Locale): HTMLElement {
   const welcome = h("div", { class: "card", "data-setting-row": "welcome" }, h("h3", { class: "card-h" }, t("set.row.welcome", lang)), h("p", { class: "muted" }, t("set.about.welcome", lang)),
-    h("button", { class: "btn ghost", type: "button", "data-act": "welcome-again", style: "min-height:44px", onclick: () => { resetOnboard(); prefs.onboard = "pending"; location.hash = "#/start"; rerender(); } }, t("set.open", lang)));
+    h("button", { class: "btn ghost", type: "button", "data-act": "welcome-again", onclick: () => { resetOnboard(); prefs.onboard = "pending"; location.hash = "#/start"; rerender(); } }, t("set.open", lang)));
   const main = h("main", { class: "scr scr-settings", "data-settings": "about" },
     link("#/settings", "crumb", `← ${t("nav.settings", lang)}`), h("h1", {}, t(CAT_LABEL.about, lang)), h("p", { class: "muted" }, t("set.about.note", lang)),
     versionCard(lang), ...GUIDES.map((g) => link(g.route, "card link", h("h3", { class: "card-h" }, t(g.label, lang)), h("p", { class: "muted" }, t(g.desc, lang)))), welcome);
@@ -182,6 +182,6 @@ export function movedNoteCard(lang: Locale, now = new Date()): HTMLElement | nul
   else if (now.getTime() - Date.parse(v) > MOVED_NOTE_DAYS * 86400_000) return null;
   const done = () => { prefs.movedNote = "done"; };
   return h("aside", { class: "card", role: "status", "data-moved-note": "1" }, h("p", {}, t("set.moved.text", lang)),
-    h("a", { href: "#/settings", class: "btn", "data-act": "moved-open", style: "width:auto;margin:0;min-height:44px", onclick: done }, t("set.moved.open", lang)),
-    h("button", { class: "btn ghost", type: "button", "data-act": "moved-ok", style: "width:auto;margin:0 0 0 8px;min-height:44px", onclick: () => { done(); rerender(); } }, t("set.moved.ok", lang)));
+    h("a", { href: "#/settings", class: "btn btn-sm", "data-act": "moved-open", onclick: done }, t("set.moved.open", lang)),
+    h("button", { class: "btn ghost btn-sm", type: "button", "data-act": "moved-ok", onclick: () => { done(); rerender(); } }, t("set.moved.ok", lang)));
 }

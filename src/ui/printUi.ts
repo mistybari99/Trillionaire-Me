@@ -50,7 +50,7 @@ function handoverBody(lang: Locale): HTMLElement {
   const a = teamAnalysis(); const sops = sopRows(allRecs(), new Date());
   return h("div", { "data-print-handover": String(views.length) },
     h("section", { class: "card" }, h("h2", { class: "card-h" }, t("print.ho.title", lang)), ...analysisLines(a, lang),
-      h("label", { class: "no-print", style: "display:flex;gap:8px;align-items:center;margin:8px 0" }, h("input", { type: "checkbox", style: "width:24px;margin:0", "data-act": "ho-goal-names", ...(withGoalNames ? { checked: true } : {}),
+      h("label", { class: "no-print k-inline" }, h("input", { type: "checkbox", "data-act": "ho-goal-names", ...(withGoalNames ? { checked: true } : {}),
         onchange: (e: Event) => { withGoalNames = (e.target as HTMLInputElement).checked; window.dispatchEvent(new HashChangeEvent("hashchange")); } }), t("print.ho.names", lang))),
     ...views.map((v) => h("section", { class: "card", "data-print-role": v.row.id },
       h("h2", { class: "card-h" }, v.row.role),

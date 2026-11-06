@@ -33,7 +33,7 @@ export function planChip(row: "planmode" | "stages" | "weighting", what: Key, la
 export function pauseChip(lang: Locale): HTMLElement | null {
   if (prefs.mode !== "pause") return null;
   return h("aside", { class: "card", role: "status", "data-pause-chip": "1" }, h("p", {}, t("plan.mode.pause.desc", lang)),
-    h("button", { class: "btn ghost", type: "button", "data-act": "end-pause", style: "width:auto;margin:0;min-height:44px", onclick: () => { prefs.mode = "normal"; rerender(); } }, t("plan.set.endpause", lang)));
+    h("button", { class: "btn ghost btn-sm", type: "button", "data-act": "end-pause", onclick: () => { prefs.mode = "normal"; rerender(); } }, t("plan.set.endpause", lang)));
 }
 
 const seg = (label: string, active: boolean, on: () => void, attrs: Record<string, string>) => h("button", { type: "button", "aria-pressed": String(active), onclick: on, ...attrs }, label);

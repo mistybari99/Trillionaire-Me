@@ -28,18 +28,18 @@ export function prayerSyncCard(lang: Locale): HTMLElement {
       h("p", { "data-sync-on": "1" }, t("prayer.sync.on", lang, { d: day(s.since ?? ""), city: s.place.city, country: s.place.country })),
       sourceLine(st.resolved, lang), h("p", { class: "muted" }, t("prayer.sync.days", lang, { n: num(st.daysSaved, lang) })),
       last === "off" ? null : h("p", { class: "muted", role: "status", "data-sync-last": last }, t(`prayer.sync.last.${last === "updated" ? "updated" : last === "offline" ? "offline" : last === "failed" ? "failed" : "skipped"}` as never, lang)),
-      h("button", { class: "btn ghost", type: "button", "data-act": "prayer-sync-now", style: "min-height:44px", onclick: () => { void maybeSyncPrayerTimes(true).finally(rerender); } }, t("prayer.sync.now", lang)),
-      h("button", { class: "btn ghost", type: "button", "data-act": "prayer-sync-off", style: "min-height:44px", onclick: () => { void turnOffPrayerSync(); } }, t("prayer.sync.withdraw", lang)));
+      h("button", { class: "btn ghost", type: "button", "data-act": "prayer-sync-now", onclick: () => { void maybeSyncPrayerTimes(true).finally(rerender); } }, t("prayer.sync.now", lang)),
+      h("button", { class: "btn ghost", type: "button", "data-act": "prayer-sync-off", onclick: () => { void turnOffPrayerSync(); } }, t("prayer.sync.withdraw", lang)));
   }
   const city = h("input", { id: "ps-city", type: "text", autocomplete: "off", value: s.place.city }) as HTMLInputElement;
   const country = h("input", { id: "ps-country", type: "text", autocomplete: "off", value: s.place.country }) as HTMLInputElement;
   return h("div", { class: "card", "data-setting-row": "prayersync", "data-prayer-sync": "off" }, head,
     h("div", { "data-sync-what": "1" }, ...(["what1", "what2", "what3"] as const).map((k) => h("p", {}, t(`prayer.sync.${k}`, lang)))), h("p", { class: "muted" }, t("prayer.sync.offnote1", lang), " ", t("prayer.sync.offnote2", lang)),
     h("label", { for: "ps-city" }, t("prayer.sync.city", lang)), city, h("label", { for: "ps-country" }, t("prayer.sync.country", lang)), country,
-    h("label", { style: "display:flex;gap:8px;align-items:center;margin:8px 0" }, h("input", { type: "checkbox", id: "ps-tick", style: "width:24px;margin:0" }), t("prayer.sync.tick", lang)),
+    h("label", { class: "k-check" }, h("input", { type: "checkbox", id: "ps-tick" }), t("prayer.sync.tick", lang)),
     badPlace ? h("p", { class: "err", role: "alert" }, t("prayer.sync.badPlace", lang)) : null,
     needTick ? h("p", { class: "need", role: "alert" }, t("data.consent.needTick", lang)) : null,
-    h("button", { class: "btn", type: "button", "data-act": "prayer-sync-on", style: "min-height:44px", onclick: () => {
+    h("button", { class: "btn", type: "button", "data-act": "prayer-sync-on", onclick: () => {
       const tick = (document.getElementById("ps-tick") as HTMLInputElement | null)?.checked === true;
       needTick = !tick; badPlace = false;
       if (tick && !turnOnPrayerSync(city.value, country.value)) badPlace = true;

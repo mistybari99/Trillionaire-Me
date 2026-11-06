@@ -8,17 +8,24 @@ import { tb } from "../i18n/t";
 
 /** Every user-data or computed value is rendered through here so it always carries a label (TM-REQ-006). */
 export function valueEl(text: string, label: Label, lang: Locale): HTMLElement {
-  return h("span", { class: "val", "data-value": "1", "data-label": label }, text, h("small", { class: `chip chip-${label}` }, t(`label.${label}` as Key, lang)));
+  return h("span", { class: "val", "data-value": "1", "data-label": label }, text, h("small", { class: `chip k-chip chip-${label}` }, t(`label.${label}` as Key, lang)));
 }
 
 export const num = (n: number, lang: Locale) => fmtNumber(n, lang);
 /** A calm "please do this first" prompt (tick the box, write a name). Not an error: uses the --calm token, never the danger colour. Real failures keep class "err". */
-export function showNeed(el: HTMLElement, text: string): void { el.className = "need"; el.textContent = text; }
+export function showNeed(el: HTMLElement, text: string): void { el.className = "need k-notice k-notice--calm"; el.setAttribute("role", "status"); el.textContent = text; }
 
-export function demoBadge(lang: Locale) { return h("span", { class: "badge" }, t("badge.demo", lang)); }
+export function demoBadge(lang: Locale) { return h("span", { class: "badge k-chip k-chip--demo" }, t("badge.demo", lang)); }
 
-export function disclaimers(lang: Locale, which: Array<"noGuarantee" | "advice" | "noFatwa"> = ["noGuarantee", "advice"]) {
-  return h("div", { class: "note", role: "note" }, ...which.map((w) => h("p", {}, t(`disclaimer.${w}` as Key, lang))));
+/** Disclaimer keys already shown on this screen. Reset at the start of every route render, so the same disclaimer text can never appear twice on one screen. */
+const shownDisclaimers = new Set<string>();
+export function resetNotices(): void { shownDisclaimers.clear(); }
+/** ONE calm legal notice with a short list. Keys already shown on this screen are left out; nothing is returned when all were shown. */
+export function disclaimers(lang: Locale, which: Array<"noGuarantee" | "advice" | "noFatwa"> = ["noGuarantee", "advice"]): HTMLElement | null {
+  const fresh = which.filter((w) => !shownDisclaimers.has(w));
+  if (!fresh.length) return null;
+  for (const w of fresh) shownDisclaimers.add(w);
+  return h("aside", { class: "note k-notice k-notice--legal", role: "note", "data-legal": "1" }, h("ul", {}, ...fresh.map((w) => h("li", { "data-disclaimer": w }, t(`disclaimer.${w}` as Key, lang)))));
 }
 
 export function fieldHelp(f: FieldDef, lang: Locale): HTMLElement {

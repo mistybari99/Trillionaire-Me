@@ -69,7 +69,7 @@ function choiceSelect(id: string, fieldId: string, lang: Locale) {
 }
 
 function removeBtn(id: string, lang: Locale) {
-  return h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0;min-height:44px", "data-remove": id, onclick: () => { store[activeNs()].delete(id); rerender(); } }, t("risk.remove", lang));
+  return h("button", { class: "btn ghost btn-sm", type: "button", "data-remove": id, onclick: () => { store[activeNs()].delete(id); rerender(); } }, t("risk.remove", lang));
 }
 
 // ---- M15 risks & stop rules ----
@@ -166,7 +166,7 @@ function ventureScreenInner(): HTMLElement {
     const f = h("form", { novalidate: true, "data-venture-edit": id },
       h("label", { for: `ve-n-${id}` }, t("ven.name", lang)), n, h("label", { for: `ve-s-${id}` }, t("ven.stage", lang)), st,
       h("label", { for: `ve-o-${id}` }, t("ven.ownership", lang)), ow, h("label", { for: `ve-v-${id}` }, t("ven.value", lang)), va, msg,
-      h("button", { class: "btn ghost", type: "submit", style: "width:auto;margin:0;min-height:44px" }, t("ven.edit.save", lang)));
+      h("button", { class: "btn ghost btn-sm", type: "submit" }, t("ven.edit.save", lang)));
     f.addEventListener("submit", (ev) => {
       ev.preventDefault(); msg.className = "err"; msg.textContent = "";
       const nm = n.value.trim(); if (!nm) { showNeed(msg, t("ven.err.name", lang)); return; }
@@ -191,7 +191,7 @@ function ventureScreenInner(): HTMLElement {
     const f = h("form", { novalidate: true, "data-venture-line": vid },
       h("label", { for: `vl-k-${vid}` }, t("ven.line.kind", lang)), kind, h("label", { for: `vl-l-${vid}` }, t("ven.line.label", lang)), label,
       h("p", { class: "muted" }, t("money.nameHint", lang)), h("label", { for: `vl-a-${vid}` }, t("ven.line.amount", lang)), amt, msg,
-      h("button", { class: "btn ghost", type: "submit", style: "width:auto;margin:0;min-height:44px" }, t("ven.line.save", lang)));
+      h("button", { class: "btn ghost btn-sm", type: "submit" }, t("ven.line.save", lang)));
     f.addEventListener("submit", (ev) => {
       ev.preventDefault(); msg.className = "err"; msg.textContent = "";
       const lb = label.value.trim(); if (!lb) { showNeed(msg, t("ven.line.err.name", lang)); return; }
@@ -207,7 +207,7 @@ function ventureScreenInner(): HTMLElement {
   };
 
   // Removing a venture keeps its money lines: they lose the link and stay on the Money screen.
-  const removeVenture = (id: string) => h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0;min-height:44px", "data-remove": id, onclick: () => {
+  const removeVenture = (id: string) => h("button", { class: "btn ghost btn-sm", type: "button", "data-remove": id, onclick: () => {
     // Unlinking is a write: in real mode it needs the consent tick. Without it the lines keep a link to a venture that no longer exists, which every screen ignores.
     if (entryNs()) for (const r of allRecs()) if (r.entity === "finance_item" && r.links?.venture === id) { const { venture: _v, ...rest } = r.links; storeOf(r).put({ ...r, links: Object.keys(rest).length ? rest : undefined }); }
     store[activeNs()].delete(id); rerender();
@@ -218,7 +218,7 @@ function ventureScreenInner(): HTMLElement {
     const r = findOne(lid)!; const a = r.values["finance.amount"]; const kind = String((r.values["finance.kind"] as { value?: unknown })?.value ?? "");
     return h("li", { "data-venture-line-row": lid }, `${choiceLabel("finance.kind", kind, lang)}: ${String((r.values["finance.label"] as { value?: unknown })?.value ?? "")} · `,
       a && a.state === "value" ? valueEl(bdt(Number(a.value), lang), a.label, lang) : t("unknown.unknown", lang), " ",
-      h("button", { class: "btn ghost", type: "button", "data-remove": lid, style: "width:auto;margin:0;min-height:44px", onclick: () => { storeOf(r).delete(lid); rerender(); } }, t("money.remove", lang)));
+      h("button", { class: "btn ghost btn-sm", type: "button", "data-remove": lid, onclick: () => { storeOf(r).delete(lid); rerender(); } }, t("money.remove", lang)));
   });
   const est = estimateLabel();
   const card = (v: (typeof views)[number]) => {
@@ -286,22 +286,22 @@ function teamScreenInner(): HTMLElement {
     const hsel = h("select", { id: `tm-h-${r.id}` }, h("option", { value: "" }, t("unknown.unknown", lang)),
       ...(["me", "someone", "open"] as const).map((c) => h("option", { value: c, ...(r.holder === c ? { selected: true } : {}) }, choiceLabel("team_role.holder", c, lang))));
     const hform = h("form", { novalidate: true, "data-team-holder": r.id }, h("label", { for: `tm-h-${r.id}` }, t("team.holder", lang)), hsel,
-      h("button", { class: "btn ghost", type: "submit", style: "width:auto;margin:0;min-height:44px" }, t("team.holder.save", lang)));
+      h("button", { class: "btn ghost btn-sm", type: "submit" }, t("team.holder.save", lang)));
     hform.addEventListener("submit", (e) => { e.preventDefault(); msg.textContent = ""; if (!commit([withHolder(rec, (hsel.value || null) as Holder | null)])) { msg.textContent = saveBlockedText(lang); return; } rerender(); });
     // steps tied to the role
     const stepLis = v.tasks.map((x) => h("li", { "data-role-step": x.id },
       h("strong", {}, x.title || "—"), " · ", x.minutes === null ? t("plan.task.minutes.later", lang) : t("task.minutes", lang, { n: num(x.minutes, lang) }),
       x.delegated ? h("span", { class: "tag off", "data-delegated": x.id }, ` ${t("team.step.delegated", lang)}`) : null, x.parked ? h("span", { class: "tag off" }, ` ${t("rl.state.parked", lang)}`) : null, " ",
-      h("button", { class: "btn ghost", type: "button", "data-untie": x.id, style: "width:auto;margin:0;min-height:44px", onclick: () => { const tr = store[activeNs()].get(x.id); if (tr && commit([assignTask(tr, null)])) rerender(); } }, t("team.step.untie", lang))));
+      h("button", { class: "btn ghost btn-sm", type: "button", "data-untie": x.id, onclick: () => { const tr = store[activeNs()].get(x.id); if (tr && commit([assignTask(tr, null)])) rerender(); } }, t("team.step.untie", lang))));
     const assignSel = stepsFree.length ? h("select", { id: `tm-as-${r.id}` }, ...stepsFree.map((x) => h("option", { value: x.id }, titleOf(x) || x.id))) : null;
-    const assignBtn = assignSel ? h("button", { class: "btn ghost", type: "button", "data-assign": r.id, style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => {
+    const assignBtn = assignSel ? h("button", { class: "btn ghost btn-sm", type: "button", "data-assign": r.id, onclick: () => {
       const tr = store[activeNs()].get((assignSel as HTMLSelectElement).value); if (tr && commit([assignTask(tr, r.id)])) rerender(); else if (!entryNs()) { msg.textContent = saveBlockedText(lang); } } }, t("team.step.assign", lang)) : null;
     // hand-over
     const note = h("input", { id: `ho-n-${r.id}`, type: "text", maxlength: "200", autocomplete: "off" });
     const due = h("input", { id: `ho-d-${r.id}`, type: "date" });
     const hoForm = h("form", { novalidate: true, "data-handover": r.id },
       h("label", { for: `ho-n-${r.id}` }, labelOf("handover.note", lang)), note, h("label", { for: `ho-d-${r.id}` }, labelOf("handover.due", lang)), due,
-      h("button", { class: "btn ghost", type: "submit", style: "width:auto;margin:6px 0 0;min-height:44px" }, t("team.ho.save", lang)));
+      h("button", { class: "btn ghost btn-sm", type: "submit" }, t("team.ho.save", lang)));
     hoForm.addEventListener("submit", (e) => {
       e.preventDefault(); msg.textContent = "";
       if (!checkFreeText(note.value).ok || looksLikePersonContact(note.value)) { msg.textContent = t("team.err.contact", lang); return; }
@@ -317,17 +317,17 @@ function teamScreenInner(): HTMLElement {
       v.planned.note ? h("p", { class: "muted" }, v.planned.note) : null, v.planned.due ? h("p", { class: "muted" }, t("team.ho.due", lang, { d: v.planned.due })) : null,
       h("p", { class: "muted" }, t("team.ho.effect", lang, { n: num(v.tasks.length, lang) })),
       v.planned.due ? remindRow("task", v.planned.id, lang, { checkin: true, date: v.planned.due }) : null,
-      h("button", { class: "btn", type: "button", "data-act": "handover-done", style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => {
+      h("button", { class: "btn btn-sm", type: "button", "data-act": "handover-done", onclick: () => {
         const res = completeHandover(allRecs(), v.planned!.id, today); if (!res) return;
         if (!commit(res.puts)) { msg.textContent = saveBlockedText(lang); return; }
         putMode(loopLogRecord({ id: `hlog-${Date.now().toString(36)}`, eventId: null, createdAt: new Date().toISOString(), text: t("team.ho.logged", lang, { role: r.role, date: today }) }));
         rerender(); } }, t("team.ho.done", lang)), " ",
-      h("button", { class: "btn ghost", type: "button", "data-act": "handover-cancel", style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => { store[activeNs()].delete(v.planned!.id); rerender(); } }, t("team.ho.cancel", lang)))
+      h("button", { class: "btn ghost btn-sm", type: "button", "data-act": "handover-cancel", onclick: () => { store[activeNs()].delete(v.planned!.id); rerender(); } }, t("team.ho.cancel", lang)))
       : r.holder !== "someone" ? h("details", { class: "help" }, h("summary", {}, t("team.ho.plan", lang)), hoForm) : null;
     // hiring step
     const hireTitle = t("team.hire.title", lang, { role: r.role });
     const hasHire = v.tasks.some((x) => x.title === hireTitle);
-    const hireBtn = (r.holder === "open" || r.holder === null) && !hasHire ? h("button", { class: "btn ghost", type: "button", "data-act": "hire", style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => {
+    const hireBtn = (r.holder === "open" || r.holder === null) && !hasHire ? h("button", { class: "btn ghost btn-sm", type: "button", "data-act": "hire", onclick: () => {
       const id = `task-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`;
       if (!saveTyped({ id, entity: "task", createdAt: new Date().toISOString(), values: { "task.title": txt(hireTitle), "task.minutes": { state: "later" }, "task.priority": txt("normal") }, links: { role: r.id } })) { msg.textContent = saveBlockedText(lang); return; }
       rerender(); } }, t("team.hire.btn", lang)) : null;
@@ -343,7 +343,7 @@ function teamScreenInner(): HTMLElement {
       assignSel ? h("div", {}, h("label", { for: `tm-as-${r.id}` }, t("team.step.assignLabel", lang)), assignSel, assignBtn) : null,
       plannedBox, hireBtn,
       v.done.length ? h("ul", { class: "plain", "data-handed-over": String(v.done.length) }, ...v.done.map((d) => h("li", {}, t("team.ho.was", lang, { d: d.doneOn ?? "—" })))) : null, msg),
-      h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0;min-height:44px", "data-remove": r.id, onclick: () => {
+      h("button", { class: "btn ghost btn-sm", type: "button", "data-remove": r.id, onclick: () => {
         if (entryNs()) for (const x of allRecs()) if (x.entity === "task" && x.links?.role === r.id) storeOf(x).put(inNs(assignTask(x, null), x.ns));
         store[activeNs()].delete(r.id); syncDelegationNow(); rerender(); } }, t("risk.remove", lang))));
   };
@@ -422,7 +422,7 @@ export function northStarScreen(): HTMLElement {
       h("label", { for: `ns-eb-${id}` }, t("ns.baseline", lang)), eb, h("label", { for: `ns-et-${id}` }, t("ns.target", lang)), et,
       h("label", { for: `ns-es-${id}` }, labelOf("north_star.source", lang)), es, h("label", { for: `ns-ec-${id}` }, t("ns.current", lang)), ec,
       h("label", { for: `ns-ew-${id}` }, t("ns.weight", lang)), ew, msg,
-      h("button", { class: "btn ghost", type: "submit", style: "width:auto;margin:0;min-height:44px" }, t("ns.update", lang)));
+      h("button", { class: "btn ghost btn-sm", type: "submit" }, t("ns.update", lang)));
     f.addEventListener("submit", (e) => {
       e.preventDefault(); msg.textContent = "";
       const b = numberInput(eb.value), g = numberInput(et.value), c = numberInput(ec.value), w = parseWeight(ew.value);
@@ -502,7 +502,7 @@ export function kpiScreen(): HTMLElement {
     const f = h("form", { novalidate: true, class: "kpi-edit", "data-kpi-edit": id },
       h("label", { for: `kp-t-${id}` }, t("kpi.edit.target", lang)), tIn,
       ...(aIn ? [h("label", { for: `kp-a-${id}` }, t("kpi.edit.actual", lang)), aIn] : []), msg,
-      h("button", { class: "btn ghost", type: "submit", style: "width:auto;margin:0;min-height:44px" }, t("kpi.update", lang)));
+      h("button", { class: "btn ghost btn-sm", type: "submit" }, t("kpi.update", lang)));
     f.addEventListener("submit", (ev) => {
       ev.preventDefault(); msg.textContent = "";
       const tg = parseTarget(tIn.value); if (tg === null) { msg.textContent = t("kpi.err.target_invalid", lang); return; }
@@ -573,7 +573,7 @@ export function gatesScreen(): HTMLElement {
       const f = h("form", { novalidate: true, class: "kpi-edit", "data-exit-edit": r.id },
         h("label", { for: `se-t-${r.id}` }, t("kpi.edit.target", lang)), tIn,
         ...(aIn ? [h("label", { for: `se-a-${r.id}` }, t("kpi.edit.actual", lang)), aIn] : []), msg,
-        h("button", { class: "btn ghost", type: "submit", style: "width:auto;margin:0;min-height:44px" }, t("kpi.update", lang)));
+        h("button", { class: "btn ghost btn-sm", type: "submit" }, t("kpi.update", lang)));
       f.addEventListener("submit", (ev) => {
         ev.preventDefault(); msg.textContent = "";
         const tg = parseTarget(tIn.value); if (tg === null) { msg.textContent = t("kpi.err.target_invalid", lang); return; }
@@ -611,7 +611,7 @@ export function gatesScreen(): HTMLElement {
     });
     const sum = summariseExits(list);
     return h("details", { class: "card", "data-gate-stage": code, ...(code === "B" || !gateIsEmpty(g) || list.length ? { open: true } : {}) },
-      h("summary", { style: "min-height:44px" }, h("strong", {}, t("gate.stage", lang, { c: code, n: stageName(code, lang) })),
+      h("summary", { }, h("strong", {}, t("gate.stage", lang, { c: code, n: stageName(code, lang) })),
         sum.total ? h("span", { class: "muted" }, ` · ${t("gate.report.exits", lang, { m: fmtNumber(sum.met, lang), n: fmtNumber(sum.total, lang) })}`) : null),
       h("h3", { class: "card-h" }, t("gate.rules.h", lang)), form,
       h("h3", { class: "card-h" }, t("gate.exits.h", lang)),

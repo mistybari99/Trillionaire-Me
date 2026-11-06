@@ -64,15 +64,15 @@ export function backwardScreen(goalId: string): HTMLElement {
   const lastTitle = d.order.length ? title.get(d.order[d.order.length - 1]!)! : "";
   const picker = !steps.length ? h("p", { class: "muted", "data-bw": "nosteps" }, t("bw.steps.none", lang), " ", link("#/diary/plan", "crumb", t("bw.steps.add", lang)))
     : remaining.length ? h("div", { "data-bw": "pick" }, h("h3", {}, d.order.length ? t("bw.q.before", lang, { title: lastTitle }) : t("bw.q.last", lang)),
-      ...remaining.map((s) => h("button", { type: "button", class: "btn ghost", "data-bw-step": s.id, style: "min-height:44px", onclick: () => { d.order = [...d.order, s.id]; d.msg = null; rerender(); } }, s.title)))
+      ...remaining.map((s) => h("button", { type: "button", class: "btn ghost", "data-bw-step": s.id, onclick: () => { d.order = [...d.order, s.id]; d.msg = null; rerender(); } }, s.title)))
       : h("p", { class: "ok-msg", role: "status", "data-bw": "allplaced" }, t("bw.q.done", lang));
   const placed = d.order.length ? h("div", { "data-bw": "placed" }, h("h3", {}, t("bw.placed", lang)), h("ol", {}, ...d.order.map((id) => h("li", { "data-bw-placed": id }, title.get(id)!))),
-    h("button", { type: "button", class: "btn ghost", "data-act": "bw-undo", style: "min-height:44px", onclick: () => { d.order = d.order.slice(0, -1); d.msg = null; rerender(); } }, t("bw.undo", lang))) : null;
+    h("button", { type: "button", class: "btn ghost", "data-act": "bw-undo", onclick: () => { d.order = d.order.slice(0, -1); d.msg = null; rerender(); } }, t("bw.undo", lang))) : null;
   const out = result.kind === "ok" ? h("section", { class: "card", "data-bw": "result" }, h("h2", { class: "card-h" }, t("bw.result", lang)),
       h("ol", {}, ...result.rows.map((r) => h("li", { "data-bw-row": r.id, "data-date": r.date }, `${r.date} · ${title.get(r.id)}`))),
       h("p", { class: "muted" }, t("bw.even", lang)), result.shared ? h("p", { class: "muted", "data-bw": "shared" }, t("bw.shared", lang)) : null,
       steps.length > d.order.length ? h("p", { class: "muted", "data-bw": "unplaced" }, t("bw.unplaced", lang, { n: num(steps.length - d.order.length, lang) })) : null,
-      h("button", { type: "button", class: "btn", "data-act": "bw-save", style: "min-height:44px", onclick: save }, t("bw.save", lang)))
+      h("button", { type: "button", class: "btn", "data-act": "bw-save", onclick: save }, t("bw.save", lang)))
     : null;
   const dateNote = result.kind === "past" ? h("p", { class: "need", role: "status", "data-bw": "past" }, t("bw.date.past", lang)) : !d.target ? h("p", { class: "need", role: "status", "data-bw": "nodate" }, t("bw.date.unset", lang)) : null;
   return h("main", { "data-backward": goalId }, link("#/journey/backward", "crumb", `← ${t("bw.title", lang)}`), h("h1", {}, t("bw.title", lang)), h("p", { class: "sub" }, textOf(goal, "goal.title")), h("p", {}, t("bw.intro", lang)), gate,
@@ -80,5 +80,5 @@ export function backwardScreen(goalId: string): HTMLElement {
     h("section", { class: "card" }, picker, placed),
     out,
     d.msg ? h("p", { class: "ok-msg", role: "status", "data-bw": "msg" }, t(d.msg.key, lang, d.msg.args)) : null,
-    hasDates ? h("button", { type: "button", class: "btn ghost", "data-act": "bw-clear", style: "min-height:44px", onclick: clear }, t("bw.clear", lang)) : null);
+    hasDates ? h("button", { type: "button", class: "btn ghost", "data-act": "bw-clear", onclick: clear }, t("bw.clear", lang)) : null);
 }

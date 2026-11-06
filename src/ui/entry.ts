@@ -77,7 +77,7 @@ export function nsTag(ns: Namespace, lang: Locale): HTMLElement {
 export function consentPrompt(lang: Locale): HTMLElement {
   return h("div", { class: "note", role: "note", "data-consent-prompt": "1" },
     h("p", {}, t("entry.consent.need", lang)),
-    h("a", { href: "#/settings/privacy/consent", class: "btn ghost", style: "width:auto;margin:6px 0 0;min-height:44px" }, t("entry.consent.open", lang)));
+    h("a", { href: "#/settings/privacy/consent", class: "btn ghost btn-sm" }, t("entry.consent.open", lang)));
 }
 
 /** Error text on submit when consent is missing. */

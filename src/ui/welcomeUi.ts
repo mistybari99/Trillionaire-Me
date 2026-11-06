@@ -21,8 +21,8 @@ export function welcomeBackCard(lang: Locale): HTMLElement | null {
     h("h2", { class: "card-h" }, t("wb.title", lang)),
     h("p", {}, t("wb.body", lang, { n: num(w.away, lang) })),
     f.openSteps !== null && f.openSteps > 0 ? h("p", { "data-wb-steps": String(f.openSteps) }, t("wb.steps", lang, { n: num(f.openSteps, lang) }), f.nextStep ? " " + t("wb.next", lang, { s: f.nextStep }) : "") : null,
-    h("a", { href: "#/diary/plan", class: "btn", "data-act": "wb-open", style: "width:auto;margin:0;min-height:44px" }, t("wb.open", lang)),
-    h("button", { class: "btn ghost", type: "button", "data-act": "wb-dismiss", style: "width:auto;margin:0 0 0 8px;min-height:44px", onclick: () => { prefs.visit = dismissWelcome(prefs.visit); rerender(); } }, t("wb.later", lang)));
+    h("a", { href: "#/diary/plan", class: "btn btn-sm", "data-act": "wb-open" }, t("wb.open", lang)),
+    h("button", { class: "btn ghost btn-sm", type: "button", "data-act": "wb-dismiss", onclick: () => { prefs.visit = dismissWelcome(prefs.visit); rerender(); } }, t("wb.later", lang)));
 }
 
 const LABEL: Record<Measure, Key> = { tasks: "month.tasks", focus: "month.focus", habits: "month.habits", notes: "month.tn.notes" };

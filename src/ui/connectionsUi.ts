@@ -17,13 +17,13 @@ let missingTick: FacilityId | null = null;
 let keyMsg: { id: FacilityId; key: Key; bad: boolean } | null = null;
 
 function confirmPanel(id: FacilityId, lang: Locale): HTMLElement {
-  const tick = h("input", { type: "checkbox", id: `conn-tick-${id}`, "data-conn-tick": id, style: "width:24px;margin:0" }) as HTMLInputElement;
+  const tick = h("input", { type: "checkbox", id: `conn-tick-${id}`, "data-conn-tick": id }) as HTMLInputElement;
   return h("div", { class: "card", "data-conn-confirm": id, role: "group", "aria-label": t("conn.confirm.title", lang) },
     h("h3", {}, t("conn.confirm.title", lang)),
     h("p", {}, t("conn.confirm.cost", lang)),
     h("p", {}, t("conn.confirm.leave", lang)),
     h("p", {}, t("conn.confirm.real", lang)),
-    h("label", { style: "display:flex;gap:8px;align-items:center;margin:8px 0" }, tick, t("conn.confirm.tick", lang)),
+    h("label", { class: "k-check" }, tick, t("conn.confirm.tick", lang)),
     h("button", { class: "btn", type: "button", "data-conn-confirm-btn": id, onclick: () => {
       if (!tick.checked) { missingTick = id; rerender(); return; }
       missingTick = null; confirming = null;

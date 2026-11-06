@@ -24,6 +24,28 @@ html{--brand-obsidian:#0B1216;--brand-champagne:#C9A96E;--brand-emerald:#1B6F57}
   --primary:#8FA8E6; --on-primary:#0F1218; --ember:#F08A56; --moss:#8BC49A;
   --demo:#E3C566; --demo-bg:#2C2610; --danger:#F08A56; --calm:#9CC8E4;}}
 
+/* K0 design tokens (ui-polish-spec 1.1): spacing, radius, elevation, control, type, line, motion. Base values are Ink & Paper; the other looks override only what differs (themes.ts). Components use these, not raw px. */
+:root{
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px; --s7:48px; --gutter:16px;
+  --r-sm:2px; --r-md:4px; --r-lg:4px; --r-pill:999px;
+  --e0:none; --e1:0 1px 0 var(--rule); --e2:0 6px 20px color-mix(in srgb,var(--ink) 10%,transparent);
+  --hair:1px solid color-mix(in srgb,var(--rule) 55%,transparent);
+  --ctl-h:48px; --tap:44px; --ctl-bw:1.5px;
+  --tint-primary:color-mix(in srgb,var(--primary) 10%,var(--card));
+  --tint-calm:color-mix(in srgb,var(--calm) 10%,var(--card));
+  --tint-moss:color-mix(in srgb,var(--moss) 10%,var(--card));
+  --tint-demo:var(--demo-bg);
+  --focus:3px solid var(--ember);
+  --scrim:color-mix(in srgb,var(--ink) 55%,transparent);
+  --line:var(--rule);
+  --fs-xs:.75rem; --fs-sm:.875rem; --fs-md:1rem; --fs-lg:1.125rem; --fs-xl:1.25rem; --fs-2xl:1.75rem; --fs-hero:4rem;
+  --lh-tight:1.35; --lh-body:1.7; --lh-ui:1.5;
+  --dur-fast:120ms; --dur:200ms; --dur-reward:600ms; --ease:cubic-bezier(.2,.7,.2,1);
+  color-scheme:light;
+}
+:root[data-theme="dark"]{color-scheme:dark}
+@media (prefers-color-scheme:dark){:root[data-theme="auto"]{color-scheme:dark}}
+
 *{box-sizing:border-box;margin:0}
 body{background:var(--paper);color:var(--ink);font:400 1.0625rem/1.7 "Hind Siliguri",system-ui,sans-serif;max-width:480px;margin:0 auto;padding:16px 16px max(96px,8rem);overflow-wrap:anywhere}
 .top{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:0.875rem;color:var(--muted);flex-wrap:wrap}
@@ -111,7 +133,7 @@ dl{margin:6px 0} .hrow{display:grid;grid-template-columns:96px 1fr;gap:8px;paddi
 .menu-btn{min-height:44px;min-width:44px;background:none;border:1.5px solid var(--rule);color:var(--ink);font:600 1.125rem system-ui;cursor:pointer}
 .drawer{position:fixed;inset:0;z-index:30;display:none}
 .drawer.open{display:block}
-.drawer .scrim{position:absolute;inset:0;background:rgba(0,0,0,.45)}
+.drawer .scrim{position:absolute;inset:0;background:var(--scrim)}
 .drawer .panel{position:absolute;inset-block:0;inset-inline-start:0;width:min(88%,360px);background:var(--paper);border-inline-end:1px solid var(--rule);overflow-y:auto;padding:16px}
 .drawer h2{margin-top:16px}
 .drawer a.item{display:block;padding:10px 0;border-bottom:1px solid var(--rule);color:var(--ink);text-decoration:none;min-height:44px}
@@ -136,10 +158,10 @@ dl{margin:6px 0} .hrow{display:grid;grid-template-columns:96px 1fr;gap:8px;paddi
 
 /* Daily inspiration card (R1): calm fade-in, theme accent, reduced-motion safe */
 .inspire{position:relative;overflow:hidden;border-inline-start:3px solid var(--rule);animation:inspireIn .6s ease-out both}
-.inspire.motivation{border-inline-start-color:#C9A227}
-.inspire.discipline{border-inline-start-color:#3E6E8E}
-.inspire.patience{border-inline-start-color:#4F7A5A}
-.inspire.care{border-inline-start-color:#9A6B8E}
+.inspire.motivation{border-inline-start-color:var(--ember)}
+.inspire.discipline{border-inline-start-color:var(--calm)}
+.inspire.patience{border-inline-start-color:var(--moss)}
+.inspire.care{border-inline-start-color:var(--primary)}
 .inspire-bn{font:600 1.125rem/1.6 "Hind Siliguri",sans-serif;color:var(--ink);margin:6px 0 2px}
 .inspire-en{font-size:0.875rem;margin:0}
 @keyframes inspireIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
@@ -283,7 +305,7 @@ h2.card-h{font:600 1.0625rem/1.4 "Hind Siliguri",sans-serif;margin:0 0 2px}
 .scr-reward .cta{margin-top:16px}
 @media (prefers-reduced-motion:no-preference){.scr-reward [data-fresh]{animation:inspireIn .6s ease-out both}}
 @media (prefers-reduced-motion:reduce){.scr-reward [data-fresh]{animation:none!important}}
-.list-compact{list-style:none;padding:0;margin:8px 0} .list-compact li{padding:8px 0;border-bottom:1px solid var(--line,#ddd)} .table-compact{width:100%;border-collapse:collapse;margin:8px 0} .table-compact td,.table-compact th{padding:8px 4px;text-align:start;border-bottom:1px solid var(--line,#ddd)} .ladder-compact li{padding:6px 0}
+.list-compact{list-style:none;padding:0;margin:8px 0} .list-compact li{padding:8px 0;border-bottom:1px solid var(--line)} .table-compact{width:100%;border-collapse:collapse;margin:8px 0} .table-compact td,.table-compact th{padding:8px 4px;text-align:start;border-bottom:1px solid var(--line)} .ladder-compact li{padding:6px 0}
 
 /* step 3 charts (inline SVG, static; colours from tokens only) */
 .chart-svg{display:block;width:100%;height:auto;max-width:360px;margin:6px 0}
@@ -480,16 +502,3 @@ textarea[data-swot]{width:100%;box-sizing:border-box;font:inherit;padding:8px}
 .goal-chips{display:inline-flex;flex-wrap:wrap;gap:6px;vertical-align:middle}
 .goal-chips .tag{text-decoration:none;color:var(--ink);display:inline-flex;align-items:center;min-height:24px}
 .chip-link{display:inline-flex;align-items:center;min-height:44px;font-size:0.875rem}
-
-/* One vertical rhythm (UI bug fix 3 Nov 2026): stacked buttons, rows and boxes never touch. --gap is the only spacing value used here.
-   Many compact buttons carry inline margin:0, so these rules use !important on purpose; flex/grid button groups (which have their own gap) are excluded below.
-   The full component kit is a later pass (docs/design/ui-polish-spec.md). */
-:root{--gap:10px}
-main :is(.btn,.cta) + :is(.btn,.cta,.row,.card,.next-step,.note){margin-top:var(--gap) !important}
-main :is(.card,.advice-item) > :is(.btn,.cta){display:block;width:100% !important;margin-top:var(--gap) !important;margin-inline:0 !important}
-main .row + .row{margin-top:var(--gap)}
-main details.help + details.help{margin-top:var(--gap) !important}
-main :is(.row,.actions,.snap-btns,.update-banner,.tags,.goal-chips,.btn-row) > .btn + .btn{margin-top:0 !important}
-main :is(.row,.snap-btns,.update-banner) > .btn{width:auto !important}
-.btn-row{display:flex;flex-wrap:wrap;gap:var(--gap)}
-main details + details{margin-top:var(--gap) !important}

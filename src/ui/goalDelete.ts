@@ -26,7 +26,7 @@ export function goalDeleteCard(goal: TMRecord, lang: Locale): HTMLElement {
     h("p", { "data-del-preview": "1" }, t("gl.del.preview", lang, { s: num(pv.steps, lang), k: num(pv.keepOther, lang), u: num(pv.unlinked, lang), p: num(pv.partsMoveUp, lang) })),
     pv.habits ? h("p", { class: "muted" }, t("gl.del.habits", lang, { h: num(pv.habits, lang) })) : null,
     h("p", { class: "muted" }, t("gl.del.safe", lang)), msg,
-    h("button", { class: "btn", type: "button", "data-act": "goal-delete-confirm", style: "min-height:44px", onclick: () => {
+    h("button", { class: "btn", type: "button", "data-act": "goal-delete-confirm", onclick: () => {
       if (!entryNs()) { msg.textContent = saveBlockedText(lang); return; }
       const cur = findRec(goal.id); if (!cur) return;
       const now = allRecs(); const before = snapshotOf(now, prefs.mode); const after = recordsAfterGoalDelete(now, goal.id); const number = nextVersionNumber(now);
@@ -37,7 +37,7 @@ export function goalDeleteCard(goal: TMRecord, lang: Locale): HTMLElement {
       putMode(loopLogRecord({ id: `rlog-${suffix}`, eventId: null, createdAt: at.toISOString(), text: t("gl.del.logged", lang, { title: String((goal.values["goal.title"] as { value?: unknown } | undefined)?.value ?? "") }) }));
       location.hash = "#/journey/goals"; rerender();
     } }, t("gl.del.confirm", lang)),
-    h("button", { class: "btn ghost", type: "button", "data-act": "goal-delete-cancel", style: "min-height:44px", onclick: () => { panel.hidden = true; open.hidden = false; } }, t("gl.del.cancel", lang)));
-  const open = h("button", { class: "btn ghost", type: "button", "data-act": "goal-delete-open", style: "min-height:44px", onclick: () => { panel.hidden = false; open.hidden = true; } }, t("gl.del.btn", lang));
+    h("button", { class: "btn ghost", type: "button", "data-act": "goal-delete-cancel", onclick: () => { panel.hidden = true; open.hidden = false; } }, t("gl.del.cancel", lang)));
+  const open = h("button", { class: "btn ghost", type: "button", "data-act": "goal-delete-open", onclick: () => { panel.hidden = false; open.hidden = true; } }, t("gl.del.btn", lang));
   return h("section", { class: "card", "data-goal-delete": goal.id }, h("h2", { class: "card-h" }, t("gl.del.title", lang)), open, panel);
 }
