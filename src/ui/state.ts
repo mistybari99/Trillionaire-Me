@@ -59,6 +59,7 @@ export async function initStorage(): Promise<void> {
 }
 
 const get = (k: string) => { try { return localStorage.getItem(k); } catch { return null; } };
+const normalizeScale = (n: number) => Number.isFinite(n) && n > 0 ? Math.min(150, Math.max(75, Math.round(n))) : 100;
 const set = (k: string, v: string) => { try { localStorage.setItem(k, v); } catch { /* ignore */ } };
 
 import { parseOnboard, parseTimes, type OnboardState, type OnboardTimes } from "../core/onboarding";
@@ -135,8 +136,8 @@ export const prefs = {
   /** Day (YYYY-MM-DD) the user chose "remind me tomorrow". */
   get remindSnoozedOn(): string { return get("tm:ui:remindSnoozedOn") ?? ""; },
   set remindSnoozedOn(v: string) { set("tm:ui:remindSnoozedOn", v); },
-  get scale(): number { const n = Number(get("tm:ui:scale")); return [100, 125, 150, 200].includes(n) ? n : 100; },
-  set scale(v: number) { set("tm:ui:scale", String(v)); },
+  get scale(): number { return normalizeScale(Number(get("tm:ui:scale"))); },
+  set scale(v: number) { set("tm:ui:scale", String(normalizeScale(v))); },
   get mode(): PlanMode { const v = get("tm:ui:mode"); return v === "minimum_week" || v === "pause" ? v : "normal"; },
   set mode(v: PlanMode) { set("tm:ui:mode", v); },
   /** Horizon screen template. Unknown or missing value falls back to "stack" (the original view). */
