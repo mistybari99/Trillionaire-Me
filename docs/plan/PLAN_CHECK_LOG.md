@@ -88,3 +88,8 @@ The selected two-agent design is implemented on `feat/action-desk-ui`, based on 
 - 128 browser frames and15 functional/update probes passed. A final rebuilt functional-only run passed13/13. Whole-app Chromium regression passed92/92 after correcting an actual Settings flex-wrap regression. Details and limits are linked in the usability implementation report.
 - The local full suite initially passed1,999 of2,006 tests; all seven failures were repaired and74 affected tests then passed. Final chart/range tests passed28/28. The exact-production CI gate requires the complete final suite again before deployment; no local full passing rerun is fabricated.
 - The earlier Action Desk release is verified live as0eca3ea with62 cached required files, offline reload and zero page errors. Physical Android/TalkBack and comprehensive contrast remain unclosed. All four archived plans remain unchanged; plan/link checks pass.
+
+
+## Check #8 — 6 Nov 2026 (continuous text size)
+
+The owner replaced preset text-size buttons with a75–150% slider at1% increments. Live updates preserve pointer/keyboard focus and save the existing preference. Old out-of-range preferences clamp safely; invalid values default to100%. Typecheck/build and49 focused tests pass; the96-check browser suite includes native drag/keyboard, arbitrary-size persistence, EN/BN endpoints,200% accessibility stress and offline update behavior. [Dated evidence](../audit/TEXT_SIZE_SLIDER_2026-11-06.md). UI-03 retains its physical-device acceptance gap; no data schema or original Register change.

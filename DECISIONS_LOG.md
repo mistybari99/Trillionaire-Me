@@ -789,3 +789,10 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 - Controls: consistent 52px primary/secondary actions, 48px choices and at least44px icon utilities; wrapping labels and container-owned layout. Preserve all saved looks, purple default, warnings, planner order, unknown states and namespace isolation. No cost, AI, provider, off-device records or content gate changes.
 - Evidence: final validation and any remaining physical accessibility checks are recorded in `docs/audit/USABILITY_CONTROLS_2026-11-05.md`. The previous Action Desk implementation is independently verified live at production `0eca3ea`.
 - Undo: revert this usability commit. Storage format is unchanged; independent multiple goal links already use the existing reader/writer. Reverting the picker would restore its inability to edit sibling selections reliably.
+
+
+## 6 Nov 2026 — Continuous text-size range
+
+- Owner selected a draggable75–150% range instead of fixed100/125/150/200% buttons. Use a native1%-step slider with live root-font updates and the same local preference key. Preserve the focused control while dragging; do not rerender the app per input.
+- Legacy values clamp into75–150; invalid or missing settings use100. The new owner range supersedes the previous selectable200% preset.200% external/OS text stress remains tested. No record schema/migration or new service is involved.
+- Evidence: `docs/audit/TEXT_SIZE_SLIDER_2026-11-06.md`. Undo by reverting this control change; the preference key remains readable by the preceding code.

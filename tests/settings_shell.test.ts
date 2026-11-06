@@ -82,7 +82,7 @@ describe("shell", () => {
   it("quick card changes language, theme and text size; nothing destructive is on the home", () => {
     go("#/settings"); q<HTMLButtonElement>("[data-lang=bn]").click(); expect(prefs.lang).toBe("bn");
     go("#/settings"); q<HTMLButtonElement>("[data-theme-set=dark]").click(); expect(prefs.theme).toBe("dark");
-    go("#/settings"); q<HTMLButtonElement>("[data-scale='150']").click(); expect(prefs.scale).toBe(150);
+    go("#/settings"); const size = q<HTMLInputElement>("[data-scale=slider]"); size.value = "137"; size.dispatchEvent(new Event("input")); expect(prefs.scale).toBe(137);
     expect(app().querySelector("[data-act*=clear], [data-act*=delete]")).toBeNull();
   });
   it("status strip is computed from real state", () => {
