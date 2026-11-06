@@ -21,3 +21,7 @@ Its PASS excludes remote deployment verification, physical Android/TalkBack and 
 - [Merged dark report](merged-dark/report.json):16additional dark100/200% Help and Deen-menu checks, all pass.
 - `evidence/e2e-report.json` was regenerated from the merged build; all107checks pass, including offline install/update, failure/retry, Profile Back behavior and no unintended external requests.
 - The build was generated from the integration working tree before the merge commit, so its stamp is not a production-release identity. Exact remote SHA/CI/deployment records will be added separately.
+
+## Final CI link-crawl correction
+
+Exact-head CI884deaf correctly blocked release on an orphan assertion for `/deen/prayers`: the test crawled collapsed page links but did not open the new nonmodal menus. The runtime route was already covered by actual menu navigation and browser regression. The link-check test now opens each real tab panel in EN/BN/Mix, validates its actual anchors and includes them in route reachability; no deliberate-entry exemption was added. The15affected link/navigation/overlay tests pass. The final exact-head CI must pass before deployment.
