@@ -93,3 +93,8 @@ The selected two-agent design is implemented on `feat/action-desk-ui`, based on 
 ## Check #8 — 6 Nov 2026 (continuous text size)
 
 The owner replaced preset text-size buttons with a75–150% slider at1% increments. Live updates preserve pointer/keyboard focus and save the existing preference. Old out-of-range preferences clamp safely; invalid values default to100%. Typecheck/build and49 focused tests pass; the96-check browser suite includes native drag/keyboard, arbitrary-size persistence, EN/BN endpoints,200% accessibility stress and offline update behavior. [Dated evidence](../audit/TEXT_SIZE_SLIDER_2026-11-06.md). UI-03 retains its physical-device acceptance gap; no data schema or original Register change.
+
+
+## Check #9 — 6 Nov 2026 (optional module descriptions)
+
+Owner screenshots showed technical module notes dominating Journey. Journey, Diary and Deen now place these cards under a closed native “Feature details” summary. All original module information remains reachable; the dedicated Build status page still exposes all25 cards. Working tools and mandatory warnings are outside the disclosure. Typecheck/build and74 focused tests pass;104 browser checks pass, including keyboard/pointer toggles and status reachability. [Dated evidence](../audit/FEATURE_DETAILS_2026-11-06.md). UI-03's physical accessibility acceptance remains open.

@@ -796,3 +796,10 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 - Owner selected a draggable75–150% range instead of fixed100/125/150/200% buttons. Use a native1%-step slider with live root-font updates and the same local preference key. Preserve the focused control while dragging; do not rerender the app per input.
 - Legacy values clamp into75–150; invalid or missing settings use100. The new owner range supersedes the previous selectable200% preset.200% external/OS text stress remains tested. No record schema/migration or new service is involved.
 - Evidence: `docs/audit/TEXT_SIZE_SLIDER_2026-11-06.md`. Undo by reverting this control change; the preference key remains readable by the preceding code.
+
+
+## 6 Nov 2026 — Keep module descriptions optional on work screens
+
+- Owner questioned the always-open module descriptions and Input/Storage/Calculation/Built lists shown in Journey screenshots. Put these reference cards inside one native closed disclosure per Journey/Diary/Deen screen, using a plain localized Feature details label.
+- Retain all module data/build information and the fully expanded dedicated Build status page. Keep tools, save/consent warnings and ordinary guidance in their existing positions. No calculation, data schema, record or preference change.
+- Evidence: `docs/audit/FEATURE_DETAILS_2026-11-06.md`. Undo by reverting this presentation change; there is no stored state to migrate.

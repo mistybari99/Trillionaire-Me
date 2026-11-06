@@ -6,7 +6,7 @@ import { h } from "./dom";
 import { t, tb } from "../i18n/t";
 import type { Key } from "../i18n/packs";
 import type { Locale } from "../i18n/registry";
-import { BUILD_BOXES, CAP_ATTRS, buildLabel, missingBoxes, type BuildLabel, type ModuleDef } from "../modules/capability";
+import { MODULES, BUILD_BOXES, CAP_ATTRS, buildLabel, missingBoxes, type BuildLabel, type ModuleDef } from "../modules/capability";
 import { dataStatus, recordCount } from "../modules/dataStatus";
 import { activeNs, allRecs } from "./entry";
 
@@ -18,6 +18,13 @@ export const buildTag = (label: BuildLabel, lang: Locale) =>
 
 /** The legend row on the status screen: the four labels. */
 export const buildLegend = (lang: Locale) => h("div", { class: "tags", "data-cap-legend": "1" }, ...(["complete", "partial", "not-built", "blocked"] as const).map((l) => buildTag(l, lang)));
+
+/** Keep technical descriptions available without filling the everyday workspace. */
+export function moduleDetails(tab: ModuleDef["tab"], lang: Locale): HTMLElement {
+  return h("details", { class: "card module-details", "data-module-details": tab },
+    h("summary", {}, t("cap.details", lang)),
+    ...MODULES.filter(m => m.tab === tab).map(m => moduleCard(m, lang)));
+}
 
 export function moduleCard(m: ModuleDef, lang: Locale, recs = allRecs(), mode = activeNs()): HTMLElement {
   const label = buildLabel(m);

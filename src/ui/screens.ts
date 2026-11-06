@@ -11,7 +11,7 @@ import { pausedCard } from "./privacyUi";
 import { disclaimers, fieldHelp, num, showNeed, valueEl } from "./components";
 import { STAGES, DEMO_DATE, DEMO_TASKS } from "../demo/seed";
 import { MODULES } from "../modules/capability";
-import { buildLegend, moduleCard } from "./capabilityUi";
+import { buildLegend, moduleCard, moduleDetails } from "./capabilityUi";
 import { ENTITIES } from "../schema/entities";
 import { FIELDS, CATALOG_VERSION, intakeSteps, fieldById } from "../catalog/fields";
 import { semanticLabel } from "../catalog/labels";
@@ -1162,8 +1162,7 @@ export function journey(): HTMLElement {
     viewBar("journey", lang),
     stageLadder(lang),
     stagePanel(lang),
-    h("h2", {}, t("journey.slots", lang)),
-    ...MODULES.filter((m) => m.tab === "journey").map((m) => moduleCard(m, lang)),
+    moduleDetails("journey", lang),
     disclaimers(lang));
 }
 
@@ -1190,8 +1189,7 @@ export function diary(): HTMLElement {
     link("#/diary/ventures", "btn ghost", t("ven.link", lang)),
     link("#/diary/team", "btn ghost", t("team.link", lang)),
     link("#/diary/health", "btn ghost", t("hl.title", lang)),
-    h("h2", {}, t("diary.modules", lang)),
-    ...MODULES.filter((m) => m.tab === "diary").map((m) => moduleCard(m, lang)),
+    moduleDetails("diary", lang),
     disclaimers(lang));
 }
 
@@ -1364,7 +1362,7 @@ export function deen(): HTMLElement {
         h("p", { class: "muted" }, t("deen.fields", lang, { n: num(fs.length, lang) }), " · ", t("access.device_only_per_item_authorisation", lang)),
         ...fs.map((f) => fieldHelp(f, lang)));
     }),
-    ...MODULES.filter((m) => m.tab === "deen").map((m) => moduleCard(m, lang)),
+    moduleDetails("deen", lang),
     disclaimers(lang, ["noFatwa", "noGuarantee"]));
 }
 
