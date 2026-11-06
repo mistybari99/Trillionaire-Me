@@ -4,15 +4,15 @@ Docs only. Nothing in src/ is changed. Look: D-E Light, Colorful, Futuristic. Co
 
 ## বাংলা সারসংক্ষেপ (সহজ বাংলা)
 1. এই ডকে Today, Journey, Diary, Habits, Focus, Stuck, Reward আর Capture স্ক্রিনের নতুন ডিজাইন আছে।
-2. লক্ষ্য: ৩৬০ px ফোনে স্ক্রল সর্বোচ্চ দেড় স্ক্রিন। এখন Journey প্রায় ১৪ স্ক্রিন, Today প্রায় ৪.৭ স্ক্রিন।
+2. গোল: 360 px ফোনে স্ক্রল সর্বোচ্চ দেড় স্ক্রিন। এখন Journey প্রায় 14 স্ক্রিন, Today প্রায় 4.7 স্ক্রিন।
 3. উপায়: ট্যাব, অ্যাকর্ডিয়ন, বটম শিট ফর্ম, কুইক অ্যাকশন রো আর সার্চ বার। পেজের ভিতরে পেজ, ফাংশনের ভিতরে ফাংশন।
 4. কোনো ফাংশন বাদ যায়নি। প্রতিটা রুটের জন্য ম্যাপ টেবিল আছে: কোন ফাংশন এখন কোথায় পাওয়া যাবে।
 5. জরুরি সতর্কতা (সেভ ফেইল, কনসেন্ট পজ) কখনো ভাঁজ হবে না। আগের Action Desk ক্রম ঠিক থাকবে।
-6. Journey এর ১৮টা টুল ৩টা ট্যাবে যাবে (প্ল্যান ৭, রিভিউ ৬, এক্সপ্লোর ৫) আর সার্চ বার থেকেও খোঁজা যাবে।
+6. Journey এর 18টা টুল 3টা ট্যাবে যাবে (প্ল্যান 7, রিভিউ 6, এক্সপ্লোর 5) আর সার্চ বার থেকেও খোঁজা যাবে।
 7. গোল পেজে স্টেপ, প্ল্যান, কোথায় যায়, SMART/SWOT, স্ট্যাটাস আলাদা ট্যাবে থাকবে।
 8. ফর্মগুলো (নতুন গোল, হ্যাবিট, ক্যাপচার) বটম শিটে খুলবে, তাই পেজ ছোট থাকবে।
 9. নতুন বানাতে হবে: k-tabs, k-sheet, k-cmd, k-help কম্পোনেন্ট আর একটা নতুন রুট `#/journey/tools`।
-10. কোনো স্কোর, র‍্যাংক, স্ট্রিক বা লাল ব্যর্থতার লেখা নেই। অজানা মানে ০ না। ডেমো ডাটায় DEMO লেবেল থাকে।
+10. কোনো স্কোর, র‍্যাংক, স্ট্রিক বা লাল ব্যর্থতার লেখা নেই। প্রোফাইলে পার্সেন্ট নেই, শুধু কোনটা ভরা আর কোনটা অজানা। অজানা মানে 0 না।
 
 ## 0. How I measured (no guessing)
 | Source | What it gives | Limit |
@@ -33,9 +33,9 @@ Route names: owner list says `/wheel`, `/goals`; real routes are `#/journey/whee
 | Quick-action row | exists: `workspaceShortcuts()` + `.k-actions--row` | 3 to 5 chips, 44 px (`--tap`), wraps, never scrolls sideways |
 | Search / command bar `k-cmd` | **new, needs build** (copy of `settingsSearch.ts`: `norm`, recents; index = route labels from ROUTES + tool names; local only, no AI) | Sits under the title; empty = recents |
 | Help (i) `k-help` | **new, needs build**; content = existing `details.help` text (`dl`) | 44 px (i) button opens it inline under the heading |
-| Profile | exists: `profileCard` (Diary), Settings > Profile | Shown as chip "Profile 62%" that opens it in a sheet |
+| Profile | exists: `profileCard` (Diary), Settings > Profile | Shown as chip "Profile" that opens it in a sheet: plain list of filled parts and unknown parts, no percent, no inferred value |
 | Count badge | exists: `kChip` (`--tint-primary`) | Counts only real numbers; unknown shows "?" never 0 |
-Never collapsed: `pausedCard`, save/storage/namespace banners, `disclaimers`, DEMO chips (`--tint-demo`, `--demo`). Tokens used: `--paper --card --ink --muted --rule --primary --on-primary --ember --moss --calm --danger --demo --demo-bg --tint-primary --tint-calm --tint-moss --s1..--s7 --r-md --r-lg --e1 --e2 --hair --tap --ctl-h --fs-sm..--fs-2xl --lh-ui --focus --scrim`.
+Never collapsed: `pausedCard`, save/storage/namespace banners, `disclaimers`, DEMO chips (`--tint-demo`, `--demo`). Tokens are defined in `src/ui/styles.css` and used by `src/ui/kit.css`. Tokens used: `--paper --card --ink --muted --rule --primary --on-primary --ember --moss --calm --danger --demo --demo-bg --tint-primary --tint-calm --tint-moss --s1..--s7 --r-md --r-lg --e1 --e2 --hair --tap --ctl-h --fs-sm..--fs-2xl --lh-ui --focus --scrim`.
 
 ## 2. Today and Capture (`#/today`, `#/capture`)
 **Problems (source: `today()` screens.ts 1013-1071, 3488 px).** About 24 conditional blocks stacked: pausedCard, header, 4 shortcuts, nextActionCard, agenda + 3 buttons, 6 attention cards, 3 context, 12 summary cards, stage + rungs, inspiration, rules, disclaimers. Tasks start at ~451 px (ACTION_DESK note). Summary and inspiration are always open. Capture 745+ px has a 3-input form always open.
@@ -52,14 +52,14 @@ Never collapsed: `pausedCard`, save/storage/namespace banners, `disclaimers`, DE
 | riskDueCard, gateDueCard, remindersTodayCard, missedTodayCard, goalDateReminders, backupReminderCard | Attention accordion (6 items, badge) |
 | welcomeBackCard, movedNoteCard, next-step aside | tab Context |
 | overallProgressCard, homeCountCards, kpiTodayCard, northStarCard, teamCard, blocksTodayCard, healthCard, deenTodayCard, realityTodayCard, homeSummaryCards, portfolioCard, adviceCardsView | tab Summary, same order, each its own row-card |
-| stage text + rungs (A-H "১/৮"), inspiration card | tab Stage and idea |
+| stage text + rungs (A-H "1/8"), inspiration card | tab Stage and idea |
 | rulesTodayCard, disclaimers | Notes accordion (disclaimer line stays visible) |
 | captureScreen: input, parse, found/none, confirmLow, saveNote | input + sheet (same code) |
 **Target:** Today first view = header + 1 band + 3 rows + chip row = ~560 px; tab content opens in place, page <= 1100 px (from 3488, **-68%**). Capture <= 740 px.
 
 ## 3. Journey home (`#/journey`) and Start (`#/start`)
 **Problems (`journey()` 1132-1168, 10310 px, 13.9 screens).** 18 equal tool buttons in 3 grids (~1000 px), goals card, funnel hero, overallProgress, northStar, templatePicker, viewBar, 8-rung stageLadder, stagePanel (3 cards), module details. The goal/plan entry is repeated (shortcut, goals card, tool grid).
-**Proposal.** Title + stage strip (1 line "Stage A · ১/৮" with `valueEl` DEMO/ESTIMATE) > `k-cmd` "Find a tool" > goals card (top 3 active, "All n" > `#/journey/goals`, "+ New goal" opens `k-sheet` = `newGoalForm`) > tabs **[Plan 7][Review 6][Explore 5]** (2-column tool grid, one tab at a time) > Overview accordions (closed, badges): Progress, North Star, Goal funnel, Stages (8), Stage detail, Look (template + view), Feature details. `#/journey/tools` = full searchable list of all 18 + sub-pages (**new, needs build**; optional "All tools" link at the end of the tab).
+**Proposal.** Title + stage strip (1 line "Stage A · 1/8" with `valueEl` DEMO/ESTIMATE) > `k-cmd` "Find a tool" > goals card (top 3 active, "All n" > `#/journey/goals`, "+ New goal" opens `k-sheet` = `newGoalForm`) > tabs **[Plan 7][Review 6][Explore 5]** (2-column tool grid, one tab at a time) > Overview accordions (closed, badges): Progress, North Star, Goal funnel, Stages (8), Stage detail, Look (template + view), Feature details. `#/journey/tools` = full searchable list of all 18 + sub-pages (**new, needs build**; optional "All tools" link at the end of the tab).
 | Existing function | New place |
 |---|---|
 | 18 tool links (boards, horizon, decide, risks, reality, northstar, kpi / log, report, week, month, review, history / universe, art, mine, legs, leak) | 3 tabs, same labels (`bd.link` ...), plus `k-cmd` and `#/journey/tools` |
@@ -116,11 +116,11 @@ Never collapsed: `pausedCard`, save/storage/namespace banners, `disclaimers`, DE
 
 ## 7. Diary (`#/diary`, `intake`, `plan`, `money`, `ventures`, `health`, `team`)
 **Problems.** `diary()` 1864 px: profileCard, completeness card, next card, CTA + 5 ghost buttons, module details. plan 2376, money 1476, intake step 1251-1714 (7 steps), ventures (3 forms, 9 inputs), team (3 forms, 9 buttons), health (5 cards).
-**Proposal.** Diary home: title + completeness ring (`INFERENCE` chip) + Profile chip (sheet) > next step band + "Continue intake" CTA > **tab bar of 6 sections [Plan][Money][Ventures][Team][Health][Intake]** as a 2-row tile grid (icon + count badge) > `k-cmd`. Each section keeps its route; inside: list first, add form in sheet, extras in accordions. Plan: [Today][Week][Later] tabs; money: [Summary][Entries][Currency] tabs; intake: sticky step chips 1-7 with progress.
+**Proposal.** Diary home: title + Profile chip (sheet: filled parts / unknown parts list, no percent) > next step band + "Continue intake" CTA > **tab bar of 6 sections [Plan][Money][Ventures][Team][Health][Intake]** as a 2-row tile grid (icon + count badge) > `k-cmd`. Each section keeps its route; inside: list first, add form in sheet, extras in accordions. Plan: [Today][Week][Later] tabs; money: [Summary][Entries][Currency] tabs; intake: sticky step chips 1-7 with progress.
 | Function | Place |
 |---|---|
 | profileCard | Profile chip > sheet (also Settings) |
-| completeness, nextText | ring + band |
+| completeness (shown as list of filled / unknown parts, no percent), nextText | Profile sheet + band |
 | 6 links (intake, plan, money, ventures, team, health) | tile grid with badges |
 | planScreen: task add/edit, hours, mode, role, size, planFlow, feasibilityNote | tabs Today/Week/Later; add = sheet |
 | moneyScreen: add, cash90, runway, networth, fx rate, remove | tabs Summary/Entries/Currency |
@@ -134,7 +134,7 @@ Never collapsed: `pausedCard`, save/storage/namespace banners, `disclaimers`, DE
 **Proposal.** Habits: today strip (one `k-row` per habit, tick button, 7 dots inline) > grid tracker tab **[Today][Grid][Add]**; per-habit details (chart, goals, reminder, restart note) in an accordion on the row; Add = sheet. Stuck: causes as a question list (Yes / No / Not sure) one at a time, helpers in accordion. Focus: timer + 3 buttons visible, minutes picker and total in a details row. Reward: ring + latest picture; `#/journey/art` gallery stays.
 | Function | Place |
 |---|---|
-| habit tick/plus, dots, consistency (INFERENCE), restart plan, remindRow, habitGoalsRow, delete | row + row accordion |
+| habit tick/plus, dots, consistency (shown as "x of y planned days", no score), restart plan, remindRow, habitGoalsRow, delete | row + row accordion |
 | habitGridTracker, viewBar("habits"), add form + goalPicker + consent gate | tabs Grid / Add (sheet) |
 | stuckScreen causes, helpers, stepAdd, plan link | question list + accordion |
 | focusScreen (pick, pause, stop, markDone, total, tip) | timer + details |
@@ -153,3 +153,18 @@ Never collapsed: `pausedCard`, save/storage/namespace banners, `disclaimers`, DE
 | Reduced motion | sheet slide only under `prefers-reduced-motion:no-preference` |
 | Link check | each route in sections 2-8 appears in the new tests' link list; Action Desk tests keep their selectors (add classes, never rename) |
 New items needing build: `k-tabs`, `k-sheet`, `k-cmd`, `k-help` (components), route `#/journey/tools`. Everything else is an existing route or builder.
+
+## 10. Help (i) text, every group that uses k-help (EN / BN, plain)
+| Group | EN | BN |
+|---|---|---|
+| Today | Your tasks for today. Tap Done when finished. Other cards open below. | আজকের কাজ এখানে। শেষ হলে Done চাপুন। বাকি কার্ড নিচে খোলে। |
+| Journey | Your goals and all tools. Pick a tab or search for a tool. | আপনার গোল আর সব টুল। ট্যাব বাছুন বা টুল সার্চ করুন। |
+| Goal page | One goal: steps, plan, where it goes, SMART and SWOT, status. | একটা গোল: স্টেপ, প্ল্যান, কোথায় যায়, SMART ও SWOT, স্ট্যাটাস। |
+| Review | Look back by week, month or report. Not enough data stays "unknown". | সপ্তাহ, মাস বা রিপোর্টে পেছনে তাকান। ডাটা কম হলে "অজানা" থাকে। |
+| Plan tools | Your own lists. Tap Add to open the form. Nothing leaves this phone. | আপনার নিজের লিস্ট। Add চাপলে ফর্ম খোলে। কিছু ফোনের বাইরে যায় না। |
+| Diary | Your details and next step. Fill only what you want. | আপনার তথ্য আর পরের ধাপ। যা ইচ্ছা শুধু তা ভরুন। |
+| Habits | Tick today. Open a habit for chart, goals and reminder. | আজকের টিক দিন। চার্ট, গোল ও রিমাইন্ডারের জন্য হ্যাবিট খুলুন। |
+| Stuck | Answer Yes, No or Not sure. You get one small step. | Yes, No বা Not sure বলুন। একটা ছোট স্টেপ পাবেন। |
+| Focus | Pick a task and a time. Pause or stop any time. | একটা কাজ আর সময় বাছুন। যেকোনো সময় পজ বা স্টপ করুন। |
+| Reward | Your latest picture and small wins. No ranks. | আপনার সর্বশেষ ছবি আর ছোট জয়। কোনো র‍্যাংক নেই। |
+Profile sheet (Diary): list "Filled: name, city" and "Unknown: income, goals" with no percent; unknown stays unknown, never 0.

@@ -2,18 +2,18 @@
 
 ## বাংলা সারাংশ
 - এই ডকুমেন্ট শুধু ডিজাইন। কোড, ডাটা, কমিট কিছু বদলায়নি।
-- আসল ব্রাউজারে (360 px, বাংলা, 100% সাইজ, ডেমো মোড) মেপে দেখা গেছে: সবচেয়ে লম্বা পেজ Fields গাইড (44 স্ক্রিন), Status (19), Topic (7.4), Deen (6.2), নামাজ সেটিংস (5.5)।
+- আসল ব্রাউজারে (360 px, বাংলা, 100% সাইজ, ডেমো মোড) মেপে দেখা গেছে: সবচেয়ে লম্বা পেজ Fields গাইড (44 স্ক্রিন), Status (19), Topic (7.8), Deen (6.2), নামাজ সেটিংস (5.5)।
 - সমাধান: প্রতি পেজে ট্যাব, অ্যাকর্ডিয়ন, নিচ থেকে ওঠা শিট, কাউন্ট ব্যাজ, আর প্রতি গ্রুপে ⓘ হেল্প।
 - সব পেজে এক লাইনের ডেমো ব্যানার (এখন 120 px), ডিসক্লেমার এক লাইনের চিপ।
 - সব ট্যাবে 🔍 কমান্ড বার: অ্যাকশন, পেজ, সেটিংস, টপিক, গ্লসারি, অফলাইনে খোঁজে।
 - নতুন "আমার প্রোফাইল" হাব: নাম, পারমিশন, লুক, ভাষা, ব্যাকআপ এক জায়গায়। কোনো স্কোর বা র‍্যাঙ্ক নেই।
 - নিচের ম্যাপ দেখায় কোনো ফাংশন বাদ যায়নি। আগের লিংক সব কাজ করবে।
-- লক্ষ্য: ডিফল্ট ভিউ ১.৫ স্ক্রিনের মধ্যে। এগুলো বাজেট, বানানো হয়নি।
-- নতুন রুট মাত্র ৩টি (নিচে)। ৫টি ট্যাব একই থাকে।
-- ছবিতে দেখুন: `B2_deen_settings_profile.html` (আগে/পরে ৫টি ফ্রেম)।
+- গোল: ডিফল্ট ভিউ 1.5 স্ক্রিনের মধ্যে। এগুলো বাজেট, বানানো হয়নি।
+- নতুন রুট মাত্র 3টি (নিচে)। 5টি ট্যাব একই থাকে।
+- ছবিতে দেখুন: `B2_deen_settings_profile.html` (আগে/পরে 5টি ফ্রেম)।
 
 ## 0. How I measured (no guessing)
-Built the current app in a scratch copy (docs untouched), served `vite preview`, opened each route in Chrome 153 with Playwright: viewport 360x740, language bn, text 100%, DEMO mode, onboarding done. "Screens" = `document.documentElement.scrollHeight / 740`. Counts via `main.querySelectorAll`. Block heights via `getBoundingClientRect` of each child of `main`. Chrome overhead per screen: top bar 45, DEMO note 120 (60 on settings), nav 57, disclaimer note 135. Targets below are **budgets** (rows x measured heights), not rendered prototypes. Target: default view <= 1.5 screens (<= 1110 px page height); an opened panel scrolls inside its page.
+Built the current app in a scratch copy (docs untouched), served `vite preview`, opened each route in Chrome 153 with Playwright: viewport 360x740, language bn, text 100%, DEMO mode, onboarding done. "Screens" = `document.documentElement.scrollHeight / 740`. Counts by script (not by hand): `main.querySelectorAll(".card, .k-card")` (nested cards counted), `h2`, `details`, `button, .btn`, `input,select,textarea`; script re-run a second time on 6 Nov and every row matched (the topic row was corrected to 7.8 screens, 13 h2, 8 buttons). Block heights via `getBoundingClientRect` of each child of `main`. Chrome overhead per screen: top bar 45, DEMO note 120 (60 on settings), nav 57, disclaimer note 135. Targets below are **budgets** (rows x measured heights), not rendered prototypes. Target: default view <= 1.5 screens (<= 1110 px page height); an opened panel scrolls inside its page.
 
 Measured today (screens / cards / h2 / folded details / buttons / inputs):
 
@@ -25,7 +25,7 @@ Measured today (screens / cards / h2 / folded details / buttons / inputs):
 | /cards | 1.34 | 0 | 1 | 0 | 3 | 2 |
 | /notes | 3.39 | 3 | 3 | 0 | 3 | 9 |
 | /topics | 3.97 | 21 | 25 | 0 | 0 | 0 |
-| /topic/self-awareness | 7.4 | 11 tips | 3 | 0 | 0 | 0 |
+| /topic/self-awareness | 7.8 | 11 | 13 | 0 | 8 | 0 |
 | /settings | 2.69 | 14 | 2 | 0 | 7 | 2 |
 | /settings/look | 2.47 | 9 | 4 | 1 | 6 | 5 |
 | /settings/prayer | 5.53 | 5 | 4 | 0 | 26 | 16 |
@@ -53,8 +53,8 @@ Biggest single blocks: Deen prayer-times card 800 px; prayer settings card 1908 
 | Piece | Problem today (source) | Proposal | Status |
 |---|---|---|---|
 | Top bar | `render()` in src/app.ts: menu, title, online badge, DEMO badge, globe. No search. | menu, title, **🔍**, globe. Online state moves into the one-line banner ("Online" only as text, never "synced"). Globe keeps writing `tm:ui:lang` (settings-final-decision 1.1) | 🔍 new, needs build |
-| DEMO banner | `demoPanels()` 120 px on every route (60 on settings) | One line 36 px: "DEMO · নমুনা ডাটা · আসল শুরু" with the same Start real link. Full text one tap away. Still labelled on every screen | edit of existing |
-| Disclaimers | `disclaimers()` 135 px at the end of each screen | One-line chip row ("ফতোয়া নয় · গ্যারান্টি নয় ⓘ") keeping `data-legal`; full text in the ⓘ sheet. Still once per route (ui-reconcile R4) | edit of existing |
+| DEMO banner | `demoPanels()` 120 px on every route (60 on settings) | One line 36 px: "DEMO 9 নমুনা ডাটা 9 আসল শুরু" with the same Start real link. Full text one tap away. Still labelled on every screen | edit of existing |
+| Disclaimers | `disclaimers()` 135 px at the end of each screen | One-line chip row ("ফতোয়া নয় 9 গ্যারান্টি নয় ⓘ") keeping `data-legal`; full text in the ⓘ sheet. Still once per route (ui-reconcile R4) | edit of existing |
 | Bottom nav | 5 tabs, `TABS` + `observeNavLayout` (navLayout.ts); knowledge routes are tagged "settings" | Keep 5 labelled tabs, wrap at large text, no icon-only. Add: re-tap active tab returns to its root; calm dot on Settings if no file backup yet (no red, no count). Knowledge pages show crumb "← Guides & info" | re-tap + dot new |
 | Search / command bar | Only `withSearch()` in settingsSearch.ts, inside Settings | `commandBar()` full-width sheet: input (focus on open), chips All / Actions / Pages / Settings / Topics, grouped results with count badges, "recent 3", empty state = quick actions. Static registry, offline: ROWS, GUIDES, CATEGORIES (settingsRegistry.ts) + ROUTES labels + TOPICS names + GLOSSARY terms + actions list. Last row "Wikipedia" = the existing in-app search card (in-app-search-and-hosting.md), only on tap. No AI (D-C) | extends existing |
 | Quick actions | Action Desk has a tool grid on Today only | `quickActions(context)` row of 4 (2x2 under 300 px or 150% text): Deen: Prayer log, Fast, Give, Plan. Settings: Language, Dark, Text size, Backup now. Default (command-bar empty): Capture `#/capture`, Stuck `#/stuck`, Habits `#/habits`, Intake `#/diary/intake`, Backup `#/settings/backup/savebackup` | component new |
@@ -62,14 +62,14 @@ Biggest single blocks: Deen prayer-times card 800 px; prayer settings card 1908 
 | Sheet | Forms inline | `kSheet` used by Help, record forms, command bar. Scrim, 44 px grab bar, max 85% height, content scrolls inside | new component |
 | Count badge | none | `k-chip` + number, not a score. Counts only things that exist (entries, rows, rules on) | uses kit |
 
-New kit builders go in `src/ui/kit/` as `k-*` classes using real tokens: `--paper --card --ink --muted --rule --primary --on-primary --ember --moss --calm --demo --demo-bg --danger --s1..--s7 --r-md --r-lg --tap --ctl-h --tint-primary --hair --e1 --e2 --fs-sm --lh-ui`. Look: Light Futuristic radius 12/18, opaque cards, one primary action per view.
+New kit builders go in `src/ui/kit/` as `k-*` classes. The tokens are defined in `src/ui/styles.css` (colours per look in `src/ui/themes.ts`) and used by `src/ui/kit.css`; names: `--paper --card --ink --muted --rule --primary --on-primary --ember --moss --calm --demo --demo-bg --danger --s1..--s7 --r-md --r-lg --tap --ctl-h --tint-primary --hair --e1 --e2 --fs-sm --lh-ui`. Look: Light Futuristic radius 12/18, opaque cards, one primary action per view.
 
 ## 2. Group G1: Deen (/deen, /deen/plans)
 **Problems.** /deen is 6.24 screens: `deen()` in screens.ts stacks `fastCard`, `prayerTimesCard` (800 px), `hijriCard` (329), `prayerLinkRow`, 8 entity cards (each repeats the "Private" tag and a field list, 22 folded lists), `deen_plan` (475), `deen_mark`, `moduleDetails`, disclaimers. /deen/plans is 3.77 screens: one 14-input form (748 px), numbers card (772), notes/giving (470).
 **Proposal.**
 1. Heading row with Private chip and ⓘ. Today strip (one card, ~130 px): next prayer + source chip DEMO/method, today's fast ("no record" = Unknown, not 0), Hijri date as one line.
 2. Quick actions: Prayer log, Fast, Give, Plan. Each opens a bottom sheet with the existing form fields (same `fieldHelp`, same consent gate, same D-B rules).
-3. In-page tabs (state in the page, no route): **Today** (5 prayer rows, next highlighted, rest folded) | **Records 8** (8 rows with count badge, tap = sheet) | **Plan** (deen_plan, deen_mark) | **Learn** (Quran activity, learning, links to Hadith/Cards/Topics, Feature details).
+3. In-page tabs (state in the page, no route): **Today** (5 prayer rows, next highlighted, rest folded) | **Records 8** (8 rows with count badge, tap = sheet) | **Plan** (deen_plan, deen_mark) | **Learn** (Quran activity, learning, Feature details; one row "Knowledge ›" to G2, no duplicate list).
 4. Prayer settings stay in Settings; Deen shows one row "Prayer & alerts ›".
 5. /deen/plans: tabs **Plan | Numbers | Notes & giving**, form in a sheet, 3 inputs visible per step.
 6. No piety score, rank, streak or shame wording; no scripture text (D-D); "Not a fatwa" one-line chip stays visible.
@@ -87,23 +87,22 @@ New kit builders go in `src/ui/kit/` as `k-*` classes using real tokens: `--pape
 | Feature details | `moduleDetails("deen")` | Learn tab |
 | Not a fatwa / no guarantee | `disclaimers` | chip + ⓘ |
 
-## 3. Group G2: Knowledge (Hadith, Cards, Notes, Topics)
-**Problems.** Four routes tagged "settings" tab; /topics 3.97 screens (21 link cards, 89 px each); /topic/:id 7.4 screens (tip cards 320-550 px); /notes 3.39 (3 big sections); /hadith 1.33 (off state, consent card); /cards 1.34 (form).
-**Proposal.**
-- Shared `knowledgeTabs()` strip on all four: **Topics | Cards | Notes | Hadith** (uses existing routes; hub = Settings > Guides & info, "Learn" group). Crumb "← Guides & info".
-- /topics: search box + 4 layer accordions with count badges (first open); topic rows 56 px not 89 px.
-- /topic/:id: header + "Try it" button + tip list as accordion rows (title only, ~64 px), first tip open; "Related" folded.
-- /notes: tabs **Sources | Notes | SOP**; add-form in sheet.
-- /hadith stays honest: "Off" state card with one consent action, no text until D-D resolved. /cards: form moves to a sheet; list first.
-**Target.** Topics 3.97 to 1.3; topic 7.4 to 1.5; notes 3.39 to 1.4; hadith/cards ~1.1 (banner and disclaimer savings).
+## 3. Group G2: Knowledge (ONE group: Topics, Library, Cards, Notes, Hadith)
+**Problems.** Five routes tagged "settings" tab and split across two lists (More, Guides); /topics 3.97 screens (21 link cards, 89 px each); /topic/:id 7.8 (tip cards 320-550 px); /notes 3.39; /more/library 3.32; /hadith 1.33 (off state); /cards 1.34.
+**Proposal. One home per function:** the page **Settings > Guides & info** has two in-page tabs. Tab **Knowledge** holds exactly Topics, Library, Cards, Notes, Hadith and nothing else lists them (Deen "Learn" tab shows one row "Knowledge ›" to this tab, no copies). Tab **About the app** holds Where, Status, Fields, Glossary, Dictionary, Halal flags, Safety, Version, Welcome (see G4).
+- Shared `knowledgeTabs()` strip on the five pages: **Topics | Library | Cards | Notes | Hadith** (existing routes). Crumb "← Guides & info".
+- /topics: search + 4 layer accordions with count badges; rows 56 px. /topic/:id: accordion tips (~64 px), first open, "Related" folded.
+- /notes: tabs Sources | Notes | SOP, add-form in sheet. /more/library: accordions per section.
+- /hadith: honest off state, one consent action, no text until D-D. /cards: form in a sheet, list first.
+**Target.** Topics 3.97 to 1.3; topic 7.8 to 1.5; notes 3.39 to 1.4; library 3.32 to 1.4; hadith/cards ~1.1.
 
-| Route | Kept as | Functions kept |
+| Function | Route (unchanged) | Single home after |
 |---|---|---|
-| /topics | route | 4 layers, 21 topics, drawer links (`#/topic/<id>` from the drawer unchanged) |
-| /topic/:id | route | safety note, Try it link, tips, related |
-| /cards | route | add / list cards, seg view |
-| /notes | route | sources, notes, SOP, crumbs |
-| /hadith | route | off/consent state, pack info |
+| Topics, topic detail | /topics, /topic/:id | Guides & info > Knowledge |
+| Ready systems (Library) | /more/library | Guides & info > Knowledge |
+| Cards | /cards | Guides & info > Knowledge |
+| Notes | /notes | Guides & info > Knowledge |
+| Hadith | /hadith | Guides & info > Knowledge |
 
 ## 4. Group G3: Settings (/settings, /settings/:a/:b, /settings/connections)
 **Problems.** Home 2.69 screens (quick 434 + status 214 + 9 cards of 89-111 px). Prayer 5.53 (one 1908 px card with 26 buttons, 16 inputs); Connections 3.83 (4 cards of ~560 px, equal); Backup 3.38; Privacy 3.3 (readout 569); About 2.97 (15 cards). Category pages in registry order (settingsRegistry.ts, 34 rows).
@@ -122,17 +121,17 @@ New kit builders go in `src/ui/kit/` as `k-*` classes using real tokens: `--pape
 | /settings/look | design, density, horizon, universe, habitgrid, motion, resetlook = 7 accordions |
 | /settings/prayer | prayermethod, prayersync, prayerplace, prayeralerts, reminders = 5 accordions |
 | /settings/backup | reminder, storage, savebackup, restore, snapshots, csv, PDF print card = 7 accordions |
-| /settings/privacy | readout, lockscreen, consent, applock = 4 accordions |
+| /settings/privacy | lockscreen, consent, applock = 3 registry rows as accordions, plus the "private by default" readout, which is **not** in the 34-row ROWS registry: new row, needs build (read-only summary, no storage key) |
 | /settings/data | mode, startreal (`/settings/data/start-real` page stays) |
 | /settings/plan | rules (4 switches), planmode, stages, weighting |
 | /settings/connections | 4 facility rows |
 | /settings/delete | deletedemo, deletereal |
-| /settings/about | version, 12 guides, welcome (see G4) |
+| /settings/about | tab Knowledge (5 pages, G2) + tab About the app (version, 7 guides, welcome, G4) |
 | Redirects | /more, /more/data, /more/connections, /more/rules unchanged (`REDIRECTS`) |
 
 ## 5. Group G4: More / Guides pages (all stay at their URLs)
 **Problems.** Fields 44.4 screens (186 field cards + 47 entity headings, each card with a folded help); Status 18.8 (25 module cards); Glossary 6.1 (34 cards); Dictionary 4.75 (47 folded rows at 56+ px); Where 3.92; Library 3.32; Halal flags 2.57; Safety 1.32 (fine).
-**Proposal.** Settings > Guides & info becomes two in-page tabs: **Learn** (Topics, Library, Cards, Notes, Hadith) | **About the app** (Where, Status, Fields, Glossary, Dictionary, Halal flags, Safety, Version, Welcome). Each page:
+**Proposal.** This group is the **About the app** tab of Guides & info (the other tab is Knowledge, G2) (Where, Status, Fields, Glossary, Dictionary, Halal flags, Safety, Version, Welcome). Each page:
 - **Fields:** search box + 25 module tiles (2-col, count badge = fields); tile opens a sheet with entity accordions; field = one row, help folded. 44 to ~1.5.
 - **Status:** legend chips as filters (built / partly / blocked, with counts); 25 rows grouped in 3 accordions, closed. 18.8 to ~1.4.
 - **Glossary / Dictionary:** search-first, first 8 rows, "Show all 34 / 47"; row opens meaning inline. Keep "যাচাই হয়নি" tag. ~1.4.
@@ -165,14 +164,14 @@ Entry points: Settings home first row, command bar, Today greeting (name links t
 | Hub page, tabs Me / Permissions / Look & language / Backup | **new, needs build** | `/profile` |
 | My data at a glance (demo n / real n entries) | **new, needs build**, uses existing counts | data page counts |
 | Initial-letter avatar chip | **new, optional** | no photo, no upload |
-No owner-profile spec exists in the repo (searched docs); the extra ideas above are proposals only. Rules: nothing inferred, all typed by the person, no completeness percent, no rank. Real values need the D-B tick first.
+No owner-profile spec exists in the repo (searched docs); the extra ideas above are proposals only. Rules: nothing inferred, all typed by the person, no completeness percent, no rank. **This rule overrides the 62% completeness ring in B1**: the Profile hub shows no ring, no percent, no "x of y done", only Unknown for missing parts. Real values need the D-B tick first.
 
 ## 7. Help (i) text, every group (EN / BN, plain)
 | Group | English | বাংলা |
 |---|---|---|
 | Deen | Your private worship notes and prayer times. Changes only what you record. Data stays on this phone. Not a fatwa. | আপনার প্রাইভেট ইবাদতের নোট ও নামাজের সময়। শুধু আপনার রেকর্ড বদলায়। ডাটা এই ফোনেই থাকে। ফতোয়া নয়। |
 | Deen plans | Plan reminders from your own numbers. No score. | নিজের সংখ্যা থেকে প্ল্যান ও রিমাইন্ডার। কোনো স্কোর নেই। |
-| Knowledge | Guides, cards and notes. Read only; nothing is sent out. | গাইড, কার্ড ও নোট। শুধু পড়া; কিছু বাইরে যায় না। |
+| Knowledge | Topics, Library, Cards, Notes and Hadith. Read only; nothing is sent out. | টপিক, লাইব্রেরি, কার্ড, নোট ও হাদিস। শুধু পড়া; কিছু বাইরে যায় না। |
 | Topics | Short guides by theme. Not advice. | থিম ধরে ছোট গাইড। উপদেশ নয়। |
 | Hadith | Off until you allow it. No text is shown before that. | আপনি না দিলে বন্ধ। আগে কোনো লেখা দেখায় না। |
 | Settings home | Language, theme and text size are here only. Each tile opens a group. | ভাষা, থিম ও লেখার সাইজ শুধু এখানে। প্রতিটি টাইল একটি গ্রুপ খোলে। |
