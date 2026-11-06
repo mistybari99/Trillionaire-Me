@@ -3,7 +3,9 @@
 import { resolvedPrayerTimes } from "./prayerSync";
 import { dhakaNow, isoDate, type PrayerKey, type PrayerTimes } from "../core/prayer";
 import { alertSlots, dueSlots, type AlertSlot } from "../core/prayerAlerts";
-import { NO_AZAN, VIBRATE_PATTERN, azanFileFor, detectAzan, soundPlan, type AzanAvailability } from "../core/prayerSound";
+import { VIBRATE_PATTERN, soundPlan } from "../core/prayerSound";
+import { MANIFEST_URL, NO_AZAN, azanFileFor, chooseSlot, detectAzan, type AzanAvailability } from "../core/azanSlots";
+import { clampSpeed } from "../core/azanSpeed";
 import { buildNotification, notifyText, type NotifyPrefs } from "../core/notify";
 import { prefs } from "./state";
 import type { Bi, Locale } from "../i18n/registry";
@@ -38,7 +40,12 @@ let azanProbed: Promise<AzanAvailability> | null = null;
 export function refreshAzanAvailability(force = false): Promise<AzanAvailability> {
   if (azanProbed && !force) return azanProbed;
   const f = typeof fetch === "function" ? (fetch as unknown as Parameters<typeof detectAzan>[0]) : null;
-  azanProbed = (f ? detectAzan(f) : Promise.resolve(NO_AZAN)).then((a) => (azanAvail = a), () => (azanAvail = NO_AZAN));
+  const loadJson = async (): Promise<unknown> => {
+    const r = await (fetch as unknown as (u: string, i: { cache: "no-store" }) => Promise<{ ok: boolean; headers: { get(n: string): string | null }; json?: () => Promise<unknown> }>)(MANIFEST_URL, { cache: "no-store" });
+    if (!r.ok || !(r.headers.get("content-type") ?? "").toLowerCase().includes("json") || typeof r.json !== "function") return null;
+    return r.json();
+  };
+  azanProbed = (f ? detectAzan(f, loadJson) : Promise.resolve(NO_AZAN)).then((a) => (azanAvail = a), () => (azanAvail = NO_AZAN));
   return azanProbed;
 }
 export const azanAvailability = (): AzanAvailability => azanAvail;
@@ -47,31 +54,61 @@ export function setAzanAvailability(a: AzanAvailability) { azanAvail = a; azanPr
 
 const reducedMotion = (): boolean => prefs.reduceMotion === "always" || (typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches);
 
-/** Plays one file at the chosen volume. Needs a tap or an open app; a blocked play is ignored. */
-function playFile(file: string, volume: number) {
+/** Plays one file at the chosen volume and speed. The pitch stays natural when the speed changes. Needs a tap or an open app; a blocked play is ignored. */
+function playFile(file: string, volume: number, speed: number) {
   const a = new Audio(file); a.volume = Math.min(1, Math.max(0, volume / 100));
+  const rate = clampSpeed(speed);
+  try {
+    a.defaultPlaybackRate = rate; a.playbackRate = rate;
+    a.preservesPitch = true;
+    (a as unknown as { webkitPreservesPitch?: boolean }).webkitPreservesPitch = true;
+    (a as unknown as { mozPreservesPitch?: boolean }).mozPreservesPitch = true;
+  } catch { /* an old browser plays at normal speed */ }
   void a.play().catch(() => { /* the phone may block sound until a tap */ });
 }
 
 /** Sound or vibration for an azan alert, only if switched on. Works while the app is open; a closed page cannot play audio. Never throws. */
 export function playAlertSound(s: AlertSlot, soundOn: boolean): "audio" | "vibrate" | "none" {
   const canVibrate = typeof navigator !== "undefined" && typeof navigator.vibrate === "function";
-  const volume = prefs.prayerAlerts.volume;
-  const file = azanFileFor(s.prayer, azanAvail);
+  const { volume, azanSlot, azanSpeed } = prefs.prayerAlerts;
+  const file = azanFileFor(s.prayer, azanAvail, azanSlot);
   const plan = soundPlan(s, soundOn, file, canVibrate, volume, reducedMotion());
   try {
-    if (plan === "audio" && file) playFile(file, volume);
+    if (plan === "audio" && file) playFile(file, volume, azanSpeed);
     else if (plan === "vibrate") navigator.vibrate([...VIBRATE_PATTERN]);
   } catch { return "none"; }
   return plan;
 }
 
-/** Preview button: plays the added azan (or the Fajr one) once at the chosen volume. Returns false when no file was added. */
-export function previewAzan(prayer: PrayerKey = "dhuhr"): boolean {
-  const file = azanFileFor(prayer, azanAvail);
-  if (!file || prefs.prayerAlerts.volume <= 0) return false;
-  try { playFile(file, prefs.prayerAlerts.volume); return true; } catch { return false; }
+/** Preview button: plays the chosen recording (or the given slot) once at the chosen volume and speed (the slider's value, saved or not).
+ *  Returns false when no file was added or the volume is 0. */
+export function previewAzan(prayer: PrayerKey = "dhuhr", opts: { slot?: string; speed?: number } = {}): boolean {
+  const { volume, azanSlot, azanSpeed } = prefs.prayerAlerts;
+  const file = azanFileFor(prayer, azanAvail, opts.slot ?? azanSlot);
+  if (!file || volume <= 0) return false;
+  try { playFile(file, volume, opts.speed ?? azanSpeed); return true; } catch { return false; }
 }
+
+const durations = new Map<string, number>();
+/** The recording's real length in seconds, read from the audio file's own metadata. null while unknown (no file, not loaded, or unreadable): never 0. */
+export function azanDuration(file: string | null): Promise<number | null> {
+  if (!file) return Promise.resolve(null);
+  const known = durations.get(file);
+  if (known !== undefined) return Promise.resolve(known);
+  return new Promise((resolve) => {
+    let done = false;
+    const finish = (v: number | null) => { if (done) return; done = true; if (v !== null) durations.set(file, v); resolve(v); };
+    try {
+      const a = new Audio(); a.preload = "metadata";
+      a.addEventListener("loadedmetadata", () => finish(Number.isFinite(a.duration) && a.duration > 0 ? a.duration : null));
+      a.addEventListener("error", () => finish(null));
+      setTimeout(() => finish(null), 8000);
+      a.src = file;
+    } catch { finish(null); }
+  });
+}
+/** Chosen slot's main file (for the length readout), or null. */
+export const chosenAzanFile = (pref: string): string | null => chooseSlot(azanAvail, pref)?.main ?? null;
 
 export async function showPhone(title: string, body: string, tag: string, quiet: boolean, url?: string): Promise<boolean> {
   if (!canNotify()) return false;

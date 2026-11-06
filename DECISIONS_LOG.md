@@ -812,3 +812,14 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 - Kept: all logic, data, consent/Deen/D-B wording, Bangla copy, no-red-for-missed-goals. Action Desk and text-size slider (rem tokens scale with it) unchanged in behaviour.
 - Alternatives: keep per-screen CSS (rejected: root cause of touching buttons). Undo: revert the kit commits; aliases mean each step reverts alone.
 - Evidence: tests/ui_kit_rules.test.ts, tests/kit_components.test.ts, looks matrix (tools/screenshots.mjs, 60 routes x 4 looks x EN/BN x light/dark x 100/200%, gap >= 8px check added).
+
+
+## 6 Nov 2026 — Azan recording slots and playback speed (AZAN-01)
+
+- Owner request: the owner will supply azan mp3 files later; build the system first. No audio is added by the builder (no licence).
+- What: 4 slots (`azan-1..4.mp3`, optional `azan-N-fajr.mp3`; old `azan.mp3` / `azan-fajr.mp3` still work as slot 1). Optional `public/audio/azan-manifest.json` gives each slot a neutral label and a source/licence note only; file names are fixed by pattern so a bad manifest cannot break playback. Missing slots show "Not added" and cannot be chosen. Default = first added slot. Speed 0.75-1.5x, step 0.05, default 1.0, `playbackRate` with `preservesPitch`; live length line from the file's own metadata, "unknown" (never 0) when not read. New pure modules `src/core/azanSlots.ts`, `src/core/azanSpeed.ts`; screen block `src/ui/azanSoundUi.ts` (kit rows/buttons, 44px controls).
+- Settings: `tm:ui:prayerAlerts` gets two additive fields, `azanSlot` ("" or "1".."4") and `azanSpeed`. This is a per-device pref (not the IndexedDB record schema), so `SCHEMA_VERSION` stays; the parser is the migration: a value saved before these fields is read with the defaults (tested in `tests/azan_slots.test.ts`). Kept record fixtures and fingerprint are unchanged.
+- Offline: the build already lists every file in `dist/` (`tools/precache.ts`), so the manifest and each added slot file are saved at install; the 3 MB cap per file is unchanged (`probeAudio`). No change to `check_deploy`, CSP (`media-src 'self'`) or headers.
+- Alternatives: manifest-driven file names (rejected: path risk); one big hardcoded list in TS (rejected: owner cannot edit notes without code); changing speed by re-encoding (rejected: needs tooling, browser does it).
+- Undo: revert this commit. Saved settings stay readable by the older code (extra fields are ignored). Real playback with the owner's files is still owner task OWNER-08.
+
