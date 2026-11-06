@@ -2,20 +2,20 @@
 
 ## সারাংশ (মালিকের জন্য)
 1. আপনি বলেছিলেন: অ্যাপের প্রতিটা ফাংশন ধরে দেখো, ডাটা, টুল আর তথ্য যথেষ্ট আছে কি না। এটা তার রিপোর্ট।
-2. মোট 84টা ফাংশন দেখা হয়েছে। এর মধ্যে 52টা যথেষ্ট (ENOUGH), 28টা আংশিক (PARTIAL), 4টা অনেক বাকি (MISSING)।
-3. যথেষ্ট মানে: কোড আছে এবং টেস্ট আছে। কিছু ফাংশনে ফোনে হাতে-টেস্ট এখনো বাকি। সেগুলো "phone proof pending" দিয়ে চিহ্নিত। এতে স্ট্যাটাস কমানো হয়নি।
-4. 25টা মডিউলের মধ্যে অ্যাপের নিজের হিসাবে 22টা complete, 2টা partial (M09, M21), 1টা blocked (M23, D-C)।
-5. কোনো requirement এখানে Verified লেখা হয়নি। Register-এ 86টা requirement-এর সাথে টেস্ট লিংক করা নেই।
-6. সবচেয়ে বড় ফাঁক 1: টাকার হিসাবের গভীরতা। ব্যবসার ইউনিট ইকোনমিক্স ও ব্রেক-ইভেন (M09) নেই। ঋণের প্ল্যান, ইমার্জেন্সি রিজার্ভ, খারাপ-অবস্থার স্ক্যানারিও (M07) নেই।
-7. সবচেয়ে বড় ফাঁক 2: ডাটা সুরক্ষা। ফোনের ভেতরের রেকর্ড এনক্রিপ্ট করা নেই (আপনার সিদ্ধান্ত লাগবে)। অডিট লগ নেই। হাতে-বসানোর ওভাররাইড বাদ দেওয়া হয়েছে।
-8. সবচেয়ে বড় ফাঁক 3: কনটেন্ট ও প্রমাণ কম। পথের লাইব্রেরিতে মাত্র 10টা এন্ট্রি, সব "যাচাই হয়নি"। 86টা requirement-এর টেস্ট লিংক নেই।
-9. AI (M23) ইচ্ছা করেই বন্ধ। D-C-তে আপনার খরচের অনুমতি ছাড়া চালু হবে না। ক্লাউড সিংক একই কারণে বন্ধ।
+2. মোট 84টা ফাংশন দেখা হয়েছে। এর মধ্যে 52টা যথেষ্ট, 28টা আংশিক, 4টা এখনো অনেক বাকি।
+3. যথেষ্ট মানে: কোড আছে এবং টেস্ট আছে। কিছু ফাংশনে আসল ফোনে হাতে টেস্ট এখনো বাকি। সেগুলোতে "ফোনে টেস্ট বাকি" চিহ্ন আছে। এতে অবস্থা কমানো হয়নি।
+4. 25টা মডিউলের মধ্যে অ্যাপের নিজের হিসাবে 22টা কমপ্লিট, 2টা আংশিক (M09, M21), 1টা আটকে আছে (M23, আপনার খরচের অনুমতির অপেক্ষায়)।
+5. কোনো রিকোয়ারমেন্ট এখানে "ভেরিফায়েড" লেখা হয়নি। রেজিস্টারে 86টা রিকোয়ারমেন্টের সাথে টেস্টের লিংক নেই।
+6. সবচেয়ে বড় ফাঁক 1: টাকার হিসাবের গভীরতা। ব্যবসার ইউনিট ইকোনমিক্স ও ব্রেক-ইভেন (M09) নেই। ঋণের প্ল্যান, জরুরি রিজার্ভ আর খারাপ অবস্থার হিসাব (M07) নেই।
+7. সবচেয়ে বড় ফাঁক 2: ডাটা সুরক্ষা। ফোনের ভেতরের রেকর্ড এনক্রিপ্ট করা নেই (আপনার সিদ্ধান্ত লাগবে)। অডিট লগ নেই। হাতে বসানোর ওভাররাইড বানানো নেই।
+8. সবচেয়ে বড় ফাঁক 3: কনটেন্ট ও প্রমাণ কম। পথের লাইব্রেরিতে মাত্র 10টা এন্ট্রি, সব "যাচাই হয়নি"। 86টা রিকোয়ারমেন্টের টেস্ট লিংক নেই।
+9. AI (M23) ইচ্ছা করেই বন্ধ। আপনার খরচের অনুমতি (D-C) ছাড়া চালু হবে না। ক্লাউড সিঙ্কও একই কারণে বন্ধ।
 10. ফোনে পরীক্ষা আপনার কাজ: OWNER-01 (ইনস্টল, অফলাইন, রিস্টোর), OWNER-02 (রিমাইন্ডার, লক-স্ক্রিন), OWNER-03 (নামাজের সময়)।
 11. রিভিউয়ার লাগবে: বাংলা (OWNER-04), হাদিস ও হালাল-চেক কনটেন্ট (OWNER-06)।
-12. Section 4-এ 22টা আইডিয়া আছে, গুরুত্ব অনুযায়ী সাজানো। কোনো স্কোর, র‍্যাংক বা স্ট্রিক নেই। অজানা মানে 0 নয়। সম্পদের কোনো গ্যারান্টি নেই।
-13. Section 5-এ দেখানো আছে: src/app.ts-এর সব 57টা রুট, 4টা রিডাইরেক্ট এবং M01-M25 সব মডিউল ঠিক একবার করে আছে।
-14. Section 6-এ বলা আছে কী যাচাই করা হয়নি: টেস্ট আবার চালানো হয়নি, ফোনে দেখা হয়নি।
-15. আপনার জন্য একটা প্রশ্ন আপাতত নেই। এনক্রিপশন (DECISION-01) নিয়ে আপনি চাইলে আলাদা সিদ্ধান্ত দেবেন। আমার সুপারিশ: রিকভারি ফাইলসহ করা।
+12. সেকশন 4-এ 22টা আইডিয়া আছে, গুরুত্ব অনুযায়ী সাজানো। কোনো স্কোর, র‍্যাংক বা স্ট্রিক নেই। অজানা মানে 0 নয়। সম্পদের কোনো গ্যারান্টি নেই।
+13. সেকশন 5-এ দেখানো আছে: অ্যাপের সব 57টা রুট, 4টা রিডাইরেক্ট এবং M01–M25 সব মডিউল ঠিক একবার করে আছে।
+14. সেকশন 6-এ বলা আছে কী যাচাই করা হয়নি: টেস্ট আবার চালানো হয়নি, ফোনে দেখা হয়নি।
+15. সিদ্ধান্ত লাগবে: ডাটা এনক্রিপশন করবেন কি না (DECISION-01) · আমার সুপারিশ: হ্যাঁ, রিকভারি ফাইলসহ · না বললে আমি কোনো এনক্রিপশন যোগ করব না।
 
 **Method.** Three slice reviews (A1 Plan/Journey, A2 Life/Money, A3 Platform/Trust) were merged. Sources: `src/app.ts` ROUTES/REDIRECTS, `src/modules/capability.ts`, `docs/design/m-list-status.md`, `docs/register/EVIDENCE_GAPS_2026-11-06.md`, `docs/audit/OWNER_DEMAND_AUDIT_2026-11-03.md`, `docs/audit/VERIFY-01_2026-11-06.md`, `docs/plan/PLAN_TRACKER.md`, `DECISIONS_LOG.md`, tests by file name. Status rules: ENOUGH = code and a test file exist (a missing physical-phone check adds a "phone proof pending" mark, never lowers the status); PARTIAL = something real is missing; MISSING = not built (BLOCKED = waits for an owner decision). Where drafts disagreed, code or test evidence decided; equal evidence = lower status (see Section 6).
 
@@ -105,7 +105,7 @@
 | P25 | Halal-check flags | /more/halal-flags | `lazyScreens` HALAL; tests in g1 | Draft content, review OWNER-06; no scripture (D-D) |
 | P26 | Look: language, theme, size, motion | /settings/home, /settings/look | `settingsRegistry.ts`; `tests/i18n_modes`, `a11y_looks` | No high-contrast, font choice, week start, date/currency format (REQ-011/069) |
 | P27 | Accessibility | all screens | `tests/a11y*.test.ts`, `settings_gaps` | Text equivalents for visuals (REQ-068) not linked; TalkBack pass is phone proof pending |
-| P28 | Prayer-time sync (opt-in) | /settings/prayer/prayersync | `core/prayerSource.ts`; `tests/prayer_sync.test.ts` | VERIFY-03 (zero request when consent off) is a builder check not yet done; compare OWNER-03 |
+| P28 | Prayer-time sync (opt-in) | /settings/prayer/prayersync | `core/prayerSource.ts`; `tests/prayer_sync.test.ts` | builder check VERIFY-03 was run on 6 Nov 2026, 20 of 20 checks pass (`evidence/verify03-prayer-sync.json`: zero requests when consent off, request fields, withdraw, fallback; provider mocked); still open: compare against the official timetable (OWNER-03) |
 
 ## 3. STILL MUCH MISSING (4)
 | ID | Function | Route | Source | What is missing |
