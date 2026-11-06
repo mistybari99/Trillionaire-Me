@@ -1,0 +1,107 @@
+{
+  "build": "6b14df4",
+  "when": "2026-11-06T14:05:12.600Z",
+  "synthetic": "Testville/Testland, provider mocked by browser interception (no real network)",
+  "results": [
+    {
+      "name": "A1 consent off: zero requests to the prayer provider (start, 5 screens, reload)",
+      "pass": true,
+      "info": "aladhan=0"
+    },
+    {
+      "name": "A2 consent off: zero requests to any outside host",
+      "pass": true,
+      "info": "[]"
+    },
+    {
+      "name": "A3 consent off: Deen says times are calculated on this phone",
+      "pass": true,
+      "info": "local"
+    },
+    {
+      "name": "B0 the page says what is sent and to whom before the tick",
+      "pass": true,
+      "info": "If you turn this on, this app asks a free public service, aladhan.com, for the prayer timetable.It sends only your city, your country, your chosen method and As"
+    },
+    {
+      "name": "B1 button without the tick: nothing sent, a need-tick message shows",
+      "pass": true,
+      "info": "aladhan=0"
+    },
+    {
+      "name": "B2 bad place name refused, nothing sent",
+      "pass": true,
+      "info": "aladhan=0"
+    },
+    {
+      "name": "C1 after the tick: 1-2 requests (today + next 30 days)",
+      "pass": true,
+      "info": "n=2"
+    },
+    {
+      "name": "C2 request fields: GET, https api.aladhan.com, city/country/method/school/timezone only, no coordinates",
+      "pass": true,
+      "info": "https://api.aladhan.com/v1/calendarByCity/2026/11?city=Testville&country=Testland&method=1&school=0&timezonestring=Asia%2FDhaka"
+    },
+    {
+      "name": "C3 no cookie, no referer, no body",
+      "pass": true,
+      "info": "[\"accept\",\"origin\",\"user-agent\",\"sec-ch-ua\",\"sec-ch-ua-mobile\",\"sec-ch-ua-platform\"]"
+    },
+    {
+      "name": "C4 only that one outside host was contacted",
+      "pass": true,
+      "info": "[]"
+    },
+    {
+      "name": "C5 status shows 'on' with the place and last result updated",
+      "pass": true,
+      "info": "updated"
+    },
+    {
+      "name": "C6 Deen shows External label and the provider's synthetic Fajr time (4:11)",
+      "pass": true,
+      "info": "source=external"
+    },
+    {
+      "name": "D1 reload same day: no new request (one ask a day)",
+      "pass": true,
+      "info": "2->2"
+    },
+    {
+      "name": "D2 offline: no request and the saved copy still answers",
+      "pass": true,
+      "info": "source=external new=0"
+    },
+    {
+      "name": "D3 provider unreachable: status failed, saved copy kept and still shown as External",
+      "pass": true,
+      "info": "last=failed source=external"
+    },
+    {
+      "name": "E1 Withdraw: back to 'calculated on this phone', saved copy gone",
+      "pass": true,
+      "info": "local"
+    },
+    {
+      "name": "E2 after Withdraw and reload: zero new requests",
+      "pass": true,
+      "info": "4->4"
+    },
+    {
+      "name": "E3 (info) databases present after withdraw",
+      "pass": true,
+      "info": "[\"tm-db\",\"tm-prayer\"]"
+    },
+    {
+      "name": "F-err provider error 500: app keeps working, local calculation answers, status says failed",
+      "pass": true,
+      "info": "source=local last=failed"
+    },
+    {
+      "name": "F-bad provider unreadable answer: app keeps working, local calculation answers, status says failed",
+      "pass": true,
+      "info": "source=local last=failed"
+    }
+  ]
+}
