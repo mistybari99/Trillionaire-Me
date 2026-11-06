@@ -1,7 +1,7 @@
 // Copy/design previews only. Does not change any production title or owner records.
 import { chromium } from 'playwright';
 import { preview } from 'vite';
-import { mkdirSync,writeFileSync } from 'node:fs';
+import { mkdirSync,writeFileSync,readFileSync } from 'node:fs';
 const out='docs/design/build-yourself-previews';mkdirSync(out,{recursive:true});
 const choices=[
  {title:'Build Yourself',tag:'Build skills. Practice with purpose.',bn:'নিজেকে গড়ে তুলুন',copy:'আপনার বড় গোলের জন্য নিজেকে গড়ে তুলুন—চিন্তা, দক্ষতা ও সিদ্ধান্তে। ফোকাস, অভ্যাস, স্বাস্থ্য, সম্পর্ক ও টাকার বিষয়ে দরকারি চর্চা বেছে নিন। আজকের ছোট চর্চা দিয়ে শুরু করুন, যা শিখবেন তা কাজে লাগান।',nodes:['একটি চর্চা বেছে নিন','নিজের সামর্থ্য গড়ুন','গোলের পরের কাজ করুন']},
@@ -15,6 +15,10 @@ writeFileSync(`${out}/copy.json`,JSON.stringify(choices,null,2));
 const server=await preview({preview:{port:4195,strictPort:true}});
 const browser=await chromium.launch();
 try{const page=await browser.newPage({viewport:{width:1168,height:1110},deviceScaleFactor:1});await page.addInitScript(()=>{localStorage.setItem('tm:ui:dataMode','demo');localStorage.setItem('tm:ui:lang','bn');});await page.goto('http://localhost:4195/#/today');await page.waitForSelector('main');await page.evaluate(([css,html])=>{const style=document.createElement('style');style.textContent=css;document.head.append(style);document.body.innerHTML=html;},[styles,content]);await page.evaluate(()=>document.fonts.ready);await page.screenshot({path:`${out}/comparison.png`,fullPage:true});
-const html=await page.content();writeFileSync(`${out}/preview.html`,html.replace(/<script[\s\S]*?<\/script>/g,'').replace(/<link[^>]*rel="modulepreload"[^>]*>/g,'').replaceAll('./assets/','../../../dist/assets/').replaceAll('href="./','href="../../../dist/'));for(let i=0;i<3;i++){await page.locator('.preview-phone').nth(i).screenshot({path:`${out}/option-${i+1}.png`});}
+const html=await page.content();
+const portable=html.replace(/<script[\s\S]*?<\/script>/g,'').replace(/<link[^>]*rel="modulepreload"[^>]*>/g,'')
+ .replace(/<link[^>]*rel="stylesheet"[^>]*href="([^"]+)"[^>]*>/g,(_,href)=>`<style>${readFileSync(`dist/${href.replace(/^[./]+/,'')}`,'utf8').replaceAll('url(./','url(../../../dist/assets/')}</style>`)
+ .replaceAll('href="./','href="../../../dist/');
+writeFileSync(`${out}/preview.html`,portable);for(let i=0;i<3;i++){await page.locator('.preview-phone').nth(i).screenshot({path:`${out}/option-${i+1}.png`});}
 console.log(`${out}/comparison.png`);
 }finally{await browser.close();await server.close();}

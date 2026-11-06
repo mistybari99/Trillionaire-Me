@@ -1,0 +1,3100 @@
+{
+  "contactLayout": "four columns; zero-based contactCell ordered row-major",
+  "rawOriginals": "Explicit /tmp paths are workspace-only originals, not expected to be tracked. file/evidence paths refer to committed artifacts.",
+  "screens": {
+    "baseline:route:en:/start": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 0,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_start.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/today": {
+      "file": "docs/audit/contextual-help/baseline/route-en-_today.jpg",
+      "artifactKind": "viewport",
+      "contactCell": null,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_today.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/journey": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 2,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_journey.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/journey/log": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 3,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_log.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/journey/wheel": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 4,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_wheel.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/journey/universe": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 5,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_universe.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/journey/goals": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 6,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_goals.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/journey/goal/qa-goal": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 7,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_goal_qa-goal.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/journey/horizon": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 8,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_horizon.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/diary": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 9,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_diary.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/diary/intake/1": {
+      "file": "docs/audit/contextual-help/baseline/route-en-_diary_intake_1.jpg",
+      "artifactKind": "viewport",
+      "contactCell": null,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_diary_intake_1.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/diary/plan": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 11,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_diary_plan.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/diary/money": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 12,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_diary_money.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/capture": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 13,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_capture.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/journey/report": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 14,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_report.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/journey/print/plan": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 15,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_print_plan.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/journey/week": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 0,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_week.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/journey/month": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 1,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_month.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/journey/decide": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 2,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_decide.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/journey/mine": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 3,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_mine.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/journey/legs": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 4,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_legs.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/journey/leak": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 5,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_leak.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/journey/review": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 6,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_review.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/journey/risks": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 7,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_risks.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/journey/history": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 8,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_history.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/journey/northstar": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 9,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_northstar.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/journey/reality": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 10,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_reality.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/journey/boards": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 11,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_boards.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/journey/backward": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 12,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_backward.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/journey/backward/qa-goal": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 13,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_backward_qa-goal.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/journey/gates": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 14,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_gates.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/journey/kpi": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 15,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_kpi.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/diary/ventures": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 0,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_diary_ventures.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/diary/health": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 1,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_diary_health.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/diary/team": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 2,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_diary_team.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/stuck": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 3,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_stuck.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/topics": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 4,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_topics.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/topic/procrastination": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 5,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_topic_procrastination.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/reward": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 6,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_reward.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/journey/art": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 7,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_art.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/focus/qa-task": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 8,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_focus_qa-task.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/habits": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 9,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_habits.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/hadith": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 10,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_hadith.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/cards": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 11,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_cards.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/notes": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 12,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_notes.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/deen": {
+      "file": "docs/audit/contextual-help/baseline/route-en-_deen.jpg",
+      "artifactKind": "viewport",
+      "contactCell": null,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_deen.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/deen/plans": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 14,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_deen_plans.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/settings/connections": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 15,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_connections.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/more/where": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 0,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_more_where.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/more/status": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 1,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_more_status.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/more/fields": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 2,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_more_fields.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/more/glossary": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 3,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_more_glossary.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/more/safety": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 4,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_more_safety.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/more/dictionary": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 5,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_more_dictionary.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/more/library": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 6,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_more_library.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/more/halal-flags": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 7,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_more_halal-flags.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/settings/home/language": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 8,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_home_language.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/settings/home/theme": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 9,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_home_theme.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/settings/home/textsize": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 10,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_home_textsize.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/settings/look/design": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 11,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_look_design.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/settings/look/density": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 12,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_look_density.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/settings/look/motion": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 13,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_look_motion.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/settings/look/resetlook": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 14,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_look_resetlook.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/settings/prayer/prayermethod": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 15,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_prayer_prayermethod.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/settings/prayer/prayersync": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 0,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_prayer_prayersync.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/settings/prayer/prayerplace": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 1,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_prayer_prayerplace.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/settings/prayer/prayeralerts": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 2,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_prayer_prayeralerts.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/settings/prayer/reminders": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 3,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_prayer_reminders.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/settings/backup/reminder": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 4,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_backup_reminder.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/settings/backup/storage": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 5,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_backup_storage.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/settings/backup/savebackup": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 6,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_backup_savebackup.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/settings/backup/restore": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 7,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_backup_restore.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/settings/backup/snapshots": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 8,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_backup_snapshots.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/settings/backup/csv": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 9,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_backup_csv.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/settings/privacy/lockscreen": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 10,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_privacy_lockscreen.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/settings/privacy/consent": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 11,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_privacy_consent.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/settings/privacy/applock": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 12,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_privacy_applock.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/settings/data/mode": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 13,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_data_mode.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/settings/data/start-real": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 14,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_data_start-real.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/settings/plan/rules": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 15,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_plan_rules.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/settings/plan/planmode": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 0,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_plan_planmode.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/settings/plan/stages": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 1,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_plan_stages.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/settings/plan/weighting": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 2,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_plan_weighting.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/settings/delete": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 3,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_delete.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/settings/look": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 4,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_look.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/settings/prayer": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 5,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_prayer.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/settings/backup": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 6,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_backup.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/settings/privacy": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 7,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_privacy.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/settings/data": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 8,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_data.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/settings/plan": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 9,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_plan.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/settings/about": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 10,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_about.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/diary/intake/2": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 11,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_diary_intake_2.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/diary/intake/3": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 12,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_diary_intake_3.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/diary/intake/4": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 13,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_diary_intake_4.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/diary/intake/5": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 14,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_diary_intake_5.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/diary/intake/6": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 15,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_diary_intake_6.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/diary/intake/7": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-07.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 0,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_diary_intake_7.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/journey/print/report": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-07.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 1,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_print_report.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/journey/print/handover": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-07.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 2,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_print_handover.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:en:/deen/fasting": {
+      "file": "docs/audit/contextual-help/baseline/contact-en-07.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 3,
+      "rawFile": "/tmp/contextual-help-baseline/route-en-_deen_fasting.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/start": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 0,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_start.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/today": {
+      "file": "docs/audit/contextual-help/baseline/route-bn-_today.jpg",
+      "artifactKind": "viewport",
+      "contactCell": null,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_today.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/journey": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 2,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/journey/log": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 3,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_log.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/journey/wheel": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 4,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_wheel.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/journey/universe": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 5,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_universe.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/journey/goals": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 6,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_goals.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/journey/goal/qa-goal": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 7,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_goal_qa-goal.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/journey/horizon": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 8,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_horizon.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/diary": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 9,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_diary.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/diary/intake/1": {
+      "file": "docs/audit/contextual-help/baseline/route-bn-_diary_intake_1.jpg",
+      "artifactKind": "viewport",
+      "contactCell": null,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_diary_intake_1.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/diary/plan": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 11,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_diary_plan.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/diary/money": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 12,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_diary_money.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/capture": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 13,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_capture.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/journey/report": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 14,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_report.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/journey/print/plan": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 15,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_print_plan.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/journey/week": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 0,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_week.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/journey/month": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 1,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_month.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/journey/decide": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 2,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_decide.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/journey/mine": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 3,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_mine.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/journey/legs": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 4,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_legs.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/journey/leak": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 5,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_leak.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/journey/review": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 6,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_review.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/journey/risks": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 7,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_risks.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/journey/history": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 8,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_history.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/journey/northstar": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 9,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_northstar.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/journey/reality": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 10,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_reality.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/journey/boards": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 11,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_boards.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/journey/backward": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 12,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_backward.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/journey/backward/qa-goal": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 13,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_backward_qa-goal.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/journey/gates": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 14,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_gates.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/journey/kpi": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 15,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_kpi.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/diary/ventures": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 0,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_diary_ventures.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/diary/health": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 1,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_diary_health.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/diary/team": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 2,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_diary_team.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/stuck": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 3,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_stuck.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/topics": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 4,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_topics.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/topic/procrastination": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 5,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_topic_procrastination.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/reward": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 6,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_reward.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/journey/art": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 7,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_art.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/focus/qa-task": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 8,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_focus_qa-task.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/habits": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 9,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_habits.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/hadith": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 10,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_hadith.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/cards": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 11,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_cards.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/notes": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 12,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_notes.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/deen": {
+      "file": "docs/audit/contextual-help/baseline/route-bn-_deen.jpg",
+      "artifactKind": "viewport",
+      "contactCell": null,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_deen.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/deen/plans": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 14,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_deen_plans.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/settings/connections": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 15,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_connections.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/more/where": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 0,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_more_where.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/more/status": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 1,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_more_status.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/more/fields": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 2,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_more_fields.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/more/glossary": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 3,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_more_glossary.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/more/safety": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 4,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_more_safety.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/more/dictionary": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 5,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_more_dictionary.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/more/library": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 6,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_more_library.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/more/halal-flags": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 7,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_more_halal-flags.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/settings/home/language": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 8,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_home_language.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/settings/home/theme": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 9,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_home_theme.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/settings/home/textsize": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 10,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_home_textsize.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/settings/look/design": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 11,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_look_design.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/settings/look/density": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 12,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_look_density.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/settings/look/motion": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 13,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_look_motion.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/settings/look/resetlook": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 14,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_look_resetlook.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/settings/prayer/prayermethod": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 15,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_prayer_prayermethod.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/settings/prayer/prayersync": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 0,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_prayer_prayersync.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/settings/prayer/prayerplace": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 1,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_prayer_prayerplace.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/settings/prayer/prayeralerts": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 2,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_prayer_prayeralerts.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/settings/prayer/reminders": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 3,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_prayer_reminders.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/settings/backup/reminder": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 4,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_backup_reminder.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/settings/backup/storage": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 5,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_backup_storage.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/settings/backup/savebackup": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 6,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_backup_savebackup.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/settings/backup/restore": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 7,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_backup_restore.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/settings/backup/snapshots": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 8,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_backup_snapshots.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/settings/backup/csv": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 9,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_backup_csv.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/settings/privacy/lockscreen": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 10,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_privacy_lockscreen.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/settings/privacy/consent": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 11,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_privacy_consent.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/settings/privacy/applock": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 12,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_privacy_applock.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/settings/data/mode": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 13,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_data_mode.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/settings/data/start-real": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 14,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_data_start-real.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/settings/plan/rules": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 15,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_plan_rules.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/settings/plan/planmode": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 0,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_plan_planmode.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/settings/plan/stages": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 1,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_plan_stages.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/settings/plan/weighting": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 2,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_plan_weighting.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/settings/delete": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 3,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_delete.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/settings/look": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 4,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_look.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/settings/prayer": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 5,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_prayer.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/settings/backup": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 6,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_backup.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/settings/privacy": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 7,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_privacy.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/settings/data": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 8,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_data.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/settings/plan": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 9,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_plan.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/settings/about": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 10,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_about.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/diary/intake/2": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 11,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_diary_intake_2.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/diary/intake/3": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 12,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_diary_intake_3.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/diary/intake/4": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 13,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_diary_intake_4.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/diary/intake/5": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 14,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_diary_intake_5.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/diary/intake/6": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 15,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_diary_intake_6.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/diary/intake/7": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-07.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 0,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_diary_intake_7.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/journey/print/report": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-07.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 1,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_print_report.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/journey/print/handover": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-07.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 2,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_print_handover.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:route:bn:/deen/fasting": {
+      "file": "docs/audit/contextual-help/baseline/contact-bn-07.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 3,
+      "rawFile": "/tmp/contextual-help-baseline/route-bn-_deen_fasting.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:empty-real:bn:/today": {
+      "file": "docs/audit/contextual-help/baseline/contact-states.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 0,
+      "rawFile": "/tmp/contextual-help-baseline/empty-real-bn-_today.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:empty-real:bn:/diary/plan": {
+      "file": "docs/audit/contextual-help/baseline/contact-states.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 1,
+      "rawFile": "/tmp/contextual-help-baseline/empty-real-bn-_diary_plan.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:empty-real:bn:/deen": {
+      "file": "docs/audit/contextual-help/baseline/contact-states.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 2,
+      "rawFile": "/tmp/contextual-help-baseline/empty-real-bn-_deen.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:unknown:bn:/today": {
+      "file": "docs/audit/contextual-help/baseline/contact-states.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 3,
+      "rawFile": "/tmp/contextual-help-baseline/unknown-bn-_today.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:unknown:bn:/diary/plan": {
+      "file": "docs/audit/contextual-help/baseline/contact-states.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 4,
+      "rawFile": "/tmp/contextual-help-baseline/unknown-bn-_diary_plan.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:unknown:bn:/deen": {
+      "file": "docs/audit/contextual-help/baseline/contact-states.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 5,
+      "rawFile": "/tmp/contextual-help-baseline/unknown-bn-_deen.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:consent-paused:bn:/today": {
+      "file": "docs/audit/contextual-help/baseline/contact-states.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 6,
+      "rawFile": "/tmp/contextual-help-baseline/consent-paused-bn-_today.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:consent-paused:bn:/diary/plan": {
+      "file": "docs/audit/contextual-help/baseline/contact-states.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 7,
+      "rawFile": "/tmp/contextual-help-baseline/consent-paused-bn-_diary_plan.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:consent-paused:bn:/deen": {
+      "file": "docs/audit/contextual-help/baseline/contact-states.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 8,
+      "rawFile": "/tmp/contextual-help-baseline/consent-paused-bn-_deen.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:offline:bn:/today": {
+      "file": "docs/audit/contextual-help/baseline/contact-states.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 9,
+      "rawFile": "/tmp/contextual-help-baseline/offline-bn-_today.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:offline:bn:/diary/plan": {
+      "file": "docs/audit/contextual-help/baseline/contact-states.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 10,
+      "rawFile": "/tmp/contextual-help-baseline/offline-bn-_diary_plan.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:offline:bn:/deen": {
+      "file": "docs/audit/contextual-help/baseline/contact-states.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 11,
+      "rawFile": "/tmp/contextual-help-baseline/offline-bn-_deen.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:save-failure:bn:/today": {
+      "file": "docs/audit/contextual-help/baseline/contact-states.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 12,
+      "rawFile": "/tmp/contextual-help-baseline/save-failure-bn-_today.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:save-failure:bn:/diary/plan": {
+      "file": "docs/audit/contextual-help/baseline/contact-states.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 13,
+      "rawFile": "/tmp/contextual-help-baseline/save-failure-bn-_diary_plan.jpg",
+      "rawFileTracked": false
+    },
+    "baseline:save-failure:bn:/deen": {
+      "file": "docs/audit/contextual-help/baseline/contact-states.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 14,
+      "rawFile": "/tmp/contextual-help-baseline/save-failure-bn-_deen.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/profile": {
+      "file": "docs/audit/contextual-help/implementation/route-en-_profile.jpg",
+      "artifactKind": "viewport",
+      "contactCell": null,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_profile.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/start": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 1,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_start.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/today": {
+      "file": "docs/audit/contextual-help/implementation/route-en-_today.jpg",
+      "artifactKind": "viewport",
+      "contactCell": null,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_today.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/journey": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 3,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_journey.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/journey/log": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 4,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_journey_log.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/journey/wheel": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 5,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_journey_wheel.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/journey/universe": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 6,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_journey_universe.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/journey/goals": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 7,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_journey_goals.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/journey/goal/qa-goal": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 8,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_journey_goal_qa-goal.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/journey/horizon": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 9,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_journey_horizon.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/diary": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 10,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_diary.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/diary/intake/1": {
+      "file": "docs/audit/contextual-help/implementation/route-en-_diary_intake_1.jpg",
+      "artifactKind": "viewport",
+      "contactCell": null,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_diary_intake_1.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/diary/plan": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 12,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_diary_plan.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/diary/money": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 13,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_diary_money.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/capture": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 14,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_capture.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/journey/report": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 15,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_journey_report.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/journey/print/plan": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 0,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_journey_print_plan.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/journey/week": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 1,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_journey_week.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/journey/month": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 2,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_journey_month.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/journey/decide": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 3,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_journey_decide.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/journey/mine": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 4,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_journey_mine.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/journey/legs": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 5,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_journey_legs.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/journey/leak": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 6,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_journey_leak.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/journey/review": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 7,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_journey_review.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/journey/risks": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 8,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_journey_risks.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/journey/history": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 9,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_journey_history.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/journey/northstar": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 10,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_journey_northstar.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/journey/reality": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 11,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_journey_reality.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/journey/boards": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 12,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_journey_boards.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/journey/backward": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 13,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_journey_backward.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/journey/backward/qa-goal": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 14,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_journey_backward_qa-goal.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/journey/gates": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 15,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_journey_gates.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/journey/kpi": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 0,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_journey_kpi.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/diary/ventures": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 1,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_diary_ventures.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/diary/health": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 2,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_diary_health.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/diary/team": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 3,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_diary_team.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/stuck": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 4,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_stuck.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/topics": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 5,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_topics.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/topic/procrastination": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 6,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_topic_procrastination.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/reward": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 7,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_reward.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/journey/art": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 8,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_journey_art.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/focus/qa-task": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 9,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_focus_qa-task.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/habits": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 10,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_habits.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/hadith": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 11,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_hadith.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/cards": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 12,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_cards.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/notes": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 13,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_notes.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/deen": {
+      "file": "docs/audit/contextual-help/implementation/route-en-_deen.jpg",
+      "artifactKind": "viewport",
+      "contactCell": null,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_deen.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/deen/prayers": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 15,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_deen_prayers.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/deen/plans": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 0,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_deen_plans.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/settings/connections": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 1,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_settings_connections.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/more/where": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 2,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_more_where.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/more/status": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 3,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_more_status.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/more/fields": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 4,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_more_fields.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/more/glossary": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 5,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_more_glossary.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/more/safety": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 6,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_more_safety.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/more/dictionary": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 7,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_more_dictionary.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/more/library": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 8,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_more_library.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/more/halal-flags": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 9,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_more_halal-flags.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/settings/home/language": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 10,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_settings_home_language.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/settings/home/theme": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 11,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_settings_home_theme.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/settings/home/textsize": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 12,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_settings_home_textsize.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/settings/look/helpplacement": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 13,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_settings_look_helpplacement.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/settings/look/helpvisuals": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 14,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_settings_look_helpvisuals.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/settings/look/helpcontent": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 15,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_settings_look_helpcontent.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/settings/look/tabnavigation": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 0,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_settings_look_tabnavigation.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/settings/look/design": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 1,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_settings_look_design.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/settings/look/density": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 2,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_settings_look_density.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/settings/look/motion": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 3,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_settings_look_motion.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/settings/look/resetlook": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 4,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_settings_look_resetlook.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/settings/prayer/prayermethod": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 5,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_settings_prayer_prayermethod.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/settings/prayer/prayersync": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 6,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_settings_prayer_prayersync.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/settings/prayer/prayerplace": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 7,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_settings_prayer_prayerplace.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/settings/prayer/prayeralerts": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 8,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_settings_prayer_prayeralerts.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/settings/prayer/reminders": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 9,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_settings_prayer_reminders.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/settings/backup/reminder": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 10,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_settings_backup_reminder.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/settings/backup/storage": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 11,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_settings_backup_storage.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/settings/backup/savebackup": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 12,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_settings_backup_savebackup.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/settings/backup/restore": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 13,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_settings_backup_restore.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/settings/backup/snapshots": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 14,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_settings_backup_snapshots.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/settings/backup/csv": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 15,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_settings_backup_csv.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/settings/privacy/lockscreen": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 0,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_settings_privacy_lockscreen.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/settings/privacy/consent": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 1,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_settings_privacy_consent.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/settings/privacy/applock": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 2,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_settings_privacy_applock.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/settings/data/mode": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 3,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_settings_data_mode.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/settings/data/start-real": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 4,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_settings_data_start-real.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/settings/plan/rules": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 5,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_settings_plan_rules.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/settings/plan/planmode": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 6,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_settings_plan_planmode.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/settings/plan/stages": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 7,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_settings_plan_stages.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/settings/plan/weighting": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 8,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_settings_plan_weighting.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/settings/delete": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 9,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_settings_delete.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/settings/look": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 10,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_settings_look.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/settings/prayer": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 11,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_settings_prayer.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/settings/backup": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 12,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_settings_backup.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/settings/privacy": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 13,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_settings_privacy.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/settings/data": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 14,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_settings_data.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/settings/plan": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 15,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_settings_plan.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/settings/about": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-07.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 0,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_settings_about.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/diary/intake/2": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-07.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 1,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_diary_intake_2.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/diary/intake/3": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-07.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 2,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_diary_intake_3.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/diary/intake/4": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-07.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 3,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_diary_intake_4.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/diary/intake/5": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-07.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 4,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_diary_intake_5.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/diary/intake/6": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-07.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 5,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_diary_intake_6.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/diary/intake/7": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-07.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 6,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_diary_intake_7.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/journey/print/report": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-07.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 7,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_journey_print_report.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/journey/print/handover": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-07.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 8,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_journey_print_handover.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:en:/deen/fasting": {
+      "file": "docs/audit/contextual-help/implementation/contact-en-07.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 9,
+      "rawFile": "/tmp/contextual-help-implementation/route-en-_deen_fasting.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/profile": {
+      "file": "docs/audit/contextual-help/implementation/route-bn-_profile.jpg",
+      "artifactKind": "viewport",
+      "contactCell": null,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_profile.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/start": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 1,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_start.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/today": {
+      "file": "docs/audit/contextual-help/implementation/route-bn-_today.jpg",
+      "artifactKind": "viewport",
+      "contactCell": null,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_today.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/journey": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 3,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_journey.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/journey/log": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 4,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_journey_log.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/journey/wheel": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 5,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_journey_wheel.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/journey/universe": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 6,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_journey_universe.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/journey/goals": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 7,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_journey_goals.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/journey/goal/qa-goal": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 8,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_journey_goal_qa-goal.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/journey/horizon": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 9,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_journey_horizon.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/diary": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 10,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_diary.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/diary/intake/1": {
+      "file": "docs/audit/contextual-help/implementation/route-bn-_diary_intake_1.jpg",
+      "artifactKind": "viewport",
+      "contactCell": null,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_diary_intake_1.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/diary/plan": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 12,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_diary_plan.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/diary/money": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 13,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_diary_money.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/capture": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 14,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_capture.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/journey/report": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-01.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 15,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_journey_report.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/journey/print/plan": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 0,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_journey_print_plan.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/journey/week": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 1,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_journey_week.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/journey/month": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 2,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_journey_month.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/journey/decide": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 3,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_journey_decide.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/journey/mine": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 4,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_journey_mine.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/journey/legs": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 5,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_journey_legs.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/journey/leak": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 6,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_journey_leak.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/journey/review": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 7,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_journey_review.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/journey/risks": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 8,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_journey_risks.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/journey/history": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 9,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_journey_history.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/journey/northstar": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 10,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_journey_northstar.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/journey/reality": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 11,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_journey_reality.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/journey/boards": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 12,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_journey_boards.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/journey/backward": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 13,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_journey_backward.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/journey/backward/qa-goal": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 14,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_journey_backward_qa-goal.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/journey/gates": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-02.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 15,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_journey_gates.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/journey/kpi": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 0,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_journey_kpi.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/diary/ventures": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 1,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_diary_ventures.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/diary/health": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 2,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_diary_health.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/diary/team": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 3,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_diary_team.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/stuck": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 4,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_stuck.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/topics": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 5,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_topics.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/topic/procrastination": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 6,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_topic_procrastination.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/reward": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 7,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_reward.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/journey/art": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 8,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_journey_art.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/focus/qa-task": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 9,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_focus_qa-task.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/habits": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 10,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_habits.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/hadith": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 11,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_hadith.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/cards": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 12,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_cards.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/notes": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 13,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_notes.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/deen": {
+      "file": "docs/audit/contextual-help/implementation/route-bn-_deen.jpg",
+      "artifactKind": "viewport",
+      "contactCell": null,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_deen.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/deen/prayers": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-03.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 15,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_deen_prayers.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/deen/plans": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 0,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_deen_plans.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/settings/connections": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 1,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_settings_connections.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/more/where": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 2,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_more_where.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/more/status": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 3,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_more_status.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/more/fields": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 4,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_more_fields.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/more/glossary": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 5,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_more_glossary.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/more/safety": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 6,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_more_safety.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/more/dictionary": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 7,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_more_dictionary.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/more/library": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 8,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_more_library.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/more/halal-flags": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 9,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_more_halal-flags.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/settings/home/language": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 10,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_settings_home_language.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/settings/home/theme": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 11,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_settings_home_theme.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/settings/home/textsize": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 12,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_settings_home_textsize.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/settings/look/helpplacement": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 13,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_settings_look_helpplacement.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/settings/look/helpvisuals": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 14,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_settings_look_helpvisuals.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/settings/look/helpcontent": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-04.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 15,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_settings_look_helpcontent.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/settings/look/tabnavigation": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 0,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_settings_look_tabnavigation.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/settings/look/design": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 1,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_settings_look_design.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/settings/look/density": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 2,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_settings_look_density.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/settings/look/motion": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 3,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_settings_look_motion.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/settings/look/resetlook": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 4,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_settings_look_resetlook.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/settings/prayer/prayermethod": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 5,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_settings_prayer_prayermethod.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/settings/prayer/prayersync": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 6,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_settings_prayer_prayersync.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/settings/prayer/prayerplace": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 7,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_settings_prayer_prayerplace.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/settings/prayer/prayeralerts": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 8,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_settings_prayer_prayeralerts.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/settings/prayer/reminders": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 9,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_settings_prayer_reminders.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/settings/backup/reminder": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 10,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_settings_backup_reminder.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/settings/backup/storage": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 11,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_settings_backup_storage.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/settings/backup/savebackup": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 12,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_settings_backup_savebackup.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/settings/backup/restore": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 13,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_settings_backup_restore.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/settings/backup/snapshots": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 14,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_settings_backup_snapshots.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/settings/backup/csv": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-05.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 15,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_settings_backup_csv.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/settings/privacy/lockscreen": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 0,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_settings_privacy_lockscreen.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/settings/privacy/consent": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 1,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_settings_privacy_consent.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/settings/privacy/applock": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 2,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_settings_privacy_applock.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/settings/data/mode": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 3,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_settings_data_mode.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/settings/data/start-real": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 4,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_settings_data_start-real.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/settings/plan/rules": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 5,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_settings_plan_rules.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/settings/plan/planmode": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 6,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_settings_plan_planmode.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/settings/plan/stages": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 7,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_settings_plan_stages.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/settings/plan/weighting": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 8,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_settings_plan_weighting.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/settings/delete": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 9,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_settings_delete.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/settings/look": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 10,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_settings_look.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/settings/prayer": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 11,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_settings_prayer.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/settings/backup": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 12,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_settings_backup.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/settings/privacy": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 13,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_settings_privacy.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/settings/data": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 14,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_settings_data.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/settings/plan": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-06.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 15,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_settings_plan.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/settings/about": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-07.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 0,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_settings_about.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/diary/intake/2": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-07.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 1,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_diary_intake_2.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/diary/intake/3": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-07.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 2,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_diary_intake_3.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/diary/intake/4": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-07.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 3,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_diary_intake_4.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/diary/intake/5": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-07.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 4,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_diary_intake_5.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/diary/intake/6": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-07.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 5,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_diary_intake_6.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/diary/intake/7": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-07.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 6,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_diary_intake_7.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/journey/print/report": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-07.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 7,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_journey_print_report.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/journey/print/handover": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-07.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 8,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_journey_print_handover.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:route:bn:/deen/fasting": {
+      "file": "docs/audit/contextual-help/implementation/contact-bn-07.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 9,
+      "rawFile": "/tmp/contextual-help-implementation/route-bn-_deen_fasting.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:empty-real:bn:/today": {
+      "file": "docs/audit/contextual-help/implementation/contact-states.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 0,
+      "rawFile": "/tmp/contextual-help-implementation/empty-real-bn-_today.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:empty-real:bn:/diary/plan": {
+      "file": "docs/audit/contextual-help/implementation/contact-states.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 1,
+      "rawFile": "/tmp/contextual-help-implementation/empty-real-bn-_diary_plan.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:empty-real:bn:/deen": {
+      "file": "docs/audit/contextual-help/implementation/contact-states.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 2,
+      "rawFile": "/tmp/contextual-help-implementation/empty-real-bn-_deen.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:unknown:bn:/today": {
+      "file": "docs/audit/contextual-help/implementation/contact-states.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 3,
+      "rawFile": "/tmp/contextual-help-implementation/unknown-bn-_today.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:unknown:bn:/diary/plan": {
+      "file": "docs/audit/contextual-help/implementation/contact-states.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 4,
+      "rawFile": "/tmp/contextual-help-implementation/unknown-bn-_diary_plan.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:unknown:bn:/deen": {
+      "file": "docs/audit/contextual-help/implementation/contact-states.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 5,
+      "rawFile": "/tmp/contextual-help-implementation/unknown-bn-_deen.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:consent-paused:bn:/today": {
+      "file": "docs/audit/contextual-help/implementation/contact-states.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 6,
+      "rawFile": "/tmp/contextual-help-implementation/consent-paused-bn-_today.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:consent-paused:bn:/diary/plan": {
+      "file": "docs/audit/contextual-help/implementation/contact-states.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 7,
+      "rawFile": "/tmp/contextual-help-implementation/consent-paused-bn-_diary_plan.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:consent-paused:bn:/deen": {
+      "file": "docs/audit/contextual-help/implementation/contact-states.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 8,
+      "rawFile": "/tmp/contextual-help-implementation/consent-paused-bn-_deen.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:offline:bn:/today": {
+      "file": "docs/audit/contextual-help/implementation/contact-states.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 9,
+      "rawFile": "/tmp/contextual-help-implementation/offline-bn-_today.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:offline:bn:/diary/plan": {
+      "file": "docs/audit/contextual-help/implementation/contact-states.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 10,
+      "rawFile": "/tmp/contextual-help-implementation/offline-bn-_diary_plan.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:offline:bn:/deen": {
+      "file": "docs/audit/contextual-help/implementation/contact-states.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 11,
+      "rawFile": "/tmp/contextual-help-implementation/offline-bn-_deen.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:save-failure:bn:/today": {
+      "file": "docs/audit/contextual-help/implementation/contact-states.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 12,
+      "rawFile": "/tmp/contextual-help-implementation/save-failure-bn-_today.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:save-failure:bn:/diary/plan": {
+      "file": "docs/audit/contextual-help/implementation/contact-states.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 13,
+      "rawFile": "/tmp/contextual-help-implementation/save-failure-bn-_diary_plan.jpg",
+      "rawFileTracked": false
+    },
+    "implementation:save-failure:bn:/deen": {
+      "file": "docs/audit/contextual-help/implementation/contact-states.jpg",
+      "artifactKind": "contact-sheet",
+      "contactCell": 14,
+      "rawFile": "/tmp/contextual-help-implementation/save-failure-bn-_deen.jpg",
+      "rawFileTracked": false
+    }
+  }
+}

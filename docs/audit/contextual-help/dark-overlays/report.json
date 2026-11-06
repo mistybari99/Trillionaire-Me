@@ -1,0 +1,251 @@
+{
+  "generated": "2026-11-06T11:48:19.116Z",
+  "phase": "dark-overlays",
+  "root": "/workspace/Trillionaire-Me",
+  "synthetic": true,
+  "viewport": "360x800",
+  "sourceRevision": "1a07140-plus-final-working-tree",
+  "screens": [],
+  "checks": [
+    {
+      "name": "light-futuristic/100 help sheet geometry",
+      "pass": true,
+      "detail": {
+        "color": "rgb(238, 241, 255)",
+        "background": "rgb(11, 14, 31)",
+        "overflow": false,
+        "left": 0,
+        "right": 360,
+        "top": 96,
+        "bottom": 800,
+        "small": false
+      }
+    },
+    {
+      "name": "light-futuristic/100 quick prayer panel geometry",
+      "pass": true,
+      "detail": {
+        "color": "rgb(238, 241, 255)",
+        "background": "rgb(21, 26, 51)",
+        "overflow": false,
+        "left": 12,
+        "right": 348,
+        "top": 12,
+        "bottom": 731,
+        "navTop": 743,
+        "small": false
+      }
+    },
+    {
+      "name": "light-futuristic/200 help sheet geometry",
+      "pass": true,
+      "detail": {
+        "color": "rgb(238, 241, 255)",
+        "background": "rgb(11, 14, 31)",
+        "overflow": false,
+        "left": 0,
+        "right": 360,
+        "top": 96,
+        "bottom": 800,
+        "small": false
+      }
+    },
+    {
+      "name": "light-futuristic/200 quick prayer panel geometry",
+      "pass": true,
+      "detail": {
+        "color": "rgb(238, 241, 255)",
+        "background": "rgb(21, 26, 51)",
+        "overflow": false,
+        "left": 12,
+        "right": 348,
+        "top": 12,
+        "bottom": 657,
+        "navTop": 669.40625,
+        "small": false
+      }
+    },
+    {
+      "name": "ink-paper/100 help sheet geometry",
+      "pass": true,
+      "detail": {
+        "color": "rgb(238, 233, 220)",
+        "background": "rgb(15, 18, 24)",
+        "overflow": false,
+        "left": 0,
+        "right": 360,
+        "top": 96,
+        "bottom": 800,
+        "small": false
+      }
+    },
+    {
+      "name": "ink-paper/100 quick prayer panel geometry",
+      "pass": true,
+      "detail": {
+        "color": "rgb(238, 233, 220)",
+        "background": "rgb(23, 27, 36)",
+        "overflow": false,
+        "left": 12,
+        "right": 348,
+        "top": 12,
+        "bottom": 731,
+        "navTop": 743,
+        "small": false
+      }
+    },
+    {
+      "name": "ink-paper/200 help sheet geometry",
+      "pass": true,
+      "detail": {
+        "color": "rgb(238, 233, 220)",
+        "background": "rgb(15, 18, 24)",
+        "overflow": false,
+        "left": 0,
+        "right": 360,
+        "top": 96,
+        "bottom": 800,
+        "small": false
+      }
+    },
+    {
+      "name": "ink-paper/200 quick prayer panel geometry",
+      "pass": true,
+      "detail": {
+        "color": "rgb(238, 233, 220)",
+        "background": "rgb(23, 27, 36)",
+        "overflow": false,
+        "left": 12,
+        "right": 348,
+        "top": 12,
+        "bottom": 657,
+        "navTop": 669.40625,
+        "small": false
+      }
+    },
+    {
+      "name": "emerald-obsidian/100 help sheet geometry",
+      "pass": true,
+      "detail": {
+        "color": "rgb(242, 235, 221)",
+        "background": "rgb(11, 18, 22)",
+        "overflow": false,
+        "left": 0,
+        "right": 360,
+        "top": 96,
+        "bottom": 800,
+        "small": false
+      }
+    },
+    {
+      "name": "emerald-obsidian/100 quick prayer panel geometry",
+      "pass": true,
+      "detail": {
+        "color": "rgb(242, 235, 221)",
+        "background": "rgb(18, 29, 34)",
+        "overflow": false,
+        "left": 12,
+        "right": 348,
+        "top": 12,
+        "bottom": 731,
+        "navTop": 743,
+        "small": false
+      }
+    },
+    {
+      "name": "emerald-obsidian/200 help sheet geometry",
+      "pass": true,
+      "detail": {
+        "color": "rgb(242, 235, 221)",
+        "background": "rgb(11, 18, 22)",
+        "overflow": false,
+        "left": 0,
+        "right": 360,
+        "top": 96,
+        "bottom": 800,
+        "small": false
+      }
+    },
+    {
+      "name": "emerald-obsidian/200 quick prayer panel geometry",
+      "pass": true,
+      "detail": {
+        "color": "rgb(242, 235, 221)",
+        "background": "rgb(18, 29, 34)",
+        "overflow": false,
+        "left": 12,
+        "right": 348,
+        "top": 12,
+        "bottom": 657,
+        "navTop": 669.40625,
+        "small": false
+      }
+    },
+    {
+      "name": "broadsheet/100 help sheet geometry",
+      "pass": true,
+      "detail": {
+        "color": "rgb(241, 239, 238)",
+        "background": "rgb(26, 24, 23)",
+        "overflow": false,
+        "left": 0,
+        "right": 360,
+        "top": 96,
+        "bottom": 800,
+        "small": false
+      }
+    },
+    {
+      "name": "broadsheet/100 quick prayer panel geometry",
+      "pass": true,
+      "detail": {
+        "color": "rgb(241, 239, 238)",
+        "background": "rgb(36, 33, 32)",
+        "overflow": false,
+        "left": 12,
+        "right": 348,
+        "top": 12,
+        "bottom": 731,
+        "navTop": 743,
+        "small": false
+      }
+    },
+    {
+      "name": "broadsheet/200 help sheet geometry",
+      "pass": true,
+      "detail": {
+        "color": "rgb(241, 239, 238)",
+        "background": "rgb(26, 24, 23)",
+        "overflow": false,
+        "left": 0,
+        "right": 360,
+        "top": 96,
+        "bottom": 800,
+        "small": false
+      }
+    },
+    {
+      "name": "broadsheet/200 quick prayer panel geometry",
+      "pass": true,
+      "detail": {
+        "color": "rgb(241, 239, 238)",
+        "background": "rgb(36, 33, 32)",
+        "overflow": false,
+        "left": 12,
+        "right": 348,
+        "top": 12,
+        "bottom": 657,
+        "navTop": 669.40625,
+        "small": false
+      }
+    }
+  ],
+  "sourceNote": "Working tree derived from1a07140, before final Settings-only spacing/intro reduction; Help/quick-panel runtime unchanged by that reduction.",
+  "artifacts": [
+    "docs/audit/contextual-help/dark-overlays/visual-emerald-obsidian-200-help.jpg",
+    "docs/audit/contextual-help/dark-overlays/visual-light-futuristic-100-help.jpg",
+    "docs/audit/contextual-help/dark-overlays/contact-dark-help.jpg",
+    "docs/audit/contextual-help/dark-overlays/visual-light-futuristic-200-quick.jpg",
+    "docs/audit/contextual-help/dark-overlays/contact-dark-quick.jpg"
+  ]
+}

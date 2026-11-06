@@ -98,3 +98,9 @@ The owner replaced preset text-size buttons with a75–150% slider at1% incremen
 ## Check #9 — 6 Nov 2026 (optional module descriptions)
 
 Owner screenshots showed technical module notes dominating Journey. Journey, Diary and Deen now place these cards under a closed native “Feature details” summary. All original module information remains reachable; the dedicated Build status page still exposes all25 cards. Working tools and mandatory warnings are outside the disclosure. Typecheck/build and74 focused tests pass;104 browser checks pass, including keyboard/pointer toggles and status reachability. [Dated evidence](../audit/FEATURE_DETAILS_2026-11-06.md). UI-03's physical accessibility acceptance remains open.
+
+## 6 November 2026 — contextual help implementation
+
+Added UI-04 and OPS-03 for the approved plan and new Owner Profile. Classification ledger, guide/diagram/map modules, four independent presentation choices, canonical quick navigation and durable prayer controls are implemented with focused regressions. Full release verification remains in progress. Historical archives and original Register unchanged. Naming and dominant-action debates recorded as proposals awaiting selection.
+
+Local verification complete:2102unit tests,104whole-app browser checks,164presentation interactions,96look/text geometry checks and16extra dark-overlay checks pass. Final populated-demo Settings fold passesEN/BN/Mix after a reproduced spacing regression. HTTP gate follow-up47tests pass; remote Preview retry required. Audit source/contact manifest retains historical failures honestly.
