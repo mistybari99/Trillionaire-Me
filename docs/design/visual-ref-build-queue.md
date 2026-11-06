@@ -163,7 +163,7 @@ Every task keeps: no scores/ranks/streaks/grades, unknown is not 0 (show "Unknow
 | Q-33 | Per-screen look override | Optional per-screen look in Settings > Look; master look stays default; no new colours | lookUi.ts, themes.ts | t:look_per_screen.test.ts | 12 | Q-05 |
 | Q-34 | Weekly and monthly grid for other trackers | Reuse the habit grid cell logic (31 days, 12 weeks, 12 months, no streak, unknown cell is blank not 0) for the other trackers the owner named; same component, per-tracker data only | src/core/chartData.ts, src/ui/charts.ts, the tracker screens | extend t:habit_grid.test.ts | 4 | none |
 
-Ordering note: Q-01 to Q-09 are small and independent; Q-10 to Q-20 are medium; Q-21 to Q-33 are larger or lower value. Q-28 follows Q-01, Q-19 follows Q-17, Q-25 follows Q-09, Q-33 follows Q-05.
+Ordering note: Q-01 to Q-09 are small and independent; Q-10 to Q-20 are medium; Q-21 to Q-34 are larger or lower value. Q-28 follows Q-01, Q-19 follows Q-17, Q-25 follows Q-09, Q-33 follows Q-05.
 
 ## 4. BLOCKED list
 | id | item | waits for |
