@@ -6,7 +6,21 @@ import { chromium } from "playwright";
 import { preview } from "vite";
 import { readFileSync, writeFileSync } from "node:fs";
 
-const server = await preview({ preview: { port: 4174, strictPort: true } });
+// A real server-side interrupted download reaches service-worker fetches too.
+let interruptInstall = true;
+const installProbe = "/assets/install-retry-probe.js";
+const server = await preview({ preview: { port: 4174, strictPort: true }, plugins: [{
+  name: "e2e-interrupted-install",
+  configurePreviewServer(server) {
+    server.middlewares.use((req, res, next) => {
+      if (req.url !== installProbe) return next();
+      res.statusCode = interruptInstall ? 503 : 200;
+      res.setHeader("Content-Type", "application/javascript");
+      res.setHeader("Cache-Control", "no-store");
+      res.end(interruptInstall ? "download interrupted" : "// complete required download");
+    });
+  },
+}] });
 const browser = await chromium.launch({ executablePath: process.env.CHROMIUM_PATH || (existsSync(SANDBOX_CHROME) ? SANDBOX_CHROME : undefined) });
 const ctx = await browser.newContext({ viewport: { width: 360, height: 740 } });
 const page = await ctx.newPage();
@@ -152,7 +166,8 @@ check("G3-STAGE", "Stage A passed, Stage B is now current, calm banner shown", (
 await page.goto("http://localhost:4174/#/journey/log"); await page.waitForSelector("main");
 check("G3-STAGE", "journey log has the entry with before/after", (await page.locator("[data-log]").count()) === 1 && /%/.test(await page.locator("[data-log]").innerText()));
 await page.goto("http://localhost:4174/#/today"); await page.waitForSelector(".stage");
-check("G3-STAGE", "Home shows 2 / 8 after passing Stage A", /২ \/ ৮|2 \/ 8/.test(await page.locator(".stage .n").innerText()));
+const currentStageText = await page.locator(".action-desk-stage [data-value]").innerText();
+check("G3-STAGE", "compact Home stage remains 2 of 8 after passing Stage A", /(?:^|\D)2\s*\/\s*8(?:\D|$)/.test(currentStageText), currentStageText);
 // R2 horizon view: 5 sections, 'unset' bucket for goals with no horizon, no shame/red copy
 await page.goto("http://localhost:4174/#/journey/horizon"); await page.waitForSelector("main h1");
 const horizonSecs = await page.locator("[data-horizon]").evaluateAll((e) => e.map((x) => x.getAttribute("data-horizon")));
@@ -270,6 +285,24 @@ await ctx.setOffline(false);
   check("UI-SPACING", "no two neighbouring buttons, rows or boxes touch on Today, Deen, Settings, Where we are, Hadith, Notes, Boards (en, bn, 100 % and 200 %)", bad.length === 0, bad.slice(0, 5).join(" ; "));
 }
 
+// Long module notes/build diagnostics stay behind a native disclosure on work screens.
+for (const lang of ["en", "bn"]) {
+  await page.evaluate(l => localStorage.setItem("tm:ui:lang", l), lang);
+  for (const route of ["journey", "diary", "deen"]) {
+    await page.goto(`http://localhost:4174/#/${route}`);
+    const details = page.locator(`[data-module-details=${route}]`); await details.waitFor();
+    const card = details.locator('[data-module]').first(); const summary = details.locator(':scope > summary');
+    const initiallyClosed = await details.getAttribute('open') === null && !await card.isVisible();
+    await summary.focus(); await page.keyboard.press('Enter'); await card.waitFor({state:'visible'});
+    const opened = await details.getAttribute('open') !== null && await card.locator('[data-box]').count() === 6;
+    await summary.click(); const closedAgain = await details.getAttribute('open') === null && !await card.isVisible();
+    check('MODULE-DETAILS', `${lang}: ${route} notes start hidden and open/close with native keyboard and pointer controls`, initiallyClosed && opened && closedAgain);
+  }
+  await page.goto('http://localhost:4174/#/more/status');
+  await page.waitForFunction(() => document.querySelectorAll('[data-module]').length === 25);
+  check('MODULE-STATUS', `${lang}: dedicated status keeps all25 module cards available`, await page.locator('[data-module]').count() === 25 && await page.locator('[data-module]').first().isVisible());
+}
+
 // Text size (owner report 3 Nov 2026): each size on Settings really scales body text, headings, buttons, tab bar and form fields, in English and Bangla,
 // and 200% shows no sideways scroll and no clipped text at 360 px.
 {
@@ -282,20 +315,32 @@ await ctx.setOffline(false);
     await page.evaluate((l) => localStorage.setItem("tm:ui:lang", l), lang);
     await page.goto("http://localhost:4174/#/settings"); await page.reload(); await page.waitForSelector("[data-scale]");
     const sizes = {};
-    for (const n of [100, 125, 150, 200]) { await page.click(`[data-scale="${n}"]`); await page.waitForTimeout(150); sizes[n] = await probe(); }
+    for (const n of [75, 100, 113, 125, 150]) { await page.locator('[data-scale=slider]').evaluate((el, value) => { el.value = String(value); el.dispatchEvent(new Event('input', { bubbles: true })); }, n); await page.waitForTimeout(150); sizes[n] = await probe(); }
     const base = sizes[100];
-    const scales = [125, 150, 200].every((n) => ["root", "h1", "p", "btn", "tab"].every((k) => base[k] && Math.abs(sizes[n][k] / base[k] - n / 100) < 0.03));
-    check("TEXTSIZE", `${lang}: 125, 150 and 200% scale root, heading, text, buttons and tab bar`, scales, JSON.stringify({ base, s200: sizes[200] }));
-    check("TEXTSIZE", `${lang}: 200% has no sideways scroll and no clipped text at 360 px`, sizes[200].scrollOk && sizes[200].clipped === 0, JSON.stringify(sizes[200]));
+    const scales = [75, 113, 125, 150].every((n) => ["root", "h1", "p", "btn", "tab"].every((k) => base[k] && Math.abs(sizes[n][k] / base[k] - n / 100) < 0.03));
+    check("TEXTSIZE", `${lang}: 75, 113, 125 and 150% scale root, heading, text, buttons and tab bar`, scales, JSON.stringify({ base, s150: sizes[150] }));
+    check("TEXTSIZE", `${lang}: slider range fits at 75% and 150%`, [75,150].every(n => sizes[n].scrollOk && sizes[n].clipped === 0), JSON.stringify({s75:sizes[75],s150:sizes[150]}));
+    const slider = page.locator('[data-scale=slider]');
+    await slider.focus(); await page.keyboard.press('Home'); const minimum = await slider.inputValue();
+    await page.keyboard.press('End'); const maximum = await slider.inputValue(); await page.keyboard.press('ArrowLeft');
+    const keyboardSize = await slider.inputValue();
+    check("TEXTSIZE-KEYBOARD", `${lang}: Home/End and arrow keys adjust the native slider`, minimum === '75' && maximum === '150' && keyboardSize === '149');
+    // Drag a real thumb without replacing its node while live font changes move surrounding content.
+    await slider.evaluate(el => { el.value='100'; el.dispatchEvent(new Event('input',{bubbles:true})); el.dataset.dragProbe='kept'; });
+    const box = await slider.boundingBox(); const thumb = 8; const xFor = n => box.x + thumb + (box.width-2*thumb)*(n-75)/75;
+    await page.mouse.move(xFor(100),box.y+box.height/2); await page.mouse.down(); await page.mouse.move(xFor(117),box.y+box.height/2,{steps:12}); await page.mouse.up();
+    const dragged = await slider.evaluate(el => ({value:Number(el.value),kept:el.dataset.dragProbe==='kept',saved:localStorage.getItem('tm:ui:scale'),root:document.documentElement.style.fontSize}));
+    check("TEXTSIZE-DRAG", `${lang}: dragging selects and saves a non-preset size without replacing the slider`, Math.abs(dragged.value-117)<=1 && dragged.kept && dragged.saved===String(dragged.value) && dragged.root===`${dragged.value}%`, JSON.stringify(dragged));
     for (const r of ["today", "journey", "deen", "settings/prayer", "diary/plan"]) {
-      await page.goto(`http://localhost:4174/#/${r}`); await page.waitForSelector("main"); await page.waitForTimeout(200);
-      const x = await probe(); check("TEXTSIZE", `${lang}: ${r} at 200% fits`, x.scrollOk && x.clipped === 0 && x.h1 >= 40, JSON.stringify(x));
+      await page.goto(`http://localhost:4174/#/${r}`); await page.waitForSelector("main"); await page.evaluate(() => document.documentElement.style.fontSize="200%"); await page.waitForTimeout(200);
+      const x = await probe(); check("TEXTSIZE", `${lang}: ${r} at 200% accessibility stress fits`, x.scrollOk && x.clipped === 0 && x.h1 >= 40, JSON.stringify(x));
     }
-    await page.goto("http://localhost:4174/#/settings"); await page.waitForSelector("[data-scale]"); await page.click('[data-scale="100"]');
+    await page.goto("http://localhost:4174/#/settings"); await page.waitForSelector("[data-scale]"); await page.locator("[data-scale=slider]").evaluate(el => { el.value="113"; el.dispatchEvent(new Event("input",{bubbles:true})); });
   }
   await page.evaluate(() => localStorage.setItem("tm:ui:lang", "en")); await page.goto("http://localhost:4174/#/settings"); await page.reload();
   const reload = await page.evaluate(() => document.documentElement.style.fontSize);
-  check("TEXTSIZE", "the saved size is applied at start", reload === "100%", reload);
+  check("TEXTSIZE", "the saved size is applied at start", reload === "113%", reload);
+  await page.locator("[data-scale=slider]").evaluate(el => {el.value="100";el.dispatchEvent(new Event("input",{bubbles:true}));});
 }
 
 // Precache: the service worker saves every file of the build on the first visit, so a cold start with the network off still opens
@@ -322,6 +367,74 @@ await ctx.setOffline(false);
   check("PRECACHE", "every saved file can be read with the network off", bad.length === 0, bad.slice(0, 5).join(","));
   await ctx.setOffline(false);
   check("TM-TST-084", "headless Chromium with the network off: shell, status screen and cold-start screens open, every saved file readable (not a real-device run)", passOf("G1-OFFLINE", "PRECACHE"));
+}
+
+// A failed required download must leave the old worker and every old offline file intact.
+// Retry the exact same deployment once its missing download is available.
+{
+  const real = readFileSync("dist/sw.js", "utf8");
+  const pre = JSON.parse(readFileSync("dist/precache.json", "utf8"));
+  const version = `${pre.version}-retry-probe`;
+  const required = [...pre.files, `.${installProbe}`];
+  const next = real.replace(/^const VERSION = .*;$/m, `const VERSION = ${JSON.stringify(version)};`)
+    .replace(/^const PRECACHE = .*;$/m, `const PRECACHE = ${JSON.stringify(required)};`);
+  try {
+    writeFileSync("dist/sw.js", next);
+    const failure = await page.evaluate(async (oldVersion) => {
+      const reg = await navigator.serviceWorker.getRegistration();
+      const active = reg.active;
+      const state = await new Promise(async (resolve, reject) => {
+        const timer = setTimeout(() => reject(new Error("failed worker did not settle")), 12000);
+        reg.addEventListener("updatefound", () => {
+          const installing = reg.installing;
+          installing.addEventListener("statechange", () => {
+            if (!["redundant", "installed"].includes(installing.state)) return;
+            clearTimeout(timer); resolve(installing.state);
+          });
+        }, { once: true });
+        try { await reg.update(); } catch (error) { clearTimeout(timer); reject(error); }
+      });
+      const cache = await caches.open(`tm-shell-${oldVersion}`);
+      return { state, sameActive: reg.active === active, waiting: !!reg.waiting,
+        oldFiles: (await cache.keys()).map((request) => new URL(request.url).pathname) };
+    }, pre.version);
+    const oldFiles = pre.files.map((file) => new URL(file, "http://localhost:4174/").pathname);
+    check("UPDATE-INTERRUPTED", "503 on a required asset rejects the new worker and preserves the complete active shell",
+      failure.state === "redundant" && failure.sameActive && !failure.waiting && oldFiles.every((file) => failure.oldFiles.includes(file)), JSON.stringify(failure));
+    await ctx.setOffline(true);
+    await page.reload();
+    const oldOpens = await page.waitForSelector("main", { timeout: 8000 }).then(() => true).catch(() => false);
+    const unreadable = await page.evaluate(async (files) => {
+      const bad = []; for (const file of files) { try { if (!(await fetch(file)).ok) bad.push(file); } catch { bad.push(file); } } return bad;
+    }, pre.files);
+    check("UPDATE-INTERRUPTED", "after the failed update a cold offline reload opens and every previous required file remains readable", oldOpens && unreadable.length === 0, unreadable.join(","));
+    await ctx.setOffline(false);
+    interruptInstall = false;
+    await page.evaluate(async () => { await (await navigator.serviceWorker.getRegistration()).update(); });
+    const waiting = await page.waitForSelector("#update-banner [data-act=update-now]", { timeout: 12000 }).then(() => true).catch(() => false);
+    const complete = await page.evaluate(async ({ version, required }) => {
+      const cache = await caches.open(`tm-shell-${version}`);
+      return (await Promise.all(required.map((file) => cache.match(file)))).every(Boolean);
+    }, { version, required });
+    check("UPDATE-RETRY", "retrying the same deployment waits for approval only after all required assets are cached", waiting && complete);
+    if (waiting) {
+      await Promise.all([page.waitForEvent("load", { timeout: 10000 }).catch(() => null), page.click("#update-banner [data-act=update-now]")]);
+      await page.waitForSelector("main");
+    }
+    await ctx.setOffline(true);
+    await page.reload();
+    const retriedOpens = await page.waitForSelector("main", { timeout: 8000 }).then(() => true).catch(() => false);
+    const retry = await page.evaluate(async ({ version, oldVersion, probe }) => ({
+      current: (await caches.keys()).includes(`tm-shell-${version}`),
+      oldRemoved: !(await caches.keys()).includes(`tm-shell-${oldVersion}`),
+      probeReadable: await fetch(probe).then((r) => r.ok).catch(() => false),
+    }), { version, oldVersion: pre.version, probe: `.${installProbe}` });
+    check("UPDATE-RETRY", "the successful retry activates, retires the old cache and reloads offline with the recovered asset", waiting && retriedOpens && retry.current && retry.oldRemoved && retry.probeReadable, JSON.stringify(retry));
+  } finally {
+    await ctx.setOffline(false);
+    interruptInstall = true;
+    writeFileSync("dist/sw.js", real);
+  }
 }
 
 // Update flow (owner request 3 Nov 2026): a changed worker file waits, the calm banner appears, Update now reloads once, local data stays.

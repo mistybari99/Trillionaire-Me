@@ -1,6 +1,7 @@
 import { todaysInspiration, THEME_LABEL } from "../library/inspiration";
 import { groupByHorizon, HORIZONS, type HorizonGoal } from "../core/horizon";
 import { h } from "./dom";
+import { inputFor } from "./fieldInput";
 import { t, tb, fmtNumber } from "../i18n/t";
 import type { Key } from "../i18n/packs";
 import { intlLocale, type Locale } from "../i18n/registry";
@@ -10,7 +11,7 @@ import { pausedCard } from "./privacyUi";
 import { disclaimers, fieldHelp, num, showNeed, valueEl } from "./components";
 import { STAGES, DEMO_DATE, DEMO_TASKS } from "../demo/seed";
 import { MODULES } from "../modules/capability";
-import { buildLegend, moduleCard } from "./capabilityUi";
+import { buildLegend, moduleCard, moduleDetails } from "./capabilityUi";
 import { ENTITIES } from "../schema/entities";
 import { FIELDS, CATALOG_VERSION, intakeSteps, fieldById } from "../catalog/fields";
 import { semanticLabel } from "../catalog/labels";
@@ -44,7 +45,7 @@ import { activityChart, goalRingsChart, habitChart, habitGridTracker, moneyChart
 import type { GridRange } from "../core/chartData";
 import { rulesTodayCard } from "./libraryScreens";
 import { celebrate, journeyGoalsCard, overallProgressCard } from "./lifeUi";
-import { adviceCardsView, homeCountCards, homeSummaryCards, nextActionCard } from "./homeUi";
+import { adviceCardsView, homeCountCards, homeSummaryCards, homeNextAction, nextActionCard, nextTaskReason } from "./homeUi";
 import { progressRing, isMilestone } from "./ring";
 import { logo3d } from "./logo";
 import { goalFunnelHero, horizonArc } from "./horizonArt";
@@ -57,7 +58,7 @@ import { riskDueCard } from "./riskCard";
 import { printLink } from "./printLink";
 import { healthCard } from "./healthUi";
 import { deenReportCard, deenTodayCard } from "./deenPlansUi";
-import { greeting, profileCard } from "./profileCard";
+import { profileCard } from "./profileCard";
 import { blocksTodayCard, commitCard, currentBlocks } from "./blocksUi";
 import { toPlannerBlocks } from "../core/timeBlocks";
 import { moneyReviewCard, riskReviewCard } from "./monthUi";
@@ -980,14 +981,19 @@ function cardsScreenInner(): HTMLElement {
 }
 
 // ---- screens ----
-const todayChips = (id: string, lang: Locale): HTMLElement | null => { const r = findRec(id); return r ? goalChips(r, lang) : null; };
-function todayFromPlan(cp: ReturnType<typeof currentPlan>, lang: Locale): HTMLElement[] {
+const todayChips = (id: string, lang: Locale): HTMLElement | null => { const r = findRec(id); return r ? goalChips(r, lang, allRecs(), { fullTitles: true }) : null; };
+function todayFromPlan(cp: ReturnType<typeof currentPlan>, lang: Locale, selectedTask: string | null = null): HTMLElement[] {
   const acts = todaysActions(cp.plan, new Date().getDay());
   if (!acts.length) return [h("p", { class: "muted", "data-today": "none" }, t("home.today.none", lang), " ", link("#/diary/plan", "crumb", t("home.today.open", lang)))];
-  if (screenView("today") === "compact") return [h("ul", { class: "list-compact", "data-view": "compact" }, ...acts.map((p) => h("li", { "data-placement": p.taskId },
-    valueEl(`${fmtClock(p.start)}–${fmtClock(p.end)}`, labelFor(findRec(p.taskId)?.ns ?? activeNs()), lang), " · ", h("strong", {}, cp.titles.get(p.taskId) ?? ""), " ", todayChips(p.taskId, lang), " ", doneBtn(p.taskId, lang), focusBtn(p.taskId, lang))))];
-  return acts.map((p, i) => h("div", { class: "task", "data-placement": p.taskId }, h("b", {}, num(i + 1, lang)),
-    h("div", {}, cp.titles.get(p.taskId) ?? "", " ", todayChips(p.taskId, lang), h("p", {}, valueEl(`${fmtClock(p.start)}–${fmtClock(p.end)}`, labelFor(findRec(p.taskId)?.ns ?? activeNs()), lang)), h("div", { class: "row" }, doneBtn(p.taskId, lang), focusBtn(p.taskId, lang)))));
+  const attrs = (id: string) => ({ "data-placement": id, ...(id === selectedTask ? { "data-next-action": "do_task", "data-recommended-task": id, class: "action-desk-recommended" } : {}) });
+  if (screenView("today") === "compact") return [h("ul", { class: "list-compact", "data-view": "compact" }, ...acts.map((p) => h("li", attrs(p.taskId),
+    valueEl(`${fmtClock(p.start)}–${fmtClock(p.end)}`, labelFor(findRec(p.taskId)?.ns ?? activeNs()), lang), " · ", h("strong", { ...(p.taskId === selectedTask ? { "data-next-title": "1" } : {}) }, cp.titles.get(p.taskId) ?? ""), " ", todayChips(p.taskId, lang),
+    p.taskId === selectedTask ? nextTaskReason(lang) : null,
+    h("div", { class: "row" }, doneBtn(p.taskId, lang), focusBtn(p.taskId, lang)))))];
+  return acts.map((p, i) => h("div", { ...attrs(p.taskId), class: `task${p.taskId === selectedTask ? " action-desk-recommended" : ""}` }, h("b", {}, num(i + 1, lang)),
+    h("div", {}, h("strong", { ...(p.taskId === selectedTask ? { "data-next-title": "1" } : {}) }, cp.titles.get(p.taskId) ?? ""), " ", todayChips(p.taskId, lang),
+      p.taskId === selectedTask ? nextTaskReason(lang) : null,
+      h("p", {}, valueEl(`${fmtClock(p.start)}–${fmtClock(p.end)}`, labelFor(findRec(p.taskId)?.ns ?? activeNs()), lang)), h("div", { class: "row" }, doneBtn(p.taskId, lang), focusBtn(p.taskId, lang)))));
 }
 
 // TM-REQ-009: calm date reminders for active goals only. Paused and retired goals never appear here.
@@ -998,61 +1004,68 @@ function goalDateReminders(lang: Locale): HTMLElement | null {
     ...list.map((r) => h("p", { "data-goal-reminder": r.goalId }, t("remind.goal", lang, { title: r.title, date: r.targetDate }), " ", link(`#/journey/goal/${r.goalId}`, "crumb", t("remind.goal.open", lang)))));
 }
 
+function workspaceShortcuts(lang: Locale, screen: "today" | "journey", entries: HTMLElement[]): HTMLElement {
+  return h("section", { class: "quick-access workspace-shortcuts", "data-shortcuts": screen, "aria-labelledby": `${screen}-shortcuts-title` },
+    h("h2", { id: `${screen}-shortcuts-title`, class: "card-h" }, t("usability.shortcuts", lang)),
+    h("div", { class: "quick-access-grid" }, ...entries));
+}
+
 export function today(): HTMLElement {
   const lang = L(); const cp = currentPlan();
   const insp = todaysInspiration(new Date());
   const curStage = Math.min(currentIndex(stageData().passed), STAGES.length - 1);
   const stage = stagesFor(prefs.stageTemplate)[curStage]!;
   const nxt = nextStep(loadAnswers());
+  const selected = homeNextAction();
+  const selectedVisible = selected.taskId !== null && todaysActions(cp.plan, new Date().getDay()).some((p) => p.taskId === selected.taskId);
+  const hasSetupAction = activeNs() === "real" && !cp.hasTasks && selected.action.id === "add_goal";
+  const section = (name: string, title: Key, ...items: Array<HTMLElement | null>) => {
+    const nodes = items.filter((node): node is HTMLElement => node !== null);
+    return nodes.length ? h("section", { class: `action-desk-section action-desk-${name}`, "data-desk-section": name, "aria-labelledby": `desk-${name}-title` },
+      h("h2", { id: `desk-${name}-title` }, t(title, lang)), ...nodes) : null;
+  };
   const rungs = h("ul", { class: "rungs", role: "img", "aria-label": t("home.rungs", lang, { done: num(curStage, lang), total: num(STAGES.length, lang), now: num(curStage + 1, lang) }) },
     ...STAGES.map((_, i) => h("li", { class: i < curStage ? "done" : i === curStage ? "now" : "" })));
-  return h("main", { class: "scr scr-today" },
-    greeting(lang),
-    h("p", { class: "muted" }, activeNs() === "real" ? todayIso() : valueEl(tb(DEMO_DATE, lang), "DEMO", lang)),
-    h("div", { class: "logo-row" }, logo3d(32, lang), h("h1", {}, t("home.title", lang))),
+  return h("main", { class: "scr scr-today action-desk" },
+    pausedCard(lang),
+    h("header", { class: "action-desk-header", "data-workspace-header": "today" },
+      h("h1", {}, t("home.title", lang)),
+      h("p", { class: "muted" }, activeNs() === "real" ? todayIso() : valueEl(tb(DEMO_DATE, lang), "DEMO", lang)),
+      pauseChip(lang)),
+    workspaceShortcuts(lang, "today", [
+      link("#/diary/plan", "shortcut-link", t("plan.title", lang)),
+      link("#/journey/goals", "shortcut-link", t("goals.link", lang)),
+      link("#/diary/money", "shortcut-link", t("money.title", lang)),
+      link("#/capture", "shortcut-link", t("capture.link", lang))]),
+    // An already-visible recommended task owns its explanation and controls. An unscheduled
+    // recommendation keeps one compact navigation band; never invent a placement for it.
+    selectedVisible ? null : nextActionCard(lang, selected.action, true),
+    h("section", { class: "action-desk-agenda", "data-desk-section": "agenda", "aria-labelledby": "desk-agenda-title" },
+      h("h2", { id: "desk-agenda-title" }, t("home.tasks", lang)), viewBar("today", lang),
+      ...(cp.hasTasks ? todayFromPlan(cp, lang, selectedVisible ? selected.taskId : null)
+        : activeNs() === "real" ? [h("p", { class: "muted", "data-empty-real": "1" }, t("mode.today.empty", lang))]
+        : screenView("today") === "compact" ? [h("ul", { class: "list-compact", "data-view": "compact" }, ...DEMO_TASKS.slice(0, 3).map((k) => h("li", {}, h("strong", {}, tb(k.title, lang)), " · ", valueEl(t("task.minutes", lang, { n: num(k.minutes, lang) }), "DEMO", lang))))]
+        : DEMO_TASKS.slice(0, 3).map((k, i) => h("div", { class: "task" }, h("b", {}, num(i + 1, lang)),
+          h("div", {}, tb(k.title, lang), h("p", {}, valueEl(t("task.minutes", lang, { n: num(k.minutes, lang) }), "DEMO", lang), " · ", tb(k.hint, lang)))))),
+      h("div", { class: "actions" },
+        hasSetupAction ? null : link("#/diary/intake", "cta", t("home.start", lang)),
+        link("#/habits", "btn ghost", t("habits.link", lang)),
+        link("#/stuck", "btn ghost", t("stuck.link", lang)))),
+    section("attention", "desk.attention", riskDueCard(lang, "today"), gateDueCard(lang, stageData().passed, "today"),
+      remindersTodayCard(lang), missedTodayCard(lang), goalDateReminders(lang), backupReminderCard(lang)),
+    section("context", "desk.context", welcomeBackCard(lang), movedNoteCard(lang),
+      nxt.field ? h("aside", { class: "card next-step", "data-next-step": nxt.field.id }, h("small", {}, "→ "), h("p", {}, t("home.next", lang, { field: tb(nxt.field.label, lang) }))) : null),
+    section("summary", "desk.summary", overallProgressCard(lang, "today"), homeCountCards(lang), kpiTodayCard(lang), northStarCard(lang, "today"),
+      teamCard(lang, "today"), blocksTodayCard(lang), healthCard(lang, "today"), deenTodayCard(lang), realityTodayCard(lang),
+      homeSummaryCards(lang), portfolioCard(lang, "today"), adviceCardsView(lang)),
+    h("section", { class: "stage action-desk-stage", "aria-label": t("home.stage", lang) },
+      h("h2", { class: "card-h" }, t("home.stage", lang)),
+      h("p", {}, tb(stage.name, lang), " · ", valueEl(t("stage.progress", lang, { now: num(curStage + 1, lang), total: num(STAGES.length, lang) }), activeNs() === "real" ? "ESTIMATE" : "DEMO", lang)),
+      h("p", { class: "muted" }, t("home.step", lang)), rungs),
     h("aside", { class: `card inspire ${insp.theme}`, "aria-label": "Inspiration" },
       h("span", { class: "chip" }, `${THEME_LABEL[insp.theme].bn} · ${THEME_LABEL[insp.theme].en}`),
       h("p", { class: "inspire-bn" }, insp.bn), h("p", { class: "muted inspire-en" }, insp.en)),
-    h("p", { class: "sub" }, t("home.step", lang), " — ", valueEl(t("stage.progress", lang, { now: num(curStage + 1, lang), total: num(STAGES.length, lang) }), activeNs() === "real" ? "ESTIMATE" : "DEMO", lang)),
-    h("section", { class: "stage", "aria-label": t("home.stage", lang) },
-      h("small", {}, `${t("home.stage", lang)} · ${tb(stage.name, lang)}`),
-      h("div", { class: "n" }, num(curStage + 1, lang), h("span", { style: "font-size:1.375rem;color:var(--muted)" }, ` / ${num(STAGES.length, lang)}`)),
-      rungs),
-    movedNoteCard(lang),
-    welcomeBackCard(lang),
-    pausedCard(lang),
-    pauseChip(lang),
-    overallProgressCard(lang, "today"),
-    homeCountCards(lang),
-    kpiTodayCard(lang),
-    northStarCard(lang, "today"),
-    teamCard(lang, "today"),
-    riskDueCard(lang, "today"),
-    blocksTodayCard(lang),
-    healthCard(lang, "today"),
-    deenTodayCard(lang),
-    gateDueCard(lang, stageData().passed, "today"),
-    realityTodayCard(lang),
-    remindersTodayCard(lang),
-    missedTodayCard(lang),
-    homeSummaryCards(lang),
-    portfolioCard(lang, "today"),
-    nextActionCard(lang),
-    adviceCardsView(lang),
-    backupReminderCard(lang),
-    h("h2", {}, t("home.tasks", lang)),
-    viewBar("today", lang),
-    ...(cp.hasTasks ? todayFromPlan(cp, lang) : activeNs() === "real" ? [h("p", { class: "muted", "data-empty-real": "1" }, t("mode.today.empty", lang))] : screenView("today") === "compact" ? [h("ul", { class: "list-compact", "data-view": "compact" }, ...DEMO_TASKS.slice(0, 3).map((k) => h("li", {}, h("strong", {}, tb(k.title, lang)), " · ", valueEl(t("task.minutes", lang, { n: num(k.minutes, lang) }), "DEMO", lang))))] : DEMO_TASKS.slice(0, 3).map((k, i) => h("div", { class: "task" }, h("b", {}, num(i + 1, lang)),
-      h("div", {}, tb(k.title, lang), h("p", {}, valueEl(t("task.minutes", lang, { n: num(k.minutes, lang) }), "DEMO", lang), " · ", tb(k.hint, lang)))))),
-    h("div", { class: "actions" },
-      link("#/diary/intake", "cta", t("home.start", lang)),
-      link("#/habits", "btn ghost", t("habits.link", lang)),
-      link("#/stuck", "btn ghost", t("stuck.link", lang)),
-      link("#/capture", "btn ghost", t("capture.link", lang))),
-    nxt.field ? h("aside", { class: "card next-step", "data-next-step": nxt.field.id }, h("small", {}, "→ "), h("p", {}, t("home.next", lang, { field: tb(nxt.field.label, lang) }))) : null,
-    goalDateReminders(lang),
-    rulesTodayCard(lang),
-    disclaimers(lang));
+    rulesTodayCard(lang), disclaimers(lang));
 }
 
 // O6: stage names are chosen in Settings > Plan & progress; here only the current choice and a link.
@@ -1118,38 +1131,38 @@ export function weeklyScreen(): HTMLElement {
 
 export function journey(): HTMLElement {
   const lang = L();
-  return h("main", { class: "scr scr-journey" },
+  const cur = currentIndex(stageData().passed);
+  const stage = stagesFor(prefs.stageTemplate)[cur];
+  const goalsCard = journeyGoalsCard(lang);
+  // Move the existing launch into the first tools row so Goals stays a single entry.
+  const goalsLink = goalsCard.querySelector<HTMLAnchorElement>('a[href="#/journey/goals"]')
+    ?? link("#/journey/goals", "shortcut-link", t("goals.link", lang));
+  goalsLink.className = "shortcut-link";
+  const toolGroup = (group: "plan" | "review" | "explore", routes: Array<[string, Key]>) =>
+    h("section", { class: "tool-group", "data-tool-group": group, "aria-labelledby": `journey-tools-${group}` },
+      h("h2", { class: "card-h", id: `journey-tools-${group}` }, t(`desk.tools.${group}` as Key, lang)),
+      h("div", { class: "tool-grid" }, ...routes.map(([route, key]) => link(route, "btn ghost", t(key, lang)))));
+  return h("main", { class: "scr scr-journey action-desk journey-workspace" },
     h("div", { class: "logo-row" }, logo3d(48, lang), h("h1", {}, t("journey.title", lang))),
     passedBanner(lang),
-    stagePanel(lang),
+    h("section", { class: "journey-stage-strip", "data-stage-current": stage?.code ?? "done", "aria-label": t("stage.currentLabel", lang) },
+      h("h2", { class: "card-h" }, t("stage.currentLabel", lang)),
+      stage ? valueEl(`${stage.code} · ${tb(stage.name, lang)}`, activeNs() === "real" ? "ESTIMATE" : "DEMO", lang)
+        : h("p", {}, t("stage.alldone", lang))),
+    workspaceShortcuts(lang, "journey", [link("#/diary/plan", "shortcut-link", t("plan.title", lang)), goalsLink]),
+    goalsCard,
     goalFunnelHero(ownHorizonGoals(), (() => { const tk = allRecs().filter((r) => r.entity === "task"); return tk.length ? tk.filter(isOpenTask).length : null; })(), lang),
-    h("div", { class: "actions" },
-      link("#/journey/universe", "btn ghost", t("univ.link", lang)),
-      link("#/journey/art", "btn ghost", t("reward.see", lang)),
-      link("#/journey/boards", "btn ghost", t("bd.link", lang)),
-      link("#/journey/log", "btn ghost", t("log.link", lang)),
-      link("#/journey/horizon", "btn ghost", t("horizon.link", lang)),
-      link("#/journey/report", "btn ghost", t("report.link", lang)),
-      link("#/journey/week", "btn ghost", t("week.link", lang)),
-      link("#/journey/month", "btn ghost", t("month.link", lang)),
-      link("#/journey/decide", "btn ghost", t("dec.link", lang)),
-      link("#/journey/mine", "btn ghost", t("tri.link", lang)),
-      link("#/journey/legs", "btn ghost", t("legs.link", lang)),
-      link("#/journey/leak", "btn ghost", t("leak.link", lang)),
-      link("#/journey/review", "btn ghost", t("review.link", lang)),
-      link("#/journey/risks", "btn ghost", t("risk.link", lang)),
-      link("#/journey/history", "btn ghost", t("hist.link", lang)),
-      link("#/journey/reality", "btn ghost", t("rl.link", lang)),
-      link("#/journey/northstar", "btn ghost", t("ns.link", lang)),
-      link("#/journey/kpi", "btn ghost", t("kpi.link", lang))),
+    h("div", { class: "journey-tools" },
+      toolGroup("plan", [["#/journey/boards", "bd.link"], ["#/journey/horizon", "horizon.link"], ["#/journey/decide", "dec.link"], ["#/journey/risks", "risk.link"], ["#/journey/reality", "rl.link"], ["#/journey/northstar", "ns.link"], ["#/journey/kpi", "kpi.link"]]),
+      toolGroup("review", [["#/journey/log", "log.link"], ["#/journey/report", "report.link"], ["#/journey/week", "week.link"], ["#/journey/month", "month.link"], ["#/journey/review", "review.link"], ["#/journey/history", "hist.link"]]),
+      toolGroup("explore", [["#/journey/universe", "univ.link"], ["#/journey/art", "reward.see"], ["#/journey/mine", "tri.link"], ["#/journey/legs", "legs.link"], ["#/journey/leak", "leak.link"]])),
     overallProgressCard(lang, "journey"),
     northStarCard(lang, "journey"),
-    journeyGoalsCard(lang),
     templatePicker(lang),
     viewBar("journey", lang),
     stageLadder(lang),
-    h("h2", {}, t("journey.slots", lang)),
-    ...MODULES.filter((m) => m.tab === "journey").map((m) => moduleCard(m, lang)),
+    stagePanel(lang),
+    moduleDetails("journey", lang),
     disclaimers(lang));
 }
 
@@ -1176,43 +1189,10 @@ export function diary(): HTMLElement {
     link("#/diary/ventures", "btn ghost", t("ven.link", lang)),
     link("#/diary/team", "btn ghost", t("team.link", lang)),
     link("#/diary/health", "btn ghost", t("hl.title", lang)),
-    h("h2", {}, t("diary.modules", lang)),
-    ...MODULES.filter((m) => m.tab === "diary").map((m) => moduleCard(m, lang)),
+    moduleDetails("diary", lang),
     disclaimers(lang));
 }
 
-function inputFor(f: FieldDef, lang: Locale, cur: FieldValue | undefined): { el: HTMLElement; read: () => FieldValue | null | "invalid" | "secret" } {
-  const unkSel = h("select", { "aria-label": t("intake.valueFor", lang), "data-role": "state" },
-    h("option", { value: "value" }, t("intake.valueFor", lang)),
-    ...f.unknownStates.map((u) => h("option", { value: u }, t(`unknown.${u}` as Key, lang))));
-  if (cur && cur.state !== "value") unkSel.value = cur.state;
-  let input: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
-  const curVal = cur && cur.state === "value" ? String(cur.value) : "";
-  if (f.options) {
-    input = h("select", { id: `f-${f.id}` }, h("option", { value: "" }, t("intake.choose", lang)), ...f.options.map((o) => h("option", { value: o.code }, tb(o.label, lang))));
-  } else if (f.type === "number" || f.type === "money") {
-    input = h("input", { id: `f-${f.id}`, type: "text", inputmode: "decimal" });
-  } else if (f.type === "date") {
-    input = h("input", { id: `f-${f.id}`, type: "date" });
-  } else {
-    input = h("input", { id: `f-${f.id}`, type: "text", maxlength: /\.(note|entry|evidence)$/.test(f.id) ? "200" : "80", autocomplete: "off" });
-  }
-  input.value = curVal;
-  const el = h("div", {}, input, f.unknownStates.length ? h("div", { class: "unk" }, unkSel) : null);
-  const read = (): FieldValue | null | "invalid" | "secret" => {
-    const st = f.unknownStates.length ? (unkSel.value as UnknownState | "value") : "value";
-    if (st !== "value") return { state: st };
-    const raw = input.value.trim();
-    if (raw === "") return null; // left blank → stays unanswered (never 0)
-    if (f.type === "number" || f.type === "money") {
-      const n = Number(raw.replace(/,/g, "").replace(/[০-৯]/g, (c) => String(c.charCodeAt(0) - 0x09e6)));
-      return Number.isFinite(n) ? { state: "value", value: n, label: "DEMO" } : "invalid";
-    }
-    if (f.type === "text") { if (!checkFreeText(raw).ok) return "secret"; }
-    return { state: "value", value: raw, label: "DEMO" };
-  };
-  return { el, read };
-}
 
 /** Own options and saved results live in the active mode: demo in demo, real in real (writes need the tick). Reads in real mode without the tick find nothing. */
 const listStore = () => (prefs.dataMode === "real" ? store.real : store.demo);
@@ -1383,7 +1363,7 @@ export function deen(): HTMLElement {
         h("p", { class: "muted" }, t("deen.fields", lang, { n: num(fs.length, lang) }), " · ", t("access.device_only_per_item_authorisation", lang)),
         ...fs.map((f) => fieldHelp(f, lang)));
     }),
-    ...MODULES.filter((m) => m.tab === "deen").map((m) => moduleCard(m, lang)),
+    moduleDetails("deen", lang),
     disclaimers(lang, ["noFatwa", "noGuarantee"]));
 }
 

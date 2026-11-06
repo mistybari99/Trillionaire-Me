@@ -760,3 +760,46 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 - Alternatives: keep the pass-1 words (rejected by the owner); one blanket swap for ব্যক্তিগত (rejected: privacy, personal money and "my own note" need different words); hand-edit about 1000 strings (rejected: errors, no log).
 - All Bangla stays "যাচাই হয়নি" until TM-TST-161; no Register status changes.
 - How to undo: `git revert` the three pass-2 commits (newest first). To undo one word: change or delete its rule in `tools/bangla_plain_rules.json` (ids `W2-*`, `W3-*`, `W4-*`, `P2-*`), restore the old text by hand or from `docs/design/bangla-plain-change-log.json` (each entry has before and after), and remove its pair from `MIX_TERMS` and `tests/fixtures/bangla_banned.json`. Rule `W2-17/18` (ব্যক্তিগত) and `W2-29` (মাপকাঠি) are the two the owner may want back first.
+
+## 5 Nov 2026 — Repository audit and a single active work list
+
+- Owner instruction: implement the proposed audit and work-organization plan for this repository, including its existing GitHub work. Scope is audit, documentation, task organization and a separate review PR; feature fixes and production deployment are follow-ups.
+- Decision: `docs/plan/PLAN_TRACKER.md` is the only active status list. TODO selects next work; ROADMAP groups phases. Preserve all previous detailed plans in exact dated snapshots and preserve task IDs through `legacy-task-map.json`. Group repeated descriptions into work packages, retaining every archived acceptance item for later verification.
+- Why: the old introduction/inventory still said Settings/CI were missing, hosting was marked pending, and old PR descriptions no longer represented the delivered code. Current successful tests do not establish owner/reviewer acceptance or cover the reproduced failure paths.
+- Alternatives: keep editing three overlapping checklists (continued drift), or delete old plans (loss of decisions/evidence). Both rejected. Existing module/evidence inventories remain dated evidence; no invented whole-product completion percentage.
+- Evidence: audit of application commit `6136ba8`; 1,941 unit tests and 88 Chromium checks pass; types/build pass. AUD-01/AUD-02 failure paths reproduced separately. No physical-device or live-provider claim.
+- Hosting: read-only verification confirms existing Worker `trillionaire-me` and successful build of `6136ba8`; preserve its branch and connection. No merge, deploy, account/DNS or paid-service change. The audit PR must target the existing app branch, and its merge would auto-deploy.
+- Undo: revert this audit/organization commit. Restore the old plan files from the preserved snapshots if needed. No app data/schema migration, source behavior or original Register v2_0 changes to undo.
+
+## 5 Nov 2026 — Fix recovery/offline failures and select the UI direction
+
+- Owner instruction: start fixing the audited problems; use 3–4 engineering agents in parallel plus two UI agents to debate and select the best design. Three engineering and two design agents worked on separate owned files; parent integrated core recovery and validation.
+- Recovery decision: compensate and verify every affected namespace, retain a reachable Before restore copy on uncertain failure, await durable writes before success, and keep Go back retryable. Retries use current values/deletions. No schema migration; this is best-effort compensation with honest failure reporting, not a new cross-store transaction claim.
+- Offline decision: required precache failure rejects installation; old active version remains. Include worker source in cache version. A real Chromium test uses local-server 503, verifies old offline use, then retries the same deployment and activates after approval.
+- Deployment decision: prepare an exact-production-commit GitHub CI gate instead of installing another Chromium toolchain inside Workers Builds. API/rate-limit errors block deployment. Remote activation remains a separate verification step after merge; current hosting/account/branch/deploy command remain unchanged.
+- UI decision: A and B independently proposed Calm Journey and Action Desk, debated palette, task duplication, stage context and tool reachability, and jointly selected Action Desk. Keep purple Light Futuristic/all four saved looks; actual tasks/goals first, compact stage, grouped tools. Decision and acceptance: `docs/design/UI_REFRESH_2026-11-05_DECISION.md`. This records agent selection, not an implemented UI or human accessibility sign-off.
+- Alternatives rejected: suppress rollback errors; report memory-only success; allow incomplete required offline installs; replace the approved default palette or duplicate a task in a hero. No AI/provider/cloud/scripture/cost approval changed.
+- Undo: revert the reliability follow-up commit(s) and keep the prior audit snapshot; no data migration to undo. Reverting would reintroduce the identified failure paths. Runtime visual work is still separately tracked.
+
+## 5 Nov 2026 — Useful shortcuts, consistent controls and independent multiple selections
+
+- Owner instruction: independently assess the best architecture, improve poor-looking/inconsistent buttons, bring useful tools forward, and allow multiple selections where they make sense while preserving the core logic.
+- Selection: independent A/B source reviews chose a compact work-first workspace with four fixed neutral shortcuts (Time & tasks, Goals, Money, Capture), consistent action roles and grouped native checkboxes for actual goal IDs. This is an informed initial arrangement, not a usage-analytics claim. The model remains an offline domain application; a Notion-style universal block engine, new frontend framework and customizable dashboard were rejected as unnecessary complexity for this repair. Technical recommendations and unimplemented boundary improvements are in `docs/design/USABILITY_ARCHITECTURE_2026-11-05.md`.
+- Cardinality: task/habit goal links already store multiple IDs; the picker must preserve independent siblings and never cascade a parent's toggle. Keep the existing global five-link limit, including retained hidden IDs. The generic field renderer now honors existing multichoice/list types; exclusive settings/status/hierarchy/accounting choices stay scalar. No catalog or schema version changed. The source audit distinguishes reachable picker defects from latent generic-renderer defects in `docs/audit/MULTISELECT_AUDIT_2026-11-05.md`.
+- Controls: consistent 52px primary/secondary actions, 48px choices and at least44px icon utilities; wrapping labels and container-owned layout. Preserve all saved looks, purple default, warnings, planner order, unknown states and namespace isolation. No cost, AI, provider, off-device records or content gate changes.
+- Evidence: final validation and any remaining physical accessibility checks are recorded in `docs/audit/USABILITY_CONTROLS_2026-11-05.md`. The previous Action Desk implementation is independently verified live at production `0eca3ea`.
+- Undo: revert this usability commit. Storage format is unchanged; independent multiple goal links already use the existing reader/writer. Reverting the picker would restore its inability to edit sibling selections reliably.
+
+
+## 6 Nov 2026 — Continuous text-size range
+
+- Owner selected a draggable75–150% range instead of fixed100/125/150/200% buttons. Use a native1%-step slider with live root-font updates and the same local preference key. Preserve the focused control while dragging; do not rerender the app per input.
+- Legacy values clamp into75–150; invalid or missing settings use100. The new owner range supersedes the previous selectable200% preset.200% external/OS text stress remains tested. No record schema/migration or new service is involved.
+- Evidence: `docs/audit/TEXT_SIZE_SLIDER_2026-11-06.md`. Undo by reverting this control change; the preference key remains readable by the preceding code.
+
+
+## 6 Nov 2026 — Keep module descriptions optional on work screens
+
+- Owner questioned the always-open module descriptions and Input/Storage/Calculation/Built lists shown in Journey screenshots. Put these reference cards inside one native closed disclosure per Journey/Diary/Deen screen, using a plain localized Feature details label.
+- Retain all module data/build information and the fully expanded dedicated Build status page. Keep tools, save/consent warnings and ordinary guidance in their existing positions. No calculation, data schema, record or preference change.
+- Evidence: `docs/audit/FEATURE_DETAILS_2026-11-06.md`. Undo by reverting this presentation change; there is no stored state to migrate.

@@ -10,6 +10,9 @@
 html{--brand-obsidian:#0B1216;--brand-champagne:#C9A96E;--brand-emerald:#1B6F57}
 /* Theme tokens — "Ink and Paper" (D-E approved). Swap this block to change theme. */
 :root{
+  --nav-height:calc(64px + env(safe-area-inset-bottom,0px));
+  --nav-clearance:calc(var(--nav-height) + 24px);
+  --update-clearance:0px;
   --paper:#F5F1E8; --card:#FBF8F1; --ink:#14181F; --muted:#5B6270; --rule:#8A8470;
   --primary:#243B6B; --on-primary:#FBF8F1; --ember:#B0431A; --moss:#3F6B4A;
   --demo:#73580F; --demo-bg:#F1E6C4; --danger:#A12A1B; --calm:#2A5A7A;
@@ -47,7 +50,7 @@ html{--brand-obsidian:#0B1216;--brand-champagne:#C9A96E;--brand-emerald:#1B6F57}
 @media (prefers-color-scheme:dark){:root[data-theme="auto"]{color-scheme:dark}}
 
 *{box-sizing:border-box;margin:0}
-body{background:var(--paper);color:var(--ink);font:400 1.0625rem/1.7 "Hind Siliguri",system-ui,sans-serif;max-width:480px;margin:0 auto;padding:16px 16px max(96px,8rem);overflow-wrap:anywhere}
+body{background:var(--paper);color:var(--ink);font:400 1.0625rem/1.7 "Hind Siliguri",system-ui,sans-serif;max-width:480px;margin:0 auto;padding:16px 16px calc(var(--nav-clearance) + var(--update-clearance));overflow-wrap:anywhere}
 .top{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:0.875rem;color:var(--muted);flex-wrap:wrap}
 .top .right{display:flex;gap:6px;align-items:center}
 .badge{font-size:0.75rem;font-weight:600;padding:2px 10px;border:1px solid var(--demo);background:var(--demo-bg);color:var(--demo);border-radius:2px}
@@ -71,16 +74,16 @@ h3{font:600 1.0625rem/1.4 "Hind Siliguri",sans-serif;margin:0 0 2px}
 .task p{font-size:0.9375rem;color:var(--muted);line-height:1.5}
 .chip{font-size:0.6875rem;font-weight:600;color:var(--muted);border:1px solid var(--rule);padding:0 6px;margin-inline-start:6px;vertical-align:middle}
 .chip-DEMO{color:var(--demo);border-color:var(--demo);background:var(--demo-bg)}
-.cta,.btn{display:block;width:100%;min-height:52px;margin-top:20px;background:var(--primary);color:var(--on-primary);border:0;font:600 1.125rem "Hind Siliguri",system-ui;cursor:pointer;text-align:center;text-decoration:none;padding:12px 16px}
-.btn.ghost{background:none;color:var(--ink);border:1.5px solid var(--ink)}
+.cta,.btn{display:block;width:100%;max-width:100%;min-width:0;min-height:52px;margin-top:12px;background:var(--primary);color:var(--on-primary);border:1px solid transparent;font:600 1.0625rem/1.5 "Hind Siliguri",system-ui;cursor:pointer;text-align:center;text-decoration:none;padding:12px 16px;white-space:normal;overflow-wrap:anywhere}
+.btn.ghost{background:var(--card);color:var(--ink);border:1px solid var(--rule)}
 .cta:focus-visible,.btn:focus-visible,.tab:focus-visible,button:focus-visible,a:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--ember);outline-offset:2px}
 label.btn:focus-within{outline:3px solid var(--ember);outline-offset:2px}
 /* Skip link: hidden until focused, then the first Tab stop */
 .skip{position:absolute;inset-inline-start:16px;top:8px;z-index:50;padding:10px 14px;background:var(--primary);color:var(--on-primary);font:600 1rem "Hind Siliguri",system-ui;transform:translateY(-200%)}
 .skip:focus{transform:none;outline:3px solid var(--ember);outline-offset:2px}
 .sr-only{position:absolute;width:1px;height:1px;min-height:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;margin:-1px;padding:0;border:0}
-nav{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--rule);display:flex;flex-wrap:wrap;max-width:480px;margin:0 auto}
-.tab{flex:1 1 0;min-width:max-content;min-height:56px;display:grid;place-items:center;font:inherit;font-size:0.8125rem;overflow-wrap:normal;word-break:keep-all;padding-inline:4px;text-align:center;color:var(--muted);background:none;border:0;text-decoration:none}
+nav{position:fixed;bottom:0;left:0;right:0;z-index:20;background:var(--card);border-top:1px solid var(--rule);display:flex;flex-wrap:wrap;max-width:480px;margin:0 auto;padding:0 4px env(safe-area-inset-bottom,0px)}
+.tab{flex:1 1 max-content;min-width:0;max-width:100%;min-height:56px;display:grid;place-items:center;font:inherit;font-size:0.875rem;line-height:1.6;overflow-wrap:anywhere;word-break:normal;padding:10px 8px;text-align:center;color:var(--muted);background:none;border:0;text-decoration:none}
 .tab[aria-current]{color:var(--ink);font-weight:600;box-shadow:inset 0 3px var(--primary)}
 .card{background:var(--card);border:1px solid var(--rule);padding:12px 14px;margin:10px 0}
 .card.link{display:block;color:inherit;text-decoration:none}
@@ -134,7 +137,7 @@ dl{margin:6px 0} .hrow{display:grid;grid-template-columns:96px 1fr;gap:8px;paddi
 .drawer{position:fixed;inset:0;z-index:30;display:none}
 .drawer.open{display:block}
 .drawer .scrim{position:absolute;inset:0;background:var(--scrim)}
-.drawer .panel{position:absolute;inset-block:0;inset-inline-start:0;width:min(88%,360px);background:var(--paper);border-inline-end:1px solid var(--rule);overflow-y:auto;padding:16px}
+.drawer .panel{position:absolute;inset-block:0;inset-inline-start:0;width:min(88%,360px);background:var(--paper);border-inline-end:1px solid var(--rule);overflow-y:auto;padding:16px 16px var(--nav-clearance)}
 .drawer h2{margin-top:16px}
 .drawer a.item{display:block;padding:10px 0;border-bottom:1px solid var(--rule);color:var(--ink);text-decoration:none;min-height:44px}
 /* reward art */
@@ -188,11 +191,11 @@ dl{margin:6px 0} .hrow{display:grid;grid-template-columns:96px 1fr;gap:8px;paddi
 .next-step{display:flex;gap:10px;align-items:baseline;margin:16px 0 0;padding:14px 16px;background:var(--card)}
 .next-step small{flex:none;font-size:1.125rem;font-weight:600;color:var(--ember)}
 .next-step p{flex:1;margin:0;font-size:0.9375rem}
-/* Action group: primary full width, secondary links in a 2-column grid, last one full width */
+/* Action group: primary full width, secondary actions share a responsive grid. */
 .actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
 .actions .cta,.actions .btn{margin:0;min-height:52px}
-.actions .cta,.actions .btn:last-child{grid-column:1/-1}
-.actions .btn.ghost{font-size:1rem;padding:10px 8px}
+.actions .cta{grid-column:1/-1}
+.actions .btn.ghost{font-size:1.0625rem;padding:12px 16px}
 /* Journey: stage panel and picture get more air, the picture gets a framed caption area */
 .scr-journey .card[data-stage-panel]{padding:16px 16px 14px;margin:14px 0 12px}
 .reward{margin:14px 0 8px;box-shadow:0 2px 0 var(--rule)}
@@ -492,7 +495,7 @@ textarea[data-swot]{width:100%;box-sizing:border-box;font:inherit;padding:8px}
 }
 
 /* New-version banner: small, calm, above the tab bar, not a modal. */
-.update-banner{position:fixed;inset-inline:12px;bottom:calc(72px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 12px;background:var(--card);color:var(--ink);border:1.5px solid var(--primary);font-size:0.9375rem}
+.update-banner{position:fixed;inset-inline:12px;bottom:calc(var(--nav-height) + 12px);z-index:40;display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:10px 12px;background:var(--card);color:var(--ink);border:1.5px solid var(--primary);font-size:0.9375rem;max-height:calc(100dvh - var(--nav-clearance) - 12px);overflow-y:auto}
 .update-banner .btn{width:auto;margin:0;min-height:44px;padding:6px 14px}
 
 /* Goal links on steps */
@@ -502,3 +505,94 @@ textarea[data-swot]{width:100%;box-sizing:border-box;font:inherit;padding:8px}
 .goal-chips{display:inline-flex;flex-wrap:wrap;gap:6px;vertical-align:middle}
 .goal-chips .tag{text-decoration:none;color:var(--ink);display:inline-flex;align-items:center;min-height:24px}
 .chip-link{display:inline-flex;align-items:center;min-height:44px;font-size:0.875rem}
+/* Action Desk: work first, with quiet opaque surfaces instead of a stack of glass. */
+.action-desk{min-width:0}
+.action-desk :is(.row,.task,.home-grid,.tool-grid)>*{min-width:0}
+.action-desk-header{margin:16px 0 20px;padding:16px 0;border-bottom:1px solid var(--rule)}
+.action-desk-header h1{margin:0 0 8px}
+.action-desk-header .sub{margin:0}
+.action-desk-section{margin-block:24px}
+.action-desk-section>h2,.journey-tools .tool-group>h2{margin:0 0 12px}
+.action-desk-agenda{margin-block:20px;padding:16px;background:var(--card);border:1px solid var(--rule);border-top:3px solid var(--primary)}
+.action-desk-agenda>h2{margin:0 0 8px}
+.action-desk-agenda .task:last-child{border-bottom:0}
+.action-desk .action-desk-reason{margin-block:16px;padding:16px;border-inline-start:3px solid var(--primary)}
+.action-desk-reason h2.card-h{margin:0 0 8px;font-size:0.9375rem;color:var(--muted)}
+.action-desk-reason .next-title{font-size:1.125rem;line-height:1.6;margin:0 0 8px}
+.action-desk-reason .next-why{margin:0 0 12px}
+.action-desk-reason>.muted:last-child{margin-top:12px;font-size:0.875rem;line-height:1.6}
+.action-desk .task{grid-template-columns:44px minmax(0,1fr);gap:12px;padding-block:16px}
+.action-desk .task p{line-height:1.6}
+.action-desk .task :is(.row,.btn-row){flex-wrap:wrap}
+.action-desk-recommended{border-inline-start:3px solid var(--primary);padding-inline:12px;background:color-mix(in srgb,var(--primary) 6%,var(--card));scroll-margin-block:24px var(--nav-clearance)}
+.action-desk-recommended .btn[data-act="task-done"]{background:var(--primary);color:var(--on-primary);border-color:var(--primary)}
+.action-desk-attention{margin-block:20px}
+.action-desk-context{margin-block:24px}
+.action-desk-summary{margin-block:24px}
+.action-desk-summary .home-grid{grid-template-columns:minmax(0,1fr);gap:12px}
+.action-desk :is(.stage,.action-desk-stage){margin-block:24px;padding-block:16px;border-top:1px solid var(--rule)}
+.action-desk :is(.stage,.action-desk-stage) .n{font-size:2rem;line-height:1.4}
+.action-desk .stage small{font-size:0.875rem;letter-spacing:normal}
+.action-desk :is(.chip,.tag,.note){font-size:0.875rem;line-height:1.5}
+.action-desk .chip{display:inline-block;white-space:normal}
+.action-desk .goal-chips{display:flex;max-width:100%;min-width:0;margin-block:6px}
+.action-desk .goal-chips a{max-width:100%;min-width:0;min-height:44px;white-space:normal;overflow-wrap:anywhere;align-items:center}
+.journey-stage-strip{padding:12px 0;margin:16px 0 24px;border-block:1px solid var(--rule)}
+.journey-stage-strip h2.card-h{margin:0 0 6px;font-size:0.9375rem;color:var(--muted)}
+.journey-stage-strip p{margin:4px 0;overflow-wrap:anywhere}
+.journey-workspace [data-journey-goals]{margin-block:24px}
+.journey-tools{display:grid;gap:24px;margin-block:24px}
+.tool-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,10rem),1fr));gap:10px}
+.journey-tools .tool-grid>:is(.btn,.card){display:flex;align-items:center;justify-content:flex-start;min-height:52px;margin:0;padding:12px;text-align:start;font-size:1rem;line-height:1.6;background:var(--card);color:var(--ink);border:1px solid var(--rule);text-decoration:none;overflow-wrap:anywhere}
+.journey-tools .tool-grid>a:focus-visible{outline:3px solid var(--ember);outline-offset:2px}
+:root[data-design="light-futuristic"] .action-desk .card{background:var(--card);-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:none;border-radius:12px}
+:root[data-design="light-futuristic"] .action-desk-header{padding:16px;border:1px solid color-mix(in srgb,var(--primary) 24%,var(--rule));border-radius:16px;background:color-mix(in srgb,var(--primary) 6%,var(--card))}
+:root[data-design="light-futuristic"] .action-desk-agenda{border-radius:16px;box-shadow:0 4px 16px color-mix(in srgb,var(--ink) 5%,transparent)}
+:root[data-design="light-futuristic"] :is(.action-desk-recommended,.journey-stage-strip,.journey-tools .tool-grid>a){border-radius:12px}
+:root[data-design="light-futuristic"] .journey-stage-strip{padding:12px 16px;background:var(--card);border:1px solid var(--rule)}
+@media (max-width:380px){.action-desk .actions{grid-template-columns:minmax(0,1fr)}}
+
+/* Shared control family: readable labels and predictable sizes, with layout owned by groups. */
+.btn.ghost,.seg button,.chip-btn,.menu-btn,.lang-btn{border-width:1px;border-color:var(--rule)}
+.seg{gap:8px}
+.seg button,.chip-btn{min-height:48px;max-width:100%;min-width:0;padding:9px 14px;font:500 1rem/1.5 "Hind Siliguri",system-ui;white-space:normal;overflow-wrap:anywhere;cursor:pointer}
+.seg button[aria-pressed="true"],.chip-btn[aria-pressed="true"]{border-color:var(--primary);box-shadow:inset 0 0 0 1px var(--primary);font-weight:600}
+.scr-settings .seg button,.scr-more .seg button{flex:1 1 max-content;min-width:0}
+.menu-btn,.lang-btn{background:var(--card);padding:8px;line-height:1.5}
+main .row:has(>.btn){flex-wrap:wrap;align-items:stretch}
+main :is(.row,.btn-row,.snap-btns)>.btn{flex:1 1 8rem;min-width:0;max-width:100%;min-height:52px !important;margin-top:0 !important;padding:12px 16px;font-size:1.0625rem;line-height:1.5}
+.scr-money [data-fin] .row>.btn{flex:1 1 8rem}
+.action-desk .task :is(.row,.btn-row){gap:10px;margin-top:12px}
+.goal-chips a.tag{min-height:44px;max-width:100%;padding:8px 10px;line-height:1.5;font-size:0.875rem;white-space:normal;overflow-wrap:anywhere}
+.btn:disabled,.cta:disabled,.seg button:disabled,.chip-btn:disabled{opacity:.55;cursor:not-allowed;box-shadow:none}
+
+/* Workspace links are in-flow navigation; the fixed bottom tab bar keeps its own geometry. */
+:root[data-design] .workspace-shortcuts{position:static;inset:auto;z-index:auto;display:block;max-width:none;margin:20px 0 24px;padding:0;border:0;background:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+.workspace-shortcuts h2{margin:0 0 12px;font-size:1rem}
+.quick-access-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,9rem),1fr));gap:12px}
+.shortcut-link{display:flex;align-items:center;min-width:0;min-height:52px;padding:12px 14px;background:var(--card);color:var(--ink);border:1px solid var(--rule);font-size:1rem;line-height:1.5;font-weight:500;text-align:start;text-decoration:none;overflow-wrap:anywhere}
+.goal-pick-group,.field-choices{min-width:0;margin:12px 0;padding:8px 12px 12px;border:1px solid var(--rule)}
+.goal-pick-group legend,.field-choices legend{max-width:100%;padding-inline:6px;font-size:1rem;font-weight:600;overflow-wrap:anywhere}
+:is(.goal-picker,.field-choices) .choice-row{display:flex;align-items:center;gap:12px;min-height:48px;max-width:100%;padding:10px 0;line-height:1.6;cursor:pointer;overflow-wrap:anywhere}
+:is(.goal-picker,.field-choices) .choice-row input[type="checkbox"]{flex:0 0 24px;width:24px;height:24px;min-height:24px;margin:0;padding:0;accent-color:var(--primary)}
+.goal-picker .goal-pick-child{margin-inline-start:16px}
+:root[data-design="light-futuristic"] body :is(.btn:not(.ghost),.cta){background:var(--primary);border-radius:12px}
+:root[data-design="light-futuristic"] body :is(.btn.ghost,.seg button,.chip-btn,.menu-btn,.lang-btn,.shortcut-link,.goal-pick-group){border-radius:12px}
+:root[data-design="light-futuristic"] .btn.ghost{background:color-mix(in srgb,var(--primary) 3%,var(--card))}
+:root[data-design] .action-desk-recommended .btn[data-act="task-done"]{background:var(--primary);color:var(--on-primary);border-color:var(--primary)}
+:root[data-design="emerald-obsidian"] :is(.shortcut-link,.goal-pick-group){border-radius:10px}
+@media (hover:hover){
+  .btn.ghost:hover,.shortcut-link:hover,.seg button:not([aria-pressed="true"]):hover,.chip-btn:not([aria-pressed="true"]):hover{background:color-mix(in srgb,var(--primary) 8%,var(--card))}
+  .btn:not(:disabled):hover,.cta:not(:disabled):hover{border-color:var(--primary)}
+}
+
+.field-choices .choice-row:has(input:checked){font-weight:600}
+
+/* A continuous text-size control; retain the native pointer/keyboard behavior. */
+.text-size-readout{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:8px;font-size:0.9375rem}
+.text-size-readout output{font-weight:600;color:var(--ink)}
+.text-size-control input[type="range"]{display:block;width:100%;min-width:0;min-height:44px;margin:0;padding:0;border:0;background:transparent;accent-color:var(--primary);cursor:ew-resize;scroll-margin-block:16px var(--nav-clearance)}
+
+/* Module notes and build diagnostics are optional, closed details on daily screens. */
+.module-details>summary{min-height:48px;padding-block:10px;font-size:1rem;font-weight:600;line-height:1.6;cursor:pointer;color:var(--primary)}
+.module-details>summary::marker{color:var(--primary)}

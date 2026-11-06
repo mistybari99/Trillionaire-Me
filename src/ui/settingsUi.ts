@@ -82,6 +82,22 @@ function highlight(root: HTMLElement, row: string | undefined) {
   setTimeout(() => { try { el.scrollIntoView?.({ block: "center" }); } catch { /* ignore */ } }, 0);
 }
 
+/** Live input keeps the same DOM node so pointer dragging and keyboard focus continue. */
+function textSizeSlider(lang: Locale): HTMLElement {
+  const current = h("output", { for: "text-size-slider", "aria-live": "off" }, `${num(prefs.scale, lang)}%`);
+  const slider = h("input", { type: "range", id: "text-size-slider", min: "75", max: "150", step: "1", value: String(prefs.scale),
+    "aria-label": t("more.textsize", lang), "aria-valuetext": `${num(prefs.scale, lang)}%`, "data-scale": "slider" });
+  slider.addEventListener("input", () => {
+    prefs.scale = Number(slider.value);
+    applyPrefs();
+    current.value = `${num(prefs.scale, lang)}%`;
+    slider.setAttribute("aria-valuetext", current.value);
+    slider.scrollIntoView?.({ block: "nearest" });
+  });
+  return h("div", { class: "text-size-control" },
+    h("div", { class: "text-size-readout" }, h("span", { class: "muted" }, "75%"), current, h("span", { class: "muted" }, "150%")), slider);
+}
+
 function quickCard(lang: Locale): HTMLElement {
   const card = (id: string, label: Key, ...kids: Node[]) => h("div", { class: "card", "data-setting": id }, h("h3", { class: "card-h" }, t(label, lang)), ...kids);
   return h("section", { class: "card-group", "data-card": "quick", "aria-label": t("set.quick", lang) },
@@ -90,8 +106,7 @@ function quickCard(lang: Locale): HTMLElement {
       ...LOCALE_ORDER.map((c) => seg(LOCALES[c].endonym, prefs.lang === c, () => { prefs.lang = c; applyPrefs(); rerender(); }, { "data-lang": c })))),
     card("theme", "more.theme", h("div", { class: "seg", role: "group", "aria-label": t("more.theme", lang) },
       ...(["auto", "light", "dark"] as const).map((c) => seg(t(`more.theme.${c}` as Key, lang), prefs.theme === c, () => { prefs.theme = c; applyPrefs(); rerender(); }, { "data-theme-set": c })))),
-    card("textsize", "more.textsize", h("div", { class: "seg", role: "group", "aria-label": t("more.textsize", lang) },
-      ...[100, 125, 150, 200].map((c) => seg(`${num(c, lang)}%`, prefs.scale === c, () => { prefs.scale = c; applyPrefs(); rerender(); }, { "data-scale": String(c) })))));
+    card("textsize", "more.textsize", textSizeSlider(lang)));
 }
 
 function statusStrip(lang: Locale): HTMLElement {

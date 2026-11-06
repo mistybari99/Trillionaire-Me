@@ -41,3 +41,60 @@ Findings
 
 ## Builder update - 3 Nov 2026 (after check #3, owner "start the remaining work now")
 Closed: G3-01 (M18 boards), G3-02 (backward wizard, calm colour), G3-03 (three tests), G3-04 (looks evidence, images opened), G3-06 (in-app Where we are), G3-08 (superseded audit files), branding (N3-23). Rows SET-1.05, SET-2.T3, SET-R.09, AU-21, AU-22, AU-23, B12-22, N3-06, N3-10 moved to Built+Linked+Tested. The 59 "Built" rows and every "4L ?" row now carry a looks reference or "n/a (no screen)" or "not in matrix". New rows N4-01..N4-08. Modules: 22 complete, 2 partial (M09, M21), 1 blocked (M23). Still open: M09 unit economics (no fields in the documents), M21 encryption (owner), M23 AI (D-C), owner-only tasks (G3-10).
+
+## Check #4 — 5 Nov 2026 (audited app HEAD `6136ba8`)
+
+Owner requested implementation of the audit/organization plan. Cloned the repository, read source-of-truth spec/Register/handoff/charter, inspected all remote branches and both open PRs, and read Cloudflare build/deployment metadata. No production mutation.
+
+- Found and reproduced restore failed-rollback reassurance (AUD-01) and incomplete required precache install (AUD-02); reviewed cross-namespace Go back gap (AUD-03). Findings and acceptance tasks are in `docs/audit/REPOSITORY_AUDIT_2026-11-05.md`.
+- Moved the previous tracker/TODO/roadmap/plan into byte-identical dated snapshots under `docs/plan/archive/`. Verified all four against `git show 6136ba8:<original path>` before recording SHA-256 hashes. They are historical evidence, not current status lists.
+- Consolidated into 27 active work packages. `legacy-task-map.json` retains all 213 original task IDs and adds explicit references for 10 reminder steps and 10 G3 prose gaps. Work descriptions with multiple old IDs share a package; their acceptance detail is preserved in the archive. Historical completions require re-verification, not automatic promotion.
+- Corrected current documentation for existing Workers hosting and runtime network exceptions. The in-app `WHERE_WE_ARE_BN.md` content was intentionally left unchanged in this documentation-only app scope; its stale hosting item is part of VERIFY-01. The separate dated owner audit summary is current and linked from README.
+- Verified baseline: strict types pass, 1,941 tests / 158 files pass, production build passes (hadith chunk warning), Chromium browser checks 88 pass / 0 fail. Physical phone, reviewer acceptance, live prayer provider and a fresh screenshot matrix remain open. No Register rows promoted.
+- `node tools/check_plan.mjs` passes for IDs, status vocabulary, dependencies, legacy coverage, snapshot hashes and 54 local links. Added this read-only check to CI; it works without git history in shallow clones.
+- Routine browser-generated `evidence/e2e-report.json` restored; dated run observations copied to `docs/audit/evidence/2026-11-05.json` instead. App source, runtime configuration, lockfile, tests and original Register remain unchanged.
+
+## Check #5 — 5 Nov 2026 (reliability follow-up branch)
+
+Owner asked to start fixing the findings, then explicitly requested parallel engineering and two independent UI design agents. Three engineering agents owned offline update, persistence and deployment gating; the parent owned restore/recovery and integration. Two design agents exchanged critiques and selected Action Desk, with both reviewing the final decision.
+
+- AUD-01/AUD-03: failed compensation never asserts unchanged data; Before restore remains reachable, Go back protects both namespaces and its retry action. Restore success awaits durable storage. Persistent-failure, consent and cross-namespace cases covered by new regression tests.
+- AUD-02: failed required download rejects install. Real Chromium/local-server 503 test verifies previous worker/cache and offline app survive; same-deployment retry succeeds, waits for acceptance, activates and works offline. Worker source now changes cache version.
+- Persistence: retries keep newest value/deletion, failed local deletes are surfaced, successful values are dropped from retry bookkeeping. Schema/IndexedDB versions unchanged.
+- OPS-01: exact-commit CI gate script and activation instructions prepared with 19 failure/success tests. Remote Workers setting intentionally remains unchanged until the code reaches production; status Needs verification, not Done.
+- UI-01: independent A/B proposals and final Action Desk decision recorded. UI-02 tracks runtime presentation work; no visual refresh is claimed in this reliability block. Existing saved look IDs and default preserved.
+- Active tracker: 29 packages; 213 old IDs and 20 reminder/gap references retained. The link checker now includes the fix/deployment/design/owner documents and evidence links; maintained local links pass. Four historical snapshots remain unchanged.
+- Verification details and final test totals are recorded in `docs/audit/RELIABILITY_FIXES_2026-11-05.md`. An initial full suite identified the intentional new recovery string count; its fixture was updated explicitly before the final suite. No Register human/device row was promoted.
+
+Final verification: 1,976 tests / 162 files passed, typecheck/build passed, 92 Chromium checks passed. Earlier full-run string fixture and memory-only UI wait failures were corrected; final full rerun passed. No runtime source was changed after that passing run.
+
+## Check #6 — 5 Nov 2026 (Action Desk implementation branch)
+
+The selected two-agent design is implemented on `feat/action-desk-ui`, based on production `32bc54b`. Dated implementation details and acceptance limits are in [Action Desk implementation](../audit/ACTION_DESK_UI_2026-11-05.md); fresh capture reports and representative images are indexed by the [browser evidence README](../audit/action-desk-ui/README.md).
+
+- UI-02 moves from Pending to Needs verification. Today prioritizes the existing next action/daily agenda, Journey groups all 18 existing tool links beneath stage/goal context, goal detail improves reading order, full goal names wrap, and actual navigation/updater measurements reserve clearance at large text. Existing warnings, data modes, routes, saved looks and planner order are preserved.
+- The browser evidence contains 100 final-pass frames plus four long-Bangla-title stress frames across four looks, English/Bangla, light/dark and 100%/200% text, with populated, empty, unknown, offline, consent-paused, rejected-write and waiting-update states. These 104 completed without a recorded overflow/geometry violation. Four additional English/Bangla 100%/200% empty-real Today captures pass after removing the repeated setup action, bringing the completed capture count to 108. The broad matrix was not repeated for the localized follow-up fixes.
+- Full unit run: 1,991 tests / 166 files passed in 229.92 seconds before the skip-link repair. Final focused rerun: 48 passed, including two new skip-link cases. The current 1,993-test total awaits a complete CI run. Final Chromium regression run: all 92 passed; [dated report](../audit/action-desk-ui/e2e-report.json).
+- The first keyboard probe found Skip to content lost focus after hash-router normalization. Engineering repaired direct main focus without a route change. The rebuilt keyboard-only retest passes, including Skip to content, both actual task Done/Focus pairs and all 18 Journey tool links; the earlier failed observation is retained in the evidence README.
+- Physical Android/TalkBack reading order, current-tab announcements, focus/error behavior, device safe areas and comprehensive contrast acceptance remain outstanding. No human/device Register row is promoted.
+- OPS-01 stays Needs verification. The production build command is activated and Cloudflare build `ea8b75fb-7f75-442e-9a9c-9cfc8262c98a` successfully verified exact-commit CI run `41979897074` for `32bc54b` before deployment. An isolated failed remote CI trial remains outstanding; the deployment doc now distinguishes this observed activation from its historical preparation stage.
+- `node tools/check_plan.mjs` passed after the initial documentation edits: 29 active packages, 213 retained task IDs plus 20 reminder/gap references and four exact archives. Final check after validation updates passes with 82 maintained local links and acyclic dependencies.
+
+
+## Check #7 — 5 Nov 2026 (controls and meaningful multiple selections)
+
+- Owner requested independent architecture assessment, useful tools near the front, consistent button styling/sizing and multiple selection where the model supports it. A/B review chose a compact work-first workspace with fixed neutral shortcuts. Technical review recommends incremental domain/UI boundaries; no universal-block or framework rewrite was introduced.
+- UI-03 records implemented controls and independent task/habit goal choices. The selection audit distinguishes the reachable sibling-replacement defect from latent generic-list rendering support and correctly exclusive settings. No schema/catalog/core calculation changed.
+- 128 browser frames and15 functional/update probes passed. A final rebuilt functional-only run passed13/13. Whole-app Chromium regression passed92/92 after correcting an actual Settings flex-wrap regression. Details and limits are linked in the usability implementation report.
+- The local full suite initially passed1,999 of2,006 tests; all seven failures were repaired and74 affected tests then passed. Final chart/range tests passed28/28. The exact-production CI gate requires the complete final suite again before deployment; no local full passing rerun is fabricated.
+- The earlier Action Desk release is verified live as0eca3ea with62 cached required files, offline reload and zero page errors. Physical Android/TalkBack and comprehensive contrast remain unclosed. All four archived plans remain unchanged; plan/link checks pass.
+
+
+## Check #8 — 6 Nov 2026 (continuous text size)
+
+The owner replaced preset text-size buttons with a75–150% slider at1% increments. Live updates preserve pointer/keyboard focus and save the existing preference. Old out-of-range preferences clamp safely; invalid values default to100%. Typecheck/build and49 focused tests pass; the96-check browser suite includes native drag/keyboard, arbitrary-size persistence, EN/BN endpoints,200% accessibility stress and offline update behavior. [Dated evidence](../audit/TEXT_SIZE_SLIDER_2026-11-06.md). UI-03 retains its physical-device acceptance gap; no data schema or original Register change.
+
+
+## Check #9 — 6 Nov 2026 (optional module descriptions)
+
+Owner screenshots showed technical module notes dominating Journey. Journey, Diary and Deen now place these cards under a closed native “Feature details” summary. All original module information remains reachable; the dedicated Build status page still exposes all25 cards. Working tools and mandatory warnings are outside the disclosure. Typecheck/build and74 focused tests pass;104 browser checks pass, including keyboard/pointer toggles and status reachability. [Dated evidence](../audit/FEATURE_DETAILS_2026-11-06.md). UI-03's physical accessibility acceptance remains open.

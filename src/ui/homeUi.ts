@@ -10,6 +10,7 @@ import { financeFrom } from "../core/financeInputs";
 import { moneySummary, type Metric, type ScopeSummary } from "../core/homeSummary";
 import { goalStepCount, taskCount, type Count } from "../core/homeCounts";
 import { nextBestAction, type NextAction } from "../core/nextAction";
+import { isOpenTask } from "../core/planInputs";
 import { adviceCards } from "../core/advice";
 import { TOPICS } from "../library/topics";
 
@@ -59,15 +60,27 @@ export function homeSummaryCards(lang: Locale): HTMLElement {
 const BTN: Record<NextAction["id"], Key> = { add_goal: "next.btn.diary", link_task: "next.btn.plan", add_task: "next.btn.plan", do_task: "next.btn.plan", add_money: "next.btn.money", rate_life: "next.btn.wheel", review_plan: "next.btn.plan" };
 
 /** One rule-based suggestion. The reason is always shown. Only the user's own words are used in the text. */
-export function nextActionCard(lang: Locale): HTMLElement {
-  const a = nextBestAction(allRecs());
+export function nextActionCard(lang: Locale, a = nextBestAction(allRecs()), compact = false): HTMLElement {
   const args = { ...a.args }; if (a.id === "do_task" && !args.task) args.task = t("next.task.untitled", lang);
-  return h("aside", { class: "card next-action", "data-next-action": a.id, "aria-label": t("next.title", lang) },
+  return h("aside", { class: `card next-action${compact ? " action-desk-reason" : ""}`, "data-next-action": a.id, "aria-label": t("next.title", lang) },
     h("h2", { class: "card-h" }, t("next.title", lang)),
     h("p", { class: "next-title", "data-next-title": "1" }, t(`next.${a.id}.title` as Key, lang, args)),
     h("p", { class: "next-why", "data-next-reason": "1" }, h("strong", {}, `${t("next.why", lang)} `), t(`next.${a.id}.reason` as Key, lang)),
     h("a", { href: a.href, class: "btn btn-sm", "data-act": "next-go" }, t(BTN[a.id], lang)),
     h("p", { class: "muted" }, t("next.note", lang)));
+}
+
+/** Use the existing rule's ID ordering for identification only; never reorder the daily plan. */
+export function homeNextAction(): { action: NextAction; taskId: string | null } {
+  const recs = allRecs(); const action = nextBestAction(recs);
+  const task = action.id === "do_task" ? recs.filter((r) => r.entity === "task" && isOpenTask(r)).sort((a, b) => a.id.localeCompare(b.id))[0] : undefined;
+  return { action, taskId: task?.id ?? null };
+}
+
+/** Attach the explanation to the selected task's single existing row. */
+export function nextTaskReason(lang: Locale): HTMLElement {
+  return h("p", { class: "next-why", "data-next-reason": "1" },
+    h("strong", {}, `${t("next.why", lang)} `), t("next.do_task.reason", lang));
 }
 
 /** Up to three rule-based suggestion cards. Each shows the rule that chose it. Nothing is shown when no rule applies. */

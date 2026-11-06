@@ -1,0 +1,7330 @@
+{
+  "generated": "2026-11-05T13:09:03.492Z",
+  "synthetic": true,
+  "viewport": "360x800",
+  "phase": "after-final",
+  "screens": [
+    {
+      "design": "light-futuristic",
+      "lang": "en",
+      "theme": "light",
+      "scale": 100,
+      "route": "today",
+      "file": "/tmp/action-desk-ui-evidence/after-final/light-futuristic-en-light-100-today.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "Today",
+          "x": 4,
+          "y": 744,
+          "width": 68.1875,
+          "height": 56,
+          "bottom": 800,
+          "right": 72.1875
+        },
+        {
+          "text": "Journey",
+          "x": 72.1875,
+          "y": 744,
+          "width": 79.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 151.390625
+        },
+        {
+          "text": "Diary",
+          "x": 151.390625,
+          "y": 744,
+          "width": 62.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 213.59375
+        },
+        {
+          "text": "Deen",
+          "x": 213.59375,
+          "y": 744,
+          "width": 62.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 275.796875
+        },
+        {
+          "text": "Settings",
+          "x": 275.796875,
+          "y": 744,
+          "width": 80.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [
+        {
+          "id": "shot-t2",
+          "x": 33,
+          "y": -2237.40625,
+          "width": 294,
+          "height": 244.890625,
+          "bottom": -1992.515625,
+          "right": 327,
+          "documentTop": 450.59375
+        },
+        {
+          "id": "shot-t3",
+          "x": 33,
+          "y": -1992.515625,
+          "width": 294,
+          "height": 196.890625,
+          "bottom": -1795.625,
+          "right": 327,
+          "documentTop": 695.484375
+        }
+      ],
+      "lastControl": {
+        "x": 16,
+        "y": 168.359375,
+        "width": 328,
+        "height": 55,
+        "bottom": 223.359375,
+        "right": 344
+      },
+      "focusLinks": [
+        "#/focus/shot-t2",
+        "#/focus/shot-t3"
+      ],
+      "nextActions": 1,
+      "bodyPadding": "81px",
+      "mainPadding": "0px",
+      "navVariable": "57px"
+    },
+    {
+      "design": "light-futuristic",
+      "lang": "en",
+      "theme": "light",
+      "scale": 100,
+      "route": "journey",
+      "file": "/tmp/action-desk-ui-evidence/after-final/light-futuristic-en-light-100-journey.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "Today",
+          "x": 4,
+          "y": 744,
+          "width": 68.1875,
+          "height": 56,
+          "bottom": 800,
+          "right": 72.1875
+        },
+        {
+          "text": "Journey",
+          "x": 72.1875,
+          "y": 744,
+          "width": 79.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 151.390625
+        },
+        {
+          "text": "Diary",
+          "x": 151.390625,
+          "y": 744,
+          "width": 62.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 213.59375
+        },
+        {
+          "text": "Deen",
+          "x": 213.59375,
+          "y": 744,
+          "width": 62.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 275.796875
+        },
+        {
+          "text": "Settings",
+          "x": 275.796875,
+          "y": 744,
+          "width": 80.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [],
+      "lastControl": {
+        "x": 33,
+        "y": -5357.265625,
+        "width": 294,
+        "height": 53,
+        "bottom": -5304.265625,
+        "right": 327
+      },
+      "goalHeading": -9153.8125,
+      "toolsHeading": -8450.421875,
+      "focusLinks": [],
+      "nextActions": 0,
+      "bodyPadding": "81px",
+      "mainPadding": "0px",
+      "navVariable": "57px"
+    },
+    {
+      "design": "light-futuristic",
+      "lang": "en",
+      "theme": "light",
+      "scale": 100,
+      "route": "journey/goal/shot-goal",
+      "file": "/tmp/action-desk-ui-evidence/after-final/light-futuristic-en-light-100-journey_goal_shot-goal.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "Today",
+          "x": 4,
+          "y": 744,
+          "width": 68.1875,
+          "height": 56,
+          "bottom": 800,
+          "right": 72.1875
+        },
+        {
+          "text": "Journey",
+          "x": 72.1875,
+          "y": 744,
+          "width": 79.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 151.390625
+        },
+        {
+          "text": "Diary",
+          "x": 151.390625,
+          "y": 744,
+          "width": 62.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 213.59375
+        },
+        {
+          "text": "Deen",
+          "x": 213.59375,
+          "y": 744,
+          "width": 62.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 275.796875
+        },
+        {
+          "text": "Settings",
+          "x": 275.796875,
+          "y": 744,
+          "width": 80.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [],
+      "lastControl": {
+        "x": 31,
+        "y": 641.453125,
+        "width": 298,
+        "height": 55,
+        "bottom": 696.453125,
+        "right": 329
+      },
+      "focusLinks": [],
+      "nextActions": 0,
+      "bodyPadding": "81px",
+      "mainPadding": "0px",
+      "navVariable": "57px"
+    },
+    {
+      "design": "light-futuristic",
+      "lang": "en",
+      "theme": "light",
+      "scale": 200,
+      "route": "today",
+      "file": "/tmp/action-desk-ui-evidence/after-final/light-futuristic-en-light-200-today.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 669.40625,
+        "width": 360,
+        "height": 130.59375,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "Today",
+          "x": 4,
+          "y": 670.40625,
+          "width": 115.65625,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 119.65625
+        },
+        {
+          "text": "Journey",
+          "x": 119.65625,
+          "y": 670.40625,
+          "width": 133.671875,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 253.328125
+        },
+        {
+          "text": "Diary",
+          "x": 253.328125,
+          "y": 670.40625,
+          "width": 102.671875,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 356
+        },
+        {
+          "text": "Deen",
+          "x": 4,
+          "y": 735.203125,
+          "width": 158.5,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 162.5
+        },
+        {
+          "text": "Settings",
+          "x": 162.5,
+          "y": 735.203125,
+          "width": 193.5,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [
+        {
+          "id": "shot-t2",
+          "x": 33,
+          "y": -5505.046875,
+          "width": 294,
+          "height": 664.59375,
+          "bottom": -4840.453125,
+          "right": 327,
+          "documentTop": 1113.953125
+        },
+        {
+          "id": "shot-t3",
+          "x": 33,
+          "y": -4840.453125,
+          "width": 294,
+          "height": 424.390625,
+          "bottom": -4416.0625,
+          "right": 327,
+          "documentTop": 1778.546875
+        }
+      ],
+      "lastControl": {
+        "x": 16,
+        "y": -581.125,
+        "width": 328,
+        "height": 84,
+        "bottom": -497.125,
+        "right": 344
+      },
+      "focusLinks": [
+        "#/focus/shot-t2",
+        "#/focus/shot-t3"
+      ],
+      "nextActions": 1,
+      "bodyPadding": "155px",
+      "mainPadding": "0px",
+      "navVariable": "131px"
+    },
+    {
+      "design": "light-futuristic",
+      "lang": "en",
+      "theme": "light",
+      "scale": 200,
+      "route": "journey",
+      "file": "/tmp/action-desk-ui-evidence/after-final/light-futuristic-en-light-200-journey.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 669.40625,
+        "width": 360,
+        "height": 130.59375,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "Today",
+          "x": 4,
+          "y": 670.40625,
+          "width": 113,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 117
+        },
+        {
+          "text": "Journey",
+          "x": 117,
+          "y": 670.40625,
+          "width": 137,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 254
+        },
+        {
+          "text": "Diary",
+          "x": 254,
+          "y": 670.40625,
+          "width": 102,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 356
+        },
+        {
+          "text": "Deen",
+          "x": 4,
+          "y": 735.203125,
+          "width": 158.5,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 162.5
+        },
+        {
+          "text": "Settings",
+          "x": 162.5,
+          "y": 735.203125,
+          "width": 193.5,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [],
+      "lastControl": {
+        "x": 33,
+        "y": -17498.25,
+        "width": 294,
+        "height": 140,
+        "bottom": -17358.25,
+        "right": 327
+      },
+      "goalHeading": -26486.421875,
+      "toolsHeading": -25368.421875,
+      "focusLinks": [],
+      "nextActions": 0,
+      "bodyPadding": "155px",
+      "mainPadding": "0px",
+      "navVariable": "131px"
+    },
+    {
+      "design": "light-futuristic",
+      "lang": "en",
+      "theme": "light",
+      "scale": 200,
+      "route": "journey/goal/shot-goal",
+      "file": "/tmp/action-desk-ui-evidence/after-final/light-futuristic-en-light-200-journey_goal_shot-goal.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 669.40625,
+        "width": 360,
+        "height": 130.59375,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "Today",
+          "x": 4,
+          "y": 670.40625,
+          "width": 113,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 117
+        },
+        {
+          "text": "Journey",
+          "x": 117,
+          "y": 670.40625,
+          "width": 137,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 254
+        },
+        {
+          "text": "Diary",
+          "x": 254,
+          "y": 670.40625,
+          "width": 102,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 356
+        },
+        {
+          "text": "Deen",
+          "x": 4,
+          "y": 735.203125,
+          "width": 158.5,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 162.5
+        },
+        {
+          "text": "Settings",
+          "x": 162.5,
+          "y": 735.203125,
+          "width": 193.5,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [],
+      "lastControl": {
+        "x": 31,
+        "y": 480.078125,
+        "width": 298,
+        "height": 142,
+        "bottom": 622.078125,
+        "right": 329
+      },
+      "focusLinks": [],
+      "nextActions": 0,
+      "bodyPadding": "155px",
+      "mainPadding": "0px",
+      "navVariable": "131px"
+    },
+    {
+      "design": "light-futuristic",
+      "lang": "en",
+      "theme": "dark",
+      "scale": 100,
+      "route": "today",
+      "file": "/tmp/action-desk-ui-evidence/after-final/light-futuristic-en-dark-100-today.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "Today",
+          "x": 4,
+          "y": 744,
+          "width": 68.1875,
+          "height": 56,
+          "bottom": 800,
+          "right": 72.1875
+        },
+        {
+          "text": "Journey",
+          "x": 72.1875,
+          "y": 744,
+          "width": 79.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 151.390625
+        },
+        {
+          "text": "Diary",
+          "x": 151.390625,
+          "y": 744,
+          "width": 62.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 213.59375
+        },
+        {
+          "text": "Deen",
+          "x": 213.59375,
+          "y": 744,
+          "width": 62.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 275.796875
+        },
+        {
+          "text": "Settings",
+          "x": 275.796875,
+          "y": 744,
+          "width": 80.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [
+        {
+          "id": "shot-t2",
+          "x": 33,
+          "y": -2237.40625,
+          "width": 294,
+          "height": 244.890625,
+          "bottom": -1992.515625,
+          "right": 327,
+          "documentTop": 450.59375
+        },
+        {
+          "id": "shot-t3",
+          "x": 33,
+          "y": -1992.515625,
+          "width": 294,
+          "height": 196.890625,
+          "bottom": -1795.625,
+          "right": 327,
+          "documentTop": 695.484375
+        }
+      ],
+      "lastControl": {
+        "x": 16,
+        "y": 168.359375,
+        "width": 328,
+        "height": 55,
+        "bottom": 223.359375,
+        "right": 344
+      },
+      "focusLinks": [
+        "#/focus/shot-t2",
+        "#/focus/shot-t3"
+      ],
+      "nextActions": 1,
+      "bodyPadding": "81px",
+      "mainPadding": "0px",
+      "navVariable": "57px"
+    },
+    {
+      "design": "light-futuristic",
+      "lang": "en",
+      "theme": "dark",
+      "scale": 100,
+      "route": "journey",
+      "file": "/tmp/action-desk-ui-evidence/after-final/light-futuristic-en-dark-100-journey.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "Today",
+          "x": 4,
+          "y": 744,
+          "width": 68.1875,
+          "height": 56,
+          "bottom": 800,
+          "right": 72.1875
+        },
+        {
+          "text": "Journey",
+          "x": 72.1875,
+          "y": 744,
+          "width": 79.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 151.390625
+        },
+        {
+          "text": "Diary",
+          "x": 151.390625,
+          "y": 744,
+          "width": 62.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 213.59375
+        },
+        {
+          "text": "Deen",
+          "x": 213.59375,
+          "y": 744,
+          "width": 62.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 275.796875
+        },
+        {
+          "text": "Settings",
+          "x": 275.796875,
+          "y": 744,
+          "width": 80.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [],
+      "lastControl": {
+        "x": 33,
+        "y": -5357.265625,
+        "width": 294,
+        "height": 53,
+        "bottom": -5304.265625,
+        "right": 327
+      },
+      "goalHeading": -9153.8125,
+      "toolsHeading": -8450.421875,
+      "focusLinks": [],
+      "nextActions": 0,
+      "bodyPadding": "81px",
+      "mainPadding": "0px",
+      "navVariable": "57px"
+    },
+    {
+      "design": "light-futuristic",
+      "lang": "en",
+      "theme": "dark",
+      "scale": 100,
+      "route": "journey/goal/shot-goal",
+      "file": "/tmp/action-desk-ui-evidence/after-final/light-futuristic-en-dark-100-journey_goal_shot-goal.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "Today",
+          "x": 4,
+          "y": 744,
+          "width": 68.1875,
+          "height": 56,
+          "bottom": 800,
+          "right": 72.1875
+        },
+        {
+          "text": "Journey",
+          "x": 72.1875,
+          "y": 744,
+          "width": 79.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 151.390625
+        },
+        {
+          "text": "Diary",
+          "x": 151.390625,
+          "y": 744,
+          "width": 62.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 213.59375
+        },
+        {
+          "text": "Deen",
+          "x": 213.59375,
+          "y": 744,
+          "width": 62.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 275.796875
+        },
+        {
+          "text": "Settings",
+          "x": 275.796875,
+          "y": 744,
+          "width": 80.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [],
+      "lastControl": {
+        "x": 31,
+        "y": 641.453125,
+        "width": 298,
+        "height": 55,
+        "bottom": 696.453125,
+        "right": 329
+      },
+      "focusLinks": [],
+      "nextActions": 0,
+      "bodyPadding": "81px",
+      "mainPadding": "0px",
+      "navVariable": "57px"
+    },
+    {
+      "design": "light-futuristic",
+      "lang": "en",
+      "theme": "dark",
+      "scale": 200,
+      "route": "today",
+      "file": "/tmp/action-desk-ui-evidence/after-final/light-futuristic-en-dark-200-today.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 669.40625,
+        "width": 360,
+        "height": 130.59375,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "Today",
+          "x": 4,
+          "y": 670.40625,
+          "width": 115.65625,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 119.65625
+        },
+        {
+          "text": "Journey",
+          "x": 119.65625,
+          "y": 670.40625,
+          "width": 133.671875,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 253.328125
+        },
+        {
+          "text": "Diary",
+          "x": 253.328125,
+          "y": 670.40625,
+          "width": 102.671875,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 356
+        },
+        {
+          "text": "Deen",
+          "x": 4,
+          "y": 735.203125,
+          "width": 158.5,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 162.5
+        },
+        {
+          "text": "Settings",
+          "x": 162.5,
+          "y": 735.203125,
+          "width": 193.5,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [
+        {
+          "id": "shot-t2",
+          "x": 33,
+          "y": -5505.046875,
+          "width": 294,
+          "height": 664.59375,
+          "bottom": -4840.453125,
+          "right": 327,
+          "documentTop": 1113.953125
+        },
+        {
+          "id": "shot-t3",
+          "x": 33,
+          "y": -4840.453125,
+          "width": 294,
+          "height": 424.390625,
+          "bottom": -4416.0625,
+          "right": 327,
+          "documentTop": 1778.546875
+        }
+      ],
+      "lastControl": {
+        "x": 16,
+        "y": -581.125,
+        "width": 328,
+        "height": 84,
+        "bottom": -497.125,
+        "right": 344
+      },
+      "focusLinks": [
+        "#/focus/shot-t2",
+        "#/focus/shot-t3"
+      ],
+      "nextActions": 1,
+      "bodyPadding": "155px",
+      "mainPadding": "0px",
+      "navVariable": "131px"
+    },
+    {
+      "design": "light-futuristic",
+      "lang": "en",
+      "theme": "dark",
+      "scale": 200,
+      "route": "journey",
+      "file": "/tmp/action-desk-ui-evidence/after-final/light-futuristic-en-dark-200-journey.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 669.40625,
+        "width": 360,
+        "height": 130.59375,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "Today",
+          "x": 4,
+          "y": 670.40625,
+          "width": 113,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 117
+        },
+        {
+          "text": "Journey",
+          "x": 117,
+          "y": 670.40625,
+          "width": 137,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 254
+        },
+        {
+          "text": "Diary",
+          "x": 254,
+          "y": 670.40625,
+          "width": 102,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 356
+        },
+        {
+          "text": "Deen",
+          "x": 4,
+          "y": 735.203125,
+          "width": 158.5,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 162.5
+        },
+        {
+          "text": "Settings",
+          "x": 162.5,
+          "y": 735.203125,
+          "width": 193.5,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [],
+      "lastControl": {
+        "x": 33,
+        "y": -17498.25,
+        "width": 294,
+        "height": 140,
+        "bottom": -17358.25,
+        "right": 327
+      },
+      "goalHeading": -26486.421875,
+      "toolsHeading": -25368.421875,
+      "focusLinks": [],
+      "nextActions": 0,
+      "bodyPadding": "155px",
+      "mainPadding": "0px",
+      "navVariable": "131px"
+    },
+    {
+      "design": "light-futuristic",
+      "lang": "en",
+      "theme": "dark",
+      "scale": 200,
+      "route": "journey/goal/shot-goal",
+      "file": "/tmp/action-desk-ui-evidence/after-final/light-futuristic-en-dark-200-journey_goal_shot-goal.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 669.40625,
+        "width": 360,
+        "height": 130.59375,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "Today",
+          "x": 4,
+          "y": 670.40625,
+          "width": 113,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 117
+        },
+        {
+          "text": "Journey",
+          "x": 117,
+          "y": 670.40625,
+          "width": 137,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 254
+        },
+        {
+          "text": "Diary",
+          "x": 254,
+          "y": 670.40625,
+          "width": 102,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 356
+        },
+        {
+          "text": "Deen",
+          "x": 4,
+          "y": 735.203125,
+          "width": 158.5,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 162.5
+        },
+        {
+          "text": "Settings",
+          "x": 162.5,
+          "y": 735.203125,
+          "width": 193.5,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [],
+      "lastControl": {
+        "x": 31,
+        "y": 480.078125,
+        "width": 298,
+        "height": 142,
+        "bottom": 622.078125,
+        "right": 329
+      },
+      "focusLinks": [],
+      "nextActions": 0,
+      "bodyPadding": "155px",
+      "mainPadding": "0px",
+      "navVariable": "131px"
+    },
+    {
+      "design": "light-futuristic",
+      "lang": "bn",
+      "theme": "light",
+      "scale": 100,
+      "route": "today",
+      "file": "/tmp/action-desk-ui-evidence/after-final/light-futuristic-bn-light-100-today.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "আজ",
+          "x": 4,
+          "y": 744,
+          "width": 69.59375,
+          "height": 56,
+          "bottom": 800,
+          "right": 73.59375
+        },
+        {
+          "text": "যাত্রা",
+          "x": 73.59375,
+          "y": 744,
+          "width": 65.609375,
+          "height": 56,
+          "bottom": 800,
+          "right": 139.203125
+        },
+        {
+          "text": "ডায়েরি",
+          "x": 139.203125,
+          "y": 744,
+          "width": 77.59375,
+          "height": 56,
+          "bottom": 800,
+          "right": 216.796875
+        },
+        {
+          "text": "দ্বীন",
+          "x": 216.796875,
+          "y": 744,
+          "width": 60.609375,
+          "height": 56,
+          "bottom": 800,
+          "right": 277.40625
+        },
+        {
+          "text": "সেটিংস",
+          "x": 277.40625,
+          "y": 744,
+          "width": 78.59375,
+          "height": 56,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [
+        {
+          "id": "shot-t2",
+          "x": 33,
+          "y": -2185.40625,
+          "width": 294,
+          "height": 244.890625,
+          "bottom": -1940.515625,
+          "right": 327,
+          "documentTop": 450.59375
+        },
+        {
+          "id": "shot-t3",
+          "x": 33,
+          "y": -1940.515625,
+          "width": 294,
+          "height": 196.890625,
+          "bottom": -1743.625,
+          "right": 327,
+          "documentTop": 695.484375
+        }
+      ],
+      "lastControl": {
+        "x": 16,
+        "y": 168.0625,
+        "width": 328,
+        "height": 55,
+        "bottom": 223.0625,
+        "right": 344
+      },
+      "focusLinks": [
+        "#/focus/shot-t2",
+        "#/focus/shot-t3"
+      ],
+      "nextActions": 1,
+      "bodyPadding": "81px",
+      "mainPadding": "0px",
+      "navVariable": "57px"
+    },
+    {
+      "design": "light-futuristic",
+      "lang": "bn",
+      "theme": "light",
+      "scale": 100,
+      "route": "journey",
+      "file": "/tmp/action-desk-ui-evidence/after-final/light-futuristic-bn-light-100-journey.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "আজ",
+          "x": 4,
+          "y": 744,
+          "width": 69.390625,
+          "height": 56,
+          "bottom": 800,
+          "right": 73.390625
+        },
+        {
+          "text": "যাত্রা",
+          "x": 73.390625,
+          "y": 744,
+          "width": 66.40625,
+          "height": 56,
+          "bottom": 800,
+          "right": 139.796875
+        },
+        {
+          "text": "ডায়েরি",
+          "x": 139.796875,
+          "y": 744,
+          "width": 77.390625,
+          "height": 56,
+          "bottom": 800,
+          "right": 217.1875
+        },
+        {
+          "text": "দ্বীন",
+          "x": 217.1875,
+          "y": 744,
+          "width": 60.40625,
+          "height": 56,
+          "bottom": 800,
+          "right": 277.59375
+        },
+        {
+          "text": "সেটিংস",
+          "x": 277.59375,
+          "y": 744,
+          "width": 78.40625,
+          "height": 56,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [],
+      "lastControl": {
+        "x": 33,
+        "y": -4821.453125,
+        "width": 294,
+        "height": 53,
+        "bottom": -4768.453125,
+        "right": 327
+      },
+      "goalHeading": -8488.8125,
+      "toolsHeading": -7810.921875,
+      "focusLinks": [],
+      "nextActions": 0,
+      "bodyPadding": "81px",
+      "mainPadding": "0px",
+      "navVariable": "57px"
+    },
+    {
+      "design": "light-futuristic",
+      "lang": "bn",
+      "theme": "light",
+      "scale": 100,
+      "route": "journey/goal/shot-goal",
+      "file": "/tmp/action-desk-ui-evidence/after-final/light-futuristic-bn-light-100-journey_goal_shot-goal.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "আজ",
+          "x": 4,
+          "y": 744,
+          "width": 69.390625,
+          "height": 56,
+          "bottom": 800,
+          "right": 73.390625
+        },
+        {
+          "text": "যাত্রা",
+          "x": 73.390625,
+          "y": 744,
+          "width": 66.40625,
+          "height": 56,
+          "bottom": 800,
+          "right": 139.796875
+        },
+        {
+          "text": "ডায়েরি",
+          "x": 139.796875,
+          "y": 744,
+          "width": 77.390625,
+          "height": 56,
+          "bottom": 800,
+          "right": 217.1875
+        },
+        {
+          "text": "দ্বীন",
+          "x": 217.1875,
+          "y": 744,
+          "width": 60.40625,
+          "height": 56,
+          "bottom": 800,
+          "right": 277.59375
+        },
+        {
+          "text": "সেটিংস",
+          "x": 277.59375,
+          "y": 744,
+          "width": 78.40625,
+          "height": 56,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [],
+      "lastControl": {
+        "x": 31,
+        "y": 640.84375,
+        "width": 298,
+        "height": 55,
+        "bottom": 695.84375,
+        "right": 329
+      },
+      "focusLinks": [],
+      "nextActions": 0,
+      "bodyPadding": "81px",
+      "mainPadding": "0px",
+      "navVariable": "57px"
+    },
+    {
+      "design": "light-futuristic",
+      "lang": "bn",
+      "theme": "light",
+      "scale": 200,
+      "route": "today",
+      "file": "/tmp/action-desk-ui-evidence/after-final/light-futuristic-bn-light-200-today.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 669.40625,
+        "width": 360,
+        "height": 130.59375,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "আজ",
+          "x": 4,
+          "y": 670.40625,
+          "width": 91.75,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 95.75
+        },
+        {
+          "text": "যাত্রা",
+          "x": 95.75,
+          "y": 670.40625,
+          "width": 81.75,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 177.5
+        },
+        {
+          "text": "ডায়েরি",
+          "x": 177.5,
+          "y": 670.40625,
+          "width": 105.75,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 283.25
+        },
+        {
+          "text": "দ্বীন",
+          "x": 283.25,
+          "y": 670.40625,
+          "width": 72.75,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 356
+        },
+        {
+          "text": "সেটিংস",
+          "x": 4,
+          "y": 735.203125,
+          "width": 352,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [
+        {
+          "id": "shot-t2",
+          "x": 33,
+          "y": -5398.84375,
+          "width": 294,
+          "height": 664.59375,
+          "bottom": -4734.25,
+          "right": 327,
+          "documentTop": 1042.15625
+        },
+        {
+          "id": "shot-t3",
+          "x": 33,
+          "y": -4734.25,
+          "width": 294,
+          "height": 471.984375,
+          "bottom": -4262.265625,
+          "right": 327,
+          "documentTop": 1706.75
+        }
+      ],
+      "lastControl": {
+        "x": 16,
+        "y": -539.125,
+        "width": 328,
+        "height": 84,
+        "bottom": -455.125,
+        "right": 344
+      },
+      "focusLinks": [
+        "#/focus/shot-t2",
+        "#/focus/shot-t3"
+      ],
+      "nextActions": 1,
+      "bodyPadding": "155px",
+      "mainPadding": "0px",
+      "navVariable": "131px"
+    },
+    {
+      "design": "light-futuristic",
+      "lang": "bn",
+      "theme": "light",
+      "scale": 200,
+      "route": "journey",
+      "file": "/tmp/action-desk-ui-evidence/after-final/light-futuristic-bn-light-200-journey.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 669.40625,
+        "width": 360,
+        "height": 130.59375,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "আজ",
+          "x": 4,
+          "y": 670.40625,
+          "width": 90.25,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 94.25
+        },
+        {
+          "text": "যাত্রা",
+          "x": 94.25,
+          "y": 670.40625,
+          "width": 82.25,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 176.5
+        },
+        {
+          "text": "ডায়েরি",
+          "x": 176.5,
+          "y": 670.40625,
+          "width": 106.25,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 282.75
+        },
+        {
+          "text": "দ্বীন",
+          "x": 282.75,
+          "y": 670.40625,
+          "width": 73.25,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 356
+        },
+        {
+          "text": "সেটিংস",
+          "x": 4,
+          "y": 735.203125,
+          "width": 352,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [],
+      "lastControl": {
+        "x": 33,
+        "y": -14953.828125,
+        "width": 294,
+        "height": 140,
+        "bottom": -14813.828125,
+        "right": 327
+      },
+      "goalHeading": -23261.421875,
+      "toolsHeading": -22194.421875,
+      "focusLinks": [],
+      "nextActions": 0,
+      "bodyPadding": "155px",
+      "mainPadding": "0px",
+      "navVariable": "131px"
+    },
+    {
+      "design": "light-futuristic",
+      "lang": "bn",
+      "theme": "light",
+      "scale": 200,
+      "route": "journey/goal/shot-goal",
+      "file": "/tmp/action-desk-ui-evidence/after-final/light-futuristic-bn-light-200-journey_goal_shot-goal.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 669.40625,
+        "width": 360,
+        "height": 130.59375,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "আজ",
+          "x": 4,
+          "y": 670.40625,
+          "width": 90.25,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 94.25
+        },
+        {
+          "text": "যাত্রা",
+          "x": 94.25,
+          "y": 670.40625,
+          "width": 82.25,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 176.5
+        },
+        {
+          "text": "ডায়েরি",
+          "x": 176.5,
+          "y": 670.40625,
+          "width": 106.25,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 282.75
+        },
+        {
+          "text": "দ্বীন",
+          "x": 282.75,
+          "y": 670.40625,
+          "width": 73.25,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 356
+        },
+        {
+          "text": "সেটিংস",
+          "x": 4,
+          "y": 735.203125,
+          "width": 352,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [],
+      "lastControl": {
+        "x": 31,
+        "y": 480.484375,
+        "width": 298,
+        "height": 142,
+        "bottom": 622.484375,
+        "right": 329
+      },
+      "focusLinks": [],
+      "nextActions": 0,
+      "bodyPadding": "155px",
+      "mainPadding": "0px",
+      "navVariable": "131px"
+    },
+    {
+      "design": "light-futuristic",
+      "lang": "bn",
+      "theme": "dark",
+      "scale": 100,
+      "route": "today",
+      "file": "/tmp/action-desk-ui-evidence/after-final/light-futuristic-bn-dark-100-today.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "আজ",
+          "x": 4,
+          "y": 744,
+          "width": 69.59375,
+          "height": 56,
+          "bottom": 800,
+          "right": 73.59375
+        },
+        {
+          "text": "যাত্রা",
+          "x": 73.59375,
+          "y": 744,
+          "width": 65.609375,
+          "height": 56,
+          "bottom": 800,
+          "right": 139.203125
+        },
+        {
+          "text": "ডায়েরি",
+          "x": 139.203125,
+          "y": 744,
+          "width": 77.59375,
+          "height": 56,
+          "bottom": 800,
+          "right": 216.796875
+        },
+        {
+          "text": "দ্বীন",
+          "x": 216.796875,
+          "y": 744,
+          "width": 60.609375,
+          "height": 56,
+          "bottom": 800,
+          "right": 277.40625
+        },
+        {
+          "text": "সেটিংস",
+          "x": 277.40625,
+          "y": 744,
+          "width": 78.59375,
+          "height": 56,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [
+        {
+          "id": "shot-t2",
+          "x": 33,
+          "y": -2185.40625,
+          "width": 294,
+          "height": 244.890625,
+          "bottom": -1940.515625,
+          "right": 327,
+          "documentTop": 450.59375
+        },
+        {
+          "id": "shot-t3",
+          "x": 33,
+          "y": -1940.515625,
+          "width": 294,
+          "height": 196.890625,
+          "bottom": -1743.625,
+          "right": 327,
+          "documentTop": 695.484375
+        }
+      ],
+      "lastControl": {
+        "x": 16,
+        "y": 168.0625,
+        "width": 328,
+        "height": 55,
+        "bottom": 223.0625,
+        "right": 344
+      },
+      "focusLinks": [
+        "#/focus/shot-t2",
+        "#/focus/shot-t3"
+      ],
+      "nextActions": 1,
+      "bodyPadding": "81px",
+      "mainPadding": "0px",
+      "navVariable": "57px"
+    },
+    {
+      "design": "light-futuristic",
+      "lang": "bn",
+      "theme": "dark",
+      "scale": 100,
+      "route": "journey",
+      "file": "/tmp/action-desk-ui-evidence/after-final/light-futuristic-bn-dark-100-journey.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "আজ",
+          "x": 4,
+          "y": 744,
+          "width": 69.390625,
+          "height": 56,
+          "bottom": 800,
+          "right": 73.390625
+        },
+        {
+          "text": "যাত্রা",
+          "x": 73.390625,
+          "y": 744,
+          "width": 66.40625,
+          "height": 56,
+          "bottom": 800,
+          "right": 139.796875
+        },
+        {
+          "text": "ডায়েরি",
+          "x": 139.796875,
+          "y": 744,
+          "width": 77.390625,
+          "height": 56,
+          "bottom": 800,
+          "right": 217.1875
+        },
+        {
+          "text": "দ্বীন",
+          "x": 217.1875,
+          "y": 744,
+          "width": 60.40625,
+          "height": 56,
+          "bottom": 800,
+          "right": 277.59375
+        },
+        {
+          "text": "সেটিংস",
+          "x": 277.59375,
+          "y": 744,
+          "width": 78.40625,
+          "height": 56,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [],
+      "lastControl": {
+        "x": 33,
+        "y": -4821.453125,
+        "width": 294,
+        "height": 53,
+        "bottom": -4768.453125,
+        "right": 327
+      },
+      "goalHeading": -8488.8125,
+      "toolsHeading": -7810.921875,
+      "focusLinks": [],
+      "nextActions": 0,
+      "bodyPadding": "81px",
+      "mainPadding": "0px",
+      "navVariable": "57px"
+    },
+    {
+      "design": "light-futuristic",
+      "lang": "bn",
+      "theme": "dark",
+      "scale": 100,
+      "route": "journey/goal/shot-goal",
+      "file": "/tmp/action-desk-ui-evidence/after-final/light-futuristic-bn-dark-100-journey_goal_shot-goal.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "আজ",
+          "x": 4,
+          "y": 744,
+          "width": 69.390625,
+          "height": 56,
+          "bottom": 800,
+          "right": 73.390625
+        },
+        {
+          "text": "যাত্রা",
+          "x": 73.390625,
+          "y": 744,
+          "width": 66.40625,
+          "height": 56,
+          "bottom": 800,
+          "right": 139.796875
+        },
+        {
+          "text": "ডায়েরি",
+          "x": 139.796875,
+          "y": 744,
+          "width": 77.390625,
+          "height": 56,
+          "bottom": 800,
+          "right": 217.1875
+        },
+        {
+          "text": "দ্বীন",
+          "x": 217.1875,
+          "y": 744,
+          "width": 60.40625,
+          "height": 56,
+          "bottom": 800,
+          "right": 277.59375
+        },
+        {
+          "text": "সেটিংস",
+          "x": 277.59375,
+          "y": 744,
+          "width": 78.40625,
+          "height": 56,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [],
+      "lastControl": {
+        "x": 31,
+        "y": 640.84375,
+        "width": 298,
+        "height": 55,
+        "bottom": 695.84375,
+        "right": 329
+      },
+      "focusLinks": [],
+      "nextActions": 0,
+      "bodyPadding": "81px",
+      "mainPadding": "0px",
+      "navVariable": "57px"
+    },
+    {
+      "design": "light-futuristic",
+      "lang": "bn",
+      "theme": "dark",
+      "scale": 200,
+      "route": "today",
+      "file": "/tmp/action-desk-ui-evidence/after-final/light-futuristic-bn-dark-200-today.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 669.40625,
+        "width": 360,
+        "height": 130.59375,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "আজ",
+          "x": 4,
+          "y": 670.40625,
+          "width": 91.75,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 95.75
+        },
+        {
+          "text": "যাত্রা",
+          "x": 95.75,
+          "y": 670.40625,
+          "width": 81.75,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 177.5
+        },
+        {
+          "text": "ডায়েরি",
+          "x": 177.5,
+          "y": 670.40625,
+          "width": 105.75,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 283.25
+        },
+        {
+          "text": "দ্বীন",
+          "x": 283.25,
+          "y": 670.40625,
+          "width": 72.75,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 356
+        },
+        {
+          "text": "সেটিংস",
+          "x": 4,
+          "y": 735.203125,
+          "width": 352,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [
+        {
+          "id": "shot-t2",
+          "x": 33,
+          "y": -5398.84375,
+          "width": 294,
+          "height": 664.59375,
+          "bottom": -4734.25,
+          "right": 327,
+          "documentTop": 1042.15625
+        },
+        {
+          "id": "shot-t3",
+          "x": 33,
+          "y": -4734.25,
+          "width": 294,
+          "height": 471.984375,
+          "bottom": -4262.265625,
+          "right": 327,
+          "documentTop": 1706.75
+        }
+      ],
+      "lastControl": {
+        "x": 16,
+        "y": -539.125,
+        "width": 328,
+        "height": 84,
+        "bottom": -455.125,
+        "right": 344
+      },
+      "focusLinks": [
+        "#/focus/shot-t2",
+        "#/focus/shot-t3"
+      ],
+      "nextActions": 1,
+      "bodyPadding": "155px",
+      "mainPadding": "0px",
+      "navVariable": "131px"
+    },
+    {
+      "design": "light-futuristic",
+      "lang": "bn",
+      "theme": "dark",
+      "scale": 200,
+      "route": "journey",
+      "file": "/tmp/action-desk-ui-evidence/after-final/light-futuristic-bn-dark-200-journey.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 669.40625,
+        "width": 360,
+        "height": 130.59375,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "আজ",
+          "x": 4,
+          "y": 670.40625,
+          "width": 90.25,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 94.25
+        },
+        {
+          "text": "যাত্রা",
+          "x": 94.25,
+          "y": 670.40625,
+          "width": 82.25,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 176.5
+        },
+        {
+          "text": "ডায়েরি",
+          "x": 176.5,
+          "y": 670.40625,
+          "width": 106.25,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 282.75
+        },
+        {
+          "text": "দ্বীন",
+          "x": 282.75,
+          "y": 670.40625,
+          "width": 73.25,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 356
+        },
+        {
+          "text": "সেটিংস",
+          "x": 4,
+          "y": 735.203125,
+          "width": 352,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [],
+      "lastControl": {
+        "x": 33,
+        "y": -14953.828125,
+        "width": 294,
+        "height": 140,
+        "bottom": -14813.828125,
+        "right": 327
+      },
+      "goalHeading": -23261.421875,
+      "toolsHeading": -22194.421875,
+      "focusLinks": [],
+      "nextActions": 0,
+      "bodyPadding": "155px",
+      "mainPadding": "0px",
+      "navVariable": "131px"
+    },
+    {
+      "design": "light-futuristic",
+      "lang": "bn",
+      "theme": "dark",
+      "scale": 200,
+      "route": "journey/goal/shot-goal",
+      "file": "/tmp/action-desk-ui-evidence/after-final/light-futuristic-bn-dark-200-journey_goal_shot-goal.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 669.40625,
+        "width": 360,
+        "height": 130.59375,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "আজ",
+          "x": 4,
+          "y": 670.40625,
+          "width": 90.25,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 94.25
+        },
+        {
+          "text": "যাত্রা",
+          "x": 94.25,
+          "y": 670.40625,
+          "width": 82.25,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 176.5
+        },
+        {
+          "text": "ডায়েরি",
+          "x": 176.5,
+          "y": 670.40625,
+          "width": 106.25,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 282.75
+        },
+        {
+          "text": "দ্বীন",
+          "x": 282.75,
+          "y": 670.40625,
+          "width": 73.25,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 356
+        },
+        {
+          "text": "সেটিংস",
+          "x": 4,
+          "y": 735.203125,
+          "width": 352,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [],
+      "lastControl": {
+        "x": 31,
+        "y": 480.484375,
+        "width": 298,
+        "height": 142,
+        "bottom": 622.484375,
+        "right": 329
+      },
+      "focusLinks": [],
+      "nextActions": 0,
+      "bodyPadding": "155px",
+      "mainPadding": "0px",
+      "navVariable": "131px"
+    },
+    {
+      "design": "ink-paper",
+      "lang": "en",
+      "theme": "light",
+      "scale": 100,
+      "route": "today",
+      "file": "/tmp/action-desk-ui-evidence/after-final/ink-paper-en-light-100-today.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "Today",
+          "x": 4,
+          "y": 744,
+          "width": 68.1875,
+          "height": 56,
+          "bottom": 800,
+          "right": 72.1875
+        },
+        {
+          "text": "Journey",
+          "x": 72.1875,
+          "y": 744,
+          "width": 79.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 151.390625
+        },
+        {
+          "text": "Diary",
+          "x": 151.390625,
+          "y": 744,
+          "width": 62.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 213.59375
+        },
+        {
+          "text": "Deen",
+          "x": 213.59375,
+          "y": 744,
+          "width": 62.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 275.796875
+        },
+        {
+          "text": "Settings",
+          "x": 275.796875,
+          "y": 744,
+          "width": 80.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [
+        {
+          "id": "shot-t2",
+          "x": 33,
+          "y": -2237.40625,
+          "width": 294,
+          "height": 244.890625,
+          "bottom": -1992.515625,
+          "right": 327,
+          "documentTop": 457.59375
+        },
+        {
+          "id": "shot-t3",
+          "x": 33,
+          "y": -1992.515625,
+          "width": 294,
+          "height": 196.890625,
+          "bottom": -1795.625,
+          "right": 327,
+          "documentTop": 702.484375
+        }
+      ],
+      "lastControl": {
+        "x": 16,
+        "y": 168.359375,
+        "width": 328,
+        "height": 55,
+        "bottom": 223.359375,
+        "right": 344
+      },
+      "focusLinks": [
+        "#/focus/shot-t2",
+        "#/focus/shot-t3"
+      ],
+      "nextActions": 1,
+      "bodyPadding": "81px",
+      "mainPadding": "0px",
+      "navVariable": "57px"
+    },
+    {
+      "design": "ink-paper",
+      "lang": "en",
+      "theme": "light",
+      "scale": 100,
+      "route": "journey",
+      "file": "/tmp/action-desk-ui-evidence/after-final/ink-paper-en-light-100-journey.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "Today",
+          "x": 4,
+          "y": 744,
+          "width": 68.1875,
+          "height": 56,
+          "bottom": 800,
+          "right": 72.1875
+        },
+        {
+          "text": "Journey",
+          "x": 72.1875,
+          "y": 744,
+          "width": 79.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 151.390625
+        },
+        {
+          "text": "Diary",
+          "x": 151.390625,
+          "y": 744,
+          "width": 62.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 213.59375
+        },
+        {
+          "text": "Deen",
+          "x": 213.59375,
+          "y": 744,
+          "width": 62.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 275.796875
+        },
+        {
+          "text": "Settings",
+          "x": 275.796875,
+          "y": 744,
+          "width": 80.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [],
+      "lastControl": {
+        "x": 33,
+        "y": -5357.265625,
+        "width": 294,
+        "height": 53,
+        "bottom": -5304.265625,
+        "right": 327
+      },
+      "goalHeading": -9153.8125,
+      "toolsHeading": -8450.421875,
+      "focusLinks": [],
+      "nextActions": 0,
+      "bodyPadding": "81px",
+      "mainPadding": "0px",
+      "navVariable": "57px"
+    },
+    {
+      "design": "ink-paper",
+      "lang": "en",
+      "theme": "light",
+      "scale": 200,
+      "route": "today",
+      "file": "/tmp/action-desk-ui-evidence/after-final/ink-paper-en-light-200-today.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 669.40625,
+        "width": 360,
+        "height": 130.59375,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "Today",
+          "x": 4,
+          "y": 670.40625,
+          "width": 115.65625,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 119.65625
+        },
+        {
+          "text": "Journey",
+          "x": 119.65625,
+          "y": 670.40625,
+          "width": 133.671875,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 253.328125
+        },
+        {
+          "text": "Diary",
+          "x": 253.328125,
+          "y": 670.40625,
+          "width": 102.671875,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 356
+        },
+        {
+          "text": "Deen",
+          "x": 4,
+          "y": 735.203125,
+          "width": 158.5,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 162.5
+        },
+        {
+          "text": "Settings",
+          "x": 162.5,
+          "y": 735.203125,
+          "width": 193.5,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [
+        {
+          "id": "shot-t2",
+          "x": 33,
+          "y": -5504.640625,
+          "width": 294,
+          "height": 664.59375,
+          "bottom": -4840.046875,
+          "right": 327,
+          "documentTop": 1045.359375
+        },
+        {
+          "id": "shot-t3",
+          "x": 33,
+          "y": -4840.046875,
+          "width": 294,
+          "height": 424.390625,
+          "bottom": -4415.65625,
+          "right": 327,
+          "documentTop": 1709.953125
+        }
+      ],
+      "lastControl": {
+        "x": 16,
+        "y": -580.71875,
+        "width": 328,
+        "height": 84,
+        "bottom": -496.71875,
+        "right": 344
+      },
+      "focusLinks": [
+        "#/focus/shot-t2",
+        "#/focus/shot-t3"
+      ],
+      "nextActions": 1,
+      "bodyPadding": "155px",
+      "mainPadding": "0px",
+      "navVariable": "131px"
+    },
+    {
+      "design": "ink-paper",
+      "lang": "en",
+      "theme": "light",
+      "scale": 200,
+      "route": "journey",
+      "file": "/tmp/action-desk-ui-evidence/after-final/ink-paper-en-light-200-journey.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 669.40625,
+        "width": 360,
+        "height": 130.59375,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "Today",
+          "x": 4,
+          "y": 670.40625,
+          "width": 113,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 117
+        },
+        {
+          "text": "Journey",
+          "x": 117,
+          "y": 670.40625,
+          "width": 137,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 254
+        },
+        {
+          "text": "Diary",
+          "x": 254,
+          "y": 670.40625,
+          "width": 102,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 356
+        },
+        {
+          "text": "Deen",
+          "x": 4,
+          "y": 735.203125,
+          "width": 158.5,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 162.5
+        },
+        {
+          "text": "Settings",
+          "x": 162.5,
+          "y": 735.203125,
+          "width": 193.5,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [],
+      "lastControl": {
+        "x": 33,
+        "y": -17498.25,
+        "width": 294,
+        "height": 140,
+        "bottom": -17358.25,
+        "right": 327
+      },
+      "goalHeading": -26486.421875,
+      "toolsHeading": -25368.421875,
+      "focusLinks": [],
+      "nextActions": 0,
+      "bodyPadding": "155px",
+      "mainPadding": "0px",
+      "navVariable": "131px"
+    },
+    {
+      "design": "ink-paper",
+      "lang": "en",
+      "theme": "dark",
+      "scale": 100,
+      "route": "today",
+      "file": "/tmp/action-desk-ui-evidence/after-final/ink-paper-en-dark-100-today.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "Today",
+          "x": 4,
+          "y": 744,
+          "width": 68.1875,
+          "height": 56,
+          "bottom": 800,
+          "right": 72.1875
+        },
+        {
+          "text": "Journey",
+          "x": 72.1875,
+          "y": 744,
+          "width": 79.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 151.390625
+        },
+        {
+          "text": "Diary",
+          "x": 151.390625,
+          "y": 744,
+          "width": 62.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 213.59375
+        },
+        {
+          "text": "Deen",
+          "x": 213.59375,
+          "y": 744,
+          "width": 62.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 275.796875
+        },
+        {
+          "text": "Settings",
+          "x": 275.796875,
+          "y": 744,
+          "width": 80.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [
+        {
+          "id": "shot-t2",
+          "x": 33,
+          "y": -2237.40625,
+          "width": 294,
+          "height": 244.890625,
+          "bottom": -1992.515625,
+          "right": 327,
+          "documentTop": 457.59375
+        },
+        {
+          "id": "shot-t3",
+          "x": 33,
+          "y": -1992.515625,
+          "width": 294,
+          "height": 196.890625,
+          "bottom": -1795.625,
+          "right": 327,
+          "documentTop": 702.484375
+        }
+      ],
+      "lastControl": {
+        "x": 16,
+        "y": 168.359375,
+        "width": 328,
+        "height": 55,
+        "bottom": 223.359375,
+        "right": 344
+      },
+      "focusLinks": [
+        "#/focus/shot-t2",
+        "#/focus/shot-t3"
+      ],
+      "nextActions": 1,
+      "bodyPadding": "81px",
+      "mainPadding": "0px",
+      "navVariable": "57px"
+    },
+    {
+      "design": "ink-paper",
+      "lang": "en",
+      "theme": "dark",
+      "scale": 100,
+      "route": "journey",
+      "file": "/tmp/action-desk-ui-evidence/after-final/ink-paper-en-dark-100-journey.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "Today",
+          "x": 4,
+          "y": 744,
+          "width": 68.1875,
+          "height": 56,
+          "bottom": 800,
+          "right": 72.1875
+        },
+        {
+          "text": "Journey",
+          "x": 72.1875,
+          "y": 744,
+          "width": 79.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 151.390625
+        },
+        {
+          "text": "Diary",
+          "x": 151.390625,
+          "y": 744,
+          "width": 62.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 213.59375
+        },
+        {
+          "text": "Deen",
+          "x": 213.59375,
+          "y": 744,
+          "width": 62.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 275.796875
+        },
+        {
+          "text": "Settings",
+          "x": 275.796875,
+          "y": 744,
+          "width": 80.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [],
+      "lastControl": {
+        "x": 33,
+        "y": -5357.265625,
+        "width": 294,
+        "height": 53,
+        "bottom": -5304.265625,
+        "right": 327
+      },
+      "goalHeading": -9153.8125,
+      "toolsHeading": -8450.421875,
+      "focusLinks": [],
+      "nextActions": 0,
+      "bodyPadding": "81px",
+      "mainPadding": "0px",
+      "navVariable": "57px"
+    },
+    {
+      "design": "ink-paper",
+      "lang": "en",
+      "theme": "dark",
+      "scale": 200,
+      "route": "today",
+      "file": "/tmp/action-desk-ui-evidence/after-final/ink-paper-en-dark-200-today.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 669.40625,
+        "width": 360,
+        "height": 130.59375,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "Today",
+          "x": 4,
+          "y": 670.40625,
+          "width": 115.65625,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 119.65625
+        },
+        {
+          "text": "Journey",
+          "x": 119.65625,
+          "y": 670.40625,
+          "width": 133.671875,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 253.328125
+        },
+        {
+          "text": "Diary",
+          "x": 253.328125,
+          "y": 670.40625,
+          "width": 102.671875,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 356
+        },
+        {
+          "text": "Deen",
+          "x": 4,
+          "y": 735.203125,
+          "width": 158.5,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 162.5
+        },
+        {
+          "text": "Settings",
+          "x": 162.5,
+          "y": 735.203125,
+          "width": 193.5,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [
+        {
+          "id": "shot-t2",
+          "x": 33,
+          "y": -5504.640625,
+          "width": 294,
+          "height": 664.59375,
+          "bottom": -4840.046875,
+          "right": 327,
+          "documentTop": 1045.359375
+        },
+        {
+          "id": "shot-t3",
+          "x": 33,
+          "y": -4840.046875,
+          "width": 294,
+          "height": 424.390625,
+          "bottom": -4415.65625,
+          "right": 327,
+          "documentTop": 1709.953125
+        }
+      ],
+      "lastControl": {
+        "x": 16,
+        "y": -580.71875,
+        "width": 328,
+        "height": 84,
+        "bottom": -496.71875,
+        "right": 344
+      },
+      "focusLinks": [
+        "#/focus/shot-t2",
+        "#/focus/shot-t3"
+      ],
+      "nextActions": 1,
+      "bodyPadding": "155px",
+      "mainPadding": "0px",
+      "navVariable": "131px"
+    },
+    {
+      "design": "ink-paper",
+      "lang": "en",
+      "theme": "dark",
+      "scale": 200,
+      "route": "journey",
+      "file": "/tmp/action-desk-ui-evidence/after-final/ink-paper-en-dark-200-journey.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 669.40625,
+        "width": 360,
+        "height": 130.59375,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "Today",
+          "x": 4,
+          "y": 670.40625,
+          "width": 113,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 117
+        },
+        {
+          "text": "Journey",
+          "x": 117,
+          "y": 670.40625,
+          "width": 137,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 254
+        },
+        {
+          "text": "Diary",
+          "x": 254,
+          "y": 670.40625,
+          "width": 102,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 356
+        },
+        {
+          "text": "Deen",
+          "x": 4,
+          "y": 735.203125,
+          "width": 158.5,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 162.5
+        },
+        {
+          "text": "Settings",
+          "x": 162.5,
+          "y": 735.203125,
+          "width": 193.5,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [],
+      "lastControl": {
+        "x": 33,
+        "y": -17498.25,
+        "width": 294,
+        "height": 140,
+        "bottom": -17358.25,
+        "right": 327
+      },
+      "goalHeading": -26486.421875,
+      "toolsHeading": -25368.421875,
+      "focusLinks": [],
+      "nextActions": 0,
+      "bodyPadding": "155px",
+      "mainPadding": "0px",
+      "navVariable": "131px"
+    },
+    {
+      "design": "ink-paper",
+      "lang": "bn",
+      "theme": "light",
+      "scale": 100,
+      "route": "today",
+      "file": "/tmp/action-desk-ui-evidence/after-final/ink-paper-bn-light-100-today.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "আজ",
+          "x": 4,
+          "y": 744,
+          "width": 69.59375,
+          "height": 56,
+          "bottom": 800,
+          "right": 73.59375
+        },
+        {
+          "text": "যাত্রা",
+          "x": 73.59375,
+          "y": 744,
+          "width": 65.609375,
+          "height": 56,
+          "bottom": 800,
+          "right": 139.203125
+        },
+        {
+          "text": "ডায়েরি",
+          "x": 139.203125,
+          "y": 744,
+          "width": 77.59375,
+          "height": 56,
+          "bottom": 800,
+          "right": 216.796875
+        },
+        {
+          "text": "দ্বীন",
+          "x": 216.796875,
+          "y": 744,
+          "width": 60.609375,
+          "height": 56,
+          "bottom": 800,
+          "right": 277.40625
+        },
+        {
+          "text": "সেটিংস",
+          "x": 277.40625,
+          "y": 744,
+          "width": 78.59375,
+          "height": 56,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [
+        {
+          "id": "shot-t2",
+          "x": 33,
+          "y": -2185.40625,
+          "width": 294,
+          "height": 244.890625,
+          "bottom": -1940.515625,
+          "right": 327,
+          "documentTop": 457.59375
+        },
+        {
+          "id": "shot-t3",
+          "x": 33,
+          "y": -1940.515625,
+          "width": 294,
+          "height": 196.890625,
+          "bottom": -1743.625,
+          "right": 327,
+          "documentTop": 702.484375
+        }
+      ],
+      "lastControl": {
+        "x": 16,
+        "y": 168.0625,
+        "width": 328,
+        "height": 55,
+        "bottom": 223.0625,
+        "right": 344
+      },
+      "focusLinks": [
+        "#/focus/shot-t2",
+        "#/focus/shot-t3"
+      ],
+      "nextActions": 1,
+      "bodyPadding": "81px",
+      "mainPadding": "0px",
+      "navVariable": "57px"
+    },
+    {
+      "design": "ink-paper",
+      "lang": "bn",
+      "theme": "light",
+      "scale": 100,
+      "route": "journey",
+      "file": "/tmp/action-desk-ui-evidence/after-final/ink-paper-bn-light-100-journey.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "আজ",
+          "x": 4,
+          "y": 744,
+          "width": 69.390625,
+          "height": 56,
+          "bottom": 800,
+          "right": 73.390625
+        },
+        {
+          "text": "যাত্রা",
+          "x": 73.390625,
+          "y": 744,
+          "width": 66.40625,
+          "height": 56,
+          "bottom": 800,
+          "right": 139.796875
+        },
+        {
+          "text": "ডায়েরি",
+          "x": 139.796875,
+          "y": 744,
+          "width": 77.390625,
+          "height": 56,
+          "bottom": 800,
+          "right": 217.1875
+        },
+        {
+          "text": "দ্বীন",
+          "x": 217.1875,
+          "y": 744,
+          "width": 60.40625,
+          "height": 56,
+          "bottom": 800,
+          "right": 277.59375
+        },
+        {
+          "text": "সেটিংস",
+          "x": 277.59375,
+          "y": 744,
+          "width": 78.40625,
+          "height": 56,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [],
+      "lastControl": {
+        "x": 33,
+        "y": -4821.453125,
+        "width": 294,
+        "height": 53,
+        "bottom": -4768.453125,
+        "right": 327
+      },
+      "goalHeading": -8488.8125,
+      "toolsHeading": -7810.921875,
+      "focusLinks": [],
+      "nextActions": 0,
+      "bodyPadding": "81px",
+      "mainPadding": "0px",
+      "navVariable": "57px"
+    },
+    {
+      "design": "ink-paper",
+      "lang": "bn",
+      "theme": "light",
+      "scale": 200,
+      "route": "today",
+      "file": "/tmp/action-desk-ui-evidence/after-final/ink-paper-bn-light-200-today.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 669.40625,
+        "width": 360,
+        "height": 130.59375,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "আজ",
+          "x": 4,
+          "y": 670.40625,
+          "width": 91.75,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 95.75
+        },
+        {
+          "text": "যাত্রা",
+          "x": 95.75,
+          "y": 670.40625,
+          "width": 81.75,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 177.5
+        },
+        {
+          "text": "ডায়েরি",
+          "x": 177.5,
+          "y": 670.40625,
+          "width": 105.75,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 283.25
+        },
+        {
+          "text": "দ্বীন",
+          "x": 283.25,
+          "y": 670.40625,
+          "width": 72.75,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 356
+        },
+        {
+          "text": "সেটিংস",
+          "x": 4,
+          "y": 735.203125,
+          "width": 352,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [
+        {
+          "id": "shot-t2",
+          "x": 33,
+          "y": -5399.03125,
+          "width": 294,
+          "height": 664.59375,
+          "bottom": -4734.4375,
+          "right": 327,
+          "documentTop": 897.96875
+        },
+        {
+          "id": "shot-t3",
+          "x": 33,
+          "y": -4734.4375,
+          "width": 294,
+          "height": 471.984375,
+          "bottom": -4262.453125,
+          "right": 327,
+          "documentTop": 1562.5625
+        }
+      ],
+      "lastControl": {
+        "x": 16,
+        "y": -539.3125,
+        "width": 328,
+        "height": 84,
+        "bottom": -455.3125,
+        "right": 344
+      },
+      "focusLinks": [
+        "#/focus/shot-t2",
+        "#/focus/shot-t3"
+      ],
+      "nextActions": 1,
+      "bodyPadding": "155px",
+      "mainPadding": "0px",
+      "navVariable": "131px"
+    },
+    {
+      "design": "ink-paper",
+      "lang": "bn",
+      "theme": "light",
+      "scale": 200,
+      "route": "journey",
+      "file": "/tmp/action-desk-ui-evidence/after-final/ink-paper-bn-light-200-journey.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 669.40625,
+        "width": 360,
+        "height": 130.59375,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "আজ",
+          "x": 4,
+          "y": 670.40625,
+          "width": 90.25,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 94.25
+        },
+        {
+          "text": "যাত্রা",
+          "x": 94.25,
+          "y": 670.40625,
+          "width": 82.25,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 176.5
+        },
+        {
+          "text": "ডায়েরি",
+          "x": 176.5,
+          "y": 670.40625,
+          "width": 106.25,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 282.75
+        },
+        {
+          "text": "দ্বীন",
+          "x": 282.75,
+          "y": 670.40625,
+          "width": 73.25,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 356
+        },
+        {
+          "text": "সেটিংস",
+          "x": 4,
+          "y": 735.203125,
+          "width": 352,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [],
+      "lastControl": {
+        "x": 33,
+        "y": -14953.828125,
+        "width": 294,
+        "height": 140,
+        "bottom": -14813.828125,
+        "right": 327
+      },
+      "goalHeading": -23261.421875,
+      "toolsHeading": -22194.421875,
+      "focusLinks": [],
+      "nextActions": 0,
+      "bodyPadding": "155px",
+      "mainPadding": "0px",
+      "navVariable": "131px"
+    },
+    {
+      "design": "ink-paper",
+      "lang": "bn",
+      "theme": "dark",
+      "scale": 100,
+      "route": "today",
+      "file": "/tmp/action-desk-ui-evidence/after-final/ink-paper-bn-dark-100-today.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "আজ",
+          "x": 4,
+          "y": 744,
+          "width": 69.59375,
+          "height": 56,
+          "bottom": 800,
+          "right": 73.59375
+        },
+        {
+          "text": "যাত্রা",
+          "x": 73.59375,
+          "y": 744,
+          "width": 65.609375,
+          "height": 56,
+          "bottom": 800,
+          "right": 139.203125
+        },
+        {
+          "text": "ডায়েরি",
+          "x": 139.203125,
+          "y": 744,
+          "width": 77.59375,
+          "height": 56,
+          "bottom": 800,
+          "right": 216.796875
+        },
+        {
+          "text": "দ্বীন",
+          "x": 216.796875,
+          "y": 744,
+          "width": 60.609375,
+          "height": 56,
+          "bottom": 800,
+          "right": 277.40625
+        },
+        {
+          "text": "সেটিংস",
+          "x": 277.40625,
+          "y": 744,
+          "width": 78.59375,
+          "height": 56,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [
+        {
+          "id": "shot-t2",
+          "x": 33,
+          "y": -2185.40625,
+          "width": 294,
+          "height": 244.890625,
+          "bottom": -1940.515625,
+          "right": 327,
+          "documentTop": 457.59375
+        },
+        {
+          "id": "shot-t3",
+          "x": 33,
+          "y": -1940.515625,
+          "width": 294,
+          "height": 196.890625,
+          "bottom": -1743.625,
+          "right": 327,
+          "documentTop": 702.484375
+        }
+      ],
+      "lastControl": {
+        "x": 16,
+        "y": 168.0625,
+        "width": 328,
+        "height": 55,
+        "bottom": 223.0625,
+        "right": 344
+      },
+      "focusLinks": [
+        "#/focus/shot-t2",
+        "#/focus/shot-t3"
+      ],
+      "nextActions": 1,
+      "bodyPadding": "81px",
+      "mainPadding": "0px",
+      "navVariable": "57px"
+    },
+    {
+      "design": "ink-paper",
+      "lang": "bn",
+      "theme": "dark",
+      "scale": 100,
+      "route": "journey",
+      "file": "/tmp/action-desk-ui-evidence/after-final/ink-paper-bn-dark-100-journey.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "আজ",
+          "x": 4,
+          "y": 744,
+          "width": 69.390625,
+          "height": 56,
+          "bottom": 800,
+          "right": 73.390625
+        },
+        {
+          "text": "যাত্রা",
+          "x": 73.390625,
+          "y": 744,
+          "width": 66.40625,
+          "height": 56,
+          "bottom": 800,
+          "right": 139.796875
+        },
+        {
+          "text": "ডায়েরি",
+          "x": 139.796875,
+          "y": 744,
+          "width": 77.390625,
+          "height": 56,
+          "bottom": 800,
+          "right": 217.1875
+        },
+        {
+          "text": "দ্বীন",
+          "x": 217.1875,
+          "y": 744,
+          "width": 60.40625,
+          "height": 56,
+          "bottom": 800,
+          "right": 277.59375
+        },
+        {
+          "text": "সেটিংস",
+          "x": 277.59375,
+          "y": 744,
+          "width": 78.40625,
+          "height": 56,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [],
+      "lastControl": {
+        "x": 33,
+        "y": -4821.453125,
+        "width": 294,
+        "height": 53,
+        "bottom": -4768.453125,
+        "right": 327
+      },
+      "goalHeading": -8488.8125,
+      "toolsHeading": -7810.921875,
+      "focusLinks": [],
+      "nextActions": 0,
+      "bodyPadding": "81px",
+      "mainPadding": "0px",
+      "navVariable": "57px"
+    },
+    {
+      "design": "ink-paper",
+      "lang": "bn",
+      "theme": "dark",
+      "scale": 200,
+      "route": "today",
+      "file": "/tmp/action-desk-ui-evidence/after-final/ink-paper-bn-dark-200-today.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 669.40625,
+        "width": 360,
+        "height": 130.59375,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "আজ",
+          "x": 4,
+          "y": 670.40625,
+          "width": 91.75,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 95.75
+        },
+        {
+          "text": "যাত্রা",
+          "x": 95.75,
+          "y": 670.40625,
+          "width": 81.75,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 177.5
+        },
+        {
+          "text": "ডায়েরি",
+          "x": 177.5,
+          "y": 670.40625,
+          "width": 105.75,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 283.25
+        },
+        {
+          "text": "দ্বীন",
+          "x": 283.25,
+          "y": 670.40625,
+          "width": 72.75,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 356
+        },
+        {
+          "text": "সেটিংস",
+          "x": 4,
+          "y": 735.203125,
+          "width": 352,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [
+        {
+          "id": "shot-t2",
+          "x": 33,
+          "y": -5399.03125,
+          "width": 294,
+          "height": 664.59375,
+          "bottom": -4734.4375,
+          "right": 327,
+          "documentTop": 897.96875
+        },
+        {
+          "id": "shot-t3",
+          "x": 33,
+          "y": -4734.4375,
+          "width": 294,
+          "height": 471.984375,
+          "bottom": -4262.453125,
+          "right": 327,
+          "documentTop": 1562.5625
+        }
+      ],
+      "lastControl": {
+        "x": 16,
+        "y": -539.3125,
+        "width": 328,
+        "height": 84,
+        "bottom": -455.3125,
+        "right": 344
+      },
+      "focusLinks": [
+        "#/focus/shot-t2",
+        "#/focus/shot-t3"
+      ],
+      "nextActions": 1,
+      "bodyPadding": "155px",
+      "mainPadding": "0px",
+      "navVariable": "131px"
+    },
+    {
+      "design": "ink-paper",
+      "lang": "bn",
+      "theme": "dark",
+      "scale": 200,
+      "route": "journey",
+      "file": "/tmp/action-desk-ui-evidence/after-final/ink-paper-bn-dark-200-journey.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 669.40625,
+        "width": 360,
+        "height": 130.59375,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "আজ",
+          "x": 4,
+          "y": 670.40625,
+          "width": 90.25,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 94.25
+        },
+        {
+          "text": "যাত্রা",
+          "x": 94.25,
+          "y": 670.40625,
+          "width": 82.25,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 176.5
+        },
+        {
+          "text": "ডায়েরি",
+          "x": 176.5,
+          "y": 670.40625,
+          "width": 106.25,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 282.75
+        },
+        {
+          "text": "দ্বীন",
+          "x": 282.75,
+          "y": 670.40625,
+          "width": 73.25,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 356
+        },
+        {
+          "text": "সেটিংস",
+          "x": 4,
+          "y": 735.203125,
+          "width": 352,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [],
+      "lastControl": {
+        "x": 33,
+        "y": -14953.828125,
+        "width": 294,
+        "height": 140,
+        "bottom": -14813.828125,
+        "right": 327
+      },
+      "goalHeading": -23261.421875,
+      "toolsHeading": -22194.421875,
+      "focusLinks": [],
+      "nextActions": 0,
+      "bodyPadding": "155px",
+      "mainPadding": "0px",
+      "navVariable": "131px"
+    },
+    {
+      "design": "emerald-obsidian",
+      "lang": "en",
+      "theme": "light",
+      "scale": 100,
+      "route": "today",
+      "file": "/tmp/action-desk-ui-evidence/after-final/emerald-obsidian-en-light-100-today.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "Today",
+          "x": 4,
+          "y": 744,
+          "width": 68.1875,
+          "height": 56,
+          "bottom": 800,
+          "right": 72.1875
+        },
+        {
+          "text": "Journey",
+          "x": 72.1875,
+          "y": 744,
+          "width": 79.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 151.390625
+        },
+        {
+          "text": "Diary",
+          "x": 151.390625,
+          "y": 744,
+          "width": 62.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 213.59375
+        },
+        {
+          "text": "Deen",
+          "x": 213.59375,
+          "y": 744,
+          "width": 62.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 275.796875
+        },
+        {
+          "text": "Settings",
+          "x": 275.796875,
+          "y": 744,
+          "width": 80.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [
+        {
+          "id": "shot-t2",
+          "x": 33,
+          "y": -2237.40625,
+          "width": 294,
+          "height": 244.890625,
+          "bottom": -1992.515625,
+          "right": 327,
+          "documentTop": 457.59375
+        },
+        {
+          "id": "shot-t3",
+          "x": 33,
+          "y": -1992.515625,
+          "width": 294,
+          "height": 196.890625,
+          "bottom": -1795.625,
+          "right": 327,
+          "documentTop": 702.484375
+        }
+      ],
+      "lastControl": {
+        "x": 16,
+        "y": 168.359375,
+        "width": 328,
+        "height": 55,
+        "bottom": 223.359375,
+        "right": 344
+      },
+      "focusLinks": [
+        "#/focus/shot-t2",
+        "#/focus/shot-t3"
+      ],
+      "nextActions": 1,
+      "bodyPadding": "81px",
+      "mainPadding": "0px",
+      "navVariable": "57px"
+    },
+    {
+      "design": "emerald-obsidian",
+      "lang": "en",
+      "theme": "light",
+      "scale": 100,
+      "route": "journey",
+      "file": "/tmp/action-desk-ui-evidence/after-final/emerald-obsidian-en-light-100-journey.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "Today",
+          "x": 4,
+          "y": 744,
+          "width": 68.1875,
+          "height": 56,
+          "bottom": 800,
+          "right": 72.1875
+        },
+        {
+          "text": "Journey",
+          "x": 72.1875,
+          "y": 744,
+          "width": 79.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 151.390625
+        },
+        {
+          "text": "Diary",
+          "x": 151.390625,
+          "y": 744,
+          "width": 62.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 213.59375
+        },
+        {
+          "text": "Deen",
+          "x": 213.59375,
+          "y": 744,
+          "width": 62.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 275.796875
+        },
+        {
+          "text": "Settings",
+          "x": 275.796875,
+          "y": 744,
+          "width": 80.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [],
+      "lastControl": {
+        "x": 33,
+        "y": -5357.265625,
+        "width": 294,
+        "height": 53,
+        "bottom": -5304.265625,
+        "right": 327
+      },
+      "goalHeading": -9153.8125,
+      "toolsHeading": -8450.421875,
+      "focusLinks": [],
+      "nextActions": 0,
+      "bodyPadding": "81px",
+      "mainPadding": "0px",
+      "navVariable": "57px"
+    },
+    {
+      "design": "emerald-obsidian",
+      "lang": "en",
+      "theme": "light",
+      "scale": 200,
+      "route": "today",
+      "file": "/tmp/action-desk-ui-evidence/after-final/emerald-obsidian-en-light-200-today.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 669.40625,
+        "width": 360,
+        "height": 130.59375,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "Today",
+          "x": 4,
+          "y": 670.40625,
+          "width": 115.65625,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 119.65625
+        },
+        {
+          "text": "Journey",
+          "x": 119.65625,
+          "y": 670.40625,
+          "width": 133.671875,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 253.328125
+        },
+        {
+          "text": "Diary",
+          "x": 253.328125,
+          "y": 670.40625,
+          "width": 102.671875,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 356
+        },
+        {
+          "text": "Deen",
+          "x": 4,
+          "y": 735.203125,
+          "width": 158.5,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 162.5
+        },
+        {
+          "text": "Settings",
+          "x": 162.5,
+          "y": 735.203125,
+          "width": 193.5,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [
+        {
+          "id": "shot-t2",
+          "x": 33,
+          "y": -5504.640625,
+          "width": 294,
+          "height": 664.59375,
+          "bottom": -4840.046875,
+          "right": 327,
+          "documentTop": 1045.359375
+        },
+        {
+          "id": "shot-t3",
+          "x": 33,
+          "y": -4840.046875,
+          "width": 294,
+          "height": 424.390625,
+          "bottom": -4415.65625,
+          "right": 327,
+          "documentTop": 1709.953125
+        }
+      ],
+      "lastControl": {
+        "x": 16,
+        "y": -580.71875,
+        "width": 328,
+        "height": 84,
+        "bottom": -496.71875,
+        "right": 344
+      },
+      "focusLinks": [
+        "#/focus/shot-t2",
+        "#/focus/shot-t3"
+      ],
+      "nextActions": 1,
+      "bodyPadding": "155px",
+      "mainPadding": "0px",
+      "navVariable": "131px"
+    },
+    {
+      "design": "emerald-obsidian",
+      "lang": "en",
+      "theme": "light",
+      "scale": 200,
+      "route": "journey",
+      "file": "/tmp/action-desk-ui-evidence/after-final/emerald-obsidian-en-light-200-journey.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 669.40625,
+        "width": 360,
+        "height": 130.59375,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "Today",
+          "x": 4,
+          "y": 670.40625,
+          "width": 113,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 117
+        },
+        {
+          "text": "Journey",
+          "x": 117,
+          "y": 670.40625,
+          "width": 137,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 254
+        },
+        {
+          "text": "Diary",
+          "x": 254,
+          "y": 670.40625,
+          "width": 102,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 356
+        },
+        {
+          "text": "Deen",
+          "x": 4,
+          "y": 735.203125,
+          "width": 158.5,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 162.5
+        },
+        {
+          "text": "Settings",
+          "x": 162.5,
+          "y": 735.203125,
+          "width": 193.5,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [],
+      "lastControl": {
+        "x": 33,
+        "y": -17554.25,
+        "width": 294,
+        "height": 140,
+        "bottom": -17414.25,
+        "right": 327
+      },
+      "goalHeading": -26542.421875,
+      "toolsHeading": -25424.421875,
+      "focusLinks": [],
+      "nextActions": 0,
+      "bodyPadding": "155px",
+      "mainPadding": "0px",
+      "navVariable": "131px"
+    },
+    {
+      "design": "emerald-obsidian",
+      "lang": "en",
+      "theme": "dark",
+      "scale": 100,
+      "route": "today",
+      "file": "/tmp/action-desk-ui-evidence/after-final/emerald-obsidian-en-dark-100-today.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "Today",
+          "x": 4,
+          "y": 744,
+          "width": 68.1875,
+          "height": 56,
+          "bottom": 800,
+          "right": 72.1875
+        },
+        {
+          "text": "Journey",
+          "x": 72.1875,
+          "y": 744,
+          "width": 79.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 151.390625
+        },
+        {
+          "text": "Diary",
+          "x": 151.390625,
+          "y": 744,
+          "width": 62.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 213.59375
+        },
+        {
+          "text": "Deen",
+          "x": 213.59375,
+          "y": 744,
+          "width": 62.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 275.796875
+        },
+        {
+          "text": "Settings",
+          "x": 275.796875,
+          "y": 744,
+          "width": 80.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [
+        {
+          "id": "shot-t2",
+          "x": 33,
+          "y": -2237.40625,
+          "width": 294,
+          "height": 244.890625,
+          "bottom": -1992.515625,
+          "right": 327,
+          "documentTop": 457.59375
+        },
+        {
+          "id": "shot-t3",
+          "x": 33,
+          "y": -1992.515625,
+          "width": 294,
+          "height": 196.890625,
+          "bottom": -1795.625,
+          "right": 327,
+          "documentTop": 702.484375
+        }
+      ],
+      "lastControl": {
+        "x": 16,
+        "y": 168.359375,
+        "width": 328,
+        "height": 55,
+        "bottom": 223.359375,
+        "right": 344
+      },
+      "focusLinks": [
+        "#/focus/shot-t2",
+        "#/focus/shot-t3"
+      ],
+      "nextActions": 1,
+      "bodyPadding": "81px",
+      "mainPadding": "0px",
+      "navVariable": "57px"
+    },
+    {
+      "design": "emerald-obsidian",
+      "lang": "en",
+      "theme": "dark",
+      "scale": 100,
+      "route": "journey",
+      "file": "/tmp/action-desk-ui-evidence/after-final/emerald-obsidian-en-dark-100-journey.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "Today",
+          "x": 4,
+          "y": 744,
+          "width": 68.1875,
+          "height": 56,
+          "bottom": 800,
+          "right": 72.1875
+        },
+        {
+          "text": "Journey",
+          "x": 72.1875,
+          "y": 744,
+          "width": 79.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 151.390625
+        },
+        {
+          "text": "Diary",
+          "x": 151.390625,
+          "y": 744,
+          "width": 62.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 213.59375
+        },
+        {
+          "text": "Deen",
+          "x": 213.59375,
+          "y": 744,
+          "width": 62.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 275.796875
+        },
+        {
+          "text": "Settings",
+          "x": 275.796875,
+          "y": 744,
+          "width": 80.203125,
+          "height": 56,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [],
+      "lastControl": {
+        "x": 33,
+        "y": -5357.265625,
+        "width": 294,
+        "height": 53,
+        "bottom": -5304.265625,
+        "right": 327
+      },
+      "goalHeading": -9153.8125,
+      "toolsHeading": -8450.421875,
+      "focusLinks": [],
+      "nextActions": 0,
+      "bodyPadding": "81px",
+      "mainPadding": "0px",
+      "navVariable": "57px"
+    },
+    {
+      "design": "emerald-obsidian",
+      "lang": "en",
+      "theme": "dark",
+      "scale": 200,
+      "route": "today",
+      "file": "/tmp/action-desk-ui-evidence/after-final/emerald-obsidian-en-dark-200-today.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 669.40625,
+        "width": 360,
+        "height": 130.59375,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "Today",
+          "x": 4,
+          "y": 670.40625,
+          "width": 115.65625,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 119.65625
+        },
+        {
+          "text": "Journey",
+          "x": 119.65625,
+          "y": 670.40625,
+          "width": 133.671875,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 253.328125
+        },
+        {
+          "text": "Diary",
+          "x": 253.328125,
+          "y": 670.40625,
+          "width": 102.671875,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 356
+        },
+        {
+          "text": "Deen",
+          "x": 4,
+          "y": 735.203125,
+          "width": 158.5,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 162.5
+        },
+        {
+          "text": "Settings",
+          "x": 162.5,
+          "y": 735.203125,
+          "width": 193.5,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [
+        {
+          "id": "shot-t2",
+          "x": 33,
+          "y": -5504.640625,
+          "width": 294,
+          "height": 664.59375,
+          "bottom": -4840.046875,
+          "right": 327,
+          "documentTop": 1045.359375
+        },
+        {
+          "id": "shot-t3",
+          "x": 33,
+          "y": -4840.046875,
+          "width": 294,
+          "height": 424.390625,
+          "bottom": -4415.65625,
+          "right": 327,
+          "documentTop": 1709.953125
+        }
+      ],
+      "lastControl": {
+        "x": 16,
+        "y": -580.71875,
+        "width": 328,
+        "height": 84,
+        "bottom": -496.71875,
+        "right": 344
+      },
+      "focusLinks": [
+        "#/focus/shot-t2",
+        "#/focus/shot-t3"
+      ],
+      "nextActions": 1,
+      "bodyPadding": "155px",
+      "mainPadding": "0px",
+      "navVariable": "131px"
+    },
+    {
+      "design": "emerald-obsidian",
+      "lang": "en",
+      "theme": "dark",
+      "scale": 200,
+      "route": "journey",
+      "file": "/tmp/action-desk-ui-evidence/after-final/emerald-obsidian-en-dark-200-journey.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 669.40625,
+        "width": 360,
+        "height": 130.59375,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "Today",
+          "x": 4,
+          "y": 670.40625,
+          "width": 113,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 117
+        },
+        {
+          "text": "Journey",
+          "x": 117,
+          "y": 670.40625,
+          "width": 137,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 254
+        },
+        {
+          "text": "Diary",
+          "x": 254,
+          "y": 670.40625,
+          "width": 102,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 356
+        },
+        {
+          "text": "Deen",
+          "x": 4,
+          "y": 735.203125,
+          "width": 158.5,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 162.5
+        },
+        {
+          "text": "Settings",
+          "x": 162.5,
+          "y": 735.203125,
+          "width": 193.5,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [],
+      "lastControl": {
+        "x": 33,
+        "y": -17554.25,
+        "width": 294,
+        "height": 140,
+        "bottom": -17414.25,
+        "right": 327
+      },
+      "goalHeading": -26542.421875,
+      "toolsHeading": -25424.421875,
+      "focusLinks": [],
+      "nextActions": 0,
+      "bodyPadding": "155px",
+      "mainPadding": "0px",
+      "navVariable": "131px"
+    },
+    {
+      "design": "emerald-obsidian",
+      "lang": "bn",
+      "theme": "light",
+      "scale": 100,
+      "route": "today",
+      "file": "/tmp/action-desk-ui-evidence/after-final/emerald-obsidian-bn-light-100-today.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "আজ",
+          "x": 4,
+          "y": 744,
+          "width": 69.59375,
+          "height": 56,
+          "bottom": 800,
+          "right": 73.59375
+        },
+        {
+          "text": "যাত্রা",
+          "x": 73.59375,
+          "y": 744,
+          "width": 65.609375,
+          "height": 56,
+          "bottom": 800,
+          "right": 139.203125
+        },
+        {
+          "text": "ডায়েরি",
+          "x": 139.203125,
+          "y": 744,
+          "width": 77.59375,
+          "height": 56,
+          "bottom": 800,
+          "right": 216.796875
+        },
+        {
+          "text": "দ্বীন",
+          "x": 216.796875,
+          "y": 744,
+          "width": 60.609375,
+          "height": 56,
+          "bottom": 800,
+          "right": 277.40625
+        },
+        {
+          "text": "সেটিংস",
+          "x": 277.40625,
+          "y": 744,
+          "width": 78.59375,
+          "height": 56,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [
+        {
+          "id": "shot-t2",
+          "x": 33,
+          "y": -2185.40625,
+          "width": 294,
+          "height": 244.890625,
+          "bottom": -1940.515625,
+          "right": 327,
+          "documentTop": 457.59375
+        },
+        {
+          "id": "shot-t3",
+          "x": 33,
+          "y": -1940.515625,
+          "width": 294,
+          "height": 196.890625,
+          "bottom": -1743.625,
+          "right": 327,
+          "documentTop": 702.484375
+        }
+      ],
+      "lastControl": {
+        "x": 16,
+        "y": 168.0625,
+        "width": 328,
+        "height": 55,
+        "bottom": 223.0625,
+        "right": 344
+      },
+      "focusLinks": [
+        "#/focus/shot-t2",
+        "#/focus/shot-t3"
+      ],
+      "nextActions": 1,
+      "bodyPadding": "81px",
+      "mainPadding": "0px",
+      "navVariable": "57px"
+    },
+    {
+      "design": "emerald-obsidian",
+      "lang": "bn",
+      "theme": "light",
+      "scale": 100,
+      "route": "journey",
+      "file": "/tmp/action-desk-ui-evidence/after-final/emerald-obsidian-bn-light-100-journey.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "আজ",
+          "x": 4,
+          "y": 744,
+          "width": 69.390625,
+          "height": 56,
+          "bottom": 800,
+          "right": 73.390625
+        },
+        {
+          "text": "যাত্রা",
+          "x": 73.390625,
+          "y": 744,
+          "width": 66.40625,
+          "height": 56,
+          "bottom": 800,
+          "right": 139.796875
+        },
+        {
+          "text": "ডায়েরি",
+          "x": 139.796875,
+          "y": 744,
+          "width": 77.390625,
+          "height": 56,
+          "bottom": 800,
+          "right": 217.1875
+        },
+        {
+          "text": "দ্বীন",
+          "x": 217.1875,
+          "y": 744,
+          "width": 60.40625,
+          "height": 56,
+          "bottom": 800,
+          "right": 277.59375
+        },
+        {
+          "text": "সেটিংস",
+          "x": 277.59375,
+          "y": 744,
+          "width": 78.40625,
+          "height": 56,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [],
+      "lastControl": {
+        "x": 33,
+        "y": -4821.453125,
+        "width": 294,
+        "height": 53,
+        "bottom": -4768.453125,
+        "right": 327
+      },
+      "goalHeading": -8488.8125,
+      "toolsHeading": -7810.921875,
+      "focusLinks": [],
+      "nextActions": 0,
+      "bodyPadding": "81px",
+      "mainPadding": "0px",
+      "navVariable": "57px"
+    },
+    {
+      "design": "emerald-obsidian",
+      "lang": "bn",
+      "theme": "light",
+      "scale": 200,
+      "route": "today",
+      "file": "/tmp/action-desk-ui-evidence/after-final/emerald-obsidian-bn-light-200-today.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 669.40625,
+        "width": 360,
+        "height": 130.59375,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "আজ",
+          "x": 4,
+          "y": 670.40625,
+          "width": 91.75,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 95.75
+        },
+        {
+          "text": "যাত্রা",
+          "x": 95.75,
+          "y": 670.40625,
+          "width": 81.75,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 177.5
+        },
+        {
+          "text": "ডায়েরি",
+          "x": 177.5,
+          "y": 670.40625,
+          "width": 105.75,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 283.25
+        },
+        {
+          "text": "দ্বীন",
+          "x": 283.25,
+          "y": 670.40625,
+          "width": 72.75,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 356
+        },
+        {
+          "text": "সেটিংস",
+          "x": 4,
+          "y": 735.203125,
+          "width": 352,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [
+        {
+          "id": "shot-t2",
+          "x": 33,
+          "y": -5399.03125,
+          "width": 294,
+          "height": 664.59375,
+          "bottom": -4734.4375,
+          "right": 327,
+          "documentTop": 897.96875
+        },
+        {
+          "id": "shot-t3",
+          "x": 33,
+          "y": -4734.4375,
+          "width": 294,
+          "height": 471.984375,
+          "bottom": -4262.453125,
+          "right": 327,
+          "documentTop": 1562.5625
+        }
+      ],
+      "lastControl": {
+        "x": 16,
+        "y": -539.3125,
+        "width": 328,
+        "height": 84,
+        "bottom": -455.3125,
+        "right": 344
+      },
+      "focusLinks": [
+        "#/focus/shot-t2",
+        "#/focus/shot-t3"
+      ],
+      "nextActions": 1,
+      "bodyPadding": "155px",
+      "mainPadding": "0px",
+      "navVariable": "131px"
+    },
+    {
+      "design": "emerald-obsidian",
+      "lang": "bn",
+      "theme": "light",
+      "scale": 200,
+      "route": "journey",
+      "file": "/tmp/action-desk-ui-evidence/after-final/emerald-obsidian-bn-light-200-journey.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 669.40625,
+        "width": 360,
+        "height": 130.59375,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "আজ",
+          "x": 4,
+          "y": 670.40625,
+          "width": 90.25,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 94.25
+        },
+        {
+          "text": "যাত্রা",
+          "x": 94.25,
+          "y": 670.40625,
+          "width": 82.25,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 176.5
+        },
+        {
+          "text": "ডায়েরি",
+          "x": 176.5,
+          "y": 670.40625,
+          "width": 106.25,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 282.75
+        },
+        {
+          "text": "দ্বীন",
+          "x": 282.75,
+          "y": 670.40625,
+          "width": 73.25,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 356
+        },
+        {
+          "text": "সেটিংস",
+          "x": 4,
+          "y": 735.203125,
+          "width": 352,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [],
+      "lastControl": {
+        "x": 33,
+        "y": -14953.828125,
+        "width": 294,
+        "height": 140,
+        "bottom": -14813.828125,
+        "right": 327
+      },
+      "goalHeading": -23261.421875,
+      "toolsHeading": -22194.421875,
+      "focusLinks": [],
+      "nextActions": 0,
+      "bodyPadding": "155px",
+      "mainPadding": "0px",
+      "navVariable": "131px"
+    },
+    {
+      "design": "emerald-obsidian",
+      "lang": "bn",
+      "theme": "dark",
+      "scale": 100,
+      "route": "today",
+      "file": "/tmp/action-desk-ui-evidence/after-final/emerald-obsidian-bn-dark-100-today.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "আজ",
+          "x": 4,
+          "y": 744,
+          "width": 69.59375,
+          "height": 56,
+          "bottom": 800,
+          "right": 73.59375
+        },
+        {
+          "text": "যাত্রা",
+          "x": 73.59375,
+          "y": 744,
+          "width": 65.609375,
+          "height": 56,
+          "bottom": 800,
+          "right": 139.203125
+        },
+        {
+          "text": "ডায়েরি",
+          "x": 139.203125,
+          "y": 744,
+          "width": 77.59375,
+          "height": 56,
+          "bottom": 800,
+          "right": 216.796875
+        },
+        {
+          "text": "দ্বীন",
+          "x": 216.796875,
+          "y": 744,
+          "width": 60.609375,
+          "height": 56,
+          "bottom": 800,
+          "right": 277.40625
+        },
+        {
+          "text": "সেটিংস",
+          "x": 277.40625,
+          "y": 744,
+          "width": 78.59375,
+          "height": 56,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [
+        {
+          "id": "shot-t2",
+          "x": 33,
+          "y": -2185.40625,
+          "width": 294,
+          "height": 244.890625,
+          "bottom": -1940.515625,
+          "right": 327,
+          "documentTop": 457.59375
+        },
+        {
+          "id": "shot-t3",
+          "x": 33,
+          "y": -1940.515625,
+          "width": 294,
+          "height": 196.890625,
+          "bottom": -1743.625,
+          "right": 327,
+          "documentTop": 702.484375
+        }
+      ],
+      "lastControl": {
+        "x": 16,
+        "y": 168.0625,
+        "width": 328,
+        "height": 55,
+        "bottom": 223.0625,
+        "right": 344
+      },
+      "focusLinks": [
+        "#/focus/shot-t2",
+        "#/focus/shot-t3"
+      ],
+      "nextActions": 1,
+      "bodyPadding": "81px",
+      "mainPadding": "0px",
+      "navVariable": "57px"
+    },
+    {
+      "design": "emerald-obsidian",
+      "lang": "bn",
+      "theme": "dark",
+      "scale": 100,
+      "route": "journey",
+      "file": "/tmp/action-desk-ui-evidence/after-final/emerald-obsidian-bn-dark-100-journey.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "আজ",
+          "x": 4,
+          "y": 744,
+          "width": 69.390625,
+          "height": 56,
+          "bottom": 800,
+          "right": 73.390625
+        },
+        {
+          "text": "যাত্রা",
+          "x": 73.390625,
+          "y": 744,
+          "width": 66.40625,
+          "height": 56,
+          "bottom": 800,
+          "right": 139.796875
+        },
+        {
+          "text": "ডায়েরি",
+          "x": 139.796875,
+          "y": 744,
+          "width": 77.390625,
+          "height": 56,
+          "bottom": 800,
+          "right": 217.1875
+        },
+        {
+          "text": "দ্বীন",
+          "x": 217.1875,
+          "y": 744,
+          "width": 60.40625,
+          "height": 56,
+          "bottom": 800,
+          "right": 277.59375
+        },
+        {
+          "text": "সেটিংস",
+          "x": 277.59375,
+          "y": 744,
+          "width": 78.40625,
+          "height": 56,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [],
+      "lastControl": {
+        "x": 33,
+        "y": -4821.453125,
+        "width": 294,
+        "height": 53,
+        "bottom": -4768.453125,
+        "right": 327
+      },
+      "goalHeading": -8488.8125,
+      "toolsHeading": -7810.921875,
+      "focusLinks": [],
+      "nextActions": 0,
+      "bodyPadding": "81px",
+      "mainPadding": "0px",
+      "navVariable": "57px"
+    },
+    {
+      "design": "emerald-obsidian",
+      "lang": "bn",
+      "theme": "dark",
+      "scale": 200,
+      "route": "today",
+      "file": "/tmp/action-desk-ui-evidence/after-final/emerald-obsidian-bn-dark-200-today.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 669.40625,
+        "width": 360,
+        "height": 130.59375,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "আজ",
+          "x": 4,
+          "y": 670.40625,
+          "width": 91.75,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 95.75
+        },
+        {
+          "text": "যাত্রা",
+          "x": 95.75,
+          "y": 670.40625,
+          "width": 81.75,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 177.5
+        },
+        {
+          "text": "ডায়েরি",
+          "x": 177.5,
+          "y": 670.40625,
+          "width": 105.75,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 283.25
+        },
+        {
+          "text": "দ্বীন",
+          "x": 283.25,
+          "y": 670.40625,
+          "width": 72.75,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 356
+        },
+        {
+          "text": "সেটিংস",
+          "x": 4,
+          "y": 735.203125,
+          "width": 352,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [
+        {
+          "id": "shot-t2",
+          "x": 33,
+          "y": -5399.03125,
+          "width": 294,
+          "height": 664.59375,
+          "bottom": -4734.4375,
+          "right": 327,
+          "documentTop": 897.96875
+        },
+        {
+          "id": "shot-t3",
+          "x": 33,
+          "y": -4734.4375,
+          "width": 294,
+          "height": 471.984375,
+          "bottom": -4262.453125,
+          "right": 327,
+          "documentTop": 1562.5625
+        }
+      ],
+      "lastControl": {
+        "x": 16,
+        "y": -539.3125,
+        "width": 328,
+        "height": 84,
+        "bottom": -455.3125,
+        "right": 344
+      },
+      "focusLinks": [
+        "#/focus/shot-t2",
+        "#/focus/shot-t3"
+      ],
+      "nextActions": 1,
+      "bodyPadding": "155px",
+      "mainPadding": "0px",
+      "navVariable": "131px"
+    },
+    {
+      "design": "emerald-obsidian",
+      "lang": "bn",
+      "theme": "dark",
+      "scale": 200,
+      "route": "journey",
+      "file": "/tmp/action-desk-ui-evidence/after-final/emerald-obsidian-bn-dark-200-journey.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 669.40625,
+        "width": 360,
+        "height": 130.59375,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "আজ",
+          "x": 4,
+          "y": 670.40625,
+          "width": 90.25,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 94.25
+        },
+        {
+          "text": "যাত্রা",
+          "x": 94.25,
+          "y": 670.40625,
+          "width": 82.25,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 176.5
+        },
+        {
+          "text": "ডায়েরি",
+          "x": 176.5,
+          "y": 670.40625,
+          "width": 106.25,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 282.75
+        },
+        {
+          "text": "দ্বীন",
+          "x": 282.75,
+          "y": 670.40625,
+          "width": 73.25,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 356
+        },
+        {
+          "text": "সেটিংস",
+          "x": 4,
+          "y": 735.203125,
+          "width": 352,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [],
+      "lastControl": {
+        "x": 33,
+        "y": -14953.828125,
+        "width": 294,
+        "height": 140,
+        "bottom": -14813.828125,
+        "right": 327
+      },
+      "goalHeading": -23261.421875,
+      "toolsHeading": -22194.421875,
+      "focusLinks": [],
+      "nextActions": 0,
+      "bodyPadding": "155px",
+      "mainPadding": "0px",
+      "navVariable": "131px"
+    },
+    {
+      "design": "broadsheet",
+      "lang": "en",
+      "theme": "light",
+      "scale": 100,
+      "route": "today",
+      "file": "/tmp/action-desk-ui-evidence/after-final/broadsheet-en-light-100-today.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "Today",
+          "x": 4,
+          "y": 744,
+          "width": 67.796875,
+          "height": 56,
+          "bottom": 800,
+          "right": 71.796875
+        },
+        {
+          "text": "Journey",
+          "x": 71.796875,
+          "y": 744,
+          "width": 79.8125,
+          "height": 56,
+          "bottom": 800,
+          "right": 151.609375
+        },
+        {
+          "text": "Diary",
+          "x": 151.609375,
+          "y": 744,
+          "width": 63.796875,
+          "height": 56,
+          "bottom": 800,
+          "right": 215.40625
+        },
+        {
+          "text": "Deen",
+          "x": 215.40625,
+          "y": 744,
+          "width": 60.796875,
+          "height": 56,
+          "bottom": 800,
+          "right": 276.203125
+        },
+        {
+          "text": "Settings",
+          "x": 276.203125,
+          "y": 744,
+          "width": 79.796875,
+          "height": 56,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [
+        {
+          "id": "shot-t2",
+          "x": 33,
+          "y": -2284.90625,
+          "width": 294,
+          "height": 244.890625,
+          "bottom": -2040.015625,
+          "right": 327,
+          "documentTop": 529.09375
+        },
+        {
+          "id": "shot-t3",
+          "x": 33,
+          "y": -2040.015625,
+          "width": 294,
+          "height": 196.890625,
+          "bottom": -1843.125,
+          "right": 327,
+          "documentTop": 773.984375
+        }
+      ],
+      "lastControl": {
+        "x": 16,
+        "y": 147.359375,
+        "width": 328,
+        "height": 55,
+        "bottom": 202.359375,
+        "right": 344
+      },
+      "focusLinks": [
+        "#/focus/shot-t2",
+        "#/focus/shot-t3"
+      ],
+      "nextActions": 1,
+      "bodyPadding": "81px",
+      "mainPadding": "0px",
+      "navVariable": "57px"
+    },
+    {
+      "design": "broadsheet",
+      "lang": "en",
+      "theme": "light",
+      "scale": 100,
+      "route": "journey",
+      "file": "/tmp/action-desk-ui-evidence/after-final/broadsheet-en-light-100-journey.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "Today",
+          "x": 4,
+          "y": 744,
+          "width": 66.59375,
+          "height": 56,
+          "bottom": 800,
+          "right": 70.59375
+        },
+        {
+          "text": "Journey",
+          "x": 70.59375,
+          "y": 744,
+          "width": 81.609375,
+          "height": 56,
+          "bottom": 800,
+          "right": 152.203125
+        },
+        {
+          "text": "Diary",
+          "x": 152.203125,
+          "y": 744,
+          "width": 63.59375,
+          "height": 56,
+          "bottom": 800,
+          "right": 215.796875
+        },
+        {
+          "text": "Deen",
+          "x": 215.796875,
+          "y": 744,
+          "width": 60.609375,
+          "height": 56,
+          "bottom": 800,
+          "right": 276.40625
+        },
+        {
+          "text": "Settings",
+          "x": 276.40625,
+          "y": 744,
+          "width": 79.59375,
+          "height": 56,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [],
+      "lastControl": {
+        "x": 32,
+        "y": -5759.984375,
+        "width": 296,
+        "height": 53,
+        "bottom": -5706.984375,
+        "right": 328
+      },
+      "goalHeading": -9693.3125,
+      "toolsHeading": -8988.421875,
+      "focusLinks": [],
+      "nextActions": 0,
+      "bodyPadding": "81px",
+      "mainPadding": "0px",
+      "navVariable": "57px"
+    },
+    {
+      "design": "broadsheet",
+      "lang": "en",
+      "theme": "light",
+      "scale": 200,
+      "route": "today",
+      "file": "/tmp/action-desk-ui-evidence/after-final/broadsheet-en-light-200-today.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 669.40625,
+        "width": 360,
+        "height": 130.59375,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "Today",
+          "x": 4,
+          "y": 670.40625,
+          "width": 112.328125,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 116.328125
+        },
+        {
+          "text": "Journey",
+          "x": 116.328125,
+          "y": 670.40625,
+          "width": 135.34375,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 251.671875
+        },
+        {
+          "text": "Diary",
+          "x": 251.671875,
+          "y": 670.40625,
+          "width": 104.328125,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 356
+        },
+        {
+          "text": "Deen",
+          "x": 4,
+          "y": 735.203125,
+          "width": 157.5,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 161.5
+        },
+        {
+          "text": "Settings",
+          "x": 161.5,
+          "y": 735.203125,
+          "width": 194.5,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [
+        {
+          "id": "shot-t2",
+          "x": 33,
+          "y": -5715.640625,
+          "width": 294,
+          "height": 722.390625,
+          "bottom": -4993.25,
+          "right": 327,
+          "documentTop": 1084.359375
+        },
+        {
+          "id": "shot-t3",
+          "x": 33,
+          "y": -4993.25,
+          "width": 294,
+          "height": 424.390625,
+          "bottom": -4568.859375,
+          "right": 327,
+          "documentTop": 1806.75
+        }
+      ],
+      "lastControl": {
+        "x": 16,
+        "y": -580.921875,
+        "width": 328,
+        "height": 84,
+        "bottom": -496.921875,
+        "right": 344
+      },
+      "focusLinks": [
+        "#/focus/shot-t2",
+        "#/focus/shot-t3"
+      ],
+      "nextActions": 1,
+      "bodyPadding": "155px",
+      "mainPadding": "0px",
+      "navVariable": "131px"
+    },
+    {
+      "design": "broadsheet",
+      "lang": "en",
+      "theme": "light",
+      "scale": 200,
+      "route": "journey",
+      "file": "/tmp/action-desk-ui-evidence/after-final/broadsheet-en-light-200-journey.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 669.40625,
+        "width": 360,
+        "height": 130.59375,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "Today",
+          "x": 4,
+          "y": 670.40625,
+          "width": 107.65625,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 111.65625
+        },
+        {
+          "text": "Journey",
+          "x": 111.65625,
+          "y": 670.40625,
+          "width": 140.671875,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 252.328125
+        },
+        {
+          "text": "Diary",
+          "x": 252.328125,
+          "y": 670.40625,
+          "width": 103.671875,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 356
+        },
+        {
+          "text": "Deen",
+          "x": 4,
+          "y": 735.203125,
+          "width": 157.5,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 161.5
+        },
+        {
+          "text": "Settings",
+          "x": 161.5,
+          "y": 735.203125,
+          "width": 194.5,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [],
+      "lastControl": {
+        "x": 32,
+        "y": -19496.984375,
+        "width": 296,
+        "height": 140,
+        "bottom": -19356.984375,
+        "right": 328
+      },
+      "goalHeading": -29853.421875,
+      "toolsHeading": -28682.921875,
+      "focusLinks": [],
+      "nextActions": 0,
+      "bodyPadding": "155px",
+      "mainPadding": "0px",
+      "navVariable": "131px"
+    },
+    {
+      "design": "broadsheet",
+      "lang": "en",
+      "theme": "dark",
+      "scale": 100,
+      "route": "today",
+      "file": "/tmp/action-desk-ui-evidence/after-final/broadsheet-en-dark-100-today.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "Today",
+          "x": 4,
+          "y": 744,
+          "width": 67.796875,
+          "height": 56,
+          "bottom": 800,
+          "right": 71.796875
+        },
+        {
+          "text": "Journey",
+          "x": 71.796875,
+          "y": 744,
+          "width": 79.8125,
+          "height": 56,
+          "bottom": 800,
+          "right": 151.609375
+        },
+        {
+          "text": "Diary",
+          "x": 151.609375,
+          "y": 744,
+          "width": 63.796875,
+          "height": 56,
+          "bottom": 800,
+          "right": 215.40625
+        },
+        {
+          "text": "Deen",
+          "x": 215.40625,
+          "y": 744,
+          "width": 60.796875,
+          "height": 56,
+          "bottom": 800,
+          "right": 276.203125
+        },
+        {
+          "text": "Settings",
+          "x": 276.203125,
+          "y": 744,
+          "width": 79.796875,
+          "height": 56,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [
+        {
+          "id": "shot-t2",
+          "x": 33,
+          "y": -2284.90625,
+          "width": 294,
+          "height": 244.890625,
+          "bottom": -2040.015625,
+          "right": 327,
+          "documentTop": 529.09375
+        },
+        {
+          "id": "shot-t3",
+          "x": 33,
+          "y": -2040.015625,
+          "width": 294,
+          "height": 196.890625,
+          "bottom": -1843.125,
+          "right": 327,
+          "documentTop": 773.984375
+        }
+      ],
+      "lastControl": {
+        "x": 16,
+        "y": 147.359375,
+        "width": 328,
+        "height": 55,
+        "bottom": 202.359375,
+        "right": 344
+      },
+      "focusLinks": [
+        "#/focus/shot-t2",
+        "#/focus/shot-t3"
+      ],
+      "nextActions": 1,
+      "bodyPadding": "81px",
+      "mainPadding": "0px",
+      "navVariable": "57px"
+    },
+    {
+      "design": "broadsheet",
+      "lang": "en",
+      "theme": "dark",
+      "scale": 100,
+      "route": "journey",
+      "file": "/tmp/action-desk-ui-evidence/after-final/broadsheet-en-dark-100-journey.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "Today",
+          "x": 4,
+          "y": 744,
+          "width": 66.59375,
+          "height": 56,
+          "bottom": 800,
+          "right": 70.59375
+        },
+        {
+          "text": "Journey",
+          "x": 70.59375,
+          "y": 744,
+          "width": 81.609375,
+          "height": 56,
+          "bottom": 800,
+          "right": 152.203125
+        },
+        {
+          "text": "Diary",
+          "x": 152.203125,
+          "y": 744,
+          "width": 63.59375,
+          "height": 56,
+          "bottom": 800,
+          "right": 215.796875
+        },
+        {
+          "text": "Deen",
+          "x": 215.796875,
+          "y": 744,
+          "width": 60.609375,
+          "height": 56,
+          "bottom": 800,
+          "right": 276.40625
+        },
+        {
+          "text": "Settings",
+          "x": 276.40625,
+          "y": 744,
+          "width": 79.59375,
+          "height": 56,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [],
+      "lastControl": {
+        "x": 32,
+        "y": -5759.984375,
+        "width": 296,
+        "height": 53,
+        "bottom": -5706.984375,
+        "right": 328
+      },
+      "goalHeading": -9693.3125,
+      "toolsHeading": -8988.421875,
+      "focusLinks": [],
+      "nextActions": 0,
+      "bodyPadding": "81px",
+      "mainPadding": "0px",
+      "navVariable": "57px"
+    },
+    {
+      "design": "broadsheet",
+      "lang": "en",
+      "theme": "dark",
+      "scale": 200,
+      "route": "today",
+      "file": "/tmp/action-desk-ui-evidence/after-final/broadsheet-en-dark-200-today.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 669.40625,
+        "width": 360,
+        "height": 130.59375,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "Today",
+          "x": 4,
+          "y": 670.40625,
+          "width": 112.328125,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 116.328125
+        },
+        {
+          "text": "Journey",
+          "x": 116.328125,
+          "y": 670.40625,
+          "width": 135.34375,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 251.671875
+        },
+        {
+          "text": "Diary",
+          "x": 251.671875,
+          "y": 670.40625,
+          "width": 104.328125,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 356
+        },
+        {
+          "text": "Deen",
+          "x": 4,
+          "y": 735.203125,
+          "width": 157.5,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 161.5
+        },
+        {
+          "text": "Settings",
+          "x": 161.5,
+          "y": 735.203125,
+          "width": 194.5,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [
+        {
+          "id": "shot-t2",
+          "x": 33,
+          "y": -5715.640625,
+          "width": 294,
+          "height": 722.390625,
+          "bottom": -4993.25,
+          "right": 327,
+          "documentTop": 1084.359375
+        },
+        {
+          "id": "shot-t3",
+          "x": 33,
+          "y": -4993.25,
+          "width": 294,
+          "height": 424.390625,
+          "bottom": -4568.859375,
+          "right": 327,
+          "documentTop": 1806.75
+        }
+      ],
+      "lastControl": {
+        "x": 16,
+        "y": -580.921875,
+        "width": 328,
+        "height": 84,
+        "bottom": -496.921875,
+        "right": 344
+      },
+      "focusLinks": [
+        "#/focus/shot-t2",
+        "#/focus/shot-t3"
+      ],
+      "nextActions": 1,
+      "bodyPadding": "155px",
+      "mainPadding": "0px",
+      "navVariable": "131px"
+    },
+    {
+      "design": "broadsheet",
+      "lang": "en",
+      "theme": "dark",
+      "scale": 200,
+      "route": "journey",
+      "file": "/tmp/action-desk-ui-evidence/after-final/broadsheet-en-dark-200-journey.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 669.40625,
+        "width": 360,
+        "height": 130.59375,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "Today",
+          "x": 4,
+          "y": 670.40625,
+          "width": 107.65625,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 111.65625
+        },
+        {
+          "text": "Journey",
+          "x": 111.65625,
+          "y": 670.40625,
+          "width": 140.671875,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 252.328125
+        },
+        {
+          "text": "Diary",
+          "x": 252.328125,
+          "y": 670.40625,
+          "width": 103.671875,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 356
+        },
+        {
+          "text": "Deen",
+          "x": 4,
+          "y": 735.203125,
+          "width": 157.5,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 161.5
+        },
+        {
+          "text": "Settings",
+          "x": 161.5,
+          "y": 735.203125,
+          "width": 194.5,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [],
+      "lastControl": {
+        "x": 32,
+        "y": -19496.984375,
+        "width": 296,
+        "height": 140,
+        "bottom": -19356.984375,
+        "right": 328
+      },
+      "goalHeading": -29853.421875,
+      "toolsHeading": -28682.921875,
+      "focusLinks": [],
+      "nextActions": 0,
+      "bodyPadding": "155px",
+      "mainPadding": "0px",
+      "navVariable": "131px"
+    },
+    {
+      "design": "broadsheet",
+      "lang": "bn",
+      "theme": "light",
+      "scale": 100,
+      "route": "today",
+      "file": "/tmp/action-desk-ui-evidence/after-final/broadsheet-bn-light-100-today.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "আজ",
+          "x": 4,
+          "y": 744,
+          "width": 68.59375,
+          "height": 56,
+          "bottom": 800,
+          "right": 72.59375
+        },
+        {
+          "text": "যাত্রা",
+          "x": 72.59375,
+          "y": 744,
+          "width": 64.609375,
+          "height": 56,
+          "bottom": 800,
+          "right": 137.203125
+        },
+        {
+          "text": "ডায়েরি",
+          "x": 137.203125,
+          "y": 744,
+          "width": 77.59375,
+          "height": 56,
+          "bottom": 800,
+          "right": 214.796875
+        },
+        {
+          "text": "দ্বীন",
+          "x": 214.796875,
+          "y": 744,
+          "width": 60.609375,
+          "height": 56,
+          "bottom": 800,
+          "right": 275.40625
+        },
+        {
+          "text": "সেটিংস",
+          "x": 275.40625,
+          "y": 744,
+          "width": 80.59375,
+          "height": 56,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [
+        {
+          "id": "shot-t2",
+          "x": 33,
+          "y": -2185.40625,
+          "width": 294,
+          "height": 244.890625,
+          "bottom": -1940.515625,
+          "right": 327,
+          "documentTop": 509.59375
+        },
+        {
+          "id": "shot-t3",
+          "x": 33,
+          "y": -1940.515625,
+          "width": 294,
+          "height": 196.890625,
+          "bottom": -1743.625,
+          "right": 327,
+          "documentTop": 754.484375
+        }
+      ],
+      "lastControl": {
+        "x": 16,
+        "y": 168.0625,
+        "width": 328,
+        "height": 55,
+        "bottom": 223.0625,
+        "right": 344
+      },
+      "focusLinks": [
+        "#/focus/shot-t2",
+        "#/focus/shot-t3"
+      ],
+      "nextActions": 1,
+      "bodyPadding": "81px",
+      "mainPadding": "0px",
+      "navVariable": "57px"
+    },
+    {
+      "design": "broadsheet",
+      "lang": "bn",
+      "theme": "light",
+      "scale": 100,
+      "route": "journey",
+      "file": "/tmp/action-desk-ui-evidence/after-final/broadsheet-bn-light-100-journey.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "আজ",
+          "x": 4,
+          "y": 744,
+          "width": 67,
+          "height": 56,
+          "bottom": 800,
+          "right": 71
+        },
+        {
+          "text": "যাত্রা",
+          "x": 71,
+          "y": 744,
+          "width": 65,
+          "height": 56,
+          "bottom": 800,
+          "right": 136
+        },
+        {
+          "text": "ডায়েরি",
+          "x": 136,
+          "y": 744,
+          "width": 78,
+          "height": 56,
+          "bottom": 800,
+          "right": 214
+        },
+        {
+          "text": "দ্বীন",
+          "x": 214,
+          "y": 744,
+          "width": 61,
+          "height": 56,
+          "bottom": 800,
+          "right": 275
+        },
+        {
+          "text": "সেটিংস",
+          "x": 275,
+          "y": 744,
+          "width": 81,
+          "height": 56,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [],
+      "lastControl": {
+        "x": 32,
+        "y": -4871.953125,
+        "width": 296,
+        "height": 53,
+        "bottom": -4818.953125,
+        "right": 328
+      },
+      "goalHeading": -8541.8125,
+      "toolsHeading": -7862.421875,
+      "focusLinks": [],
+      "nextActions": 0,
+      "bodyPadding": "81px",
+      "mainPadding": "0px",
+      "navVariable": "57px"
+    },
+    {
+      "design": "broadsheet",
+      "lang": "bn",
+      "theme": "light",
+      "scale": 200,
+      "route": "today",
+      "file": "/tmp/action-desk-ui-evidence/after-final/broadsheet-bn-light-200-today.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 669.40625,
+        "width": 360,
+        "height": 130.59375,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "আজ",
+          "x": 4,
+          "y": 670.40625,
+          "width": 89.75,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 93.75
+        },
+        {
+          "text": "যাত্রা",
+          "x": 93.75,
+          "y": 670.40625,
+          "width": 81.75,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 175.5
+        },
+        {
+          "text": "ডায়েরি",
+          "x": 175.5,
+          "y": 670.40625,
+          "width": 106.75,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 282.25
+        },
+        {
+          "text": "দ্বীন",
+          "x": 282.25,
+          "y": 670.40625,
+          "width": 73.75,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 356
+        },
+        {
+          "text": "সেটিংস",
+          "x": 4,
+          "y": 735.203125,
+          "width": 352,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [
+        {
+          "id": "shot-t2",
+          "x": 33,
+          "y": -5456.03125,
+          "width": 294,
+          "height": 722.390625,
+          "bottom": -4733.640625,
+          "right": 327,
+          "documentTop": 936.96875
+        },
+        {
+          "id": "shot-t3",
+          "x": 33,
+          "y": -4733.640625,
+          "width": 294,
+          "height": 471.984375,
+          "bottom": -4261.65625,
+          "right": 327,
+          "documentTop": 1659.359375
+        }
+      ],
+      "lastControl": {
+        "x": 16,
+        "y": -538.515625,
+        "width": 328,
+        "height": 84,
+        "bottom": -454.515625,
+        "right": 344
+      },
+      "focusLinks": [
+        "#/focus/shot-t2",
+        "#/focus/shot-t3"
+      ],
+      "nextActions": 1,
+      "bodyPadding": "155px",
+      "mainPadding": "0px",
+      "navVariable": "131px"
+    },
+    {
+      "design": "broadsheet",
+      "lang": "bn",
+      "theme": "light",
+      "scale": 200,
+      "route": "journey",
+      "file": "/tmp/action-desk-ui-evidence/after-final/broadsheet-bn-light-200-journey.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 669.40625,
+        "width": 360,
+        "height": 130.59375,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "আজ",
+          "x": 4,
+          "y": 670.40625,
+          "width": 87,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 91
+        },
+        {
+          "text": "যাত্রা",
+          "x": 91,
+          "y": 670.40625,
+          "width": 84,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 175
+        },
+        {
+          "text": "ডায়েরি",
+          "x": 175,
+          "y": 670.40625,
+          "width": 107,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 282
+        },
+        {
+          "text": "দ্বীন",
+          "x": 282,
+          "y": 670.40625,
+          "width": 74,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 356
+        },
+        {
+          "text": "সেটিংস",
+          "x": 4,
+          "y": 735.203125,
+          "width": 352,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [],
+      "lastControl": {
+        "x": 32,
+        "y": -15105.140625,
+        "width": 296,
+        "height": 140,
+        "bottom": -14965.140625,
+        "right": 328
+      },
+      "goalHeading": -23646.421875,
+      "toolsHeading": -22577.921875,
+      "focusLinks": [],
+      "nextActions": 0,
+      "bodyPadding": "155px",
+      "mainPadding": "0px",
+      "navVariable": "131px"
+    },
+    {
+      "design": "broadsheet",
+      "lang": "bn",
+      "theme": "dark",
+      "scale": 100,
+      "route": "today",
+      "file": "/tmp/action-desk-ui-evidence/after-final/broadsheet-bn-dark-100-today.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "আজ",
+          "x": 4,
+          "y": 744,
+          "width": 68.59375,
+          "height": 56,
+          "bottom": 800,
+          "right": 72.59375
+        },
+        {
+          "text": "যাত্রা",
+          "x": 72.59375,
+          "y": 744,
+          "width": 64.609375,
+          "height": 56,
+          "bottom": 800,
+          "right": 137.203125
+        },
+        {
+          "text": "ডায়েরি",
+          "x": 137.203125,
+          "y": 744,
+          "width": 77.59375,
+          "height": 56,
+          "bottom": 800,
+          "right": 214.796875
+        },
+        {
+          "text": "দ্বীন",
+          "x": 214.796875,
+          "y": 744,
+          "width": 60.609375,
+          "height": 56,
+          "bottom": 800,
+          "right": 275.40625
+        },
+        {
+          "text": "সেটিংস",
+          "x": 275.40625,
+          "y": 744,
+          "width": 80.59375,
+          "height": 56,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [
+        {
+          "id": "shot-t2",
+          "x": 33,
+          "y": -2185.40625,
+          "width": 294,
+          "height": 244.890625,
+          "bottom": -1940.515625,
+          "right": 327,
+          "documentTop": 509.59375
+        },
+        {
+          "id": "shot-t3",
+          "x": 33,
+          "y": -1940.515625,
+          "width": 294,
+          "height": 196.890625,
+          "bottom": -1743.625,
+          "right": 327,
+          "documentTop": 754.484375
+        }
+      ],
+      "lastControl": {
+        "x": 16,
+        "y": 168.0625,
+        "width": 328,
+        "height": 55,
+        "bottom": 223.0625,
+        "right": 344
+      },
+      "focusLinks": [
+        "#/focus/shot-t2",
+        "#/focus/shot-t3"
+      ],
+      "nextActions": 1,
+      "bodyPadding": "81px",
+      "mainPadding": "0px",
+      "navVariable": "57px"
+    },
+    {
+      "design": "broadsheet",
+      "lang": "bn",
+      "theme": "dark",
+      "scale": 100,
+      "route": "journey",
+      "file": "/tmp/action-desk-ui-evidence/after-final/broadsheet-bn-dark-100-journey.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "আজ",
+          "x": 4,
+          "y": 744,
+          "width": 67,
+          "height": 56,
+          "bottom": 800,
+          "right": 71
+        },
+        {
+          "text": "যাত্রা",
+          "x": 71,
+          "y": 744,
+          "width": 65,
+          "height": 56,
+          "bottom": 800,
+          "right": 136
+        },
+        {
+          "text": "ডায়েরি",
+          "x": 136,
+          "y": 744,
+          "width": 78,
+          "height": 56,
+          "bottom": 800,
+          "right": 214
+        },
+        {
+          "text": "দ্বীন",
+          "x": 214,
+          "y": 744,
+          "width": 61,
+          "height": 56,
+          "bottom": 800,
+          "right": 275
+        },
+        {
+          "text": "সেটিংস",
+          "x": 275,
+          "y": 744,
+          "width": 81,
+          "height": 56,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [],
+      "lastControl": {
+        "x": 32,
+        "y": -4871.953125,
+        "width": 296,
+        "height": 53,
+        "bottom": -4818.953125,
+        "right": 328
+      },
+      "goalHeading": -8541.8125,
+      "toolsHeading": -7862.421875,
+      "focusLinks": [],
+      "nextActions": 0,
+      "bodyPadding": "81px",
+      "mainPadding": "0px",
+      "navVariable": "57px"
+    },
+    {
+      "design": "broadsheet",
+      "lang": "bn",
+      "theme": "dark",
+      "scale": 200,
+      "route": "today",
+      "file": "/tmp/action-desk-ui-evidence/after-final/broadsheet-bn-dark-200-today.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 669.40625,
+        "width": 360,
+        "height": 130.59375,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "আজ",
+          "x": 4,
+          "y": 670.40625,
+          "width": 89.75,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 93.75
+        },
+        {
+          "text": "যাত্রা",
+          "x": 93.75,
+          "y": 670.40625,
+          "width": 81.75,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 175.5
+        },
+        {
+          "text": "ডায়েরি",
+          "x": 175.5,
+          "y": 670.40625,
+          "width": 106.75,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 282.25
+        },
+        {
+          "text": "দ্বীন",
+          "x": 282.25,
+          "y": 670.40625,
+          "width": 73.75,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 356
+        },
+        {
+          "text": "সেটিংস",
+          "x": 4,
+          "y": 735.203125,
+          "width": 352,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [
+        {
+          "id": "shot-t2",
+          "x": 33,
+          "y": -5456.03125,
+          "width": 294,
+          "height": 722.390625,
+          "bottom": -4733.640625,
+          "right": 327,
+          "documentTop": 936.96875
+        },
+        {
+          "id": "shot-t3",
+          "x": 33,
+          "y": -4733.640625,
+          "width": 294,
+          "height": 471.984375,
+          "bottom": -4261.65625,
+          "right": 327,
+          "documentTop": 1659.359375
+        }
+      ],
+      "lastControl": {
+        "x": 16,
+        "y": -538.515625,
+        "width": 328,
+        "height": 84,
+        "bottom": -454.515625,
+        "right": 344
+      },
+      "focusLinks": [
+        "#/focus/shot-t2",
+        "#/focus/shot-t3"
+      ],
+      "nextActions": 1,
+      "bodyPadding": "155px",
+      "mainPadding": "0px",
+      "navVariable": "131px"
+    },
+    {
+      "design": "broadsheet",
+      "lang": "bn",
+      "theme": "dark",
+      "scale": 200,
+      "route": "journey",
+      "file": "/tmp/action-desk-ui-evidence/after-final/broadsheet-bn-dark-200-journey.png",
+      "overflow": false,
+      "nav": {
+        "x": 0,
+        "y": 669.40625,
+        "width": 360,
+        "height": 130.59375,
+        "bottom": 800,
+        "right": 360
+      },
+      "tabs": [
+        {
+          "text": "আজ",
+          "x": 4,
+          "y": 670.40625,
+          "width": 87,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 91
+        },
+        {
+          "text": "যাত্রা",
+          "x": 91,
+          "y": 670.40625,
+          "width": 84,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 175
+        },
+        {
+          "text": "ডায়েরি",
+          "x": 175,
+          "y": 670.40625,
+          "width": 107,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 282
+        },
+        {
+          "text": "দ্বীন",
+          "x": 282,
+          "y": 670.40625,
+          "width": 74,
+          "height": 64.796875,
+          "bottom": 735.203125,
+          "right": 356
+        },
+        {
+          "text": "সেটিংস",
+          "x": 4,
+          "y": 735.203125,
+          "width": 352,
+          "height": 64.796875,
+          "bottom": 800,
+          "right": 356
+        }
+      ],
+      "small": [],
+      "tasks": [],
+      "lastControl": {
+        "x": 32,
+        "y": -15105.140625,
+        "width": 296,
+        "height": 140,
+        "bottom": -14965.140625,
+        "right": 328
+      },
+      "goalHeading": -23646.421875,
+      "toolsHeading": -22577.921875,
+      "focusLinks": [],
+      "nextActions": 0,
+      "bodyPadding": "155px",
+      "mainPadding": "0px",
+      "navVariable": "131px"
+    },
+    {
+      "state": "empty-real",
+      "route": "today",
+      "scale": 100,
+      "file": "/tmp/action-desk-ui-evidence/after-final/state-empty-real-100-today.png",
+      "overflow": false,
+      "tasks": [],
+      "demoLeak": false,
+      "saveWarning": null,
+      "consentWarning": null,
+      "net": "online",
+      "nav": {
+        "top": 743,
+        "bottom": 800,
+        "height": 57,
+        "width": 360
+      },
+      "update": null,
+      "heading": {
+        "top": 118.5,
+        "bottom": 194.09375,
+        "height": 75.59375,
+        "width": 250
+      },
+      "bodyPadding": "81px"
+    },
+    {
+      "state": "empty-real",
+      "route": "today",
+      "scale": 200,
+      "file": "/tmp/action-desk-ui-evidence/after-final/state-empty-real-200-today.png",
+      "overflow": false,
+      "tasks": [],
+      "demoLeak": false,
+      "saveWarning": null,
+      "consentWarning": null,
+      "net": "online",
+      "nav": {
+        "top": 669.40625,
+        "bottom": 800,
+        "height": 130.59375,
+        "width": 360
+      },
+      "update": null,
+      "heading": {
+        "top": 210.390625,
+        "bottom": 588.359375,
+        "height": 377.96875,
+        "width": 250
+      },
+      "bodyPadding": "155px"
+    },
+    {
+      "state": "empty-real",
+      "route": "journey",
+      "scale": 100,
+      "file": "/tmp/action-desk-ui-evidence/after-final/state-empty-real-100-journey.png",
+      "overflow": false,
+      "tasks": [],
+      "demoLeak": false,
+      "saveWarning": null,
+      "consentWarning": null,
+      "net": "online",
+      "nav": {
+        "top": 743,
+        "bottom": 800,
+        "height": 57,
+        "width": 360
+      },
+      "update": null,
+      "heading": {
+        "top": 78,
+        "bottom": 115.796875,
+        "height": 37.796875,
+        "width": 47
+      },
+      "bodyPadding": "81px"
+    },
+    {
+      "state": "empty-real",
+      "route": "journey",
+      "scale": 200,
+      "file": "/tmp/action-desk-ui-evidence/after-final/state-empty-real-200-journey.png",
+      "overflow": false,
+      "tasks": [],
+      "demoLeak": false,
+      "saveWarning": null,
+      "consentWarning": null,
+      "net": "online",
+      "nav": {
+        "top": 669.40625,
+        "bottom": 800,
+        "height": 130.59375,
+        "width": 360
+      },
+      "update": null,
+      "heading": {
+        "top": 144.390625,
+        "bottom": 219.984375,
+        "height": 75.59375,
+        "width": 96
+      },
+      "bodyPadding": "155px"
+    },
+    {
+      "state": "consent-paused",
+      "route": "today",
+      "scale": 100,
+      "file": "/tmp/action-desk-ui-evidence/after-final/state-consent-paused-100-today.png",
+      "overflow": false,
+      "tasks": [],
+      "demoLeak": false,
+      "saveWarning": null,
+      "consentWarning": {
+        "top": 70,
+        "bottom": 215.6875,
+        "height": 145.6875,
+        "width": 328
+      },
+      "net": "online",
+      "nav": {
+        "top": 743,
+        "bottom": 800,
+        "height": 57,
+        "width": 360
+      },
+      "update": null,
+      "heading": {
+        "top": 274.1875,
+        "bottom": 349.78125,
+        "height": 75.59375,
+        "width": 250
+      },
+      "bodyPadding": "81px"
+    },
+    {
+      "state": "consent-paused",
+      "route": "today",
+      "scale": 200,
+      "file": "/tmp/action-desk-ui-evidence/after-final/state-consent-paused-200-today.png",
+      "overflow": false,
+      "tasks": [],
+      "demoLeak": false,
+      "saveWarning": null,
+      "consentWarning": {
+        "top": 136.390625,
+        "bottom": 527.171875,
+        "height": 390.78125,
+        "width": 328
+      },
+      "net": "online",
+      "nav": {
+        "top": 669.40625,
+        "bottom": 800,
+        "height": 130.59375,
+        "width": 360
+      },
+      "update": null,
+      "heading": {
+        "top": 611.171875,
+        "bottom": 989.140625,
+        "height": 377.96875,
+        "width": 250
+      },
+      "bodyPadding": "155px"
+    },
+    {
+      "state": "consent-paused",
+      "route": "journey",
+      "scale": 100,
+      "file": "/tmp/action-desk-ui-evidence/after-final/state-consent-paused-100-journey.png",
+      "overflow": false,
+      "tasks": [],
+      "demoLeak": false,
+      "saveWarning": null,
+      "consentWarning": null,
+      "net": "online",
+      "nav": {
+        "top": 743,
+        "bottom": 800,
+        "height": 57,
+        "width": 360
+      },
+      "update": null,
+      "heading": {
+        "top": 78,
+        "bottom": 115.796875,
+        "height": 37.796875,
+        "width": 47
+      },
+      "bodyPadding": "81px"
+    },
+    {
+      "state": "consent-paused",
+      "route": "journey",
+      "scale": 200,
+      "file": "/tmp/action-desk-ui-evidence/after-final/state-consent-paused-200-journey.png",
+      "overflow": false,
+      "tasks": [],
+      "demoLeak": false,
+      "saveWarning": null,
+      "consentWarning": null,
+      "net": "online",
+      "nav": {
+        "top": 669.40625,
+        "bottom": 800,
+        "height": 130.59375,
+        "width": 360
+      },
+      "update": null,
+      "heading": {
+        "top": 144.390625,
+        "bottom": 219.984375,
+        "height": 75.59375,
+        "width": 96
+      },
+      "bodyPadding": "155px"
+    },
+    {
+      "state": "unknown",
+      "route": "today",
+      "scale": 100,
+      "file": "/tmp/action-desk-ui-evidence/after-final/state-unknown-100-today.png",
+      "overflow": false,
+      "tasks": [],
+      "demoLeak": false,
+      "saveWarning": null,
+      "consentWarning": null,
+      "net": "online",
+      "nav": {
+        "top": 743,
+        "bottom": 800,
+        "height": 57,
+        "width": 360
+      },
+      "update": null,
+      "heading": {
+        "top": 231,
+        "bottom": 306.59375,
+        "height": 75.59375,
+        "width": 250
+      },
+      "bodyPadding": "81px"
+    },
+    {
+      "state": "unknown",
+      "route": "today",
+      "scale": 200,
+      "file": "/tmp/action-desk-ui-evidence/after-final/state-unknown-200-today.png",
+      "overflow": false,
+      "tasks": [],
+      "demoLeak": false,
+      "saveWarning": null,
+      "consentWarning": null,
+      "net": "online",
+      "nav": {
+        "top": 669.40625,
+        "bottom": 800,
+        "height": 130.59375,
+        "width": 360
+      },
+      "update": null,
+      "heading": {
+        "top": 468.390625,
+        "bottom": 846.359375,
+        "height": 377.96875,
+        "width": 250
+      },
+      "bodyPadding": "155px"
+    },
+    {
+      "state": "unknown",
+      "route": "journey",
+      "scale": 100,
+      "file": "/tmp/action-desk-ui-evidence/after-final/state-unknown-100-journey.png",
+      "overflow": false,
+      "tasks": [],
+      "demoLeak": true,
+      "saveWarning": null,
+      "consentWarning": null,
+      "net": "online",
+      "nav": {
+        "top": 743,
+        "bottom": 800,
+        "height": 57,
+        "width": 360
+      },
+      "update": null,
+      "heading": {
+        "top": 190.5,
+        "bottom": 228.296875,
+        "height": 37.796875,
+        "width": 47
+      },
+      "bodyPadding": "81px"
+    },
+    {
+      "state": "unknown",
+      "route": "journey",
+      "scale": 200,
+      "file": "/tmp/action-desk-ui-evidence/after-final/state-unknown-200-journey.png",
+      "overflow": false,
+      "tasks": [],
+      "demoLeak": true,
+      "saveWarning": null,
+      "consentWarning": null,
+      "net": "online",
+      "nav": {
+        "top": 669.40625,
+        "bottom": 800,
+        "height": 130.59375,
+        "width": 360
+      },
+      "update": null,
+      "heading": {
+        "top": 402.390625,
+        "bottom": 477.984375,
+        "height": 75.59375,
+        "width": 96
+      },
+      "bodyPadding": "155px"
+    },
+    {
+      "state": "offline",
+      "route": "today",
+      "scale": 100,
+      "file": "/tmp/action-desk-ui-evidence/after-final/state-offline-100-today.png",
+      "overflow": false,
+      "tasks": [
+        "shot-t2",
+        "shot-t3"
+      ],
+      "demoLeak": true,
+      "saveWarning": null,
+      "consentWarning": null,
+      "net": "offline",
+      "nav": {
+        "top": 743,
+        "bottom": 800,
+        "height": 57,
+        "width": 360
+      },
+      "update": null,
+      "heading": {
+        "top": 231,
+        "bottom": 306.59375,
+        "height": 75.59375,
+        "width": 250
+      },
+      "bodyPadding": "81px"
+    },
+    {
+      "state": "offline",
+      "route": "today",
+      "scale": 200,
+      "file": "/tmp/action-desk-ui-evidence/after-final/state-offline-200-today.png",
+      "overflow": false,
+      "tasks": [
+        "shot-t2",
+        "shot-t3"
+      ],
+      "demoLeak": true,
+      "saveWarning": null,
+      "consentWarning": null,
+      "net": "offline",
+      "nav": {
+        "top": 669.40625,
+        "bottom": 800,
+        "height": 130.59375,
+        "width": 360
+      },
+      "update": null,
+      "heading": {
+        "top": 468.390625,
+        "bottom": 846.359375,
+        "height": 377.96875,
+        "width": 250
+      },
+      "bodyPadding": "155px"
+    },
+    {
+      "state": "offline",
+      "route": "journey",
+      "scale": 100,
+      "file": "/tmp/action-desk-ui-evidence/after-final/state-offline-100-journey.png",
+      "overflow": false,
+      "tasks": [],
+      "demoLeak": true,
+      "saveWarning": null,
+      "consentWarning": null,
+      "net": "offline",
+      "nav": {
+        "top": 743,
+        "bottom": 800,
+        "height": 57,
+        "width": 360
+      },
+      "update": null,
+      "heading": {
+        "top": 190.5,
+        "bottom": 228.296875,
+        "height": 37.796875,
+        "width": 47
+      },
+      "bodyPadding": "81px"
+    },
+    {
+      "state": "offline",
+      "route": "journey",
+      "scale": 200,
+      "file": "/tmp/action-desk-ui-evidence/after-final/state-offline-200-journey.png",
+      "overflow": false,
+      "tasks": [],
+      "demoLeak": true,
+      "saveWarning": null,
+      "consentWarning": null,
+      "net": "offline",
+      "nav": {
+        "top": 669.40625,
+        "bottom": 800,
+        "height": 130.59375,
+        "width": 360
+      },
+      "update": null,
+      "heading": {
+        "top": 402.390625,
+        "bottom": 477.984375,
+        "height": 75.59375,
+        "width": 96
+      },
+      "bodyPadding": "155px"
+    },
+    {
+      "state": "save-failure",
+      "route": "today",
+      "scale": 100,
+      "file": "/tmp/action-desk-ui-evidence/after-final/state-save-failure-100-today.png",
+      "overflow": false,
+      "tasks": [
+        "shot-t2",
+        "shot-t3"
+      ],
+      "demoLeak": true,
+      "saveWarning": {
+        "top": 182.5,
+        "bottom": 483.96875,
+        "height": 301.46875,
+        "width": 328
+      },
+      "consentWarning": null,
+      "net": "online",
+      "nav": {
+        "top": 743,
+        "bottom": 800,
+        "height": 57,
+        "width": 360
+      },
+      "update": null,
+      "heading": {
+        "top": 542.46875,
+        "bottom": 618.0625,
+        "height": 75.59375,
+        "width": 250
+      },
+      "bodyPadding": "81px"
+    },
+    {
+      "state": "save-failure",
+      "route": "today",
+      "scale": 200,
+      "file": "/tmp/action-desk-ui-evidence/after-final/state-save-failure-200-today.png",
+      "overflow": false,
+      "tasks": [
+        "shot-t2",
+        "shot-t3"
+      ],
+      "demoLeak": true,
+      "saveWarning": {
+        "top": 394.390625,
+        "bottom": 1288.359375,
+        "height": 893.96875,
+        "width": 328
+      },
+      "consentWarning": null,
+      "net": "online",
+      "nav": {
+        "top": 669.40625,
+        "bottom": 800,
+        "height": 130.59375,
+        "width": 360
+      },
+      "update": null,
+      "heading": {
+        "top": 1372.359375,
+        "bottom": 1750.328125,
+        "height": 377.96875,
+        "width": 250
+      },
+      "bodyPadding": "155px"
+    },
+    {
+      "state": "save-failure",
+      "route": "journey",
+      "scale": 100,
+      "file": "/tmp/action-desk-ui-evidence/after-final/state-save-failure-100-journey.png",
+      "overflow": false,
+      "tasks": [],
+      "demoLeak": true,
+      "saveWarning": {
+        "top": 182.5,
+        "bottom": 483.96875,
+        "height": 301.46875,
+        "width": 328
+      },
+      "consentWarning": null,
+      "net": "online",
+      "nav": {
+        "top": 743,
+        "bottom": 800,
+        "height": 57,
+        "width": 360
+      },
+      "update": null,
+      "heading": {
+        "top": 511.96875,
+        "bottom": 549.765625,
+        "height": 37.796875,
+        "width": 47
+      },
+      "bodyPadding": "81px"
+    },
+    {
+      "state": "save-failure",
+      "route": "journey",
+      "scale": 200,
+      "file": "/tmp/action-desk-ui-evidence/after-final/state-save-failure-200-journey.png",
+      "overflow": false,
+      "tasks": [],
+      "demoLeak": true,
+      "saveWarning": {
+        "top": 394.390625,
+        "bottom": 1288.359375,
+        "height": 893.96875,
+        "width": 328
+      },
+      "consentWarning": null,
+      "net": "online",
+      "nav": {
+        "top": 669.40625,
+        "bottom": 800,
+        "height": 130.59375,
+        "width": 360
+      },
+      "update": null,
+      "heading": {
+        "top": 1316.359375,
+        "bottom": 1391.953125,
+        "height": 75.59375,
+        "width": 96
+      },
+      "bodyPadding": "155px"
+    },
+    {
+      "state": "update-ready",
+      "route": "today",
+      "scale": 100,
+      "file": "/tmp/action-desk-ui-evidence/after-final/state-update-ready-100-today.png",
+      "overflow": false,
+      "tasks": [
+        "shot-t2",
+        "shot-t3"
+      ],
+      "demoLeak": true,
+      "saveWarning": null,
+      "consentWarning": null,
+      "net": "online",
+      "nav": {
+        "top": 743,
+        "bottom": 800,
+        "height": 57,
+        "width": 360
+      },
+      "update": {
+        "top": 665,
+        "bottom": 731,
+        "height": 66,
+        "width": 336
+      },
+      "heading": {
+        "top": 231,
+        "bottom": 306.59375,
+        "height": 75.59375,
+        "width": 250
+      },
+      "bodyPadding": "159px"
+    },
+    {
+      "state": "update-ready",
+      "route": "today",
+      "scale": 200,
+      "file": "/tmp/action-desk-ui-evidence/after-final/state-update-ready-200-today.png",
+      "overflow": false,
+      "tasks": [
+        "shot-t2",
+        "shot-t3"
+      ],
+      "demoLeak": true,
+      "saveWarning": null,
+      "consentWarning": null,
+      "net": "online",
+      "nav": {
+        "top": 669.40625,
+        "bottom": 800,
+        "height": 130.59375,
+        "width": 360
+      },
+      "update": {
+        "top": 506,
+        "bottom": 657,
+        "height": 151,
+        "width": 336
+      },
+      "heading": {
+        "top": 468.390625,
+        "bottom": 846.359375,
+        "height": 377.96875,
+        "width": 250
+      },
+      "bodyPadding": "318px"
+    },
+    {
+      "state": "update-ready",
+      "route": "journey",
+      "scale": 100,
+      "file": "/tmp/action-desk-ui-evidence/after-final/state-update-ready-100-journey.png",
+      "overflow": false,
+      "tasks": [],
+      "demoLeak": true,
+      "saveWarning": null,
+      "consentWarning": null,
+      "net": "online",
+      "nav": {
+        "top": 743,
+        "bottom": 800,
+        "height": 57,
+        "width": 360
+      },
+      "update": {
+        "top": 665,
+        "bottom": 731,
+        "height": 66,
+        "width": 336
+      },
+      "heading": {
+        "top": 190.5,
+        "bottom": 228.296875,
+        "height": 37.796875,
+        "width": 47
+      },
+      "bodyPadding": "159px"
+    },
+    {
+      "state": "update-ready",
+      "route": "journey",
+      "scale": 200,
+      "file": "/tmp/action-desk-ui-evidence/after-final/state-update-ready-200-journey.png",
+      "overflow": false,
+      "tasks": [],
+      "demoLeak": true,
+      "saveWarning": null,
+      "consentWarning": null,
+      "net": "online",
+      "nav": {
+        "top": 669.40625,
+        "bottom": 800,
+        "height": 130.59375,
+        "width": 360
+      },
+      "update": {
+        "top": 506,
+        "bottom": 657,
+        "height": 151,
+        "width": 336
+      },
+      "heading": {
+        "top": 402.390625,
+        "bottom": 477.984375,
+        "height": 75.59375,
+        "width": 96
+      },
+      "bodyPadding": "318px"
+    },
+    {
+      "state": "mix",
+      "route": "today",
+      "scale": 100,
+      "file": "/tmp/action-desk-ui-evidence/after-final/state-mix-100-today.png",
+      "overflow": false,
+      "tasks": [
+        "shot-t2",
+        "shot-t3"
+      ],
+      "demoLeak": true,
+      "saveWarning": null,
+      "consentWarning": null,
+      "net": "online",
+      "nav": {
+        "top": 743,
+        "bottom": 800,
+        "height": 57,
+        "width": 360
+      },
+      "update": null,
+      "heading": {
+        "top": 231,
+        "bottom": 306.59375,
+        "height": 75.59375,
+        "width": 250
+      },
+      "bodyPadding": "81px"
+    },
+    {
+      "state": "mix",
+      "route": "today",
+      "scale": 200,
+      "file": "/tmp/action-desk-ui-evidence/after-final/state-mix-200-today.png",
+      "overflow": false,
+      "tasks": [
+        "shot-t2",
+        "shot-t3"
+      ],
+      "demoLeak": true,
+      "saveWarning": null,
+      "consentWarning": null,
+      "net": "online",
+      "nav": {
+        "top": 669.40625,
+        "bottom": 800,
+        "height": 130.59375,
+        "width": 360
+      },
+      "update": null,
+      "heading": {
+        "top": 507.390625,
+        "bottom": 885.359375,
+        "height": 377.96875,
+        "width": 250
+      },
+      "bodyPadding": "155px"
+    },
+    {
+      "state": "mix",
+      "route": "journey",
+      "scale": 100,
+      "file": "/tmp/action-desk-ui-evidence/after-final/state-mix-100-journey.png",
+      "overflow": false,
+      "tasks": [],
+      "demoLeak": true,
+      "saveWarning": null,
+      "consentWarning": null,
+      "net": "online",
+      "nav": {
+        "top": 743,
+        "bottom": 800,
+        "height": 57,
+        "width": 360
+      },
+      "update": null,
+      "heading": {
+        "top": 190.5,
+        "bottom": 228.296875,
+        "height": 37.796875,
+        "width": 113
+      },
+      "bodyPadding": "81px"
+    },
+    {
+      "state": "mix",
+      "route": "journey",
+      "scale": 200,
+      "file": "/tmp/action-desk-ui-evidence/after-final/state-mix-200-journey.png",
+      "overflow": false,
+      "tasks": [],
+      "demoLeak": true,
+      "saveWarning": null,
+      "consentWarning": null,
+      "net": "online",
+      "nav": {
+        "top": 669.40625,
+        "bottom": 800,
+        "height": 130.59375,
+        "width": 360
+      },
+      "update": null,
+      "heading": {
+        "top": 441.390625,
+        "bottom": 516.984375,
+        "height": 75.59375,
+        "width": 223
+      },
+      "bodyPadding": "155px"
+    }
+  ]
+}

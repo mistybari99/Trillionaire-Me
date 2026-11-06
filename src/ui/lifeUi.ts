@@ -217,7 +217,7 @@ function stepsCard(rec: TMRecord, lang: Locale): HTMLElement {
     const mine = all.filter((r) => r.values["task.not_true_on"]?.state !== "value" && goalIdsOf(r).includes(n.id)).sort((a, b) => a.id.localeCompare(b.id));
     return h("div", { "data-steps-of": n.id }, h("h3", {}, n.depth === 0 ? n.title : `${"· ".repeat(n.depth)}${n.title}`),
       ...habitRows(n, recs, lang),
-      mine.length ? h("ul", { class: "plain" }, ...mine.map((r) => h("li", { "data-step": r.id }, h("strong", {}, textOf(r, "task.title")), doneOf(r) ? h("span", { class: "tag ok" }, ` ${t("gl.steps.done", lang)}`) : null, " ", planByTag(r, lang), " ", goalChips(r, lang, recs, { exclude: n.id, prefix: "gl.also" }))))
+      mine.length ? h("ul", { class: "plain" }, ...mine.map((r) => h("li", { "data-step": r.id }, h("strong", {}, textOf(r, "task.title")), doneOf(r) ? h("span", { class: "tag ok" }, ` ${t("gl.steps.done", lang)}`) : null, " ", planByTag(r, lang), " ", goalChips(r, lang, recs, { exclude: n.id, prefix: "gl.also", fullTitles: true }))))
         : h("p", { class: "muted" }, t("gl.steps.none", lang)));
   };
   return h("section", { class: "card", "data-goal-steps": rec.id }, h("h2", { class: "card-h" }, t("gl.steps.title", lang)), ...flatten([node]).map(block),
@@ -348,7 +348,13 @@ export function goalScreen(id: string): HTMLElement {
   // Read-only SWOT summary so the four lists are visible as text; unknown lists say so.
   const swotView = h("section", { class: "card", "data-swot-view": "1" }, h("h2", { class: "card-h" }, t("swot.title", lang)),
     h("div", { class: "swot-grid" }, ...SWOT_KEYS.map((k) => { const items = readList(rec.values[swotField(k)]); return h("div", { "data-swot-box": k }, h("h3", {}, t(`swot.${k}` as Key, lang)), items ? h("ul", {}, ...items.map((i) => h("li", {}, i))) : h("p", { class: "muted", "data-swot-empty": k }, t("swot.empty", lang))); })));
-  return h("main", {}, back, h("h1", {}, textOf(rec, "goal.title")), progress, textOf(rec, "goal.target_date") ? remindRow("goal", id, lang) : null, stepsCard(rec, lang), weightCard(rec, lang), placeCard(rec, lang), statusCard(rec, lang), goalAreaCard(rec, lang), smartForm, swotView, swotForm, goalDeleteCard(rec, lang));
+  const node = nodeById(buildTree(allRecs()), rec.id)!;
+  const parent = node.parentId ? findRec(node.parentId) : null;
+  const context = h("header", { class: "action-desk-header", "data-goal-context": id },
+    h("h1", {}, textOf(rec, "goal.title")),
+    h("p", { class: "tags" }, nsTag(rec.ns, lang), h("span", { class: "tag" }, t(`goal.status.${goalStatusOf(rec)}` as Key, lang)), h("span", { class: "tag" }, kindLabel(node.kind, lang))),
+    parent ? h("p", { class: "muted" }, t("gt.partof", lang), " ", link(`#/journey/goal/${parent.id}`, "crumb", textOf(parent, "goal.title"))) : null);
+  return h("main", { class: "action-desk action-desk-goal" }, back, context, progress, textOf(rec, "goal.target_date") ? remindRow("goal", id, lang) : null, stepsCard(rec, lang), weightCard(rec, lang), placeCard(rec, lang), statusCard(rec, lang), goalAreaCard(rec, lang), smartForm, swotView, swotForm, goalDeleteCard(rec, lang));
 }
 
 // Weighting of this goal's steps: equal or by size. Changing it never changes the overall percent (each step is counted once there).

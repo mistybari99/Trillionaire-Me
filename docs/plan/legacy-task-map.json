@@ -1,0 +1,961 @@
+{
+  "baseline_commit": "6136ba861c85ad1630af2443e56d422a6a8a0276",
+  "archive": "docs/plan/archive/PLAN_TRACKER_2026-11-03.md",
+  "policy": "Each archived task ID maps to exactly one active package. Archived status is historical evidence, not current acceptance. Broad packages retain every mapped row as acceptance work; split into child IDs when execution starts. REM-01..09 expand the archived grouped reminder steps; REM-10 is the phone check. G3 IDs refer to archived prose gaps.",
+  "mappings": [
+    {
+      "legacy_id": "SET-1.01",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-1.02",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-1.03",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-1.04",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-1.05",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-1.06",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-1.07",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-1.08",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-1.09",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-1.10",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-1.11",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-1.T1",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-1.T2",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-1.T3",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-1.T4",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-1.T5",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-1.T6",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-1.T7",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-1.T8",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-1.T9",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-1.X1",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-1.X2",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-2.01",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-2.02",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-2.03",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-2.04",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-2.05",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-2.06",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-2.07",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-2.08",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-2.T1",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-2.T2",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-2.T3",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-2.T4",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-2.T5",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-3a.1",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-3a.2",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-3a.3",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-3a.4",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-3a.5",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-3a.T",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-3b.1",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-3b.2",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-3b.3",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-3b.4",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-3b.5",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-3b.T",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-3c.1",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-3c.2",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-3c.T",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-3d.1",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-3d.2",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-3d.3",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-3d.T",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-3e.1",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-3e.T",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-3f.1",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-3f.2",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-3f.T",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-3g.1",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-3g.T",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-3h.1",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-4.01",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-4.02",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-4.03",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-4.04",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-4.T1",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-4.T2",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-5.01",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-5.T",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-6.01",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-6.02",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-6.03",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-6.04",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-6.05",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-6.06",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-6.07",
+      "work_package": "VERIFY-02"
+    },
+    {
+      "legacy_id": "SET-6.08",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-6.09",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-R.01",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-R.02",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-R.03",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-R.04",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-R.05",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-R.06",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-R.07",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-R.08",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-R.09",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-R.10",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-R.11",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "SET-R.O1",
+      "work_package": "OWNER-02"
+    },
+    {
+      "legacy_id": "SET-R.O2",
+      "work_package": "OWNER-04"
+    },
+    {
+      "legacy_id": "TD-1.1",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "TD-1.2",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "TD-1.3",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "TD-1.4",
+      "work_package": "VERIFY-02"
+    },
+    {
+      "legacy_id": "TD-2.1",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "TD-3.1",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "TD-3.2",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "TD-3.3",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "TD-4.1",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "TD-5.1",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "TD-5.2",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "TD-6.1",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "TD-7.1",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "TD-7.2",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "TD-7.3",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "TD-7.4",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "TD-7.5",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "TD-8.1",
+      "work_package": "VERIFY-04"
+    },
+    {
+      "legacy_id": "TD-8.2",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "TD-8.3",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "TD-8.4",
+      "work_package": "BUILD-01"
+    },
+    {
+      "legacy_id": "TD-9.1",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "TD-10.1",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "TD-11.0",
+      "work_package": "ORG-01"
+    },
+    {
+      "legacy_id": "TD-O.1",
+      "work_package": "OWNER-01"
+    },
+    {
+      "legacy_id": "TD-O.2",
+      "work_package": "OWNER-02"
+    },
+    {
+      "legacy_id": "TD-O.3",
+      "work_package": "OWNER-03"
+    },
+    {
+      "legacy_id": "TD-O.4",
+      "work_package": "OWNER-04"
+    },
+    {
+      "legacy_id": "TD-O.5",
+      "work_package": "OWNER-07"
+    },
+    {
+      "legacy_id": "TD-O.6",
+      "work_package": "DECISION-02"
+    },
+    {
+      "legacy_id": "AU-01",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "AU-02",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "AU-03",
+      "work_package": "ORG-01"
+    },
+    {
+      "legacy_id": "AU-04",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "AU-05",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "AU-06",
+      "work_package": "OWNER-01"
+    },
+    {
+      "legacy_id": "AU-07",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "AU-08",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "AU-09",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "AU-10",
+      "work_package": "OWNER-02"
+    },
+    {
+      "legacy_id": "AU-11",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "AU-12",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "AU-13",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "AU-14",
+      "work_package": "PERF-01"
+    },
+    {
+      "legacy_id": "AU-15",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "AU-16",
+      "work_package": "OWNER-05"
+    },
+    {
+      "legacy_id": "AU-17",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "AU-18",
+      "work_package": "VERIFY-04"
+    },
+    {
+      "legacy_id": "AU-19",
+      "work_package": "DECISION-02"
+    },
+    {
+      "legacy_id": "AU-20",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "AU-21",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "AU-22",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "AU-23",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "AU-24",
+      "work_package": "DECISION-04"
+    },
+    {
+      "legacy_id": "AU-25",
+      "work_package": "OWNER-05"
+    },
+    {
+      "legacy_id": "DL-01",
+      "work_package": "DECISION-02"
+    },
+    {
+      "legacy_id": "DL-02",
+      "work_package": "BUILD-01"
+    },
+    {
+      "legacy_id": "DL-03",
+      "work_package": "DECISION-01"
+    },
+    {
+      "legacy_id": "DL-04",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "DL-05",
+      "work_package": "OWNER-06"
+    },
+    {
+      "legacy_id": "DL-06",
+      "work_package": "ORG-01"
+    },
+    {
+      "legacy_id": "DL-07",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "B12-01",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "B12-02",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "B12-03",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "B12-04",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "B12-05",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "B12-06",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "B12-07",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "B12-08",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "B12-09",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "B12-10",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "B12-11",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "B12-12",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "B12-13",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "B12-14",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "B12-15",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "B12-16",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "B12-17",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "B12-18",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "B12-19",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "B12-20",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "B12-21",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "B12-22",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "B12-23",
+      "work_package": "DECISION-01"
+    },
+    {
+      "legacy_id": "B12-26",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "B12-27",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "B12-28",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "B12-24",
+      "work_package": "DECISION-02"
+    },
+    {
+      "legacy_id": "B12-25",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "N3-01",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "N3-02",
+      "work_package": "VERIFY-03"
+    },
+    {
+      "legacy_id": "N3-03",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "N3-04",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "N3-05",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "N3-06",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "N3-07",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "N3-08",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "N3-09",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "N3-10",
+      "work_package": "VERIFY-02"
+    },
+    {
+      "legacy_id": "N3-11",
+      "work_package": "VERIFY-04"
+    },
+    {
+      "legacy_id": "N3-12",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "N3-13",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "N3-14",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "N3-15",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "N3-16",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "N3-17",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "N3-18",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "N3-19",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "N3-20",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "N3-21",
+      "work_package": "VERIFY-04"
+    },
+    {
+      "legacy_id": "N3-22",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "N3-23",
+      "work_package": "OWNER-07"
+    },
+    {
+      "legacy_id": "N4-01",
+      "work_package": "VERIFY-02"
+    },
+    {
+      "legacy_id": "N4-02",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "N4-03",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "N4-04",
+      "work_package": "ORG-01"
+    },
+    {
+      "legacy_id": "N4-05",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "N4-06",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "N4-07",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "N4-08",
+      "work_package": "OWNER-07"
+    },
+    {
+      "legacy_id": "REM-01",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "REM-02",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "REM-03",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "REM-04",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "REM-05",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "REM-06",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "REM-07",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "REM-08",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "REM-09",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "REM-10",
+      "work_package": "OWNER-02"
+    },
+    {
+      "legacy_id": "G3-01",
+      "work_package": "BUILD-02"
+    },
+    {
+      "legacy_id": "G3-02",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "G3-03",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "G3-04",
+      "work_package": "VERIFY-02"
+    },
+    {
+      "legacy_id": "G3-05",
+      "work_package": "VERIFY-03"
+    },
+    {
+      "legacy_id": "G3-06",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "G3-07",
+      "work_package": "VERIFY-04"
+    },
+    {
+      "legacy_id": "G3-08",
+      "work_package": "VERIFY-01"
+    },
+    {
+      "legacy_id": "G3-09",
+      "work_package": "DECISION-03"
+    },
+    {
+      "legacy_id": "G3-10",
+      "work_package": "OWNER-01"
+    }
+  ],
+  "archives": [
+    {
+      "path": "docs/plan/archive/PLAN_TRACKER_2026-11-03.md",
+      "source": "docs/plan/PLAN_TRACKER.md",
+      "sha256": "ced9536f7b26b58e2b7976a3d6e94b2aef23fdc1dff078ebece56d80a6c530d7"
+    },
+    {
+      "path": "docs/plan/archive/TODO_2026-11-03.md",
+      "source": "docs/TODO.md",
+      "sha256": "bfe81fe3a262b8dc5665f83d47f699afdf6c09e6e054506d35620bb0c5c1013f"
+    },
+    {
+      "path": "docs/plan/archive/ROADMAP_2026-11-03.md",
+      "source": "docs/ROADMAP.md",
+      "sha256": "6ffbdb5730cfeaf63b6c07b26e5f9b4dd5db7593f882dd94cbc441227dc9ae16"
+    },
+    {
+      "path": "docs/plan/archive/PLAN_2026-11-03.md",
+      "source": "docs/PLAN.md",
+      "sha256": "f8accff66d96582d2b386c98e6bf7dcda752e0b83102c8bb4fb2de69e1870658"
+    }
+  ]
+}

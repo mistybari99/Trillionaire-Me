@@ -1,4 +1,4 @@
-// Backup / restore (TM-REQ M20, G2). Versioned JSON with a checksum; restore is all-or-nothing and namespace-safe.
+// Backup / restore (TM-REQ M20, G2). Versioned JSON with checksum, namespace checks and verified compensation on write failure.
 import type { RecordRepo } from "./repo";
 import { guardWrite } from "./repo";
 import type { Namespace, TMRecord } from "./types";
@@ -21,6 +21,45 @@ export async function createBackup(repo: RecordRepo, ns: Namespace, now = new Da
 
 export class BackupError extends Error {}
 
+/** A failed write was rolled back only when every original record could be verified. */
+export class ReplacementError extends BackupError {
+  constructor(readonly unchanged: boolean) {
+    super(unchanged ? "the write failed; nothing was changed" : "the write failed; the original entries could not all be recovered");
+  }
+}
+
+export interface NamespaceReplacement { ns: Namespace; records: TMRecord[] }
+
+/** Replace all parts as one recovery operation, including the part whose write fails. */
+export async function replaceNamespaces(repo: RecordRepo, parts: NamespaceReplacement[]): Promise<void> {
+  if (new Set(parts.map((p) => p.ns)).size !== parts.length) throw new BackupError("duplicate backup namespace");
+  for (const p of parts) if (p.records.some((r) => r.ns !== p.ns)) throw new BackupError("record namespace does not match backup namespace");
+  const before: NamespaceReplacement[] = [];
+  for (const p of parts) before.push({ ns: p.ns, records: await repo.list(p.ns) });
+  const replace = async (p: NamespaceReplacement) => {
+    const old = await repo.list(p.ns); const nextIds = new Set(p.records.map((r) => r.id));
+    for (const r of p.records) await repo.put(r);
+    for (const r of old) if (!nextIds.has(r.id)) await repo.delete(p.ns, r.id);
+  };
+  try { for (const p of parts) await replace(p); }
+  catch {
+    let recovered = true;
+    // Continue after each failed compensation: one full disk must not prevent other parts recovering.
+    for (const p of before) {
+      for (const r of p.records) { try { await repo.put(r); } catch { recovered = false; } }
+      try {
+        const oldIds = new Set(p.records.map((r) => r.id));
+        for (const r of await repo.list(p.ns)) if (!oldIds.has(r.id)) {
+          try { await repo.delete(p.ns, r.id); } catch { recovered = false; }
+        }
+        const canonical = (rs: TMRecord[]) => JSON.stringify([...rs].sort((a, b) => a.id.localeCompare(b.id)));
+        if (canonical(await repo.list(p.ns)) !== canonical(p.records)) recovered = false;
+      } catch { recovered = false; }
+    }
+    throw new ReplacementError(recovered);
+  }
+}
+
 export function parseBackup(text: string): BackupFile {
   let b: BackupFile;
   try { b = JSON.parse(text) as BackupFile; } catch { throw new BackupError("not valid JSON"); }
@@ -33,22 +72,11 @@ export function parseBackup(text: string): BackupFile {
 
 /**
  * Replaces the records of one namespace without ever emptying it first: the new records are written over the old ones, then the
- * old records that are not in the new set are removed. If any write fails, the old records are put back and the error is thrown,
- * so a failure never leaves an empty or half-filled store.
+ * old records that are not in the new set are removed. A failed write triggers compensation and verification;
+ * ReplacementError.unchanged is false if storage also prevents recovery.
  */
 export async function replaceNamespace(repo: RecordRepo, ns: Namespace, next: TMRecord[]): Promise<void> {
-  const old = await repo.list(ns);
-  const oldIds = new Set(old.map((r) => r.id)); const nextIds = new Set(next.map((r) => r.id));
-  try {
-    for (const r of next) await repo.put(r);
-    for (const o of old) if (!nextIds.has(o.id)) await repo.delete(ns, o.id);
-  } catch {
-    try {
-      for (const o of old) await repo.put(o);
-      for (const r of next) if (!oldIds.has(r.id)) await repo.delete(ns, r.id);
-    } catch { throw new BackupError("the write failed and the old copy could not be put back"); }
-    throw new BackupError("the write failed; nothing was changed");
-  }
+  await replaceNamespaces(repo, [{ ns, records: next }]);
 }
 
 /** Replace the namespace contents with the backup. Validates everything first, so a bad file changes nothing; a failed write is rolled back. */
