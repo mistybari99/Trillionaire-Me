@@ -162,3 +162,11 @@ Application baseline `6136ba8`: types/build pass, 1,941 unit tests pass in 158 f
 ## 5 Nov 2026 — Reliability follow-up
 
 AUD-01/AUD-02/AUD-03 remediation: 1,976 unit tests in 162 files, 92 Chromium checks, types/build pass. New failure-path tests include persistent failed compensation, cross-namespace recovery, durable write completion, stale retries and interrupted offline install/retry. See `docs/audit/RELIABILITY_FIXES_2026-11-05.md` and its machine-readable evidence. No workbook or human acceptance status changed; production gate activation and physical-device checks remain open.
+
+## Recheck — 6 November 2026 (VERIFY-04)
+The numbers above are from 24 Oct and are historical. Rerun on build `5ab205e` (clean worktree, same code as live `6b14df4` plus docs/tools):
+- `node tools/evidence.mjs`: vitest 2068/2068 passed, 0 failed; 44 TM-TST rows with passing evidence (Pass 14, Partial 30, Fail 0, none with `evidenceOk` false). The result file was identical to the committed one, so no row changed status.
+- `python3 tools/update_register.py` regenerated the v2_1 evidence copy from the untouched v2_0 (sha1 checked before and after). Only the Change Log line changed (date and test count).
+- Counts: 184 requirement rows (172 original + 12 Life Success additions); 172 TM-TST rows, of which 44 linked (14 Pass, 30 Partial) and 128 not linked. Requirement status: Verified for G1 scope 14, Partial 30, Draft 4, Not verified 136.
+- Gap list: 86 requirement rows needed by G0-G3 still show "Not verified"; see `EVIDENCE_GAPS_2026-11-06.md`. Rows are not upgraded without a linked test. Human gates (device, reviewer, usability, owner decisions) stay open.
+- Visual references: the Register sheet has 37 rows; `docs/design/owner-demand-audit.md` mentions PARTIAL on 67 lines and MISSING on 53 (line counts, not item counts). Item-level reconciliation against present code is BUILD-03.
