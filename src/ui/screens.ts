@@ -1,3 +1,6 @@
+import { rootBar } from "./quickNavigationUi";
+import { getTabActions } from "./tabActions";
+import { getPresentationPreferences } from "./presentationPreferences";
 import { todaysInspiration, THEME_LABEL } from "../library/inspiration";
 import { groupByHorizon, HORIZONS, type HorizonGoal } from "../core/horizon";
 import { h } from "./dom";
@@ -11,7 +14,7 @@ import { pausedCard } from "./privacyUi";
 import { disclaimers, fieldHelp, num, showNeed, valueEl } from "./components";
 import { STAGES, DEMO_DATE, DEMO_TASKS } from "../demo/seed";
 import { MODULES } from "../modules/capability";
-import { buildLegend, moduleCard, moduleDetails } from "./capabilityUi";
+import { buildLegend, moduleCard } from "./capabilityUi";
 import { ENTITIES } from "../schema/entities";
 import { FIELDS, CATALOG_VERSION, intakeSteps, fieldById } from "../catalog/fields";
 import { semanticLabel } from "../catalog/labels";
@@ -80,10 +83,8 @@ import { research, safeQuery } from "../core/research";
 import { ownOptions, saveOwnOption, saveSearchResults, savedSearchResults } from "../core/savedLists";
 import { wikipedia } from "../adapters/wikipedia";
 import { GLOSSARY } from "../catalog/glossary";
-import { PRAYER_KEYS, dhakaNow, prayerClock, isoDate, type PrayerKey } from "../core/prayer";
-import { resolvedPrayerTimes } from "./prayerSync";
-import { sourceLine } from "./prayerSyncUi";
-import { markedOn, prayerLogId, prayerLogRecord } from "../core/prayerLog";
+import { dhakaNow, isoDate } from "../core/prayer";
+import { prayerControls } from "./prayerMarksUi";
 import { fastLogId, fastLogRecord, isFastMarked } from "../core/fastLog";
 import { goalIdsOf, validateLinks, withGoals } from "../core/taskGoals";
 import { linkStats } from "../core/goalPlan";
@@ -1004,11 +1005,7 @@ function goalDateReminders(lang: Locale): HTMLElement | null {
     ...list.map((r) => h("p", { "data-goal-reminder": r.goalId }, t("remind.goal", lang, { title: r.title, date: r.targetDate }), " ", link(`#/journey/goal/${r.goalId}`, "crumb", t("remind.goal.open", lang)))));
 }
 
-function workspaceShortcuts(lang: Locale, screen: "today" | "journey", entries: HTMLElement[]): HTMLElement {
-  return h("section", { class: "quick-access workspace-shortcuts", "data-shortcuts": screen, "aria-labelledby": `${screen}-shortcuts-title` },
-    h("h2", { id: `${screen}-shortcuts-title`, class: "card-h" }, t("usability.shortcuts", lang)),
-    h("div", { class: "quick-access-grid" }, ...entries));
-}
+
 
 export function today(): HTMLElement {
   const lang = L(); const cp = currentPlan();
@@ -1032,11 +1029,7 @@ export function today(): HTMLElement {
       h("h1", {}, t("home.title", lang)),
       h("p", { class: "muted" }, activeNs() === "real" ? todayIso() : valueEl(tb(DEMO_DATE, lang), "DEMO", lang)),
       pauseChip(lang)),
-    workspaceShortcuts(lang, "today", [
-      link("#/diary/plan", "shortcut-link", t("plan.title", lang)),
-      link("#/journey/goals", "shortcut-link", t("goals.link", lang)),
-      link("#/diary/money", "shortcut-link", t("money.title", lang)),
-      link("#/capture", "shortcut-link", t("capture.link", lang))]),
+    rootBar("today", lang),
     // An already-visible recommended task owns its explanation and controls. An unscheduled
     // recommendation keeps one compact navigation band; never invent a placement for it.
     selectedVisible ? null : nextActionCard(lang, selected.action, true),
@@ -1134,14 +1127,13 @@ export function journey(): HTMLElement {
   const cur = currentIndex(stageData().passed);
   const stage = stagesFor(prefs.stageTemplate)[cur];
   const goalsCard = journeyGoalsCard(lang);
-  // Move the existing launch into the first tools row so Goals stays a single entry.
-  const goalsLink = goalsCard.querySelector<HTMLAnchorElement>('a[href="#/journey/goals"]')
-    ?? link("#/journey/goals", "shortcut-link", t("goals.link", lang));
-  goalsLink.className = "shortcut-link";
+  const navigation = getPresentationPreferences().tabNavigation === "navigate";
+  if (navigation) goalsCard.querySelector('a[href="#/journey/goals"]')?.remove();
+  const promoted = new Set(getTabActions("journey").map((item) => item.href));
   const toolGroup = (group: "plan" | "review" | "explore", routes: Array<[string, Key]>) =>
     h("section", { class: "tool-group", "data-tool-group": group, "aria-labelledby": `journey-tools-${group}` },
       h("h2", { class: "card-h", id: `journey-tools-${group}` }, t(`desk.tools.${group}` as Key, lang)),
-      h("div", { class: "tool-grid" }, ...routes.map(([route, key]) => link(route, "btn ghost", t(key, lang)))));
+      h("div", { class: "tool-grid" }, ...routes.filter(([route]) => !navigation || !promoted.has(route)).map(([route, key]) => link(route, "btn ghost", t(key, lang)))));
   return h("main", { class: "scr scr-journey action-desk journey-workspace" },
     h("div", { class: "logo-row" }, logo3d(48, lang), h("h1", {}, t("journey.title", lang))),
     passedBanner(lang),
@@ -1149,7 +1141,7 @@ export function journey(): HTMLElement {
       h("h2", { class: "card-h" }, t("stage.currentLabel", lang)),
       stage ? valueEl(`${stage.code} · ${tb(stage.name, lang)}`, activeNs() === "real" ? "ESTIMATE" : "DEMO", lang)
         : h("p", {}, t("stage.alldone", lang))),
-    workspaceShortcuts(lang, "journey", [link("#/diary/plan", "shortcut-link", t("plan.title", lang)), goalsLink]),
+    rootBar("journey", lang),
     goalsCard,
     goalFunnelHero(ownHorizonGoals(), (() => { const tk = allRecs().filter((r) => r.entity === "task"); return tk.length ? tk.filter(isOpenTask).length : null; })(), lang),
     h("div", { class: "journey-tools" },
@@ -1162,7 +1154,7 @@ export function journey(): HTMLElement {
     viewBar("journey", lang),
     stageLadder(lang),
     stagePanel(lang),
-    moduleDetails("journey", lang),
+    link("#/more/status", "crumb", t("cap.details", lang)),
     disclaimers(lang));
 }
 
@@ -1176,6 +1168,7 @@ export function diary(): HTMLElement {
     : t("diary.next.all_done", lang);
   return h("main", { class: "scr scr-diary" },
     h("h1", {}, t("diary.title", lang)),
+    rootBar("diary", lang),
     h("p", { class: "sub" }, t("diary.intro", lang)),
     profileCard(lang),
     h("section", { class: "card", "aria-label": t("diary.completeness", lang) },
@@ -1183,13 +1176,9 @@ export function diary(): HTMLElement {
       h("div", { class: "bar", role: "img", "aria-label": `${c.pct}%` }, h("i", { style: `width:${c.pct}%` })),
       h("p", { class: "muted" }, t("diary.completeness.detail", lang, { filled: num(c.filled, lang), total: num(c.total, lang), addressed: num(c.addressed, lang) }))),
     h("section", { class: "card", "data-next": "1" }, h("h2", { class: "card-h", }, t("diary.next", lang)), h("p", {}, nextText)),
-    link("#/diary/intake", "cta", t("diary.start", lang)),
-    link("#/diary/plan", "btn ghost", t("plan.title", lang)),
-    link("#/diary/money", "btn ghost", t("money.title", lang)),
-    link("#/diary/ventures", "btn ghost", t("ven.link", lang)),
+    getPresentationPreferences().tabNavigation === "menu" ? link("#/diary/intake", "cta", t("diary.start", lang)) : null,
     link("#/diary/team", "btn ghost", t("team.link", lang)),
-    link("#/diary/health", "btn ghost", t("hl.title", lang)),
-    moduleDetails("diary", lang),
+    link("#/more/status", "crumb", t("cap.details", lang)),
     disclaimers(lang));
 }
 
@@ -1298,12 +1287,6 @@ export function intake(stepParam: string | undefined): HTMLElement {
 }
 
 // ---- Prayer times, one-tap marks and alert settings (M13). Marks use the prayer_log entity, demo namespace (real stays closed, D-B). ----
-function togglePrayerMark(day: string, k: PrayerKey) {
-  const id = prayerLogId(day, k);
-  if (store[activeNs()].get(id)) store[activeNs()].delete(id);
-  else putMode(prayerLogRecord(day, k, new Date().toISOString()));
-}
-
 function toggleFastMark(day: string) {
   const id = fastLogId(day);
   if (store[activeNs()].get(id)) store[activeNs()].delete(id);
@@ -1314,7 +1297,7 @@ function toggleFastMark(day: string) {
 function fastCard(lang: Locale): HTMLElement {
   const day = isoDate(dhakaNow(Date.now()).date);
   const marked = isFastMarked(allRecs(), day);
-  return h("div", { class: "card", "data-fast": day },
+  return h("div", { class: "card", id: "deen-fasting", "data-fast": day },
     h("h2", { class: "card-h" }, t("deen.fast.title", lang)),
     h("p", { class: "muted" }, t("deen.fast.hint", lang)),
     h("button", { class: marked ? "btn" : "btn ghost", type: "button", "data-act": "fast-mark", "aria-pressed": String(marked),
@@ -1322,37 +1305,17 @@ function fastCard(lang: Locale): HTMLElement {
     h("p", { class: "note" }, t("deen.fast.note", lang)));
 }
 
-function prayerTimesCard(lang: Locale): HTMLElement {
-  const now = dhakaNow(Date.now()); const day = isoDate(now.date);
-  const ps = prefs.prayerSettings; const res = resolvedPrayerTimes(now.date); const times = res.times;
-  const marked = markedOn(allRecs(), day);
-  return h("div", { class: "card", "data-prayer-times": day },
-    h("h2", { class: "card-h" }, t("deen.prayer.title", lang)),
-    h("p", { class: "muted" }, day),
-    h("p", { class: "muted", "data-prayer-method": "1" }, t("deen.set.methodLine", lang, { m: t(`deen.method.${ps.method}` as Key, lang), a: t(ps.asr === "hanafi" ? "deen.asr.hanafi" : "deen.asr.standard", lang) })),
-    sourceLine(res, lang),
-    h("p", { class: "muted" }, t("deen.prayer.hint", lang)),
-    ...PRAYER_KEYS.map((k) => {
-      const at = times[k]; const isMarked = marked.has(k);
-      return h("div", { class: "row", "data-prayer-row": k },
-        h("span", {}, h("strong", {}, t(`deen.prayer.name.${k}` as Key, lang)), " ", h("span", { "data-prayer-time": k }, prayerClock(at) ?? t("deen.prayer.none", lang)),
-          ...(at !== null && !isMarked ? [h("br"), h("span", { class: "muted", "data-prayer-pending": k }, t("deen.prayer.notYet", lang))] : [])),
-        h("button", { class: isMarked ? "btn" : "btn ghost", type: "button", "data-act": "prayer-mark", "data-prayer": k, "aria-pressed": String(isMarked), style: "width:auto;margin:0;min-height:44px",
-          ...(at === null ? { disabled: true } : {}), onclick: () => { togglePrayerMark(day, k); rerender(); } }, isMarked ? t("deen.prayer.marked", lang) : t("deen.prayer.mark", lang)));
-    }),
-    h("p", { class: "note", "data-prayer-note": "1" }, t(res.source === "external" ? "deen.prayer.noteExt" : "deen.prayer.note", lang)));
-}
-
 export function deen(): HTMLElement {
   const lang = L();
   const ents = ENTITIES.filter((e) => e.module === "M13");
   return h("main", { class: "scr scr-deen" },
     h("h1", {}, t("deen.title", lang)),
+    rootBar("deen", lang),
     h("p", { class: "sub" }, t("deen.intro", lang)),
     h("p", { class: "muted" }, t("deen.control", lang)),
+    prayerControls(lang, "full"),
     link("#/deen/plans", "btn", t("dp.title", lang)),
     fastCard(lang),
-    prayerTimesCard(lang),
     hijriCard(lang),
     prayerLinkRow(lang),
     ...ents.map((e) => {
@@ -1362,7 +1325,7 @@ export function deen(): HTMLElement {
         h("p", { class: "muted" }, t("deen.fields", lang, { n: num(fs.length, lang) }), " · ", t("access.device_only_per_item_authorisation", lang)),
         ...fs.map((f) => fieldHelp(f, lang)));
     }),
-    moduleDetails("deen", lang),
+    link("#/more/status", "crumb", t("cap.details", lang)),
     disclaimers(lang, ["noFatwa", "noGuarantee"]));
 }
 

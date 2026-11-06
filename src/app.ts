@@ -1,7 +1,7 @@
+import { ownerProfileLink, ownerProfileScreen } from "./ui/ownerProfileUi";
 import { h } from "./ui/dom";
 import { applyPrefs, prefs } from "./ui/state";
 import { t, tb } from "./i18n/t";
-import type { Key } from "./i18n/packs";
 import { demoBadge } from "./ui/components";
 import { langMenu } from "./ui/langMenu";
 import * as S from "./ui/screens";
@@ -30,12 +30,16 @@ import { isLocked, lockScreen } from "./ui/lockUi";
 import { saveFailedBanner } from "./ui/saveBanner";
 import { notifyText } from "./core/notify";
 import { observeNavLayout } from "./ui/navLayout";
+import { createBottomNavigation, focusDeenTarget } from "./ui/quickNavigationUi";
+import { isTabId } from "./ui/tabActions";
+import { setOverlayContext } from "./ui/overlayCoordinator";
+import { consentOn } from "./ui/entry";
+import { enhanceScreenHelp } from "./ui/screenHelp";
 
 let stopNavLayout: (() => void) | undefined;
 
-const TABS: Array<[string, Key]> = [["today", "nav.today"], ["journey", "nav.journey"], ["diary", "nav.diary"], ["deen", "nav.deen"], ["settings", "nav.settings"]];
-
 export const ROUTES: Array<[RegExp, (m: RegExpMatchArray) => HTMLElement, string]> = [
+  [/^\/profile$/, () => ownerProfileScreen(), "settings"],
   [/^\/start$/, () => onboardScreen(), "today"],
   [/^\/today$/, () => S.today(), "today"],
   [/^\/journey$/, () => S.journey(), "journey"],
@@ -82,6 +86,7 @@ export const ROUTES: Array<[RegExp, (m: RegExpMatchArray) => HTMLElement, string
   [/^\/cards$/, () => S.cardsScreen(), "settings"],
   [/^\/notes$/, () => notesScreen(), "settings"],
   [/^\/deen$/, () => S.deen(), "deen"],
+  [/^\/deen\/(?:prayers|fasting)$/, () => S.deen(), "deen"],
   [/^\/deen\/plans$/, () => deenPlansScreen(), "deen"],
   [/^\/settings\/connections$/, () => viaLazy(CONN, (m) => m.connectionsScreen(prefs.lang)), "settings"],
   [/^\/settings(?:\/([a-z]+))?(?:\/([a-z-]+))?$/, (m) => settingsScreen(m[1], m[2]), "settings"],
@@ -107,10 +112,11 @@ function toggleDrawer(open: boolean) { const d = document.getElementById("drawer
 
 /** Entry point for the browser: the first-run choice comes before anything else, once per device. */
 export function renderApp() {
-  if (isLocked()) { stopNavLayout?.(); applyPrefs(); document.getElementById("app")!.replaceChildren(lockScreen()); return; }
+  if (isLocked()) { setOverlayContext("locked"); stopNavLayout?.(); applyPrefs(); document.getElementById("app")!.replaceChildren(lockScreen()); return; }
   if (prefs.dataModeChoice !== null) { render(); return; }
   applyPrefs();
   stopNavLayout?.();
+  setOverlayContext("first-run");
   document.getElementById("app")!.replaceChildren(firstRunScreen());
 }
 
@@ -122,9 +128,11 @@ export function render() {
   let path = location.hash.replace(/^#/, "") || "/today";
   const moved = REDIRECTS[path];
   if (moved) { history.replaceState(null, "", `#${moved}`); path = moved; }
+  setOverlayContext(`${path}|${prefs.dataMode}|${consentOn()}|${lang}|unlocked`);
   let body: HTMLElement | null = null, tab = "today";
   for (const [re, fn, tb] of ROUTES) { const m = path.match(re); if (m) { body = fn(m); tab = tb; break; } }
   if (!body) { location.hash = "#/today"; return; }
+  enhanceScreenHelp(body, path, lang);
   const online = navigator.onLine;
   const drawer = h("div", { class: "drawer", id: "drawer", role: "dialog", "aria-label": t("topics.menu", lang), "aria-hidden": "true" },
     h("div", { class: "scrim", onclick: () => toggleDrawer(false) }),
@@ -132,8 +140,8 @@ export function render() {
       ...(Object.keys(LAYERS) as (keyof typeof LAYERS)[]).flatMap((ly) => [h("h2", {}, tb(LAYERS[ly], lang)), ...TOPICS.filter((x) => x.layer === ly).map((x) => h("a", { class: "item", href: `#/topic/${x.id}`, "data-topic": x.id, onclick: () => toggleDrawer(false) }, tb(x.name, lang)))])));
   const menuBtn = h("button", { class: "menu-btn", type: "button", "data-act": "drawer-open", "aria-label": t("topics.open", lang), "aria-controls": "drawer", onclick: () => toggleDrawer(true) }, "☰");
   const top = h("div", { class: "top" }, h("span", {}, menuBtn, " ", t("app.title", lang)),
-    h("span", { class: "right" }, h("span", { class: "net", "data-net": online ? "online" : "offline" }, t(online ? "status.online" : "status.offline", lang)), prefs.dataMode === "demo" ? demoBadge(lang) : h("span", { class: "tag", "data-mode": "real" }, t("mode.switch.real", lang)), langMenu(lang)));
-  const nav = h("nav", { "aria-label": t("nav.aria", lang) }, ...TABS.map(([r, k]) => h("a", { class: "tab", href: `#/${r}`, ...(tab === r ? { "aria-current": "page" } : {}) }, t(k, lang))));
+    h("span", { class: "right" }, h("span", { class: "net", "data-net": online ? "online" : "offline" }, t(online ? "status.online" : "status.offline", lang)), prefs.dataMode === "demo" ? demoBadge(lang) : h("span", { class: "tag", "data-mode": "real" }, t("mode.switch.real", lang)), langMenu(lang), ownerProfileLink(lang)));
+  const nav = createBottomNavigation(isTabId(tab) ? tab : "today", lang);
   const app = document.getElementById("app")!;
   // Skip link (first Tab stop) jumps past the top bar to the screen content.
   // Keep the screen's own id (the focus timer looks up "focus-root"); only add one when there is none.
@@ -163,7 +171,13 @@ export function render() {
   const heading = body.querySelector("h1");
   if (heading) document.title = `${heading.textContent} · ${t("app.title", lang)}`;
   if (routeChanged && !firstLoad && heading) { heading.setAttribute("tabindex", "-1"); (heading as HTMLElement).focus({ preventScroll: true }); }
+  if (routeChanged) focusDeenTarget(path);
 }
 
 let lastRenderedPath: string | null = null;
+
+window.addEventListener("tm:presentation-changed", (event) => {
+  const detail = (event as CustomEvent).detail;
+  if ((detail?.key === "tabNavigation" || detail?.reset) && document.querySelector("#app .bottom-tabs")) setTimeout(render, 0);
+});
 

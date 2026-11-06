@@ -285,18 +285,14 @@ await ctx.setOffline(false);
   check("UI-SPACING", "no two neighbouring buttons, rows or boxes touch on Today, Deen, Settings, Where we are, Hadith, Notes, Boards (en, bn, 100 % and 200 %)", bad.length === 0, bad.slice(0, 5).join(" ; "));
 }
 
-// Long module notes/build diagnostics stay behind a native disclosure on work screens.
+// Engineering diagnostics belong on their dedicated status screen; the workspaces retain a named link.
 for (const lang of ["en", "bn"]) {
   await page.evaluate(l => localStorage.setItem("tm:ui:lang", l), lang);
   for (const route of ["journey", "diary", "deen"]) {
-    await page.goto(`http://localhost:4174/#/${route}`);
-    const details = page.locator(`[data-module-details=${route}]`); await details.waitFor();
-    const card = details.locator('[data-module]').first(); const summary = details.locator(':scope > summary');
-    const initiallyClosed = await details.getAttribute('open') === null && !await card.isVisible();
-    await summary.focus(); await page.keyboard.press('Enter'); await card.waitFor({state:'visible'});
-    const opened = await details.getAttribute('open') !== null && await card.locator('[data-box]').count() === 6;
-    await summary.click(); const closedAgain = await details.getAttribute('open') === null && !await card.isVisible();
-    check('MODULE-DETAILS', `${lang}: ${route} notes start hidden and open/close with native keyboard and pointer controls`, initiallyClosed && opened && closedAgain);
+    await page.goto(`http://localhost:4174/#/${route}`); await page.waitForSelector('main h1');
+    const link = page.locator('main a[href="#/more/status"]');
+    check('MODULE-DETAILS', `${lang}: ${route} keeps actions visible and links to diagnostics`,
+      await page.locator('main [data-module],main [data-box]').count() === 0 && await link.count() === 1 && Boolean(await link.textContent()));
   }
   await page.goto('http://localhost:4174/#/more/status');
   await page.waitForFunction(() => document.querySelectorAll('[data-module]').length === 25);

@@ -1,3 +1,4 @@
+import { rootBar } from "./quickNavigationUi";
 // Settings area (settings redesign PR 2): home (quick card, status strip, category cards, guides) and one page per category.
 // Everything listed comes from settingsRegistry.ts. A row opens the place where the setting is changed; the three quick rows
 // (language, theme, text size) are changed right here and nowhere else except the top-bar globe.
@@ -127,7 +128,7 @@ function categoryCard(cat: CatKey, lang: Locale): HTMLElement {
 function home(row: string | undefined, lang: Locale): HTMLElement {
   const main = h("main", { class: "scr scr-settings", "data-settings": "home" },
     h("h1", {}, t("set.title", lang)), h("p", { class: "sub" }, t("set.intro", lang)),
-    quickCard(lang), statusStrip(lang),
+    quickCard(lang), statusStrip(lang), rootBar("settings", lang),
     ...CATEGORIES.map((c) => categoryCard(c, lang)),
     link(settingsHash("about"), "card link", h("h3", { class: "card-h" }, t(CAT_LABEL.about, lang)), h("p", { class: "muted", "data-summary": "about" }, categorySummary("about", lang))));
   highlight(main, row);

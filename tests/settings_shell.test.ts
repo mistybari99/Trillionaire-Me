@@ -75,7 +75,10 @@ describe("shell", () => {
   });
   it("home shows quick card, status strip, 8 category cards and the Guides row in order", () => {
     go("#/settings");
-    expect([...app().querySelectorAll("main > *")].map((e) => e.tagName + (e.getAttribute("data-card") ?? ""))).toEqual(["DIV", "SECTION", "P", "SECTIONquick", "SECTIONstatus", ...Array(9).fill("A")]);
+    const main = q("main");
+    const ordered = [main.querySelector("h1"), main.querySelector('[data-card="quick"]'), main.querySelector('[data-card="status"]'), main.querySelector('[data-shortcuts="settings"]'), main.querySelector('a[href="#/settings/look"]:not(.shortcut-link)')];
+    for (const element of ordered) expect(element).not.toBeNull();
+    for (let i = 1; i < ordered.length; i++) expect(Boolean(ordered[i - 1]!.compareDocumentPosition(ordered[i]!) & Node.DOCUMENT_POSITION_FOLLOWING)).toBe(true);
     expect([...app().querySelectorAll("main > a")].map((a) => a.getAttribute("href"))).toEqual([...CATEGORIES, "about"].map((c) => `#/settings/${c}`));
     const last = app().querySelectorAll("main > a")[7]!; expect(last.getAttribute("href")).toBe("#/settings/delete"); // Delete data is the last category
   });

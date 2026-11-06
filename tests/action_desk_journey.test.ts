@@ -30,15 +30,20 @@ describe("Action Desk Journey", () => {
     expect(el.querySelector('[data-shortcuts="journey"] a[href="#/journey/goals"]')).not.toBeNull();
   });
 
-  it("retains all 18 tools exactly once in the selected accessible groups and order", () => {
+  it("retains all 18 tools exactly once across promoted links and accessible groups", () => {
     const el = mount();
     const groups = [...el.querySelectorAll("[data-tool-group]")];
     expect(groups.map((g) => g.getAttribute("data-tool-group"))).toEqual(["plan", "review", "explore"]);
     expect(groups.map((g) => [...g.querySelectorAll("a")].map((a) => a.getAttribute("href")))).toEqual([
-      ["boards", "horizon", "decide", "risks", "reality", "northstar", "kpi"].map((r) => `#/journey/${r}`),
-      ["log", "report", "week", "month", "review", "history"].map((r) => `#/journey/${r}`),
+      ["decide", "risks", "reality", "northstar", "kpi"].map((r) => `#/journey/${r}`),
+      ["log", "month", "review", "history"].map((r) => `#/journey/${r}`),
       ["universe", "art", "mine", "legs", "leak"].map((r) => `#/journey/${r}`),
     ]);
+    const originalTools = ["boards", "horizon", "decide", "risks", "reality", "northstar", "kpi", "log", "report", "week", "month", "review", "history", "universe", "art", "mine", "legs", "leak"];
+    const launchers = el.querySelectorAll('.journey-tools a, [data-shortcuts="journey"] a');
+    const hrefs = [...launchers].map((a) => a.getAttribute("href"));
+    for (const route of originalTools) expect(hrefs.filter((href) => href === `#/journey/${route}`), route).toHaveLength(1);
+    expect(el.querySelectorAll(".journey-tools a")).toHaveLength(14);
     for (const group of groups) expect(el.querySelector(`#${group.getAttribute("aria-labelledby")}`)?.textContent).toBeTruthy();
   });
 
