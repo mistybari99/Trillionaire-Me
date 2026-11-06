@@ -54,11 +54,11 @@ h1.t{font-size:var(--fs-2xl);margin:var(--s4) 0 var(--s1);line-height:1.3}
 .card h3{margin:0 0 var(--s1);font-size:var(--fs-lg);line-height:1.35}
 .card p{margin:0;font-size:var(--fs-sm);color:var(--muted);line-height:var(--lh-ui)}
 .blk{border:1px dashed var(--rule);border-radius:var(--r-md);background:var(--card);margin:var(--s2) 0;padding:var(--s2) var(--s3);font-size:var(--fs-sm);display:flex;justify-content:space-between;gap:var(--s2);align-items:flex-start;overflow:hidden}
-.blk b{font-weight:700}.blk i{font-style:normal;color:var(--muted);white-space:nowrap}
+.blk b{font-weight:700}.blk i{font-style:normal;color:var(--muted);white-space:normal;text-align:end}
 .blk.card2{border-style:solid;box-shadow:var(--e1)}
 .cut{position:absolute;inset:auto 0 57px 0;padding:var(--s5) var(--s3) var(--s3);text-align:center;font-weight:700;color:var(--ink);background:linear-gradient(to bottom,transparent,var(--paper) 55%)}
 .cut em{font-style:normal;color:var(--ember)}
-.chip{display:inline-flex;align-items:center;min-height:24px;padding:0 var(--s2);border:1px solid color-mix(in srgb,var(--rule) 80%,transparent);border-radius:var(--r-pill);font-size:var(--fs-sm);background:var(--card);white-space:nowrap}
+.chip{display:inline-flex;align-items:center;min-height:24px;padding:0 var(--s2);border:1px solid color-mix(in srgb,var(--rule) 80%,transparent);border-radius:var(--r-pill);font-size:var(--fs-sm);background:var(--card);max-width:100%}
 .chip.demo{background:var(--tint-demo);border-color:var(--demo)}
 .chip.ok{background:var(--tint-moss);border-color:var(--moss)}
 .chip.calm{background:var(--tint-calm);border-color:var(--calm)}
@@ -116,35 +116,35 @@ a{color:var(--primary)}
     <div class="col"><p class="cap">আগে <small>Before: 4619 px = 6.24 screens</small></p>
       <div class="phone">
         <div class="top"><span>☰ Trillionaire Me</span><span class="sp"></span><span class="chip">অনলাইন</span><span class="chip demo">DEMO</span><span class="ib">🌐</span></div>
-        <div class="demo-old"><b>DEMO ডাটা</b> 9 এখানে সব নমুনা। আসল ডাটা দিতে "আসল শুরু" চাপুন। আপনার ডাটা এই ফোনেই থাকে। (120 px)</div>
+        <div class="demo-old"><b>DEMO ডাটা</b> · এখানে সব নমুনা। আসল ডাটা দিতে "আসল শুরু" চাপুন। আপনার ডাটা এই ফোনেই থাকে। (120 px)</div>
         <div class="main">
           <h1 class="t">দ্বীন ও আখিরাত</h1>
-          <p class="sub">intro (68 px) 9 control line (45 px)</p>
+          <p class="sub">intro (68 px) · control line (45 px)</p>
           <div class="blk card2"><b>দ্বীনি প্ল্যান ও রিমাইন্ডার (বাটন)</b><i>48</i></div>
           <div class="blk card2"><b>আজকের রোজা</b><i>278</i></div>
           <div class="blk card2" style="height:200px"><b>আজকের নামাজের সময়</b><i>800 px, 5 ওয়াক্ত + ফর্ম</i></div>
         </div>
-        <div class="cut">আরও 5.2 স্ক্রিন নিচে: <em>হিজরি 329 9 নামাজ লগ 215 9 কুরআন 9 রোজা 9 যাকাত 371 9 দান 9 হজ 9 শেখা 9 হক 9 প্ল্যান 475 9 চিহ্ন 9 Feature details</em></div>
+        <div class="cut">আরও 5.2 স্ক্রিন নিচে: <em>হিজরি 329 · নামাজ লগ 215 · কুরআন · রোজা · যাকাত 371 · দান · হজ · শেখা · হক · প্ল্যান 475 · চিহ্ন · Feature details</em></div>
         <div class="nav"><span>Today</span><span>Journey</span><span>Diary</span><span class="on">Deen</span><span>Settings</span></div>
       </div></div>
     <div class="col"><p class="cap">পরে <small>After: target 1.4 screens</small></p>
       <div class="phone">
         <div class="top"><span>☰ Trillionaire Me</span><span class="sp"></span><span class="ib">🔍</span><span class="ib">🌐</span></div>
-        <div class="demo-new"><b>DEMO</b> 9 নমুনা ডাটা 9 <u>আসল শুরু</u></div>
+        <div class="demo-new"><b>DEMO</b> · নমুনা ডাটা · <u>আসল শুরু</u></div>
         <div class="main">
           <div class="hrow"><h1>দ্বীন ও আখিরাত</h1><span class="chip ok">প্রাইভেট</span><span class="ib" aria-label="সাহায্য">ⓘ</span></div>
           <div class="card" style="margin-top:var(--s2)">
-            <div class="row" style="min-height:48px;padding:0"><div class="m"><b>পরের ওয়াক্ত: আসর</b> <span class="chip demo">DEMO</span><small>সময় নমুনা 9 মেথড: সেটিংসে দেখুন</small></div></div>
-            <div class="row" style="min-height:40px;padding:var(--s1) 0"><div class="m">আজকের রোজা: <b>রেকর্ড নেই</b> <small>হিজরি: তারিখ নেই (Unknown)</small></div></div>
+            <div class="row" style="min-height:48px;padding:0"><div class="m"><b>পরের ওয়াক্ত: আসর</b> <span class="chip demo">DEMO</span><small>সময় নমুনা · মেথড: সেটিংসে দেখুন</small></div></div>
+            <div class="row" style="min-height:40px;padding:var(--s1) 0"><div class="m">আজকের রোজা: <b>রেকর্ড নেই</b> <small>হিজরি: তারিখ নেই (Unknown)</small></div></div><div style="display:flex;flex-wrap:wrap;gap:var(--s1);padding-top:var(--s1)"><span class="chip" style="min-height:44px">✓ ফজর</span><span class="chip" style="min-height:44px">✓ যোহর</span><span class="chip" style="min-height:44px">✓ আসর</span><span class="chip" style="min-height:44px">✓ মাগরিব</span><span class="chip" style="min-height:44px">✓ এশা</span></div><small style="color:var(--muted)">কুইক-মার্ক (আছে: prayerControls)</small>
           </div>
-          <div class="qa"><span>🕌<br>নামাজ লগ</span><span>🌙<br>রোজা</span><span>🤲<br>দান</span><span>📋<br>প্ল্যান</span></div>
+          <div class="qa"><span>🕌<br>নামাজ (আছে)</span><span>🌙<br>রোজা (আছে)</span><span>📋<br>প্ল্যান (আছে)</span><span>🤲<br>দান (নতুন)</span></div>
           <div class="tabs"><span class="on">আজ</span><span>রেকর্ড <span class="chip cnt">8</span></span><span>প্ল্যান</span><span>শেখা (ইবাদত শেখা + "Knowledge" লিংক)</span></div>
           <div class="grp">5 ওয়াক্ত (নমুনা)</div>
           <div class="row" style="min-height:44px"><div class="m">ফজর</div><span class="chip">--:--</span></div>
           <div class="row" style="min-height:44px"><div class="m">যোহর</div><span class="chip">--:--</span></div>
           <div class="row" style="min-height:44px"><div class="m"><b>আসর</b> (পরের)</div><span class="chip calm">--:--</span></div>
-          <div class="row" style="min-height:44px"><div class="m">মাগরিব 9 এশা</div><span class="chip">খুলুন ▾</span></div>
-          <div class="note1">ফতোয়া নয় 9 আয়ের গ্যারান্টি নয় <u>ⓘ</u></div>
+          <div class="row" style="min-height:44px"><div class="m">মাগরিব · এশা</div><span class="chip">খুলুন ▾</span></div>
+          <div class="note1">ফতোয়া নয় · আয়ের গ্যারান্টি নয় <u>ⓘ</u></div>
         </div>
         <div class="nav"><span>Today</span><span>Journey</span><span>Diary</span><span class="on">Deen</span><span>Settings</span></div>
       </div></div>
@@ -155,30 +155,30 @@ a{color:var(--primary)}
 <!-- ============ 2. SETTINGS HOME ============ -->
 <section class="sec">
   <h2>2. Settings home (/settings)</h2>
-  <p>Today: 2.7 screens, 14 cards (3 quick cards, status, 9 category cards). After: about 1.4 screens. Same 8 categories + Guides, same quick controls, 2-column tiles.</p>
+  <p>Today: 2.7 screens, 14 cards (3 quick cards, status, · category cards). After: about 1.4 screens. Same 8 categories + Guides, same quick controls, 2-column tiles.</p>
   <div class="pair">
     <div class="col"><p class="cap">আগে <small>Before: 1764 px main = 2.69 screens</small></p>
       <div class="phone">
         <div class="top"><span>☰ Trillionaire Me</span><span class="sp"></span><span class="chip">অনলাইন</span><span class="chip demo">DEMO</span><span class="ib">🌐</span></div>
-        <div class="demo-new" style="height:36px"><b>DEMO</b> 9 (settings already uses one line)</div>
+        <div class="demo-new" style="height:36px"><b>DEMO</b> · (settings already uses one line)</div>
         <div class="main">
           <div class="hrow"><h1>সেটিংস</h1><span class="ib">🔍</span></div>
           <p class="sub">intro line (45 px)</p>
-          <div class="blk card2" style="height:150px"><b>দ্রুত সেটিংস (434 px)</b><i>ভাষা 9 থিম 9 লেখার সাইজ = 3 কার্ড</i></div>
-          <div class="blk card2"><b>এখন যেমন আছে</b><i>214 px 9 3 লাইন</i></div>
+          <div class="blk card2" style="height:150px"><b>দ্রুত সেটিংস (434 px)</b><i>ভাষা · থিম · লেখার সাইজ = 3 কার্ড</i></div>
+          <div class="blk card2"><b>এখন যেমন আছে</b><i>214 px · 3 লাইন</i></div>
           <div class="card" style="margin:var(--s2) 0"><h3>লুক ও স্ক্রিন</h3><p>89 px</p></div>
           <div class="card" style="margin:var(--s2) 0"><h3>নামাজ ও অ্যালার্ট</h3><p>89 px</p></div>
         </div>
-        <div class="cut">আরও 1.5 স্ক্রিন: <em>ব্যাকআপ 9 প্রাইভেসি 9 ডাটা 9 প্ল্যান 9 কানেকশন 9 ডিলিট 9 গাইড (7 কার্ড)</em></div>
+        <div class="cut">আরও 1.5 স্ক্রিন: <em>ব্যাকআপ · প্রাইভেসি · ডাটা · প্ল্যান · কানেকশন · ডিলিট · গাইড (7 কার্ড)</em></div>
         <div class="nav"><span>Today</span><span>Journey</span><span>Diary</span><span>Deen</span><span class="on">Settings</span></div>
       </div></div>
     <div class="col"><p class="cap">পরে <small>After: target 1.4 screens</small></p>
       <div class="phone">
         <div class="top"><span>☰ Trillionaire Me</span><span class="sp"></span><span class="ib">🔍</span><span class="ib">🌐</span></div>
-        <div class="demo-new"><b>DEMO</b> 9 নমুনা ডাটা 9 <u>আসল শুরু</u></div>
+        <div class="demo-new"><b>DEMO</b> · নমুনা ডাটা · <u>আসল শুরু</u></div>
         <div class="main">
           <div class="hrow"><h1>সেটিংস</h1><span class="ib">ⓘ</span></div>
-          <div class="card" style="margin:var(--s2) 0;padding:var(--s2) var(--s3)"><div class="row" style="min-height:52px;padding:0"><div class="avatar" style="width:40px;height:40px;font-size:1.1rem">?</div><div class="m"><b>আমার প্রোফাইল</b> <span class="chip new">নতুন</span><small>নাম দেওয়া হয়নি 9 Unknown</small></div><span class="go">›</span></div></div>
+          <div class="card" style="margin:var(--s2) 0;padding:var(--s2) var(--s3)"><div class="row" style="min-height:52px;padding:0"><div class="avatar" style="width:40px;height:40px;font-size:1.1rem">?</div><div class="m"><b>আমার প্রোফাইল</b> <span class="chip built">আছে</span><small>নাম দেওয়া হয়নি · Unknown</small></div><span class="go">›</span></div></div>
           <div class="card" style="margin:var(--s2) 0">
             <div class="grp" style="margin-top:0">ভাষা</div>
             <div class="seg"><span class="on">English</span><span>বাংলা</span><span>Mix</span></div>
@@ -191,7 +191,7 @@ a{color:var(--primary)}
           <div class="tiles">
             <div class="tile">🎨<b>লুক ও স্ক্রিন</b><small>Light Futuristic</small></div>
             <div class="tile">🕌<b>নামাজ ও অ্যালার্ট</b><small>অ্যালার্ট: বন্ধ</small></div>
-            <div class="tile">💾<b>ব্যাকআপ</b><small>সেভ 9 রিস্টোর</small></div>
+            <div class="tile">💾<b>ব্যাকআপ</b><small>সেভ · রিস্টোর</small></div>
             <div class="tile">🔒<b>প্রাইভেসি ও লক</b><small>পারমিশন: নেই</small></div>
             <div class="tile">🧪<b>ডেমো না আসল</b><small>ডেমো</small></div>
             <div class="tile">📋<b>প্ল্যান ও প্রোগ্রেস</b><small>নরমাল</small></div>
@@ -207,35 +207,35 @@ a{color:var(--primary)}
 
 <!-- ============ 3. PROFILE HUB ============ -->
 <section class="sec">
-  <h2>3. Profile hub (/profile, new)</h2>
-  <p>Today there is no one place: name and age sit in a Diary card, consent in Privacy, look in Look, backup in Backup. The hub only links and summarises; it stores nothing new.</p>
+  <h2>3. Owner profile (/profile): extends the built page</h2>
+  <p>Built today: card with name, age (estimate), time zone, then a plain link list to language, look, text size, privacy, backup, data, prayer, about. No percent, nothing inferred. Proposal adds 4 tabs and a status line per link only; nothing new is stored.</p>
   <div class="pair">
-    <div class="col"><p class="cap">আগে <small>Before: 5 places, 3 tabs</small></p>
+    <div class="col"><p class="cap">আগে <small>Before: built page, link list, no tabs</small></p>
       <div class="phone">
         <div class="top"><span>☰ Trillionaire Me</span><span class="sp"></span><span class="chip demo">DEMO</span><span class="ib">🌐</span></div>
         <div class="main">
           <h1 class="t" style="font-size:var(--fs-xl)">আমার তথ্য কোথায়?</h1>
           <div class="blk card2"><b>Diary ট্যাব</b><i>প্রোফাইল কার্ড: নাম, জন্মসাল, বয়স, টাইম জোন</i></div>
-          <div class="blk card2"><b>Settings ট্যাব → হোম</b><i>ভাষা 9 থিম 9 সাইজ</i></div>
-          <div class="blk card2"><b>Settings → প্রাইভেসি</b><i>পারমিশন 9 অ্যাপ লক</i></div>
-          <div class="blk card2"><b>Settings → লুক</b><i>ডিজাইন 9 ভিউ</i></div>
-          <div class="blk card2"><b>Settings → ব্যাকআপ</b><i>স্ট্যাটাস 9 সেভ</i></div>
+          <div class="blk card2"><b>Settings ট্যাব → হোম</b><i>ভাষা · থিম · সাইজ</i></div>
+          <div class="blk card2"><b>Settings → প্রাইভেসি</b><i>পারমিশন · অ্যাপ লক</i></div>
+          <div class="blk card2"><b>Settings → লুক</b><i>ডিজাইন · ভিউ</i></div>
+          <div class="blk card2"><b>Settings → ব্যাকআপ</b><i>স্ট্যাটাস · সেভ</i></div>
           <p class="sub"><span class="arrow">→</span> কোনো সারাংশ বা "আমার ঘর" নেই। 5টি জায়গা মনে রাখতে হয়।</p>
         </div>
         <div class="nav"><span>Today</span><span>Journey</span><span>Diary</span><span>Deen</span><span class="on">Settings</span></div>
       </div></div>
-    <div class="col"><p class="cap">পরে <small>After: one hub, about 1.2 screens</small></p>
+    <div class="col"><p class="cap">পরে <small>After: extends the built page, about 1.2 screens</small></p>
       <div class="phone">
         <div class="top"><span>☰ Trillionaire Me</span><span class="sp"></span><span class="ib">🔍</span><span class="ib">🌐</span></div>
-        <div class="demo-new"><b>DEMO</b> 9 নমুনা ডাটা 9 <u>আসল শুরু</u></div>
+        <div class="demo-new"><b>DEMO</b> · নমুনা ডাটা · <u>আসল শুরু</u></div>
         <div class="main">
-          <div class="hrow"><h1>আমার প্রোফাইল</h1><span class="chip new">নতুন পেজ</span><span class="ib">ⓘ</span></div>
-          <div class="card" style="margin:var(--s2) 0"><div class="row" style="padding:0"><div class="avatar">?</div><div class="m"><b>নাম: Unknown</b><small>বয়স: Unknown 9 টাইম জোন: Unknown</small><small>এই ফোনেই থাকে 9 <u>এডিট</u> <span class="chip built">আছে</span></small></div></div></div>
+          <div class="hrow"><h1>আমার প্রোফাইল</h1><span class="chip built">আছে: বাড়ানো হবে</span><span class="ib">ⓘ</span></div>
+          <div class="card" style="margin:var(--s2) 0"><div class="row" style="padding:0"><div class="avatar">?</div><div class="m"><b>নাম: Unknown</b><small>বয়স: Unknown · টাইম জোন: Unknown</small><small>এই ফোনেই থাকে · <u>এডিট</u> <span class="chip built">আছে</span></small></div></div></div>
           <div class="tabs"><span class="on">আমি</span><span>পারমিশন</span><span>লুক ও ভাষা</span><span>ব্যাকআপ</span></div>
-          <div class="row"><div class="lead">🧪</div><div class="m">ডাটা মোড<small>ডেমো 9 আসল ডাটা বন্ধ</small></div><span class="chip built">আছে</span><span class="go">›</span></div>
+          <div class="row"><div class="lead">🧪</div><div class="m">ডাটা মোড<small>ডেমো · আসল ডাটা বন্ধ</small></div><span class="chip built">আছে</span><span class="go">›</span></div>
           <div class="row"><div class="lead">✅</div><div class="m">আসল ডাটার পারমিশন<small>দেওয়া নেই</small></div><span class="chip built">আছে</span><span class="go">›</span></div>
           <div class="row"><div class="lead">🔒</div><div class="m">অ্যাপ লক ও পিন<small>বন্ধ</small></div><span class="chip built">আছে</span><span class="go">›</span></div>
-          <div class="row"><div class="lead">🎨</div><div class="m">লুক 9 ভাষা 9 সাইজ<small>Light Futuristic 9 Mix 9 100%</small></div><span class="chip built">আছে</span><span class="go">›</span></div>
+          <div class="row"><div class="lead">🎨</div><div class="m">লুক · ভাষা · সাইজ<small>Light Futuristic · Mix · 100%</small></div><span class="chip built">আছে</span><span class="go">›</span></div>
           <div class="row"><div class="lead">💾</div><div class="m">ব্যাকআপ<small>ফাইল ব্যাকআপ নেই</small></div><span class="chip built">আছে</span><span class="go">›</span></div>
           <div class="row"><div class="lead">🧾</div><div class="m">আমার ডাটা এক নজরে<small>ডেমো এন্ট্রি / আসল এন্ট্রি (হিসাব; Unknown হলে 0 নয়)</small></div><span class="chip new">নতুন</span><span class="go">›</span></div>
         </div>
@@ -270,12 +270,12 @@ a{color:var(--primary)}
           <div class="inp" style="margin-top:var(--s3)"><span>🔍</span><b>ব্যাকআপ</b><span style="margin-inline-start:auto" class="ib">✕</span></div>
           <div class="tabs" style="margin-bottom:0"><span class="on">সব</span><span>অ্যাকশন</span><span>পেজ</span><span>সেটিংস</span><span>টপিক</span></div>
           <div class="grp">অ্যাকশন</div>
-          <div class="row" style="min-height:52px"><div class="lead">⚡</div><div class="m">ব্যাকআপ এখনই নিন<small>→ সেটিংস 9 ব্যাকআপ সেভ করুন</small></div><span class="go">›</span></div>
+          <div class="row" style="min-height:52px"><div class="lead">⚡</div><div class="m">ব্যাকআপ এখনই নিন<small>→ সেটিংস · ব্যাকআপ সেভ করুন</small></div><span class="go">›</span></div>
           <div class="grp">সেটিংস <span class="chip cnt">4</span></div>
-          <div class="row" style="min-height:52px"><div class="lead">💾</div><div class="m">ব্যাকআপ রিমাইন্ডার<small>সেটিংস 9 ব্যাকআপ</small></div><span class="go">›</span></div>
-          <div class="row" style="min-height:52px"><div class="lead">💾</div><div class="m">রিস্টোর (ফাইল থেকে)<small>সেটিংস 9 ব্যাকআপ</small></div><span class="go">›</span></div>
+          <div class="row" style="min-height:52px"><div class="lead">💾</div><div class="m">ব্যাকআপ রিমাইন্ডার<small>সেটিংস · ব্যাকআপ</small></div><span class="go">›</span></div>
+          <div class="row" style="min-height:52px"><div class="lead">💾</div><div class="m">রিস্টোর (ফাইল থেকে)<small>সেটিংস · ব্যাকআপ</small></div><span class="go">›</span></div>
           <div class="grp">টপিক ও গ্লসারি <span class="chip cnt">1</span></div>
-          <div class="row" style="min-height:52px"><div class="lead">📖</div><div class="m">গ্লসারি: ব্যাকআপ<small>গাইড ও তথ্য 9 যাচাই হয়নি</small></div><span class="go">›</span></div>
+          <div class="row" style="min-height:52px"><div class="lead">📖</div><div class="m">গ্লসারি: ব্যাকআপ<small>গাইড ও তথ্য · যাচাই হয়নি</small></div><span class="go">›</span></div>
           <div class="grp">অনলাইনে (ইন্টারনেট লাগে)</div>
           <div class="row" style="min-height:52px"><div class="lead">🌐</div><div class="m">Wikipedia-তে খুঁজুন<small>আপনি চাপলে তবেই যাবে</small></div><span class="go">›</span></div>
           <div class="note1" style="margin-top:var(--s3)">খালি বারে: আগে খোঁজা 3টি + 5টি কুইক অ্যাকশন</div>
@@ -288,7 +288,7 @@ a{color:var(--primary)}
 
 <!-- ============ 5. HELP (i) ============ -->
 <section class="sec">
-  <h2>5. Help (i) sheet (pattern for every group)</h2>
+  <h2>5. Help (i) sheet: extends the built helpTrigger / helpTopics</h2>
   <p>Today long explanation text sits inside the page (Privacy readout 569 px, intro lines, 135 px disclaimer on each screen). After: one ⓘ per group opens a bottom sheet; the page keeps only values and actions.</p>
   <div class="pair">
     <div class="col"><p class="cap">আগে <small>Before: Privacy 2230 px = 3.3 screens</small></p>
@@ -298,16 +298,16 @@ a{color:var(--primary)}
         <div class="main">
           <div class="hrow"><h1>প্রাইভেসি ও লক</h1><span class="ib">🔍</span></div>
           <p class="sub">ব্যাখ্যা 45 px</p>
-          <div class="card"><h3>ডিফল্টে প্রাইভেট</h3><p>ডাটা এই ফোনেই থাকে. কেউ দেখে না… (লম্বা লাইন 9 6, লিংকসহ)</p><p>পারমিশন: বন্ধ 9 লক: বন্ধ 9 লক-স্ক্রিন: কিছু দেখায় না 9 কানেকশন 0/4 9 স্টোরেজ…</p><p style="margin-top:var(--s2)">569 px</p></div>
+          <div class="card"><h3>ডিফল্টে প্রাইভেট</h3><p>ডাটা এই ফোনেই থাকে. কেউ দেখে না… (লম্বা লাইন · 6, লিংকসহ)</p><p>পারমিশন: বন্ধ · লক: বন্ধ · লক-স্ক্রিন: কিছু দেখায় না · কানেকশন 0/4 · স্টোরেজ…</p><p style="margin-top:var(--s2)">569 px</p></div>
           <div class="blk card2" style="height:100px"><b>আসল ডাটার পারমিশন</b><i>445 px (ব্যাখ্যা + টিক)</i></div>
         </div>
-        <div class="cut">আরও 1.9 স্ক্রিন: <em>লক-স্ক্রিন 619 9 অ্যাপ লক 421 9 disclaimer</em></div>
+        <div class="cut">আরও 1.9 স্ক্রিন: <em>লক-স্ক্রিন 619 · অ্যাপ লক 421 · disclaimer</em></div>
         <div class="nav"><span>Today</span><span>Journey</span><span>Diary</span><span>Deen</span><span class="on">Settings</span></div>
       </div></div>
-    <div class="col"><p class="cap">পরে <small>After: ⓘ sheet open</small></p>
+    <div class="col"><p class="cap">পরে <small>After: extends the built help sheet</small></p>
       <div class="phone">
         <div class="top"><span>☰ Trillionaire Me</span><span class="sp"></span><span class="ib">🔍</span><span class="ib">🌐</span></div>
-        <div class="demo-new"><b>DEMO</b> 9 নমুনা ডাটা</div>
+        <div class="demo-new"><b>DEMO</b> · নমুনা ডাটা</div>
         <div class="main">
           <div class="hrow"><h1>প্রাইভেসি ও লক</h1><span class="ib" style="border-color:var(--primary)">ⓘ</span></div>
           <div class="row"><div class="m">ডাটা এই ফোনেই<small>কানেকশন 0/4 চালু</small></div><span class="chip ok">প্রাইভেট</span></div>

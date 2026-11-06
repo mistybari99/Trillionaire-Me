@@ -6,14 +6,14 @@
 - সমাধান: প্রতি পেজে ট্যাব, অ্যাকর্ডিয়ন, নিচ থেকে ওঠা শিট, কাউন্ট ব্যাজ, আর প্রতি গ্রুপে ⓘ হেল্প।
 - সব পেজে এক লাইনের ডেমো ব্যানার (এখন 120 px), ডিসক্লেমার এক লাইনের চিপ।
 - সব ট্যাবে 🔍 কমান্ড বার: অ্যাকশন, পেজ, সেটিংস, টপিক, গ্লসারি, অফলাইনে খোঁজে।
-- নতুন "আমার প্রোফাইল" হাব: নাম, পারমিশন, লুক, ভাষা, ব্যাকআপ এক জায়গায়। কোনো স্কোর বা র‍্যাঙ্ক নেই।
+- প্রোফাইল পেজ (/profile) আগে থেকেই আছে: তার ওপর ট্যাব ও স্ট্যাটাস লাইন যোগ হবে। কোনো স্কোর, পার্সেন্ট বা র‍্যাঙ্ক নেই।
 - নিচের ম্যাপ দেখায় কোনো ফাংশন বাদ যায়নি। আগের লিংক সব কাজ করবে।
 - গোল: ডিফল্ট ভিউ 1.5 স্ক্রিনের মধ্যে। এগুলো বাজেট, বানানো হয়নি।
-- নতুন রুট মাত্র 3টি (নিচে)। 5টি ট্যাব একই থাকে।
+- নতুন রুট দরকার নেই। হেল্প (i), কুইক অ্যাকশন, /profile, নিচের ট্যাব আগেই বানানো; শুধু বাড়ানো হবে। নতুন: কমান্ড বার (k-cmd)।
 - ছবিতে দেখুন: `B2_deen_settings_profile.html` (আগে/পরে 5টি ফ্রেম)।
 
 ## 0. How I measured (no guessing)
-Built the current app in a scratch copy (docs untouched), served `vite preview`, opened each route in Chrome 153 with Playwright: viewport 360x740, language bn, text 100%, DEMO mode, onboarding done. "Screens" = `document.documentElement.scrollHeight / 740`. Counts by script (not by hand): `main.querySelectorAll(".card, .k-card")` (nested cards counted), `h2`, `details`, `button, .btn`, `input,select,textarea`; script re-run a second time on 6 Nov and every row matched (the topic row was corrected to 7.8 screens, 13 h2, 8 buttons). Block heights via `getBoundingClientRect` of each child of `main`. Chrome overhead per screen: top bar 45, DEMO note 120 (60 on settings), nav 57, disclaimer note 135. Targets below are **budgets** (rows x measured heights), not rendered prototypes. Target: default view <= 1.5 screens (<= 1110 px page height); an opened panel scrolls inside its page.
+Built the app (branch before merge 7d34280; re-measure after it) in a scratch copy (docs untouched), served `vite preview`, opened each route in Chrome 153 with Playwright: viewport 360x740, language bn, text 100%, DEMO mode, onboarding done. "Screens" = `document.documentElement.scrollHeight / 740`. Counts by script (not by hand): `main.querySelectorAll(".card, .k-card")` (nested cards counted), `h2`, `details`, `button, .btn`, `input,select,textarea`; script re-run a second time on 6 Nov and every row matched (the topic row was corrected to 7.8 screens, 13 h2, 8 buttons). Block heights via `getBoundingClientRect` of each child of `main`. Chrome overhead per screen: top bar 45, DEMO note 120 (60 on settings), nav 57, disclaimer note 135. Targets below are **budgets** (rows x measured heights), not rendered prototypes. Target: default view <= 1.5 screens (<= 1110 px page height); an opened panel scrolls inside its page.
 
 Measured today (screens / cards / h2 / folded details / buttons / inputs):
 
@@ -23,11 +23,11 @@ Measured today (screens / cards / h2 / folded details / buttons / inputs):
 | /deen/plans | 3.77 | 2 | 4 | 0 | 3 | 14 |
 | /hadith (off state) | 1.33 | 1 | 1 | 0 | 1 | 1 |
 | /cards | 1.34 | 0 | 1 | 0 | 3 | 2 |
-| /notes | 3.39 | 3 | 3 | 0 | 3 | 9 |
+| /notes | 3.39 | 3 | 3 | 0 | 3 | · |
 | /topics | 3.97 | 21 | 25 | 0 | 0 | 0 |
 | /topic/self-awareness | 7.8 | 11 | 13 | 0 | 8 | 0 |
 | /settings | 2.69 | 14 | 2 | 0 | 7 | 2 |
-| /settings/look | 2.47 | 9 | 4 | 1 | 6 | 5 |
+| /settings/look | 2.47 | · | 4 | 1 | 6 | 5 |
 | /settings/prayer | 5.53 | 5 | 4 | 0 | 26 | 16 |
 | /settings/backup | 3.38 | 11 | 11 | 2 | 13 | 8 |
 | /settings/privacy | 3.30 | 5 | 5 | 0 | 11 | 4 |
@@ -44,7 +44,7 @@ Measured today (screens / cards / h2 / folded details / buttons / inputs):
 | /more/dictionary | 4.75 | 1 | 1 | 47 | 0 | 0 |
 | /more/library | 3.32 | 6 | 6 | 0 | 8 | 0 |
 | /more/halal-flags | 2.57 | 6 | 6 | 0 | 0 | 0 |
-| /diary (profile card lives here) | 2.05 | 9 | 8 | 1 | 5 | 0 |
+| /diary (profile card lives here) | 2.05 | · | 8 | 1 | 5 | 0 |
 
 Biggest single blocks: Deen prayer-times card 800 px; prayer settings card 1908 px; Settings quick card 434 px; Privacy readout 569 px; each topic tip card 320-550 px.
 
@@ -52,14 +52,14 @@ Biggest single blocks: Deen prayer-times card 800 px; prayer settings card 1908 
 
 | Piece | Problem today (source) | Proposal | Status |
 |---|---|---|---|
-| Top bar | `render()` in src/app.ts: menu, title, online badge, DEMO badge, globe. No search. | menu, title, **🔍**, globe. Online state moves into the one-line banner ("Online" only as text, never "synced"). Globe keeps writing `tm:ui:lang` (settings-final-decision 1.1) | 🔍 new, needs build |
-| DEMO banner | `demoPanels()` 120 px on every route (60 on settings) | One line 36 px: "DEMO 9 নমুনা ডাটা 9 আসল শুরু" with the same Start real link. Full text one tap away. Still labelled on every screen | edit of existing |
-| Disclaimers | `disclaimers()` 135 px at the end of each screen | One-line chip row ("ফতোয়া নয় 9 গ্যারান্টি নয় ⓘ") keeping `data-legal`; full text in the ⓘ sheet. Still once per route (ui-reconcile R4) | edit of existing |
-| Bottom nav | 5 tabs, `TABS` + `observeNavLayout` (navLayout.ts); knowledge routes are tagged "settings" | Keep 5 labelled tabs, wrap at large text, no icon-only. Add: re-tap active tab returns to its root; calm dot on Settings if no file backup yet (no red, no count). Knowledge pages show crumb "← Guides & info" | re-tap + dot new |
-| Search / command bar | Only `withSearch()` in settingsSearch.ts, inside Settings | `commandBar()` full-width sheet: input (focus on open), chips All / Actions / Pages / Settings / Topics, grouped results with count badges, "recent 3", empty state = quick actions. Static registry, offline: ROWS, GUIDES, CATEGORIES (settingsRegistry.ts) + ROUTES labels + TOPICS names + GLOSSARY terms + actions list. Last row "Wikipedia" = the existing in-app search card (in-app-search-and-hosting.md), only on tap. No AI (D-C) | extends existing |
-| Quick actions | Action Desk has a tool grid on Today only | `quickActions(context)` row of 4 (2x2 under 300 px or 150% text): Deen: Prayer log, Fast, Give, Plan. Settings: Language, Dark, Text size, Backup now. Default (command-bar empty): Capture `#/capture`, Stuck `#/stuck`, Habits `#/habits`, Intake `#/diary/intake`, Backup `#/settings/backup/savebackup` | component new |
-| Help (i) | None; long intro text inline | `kHelp(id)`: 44 px ⓘ button in the heading row opens a bottom sheet (role=dialog, Esc, focus back to ⓘ). 3 lines: what / what changes / where data stays, + one "more" link. Texts in section 7 | new component |
-| Sheet | Forms inline | `kSheet` used by Help, record forms, command bar. Scrim, 44 px grab bar, max 85% height, content scrolls inside | new component |
+| Top bar | After Codex merge (src/app.ts `render()`): menu, title, online badge, DEMO badge, `langMenu` (globe), `ownerProfileLink` (person icon to `/profile`). No search. | Keep as built. Add only **🔍** after the person icon; to make room the online badge text moves into the one-line banner (never "synced"). | person icon exists; 🔍 new, needs build |
+| DEMO banner | `demoPanels()` 120 px on every route (60 on settings) | One line 36 px: "DEMO · নমুনা ডাটা · আসল শুরু" with the same Start real link. Full text one tap away. Still labelled on every screen | edit of existing |
+| Disclaimers | `disclaimers()` 135 px at the end of each screen | One-line chip row ("ফতোয়া নয় · গ্যারান্টি নয় ⓘ") keeping `data-legal`; full text in the ⓘ sheet. Still once per route (ui-reconcile R4) | edit of existing |
+| Bottom nav | Built: `createBottomNavigation` (quickNavigationUi.ts), `TAB_DEFINITIONS`, optional `tabNavigation: menu` mode opening a non-modal tab panel from `TAB_ACTIONS` (tabActions.ts), `rootBar` "Quick tools" on tab roots, `observeNavLayout`. Knowledge routes are tagged "settings" | Keep all of it. Add only: re-tap active tab returns to its root; calm dot on Settings if no file backup yet (no red, no count); crumb "← Guides & info" on knowledge pages | built, extend (dot, re-tap new) |
+| Search / command bar | Checked quickNavigationUi.ts, tabActions.ts, overlayCoordinator.ts: no search there. Only `withSearch()` (settingsSearch.ts) exists, inside Settings | `k-cmd` command bar: full-width sheet, input focus on open, chips All / Actions / Pages / Settings / Topics, grouped results with count badges, "recent 3", empty state = built TAB_ACTIONS of the current tab. Static registry, offline: ROWS, GUIDES, CATEGORIES + ROUTES labels + TOPICS names + GLOSSARY terms. Last row "Wikipedia" = existing in-app search card, only on tap. Reuse the built `overlayCoordinator` for open/close/focus. No AI (D-C) | `k-cmd` new, needs build; extends settingsSearch |
+| Quick actions | **Built:** `TAB_ACTIONS` per tab (Today, Journey, Diary, Deen, Settings), `rootBar` grid, tab panel, and the prayer quick-mark (`prayerControls(lang,"compact")` from prayerMarksUi.ts, `quickPrayer` on Deen). Deen built: Home, `#/deen/prayers`, `#/deen/fasting`, `#/deen/plans`, `#/settings/prayer`. Settings built: Home, Look, Backup, Privacy, Prayer | **Exists, extend only.** Additions: Deen: Give and Records (sheets on /deen, no new route); Settings: Language and Text size (`#/settings/home/language`, `#/settings/home/textsize`), Backup now (`#/settings/backup/savebackup`). Command-bar empty state reuses TAB_ACTIONS. No second quick-action component | exists, extend |
+| Help (i) |  **Built:** `helpTrigger(topic, lang, context, notes)` (helpUi.ts), 12 `HELP_TOPIC_IDS` in helpTopics.ts, `enhanceScreenHelp` + `screenHelpTopic(path)` (screenHelp.ts) put an "i" button beside every screen `h1`; sheet or inline per `helpPlacement`; guide + "my map". | **Exists, extend.** `k-help` is not a new component: it must reuse `helpTrigger` / `helpTopics`. Add only the group texts of section 7 as extra lines in the matching topics (deen, knowledge, settings, backup, profile) and 3 new group topics if needed; keep the "what / what changes / where data stays" lines and the fictional-example rule; 44 px target | exists, extend |
+| Sheet | Built: help sheet/dialog and `overlayCoordinator` (`openTransientOverlay`) | Reuse for record forms and k-cmd. Record-form sheet = thin wrapper, no separate "kSheet" system | extend |
 | Count badge | none | `k-chip` + number, not a score. Counts only things that exist (entries, rows, rules on) | uses kit |
 
 New kit builders go in `src/ui/kit/` as `k-*` classes. The tokens are defined in `src/ui/styles.css` (colours per look in `src/ui/themes.ts`) and used by `src/ui/kit.css`; names: `--paper --card --ink --muted --rule --primary --on-primary --ember --moss --calm --demo --demo-bg --danger --s1..--s7 --r-md --r-lg --tap --ctl-h --tint-primary --hair --e1 --e2 --fs-sm --lh-ui`. Look: Light Futuristic radius 12/18, opaque cards, one primary action per view.
@@ -67,8 +67,8 @@ New kit builders go in `src/ui/kit/` as `k-*` classes. The tokens are defined in
 ## 2. Group G1: Deen (/deen, /deen/plans)
 **Problems.** /deen is 6.24 screens: `deen()` in screens.ts stacks `fastCard`, `prayerTimesCard` (800 px), `hijriCard` (329), `prayerLinkRow`, 8 entity cards (each repeats the "Private" tag and a field list, 22 folded lists), `deen_plan` (475), `deen_mark`, `moduleDetails`, disclaimers. /deen/plans is 3.77 screens: one 14-input form (748 px), numbers card (772), notes/giving (470).
 **Proposal.**
-1. Heading row with Private chip and ⓘ. Today strip (one card, ~130 px): next prayer + source chip DEMO/method, today's fast ("no record" = Unknown, not 0), Hijri date as one line.
-2. Quick actions: Prayer log, Fast, Give, Plan. Each opens a bottom sheet with the existing form fields (same `fieldHelp`, same consent gate, same D-B rules).
+1. Heading row with Private chip and ⓘ. Today strip (one card, ~130 px) **keeps the built prayer quick-mark** (`prayerControls` compact: the mark buttons stay one tap from the strip): next prayer + source chip DEMO/method, today's fast ("no record" = Unknown, not 0), Hijri date as one line.
+2. Quick actions = the built Deen TAB_ACTIONS (Prayers `#/deen/prayers`, Fasting `#/deen/fasting`, Plans `#/deen/plans`, Prayer settings `#/settings/prayer`; the two /deen/* routes render Deen and focus `deen-prayers` / `deen-fasting`). Only additions: Give and Records open sheets with the existing form fields (same `fieldHelp`, consent gate, D-B rules).
 3. In-page tabs (state in the page, no route): **Today** (5 prayer rows, next highlighted, rest folded) | **Records 8** (8 rows with count badge, tap = sheet) | **Plan** (deen_plan, deen_mark) | **Learn** (Quran activity, learning, Feature details; one row "Knowledge ›" to G2, no duplicate list).
 4. Prayer settings stay in Settings; Deen shows one row "Prayer & alerts ›".
 5. /deen/plans: tabs **Plan | Numbers | Notes & giving**, form in a sheet, 3 inputs visible per step.
@@ -81,6 +81,7 @@ New kit builders go in `src/ui/kit/` as `k-*` classes. The tokens are defined in
 | Prayer times, 5 ways | `prayerTimesCard` | Tab Today (rows) |
 | Hijri / Ramadan | `hijriCard` | Today strip line + sheet |
 | Prayer settings link | `prayerLinkRow` -> /settings/prayer | row in Today tab |
+| Prayer marks, fasting focus | `/deen/prayers`, `/deen/fasting` (render `S.deen()`, focus `#deen-prayers`, `#deen-fasting`) | same routes; open Today tab (prayers) or Records > Fast (fasting) and focus it; quick-mark stays in the strip |
 | prayer_log, quran_activity, fast, zakat_snapshot, giving, hajj_plan, learning_item, right_duty | entity cards (M13) | Records tab rows, sheet each |
 | deen_plan, deen_mark | entity cards | Plan tab |
 | Deen plans page | /deen/plans | stays route, 3 tabs |
@@ -105,9 +106,9 @@ New kit builders go in `src/ui/kit/` as `k-*` classes. The tokens are defined in
 | Hadith | /hadith | Guides & info > Knowledge |
 
 ## 4. Group G3: Settings (/settings, /settings/:a/:b, /settings/connections)
-**Problems.** Home 2.69 screens (quick 434 + status 214 + 9 cards of 89-111 px). Prayer 5.53 (one 1908 px card with 26 buttons, 16 inputs); Connections 3.83 (4 cards of ~560 px, equal); Backup 3.38; Privacy 3.3 (readout 569); About 2.97 (15 cards). Category pages in registry order (settingsRegistry.ts, 34 rows).
+**Problems.** Home 2.69 screens (quick 434 + status 214 + · cards of 89-111 px). Prayer 5.53 (one 1908 px card with 26 buttons, 16 inputs); Connections 3.83 (4 cards of ~560 px, equal); Backup 3.38; Privacy 3.3 (readout 569); About 2.97 (15 cards). Category pages in registry order (settingsRegistry.ts, 34 rows).
 **Proposal.**
-- Home: heading + 🔍 + ⓘ; "My profile" row (new); one compact Quick card (language seg, theme seg, text slider 75-150, all in ~210 px); status as 3 chips (backup, data, lock) each a link; **2-column tiles** for the 8 categories with one value line; Delete tile last, dashed neutral border; Guides & info row. ~1.4 screens.
+- Home: heading + 🔍 + ⓘ; "Owner profile" row (the built `/profile`); one compact Quick card (language seg, theme seg, text slider 50-150, all in ~210 px); status as 3 chips (backup, data, lock) each a link; **2-column tiles** for the 8 categories with one value line; Delete tile last, dashed neutral border; Guides & info row. ~1.4 screens.
 - Every category page: summary line + **accordion per registry row** (`data-setting-row` kept). Summary shows current value + count badge; open = the existing control. `#/settings/<cat>/<row>` opens and highlights that row (extends `highlight()`).
 - Long forms (prayer offsets x5, alert prayers x5, passphrase, CSV import) go to bottom sheets.
 - Prayer: accordions Times (method, Asr), Fine tune (offsets, sheet), Alerts, Place, Auto-update, Reminders.
@@ -118,11 +119,12 @@ New kit builders go in `src/ui/kit/` as `k-*` classes. The tokens are defined in
 | Route | Rows (registry ids) now to after |
 |---|---|
 | /settings | language, theme, textsize (Quick card); status strip; 8 tiles; about row |
+| /settings/home/<row> | row ids language, theme, textsize (registry `home` rows) | same URL: opens the home and highlights the Quick-card control; also used by /profile links |
 | /settings/look | design, density, horizon, universe, habitgrid, motion, resetlook = 7 accordions |
 | /settings/prayer | prayermethod, prayersync, prayerplace, prayeralerts, reminders = 5 accordions |
 | /settings/backup | reminder, storage, savebackup, restore, snapshots, csv, PDF print card = 7 accordions |
 | /settings/privacy | lockscreen, consent, applock = 3 registry rows as accordions, plus the "private by default" readout, which is **not** in the 34-row ROWS registry: new row, needs build (read-only summary, no storage key) |
-| /settings/data | mode, startreal (`/settings/data/start-real` page stays) |
+| /settings/data, /settings/data/mode, /settings/data/start-real | mode, startreal | mode accordion; `start-real` stays a full page (gate, demo copy, confirm) |
 | /settings/plan | rules (4 switches), planmode, stages, weighting |
 | /settings/connections | 4 facility rows |
 | /settings/delete | deletedemo, deletereal |
@@ -149,22 +151,19 @@ New kit builders go in `src/ui/kit/` as `k-*` classes. The tokens are defined in
 | /more/halal-flags | yes (lazy) | all flags, draft label |
 | /more/safety | yes | 3 safety cards |
 
-## 6. Group G5: Profile hub (new `/profile`)
-Entry points: Settings home first row, command bar, Today greeting (name links to it). Top bar stays unchanged. Hub only links and summarises; it stores nothing and adds no key.
+## 6. Group G5: Owner profile (`/profile`, EXISTS: extend)
+Built (src/ui/ownerProfileUi.ts, route in app.ts, entry = person icon in the top bar): h1 "Owner profile", namespace tag, a device-only note, `profileCard` (name, birth year, age as ESTIMATE, time zone, Unknown when empty), then a link list: language, look, text size, privacy, backup, data, prayer, about, Settings. **Confirmed by reading the source: no percent, no ring, no inferred value, no tabs, no stored key.** My rule stands and overrides the 62% ring in B1: nothing inferred, no completeness percent, no "x of y done".
+**Add on top (no new route, no new key):**
 
-| Part | State | Source / route |
+| Addition | State | Source / route |
 |---|---|---|
-| Header: name, age (ESTIMATE), time zone, Unknown if empty | built (card) / hub **new** | `profileCard`, `profileView` in src/ui/profileCard.ts, edit `#/diary/intake/1` |
-| Greeting | built | `greeting()` |
-| Data mode demo/real | built | `#/settings/data/mode` |
-| Real-data permission (consent, date, Withdraw) | built | `#/settings/privacy/consent` |
-| App lock + PIN | built | `#/settings/privacy/applock` |
-| Look, language, text size | built | `#/settings/look`, Quick card |
-| Backup status, last file | built | `#/settings/backup` |
-| Hub page, tabs Me / Permissions / Look & language / Backup | **new, needs build** | `/profile` |
-| My data at a glance (demo n / real n entries) | **new, needs build**, uses existing counts | data page counts |
-| Initial-letter avatar chip | **new, optional** | no photo, no upload |
-No owner-profile spec exists in the repo (searched docs); the extra ideas above are proposals only. Rules: nothing inferred, all typed by the person, no completeness percent, no rank. **This rule overrides the 62% completeness ring in B1**: the Profile hub shows no ring, no percent, no "x of y done", only Unknown for missing parts. Real values need the D-B tick first.
+| Group the link list into 4 in-page tabs: Me / Permissions / Look & language / Backup | **new, needs build** (page edit) | same links as built |
+| Status line under each link (value from existing state: mode, consent date, lock on/off, last file backup, look name, language, text size %) | **new, needs build** | `rowValue()` in settingsUi.ts (already exported) |
+| Permissions tab: real-data consent, app lock, mode with Withdraw links | built targets | `#/settings/privacy`, `#/settings/privacy/consent`, `#/settings/data/mode` |
+| My data at a glance (demo n / real n) | **new, needs build**, existing counts | data page counts |
+| Initial-letter avatar | optional, no photo | none |
+| Ⓘ on the page | exists, via `enhanceScreenHelp` (topic `profile`) | none |
+Unchanged: edit via `#/diary/intake/1`; greeting; real values need the D-B tick first. No owner-profile spec exists in the docs; the additions are proposals.
 
 ## 7. Help (i) text, every group (EN / BN, plain)
 | Group | English | বাংলা |
@@ -191,16 +190,17 @@ No owner-profile spec exists in the repo (searched docs); the extra ideas above 
 ## 8. New routes / components needing build
 | Item | Kind | Note |
 |---|---|---|
-| `/profile` | new route | add to ROUTES, tab tag "settings"; no key, no schema change |
-| Command bar (🔍 in top bar) | new component + top-bar edit | extends settingsSearch registry; no route |
+| `/profile` | **exists** (ownerProfileUi.ts) | extend with tabs and status lines only; no key, no schema change |
+| `k-cmd` command bar + 🔍 in top bar | new component + top-bar edit | extends settingsSearch registry; reuse overlayCoordinator; no route |
 | Deen and Notes tabs | in-page state | no route; optional deep link `/deen/records` new, needs build (not required) |
-| `kHelp`, `kSheet`, `knowledgeTabs`, `quickActions`, accordion | new kit builders | all other routes above exist |
+| Help (i) (`helpTrigger`, `helpTopics`, `screenHelp`), quick actions (`TAB_ACTIONS`, `rootBar`, prayer quick-mark), bottom navigation | **exist, extend** | extra help lines, extra actions only |
+| `knowledgeTabs`, accordion, record-form sheet wrapper | new kit builders | all other routes above exist |
 | One-line DEMO banner, disclaimer chip | edit of `demoPanels`, `disclaimers` | keep `data-legal` and Start real link |
 
 Every other route in this document exists today in `ROUTES` / `REDIRECTS` (src/app.ts).
 
 ## 9. Acceptance checklist (per screen, per language EN / BN / Mix)
-- [ ] Text 75, 100, 125, 150%: no clipped Bangla vowel marks, no horizontal scroll, tabs wrap to two rows, tiles go to one column at 150%.
+- [ ] Text 50, 75, 100, 125, 150% (slider min 50, settingsUi.ts:89): no clipped Bangla vowel marks, no horizontal scroll, tabs wrap to two rows, tiles go to one column at 150%.
 - [ ] Every target >= 44 px (ⓘ, 🔍, tabs, chips that are links, accordion headers, tiles); no two targets under 8 px apart.
 - [ ] Contrast: text 4.5:1, icons and borders 3:1 in Light and dark; DEMO chip keeps `--demo` on `--demo-bg`.
 - [ ] Focus order: skip link, top bar, 🔍, heading, ⓘ, content, nav. Sheets trap focus, Esc closes, focus returns to the opener. Route change moves focus to h1 (settings-final-decision R11).
