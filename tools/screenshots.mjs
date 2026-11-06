@@ -35,12 +35,15 @@ if (process.env.TM_SHOT_MATRIX_MERGE === "1") {
   console.log("merged", parts.length, "parts;", bad.length, "problems"); process.exit(0);
 }
 if (process.env.TM_SHOT_MATRIX === "1") {
-  const routes = ["today", "journey", "journey/goal/shot-goal", "journey/month", "deen", "settings", "settings/prayer", "settings/privacy", "settings/backup", "diary/plan", "journey/boards", "journey/backward/shot-goal", "more/where",
+  const routes0 = ["today", "journey", "journey/goal/shot-goal", "journey/month", "deen", "settings", "settings/prayer", "settings/privacy", "settings/backup", "diary/plan", "journey/boards", "journey/backward/shot-goal", "more/where",
     "settings/look", "settings/data", "settings/data/start-real", "settings/plan", "settings/connections", "settings/delete", "settings/about", "settings/backup/restore", "journey/risks", "diary/team", "diary/ventures", "diary/money", "habits", "journey/goals", "more/status",
     "diary/intake/4", "journey/week", "journey/review", "journey/universe", "topics", "topic/procrastination", "print/plan", "settings/lock", "capture", "stuck", "focus/shot-t2", "reward", "deen/plans", "more/glossary", "more/safety", "more/fields"];
+  // TM_SHOT_ROUTES (comma list) / TM_SHOT_LANGS / TM_SHOT_OUT: extra verification runs (VERIFY-02); defaults keep the committed matrix unchanged.
+  const routes = process.env.TM_SHOT_ROUTES ? process.env.TM_SHOT_ROUTES.split(",") : routes0;
+  const LANGS = process.env.TM_SHOT_LANGS ? process.env.TM_SHOT_LANGS.split(",") : ["en", "bn"];
   const mdir = "evidence/screenshots-matrix"; mkdirSync(mdir, { recursive: true });
   const visit = new Date(Date.now() - 6 * 86400000); const lastOpen = `${visit.getFullYear()}-${String(visit.getMonth() + 1).padStart(2, "0")}-${String(visit.getDate()).padStart(2, "0")}`;
-  for (const design of DESIGNS) for (const lang of ["en", "bn"]) for (const scheme of ["light", "dark"]) for (const big of [false, true]) {
+  for (const design of DESIGNS) for (const lang of LANGS) for (const scheme of ["light", "dark"]) for (const big of [false, true]) {
     const ctx = await browser.newContext({ viewport: { width: 360, height: 740 }, deviceScaleFactor: 1, colorScheme: scheme });
     await ctx.addInitScript(([d, l, recs, lo]) => { try { localStorage.setItem("tm:ui:lang", l); localStorage.setItem("tm:ui:design", d); localStorage.setItem("tm:ui:dataMode", "demo"); localStorage.setItem("tm:ui:visit", JSON.stringify({ lastOpen: lo, welcome: null })); for (const r of recs) localStorage.setItem(`tm:demo:${r.id}`, JSON.stringify(r)); } catch { /* storage blocked */ } }, [design, lang, SEED, lastOpen]);
     const page = await ctx.newPage();
@@ -65,7 +68,7 @@ if (process.env.TM_SHOT_MATRIX === "1") {
   }
   await browser.close(); await server.close();
   const bad = report.filter((x) => x.overflow || x.wide || x.small || !x.tabsInView || x.touching);
-  writeFileSync(process.env.TM_SHOT_ONLY_DESIGN ? `evidence/matrix-part-${process.env.TM_SHOT_ONLY_DESIGN}.json` : "evidence/matrix-report.json", JSON.stringify({ viewport: "360x740", generated: new Date().toISOString(), combos: DESIGNS.length * 2 * 2 * 2, screens: report.length, problems: bad.length, bad, routes, matrix: "4 looks x en/bn x light/dark x 100%/200% text" }, null, 2));
+  writeFileSync(process.env.TM_SHOT_OUT ? process.env.TM_SHOT_OUT : process.env.TM_SHOT_ONLY_DESIGN ? `evidence/matrix-part-${process.env.TM_SHOT_ONLY_DESIGN}.json` : "evidence/matrix-report.json", JSON.stringify({ viewport: "360x740", generated: new Date().toISOString(), combos: DESIGNS.length * LANGS.length * 2 * 2, screens: report.length, problems: bad.length, bad, routes, matrix: "4 looks x en/bn x light/dark x 100%/200% text" }, null, 2));
   console.log(report.length, "matrix screens;", bad.length, "with a problem;", report.filter((x) => x.overflow).length, "overflow,", report.filter((x) => x.wide).length, "wide elements,", report.filter((x) => x.small).length, "small targets");
   process.exit(0);
 }
