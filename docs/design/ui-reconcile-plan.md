@@ -38,3 +38,6 @@ R7 Docs: DECISIONS_LOG, PLAN_TRACKER (new format from 83916d3, run tools/check_p
 - Their plan docs now have a checker (check_plan.mjs, CI): editing PLAN_TRACKER wrongly turns CI red.
 - Recovery/offline commits touch state.ts and sw.js: we do not edit them; kit adds only CSS and class names, so precache list must still pass deployment_gate test (kit.css is bundled by vite, no new asset path).
 - Large evidence churn from the matrix: commit only deliverable evidence.
+
+## 5. Second merge (6 Nov 2026)
+Merged origin/ccr-8b686ba2-vitt45 (0f6d17f, 1a07140) into the UI kit branch. No conflicts. Those commits only changed Workers preview isolation (wrangler.jsonc, package.json/lock, tools/check_branch_ci.mjs, check_deploy.mjs, check_preview_deploy.*, docs/deployment/PREVIEWS.md, tests/preview_deployment_gate.test.ts); no UI/CSS/markup, so no kit class changes or new matrix routes were needed. Checks on the merged head: tsc, vitest (2068 pass, includes looks matrix 0 problems), build, tools/e2e.mjs, tools/check_plan.mjs all pass. Not pushed (owner hold).
