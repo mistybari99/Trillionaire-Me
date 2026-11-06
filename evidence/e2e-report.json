@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-06T17:13:57.581Z",
+  "generated": "2026-11-06T17:48:04.855Z",
   "results": [
     {
       "id": "BRAND-SPLASH",
@@ -393,15 +393,15 @@
     },
     {
       "id": "TEXTSIZE",
-      "name": "en: 75, 113, 125 and 150% scale root, heading, text, buttons and tab bar",
+      "name": "en: 50, 75, 113, 125 and 150% scale root, heading, text, buttons and tab bar",
       "pass": true,
-      "detail": "{\"base\":{\"root\":16,\"h1\":28,\"p\":15,\"btn\":17,\"tab\":14,\"input\":17,\"scrollOk\":true,\"clipped\":0},\"s150\":{\"root\":24,\"h1\":42,\"p\":22.5,\"btn\":25.5,\"tab\":21,\"input\":25.5,\"scrollOk\":true,\"clipped\":0}}"
+      "detail": "{\"base\":{\"root\":16,\"h1\":28,\"p\":15,\"btn\":17,\"tab\":14,\"input\":17,\"scrollOk\":true,\"clipped\":0},\"s50\":{\"root\":8,\"h1\":14,\"p\":7.5,\"btn\":8.5,\"tab\":7,\"input\":8.5,\"scrollOk\":true,\"clipped\":0},\"s150\":{\"root\":24,\"h1\":42,\"p\":22.5,\"btn\":25.5,\"tab\":21,\"input\":25.5,\"scrollOk\":true,\"clipped\":0}}"
     },
     {
       "id": "TEXTSIZE",
-      "name": "en: slider range fits at 75% and 150%",
+      "name": "en: slider range fits at 50% and 150%",
       "pass": true,
-      "detail": "{\"s75\":{\"root\":12,\"h1\":21,\"p\":11.25,\"btn\":12.75,\"tab\":10.5,\"input\":12.75,\"scrollOk\":true,\"clipped\":0},\"s150\":{\"root\":24,\"h1\":42,\"p\":22.5,\"btn\":25.5,\"tab\":21,\"input\":25.5,\"scrollOk\":true,\"clipped\":0}}"
+      "detail": "{\"s50\":{\"root\":8,\"h1\":14,\"p\":7.5,\"btn\":8.5,\"tab\":7,\"input\":8.5,\"scrollOk\":true,\"clipped\":0},\"s150\":{\"root\":24,\"h1\":42,\"p\":22.5,\"btn\":25.5,\"tab\":21,\"input\":25.5,\"scrollOk\":true,\"clipped\":0}}"
     },
     {
       "id": "TEXTSIZE-KEYBOARD",
@@ -447,15 +447,15 @@
     },
     {
       "id": "TEXTSIZE",
-      "name": "bn: 75, 113, 125 and 150% scale root, heading, text, buttons and tab bar",
+      "name": "bn: 50, 75, 113, 125 and 150% scale root, heading, text, buttons and tab bar",
       "pass": true,
-      "detail": "{\"base\":{\"root\":16,\"h1\":28,\"p\":15,\"btn\":17,\"tab\":14,\"input\":17,\"scrollOk\":true,\"clipped\":0},\"s150\":{\"root\":24,\"h1\":42,\"p\":22.5,\"btn\":25.5,\"tab\":21,\"input\":25.5,\"scrollOk\":true,\"clipped\":0}}"
+      "detail": "{\"base\":{\"root\":16,\"h1\":28,\"p\":15,\"btn\":17,\"tab\":14,\"input\":17,\"scrollOk\":true,\"clipped\":0},\"s50\":{\"root\":8,\"h1\":14,\"p\":7.5,\"btn\":8.5,\"tab\":7,\"input\":8.5,\"scrollOk\":true,\"clipped\":0},\"s150\":{\"root\":24,\"h1\":42,\"p\":22.5,\"btn\":25.5,\"tab\":21,\"input\":25.5,\"scrollOk\":true,\"clipped\":0}}"
     },
     {
       "id": "TEXTSIZE",
-      "name": "bn: slider range fits at 75% and 150%",
+      "name": "bn: slider range fits at 50% and 150%",
       "pass": true,
-      "detail": "{\"s75\":{\"root\":12,\"h1\":21,\"p\":11.25,\"btn\":12.75,\"tab\":10.5,\"input\":12.75,\"scrollOk\":true,\"clipped\":0},\"s150\":{\"root\":24,\"h1\":42,\"p\":22.5,\"btn\":25.5,\"tab\":21,\"input\":25.5,\"scrollOk\":true,\"clipped\":0}}"
+      "detail": "{\"s50\":{\"root\":8,\"h1\":14,\"p\":7.5,\"btn\":8.5,\"tab\":7,\"input\":8.5,\"scrollOk\":true,\"clipped\":0},\"s150\":{\"root\":24,\"h1\":42,\"p\":22.5,\"btn\":25.5,\"tab\":21,\"input\":25.5,\"scrollOk\":true,\"clipped\":0}}"
     },
     {
       "id": "TEXTSIZE-KEYBOARD",
@@ -515,7 +515,7 @@
       "id": "PRECACHE",
       "name": "only the current shell cache and the small runtime cache exist (old ones are deleted)",
       "pass": true,
-      "detail": "tm-runtime-v1,tm-shell-7a9f73230f6a"
+      "detail": "tm-runtime-v1,tm-shell-18825e995f3d"
     },
     {
       "id": "PRECACHE",
@@ -539,7 +539,7 @@
       "id": "UPDATE-INTERRUPTED",
       "name": "503 on a required asset rejects the new worker and preserves the complete active shell",
       "pass": true,
-      "detail": "{\"state\":\"redundant\",\"sameActive\":true,\"waiting\":false,\"oldFiles\":[\"/\",\"/assets/fraunces-latin-400-normal-6IfK1voy.woff2\",\"/assets/connectionsUi-CIInZYL0.js\",\"/assets/decisionUi-D2CfHaUL.js\",\"/assets/fraunces-latin-600-normal-BFCDtZfi.woff2\",\"/assets/dexie-DtOs0fV1.js\",\"/assets/fraunces-latin-ext-400-normal-D8gbi3Gu.woff2\",\"/assets/fraunces-latin-ext-600-normal-BtzmzP0X.woff2\",\"/assets/fraunces-vietnamese-400-normal-CvGt0Ybw.woff2\",\"/assets/fraunces-vietnamese-600-normal-BjlAJixd.woff2\",\"/assets/hind-siliguri-bengali-400-normal-rHQ7AW0H.woff2\",\"/assets/halalUi-0w6hopvt.js\",\"/assets/hind-siliguri-bengali-500-normal-UuhTmLlo.woff2\",\"/assets/hind-siliguri-bengali-600-normal-DLZF4s8q.woff2\",\"/assets/hind-siliguri-latin-400-normal-esES0U7a.woff2\",\"/assets/hind-siliguri-latin-500-normal-S8HLIV69.woff2\",\"/assets/hind-siliguri-latin-600-normal-DHrLfb92.woff2\",\"/assets/hind-siliguri-latin-ext-400-normal-EIcpWxdl.woff2\",\"/assets/hind-siliguri-latin-ext-500-normal-BzNTYs89.woff2\",\"/assets/hadithPack-DithIlcV.js\",\"/assets/hind-siliguri-latin-ext-600-normal-BE5fbvrE.woff2\",\"/assets/index-Dk-DQDYL.css\",\"/assets/legsUi-DslMkfky.js\",\"/assets/noto-serif-bengali-bengali-500-normal-izpjMjkk.woff2\",\"/assets/i18n-CduPA7c1.js\",\"/assets/library-BOzrJp_9.js\",\"/assets/noto-serif-bengali-bengali-700-normal-D6heRmtL.woff2\",\"/assets/noto-serif-bengali-latin-500-normal-ChHikhgt.woff2\",\"/assets/noto-serif-bengali-latin-700-normal-BH4cA-4o.woff2\",\"/assets/index-BsX5kxwT.js\",\"/assets/noto-serif-bengali-latin-ext-500-normal-uqHYh-WD.woff2\",\"/assets/noto-serif-bengali-latin-ext-700-normal-ktrNXsDH.woff2\",\"/assets/pack-001-DUTOTIFf.js\",\"/assets/pack-002-C1ATZw8r.js\",\"/assets/pack-003-DXXGS0EW.js\",\"/assets/pack-004-CADvCbl_.js\",\"/assets/pack-005-CAXnvOUz.js\",\"/assets/pack-007-CY0SJsIk.js\",\"/assets/pack-008-DxmvMQLr.js\",\"/assets/pack-006-DAAVgteg.js\",\"/audio/azan-manifest.json\",\"/assets/pack-009-BTKY__Lk.js\",\"/content/pack-001.json\",\"/assets/planScreens-84yWUI0h.js\",\"/content/pack-002.json\",\"/content/pack-003.json\",\"/content/pack-004.json\",\"/content/pack-005.json\",\"/content/pack-006.json\",\"/content/pack-007.json\",\"/content/pack-008.json\",\"/content/pack-009.json\",\"/icon-180.png\",\"/icon-192.png\",\"/icon-512.png\",\"/icon-maskable-192.png\",\"/icon-maskable-512.png\",\"/icon-maskable.svg\",\"/icon.svg\",\"/manifest.webmanifest\",\"/index.html\"]}"
+      "detail": "{\"state\":\"redundant\",\"sameActive\":true,\"waiting\":false,\"oldFiles\":[\"/\",\"/assets/connectionsUi-CH6DqnKA.js\",\"/assets/decisionUi-DhlRdllw.js\",\"/assets/dexie-B2zrUJOC.js\",\"/assets/fraunces-latin-ext-400-normal-D8gbi3Gu.woff2\",\"/assets/fraunces-latin-400-normal-6IfK1voy.woff2\",\"/assets/fraunces-latin-ext-600-normal-BtzmzP0X.woff2\",\"/assets/fraunces-latin-600-normal-BFCDtZfi.woff2\",\"/assets/fraunces-vietnamese-400-normal-CvGt0Ybw.woff2\",\"/assets/fraunces-vietnamese-600-normal-BjlAJixd.woff2\",\"/assets/halalUi-Dh40VsGp.js\",\"/assets/hind-siliguri-bengali-400-normal-rHQ7AW0H.woff2\",\"/assets/hind-siliguri-bengali-500-normal-UuhTmLlo.woff2\",\"/assets/hind-siliguri-bengali-600-normal-DLZF4s8q.woff2\",\"/assets/hind-siliguri-latin-400-normal-esES0U7a.woff2\",\"/assets/hind-siliguri-latin-500-normal-S8HLIV69.woff2\",\"/assets/hind-siliguri-latin-600-normal-DHrLfb92.woff2\",\"/assets/hind-siliguri-latin-ext-400-normal-EIcpWxdl.woff2\",\"/assets/hind-siliguri-latin-ext-500-normal-BzNTYs89.woff2\",\"/assets/hind-siliguri-latin-ext-600-normal-BE5fbvrE.woff2\",\"/assets/hadithPack-DithIlcV.js\",\"/assets/index-Dk-DQDYL.css\",\"/assets/i18n-CduPA7c1.js\",\"/assets/legsUi-CkG8S4aN.js\",\"/assets/index-C2TCxJ8T.js\",\"/assets/library-BOzrJp_9.js\",\"/assets/noto-serif-bengali-bengali-500-normal-izpjMjkk.woff2\",\"/assets/noto-serif-bengali-bengali-700-normal-D6heRmtL.woff2\",\"/assets/noto-serif-bengali-latin-500-normal-ChHikhgt.woff2\",\"/assets/noto-serif-bengali-latin-700-normal-BH4cA-4o.woff2\",\"/assets/noto-serif-bengali-latin-ext-700-normal-ktrNXsDH.woff2\",\"/assets/noto-serif-bengali-latin-ext-500-normal-uqHYh-WD.woff2\",\"/assets/pack-002-C1ATZw8r.js\",\"/assets/pack-001-DUTOTIFf.js\",\"/assets/pack-003-DXXGS0EW.js\",\"/assets/pack-004-CADvCbl_.js\",\"/assets/pack-005-CAXnvOUz.js\",\"/assets/pack-006-DAAVgteg.js\",\"/assets/pack-007-CY0SJsIk.js\",\"/assets/pack-008-DxmvMQLr.js\",\"/assets/pack-009-BTKY__Lk.js\",\"/audio/azan-manifest.json\",\"/assets/planScreens-SOdYRtGf.js\",\"/content/pack-001.json\",\"/content/pack-002.json\",\"/content/pack-004.json\",\"/content/pack-003.json\",\"/content/pack-006.json\",\"/content/pack-005.json\",\"/content/pack-007.json\",\"/icon-180.png\",\"/icon-192.png\",\"/content/pack-009.json\",\"/content/pack-008.json\",\"/icon-512.png\",\"/icon-maskable-192.png\",\"/icon-maskable-512.png\",\"/icon-maskable.svg\",\"/icon.svg\",\"/manifest.webmanifest\",\"/index.html\"]}"
     },
     {
       "id": "UPDATE-INTERRUPTED",
@@ -563,7 +563,7 @@
       "id": "UPDATE-STAMP",
       "name": "Settings > About shows version, build and date",
       "pass": true,
-      "detail": "Version: 0.1.0-g1 · build b94809a · 6 Nov 2026"
+      "detail": "Version: 0.1.0-g1 · build b7128bf · 6 Nov 2026"
     },
     {
       "id": "UPDATE-BANNER",

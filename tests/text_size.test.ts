@@ -21,8 +21,8 @@ describe("type sizes scale with the Text size setting", () => {
   });
   it("the page start reads the saved size and applies it before the first draw", () => {
     expect(readFileSync("src/main.ts", "utf8")).toMatch(/applyPrefs\(\);\s*\n\s*\nconst onRoute/);
-    for (const n of [75, 83, 100, 117, 137, 150]) { localStorage.setItem("tm:ui:scale", String(n)); applyPrefs(); expect(document.documentElement.style.fontSize).toBe(`${n}%`); }
-    for (const [saved, expected] of [["200", 150], ["50", 75], ["NaN", 100], ["Infinity", 100], ["-1", 100], ["0", 100], ["", 100], ["117.6", 118]] as const) {
+    for (const n of [50, 63, 75, 100, 117, 137, 150]) { localStorage.setItem("tm:ui:scale", String(n)); applyPrefs(); expect(document.documentElement.style.fontSize).toBe(`${n}%`); }
+    for (const [saved, expected] of [["200", 150], ["25", 50], ["50", 50], ["NaN", 100], ["Infinity", 100], ["-1", 100], ["0", 100], ["", 100], ["117.6", 118]] as const) {
       localStorage.setItem("tm:ui:scale", saved); applyPrefs(); expect(document.documentElement.style.fontSize).toBe(`${expected}%`);
     }
     localStorage.removeItem("tm:ui:scale"); applyPrefs(); expect(prefs.scale).toBe(100);
@@ -30,9 +30,9 @@ describe("type sizes scale with the Text size setting", () => {
   it("live dragging updates and saves arbitrary integer sizes without replacing the focused slider", () => {
     location.hash = "#/settings"; render();
     const slider = document.querySelector<HTMLInputElement>("[data-scale=slider]")!;
-    expect([slider.type, slider.min, slider.max, slider.step]).toEqual(["range", "75", "150", "1"]);
+    expect([slider.type, slider.min, slider.max, slider.step]).toEqual(["range", "50", "150", "1"]);
     slider.focus();
-    for (const n of [75, 83, 117, 137, 150]) {
+    for (const n of [50, 63, 75, 117, 137, 150]) {
       slider.value = String(n); slider.dispatchEvent(new Event("input", { bubbles: true }));
       expect(localStorage.getItem("tm:ui:scale")).toBe(String(n)); expect(document.documentElement.style.fontSize).toBe(`${n}%`);
       expect(document.querySelector("[data-scale=slider]")).toBe(slider); expect(document.activeElement).toBe(slider);
@@ -42,6 +42,6 @@ describe("type sizes scale with the Text size setting", () => {
     expect(document.querySelector<HTMLInputElement>("[data-scale=slider]")!.value).toBe("113");
   });
   it("normalizes programmatic writes to the supported range", () => {
-    for (const [value, expected] of [[200, 150], [25, 75], [117.6, 118], [NaN, 100]] as const) { prefs.scale = value; expect(localStorage.getItem("tm:ui:scale")).toBe(String(expected)); }
+    for (const [value, expected] of [[200, 150], [25, 50], [50, 50], [117.6, 118], [NaN, 100]] as const) { prefs.scale = value; expect(localStorage.getItem("tm:ui:scale")).toBe(String(expected)); }
   });
 });

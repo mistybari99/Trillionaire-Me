@@ -60,7 +60,7 @@ export async function initStorage(): Promise<void> {
 }
 
 const get = (k: string) => { try { return localStorage.getItem(k); } catch { return null; } };
-const normalizeScale = (n: number) => Number.isFinite(n) && n > 0 ? Math.min(150, Math.max(75, Math.round(n))) : 100;
+const normalizeScale = (n: number) => Number.isFinite(n) && n > 0 ? Math.min(150, Math.max(50, Math.round(n))) : 100;
 const set = (k: string, v: string) => { try { localStorage.setItem(k, v); } catch { /* ignore */ } };
 
 import { parseOnboard, parseTimes, type OnboardState, type OnboardTimes } from "../core/onboarding";

@@ -311,19 +311,19 @@ for (const lang of ["en", "bn"]) {
     await page.evaluate((l) => localStorage.setItem("tm:ui:lang", l), lang);
     await page.goto("http://localhost:4174/#/settings"); await page.reload(); await page.waitForSelector("[data-scale]");
     const sizes = {};
-    for (const n of [75, 100, 113, 125, 150]) { await page.locator('[data-scale=slider]').evaluate((el, value) => { el.value = String(value); el.dispatchEvent(new Event('input', { bubbles: true })); }, n); await page.waitForTimeout(150); sizes[n] = await probe(); }
+    for (const n of [50, 75, 100, 113, 125, 150]) { await page.locator('[data-scale=slider]').evaluate((el, value) => { el.value = String(value); el.dispatchEvent(new Event('input', { bubbles: true })); }, n); await page.waitForTimeout(150); sizes[n] = await probe(); }
     const base = sizes[100];
-    const scales = [75, 113, 125, 150].every((n) => ["root", "h1", "p", "btn", "tab"].every((k) => base[k] && Math.abs(sizes[n][k] / base[k] - n / 100) < 0.03));
-    check("TEXTSIZE", `${lang}: 75, 113, 125 and 150% scale root, heading, text, buttons and tab bar`, scales, JSON.stringify({ base, s150: sizes[150] }));
-    check("TEXTSIZE", `${lang}: slider range fits at 75% and 150%`, [75,150].every(n => sizes[n].scrollOk && sizes[n].clipped === 0), JSON.stringify({s75:sizes[75],s150:sizes[150]}));
+    const scales = [50, 75, 113, 125, 150].every((n) => ["root", "h1", "p", "btn", "tab"].every((k) => base[k] && Math.abs(sizes[n][k] / base[k] - n / 100) < 0.03));
+    check("TEXTSIZE", `${lang}: 50, 75, 113, 125 and 150% scale root, heading, text, buttons and tab bar`, scales, JSON.stringify({ base, s50: sizes[50], s150: sizes[150] }));
+    check("TEXTSIZE", `${lang}: slider range fits at 50% and 150%`, [50,150].every(n => sizes[n].scrollOk && sizes[n].clipped === 0), JSON.stringify({s50:sizes[50],s150:sizes[150]}));
     const slider = page.locator('[data-scale=slider]');
     await slider.focus(); await page.keyboard.press('Home'); const minimum = await slider.inputValue();
     await page.keyboard.press('End'); const maximum = await slider.inputValue(); await page.keyboard.press('ArrowLeft');
     const keyboardSize = await slider.inputValue();
-    check("TEXTSIZE-KEYBOARD", `${lang}: Home/End and arrow keys adjust the native slider`, minimum === '75' && maximum === '150' && keyboardSize === '149');
+    check("TEXTSIZE-KEYBOARD", `${lang}: Home/End and arrow keys adjust the native slider`, minimum === '50' && maximum === '150' && keyboardSize === '149');
     // Drag a real thumb without replacing its node while live font changes move surrounding content.
     await slider.evaluate(el => { el.value='100'; el.dispatchEvent(new Event('input',{bubbles:true})); el.dataset.dragProbe='kept'; });
-    const box = await slider.boundingBox(); const thumb = 8; const xFor = n => box.x + thumb + (box.width-2*thumb)*(n-75)/75;
+    const box = await slider.boundingBox(); const thumb = 8; const xFor = n => box.x + thumb + (box.width-2*thumb)*(n-50)/100;
     await page.mouse.move(xFor(100),box.y+box.height/2); await page.mouse.down(); await page.mouse.move(xFor(117),box.y+box.height/2,{steps:12}); await page.mouse.up();
     const dragged = await slider.evaluate(el => ({value:Number(el.value),kept:el.dataset.dragProbe==='kept',saved:localStorage.getItem('tm:ui:scale'),root:document.documentElement.style.fontSize}));
     check("TEXTSIZE-DRAG", `${lang}: dragging selects and saves a non-preset size without replacing the slider`, Math.abs(dragged.value-117)<=1 && dragged.kept && dragged.saved===String(dragged.value) && dragged.root===`${dragged.value}%`, JSON.stringify(dragged));

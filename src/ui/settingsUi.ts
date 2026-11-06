@@ -86,7 +86,7 @@ function highlight(root: HTMLElement, row: string | undefined) {
 /** Live input keeps the same DOM node so pointer dragging and keyboard focus continue. */
 function textSizeSlider(lang: Locale): HTMLElement {
   const current = h("output", { for: "text-size-slider", "aria-live": "off" }, `${num(prefs.scale, lang)}%`);
-  const slider = h("input", { type: "range", id: "text-size-slider", min: "75", max: "150", step: "1", value: String(prefs.scale),
+  const slider = h("input", { type: "range", id: "text-size-slider", min: "50", max: "150", step: "1", value: String(prefs.scale),
     "aria-label": t("more.textsize", lang), "aria-valuetext": `${num(prefs.scale, lang)}%`, "data-scale": "slider" });
   slider.addEventListener("input", () => {
     prefs.scale = Number(slider.value);
@@ -96,7 +96,7 @@ function textSizeSlider(lang: Locale): HTMLElement {
     slider.scrollIntoView?.({ block: "nearest" });
   });
   return h("div", { class: "text-size-control" },
-    h("div", { class: "text-size-readout" }, h("span", { class: "muted" }, "75%"), current, h("span", { class: "muted" }, "150%")), slider);
+    h("div", { class: "text-size-readout" }, h("span", { class: "muted" }, "50%"), current, h("span", { class: "muted" }, "150%")), slider);
 }
 
 function quickCard(lang: Locale): HTMLElement {
