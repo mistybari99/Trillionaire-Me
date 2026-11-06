@@ -2,17 +2,17 @@
 
 ## 1. সারাংশ (Bangla)
 1. মালিকের চাওয়া মোট 97টা সারি কোডের সাথে মিলিয়ে দেখা হয়েছে।
-2. DONE-NOW (এখন তৈরি আছে): 9টা।
-3. STILL-PARTIAL (আংশিক তৈরি): 44টা।
+2. DONE-NOW (এখন তৈরি আছে): 8টা।
+3. STILL-PARTIAL (আংশিক তৈরি): 45টা।
 4. STILL-MISSING (এখনো নেই): 29টা।
 5. BLOCKED (আপনার সিদ্ধান্ত বা ফোনের কাজ লাগবে): 15টা।
-6. আংশিক ও নেই, মোট 73টা সারি মিলিয়ে 33টা ছোট বিল্ডার টাস্ক বানানো হয়েছে (Q-01 থেকে Q-33)।
+6. আংশিক ও নেই, মোট 74টা সারি মিলিয়ে 34টা ছোট বিল্ডার টাস্ক বানানো হয়েছে (Q-01 থেকে Q-34)।
 7. ছোট টাস্ক আগে, বড় টাস্ক পরে; একই কাজ একাধিক সারিতে থাকলে এক টাস্কে মেলানো হয়েছে।
 8. প্রতিটা টাস্কে স্কোর, র‍্যাঙ্ক, স্ট্রিক নেই; অজানা মানে 0 নয়; ডেমো লেবেল থাকবে।
 9. প্রতিটা টাস্কে EN/BN/Mix টেক্সট, 360 px, আর টেক্সট 75-150% চেক আছে।
 10. BLOCKED তালিকায় লেখা আছে কোন সিদ্ধান্ত বা ফোনের কাজের জন্য কোনটা আটকে আছে।
 
-Status counts: DONE-NOW 9 · STILL-PARTIAL 44 · STILL-MISSING 29 · BLOCKED 15 (total 97).
+Status counts: DONE-NOW 8 · STILL-PARTIAL 45 · STILL-MISSING 29 · BLOCKED 15 (total 97).
 Row ids: numbers 1-38 (part 1, visual-references rows) · V1-V39 (visual) · O1-O20 (owner-rule / build-list). Source evidence: BUILD-03 reconcile outputs 1 and 2.
 
 Corrections made after spot-check of 10+ evidence paths (all other paths exist; the audit found one more wrong path, `src/library/stageTemplates.ts`, now corrected to `src/core/stageTemplates.ts`):
@@ -28,7 +28,7 @@ Paths are repo-relative. "t:" = tests/ file.
 | 1 | Time cascade + "one thing" | STILL-PARTIAL | src/core/horizon.ts, src/ui/horizonArt.ts, t:horizon_art.test.ts | levels and own counts only; no per-level one thing (Q-15) |
 | 2 | Systems>routines>habits>identity flow | STILL-PARTIAL | src/library/topics.ts (text tips) | no flow SVG (Q-16) |
 | 3 | Goal funnel hero | DONE-NOW | src/ui/horizonArt.ts goalFunnelHero; t:horizon_art.test.ts | DONE-NOW covers only the funnel hero itself; the time cascade and the "one thing" prompt that the source gap still names are NOT done and are tracked by row 1 |
-| 4 | Grid trackers | DONE-NOW | src/core/chartData.ts habitGrid + GRID_RANGES, src/ui/charts.ts habitGridTracker; t:habit_grid.test.ts | daily/weekly/monthly; 31 days, 12 weeks, 12 months, no streak. DONE-NOW covers the habit grid only; the source gap still says no weekly or monthly grid exists for other trackers: that part is NOT done and stays in the queue tasks of the tracker rows |
+| 4 | Grid trackers | STILL-PARTIAL | src/core/chartData.ts habitGrid + GRID_RANGES, src/ui/charts.ts habitGridTracker; t:habit_grid.test.ts | daily/weekly/monthly; 31 days, 12 weeks, 12 months, no streak. the habit grid is done; weekly and monthly grids for other trackers are NOT done (Q-34) |
 | 5 | Challenge tracker | STILL-MISSING | grep "challenge" in src/ and tests/: nothing | Q-21 |
 | 6 | Action-plan table | STILL-PARTIAL | src/ui/lifeUi.ts steps as cards; t:goal_tree.test.ts | no table view (Q-11) |
 | 7 | Working-style chooser | STILL-MISSING | no code | Q-31 |
@@ -161,6 +161,7 @@ Every task keeps: no scores/ranks/streaks/grades, unknown is not 0 (show "Unknow
 | Q-31 | Small choosers | Working-style 4 cards saved as private pref (suggest one routine, no type score); 6-level maturity funnel own pick (does / result / next, no score); quick-pick card tick 1-3 ways this week saved private | new UIs, topics UI | t:work_style.test.ts, t:maturity_funnel.test.ts, t:quick_pick.test.ts | 7, 16, 15 | none |
 | Q-32 | Focus grid | 16-card tick grid page, steps from visual-references.md text, ticks private | new UI, fields | t:focus_grid.test.ts | 13 | none |
 | Q-33 | Per-screen look override | Optional per-screen look in Settings > Look; master look stays default; no new colours | lookUi.ts, themes.ts | t:look_per_screen.test.ts | 12 | Q-05 |
+| Q-34 | Weekly and monthly grid for other trackers | Reuse the habit grid cell logic (31 days, 12 weeks, 12 months, no streak, unknown cell is blank not 0) for the other trackers the owner named; same component, per-tracker data only | src/core/chartData.ts, src/ui/charts.ts, the tracker screens | extend t:habit_grid.test.ts | 4 | none |
 
 Ordering note: Q-01 to Q-09 are small and independent; Q-10 to Q-20 are medium; Q-21 to Q-33 are larger or lower value. Q-28 follows Q-01, Q-19 follows Q-17, Q-25 follows Q-09, Q-33 follows Q-05.
 
