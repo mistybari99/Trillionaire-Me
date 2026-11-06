@@ -1269,7 +1269,7 @@ export function intake(stepParam: string | undefined): HTMLElement {
     const err = h("p", { class: "err", role: "alert" });
     readers.push({ f, read: ip.read, err });
     form.append(h("div", { class: "field", "data-field": f.id },
-      h("label", { for: `f-${f.id}` }, tb(f.label, lang), " ", h("span", { class: "tag" }, t(`requirement.${f.requirement}` as Key, lang))),
+      h("label", { for: `f-${f.id}` }, tb(f.label, lang)), h("div", { class: "tags" }, h("span", { class: "tag" }, t(`requirement.${f.requirement}` as Key, lang))),
       ip.el, err, SUGGESTABLE.has(f.id) ? suggestPanel(f, lang, () => document.getElementById(`f-${f.id}`) as HTMLInputElement) : null, fieldHelp(f, lang)));
   }
   form.addEventListener("submit", (ev) => {

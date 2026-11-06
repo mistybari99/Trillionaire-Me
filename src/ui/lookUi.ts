@@ -39,7 +39,7 @@ export function lookPage(row: string | undefined, lang: Locale): HTMLElement {
       }))));
   const links = h("section", { class: "card", "data-card": "layout-links" }, h("h2", { class: "card-h" }, t("look.layouts", lang)),
     ...([["horizon", "#/journey/horizon", t(`horizon.view.${prefs.horizonView}` as Key, lang)], ["universe", "#/journey/universe", t(`univ.view.${prefs.universeView}` as Key, lang)], ["habitgrid", "#/habits", gridLabel(lang)]] as const).map(([id, href, val]) =>
-      h("a", { href, class: "card link", "data-setting-row": id, style: "margin:8px 0" }, h("h3", { class: "card-h" }, t(`set.row.${id}` as Key, lang)), h("p", { class: "muted", "data-row-value": id }, val))));
+      h("a", { href, class: "card link", "data-setting-row": id }, h("h3", { class: "card-h" }, t(`set.row.${id}` as Key, lang)), h("p", { class: "muted", "data-row-value": id }, val))));
   const motion = h("section", { class: "card", "data-setting-row": "motion" }, h("h2", { class: "card-h" }, t("set.row.motion", lang)),
     h("div", { class: "seg", role: "group", "aria-label": t("set.row.motion", lang) }, seg(t("look.motion.system", lang), prefs.reduceMotion === "system", () => { prefs.reduceMotion = "system"; applyPrefs(); rerender(); }, { "data-motion-set": "system" }), seg(t("look.motion.always", lang), prefs.reduceMotion === "always", () => { prefs.reduceMotion = "always"; applyPrefs(); rerender(); }, { "data-motion-set": "always" })),
     h("p", { class: "muted" }, t("look.motion.note", lang)));

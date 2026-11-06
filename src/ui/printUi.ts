@@ -82,7 +82,7 @@ export function printScreen(kindRaw?: string): HTMLElement {
   const body = kind === "plan" ? planBody(lang) : kind === "handover" ? handoverBody(lang) : reportBody(lang);
   return h("main", { class: "scr scr-print", "data-print-kind": kind }, back, h("h1", {}, t(`print.kind.${kind}` as Key, lang)),
     h("p", { class: "sub no-print" }, t("print.intro", lang)),
-    h("p", { class: "muted", "data-print-made": "1" }, nsTag(ns, lang), " ", t("print.made", lang, { d: day })),
+    h("div", { class: "muted k-inline", "data-print-made": "1" }, nsTag(ns, lang), h("span", {}, t("print.made", lang, { d: day }))),
     save, h("p", { class: "muted no-print" }, t("print.saveNote", lang)),
     body, disclaimers(lang),
     h("p", { class: "muted no-print" }, ...PRINT_KINDS.filter((k) => k !== kind).flatMap((k) => [printLink(k, lang, "crumb"), " "]), link("#/journey/print", "crumb", t("print.all", lang))));

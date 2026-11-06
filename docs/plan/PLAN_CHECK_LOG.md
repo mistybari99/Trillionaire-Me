@@ -98,3 +98,8 @@ The owner replaced preset text-size buttons with a75–150% slider at1% incremen
 ## Check #9 — 6 Nov 2026 (optional module descriptions)
 
 Owner screenshots showed technical module notes dominating Journey. Journey, Diary and Deen now place these cards under a closed native “Feature details” summary. All original module information remains reachable; the dedicated Build status page still exposes all25 cards. Working tools and mandatory warnings are outside the disclosure. Typecheck/build and74 focused tests pass;104 browser checks pass, including keyboard/pointer toggles and status reachability. [Dated evidence](../audit/FEATURE_DETAILS_2026-11-06.md). UI-03's physical accessibility acceptance remains open.
+
+
+## Check #10 — 6 Nov 2026 (UI component kit)
+
+Kit tokens, `kit.css`, builders and class aliases applied across all screens on top of the Action Desk merge; 96 per-screen repair rules removed; new rules tests (chip placement, disclaimer once per route, inline-style allowlist, CSS variables defined, motion guards, tint contrast in 8 token sets). Matrix extended with 16 routes and a no-adjacent-controls-under-8px check. Local only, not pushed (owner hold).

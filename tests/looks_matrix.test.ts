@@ -5,10 +5,11 @@ import { existsSync, readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 
 const ROUTES = ["today", "journey", "journey/goal/shot-goal", "journey/month", "deen", "settings", "settings/prayer", "settings/privacy", "settings/backup", "diary/plan", "journey/boards", "journey/backward/shot-goal", "more/where",
-    "settings/look", "settings/data", "settings/data/start-real", "settings/plan", "settings/connections", "settings/delete", "settings/about", "settings/backup/restore", "journey/risks", "diary/team", "diary/ventures", "diary/money", "habits", "journey/goals", "more/status"]
+    "settings/look", "settings/data", "settings/data/start-real", "settings/plan", "settings/connections", "settings/delete", "settings/about", "settings/backup/restore", "journey/risks", "diary/team", "diary/ventures", "diary/money", "habits", "journey/goals", "more/status",
+    "diary/intake/4", "journey/week", "journey/review", "journey/universe", "topics", "topic/procrastination", "print/plan", "settings/lock", "capture", "stuck", "focus/shot-t2", "reward", "deen/plans", "more/glossary", "more/safety", "more/fields"]
 const report = JSON.parse(readFileSync("evidence/matrix-report.json", "utf8")) as { viewport: string; combos: number; screens: number; problems: number; bad: unknown[]; routes?: string[]; matrix?: string };
 describe("evidence/matrix-report.json", () => {
-  it("covers 32 combinations and every listed screen at 360 px (28 screens x 32 = 896)", () => { expect(report.viewport).toBe("360x740"); expect(report.combos).toBe(32); expect(report.routes).toEqual(ROUTES); expect(report.screens).toBe(32 * ROUTES.length); });
+  it("covers 32 combinations and every listed screen at 360 px (44 screens x 32 = 1408)", () => { expect(report.viewport).toBe("360x740"); expect(report.combos).toBe(32); expect(report.routes).toEqual(ROUTES); expect(report.screens).toBe(32 * ROUTES.length); });
   it("shows no problem (a failing row is listed in `bad`)", () => { expect(report.bad).toEqual([]); expect(report.problems).toBe(0); });
   it("full-page pictures of the Boards page with the new drawings exist (4 looks, English and Bangla, 200 % text)", () => {
     for (const n of ["light-futuristic-en-light", "light-futuristic-bn-dark", "light-futuristic-en-light-200", "ink-paper-en-dark", "emerald-obsidian-en-light", "broadsheet-bn-light"]) expect(existsSync(`evidence/looks-sheets/boards-fullpage-${n}.jpg`), n).toBe(true);

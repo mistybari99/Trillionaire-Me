@@ -65,7 +65,7 @@ export function privacyPage(row: string | undefined, lang: Locale): HTMLElement 
     h("a", { href: "#/settings", class: "crumb" }, `← ${t("nav.settings", lang)}`), h("h1", {}, t("set.cat.privacy", lang)),
     h("section", { class: "card", "data-card": "readout", "aria-label": t("priv.readout.title", lang) }, h("h2", { class: "card-h" }, t("priv.readout.title", lang)),
       h("ul", { style: "list-style:none;padding:0;margin:0" },
-        ...lines.map((l) => h("li", { style: "margin:6px 0", "data-priv-line": l.id }, h("a", { href: l.href }, l.text), ...(l.weak ? [" · ", h("a", { href: l.href, class: "muted" }, t("priv.turnon", lang))] : []))), storage)),
+        ...lines.map((l) => h("li", { class: "k-linkrow", "data-priv-line": l.id }, h("a", { href: l.href }, l.text), ...(l.weak ? [" · ", h("a", { href: l.href, class: "muted" }, t("priv.turnon", lang))] : []))), storage)),
     consentSection(lang), lockScreenSection(lang),
     h("section", { "data-setting-row": "applock" }, lockCard(lang), h("p", { class: "muted", "data-priv": "forgot" }, t("priv.forgot", lang, { m: num(RESET_WAIT_MIN, lang) }))));
   const el = row ? main.querySelector<HTMLElement>(`[data-setting-row="${row}"]`) : null;

@@ -13,7 +13,7 @@ main p+p{margin-top:var(--s2)}
 :where(main) ul:not([class]),:where(main) ol:not([class]){padding-inline-start:var(--s5)}
 :where(main) ul:not([class]) li+li,:where(main) ol:not([class]) li+li{margin-top:var(--s1)}
 :where(main) li::marker{color:var(--primary)}
-.crumb{margin-top:var(--s1);gap:var(--s1);text-decoration:none;font-weight:600;border-radius:var(--r-md);padding-inline:var(--s1)}
+.crumb{margin-top:var(--s2);gap:var(--s1);text-decoration:none;font-weight:600;border-radius:var(--r-md);padding-inline:var(--s1)}
 .crumb:hover{text-decoration:underline}
 hr{border:0;border-top:var(--hair);margin:var(--s5) 0}
 
@@ -38,9 +38,8 @@ hr{border:0;border-top:var(--hair);margin:var(--s5) 0}
 /* a button that is a direct child of a container with its own gap carries no margin */
 :is(.k-actions,.btn-row,.actions,.row,.snap-btns,.update-banner,.k-row__trail,.k-inline,.tags,.top .right)>:is(.btn,.cta,.k-btn){margin:0}
 :is(.row,.snap-btns,.update-banner,.k-row__trail,.k-inline,.btn-row)>.btn-sm{margin:0}
-:is(.card,.advice-item)>:is(.btn,.cta,.btn-sm){margin-top:var(--s3);margin-inline:0}
+:is(.card,.advice-item)>:is(.btn,.cta){margin-top:var(--s3)}
 :is(.card,.advice-item)>:is(.btn,.cta):not(.btn-sm){width:100%}
-:is(.btn-sm,.btn):is(a,button)+:is(.btn-sm,.btn){margin-top:var(--s2)}
 .actions{display:grid;grid-template-columns:1fr;margin-top:var(--s4)}
 .actions .cta,.actions .btn{min-height:var(--ctl-h)}
 @media (min-width:380px){.actions{grid-template-columns:1fr 1fr}.actions>.cta,.actions>.btn:last-child{grid-column:1/-1}}
@@ -164,7 +163,7 @@ details.help+details.help,details+details{margin-top:var(--s2)}
 :where(main) details:not(.help)>summary{min-height:var(--tap);display:flex;align-items:center;cursor:pointer;font-weight:600}
 
 /* ---------- Segmented choice (k-seg) ---------- */
-.seg,.k-seg{display:grid;grid-template-columns:repeat(auto-fit,minmax(7rem,1fr));gap:var(--s2);margin-top:var(--s2)}
+.seg,.k-seg{display:grid;grid-template-columns:repeat(auto-fit,minmax(5.5rem,1fr));gap:var(--s2);margin-top:var(--s2)}
 .seg button,.k-seg button{min-height:var(--tap);padding:var(--s1) var(--s3);display:flex;align-items:center;justify-content:center;gap:var(--s1);background:var(--card);color:var(--ink);border:var(--ctl-bw) solid color-mix(in srgb,var(--ink) 55%,var(--rule));font:600 var(--fs-md)/var(--lh-ui) "Hind Siliguri",system-ui,sans-serif;cursor:pointer}
 .seg button[aria-pressed="true"],.k-seg button[aria-pressed="true"]{background:var(--primary);color:var(--on-primary);border-color:var(--primary)}
 .seg button[aria-pressed="true"]::before{content:"✓";font-size:.9em}
@@ -260,3 +259,23 @@ nav{background:var(--card);border-top:var(--hair);box-shadow:0 -6px 20px color-m
   *{background-image:none!important}
 }
 .k-check{display:flex;align-items:center;gap:var(--s3);min-height:var(--tap);margin-top:var(--s2);font-weight:400;cursor:pointer}
+
+.note[data-compact]{margin:var(--s2) 0 0;padding:var(--s2) var(--s3)}
+.note[data-compact]::before{display:none}
+.note[data-compact] p{margin:0}
+main .row>.btn.k-iconbtn,.k-iconbtn{flex:0 0 var(--tap);width:var(--tap);min-width:var(--tap);height:var(--tap);min-height:var(--tap)!important;padding:0;margin:0}
+
+/* link rows: a link on its own line is a 44px target with 8px between rows */
+.k-linkrow{margin:0}
+.k-linkrow>a{display:flex;align-items:center;min-height:var(--tap)}
+.k-linkrow+.k-linkrow{margin-top:var(--s2)}
+:where(ul,ol)>li:has(>a.crumb:only-child)+li{margin-top:var(--s2)}
+:where(main) details+:is(.seg,.btn,.cta,.crumb,.card,.k-actions,.btn-row){margin-top:var(--s3)}
+.remind-row+.remind-row,.remind-row+*{margin-top:var(--s3)}
+.snap-btns,.btn-row{gap:var(--s3)}
+.snap-btns>.btn{margin:0}
+:is(.card,.advice-item)>:is(.btn,.cta):not(.btn-sm){margin-inline:0}
+:is(.card,.advice-item)>.btn-sm{margin-top:var(--s3);vertical-align:top}
+:where(main) :is(input,select,textarea,.btn,.cta)+:is(.btn,.cta,.btn-sm,a.btn){margin-top:var(--s3)}
+label+input[type=file]+.btn,input[type=file]+.btn{margin-top:var(--s3)}
+.crumb{margin-inline-end:var(--s2)}

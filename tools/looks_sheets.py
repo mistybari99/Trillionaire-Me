@@ -9,7 +9,8 @@ src = sys.argv[1]; out = sys.argv[2] if len(sys.argv) > 2 else "evidence/looks-s
 os.makedirs(out, exist_ok=True)
 DESIGNS = ["light-futuristic", "ink-paper", "emerald-obsidian", "broadsheet"]
 ROUTES = ["today", "journey", "journey/goal/shot-goal", "journey/month", "deen", "settings", "settings/prayer", "settings/privacy", "settings/backup", "diary/plan", "journey/boards", "journey/backward/shot-goal", "more/where",
-    "settings/look", "settings/data", "settings/data/start-real", "settings/plan", "settings/connections", "settings/delete", "settings/about", "settings/backup/restore", "journey/risks", "diary/team", "diary/ventures", "diary/money", "habits", "journey/goals", "more/status"]
+    "settings/look", "settings/data", "settings/data/start-real", "settings/plan", "settings/connections", "settings/delete", "settings/about", "settings/backup/restore", "journey/risks", "diary/team", "diary/ventures", "diary/money", "habits", "journey/goals", "more/status",
+    "diary/intake/4", "journey/week", "journey/review", "journey/universe", "topics", "topic/procrastination", "print/plan", "settings/lock", "capture", "stuck", "focus/shot-t2", "reward", "deen/plans", "more/glossary", "more/safety", "more/fields"]
 TW, TH, GAP = 180, 370, 3
 for d in DESIGNS:
     for r in ROUTES:

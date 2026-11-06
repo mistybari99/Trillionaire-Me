@@ -1,5 +1,5 @@
 // Screenshot report: every route at 360 px, Bangla and English (G1 definition of done).
-import { TOUCHING_FN } from "./touching.mjs";
+import { TOUCHING_FN, ADJACENT_FN } from "./touching.mjs";
 import { existsSync } from "node:fs";
 const SANDBOX_CHROME = "/opt/pw-browsers/chromium-1194/chrome-linux/chrome";
 import { chromium } from "playwright";
@@ -36,7 +36,8 @@ if (process.env.TM_SHOT_MATRIX_MERGE === "1") {
 }
 if (process.env.TM_SHOT_MATRIX === "1") {
   const routes = ["today", "journey", "journey/goal/shot-goal", "journey/month", "deen", "settings", "settings/prayer", "settings/privacy", "settings/backup", "diary/plan", "journey/boards", "journey/backward/shot-goal", "more/where",
-    "settings/look", "settings/data", "settings/data/start-real", "settings/plan", "settings/connections", "settings/delete", "settings/about", "settings/backup/restore", "journey/risks", "diary/team", "diary/ventures", "diary/money", "habits", "journey/goals", "more/status"];
+    "settings/look", "settings/data", "settings/data/start-real", "settings/plan", "settings/connections", "settings/delete", "settings/about", "settings/backup/restore", "journey/risks", "diary/team", "diary/ventures", "diary/money", "habits", "journey/goals", "more/status",
+    "diary/intake/4", "journey/week", "journey/review", "journey/universe", "topics", "topic/procrastination", "print/plan", "settings/lock", "capture", "stuck", "focus/shot-t2", "reward", "deen/plans", "more/glossary", "more/safety", "more/fields"];
   const mdir = "evidence/screenshots-matrix"; mkdirSync(mdir, { recursive: true });
   const visit = new Date(Date.now() - 6 * 86400000); const lastOpen = `${visit.getFullYear()}-${String(visit.getMonth() + 1).padStart(2, "0")}-${String(visit.getDate()).padStart(2, "0")}`;
   for (const design of DESIGNS) for (const lang of ["en", "bn"]) for (const scheme of ["light", "dark"]) for (const big of [false, true]) {
@@ -46,7 +47,7 @@ if (process.env.TM_SHOT_MATRIX === "1") {
     for (const r of routes) {
       await page.goto("about:blank"); await page.goto(`http://localhost:${PORT}/#/${r}`);
       await page.waitForSelector("main"); if (big) await page.evaluate(() => { document.documentElement.style.fontSize = "200%"; }); await page.waitForTimeout(500);
-      const touching = await page.evaluate(TOUCHING_FN);
+      const touching = [...(await page.evaluate(TOUCHING_FN)), ...(await page.evaluate(ADJACENT_FN))];
       const m = await page.evaluate(() => {
         const vw = window.innerWidth; const vis = (e) => { const b = e.getBoundingClientRect(); return b.width > 0 && b.height > 0; };
         const wide = [...document.querySelectorAll("main *")].filter((e) => vis(e) && e.getBoundingClientRect().right > vw + 1 && !e.closest("svg, .sr-only, [aria-hidden=true], pre, table")).length;

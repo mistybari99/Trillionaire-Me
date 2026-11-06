@@ -803,3 +803,12 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 - Owner questioned the always-open module descriptions and Input/Storage/Calculation/Built lists shown in Journey screenshots. Put these reference cards inside one native closed disclosure per Journey/Diary/Deen screen, using a plain localized Feature details label.
 - Retain all module data/build information and the fully expanded dedicated Build status page. Keep tools, save/consent warnings and ordinary guidance in their existing positions. No calculation, data schema, record or preference change.
 - Evidence: `docs/audit/FEATURE_DETAILS_2026-11-06.md`. Undo by reverting this presentation change; there is no stored state to migrate.
+
+
+## 6 Nov 2026 — UI component kit over every screen (ui-polish-spec K0-K6, reconciled with Action Desk)
+
+- Decision: add a token layer (spacing, radius, elevation, hairline, control, type, motion, tints) to `styles.css`, per-look overrides in `themes.ts`, and one component kit (`src/ui/kit.css` plus builders in `src/ui/kit/index.ts`). Old class names (`.btn .cta .card .row .tag .chip .note .need .seg .field`) stay as aliases that receive the kit look, so tests, e2e selectors and the merged Action Desk markup keep working. The 96 `.scr-*` per-screen spacing repairs and the old "one vertical rhythm" `!important` block were deleted.
+- Fixes root causes: buttons no longer own margins (container gap), checkboxes/radios are a 24px drawn box (no 100% width), notices replace left-rule quotes, disclaimers render as one legal notice and once per route (`resetNotices`), chips never sit inside a sentence (labelled value `.val` is the one exception because TM-REQ-006 needs its label next to the figure), inline `style:` attributes cut from 195 to 42 (test allowlist only shrinks).
+- Kept: all logic, data, consent/Deen/D-B wording, Bangla copy, no-red-for-missed-goals. Action Desk and text-size slider (rem tokens scale with it) unchanged in behaviour.
+- Alternatives: keep per-screen CSS (rejected: root cause of touching buttons). Undo: revert the kit commits; aliases mean each step reverts alone.
+- Evidence: tests/ui_kit_rules.test.ts, tests/kit_components.test.ts, looks matrix (tools/screenshots.mjs, 60 routes x 4 looks x EN/BN x light/dark x 100/200%, gap >= 8px check added).

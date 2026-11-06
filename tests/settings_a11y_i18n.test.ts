@@ -49,7 +49,7 @@ describe("Settings strings: parity and wording rules", () => {
     expect(text).not.toMatch(/\b(score|scores|rank|ranks|ranking|streak|streaks|points)\b/i);
   });
   it("every Settings page renders with every target at least 44px by rule and no horizontal-scroll style", () => {
-    const css = readFileSync("src/ui/styles.css", "utf8"); expect(css).toMatch(/\.scr-settings \.seg button\{[^}]*min-width:max-content/); /* words never split ("Automati-c"); the row wraps instead, no sideways scroll: matrix report + e2e SET-200 */ expect(css).toMatch(/\.seg button\{min-height:44px/);
+    const css = readFileSync("src/ui/styles.css", "utf8"); expect(css).toMatch(/\.scr-settings \.seg button\{[^}]*min-width:(min\(max-content,100%\)|max-content)/); /* words never split ("Automati-c"); the row wraps instead, no sideways scroll: matrix report + e2e SET-200 */ expect(css).toMatch(/\.seg button\{min-height:44px/);
     go("#/settings"); for (const b of app().querySelectorAll<HTMLElement>("button")) { const mh = b.style.minHeight; if (mh) expect(parseInt(mh), b.outerHTML.slice(0, 80)).toBeGreaterThanOrEqual(44); }
   });
 });

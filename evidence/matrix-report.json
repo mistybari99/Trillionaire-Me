@@ -1,8 +1,8 @@
 {
   "viewport": "360x740",
-  "generated": "2026-11-03T16:39:22.925Z",
+  "generated": "2026-11-06T10:14:01.192Z",
   "combos": 32,
-  "screens": 896,
+  "screens": 1408,
   "problems": 0,
   "bad": [],
   "routes": [
@@ -33,7 +33,23 @@
     "diary/money",
     "habits",
     "journey/goals",
-    "more/status"
+    "more/status",
+    "diary/intake/4",
+    "journey/week",
+    "journey/review",
+    "journey/universe",
+    "topics",
+    "topic/procrastination",
+    "print/plan",
+    "settings/lock",
+    "capture",
+    "stuck",
+    "focus/shot-t2",
+    "reward",
+    "deen/plans",
+    "more/glossary",
+    "more/safety",
+    "more/fields"
   ],
   "matrix": "4 looks x en/bn x light/dark x 100%/200% text"
 }

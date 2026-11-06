@@ -117,7 +117,7 @@ function statusStrip(lang: Locale): HTMLElement {
     ["privacy", settingsHash("privacy"), t(lockEnabled(consentKv) ? "set.status.lock.on" : "set.status.lock.off", lang)],
   ];
   return h("section", { class: "card", "data-card": "status", "aria-label": t("set.status.title", lang) }, h("h2", { class: "card-h" }, t("set.status.title", lang)),
-    ...lines.map(([id, href, text]) => h("p", { style: "margin:4px 0" }, link(href, "", h("span", { "data-status": id }, text)))));
+    ...lines.map(([id, href, text]) => h("p", { class: "k-linkrow" }, link(href, "", h("span", { "data-status": id }, text)))));
 }
 
 function categoryCard(cat: CatKey, lang: Locale): HTMLElement {

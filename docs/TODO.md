@@ -6,6 +6,7 @@ Updated 5 Nov 2026. Status, ownership, acceptance and dependencies live only in 
 2. **VERIFY-01 + VERIFY-02 + VERIFY-03** — reconcile historical behavior, fresh mobile UI and prayer-source evidence.
 3. **UI-02** — implement the jointly selected Action Desk presentation, preserving the design decision's behavior and accessibility contracts.
 4. **DESIGN-01 + OPS-02** — reconcile PR #2's two unique commits and prepare accurate PR #1 integration scope.
+6. **UI-04** — owner phone check of the component kit (all 4 looks); then push and watch CI.
 5. **VERIFY-04 + PERF-01** — reconcile requirement evidence and cold-install size; then prioritize BUILD-03.
 
 AUD-01/02/03 fixes and UI-01 design selection are recorded with evidence in the active tracker; their original audit observations remain historical.

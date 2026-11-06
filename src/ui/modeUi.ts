@@ -105,7 +105,7 @@ export function demoPanels(): HTMLElement[] {
   if (!inSettings && askDue()) out.push(h("div", { class: "card", role: "status", "data-mode-ask": "1" }, h("h2", { class: "card-h" }, t("mode.ask.title", lang)), h("p", {}, t("mode.ask.p", lang)),
     h("button", { class: "btn", type: "button", "data-act": "demo-ask-yes", onclick: openStartReal }, t("mode.ask.yes", lang)),
     h("button", { class: "btn ghost", type: "button", "data-act": "demo-ask-no", onclick: declineStartReal }, t("mode.ask.no", lang))));
-  if (inSettings) { out.push(h("div", { class: "note", role: "status", "data-demo-banner": "1", "data-compact": "1", style: "padding:6px 12px" }, h("p", { style: "margin:0" }, h("b", {}, t("mode.banner", lang))))); return out; }
+  if (inSettings) { out.push(h("div", { class: "note", role: "status", "data-demo-banner": "1", "data-compact": "1" }, h("p", {}, h("b", {}, t("mode.banner", lang))))); return out; }
   out.push(h("div", { class: "note", role: "status", "data-demo-banner": "1" }, h("p", {}, h("b", {}, t("mode.banner", lang))),
     h("button", { class: "btn ghost btn-sm", type: "button", "data-act": "start-real-banner", onclick: openStartReal }, t("mode.banner.start", lang))));
   return out;

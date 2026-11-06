@@ -78,7 +78,7 @@ export function prayerSettingsCard(lang: Locale): HTMLElement {
   const prayerBtns = PRAYER_KEYS.map((k) => h("button", { type: "button", "data-alert-prayer": k, "aria-pressed": String(alerts.prayers[k]), style: "min-height:44px;min-width:44px", onclick: () => setAlerts({ ...alerts, prayers: { ...alerts.prayers, [k]: !alerts.prayers[k] } }) }, t(`deen.prayer.name.${k}` as Key, lang)));
   return h("div", { class: "card", "data-prayer-settings": "1" },
     h("h2", { class: "card-h" }, t("deen.set.title", lang)),
-    h("h3", {}, t("deen.set.place", lang), " ", nsTag(activeNs(), lang)),
+    h("div", { class: "row" }, h("h3", {}, t("deen.set.place", lang)), nsTag(activeNs(), lang)),
     activeNs() === "real" ? h("p", { class: "muted", "data-place-note": "1" }, t("entry.real.note", lang)) : null,
     form, dhaka,
     h("h3", {}, t("deen.set.pre", lang)),
