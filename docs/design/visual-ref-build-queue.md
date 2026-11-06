@@ -8,14 +8,14 @@
 5. BLOCKED (আপনার সিদ্ধান্ত বা ফোনের কাজ লাগবে): 15টা।
 6. আংশিক ও নেই, মোট 73টা সারি মিলিয়ে 33টা ছোট বিল্ডার টাস্ক বানানো হয়েছে (Q-01 থেকে Q-33)।
 7. ছোট টাস্ক আগে, বড় টাস্ক পরে; একই কাজ একাধিক সারিতে থাকলে এক টাস্কে মেলানো হয়েছে।
-8. প্রতিটা টাস্কে স্কোর, র‍্যাঙ্ক, স্ট্রিক নেই; অজানা মানে 0 নয়; ডেমো লেবার থাকবে।
+8. প্রতিটা টাস্কে স্কোর, র‍্যাঙ্ক, স্ট্রিক নেই; অজানা মানে 0 নয়; ডেমো লেবেল থাকবে।
 9. প্রতিটা টাস্কে EN/BN/Mix টেক্সট, 360 px, আর টেক্সট 75-150% চেক আছে।
 10. BLOCKED তালিকায় লেখা আছে কোন সিদ্ধান্ত বা ফোনের কাজের জন্য কোনটা আটকে আছে।
 
 Status counts: DONE-NOW 9 · STILL-PARTIAL 44 · STILL-MISSING 29 · BLOCKED 15 (total 97).
 Row ids: numbers 1-38 (part 1, visual-references rows) · V1-V39 (visual) · O1-O20 (owner-rule / build-list). Source evidence: BUILD-03 reconcile outputs 1 and 2.
 
-Corrections made after spot-check of 10+ evidence paths (all other paths exist):
+Corrections made after spot-check of 10+ evidence paths (all other paths exist; the audit found one more wrong path, `src/library/stageTemplates.ts`, now corrected to `src/core/stageTemplates.ts`):
 - Rows 4 and V16: `habitGrid` data function lives in `src/core/chartData.ts:61`; the UI renderer in `src/ui/charts.ts` is `habitGridTracker` (line 128), not `habitGrid`.
 - Row 13: `src/ui/focus*` does not exist; the focus timer lives in `src/ui/screens.ts` (tests/focus_habits_cards*.test.ts).
 - Row 19: `timelineChart` is not in `src/ui/mapsUi.ts` (it has goalTreeChart, resourceMapChart, readinessChart). Treat the board timeline as not present.
@@ -27,8 +27,8 @@ Paths are repo-relative. "t:" = tests/ file.
 |---|---|---|---|---|
 | 1 | Time cascade + "one thing" | STILL-PARTIAL | src/core/horizon.ts, src/ui/horizonArt.ts, t:horizon_art.test.ts | levels and own counts only; no per-level one thing (Q-15) |
 | 2 | Systems>routines>habits>identity flow | STILL-PARTIAL | src/library/topics.ts (text tips) | no flow SVG (Q-16) |
-| 3 | Goal funnel hero | DONE-NOW | src/ui/horizonArt.ts goalFunnelHero; t:horizon_art.test.ts | "one thing" prompt is row 1 |
-| 4 | Grid trackers | DONE-NOW | src/core/chartData.ts habitGrid + GRID_RANGES, src/ui/charts.ts habitGridTracker; t:habit_grid.test.ts | daily/weekly/monthly; 31 days, 12 weeks, 12 months, no streak. Long-range list covered by funnel counts |
+| 3 | Goal funnel hero | DONE-NOW | src/ui/horizonArt.ts goalFunnelHero; t:horizon_art.test.ts | DONE-NOW covers only the funnel hero itself; the time cascade and the "one thing" prompt that the source gap still names are NOT done and are tracked by row 1 |
+| 4 | Grid trackers | DONE-NOW | src/core/chartData.ts habitGrid + GRID_RANGES, src/ui/charts.ts habitGridTracker; t:habit_grid.test.ts | daily/weekly/monthly; 31 days, 12 weeks, 12 months, no streak. DONE-NOW covers the habit grid only; the source gap still says no weekly or monthly grid exists for other trackers: that part is NOT done and stays in the queue tasks of the tracker rows |
 | 5 | Challenge tracker | STILL-MISSING | grep "challenge" in src/ and tests/: nothing | Q-21 |
 | 6 | Action-plan table | STILL-PARTIAL | src/ui/lifeUi.ts steps as cards; t:goal_tree.test.ts | no table view (Q-11) |
 | 7 | Working-style chooser | STILL-MISSING | no code | Q-31 |
@@ -46,7 +46,7 @@ Paths are repo-relative. "t:" = tests/ file.
 | 19 | Goal-setting planner / timeline | STILL-PARTIAL | src/core/monthlyReview.ts, t:month_review.test.ts | board timelineChart not found (corrected); multi-year line on horizon (Q-15) |
 | 20 | Four-strategy card | STILL-PARTIAL | src/library/topics.ts text; t:stuck.test.ts | Q-14 |
 | 21 | SMART wizard / checklist / wheel | STILL-PARTIAL | src/ui/smartFunnel.ts, t:smart_funnel.test.ts; lifeUi.ts smartForm | one-page form only (Q-30). Wheel skipped, funnel covers it |
-| 22 | Problem framing 4 questions | STILL-MISSING | src/library/stageTemplates.ts stage text only | Q-10 |
+| 22 | Problem framing 4 questions | STILL-MISSING | src/core/stageTemplates.ts stage text only | Q-10 |
 | 23 | SOP template | STILL-PARTIAL | src/core/knowledge.ts, src/ui/notesUi.ts, t:notes_sops.test.ts | missing purpose, trigger, check, handoff (Q-23) |
 | 24 | Time batching | STILL-MISSING | src/core/timeBlocks.ts is commitments; t:time_blocks.test.ts | Q-26 |
 | 25 | Creator routine by situation | STILL-PARTIAL | src/catalog/fields.ts situation field | no picker (Q-27) |
