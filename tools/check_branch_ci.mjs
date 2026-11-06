@@ -3,7 +3,7 @@ const api = `https://api.github.com/repos/${repository}`;
 
 // A temporary problem (shared-IP rate limit, GitHub 5xx, network blip, timeout) must not fail a build that is simply waiting for CI:
 // the poll goes on and the problem only counts as one used attempt. If every attempt hits it, the build still fails closed with the last reason.
-// Everything else (CI failed, wrong shape, 404/401, redirect) fails at once, as before.
+// CI failure, wrong response shape and hard HTTP errors fail at once; fetch redirects remain disabled.
 class TransientError extends Error {}
 
 // Public, read-only API: no GitHub token is sent to the build service.
@@ -19,7 +19,7 @@ export async function waitForBranchCi(sha, branch, {
     let response;
     try {
       response = await fetchImpl(url, {
-        headers: { Accept: "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28" },
+        headers: { Accept: "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28", "User-Agent": "Trillionaire-Me-CI-Gate (mistybari99/Trillionaire-Me)" },
         signal: AbortSignal.timeout(10_000),
         redirect: "error",
       });
@@ -27,8 +27,14 @@ export async function waitForBranchCi(sha, branch, {
       throw new TransientError(error instanceof Error ? error.message : String(error));
     }
     if (!response.ok) {
-      const failure = `GitHub CI verification unavailable (HTTP ${response.status}); deployment blocked.`;
-      // 403 and 429 are how the public API answers when the build network's shared address has used its hourly allowance.
+      const clean = (value) => String(value).replace(/[\x00-\x1f\x7f]/g, " ").slice(0, 240);
+      let message = "";
+      try { const body = await response.json(); if (typeof body.message === "string") message = clean(body.message); } catch { /* non-JSON failures remain blocked */ }
+      const names = ["x-ratelimit-remaining", "x-ratelimit-reset", "retry-after", "x-github-request-id"];
+      const info = names.flatMap((name) => { const value = response.headers.get(name); return value === null ? [] : [`${name}=${clean(value)}`]; });
+      const failure = `GitHub CI verification unavailable (HTTP ${response.status}); deployment blocked.${message ? ` ${message}` : ""}${info.length ? ` [${info.join("; ")}]` : ""}`;
+      // Keep production's finite polling budget: one failed request consumes one attempt.
+      // HTTP 403 alone does not establish the cause; retain the public diagnostics for investigation.
       throw (response.status === 403 || response.status === 429 || response.status >= 500) ? new TransientError(failure) : new Error(failure);
     }
     try { return await response.json(); } catch (error) { throw new TransientError(error instanceof Error ? error.message : String(error)); }

@@ -1,7 +1,8 @@
+import { presentationSettings } from "./presentationSettingsUi";
 // Settings > Look & screens (settings redesign PR 3a): design version, the master Detailed/Compact choice with the list of screens
 // that differ, links to the three layouts that live on their screens, reduce motion, and Reset look & layout.
 import { h } from "./dom";
-import { t } from "../i18n/t";
+import { t, tb } from "../i18n/t";
 import type { Key } from "../i18n/packs";
 import type { Locale } from "../i18n/registry";
 import { applyPrefs, clearScreenView, masterView, prefs, resetLookLayout, screensDifferingFromMaster, setMasterView, screenViewOwn, VIEW_SCREENS } from "./state";
@@ -9,7 +10,7 @@ import { num } from "./components";
 import { DESIGNS } from "./themes";
 
 const rerender = () => window.dispatchEvent(new HashChangeEvent("hashchange"));
-let resetAsk = false, resetDone = false;
+let resetAsk = false, resetDone = false, resetFailed = false;
 const seg = (label: string, active: boolean, on: () => void, attrs: Record<string, string> = {}) => h("button", { type: "button", "aria-pressed": String(active), onclick: on, ...attrs }, label);
 
 /** Design version chooser: radio cards with a small swatch. Adding a version in themes.ts adds a card here. */
@@ -44,13 +45,14 @@ export function lookPage(row: string | undefined, lang: Locale): HTMLElement {
     h("div", { class: "seg", role: "group", "aria-label": t("set.row.motion", lang) }, seg(t("look.motion.system", lang), prefs.reduceMotion === "system", () => { prefs.reduceMotion = "system"; applyPrefs(); rerender(); }, { "data-motion-set": "system" }), seg(t("look.motion.always", lang), prefs.reduceMotion === "always", () => { prefs.reduceMotion = "always"; applyPrefs(); rerender(); }, { "data-motion-set": "always" })),
     h("p", { class: "muted" }, t("look.motion.note", lang)));
   const reset = h("section", { class: "card", "data-setting-row": "resetlook" }, h("h2", { class: "card-h" }, t("set.row.resetlook", lang)), h("p", { class: "muted" }, t("look.reset.note", lang)),
-    !resetAsk ? h("button", { class: "btn ghost", type: "button", "data-act": "reset-look", onclick: () => { resetAsk = true; resetDone = false; rerender(); } }, t("set.row.resetlook", lang))
+    !resetAsk ? h("button", { class: "btn ghost", type: "button", "data-act": "reset-look", onclick: () => { resetAsk = true; resetDone = false; resetFailed = false; rerender(); } }, t("set.row.resetlook", lang))
       : h("div", { role: "alertdialog", "aria-label": t("look.reset.ask", lang) }, h("p", {}, t("look.reset.ask", lang)),
         h("button", { class: "btn ghost", type: "button", "data-act": "reset-look-no", onclick: () => { resetAsk = false; rerender(); } }, t("del.cancel", lang)),
-        h("button", { class: "btn", type: "button", "data-act": "reset-look-yes", onclick: () => { resetLookLayout(); applyPrefs(); resetAsk = false; resetDone = true; rerender(); } }, t("look.reset.yes", lang))),
+        h("button", { class: "btn", type: "button", "data-act": "reset-look-yes", onclick: () => { const { saved } = resetLookLayout(); applyPrefs(); resetAsk = false; resetDone = saved; resetFailed = !saved; rerender(); } }, t("look.reset.yes", lang))),
+    resetFailed && !resetAsk ? h("p", { role: "alert", "data-look": "reset-failed" }, tb({ en: "Some look settings could not be reset on this device. Help and navigation defaults apply for this session; saved choices may return after reopening. Try Reset look & layout again.", bn: "এই ডিভাইসে লুকের কিছু সেটিংস রিসেট হয়নি। হেল্প ও নেভিগেশনের ডিফল্ট এখন ব্যবহার হবে; আবার খুললে সেভ করা পছন্দ ফিরে আসতে পারে। লুক ও লেআউট আবার রিসেট করে চেষ্টা করুন।" }, lang)) : null,
     resetDone && !resetAsk ? h("p", { class: "ok-msg", role: "status", "data-look": "reset-done" }, t("look.reset.done", lang)) : null);
   const main = h("main", { class: "scr scr-settings", "data-settings": "look" }, h("a", { href: "#/settings", class: "crumb" }, `← ${t("nav.settings", lang)}`), h("h1", {}, t("set.cat.look", lang)),
-    designCard(lang), master, links, motion, reset);
+    designCard(lang), presentationSettings(lang), master, links, motion, reset);
   const el = row ? main.querySelector<HTMLElement>(`[data-setting-row="${row}"]`) : null;
   if (el) { el.classList.add("set-hl"); setTimeout(() => { try { el.scrollIntoView?.({ block: "center" }); } catch { /* ignore */ } }, 0); }
   return main;

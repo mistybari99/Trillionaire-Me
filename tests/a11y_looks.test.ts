@@ -109,7 +109,7 @@ describe("calm / ghost / plain-link fixes found by the screenshot matrix (3 Nov 
   });
   it("a long tag wraps inside the screen instead of widening the page (found at 200 % text on Capability status)", () => { expect(CSS.match(/^\.tag\{([^}]*)\}/m)![1]).toMatch(/white-space:normal;max-width:100%/); });
   it("bottom tabs grow with text, wrap without truncation, and content reserves measured navigation and update clearance", () => {
-    const rule = CSS.match(/^\.tab\{([^}]*)\}/m)![1]!; const nav = CSS.match(/^nav\{([^}]*)\}/m)![1]!;
+    const rule = CSS.match(/^\.tab\{([^}]*)\}/m)![1]!; const nav = CSS.match(/^nav\.bottom-tabs\{([^}]*)\}/m)![1]!;
     expect(rule).toMatch(/font-size:0\.875rem/); expect(rule).toMatch(/overflow-wrap:anywhere/); expect(rule).toMatch(/flex:1 1 max-content/); expect(rule).not.toMatch(/text-overflow:ellipsis|white-space:nowrap/); expect(nav).toMatch(/flex-wrap:wrap/);
     expect(CSS).toMatch(/body\{[^}]*padding:16px 16px calc\(var\(--nav-clearance\) \+ var\(--update-clearance\)\)/);
   });});

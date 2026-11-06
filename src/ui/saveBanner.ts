@@ -12,12 +12,11 @@ import { markBackupFile } from "./snapshotsUi";
 export function saveFailedBanner(lang: Locale): HTMLElement | null {
   if (!saveMonitor.hasFailure) return null;
   const msg = h("p", { role: "status", "data-save": "msg" });
-  const rerender = () => window.dispatchEvent(new HashChangeEvent("hashchange"));
   return h("aside", { class: "card", role: "alert", "data-save-failed": "1" },
     h("h2", { class: "card-h" }, t("save.fail.title", lang)), h("p", {}, t("save.fail.text", lang)),
     h("button", { class: "btn ghost btn-sm", type: "button", "data-act": "save-retry", onclick: () => {
       saveMonitor.retry();
-      setTimeout(() => { if (saveMonitor.hasFailure) { msg.textContent = t("save.fail.retryStill", lang); } else { rerender(); } }, 400);
+      setTimeout(() => { if (saveMonitor.hasFailure) { msg.textContent = t("save.fail.retryStill", lang); } }, 400);
     } }, t("save.fail.retry", lang)),
     h("button", { class: "btn btn-sm", type: "button", "data-act": "save-backup", onclick: async () => {
       const f = await buildSnapshotFile(new StoreRepo(store), readConsent(consentKv));
@@ -27,4 +26,17 @@ export function saveFailedBanner(lang: Locale): HTMLElement | null {
       msg.textContent = t("save.fail.backupDone", lang);
     } }, t("save.fail.backup", lang)),
     h("a", { href: "#/settings/backup", class: "btn ghost btn-sm", "data-act": "save-open-backup" }, t("set.cat.backup", lang)), msg);
+}
+
+/** Storage status changes patch their own banner, never replace an unfinished form. */
+export function refreshSaveFailedBanner(lang: Locale): void {
+  const app = document.getElementById("app");
+  // First-run and locked screens have no bottom tabs; reveal no storage details there.
+  if (!app?.querySelector("nav.bottom-tabs")) return;
+  const current = app.querySelector<HTMLElement>(":scope > [data-save-failed]");
+  if (!saveMonitor.hasFailure) { current?.remove(); return; }
+  if (current) return;
+  const main = app.querySelector("main");
+  const banner = saveFailedBanner(lang);
+  if (main && banner) main.before(banner);
 }

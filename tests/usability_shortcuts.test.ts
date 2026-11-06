@@ -15,15 +15,15 @@ beforeEach(() => {
 });
 
 describe("Useful workspace shortcuts", () => {
-  it("keeps four stable, localized navigation entries before daily work in every data mode", () => {
+  it("keeps five stable, localized navigation entries before daily work in every data mode", () => {
     for (const mode of ["demo", "real"]) for (const locale of ["en", "bn", "mix"] as const) {
       localStorage.setItem("tm:ui:dataMode", mode); localStorage.setItem("tm:ui:lang", locale);
       const el = mount(today); const tools = el.querySelector('[data-shortcuts="today"]')!;
-      expect(routes(tools)).toEqual(["#/diary/plan", "#/journey/goals", "#/diary/money", "#/capture"]);
+      expect(routes(tools)).toEqual(["#/diary/plan", "#/journey/goals", "#/diary/money", "#/capture", "#/habits"]);
       expect(before(el.querySelector("[data-workspace-header]")!, tools)).toBe(true);
       expect(before(tools, el.querySelector(".action-desk-agenda")!)).toBe(true);
       expect([...tools.querySelectorAll("a")].map((a) => a.textContent)).toEqual([
-        PACKS[locale]["plan.title"], PACKS[locale]["goals.link"], PACKS[locale]["money.title"], PACKS[locale]["capture.link"],
+        PACKS[locale]["plan.title"], PACKS[locale]["goals.link"], PACKS[locale]["money.title"], PACKS[locale]["capture.link"], PACKS[locale]["habits.link"],
       ]);
       expect(tools.querySelector("button")).toBeNull();
       expect(el.querySelectorAll('a[href="#/capture"]')).toHaveLength(1);
@@ -43,14 +43,14 @@ describe("Useful workspace shortcuts", () => {
     expect(mount(today).querySelector('a[href="#/diary/intake"]')).not.toBeNull();
   });
 
-  it("puts Plan and a single Goals launch by Journey goals while preserving Wheel and all grouped tools", () => {
+  it("promotes five Journey entries while preserving a single Goals launch, Wheel and the remaining tools", () => {
     const el = mount(journey); const tools = el.querySelector('[data-shortcuts="journey"]')!;
-    expect(routes(tools)).toEqual(["#/diary/plan", "#/journey/goals"]);
+    expect(routes(tools)).toEqual(["#/journey/goals", "#/journey/boards", "#/journey/horizon", "#/journey/week", "#/journey/report"]);
     expect(el.querySelectorAll('a[href="#/journey/goals"]')).toHaveLength(1);
     expect(before(el.querySelector(".journey-stage-strip")!, tools)).toBe(true);
     expect(before(tools, el.querySelector("[data-journey-goals]")!)).toBe(true);
     expect(el.querySelector('[data-journey-goals] a[href="#/journey/wheel"]')).not.toBeNull();
-    expect(el.querySelectorAll(".journey-tools a")).toHaveLength(18);
+    expect(el.querySelectorAll(".journey-tools a")).toHaveLength(14);
     expect(el.querySelector("[data-act=pass-stage]")).not.toBeNull();
   });
 });

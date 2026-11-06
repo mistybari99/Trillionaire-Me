@@ -1,0 +1,3927 @@
+{
+  "generated": "2026-11-06T11:50:21.799Z",
+  "phase": "release-fold",
+  "root": "/workspace/Trillionaire-Me",
+  "synthetic": true,
+  "viewport": "360x800",
+  "sourceRevision": "1a07140-plus-final-runtime-working-tree",
+  "screens": [
+    {
+      "route": "/settings",
+      "lang": "en",
+      "tag": "route",
+      "file": "docs/audit/contextual-help/release/route-en-_settings.jpg",
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "actualHash": "#/settings",
+      "mainClasses": "scr scr-settings",
+      "settingsMode": "home",
+      "rootFont": "16px",
+      "rootFontOverride": "100%",
+      "scalePref": null,
+      "demoBanner": {
+        "html": "<div class=\"note\" role=\"status\" data-demo-banner=\"1\" data-compact=\"1\" style=\"padding:6px 12px\"><p style=\"margin:0\"><b>Demo mode: sample data only, not your real life.</b></p></div>",
+        "x": 16,
+        "y": 137,
+        "width": 328,
+        "height": 31.5,
+        "right": 344,
+        "bottom": 168.5
+      },
+      "heading": "Settings",
+      "overflow": false,
+      "lazyPending": false,
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Settings",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "Quick settings",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Language",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Theme",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Text size",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "Right now",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "Quick tools",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Look & screens",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Prayer & alerts",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Backup & export",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Privacy & lock",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Demo or real data",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Plan & progress",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Connections",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Delete data",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Guides & info",
+          "visible": true
+        }
+      ],
+      "paragraphs": [
+        {
+          "text": "",
+          "visible": false,
+          "class": "muted",
+          "attributes": {
+            "data-search": "status"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "Your data stays on this phone.",
+          "visible": true,
+          "class": "sub",
+          "attributes": {},
+          "tKeys": [
+            "set.intro",
+            "priv.line.phone"
+          ]
+        },
+        {
+          "text": "No backup file yet",
+          "visible": true,
+          "class": "",
+          "attributes": {},
+          "tKeys": [
+            "set.status.backup.none"
+          ]
+        },
+        {
+          "text": "Demo data only",
+          "visible": true,
+          "class": "",
+          "attributes": {},
+          "tKeys": [
+            "set.status.real.demo"
+          ]
+        },
+        {
+          "text": "App lock: off",
+          "visible": true,
+          "class": "",
+          "attributes": {},
+          "tKeys": [
+            "set.status.lock.off",
+            "priv.line.lock.off"
+          ]
+        },
+        {
+          "text": "Design: Light Futuristic",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "look"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "Alerts: Off",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "prayer"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "Automatic snapshots: On · Reminder: Off",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "backup"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "App lock: Off · Real-data permission: Not allowed",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "privacy"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "Showing: Demo",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "data"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "Plan mode: Normal",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "plan"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "0 of 4 on. Nothing leaves this phone.",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "connections"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "Nothing is deleted until you confirm.",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "delete"
+          },
+          "tKeys": [
+            "set.sum.delete"
+          ]
+        },
+        {
+          "text": "Topics, glossary, safety notes and more",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "about"
+          },
+          "tKeys": [
+            "set.sum.about"
+          ]
+        }
+      ],
+      "fieldCards": [],
+      "visibleWarnings": [
+        {
+          "text": "Demo mode: sample data only, not your real life.",
+          "x": 16,
+          "y": 137,
+          "width": 328,
+          "height": 31.5,
+          "right": 344,
+          "bottom": 168.5
+        }
+      ],
+      "tabs": [
+        {
+          "text": "Today",
+          "x": 4,
+          "y": 744,
+          "width": 68,
+          "height": 56,
+          "right": 72,
+          "bottom": 800
+        },
+        {
+          "text": "Journey",
+          "x": 72,
+          "y": 744,
+          "width": 79,
+          "height": 56,
+          "right": 151,
+          "bottom": 800
+        },
+        {
+          "text": "Diary",
+          "x": 151,
+          "y": 744,
+          "width": 62,
+          "height": 56,
+          "right": 213,
+          "bottom": 800
+        },
+        {
+          "text": "Deen",
+          "x": 213,
+          "y": 744,
+          "width": 62,
+          "height": 56,
+          "right": 275,
+          "bottom": 800
+        },
+        {
+          "text": "Settings",
+          "x": 275,
+          "y": 744,
+          "width": 81,
+          "height": 56,
+          "right": 356,
+          "bottom": 800
+        }
+      ],
+      "quickCard": {
+        "x": 16,
+        "y": 323.796875,
+        "width": 328,
+        "height": 358.890625,
+        "right": 344,
+        "bottom": 682.6875
+      },
+      "navBox": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "right": 360,
+        "bottom": 800
+      },
+      "forms": 0,
+      "settingsAnchors": [
+        "language",
+        "theme",
+        "textsize"
+      ],
+      "errors": [],
+      "blocker": null,
+      "artifactKind": "viewport",
+      "rawFile": "/tmp/contextual-help-release-fold/route-en-_settings.jpg",
+      "rawFileTracked": false
+    },
+    {
+      "route": "/deen",
+      "lang": "en",
+      "tag": "route",
+      "file": "docs/audit/contextual-help/release/route-en-_deen.jpg",
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "actualHash": "#/deen",
+      "mainClasses": "scr scr-deen",
+      "settingsMode": null,
+      "rootFont": "16px",
+      "rootFontOverride": "100%",
+      "scalePref": null,
+      "demoBanner": {
+        "html": "<div class=\"note\" role=\"status\" data-demo-banner=\"1\"><p><b>Demo mode: sample data only, not your real life.</b></p><button class=\"btn ghost\" type=\"button\" data-act=\"start-real-banner\" style=\"width:auto;margin:6px 0 0;min-height:44px\">Start real now</button></div>",
+        "x": 16,
+        "y": 137,
+        "width": 328,
+        "height": 85,
+        "right": 344,
+        "bottom": 222
+      },
+      "heading": "Deen & Akhirah",
+      "overflow": false,
+      "lazyPending": false,
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Deen & Akhirah",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "Quick tools",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "Today's prayer times",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "Today's fast",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "Hijri date and Ramadan",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "Prayer & alerts",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "Prayer log",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "Quran activity",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "Fast",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "Zakat note",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "Giving",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "Hajj/Umrah plan",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "Deen learning",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "Rights & duties",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "Deen plan and reminder",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "Plan mark",
+          "visible": true
+        }
+      ],
+      "paragraphs": [
+        {
+          "text": "Private by default. Plans and reminders only. Nothing here is judged, compared or shared. No scripture text yet.",
+          "visible": true,
+          "class": "sub",
+          "attributes": {},
+          "tKeys": [
+            "deen.intro"
+          ]
+        },
+        {
+          "text": "You choose what, if anything, to track.",
+          "visible": true,
+          "class": "muted",
+          "attributes": {},
+          "tKeys": [
+            "deen.control"
+          ]
+        },
+        {
+          "text": "2026-11-06",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-prayer-day": "1"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "Your private marks for today. Tap again to undo.",
+          "visible": true,
+          "class": "muted",
+          "attributes": {},
+          "tKeys": []
+        },
+        {
+          "text": "Method: Karachi (University of Islamic Sciences), default for Bangladesh · Asr: Standard (shadow 1x)",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-prayer-method": "1"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "Calculated on this phone.",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-prayer-source": "local"
+          },
+          "tKeys": [
+            "prayer.src.local"
+          ]
+        },
+        {
+          "text": "Calculated on this phone for Asia/Dhaka (UTC+6). Check against an official Bangladesh timetable before you rely on them.",
+          "visible": true,
+          "class": "note",
+          "attributes": {
+            "data-prayer-note": "1"
+          },
+          "tKeys": [
+            "deen.prayer.note"
+          ]
+        },
+        {
+          "text": "You can mark a prayer even when its time is Unknown.",
+          "visible": true,
+          "class": "muted",
+          "attributes": {},
+          "tKeys": []
+        },
+        {
+          "text": "Tap once to mark a fasting day. Tap again to undo. Nothing is counted.",
+          "visible": true,
+          "class": "muted",
+          "attributes": {},
+          "tKeys": [
+            "deen.fast.hint"
+          ]
+        },
+        {
+          "text": "Only the date is kept, on this phone. Make-up fasts can be added later.",
+          "visible": true,
+          "class": "note",
+          "attributes": {},
+          "tKeys": [
+            "deen.fast.note"
+          ]
+        },
+        {
+          "text": "Today (calculated): 26 Jumada al-Awwal 1448 AH",
+          "visible": true,
+          "class": "",
+          "attributes": {
+            "data-hijri": "today"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "Ramadan starts in about 94 days, around 2027-02-08 (calculated).",
+          "visible": true,
+          "class": "",
+          "attributes": {
+            "data-ramadan": "upcoming"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "Calculated on this phone from a built-in calendar. The moon sighting announced in Bangladesh can differ by a day or two. Wait for the official announcement before you rely on a date. This is not a ruling.",
+          "visible": true,
+          "class": "note",
+          "attributes": {},
+          "tKeys": []
+        },
+        {
+          "text": "Alerts: Off",
+          "visible": true,
+          "class": "muted",
+          "attributes": {},
+          "tKeys": []
+        },
+        {
+          "text": "2 fields · Only on this device; leaves it only with your per-item permission",
+          "visible": true,
+          "class": "muted",
+          "attributes": {},
+          "tKeys": []
+        },
+        {
+          "text": "1 fields · Only on this device; leaves it only with your per-item permission",
+          "visible": true,
+          "class": "muted",
+          "attributes": {},
+          "tKeys": []
+        },
+        {
+          "text": "1 fields · Only on this device; leaves it only with your per-item permission",
+          "visible": true,
+          "class": "muted",
+          "attributes": {},
+          "tKeys": []
+        },
+        {
+          "text": "5 fields · Only on this device; leaves it only with your per-item permission",
+          "visible": true,
+          "class": "muted",
+          "attributes": {},
+          "tKeys": []
+        },
+        {
+          "text": "1 fields · Only on this device; leaves it only with your per-item permission",
+          "visible": true,
+          "class": "muted",
+          "attributes": {},
+          "tKeys": []
+        },
+        {
+          "text": "1 fields · Only on this device; leaves it only with your per-item permission",
+          "visible": true,
+          "class": "muted",
+          "attributes": {},
+          "tKeys": []
+        },
+        {
+          "text": "1 fields · Only on this device; leaves it only with your per-item permission",
+          "visible": true,
+          "class": "muted",
+          "attributes": {},
+          "tKeys": []
+        },
+        {
+          "text": "1 fields · Only on this device; leaves it only with your per-item permission",
+          "visible": true,
+          "class": "muted",
+          "attributes": {},
+          "tKeys": []
+        },
+        {
+          "text": "7 fields · Only on this device; leaves it only with your per-item permission",
+          "visible": true,
+          "class": "muted",
+          "attributes": {},
+          "tKeys": []
+        },
+        {
+          "text": "1 fields · Only on this device; leaves it only with your per-item permission",
+          "visible": true,
+          "class": "muted",
+          "attributes": {},
+          "tKeys": []
+        },
+        {
+          "text": "This tool gives no religious rulings. Ask a qualified scholar.",
+          "visible": true,
+          "class": "",
+          "attributes": {},
+          "tKeys": [
+            "disclaimer.noFatwa"
+          ]
+        },
+        {
+          "text": "No guarantee of wealth, returns or success. Figures are estimates you enter, not predictions.",
+          "visible": true,
+          "class": "",
+          "attributes": {},
+          "tKeys": [
+            "disclaimer.noGuarantee"
+          ]
+        }
+      ],
+      "fieldCards": [],
+      "visibleWarnings": [
+        {
+          "text": "Demo mode: sample data only, not your real life.Start real now",
+          "x": 16,
+          "y": 137,
+          "width": 328,
+          "height": 85,
+          "right": 344,
+          "bottom": 222
+        },
+        {
+          "text": "This tool gives no religious rulings. Ask a qualified scholar.No guarantee of wealth, returns or success. Figures are estimates you enter, not predictions.",
+          "x": 16,
+          "y": 8295.296875,
+          "width": 328,
+          "height": 86,
+          "right": 344,
+          "bottom": 8381.296875
+        }
+      ],
+      "tabs": [
+        {
+          "text": "Today",
+          "x": 4,
+          "y": 744,
+          "width": 68.1875,
+          "height": 56,
+          "right": 72.1875,
+          "bottom": 800
+        },
+        {
+          "text": "Journey",
+          "x": 72.1875,
+          "y": 744,
+          "width": 79.203125,
+          "height": 56,
+          "right": 151.390625,
+          "bottom": 800
+        },
+        {
+          "text": "Diary",
+          "x": 151.390625,
+          "y": 744,
+          "width": 62.203125,
+          "height": 56,
+          "right": 213.59375,
+          "bottom": 800
+        },
+        {
+          "text": "Deen",
+          "x": 213.59375,
+          "y": 744,
+          "width": 62.203125,
+          "height": 56,
+          "right": 275.796875,
+          "bottom": 800
+        },
+        {
+          "text": "Settings",
+          "x": 275.796875,
+          "y": 744,
+          "width": 80.203125,
+          "height": 56,
+          "right": 356,
+          "bottom": 800
+        }
+      ],
+      "quickCard": null,
+      "navBox": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "right": 360,
+        "bottom": 800
+      },
+      "forms": 0,
+      "settingsAnchors": [],
+      "errors": [],
+      "blocker": null,
+      "artifactKind": "viewport",
+      "rawFile": "/tmp/contextual-help-release-fold/route-en-_deen.jpg",
+      "rawFileTracked": false
+    },
+    {
+      "route": "/profile",
+      "lang": "en",
+      "tag": "route",
+      "file": "docs/audit/contextual-help/release/route-en-_profile.jpg",
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "actualHash": "#/profile",
+      "mainClasses": "scr owner-profile",
+      "settingsMode": null,
+      "rootFont": "16px",
+      "rootFontOverride": "100%",
+      "scalePref": null,
+      "demoBanner": {
+        "html": "<div class=\"note\" role=\"status\" data-demo-banner=\"1\"><p><b>Demo mode: sample data only, not your real life.</b></p><button class=\"btn ghost\" type=\"button\" data-act=\"start-real-banner\" style=\"width:auto;margin:6px 0 0;min-height:44px\">Start real now</button></div>",
+        "x": 16,
+        "y": 137,
+        "width": 328,
+        "height": 85,
+        "right": 344,
+        "bottom": 222
+      },
+      "heading": "Owner profile",
+      "overflow": false,
+      "lazyPending": false,
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Owner profile",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "About you",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "Settings",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Language",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Look & screens",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Text size",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Privacy & lock",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Backup & export",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Demo or real data",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Prayer & alerts",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Guides & info",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Settings",
+          "visible": true
+        }
+      ],
+      "paragraphs": [
+        {
+          "text": "Your profile and device settings. Profile entries stay on this device; this is not an online account.",
+          "visible": true,
+          "class": "muted",
+          "attributes": {},
+          "tKeys": []
+        },
+        {
+          "text": "Name: Don't know",
+          "visible": true,
+          "class": "",
+          "attributes": {
+            "data-prof": "name"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "Birth year: Don't know",
+          "visible": true,
+          "class": "",
+          "attributes": {
+            "data-prof": "birth"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "Age: Don't know",
+          "visible": true,
+          "class": "",
+          "attributes": {
+            "data-prof": "age"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "Time zone: Don't know",
+          "visible": true,
+          "class": "",
+          "attributes": {
+            "data-prof": "tz"
+          },
+          "tKeys": []
+        }
+      ],
+      "fieldCards": [],
+      "visibleWarnings": [
+        {
+          "text": "Demo mode: sample data only, not your real life.Start real now",
+          "x": 16,
+          "y": 137,
+          "width": 328,
+          "height": 85,
+          "right": 344,
+          "bottom": 222
+        }
+      ],
+      "tabs": [
+        {
+          "text": "Today",
+          "x": 4,
+          "y": 744,
+          "width": 68,
+          "height": 56,
+          "right": 72,
+          "bottom": 800
+        },
+        {
+          "text": "Journey",
+          "x": 72,
+          "y": 744,
+          "width": 79,
+          "height": 56,
+          "right": 151,
+          "bottom": 800
+        },
+        {
+          "text": "Diary",
+          "x": 151,
+          "y": 744,
+          "width": 62,
+          "height": 56,
+          "right": 213,
+          "bottom": 800
+        },
+        {
+          "text": "Deen",
+          "x": 213,
+          "y": 744,
+          "width": 62,
+          "height": 56,
+          "right": 275,
+          "bottom": 800
+        },
+        {
+          "text": "Settings",
+          "x": 275,
+          "y": 744,
+          "width": 81,
+          "height": 56,
+          "right": 356,
+          "bottom": 800
+        }
+      ],
+      "quickCard": null,
+      "navBox": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "right": 360,
+        "bottom": 800
+      },
+      "forms": 0,
+      "settingsAnchors": [],
+      "errors": [],
+      "blocker": null,
+      "artifactKind": "viewport",
+      "rawFile": "/tmp/contextual-help-release-fold/route-en-_profile.jpg",
+      "rawFileTracked": false
+    },
+    {
+      "route": "/journey",
+      "lang": "en",
+      "tag": "route",
+      "file": "docs/audit/contextual-help/release/route-en-_journey.jpg",
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "actualHash": "#/journey",
+      "mainClasses": "scr scr-journey action-desk journey-workspace",
+      "settingsMode": null,
+      "rootFont": "16px",
+      "rootFontOverride": "100%",
+      "scalePref": null,
+      "demoBanner": {
+        "html": "<div class=\"note\" role=\"status\" data-demo-banner=\"1\"><p><b>Demo mode: sample data only, not your real life.</b></p><button class=\"btn ghost\" type=\"button\" data-act=\"start-real-banner\" style=\"width:auto;margin:6px 0 0;min-height:44px\">Start real now</button></div>",
+        "x": 16,
+        "y": 137,
+        "width": 328,
+        "height": 85,
+        "right": 344,
+        "bottom": 222
+      },
+      "heading": "Journey",
+      "overflow": false,
+      "lazyPending": false,
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Journey",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "Current stage",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "Quick tools",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "Goals and progress",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "Goal funnel",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "Goals and plan",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "Review and history",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "Explore tools",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "Overall progress",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "Stage names",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "Current stage: A · Clarity — know yourself",
+          "visible": true
+        }
+      ],
+      "paragraphs": [
+        {
+          "text": "2 of your goals narrow down from dream to today. Counts are your own goals and open tasks.",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-goal-funnel-summary": "1"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "0% — 0 of 1 tasks done (every task counts the same)",
+          "visible": true,
+          "class": "ov-big",
+          "attributes": {
+            "data-overall-text": "1"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "Are there more tasks left for this aim? Add a task",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-overall-prompt": "1"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "How to weigh tasks: Equal · Change in Settings",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-plan-chip": "weighting"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "Counted only from tasks you entered. It is not a promise.",
+          "visible": true,
+          "class": "muted",
+          "attributes": {},
+          "tKeys": [
+            "overall.note"
+          ]
+        },
+        {
+          "text": "Stage names: Default journey · Change in Settings",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-plan-chip": "stages"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "Only the names change. Stage codes, order and past passes stay the same.",
+          "visible": true,
+          "class": "muted",
+          "attributes": {},
+          "tKeys": [
+            "stage.tpl.note"
+          ]
+        },
+        {
+          "text": "To pass this stage",
+          "visible": true,
+          "class": "muted",
+          "attributes": {},
+          "tKeys": [
+            "stage.conditions"
+          ]
+        },
+        {
+          "text": "No need to worry. These are simply the next things to do.",
+          "visible": true,
+          "class": "muted",
+          "attributes": {},
+          "tKeys": [
+            "stage.leftNote"
+          ]
+        },
+        {
+          "text": "",
+          "visible": true,
+          "class": "err",
+          "attributes": {},
+          "tKeys": []
+        },
+        {
+          "text": "No guarantee of wealth, returns or success. Figures are estimates you enter, not predictions.",
+          "visible": true,
+          "class": "",
+          "attributes": {},
+          "tKeys": [
+            "disclaimer.noGuarantee"
+          ]
+        },
+        {
+          "text": "This is a planning tool, not financial, legal or tax advice.",
+          "visible": true,
+          "class": "",
+          "attributes": {},
+          "tKeys": [
+            "disclaimer.advice"
+          ]
+        }
+      ],
+      "fieldCards": [],
+      "visibleWarnings": [
+        {
+          "text": "Demo mode: sample data only, not your real life.Start real now",
+          "x": 16,
+          "y": 137,
+          "width": 328,
+          "height": 85,
+          "right": 344,
+          "bottom": 222
+        },
+        {
+          "text": "",
+          "x": 33,
+          "y": 4329.796875,
+          "width": 294,
+          "height": 0,
+          "right": 327,
+          "bottom": 4329.796875
+        },
+        {
+          "text": "No guarantee of wealth, returns or success. Figures are estimates you enter, not predictions.This is a planning tool, not financial, legal or tax advice.",
+          "x": 16,
+          "y": 4488.796875,
+          "width": 328,
+          "height": 92,
+          "right": 344,
+          "bottom": 4580.796875
+        }
+      ],
+      "tabs": [
+        {
+          "text": "Today",
+          "x": 4,
+          "y": 744,
+          "width": 68.1875,
+          "height": 56,
+          "right": 72.1875,
+          "bottom": 800
+        },
+        {
+          "text": "Journey",
+          "x": 72.1875,
+          "y": 744,
+          "width": 79.203125,
+          "height": 56,
+          "right": 151.390625,
+          "bottom": 800
+        },
+        {
+          "text": "Diary",
+          "x": 151.390625,
+          "y": 744,
+          "width": 62.203125,
+          "height": 56,
+          "right": 213.59375,
+          "bottom": 800
+        },
+        {
+          "text": "Deen",
+          "x": 213.59375,
+          "y": 744,
+          "width": 62.203125,
+          "height": 56,
+          "right": 275.796875,
+          "bottom": 800
+        },
+        {
+          "text": "Settings",
+          "x": 275.796875,
+          "y": 744,
+          "width": 80.203125,
+          "height": 56,
+          "right": 356,
+          "bottom": 800
+        }
+      ],
+      "quickCard": null,
+      "navBox": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "right": 360,
+        "bottom": 800
+      },
+      "forms": 0,
+      "settingsAnchors": [],
+      "errors": [],
+      "blocker": null,
+      "artifactKind": "viewport",
+      "rawFile": "/tmp/contextual-help-release-fold/route-en-_journey.jpg",
+      "rawFileTracked": false
+    },
+    {
+      "route": "/diary",
+      "lang": "en",
+      "tag": "route",
+      "file": "docs/audit/contextual-help/release/route-en-_diary.jpg",
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "actualHash": "#/diary",
+      "mainClasses": "scr scr-diary",
+      "settingsMode": null,
+      "rootFont": "16px",
+      "rootFontOverride": "100%",
+      "scalePref": null,
+      "demoBanner": {
+        "html": "<div class=\"note\" role=\"status\" data-demo-banner=\"1\"><p><b>Demo mode: sample data only, not your real life.</b></p><button class=\"btn ghost\" type=\"button\" data-act=\"start-real-banner\" style=\"width:auto;margin:6px 0 0;min-height:44px\">Start real now</button></div>",
+        "x": 16,
+        "y": 137,
+        "width": 328,
+        "height": 85,
+        "right": 344,
+        "bottom": 222
+      },
+      "heading": "Diary",
+      "overflow": false,
+      "lazyPending": false,
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Diary",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "Quick tools",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "About you",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "Profile completeness 10%Inferred",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "Next needed",
+          "visible": true
+        }
+      ],
+      "paragraphs": [
+        {
+          "text": "Fill in your profile step by step. Skip what you don't know.",
+          "visible": true,
+          "class": "sub",
+          "attributes": {},
+          "tKeys": [
+            "diary.intro"
+          ]
+        },
+        {
+          "text": "Name: Don't know",
+          "visible": true,
+          "class": "",
+          "attributes": {
+            "data-prof": "name"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "Birth year: Don't know",
+          "visible": true,
+          "class": "",
+          "attributes": {
+            "data-prof": "birth"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "Age: Don't know",
+          "visible": true,
+          "class": "",
+          "attributes": {
+            "data-prof": "age"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "Time zone: Don't know",
+          "visible": true,
+          "class": "",
+          "attributes": {
+            "data-prof": "tz"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "3 of 30 answered with a value · 3 addressed",
+          "visible": true,
+          "class": "muted",
+          "attributes": {},
+          "tKeys": []
+        },
+        {
+          "text": "Needed first: What should we call you. Why: Used only on screen; never sent anywhere.",
+          "visible": true,
+          "class": "",
+          "attributes": {},
+          "tKeys": []
+        },
+        {
+          "text": "No guarantee of wealth, returns or success. Figures are estimates you enter, not predictions.",
+          "visible": true,
+          "class": "",
+          "attributes": {},
+          "tKeys": [
+            "disclaimer.noGuarantee"
+          ]
+        },
+        {
+          "text": "This is a planning tool, not financial, legal or tax advice.",
+          "visible": true,
+          "class": "",
+          "attributes": {},
+          "tKeys": [
+            "disclaimer.advice"
+          ]
+        }
+      ],
+      "fieldCards": [],
+      "visibleWarnings": [
+        {
+          "text": "Demo mode: sample data only, not your real life.Start real now",
+          "x": 16,
+          "y": 137,
+          "width": 328,
+          "height": 85,
+          "right": 344,
+          "bottom": 222
+        },
+        {
+          "text": "No guarantee of wealth, returns or success. Figures are estimates you enter, not predictions.This is a planning tool, not financial, legal or tax advice.",
+          "x": 16,
+          "y": 1352.40625,
+          "width": 328,
+          "height": 66.5,
+          "right": 344,
+          "bottom": 1418.90625
+        }
+      ],
+      "tabs": [
+        {
+          "text": "Today",
+          "x": 4,
+          "y": 744,
+          "width": 68,
+          "height": 56,
+          "right": 72,
+          "bottom": 800
+        },
+        {
+          "text": "Journey",
+          "x": 72,
+          "y": 744,
+          "width": 79,
+          "height": 56,
+          "right": 151,
+          "bottom": 800
+        },
+        {
+          "text": "Diary",
+          "x": 151,
+          "y": 744,
+          "width": 63,
+          "height": 56,
+          "right": 214,
+          "bottom": 800
+        },
+        {
+          "text": "Deen",
+          "x": 214,
+          "y": 744,
+          "width": 62,
+          "height": 56,
+          "right": 276,
+          "bottom": 800
+        },
+        {
+          "text": "Settings",
+          "x": 276,
+          "y": 744,
+          "width": 80,
+          "height": 56,
+          "right": 356,
+          "bottom": 800
+        }
+      ],
+      "quickCard": null,
+      "navBox": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "right": 360,
+        "bottom": 800
+      },
+      "forms": 0,
+      "settingsAnchors": [],
+      "errors": [],
+      "blocker": null,
+      "artifactKind": "viewport",
+      "rawFile": "/tmp/contextual-help-release-fold/route-en-_diary.jpg",
+      "rawFileTracked": false
+    },
+    {
+      "route": "/settings",
+      "lang": "bn",
+      "tag": "route",
+      "file": "docs/audit/contextual-help/release/route-bn-_settings.jpg",
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "actualHash": "#/settings",
+      "mainClasses": "scr scr-settings",
+      "settingsMode": "home",
+      "rootFont": "16px",
+      "rootFontOverride": "100%",
+      "scalePref": null,
+      "demoBanner": {
+        "html": "<div class=\"note\" role=\"status\" data-demo-banner=\"1\" data-compact=\"1\" style=\"padding:6px 12px\"><p style=\"margin:0\"><b>ডেমো মোড: শুধু স্যাম্পল ডাটা, আপনার আসল জীবন নয়।</b></p></div>",
+        "x": 16,
+        "y": 137,
+        "width": 328,
+        "height": 31.5,
+        "right": 344,
+        "bottom": 168.5
+      },
+      "heading": "সেটিংস",
+      "overflow": false,
+      "lazyPending": false,
+      "headings": [
+        {
+          "level": "H1",
+          "text": "সেটিংস",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "দ্রুত সেটিংস",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "ভাষা",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Theme",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "লেখার আকার",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "এখন যেমন আছে",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "দরকারি টুল",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "লুক ও স্ক্রিন",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "নামাজ ও অ্যালার্ট",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "ব্যাকআপ ও এক্সপোর্ট",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "প্রাইভেসি ও লক",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "ডেমো না আসল ডাটা",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "প্ল্যান ও প্রোগ্রেস",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "কানেকশন",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "ডাটা ডিলিট",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "গাইড ও তথ্য",
+          "visible": true
+        }
+      ],
+      "paragraphs": [
+        {
+          "text": "",
+          "visible": false,
+          "class": "muted",
+          "attributes": {
+            "data-search": "status"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "আপনার ডাটা এই ফোনেই থাকে।",
+          "visible": true,
+          "class": "sub",
+          "attributes": {},
+          "tKeys": [
+            "set.intro",
+            "priv.line.phone"
+          ]
+        },
+        {
+          "text": "এখনো কোনো ব্যাকআপ ফাইল নেই",
+          "visible": true,
+          "class": "",
+          "attributes": {},
+          "tKeys": [
+            "set.status.backup.none"
+          ]
+        },
+        {
+          "text": "শুধু ডেমো ডাটা",
+          "visible": true,
+          "class": "",
+          "attributes": {},
+          "tKeys": [
+            "set.status.real.demo"
+          ]
+        },
+        {
+          "text": "অ্যাপ লক: বন্ধ",
+          "visible": true,
+          "class": "",
+          "attributes": {},
+          "tKeys": [
+            "set.status.lock.off",
+            "priv.line.lock.off"
+          ]
+        },
+        {
+          "text": "ডিজাইন: লাইট ফিউচারিস্টিক",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "look"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "অ্যালার্ট: বন্ধ",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "prayer"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "অটোমেটিক কপি: চালু · রিমাইন্ডার: বন্ধ",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "backup"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "অ্যাপ লক: বন্ধ · আসল ডাটার পারমিশন: দেওয়া নেই",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "privacy"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "এখন দেখাচ্ছে: ডেমো",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "data"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "প্ল্যান মোড: সাধারণ",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "plan"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "4টির মধ্যে 0টি চালু। কিছুই এই ফোনের বাইরে যায় না।",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "connections"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "আপনি নিশ্চিত না করা পর্যন্ত কিছু ডিলিট হয় না।",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "delete"
+          },
+          "tKeys": [
+            "set.sum.delete"
+          ]
+        },
+        {
+          "text": "টপিক, শব্দের অর্থ, সেফটি নোট আর কিছু",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "about"
+          },
+          "tKeys": [
+            "set.sum.about"
+          ]
+        }
+      ],
+      "fieldCards": [],
+      "visibleWarnings": [
+        {
+          "text": "ডেমো মোড: শুধু স্যাম্পল ডাটা, আপনার আসল জীবন নয়।",
+          "x": 16,
+          "y": 137,
+          "width": 328,
+          "height": 31.5,
+          "right": 344,
+          "bottom": 168.5
+        }
+      ],
+      "tabs": [
+        {
+          "text": "আজ",
+          "x": 4,
+          "y": 744,
+          "width": 69.390625,
+          "height": 56,
+          "right": 73.390625,
+          "bottom": 800
+        },
+        {
+          "text": "যাত্রা",
+          "x": 73.390625,
+          "y": 744,
+          "width": 65.40625,
+          "height": 56,
+          "right": 138.796875,
+          "bottom": 800
+        },
+        {
+          "text": "ডায়েরি",
+          "x": 138.796875,
+          "y": 744,
+          "width": 77.390625,
+          "height": 56,
+          "right": 216.1875,
+          "bottom": 800
+        },
+        {
+          "text": "দ্বীন",
+          "x": 216.1875,
+          "y": 744,
+          "width": 60.40625,
+          "height": 56,
+          "right": 276.59375,
+          "bottom": 800
+        },
+        {
+          "text": "সেটিংস",
+          "x": 276.59375,
+          "y": 744,
+          "width": 79.40625,
+          "height": 56,
+          "right": 356,
+          "bottom": 800
+        }
+      ],
+      "quickCard": {
+        "x": 16,
+        "y": 323.796875,
+        "width": 328,
+        "height": 358.890625,
+        "right": 344,
+        "bottom": 682.6875
+      },
+      "navBox": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "right": 360,
+        "bottom": 800
+      },
+      "forms": 0,
+      "settingsAnchors": [
+        "language",
+        "theme",
+        "textsize"
+      ],
+      "errors": [],
+      "blocker": null,
+      "artifactKind": "viewport",
+      "rawFile": "/tmp/contextual-help-release-fold/route-bn-_settings.jpg",
+      "rawFileTracked": false
+    },
+    {
+      "route": "/deen",
+      "lang": "bn",
+      "tag": "route",
+      "file": "docs/audit/contextual-help/release/route-bn-_deen.jpg",
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "actualHash": "#/deen",
+      "mainClasses": "scr scr-deen",
+      "settingsMode": null,
+      "rootFont": "16px",
+      "rootFontOverride": "100%",
+      "scalePref": null,
+      "demoBanner": {
+        "html": "<div class=\"note\" role=\"status\" data-demo-banner=\"1\"><p><b>ডেমো মোড: শুধু স্যাম্পল ডাটা, আপনার আসল জীবন নয়।</b></p><button class=\"btn ghost\" type=\"button\" data-act=\"start-real-banner\" style=\"width:auto;margin:6px 0 0;min-height:44px\">আসল ডাটা শুরু করুন</button></div>",
+        "x": 16,
+        "y": 137,
+        "width": 328,
+        "height": 85,
+        "right": 344,
+        "bottom": 222
+      },
+      "heading": "দ্বীন ও আখিরাত",
+      "overflow": false,
+      "lazyPending": false,
+      "headings": [
+        {
+          "level": "H1",
+          "text": "দ্বীন ও আখিরাত",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "দরকারি টুল",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "আজকের নামাজের সময়",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "আজকের রোজা",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "হিজরি তারিখ ও রমজান",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "নামাজ ও অ্যালার্ট",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "নামাজ লগ",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "কুরআন চর্চা",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "রোজা",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "যাকাত নোট",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "দান/সদকা",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "হজ/উমরাহ প্ল্যান",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "দ্বীনি শিক্ষা",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "হক ও দায়িত্ব",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "দ্বীনি প্ল্যান ও রিমাইন্ডার",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "প্ল্যানের চিহ্ন",
+          "visible": true
+        }
+      ],
+      "paragraphs": [
+        {
+          "text": "ডিফল্টে প্রাইভেট। শুধু প্ল্যান ও রিমাইন্ডার। এখানে কিছুই বিচার বা তুলনা করা হয় না, শেয়ারও হয় না। এখনো কোনো ধর্মগ্রন্থের লেখা নেই।",
+          "visible": true,
+          "class": "sub",
+          "attributes": {},
+          "tKeys": [
+            "deen.intro"
+          ]
+        },
+        {
+          "text": "কী লিখবেন, আদৌ লিখবেন কি না — সেটা আপনি ঠিক করুন।",
+          "visible": true,
+          "class": "muted",
+          "attributes": {},
+          "tKeys": [
+            "deen.control"
+          ]
+        },
+        {
+          "text": "2026-11-06",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-prayer-day": "1"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "আজকের প্রাইভেট চিহ্ন। মুছতে আবার চাপুন।",
+          "visible": true,
+          "class": "muted",
+          "attributes": {},
+          "tKeys": []
+        },
+        {
+          "text": "নিয়ম: করাচি (ইউনিভার্সিটি অব ইসলামিক সায়েন্সেস), বাংলাদেশের ডিফল্ট · আসর: সাধারণ (ছায়া 1 গুণ)",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-prayer-method": "1"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "এই ফোনে হিসাব করা।",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-prayer-source": "local"
+          },
+          "tKeys": [
+            "prayer.src.local"
+          ]
+        },
+        {
+          "text": "এই ফোনে হিসাব করা সময় (এশিয়া/ঢাকা, UTC+6)। ভরসা করার আগে সরকারি শিডিউলের সাথে মিলিয়ে নিন।",
+          "visible": true,
+          "class": "note",
+          "attributes": {
+            "data-prayer-note": "1"
+          },
+          "tKeys": [
+            "deen.prayer.note"
+          ]
+        },
+        {
+          "text": "সময় অজানা থাকলেও নিজে নামাজের চিহ্ন দিতে পারবেন।",
+          "visible": true,
+          "class": "muted",
+          "attributes": {},
+          "tKeys": []
+        },
+        {
+          "text": "একবার চাপলে আজকের রোজা লেখা হবে। আবার চাপলে সরে যাবে। কোনো হিসাব বা সিরিয়াল দেখানো হয় না।",
+          "visible": true,
+          "class": "muted",
+          "attributes": {},
+          "tKeys": [
+            "deen.fast.hint"
+          ]
+        },
+        {
+          "text": "শুধু তারিখ এই ফোনে থাকে। কাজা রোজার হিসাব পরে যোগ হবে।",
+          "visible": true,
+          "class": "note",
+          "attributes": {},
+          "tKeys": [
+            "deen.fast.note"
+          ]
+        },
+        {
+          "text": "আজ (হিসাব করা): 26 জমাদিউল আউয়াল 1448 হিজরি",
+          "visible": true,
+          "class": "",
+          "attributes": {
+            "data-hijri": "today"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "রমজান শুরু হবে প্রায় 94 দিন পরে, 2027-02-08 তারিখের কাছাকাছি (হিসাব করা)।",
+          "visible": true,
+          "class": "",
+          "attributes": {
+            "data-ramadan": "upcoming"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "ফোনের ভেতরের ক্যালেন্ডার থেকে এই ফোনেই হিসাব করা। বাংলাদেশে চাঁদ দেখার ঘোষণা এক-দুই দিন আলাদা হতে পারে। তারিখের ওপর ভরসা করার আগে সরকারি ঘোষণার জন্য অপেক্ষা করুন। এটা কোনো ফতোয়া নয়।",
+          "visible": true,
+          "class": "note",
+          "attributes": {},
+          "tKeys": []
+        },
+        {
+          "text": "অ্যালার্ট: বন্ধ",
+          "visible": true,
+          "class": "muted",
+          "attributes": {},
+          "tKeys": []
+        },
+        {
+          "text": "2টি ঘর · শুধু এই ফোনে; প্রতিটা জিনিসে পারমিশন দিলেই বাইরে যাবে",
+          "visible": true,
+          "class": "muted",
+          "attributes": {},
+          "tKeys": []
+        },
+        {
+          "text": "1টি ঘর · শুধু এই ফোনে; প্রতিটা জিনিসে পারমিশন দিলেই বাইরে যাবে",
+          "visible": true,
+          "class": "muted",
+          "attributes": {},
+          "tKeys": []
+        },
+        {
+          "text": "1টি ঘর · শুধু এই ফোনে; প্রতিটা জিনিসে পারমিশন দিলেই বাইরে যাবে",
+          "visible": true,
+          "class": "muted",
+          "attributes": {},
+          "tKeys": []
+        },
+        {
+          "text": "5টি ঘর · শুধু এই ফোনে; প্রতিটা জিনিসে পারমিশন দিলেই বাইরে যাবে",
+          "visible": true,
+          "class": "muted",
+          "attributes": {},
+          "tKeys": []
+        },
+        {
+          "text": "1টি ঘর · শুধু এই ফোনে; প্রতিটা জিনিসে পারমিশন দিলেই বাইরে যাবে",
+          "visible": true,
+          "class": "muted",
+          "attributes": {},
+          "tKeys": []
+        },
+        {
+          "text": "1টি ঘর · শুধু এই ফোনে; প্রতিটা জিনিসে পারমিশন দিলেই বাইরে যাবে",
+          "visible": true,
+          "class": "muted",
+          "attributes": {},
+          "tKeys": []
+        },
+        {
+          "text": "1টি ঘর · শুধু এই ফোনে; প্রতিটা জিনিসে পারমিশন দিলেই বাইরে যাবে",
+          "visible": true,
+          "class": "muted",
+          "attributes": {},
+          "tKeys": []
+        },
+        {
+          "text": "1টি ঘর · শুধু এই ফোনে; প্রতিটা জিনিসে পারমিশন দিলেই বাইরে যাবে",
+          "visible": true,
+          "class": "muted",
+          "attributes": {},
+          "tKeys": []
+        },
+        {
+          "text": "7টি ঘর · শুধু এই ফোনে; প্রতিটা জিনিসে পারমিশন দিলেই বাইরে যাবে",
+          "visible": true,
+          "class": "muted",
+          "attributes": {},
+          "tKeys": []
+        },
+        {
+          "text": "1টি ঘর · শুধু এই ফোনে; প্রতিটা জিনিসে পারমিশন দিলেই বাইরে যাবে",
+          "visible": true,
+          "class": "muted",
+          "attributes": {},
+          "tKeys": []
+        },
+        {
+          "text": "এই টুল ধর্মীয় সিদ্ধান্ত দেয় না। যোগ্য আলেমকে জিজ্ঞেস করুন।",
+          "visible": true,
+          "class": "",
+          "attributes": {},
+          "tKeys": [
+            "disclaimer.noFatwa"
+          ]
+        },
+        {
+          "text": "সম্পদ, লাভ বা সফলতার কোনো গ্যারান্টি নেই। সংখ্যাগুলো আপনার দেওয়া আন্দাজ, ভবিষ্যদ্বাণী নয়।",
+          "visible": true,
+          "class": "",
+          "attributes": {},
+          "tKeys": [
+            "disclaimer.noGuarantee"
+          ]
+        }
+      ],
+      "fieldCards": [],
+      "visibleWarnings": [
+        {
+          "text": "ডেমো মোড: শুধু স্যাম্পল ডাটা, আপনার আসল জীবন নয়।আসল ডাটা শুরু করুন",
+          "x": 16,
+          "y": 137,
+          "width": 328,
+          "height": 85,
+          "right": 344,
+          "bottom": 222
+        },
+        {
+          "text": "এই টুল ধর্মীয় সিদ্ধান্ত দেয় না। যোগ্য আলেমকে জিজ্ঞেস করুন।সম্পদ, লাভ বা সফলতার কোনো গ্যারান্টি নেই। সংখ্যাগুলো আপনার দেওয়া আন্দাজ, ভবিষ্যদ্বাণী নয়।",
+          "x": 16,
+          "y": 8280.09375,
+          "width": 328,
+          "height": 66.5,
+          "right": 344,
+          "bottom": 8346.59375
+        }
+      ],
+      "tabs": [
+        {
+          "text": "আজ",
+          "x": 4,
+          "y": 744,
+          "width": 69.390625,
+          "height": 56,
+          "right": 73.390625,
+          "bottom": 800
+        },
+        {
+          "text": "যাত্রা",
+          "x": 73.390625,
+          "y": 744,
+          "width": 65.40625,
+          "height": 56,
+          "right": 138.796875,
+          "bottom": 800
+        },
+        {
+          "text": "ডায়েরি",
+          "x": 138.796875,
+          "y": 744,
+          "width": 77.390625,
+          "height": 56,
+          "right": 216.1875,
+          "bottom": 800
+        },
+        {
+          "text": "দ্বীন",
+          "x": 216.1875,
+          "y": 744,
+          "width": 61.40625,
+          "height": 56,
+          "right": 277.59375,
+          "bottom": 800
+        },
+        {
+          "text": "সেটিংস",
+          "x": 277.59375,
+          "y": 744,
+          "width": 78.40625,
+          "height": 56,
+          "right": 356,
+          "bottom": 800
+        }
+      ],
+      "quickCard": null,
+      "navBox": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "right": 360,
+        "bottom": 800
+      },
+      "forms": 0,
+      "settingsAnchors": [],
+      "errors": [],
+      "blocker": null,
+      "artifactKind": "viewport",
+      "rawFile": "/tmp/contextual-help-release-fold/route-bn-_deen.jpg",
+      "rawFileTracked": false
+    },
+    {
+      "route": "/profile",
+      "lang": "bn",
+      "tag": "route",
+      "file": "docs/audit/contextual-help/release/route-bn-_profile.jpg",
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "actualHash": "#/profile",
+      "mainClasses": "scr owner-profile",
+      "settingsMode": null,
+      "rootFont": "16px",
+      "rootFontOverride": "100%",
+      "scalePref": null,
+      "demoBanner": {
+        "html": "<div class=\"note\" role=\"status\" data-demo-banner=\"1\"><p><b>ডেমো মোড: শুধু স্যাম্পল ডাটা, আপনার আসল জীবন নয়।</b></p><button class=\"btn ghost\" type=\"button\" data-act=\"start-real-banner\" style=\"width:auto;margin:6px 0 0;min-height:44px\">আসল ডাটা শুরু করুন</button></div>",
+        "x": 16,
+        "y": 137,
+        "width": 328,
+        "height": 85,
+        "right": 344,
+        "bottom": 222
+      },
+      "heading": "ওনার প্রোফাইল",
+      "overflow": false,
+      "lazyPending": false,
+      "headings": [
+        {
+          "level": "H1",
+          "text": "ওনার প্রোফাইল",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "আপনার সম্পর্কে",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "সেটিংস",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "ভাষা",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "লুক ও স্ক্রিন",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "লেখার আকার",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "প্রাইভেসি ও লক",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "ব্যাকআপ ও এক্সপোর্ট",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "ডেমো না আসল ডাটা",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "নামাজ ও অ্যালার্ট",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "গাইড ও তথ্য",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "সেটিংস",
+          "visible": true
+        }
+      ],
+      "paragraphs": [
+        {
+          "text": "আপনার প্রোফাইল ও ডিভাইসের সেটিংস। প্রোফাইলের এন্ট্রি এই ডিভাইসে থাকে; এটি অনলাইন অ্যাকাউন্ট নয়।",
+          "visible": true,
+          "class": "muted",
+          "attributes": {},
+          "tKeys": []
+        },
+        {
+          "text": "নাম: জানি না",
+          "visible": true,
+          "class": "",
+          "attributes": {
+            "data-prof": "name"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "জন্মসাল: জানি না",
+          "visible": true,
+          "class": "",
+          "attributes": {
+            "data-prof": "birth"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "বয়স: জানি না",
+          "visible": true,
+          "class": "",
+          "attributes": {
+            "data-prof": "age"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "টাইম জোন: জানি না",
+          "visible": true,
+          "class": "",
+          "attributes": {
+            "data-prof": "tz"
+          },
+          "tKeys": []
+        }
+      ],
+      "fieldCards": [],
+      "visibleWarnings": [
+        {
+          "text": "ডেমো মোড: শুধু স্যাম্পল ডাটা, আপনার আসল জীবন নয়।আসল ডাটা শুরু করুন",
+          "x": 16,
+          "y": 137,
+          "width": 328,
+          "height": 85,
+          "right": 344,
+          "bottom": 222
+        }
+      ],
+      "tabs": [
+        {
+          "text": "আজ",
+          "x": 4,
+          "y": 744,
+          "width": 69.390625,
+          "height": 56,
+          "right": 73.390625,
+          "bottom": 800
+        },
+        {
+          "text": "যাত্রা",
+          "x": 73.390625,
+          "y": 744,
+          "width": 65.40625,
+          "height": 56,
+          "right": 138.796875,
+          "bottom": 800
+        },
+        {
+          "text": "ডায়েরি",
+          "x": 138.796875,
+          "y": 744,
+          "width": 77.390625,
+          "height": 56,
+          "right": 216.1875,
+          "bottom": 800
+        },
+        {
+          "text": "দ্বীন",
+          "x": 216.1875,
+          "y": 744,
+          "width": 60.40625,
+          "height": 56,
+          "right": 276.59375,
+          "bottom": 800
+        },
+        {
+          "text": "সেটিংস",
+          "x": 276.59375,
+          "y": 744,
+          "width": 79.40625,
+          "height": 56,
+          "right": 356,
+          "bottom": 800
+        }
+      ],
+      "quickCard": null,
+      "navBox": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "right": 360,
+        "bottom": 800
+      },
+      "forms": 0,
+      "settingsAnchors": [],
+      "errors": [],
+      "blocker": null,
+      "artifactKind": "viewport",
+      "rawFile": "/tmp/contextual-help-release-fold/route-bn-_profile.jpg",
+      "rawFileTracked": false
+    },
+    {
+      "route": "/journey",
+      "lang": "bn",
+      "tag": "route",
+      "file": "docs/audit/contextual-help/release/route-bn-_journey.jpg",
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "actualHash": "#/journey",
+      "mainClasses": "scr scr-journey action-desk journey-workspace",
+      "settingsMode": null,
+      "rootFont": "16px",
+      "rootFontOverride": "100%",
+      "scalePref": null,
+      "demoBanner": {
+        "html": "<div class=\"note\" role=\"status\" data-demo-banner=\"1\"><p><b>ডেমো মোড: শুধু স্যাম্পল ডাটা, আপনার আসল জীবন নয়।</b></p><button class=\"btn ghost\" type=\"button\" data-act=\"start-real-banner\" style=\"width:auto;margin:6px 0 0;min-height:44px\">আসল ডাটা শুরু করুন</button></div>",
+        "x": 16,
+        "y": 137,
+        "width": 328,
+        "height": 85,
+        "right": 344,
+        "bottom": 222
+      },
+      "heading": "যাত্রা",
+      "overflow": false,
+      "lazyPending": false,
+      "headings": [
+        {
+          "level": "H1",
+          "text": "যাত্রা",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "এখনকার স্টেজ",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "দরকারি টুল",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "গোল ও প্রোগ্রেস",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "গোলের ফানেল",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "গোল ও প্ল্যান",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "রিভিউ ও হিস্ট্রি",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "টুল দেখুন",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "ওভারঅল প্রোগ্রেস",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "স্টেজের নাম",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "এখনকার স্টেজ: A · স্পষ্টতা — নিজেকে চেনা",
+          "visible": true
+        }
+      ],
+      "paragraphs": [
+        {
+          "text": "আপনার 2টি গোল স্বপ্ন থেকে আজ পর্যন্ত নামছে। সংখ্যা আপনার নিজের গোল আর খোলা কাজের।",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-goal-funnel-summary": "1"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "0% — 1টি কাজের মধ্যে 0টি শেষ (প্রতিটা কাজ সমান ধরা হয়েছে)",
+          "visible": true,
+          "class": "ov-big",
+          "attributes": {
+            "data-overall-text": "1"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "এই গোলে আর কোনো কাজ বাকি আছে কি? কাজ যোগ করুন",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-overall-prompt": "1"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "কাজের ওজন কীভাবে ধরবেন এখন: সমান · সেটিংসে বদলান",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-plan-chip": "weighting"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "শুধু আপনার দেওয়া কাজ থেকে হিসাব। এটা নম্বর বা প্রতিশ্রুতি নয়।",
+          "visible": true,
+          "class": "muted",
+          "attributes": {},
+          "tKeys": [
+            "overall.note"
+          ]
+        },
+        {
+          "text": "স্টেজের নাম এখন: ডিফল্ট যাত্রা · সেটিংসে বদলান",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-plan-chip": "stages"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "শুধু নাম বদলায়। স্টেজের কোড, সিরিয়াল আর আগের পার হওয়া একই থাকে।",
+          "visible": true,
+          "class": "muted",
+          "attributes": {},
+          "tKeys": [
+            "stage.tpl.note"
+          ]
+        },
+        {
+          "text": "এই স্টেজ শেষ করতে যা লাগবে",
+          "visible": true,
+          "class": "muted",
+          "attributes": {},
+          "tKeys": [
+            "stage.conditions"
+          ]
+        },
+        {
+          "text": "চিন্তার কিছু নেই। এগুলো শুধু পরের কাজ।",
+          "visible": true,
+          "class": "muted",
+          "attributes": {},
+          "tKeys": [
+            "stage.leftNote"
+          ]
+        },
+        {
+          "text": "",
+          "visible": true,
+          "class": "err",
+          "attributes": {},
+          "tKeys": []
+        },
+        {
+          "text": "সম্পদ, লাভ বা সফলতার কোনো গ্যারান্টি নেই। সংখ্যাগুলো আপনার দেওয়া আন্দাজ, ভবিষ্যদ্বাণী নয়।",
+          "visible": true,
+          "class": "",
+          "attributes": {},
+          "tKeys": [
+            "disclaimer.noGuarantee"
+          ]
+        },
+        {
+          "text": "এটা একটা প্ল্যানের সরঞ্জাম। আর্থিক, আইনি বা করের পরামর্শ নয়।",
+          "visible": true,
+          "class": "",
+          "attributes": {},
+          "tKeys": [
+            "disclaimer.advice"
+          ]
+        }
+      ],
+      "fieldCards": [],
+      "visibleWarnings": [
+        {
+          "text": "ডেমো মোড: শুধু স্যাম্পল ডাটা, আপনার আসল জীবন নয়।আসল ডাটা শুরু করুন",
+          "x": 16,
+          "y": 137,
+          "width": 328,
+          "height": 85,
+          "right": 344,
+          "bottom": 222
+        },
+        {
+          "text": "",
+          "x": 33,
+          "y": 4154.109375,
+          "width": 294,
+          "height": 0,
+          "right": 327,
+          "bottom": 4154.109375
+        },
+        {
+          "text": "সম্পদ, লাভ বা সফলতার কোনো গ্যারান্টি নেই। সংখ্যাগুলো আপনার দেওয়া আন্দাজ, ভবিষ্যদ্বাণী নয়।এটা একটা প্ল্যানের সরঞ্জাম। আর্থিক, আইনি বা করের পরামর্শ নয়।",
+          "x": 16,
+          "y": 4313.109375,
+          "width": 328,
+          "height": 92,
+          "right": 344,
+          "bottom": 4405.109375
+        }
+      ],
+      "tabs": [
+        {
+          "text": "আজ",
+          "x": 4,
+          "y": 744,
+          "width": 69.390625,
+          "height": 56,
+          "right": 73.390625,
+          "bottom": 800
+        },
+        {
+          "text": "যাত্রা",
+          "x": 73.390625,
+          "y": 744,
+          "width": 66.40625,
+          "height": 56,
+          "right": 139.796875,
+          "bottom": 800
+        },
+        {
+          "text": "ডায়েরি",
+          "x": 139.796875,
+          "y": 744,
+          "width": 77.390625,
+          "height": 56,
+          "right": 217.1875,
+          "bottom": 800
+        },
+        {
+          "text": "দ্বীন",
+          "x": 217.1875,
+          "y": 744,
+          "width": 60.40625,
+          "height": 56,
+          "right": 277.59375,
+          "bottom": 800
+        },
+        {
+          "text": "সেটিংস",
+          "x": 277.59375,
+          "y": 744,
+          "width": 78.40625,
+          "height": 56,
+          "right": 356,
+          "bottom": 800
+        }
+      ],
+      "quickCard": null,
+      "navBox": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "right": 360,
+        "bottom": 800
+      },
+      "forms": 0,
+      "settingsAnchors": [],
+      "errors": [],
+      "blocker": null,
+      "artifactKind": "viewport",
+      "rawFile": "/tmp/contextual-help-release-fold/route-bn-_journey.jpg",
+      "rawFileTracked": false
+    },
+    {
+      "route": "/diary",
+      "lang": "bn",
+      "tag": "route",
+      "file": "docs/audit/contextual-help/release/route-bn-_diary.jpg",
+      "viewport": {
+        "width": 360,
+        "height": 800
+      },
+      "actualHash": "#/diary",
+      "mainClasses": "scr scr-diary",
+      "settingsMode": null,
+      "rootFont": "16px",
+      "rootFontOverride": "100%",
+      "scalePref": null,
+      "demoBanner": {
+        "html": "<div class=\"note\" role=\"status\" data-demo-banner=\"1\"><p><b>ডেমো মোড: শুধু স্যাম্পল ডাটা, আপনার আসল জীবন নয়।</b></p><button class=\"btn ghost\" type=\"button\" data-act=\"start-real-banner\" style=\"width:auto;margin:6px 0 0;min-height:44px\">আসল ডাটা শুরু করুন</button></div>",
+        "x": 16,
+        "y": 137,
+        "width": 328,
+        "height": 85,
+        "right": 344,
+        "bottom": 222
+      },
+      "heading": "ডায়েরি",
+      "overflow": false,
+      "lazyPending": false,
+      "headings": [
+        {
+          "level": "H1",
+          "text": "ডায়েরি",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "দরকারি টুল",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "আপনার সম্পর্কে",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "কতটা লেখা হয়েছে 10%হিসাব করে পাওয়া",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "এরপর কী লিখবেন",
+          "visible": true
+        }
+      ],
+      "paragraphs": [
+        {
+          "text": "ছোট ছোট ধাপে আপনার তথ্য লিখুন। যা জানেন না, বাদ দিন।",
+          "visible": true,
+          "class": "sub",
+          "attributes": {},
+          "tKeys": [
+            "diary.intro"
+          ]
+        },
+        {
+          "text": "নাম: জানি না",
+          "visible": true,
+          "class": "",
+          "attributes": {
+            "data-prof": "name"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "জন্মসাল: জানি না",
+          "visible": true,
+          "class": "",
+          "attributes": {
+            "data-prof": "birth"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "বয়স: জানি না",
+          "visible": true,
+          "class": "",
+          "attributes": {
+            "data-prof": "age"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "টাইম জোন: জানি না",
+          "visible": true,
+          "class": "",
+          "attributes": {
+            "data-prof": "tz"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "30টির মধ্যে 3টিতে মান দেওয়া · 3টির উত্তর দেওয়া",
+          "visible": true,
+          "class": "muted",
+          "attributes": {},
+          "tKeys": []
+        },
+        {
+          "text": "আগে লিখুন: আপনাকে কী নামে ডাকব। কেন দরকার: শুধু স্ক্রিনে ডাকার জন্য; কোথাও পাঠানো হয় না।",
+          "visible": true,
+          "class": "",
+          "attributes": {},
+          "tKeys": []
+        },
+        {
+          "text": "সম্পদ, লাভ বা সফলতার কোনো গ্যারান্টি নেই। সংখ্যাগুলো আপনার দেওয়া আন্দাজ, ভবিষ্যদ্বাণী নয়।",
+          "visible": true,
+          "class": "",
+          "attributes": {},
+          "tKeys": [
+            "disclaimer.noGuarantee"
+          ]
+        },
+        {
+          "text": "এটা একটা প্ল্যানের সরঞ্জাম। আর্থিক, আইনি বা করের পরামর্শ নয়।",
+          "visible": true,
+          "class": "",
+          "attributes": {},
+          "tKeys": [
+            "disclaimer.advice"
+          ]
+        }
+      ],
+      "fieldCards": [],
+      "visibleWarnings": [
+        {
+          "text": "ডেমো মোড: শুধু স্যাম্পল ডাটা, আপনার আসল জীবন নয়।আসল ডাটা শুরু করুন",
+          "x": 16,
+          "y": 137,
+          "width": 328,
+          "height": 85,
+          "right": 344,
+          "bottom": 222
+        },
+        {
+          "text": "সম্পদ, লাভ বা সফলতার কোনো গ্যারান্টি নেই। সংখ্যাগুলো আপনার দেওয়া আন্দাজ, ভবিষ্যদ্বাণী নয়।এটা একটা প্ল্যানের সরঞ্জাম। আর্থিক, আইনি বা করের পরামর্শ নয়।",
+          "x": 16,
+          "y": 1326.90625,
+          "width": 328,
+          "height": 86,
+          "right": 344,
+          "bottom": 1412.90625
+        }
+      ],
+      "tabs": [
+        {
+          "text": "আজ",
+          "x": 4,
+          "y": 744,
+          "width": 69.59375,
+          "height": 56,
+          "right": 73.59375,
+          "bottom": 800
+        },
+        {
+          "text": "যাত্রা",
+          "x": 73.59375,
+          "y": 744,
+          "width": 65.609375,
+          "height": 56,
+          "right": 139.203125,
+          "bottom": 800
+        },
+        {
+          "text": "ডায়েরি",
+          "x": 139.203125,
+          "y": 744,
+          "width": 77.59375,
+          "height": 56,
+          "right": 216.796875,
+          "bottom": 800
+        },
+        {
+          "text": "দ্বীন",
+          "x": 216.796875,
+          "y": 744,
+          "width": 60.609375,
+          "height": 56,
+          "right": 277.40625,
+          "bottom": 800
+        },
+        {
+          "text": "সেটিংস",
+          "x": 277.40625,
+          "y": 744,
+          "width": 78.59375,
+          "height": 56,
+          "right": 356,
+          "bottom": 800
+        }
+      ],
+      "quickCard": null,
+      "navBox": {
+        "x": 0,
+        "y": 743,
+        "width": 360,
+        "height": 57,
+        "right": 360,
+        "bottom": 800
+      },
+      "forms": 0,
+      "settingsAnchors": [],
+      "errors": [],
+      "blocker": null,
+      "artifactKind": "viewport",
+      "rawFile": "/tmp/contextual-help-release-fold/route-bn-_diary.jpg",
+      "rawFileTracked": false
+    },
+    {
+      "route": "/settings",
+      "lang": "en",
+      "tag": "populated",
+      "file": "docs/audit/contextual-help/release/populated-en-_settings.jpg",
+      "viewport": {
+        "width": 360,
+        "height": 740
+      },
+      "actualHash": "#/settings",
+      "mainClasses": "scr scr-settings",
+      "settingsMode": "home",
+      "rootFont": "16px",
+      "rootFontOverride": "100%",
+      "scalePref": null,
+      "demoBanner": {
+        "html": "<div class=\"note\" role=\"status\" data-demo-banner=\"1\" data-compact=\"1\" style=\"padding:6px 12px\"><p style=\"margin:0\"><b>Demo mode: sample data only, not your real life.</b></p></div>",
+        "x": 16,
+        "y": 137,
+        "width": 328,
+        "height": 31.5,
+        "right": 344,
+        "bottom": 168.5
+      },
+      "heading": "Settings",
+      "overflow": false,
+      "lazyPending": false,
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Settings",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "Quick settings",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Language",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Theme",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Text size",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "Right now",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "Quick tools",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Look & screens",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Prayer & alerts",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Backup & export",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Privacy & lock",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Demo or real data",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Plan & progress",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Connections",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Delete data",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Guides & info",
+          "visible": true
+        }
+      ],
+      "paragraphs": [
+        {
+          "text": "",
+          "visible": false,
+          "class": "muted",
+          "attributes": {
+            "data-search": "status"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "Your data stays on this phone.",
+          "visible": true,
+          "class": "sub",
+          "attributes": {},
+          "tKeys": [
+            "set.intro",
+            "priv.line.phone"
+          ]
+        },
+        {
+          "text": "No backup file yet",
+          "visible": true,
+          "class": "",
+          "attributes": {},
+          "tKeys": [
+            "set.status.backup.none"
+          ]
+        },
+        {
+          "text": "Demo data only",
+          "visible": true,
+          "class": "",
+          "attributes": {},
+          "tKeys": [
+            "set.status.real.demo"
+          ]
+        },
+        {
+          "text": "App lock: off",
+          "visible": true,
+          "class": "",
+          "attributes": {},
+          "tKeys": [
+            "set.status.lock.off",
+            "priv.line.lock.off"
+          ]
+        },
+        {
+          "text": "Design: Light Futuristic",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "look"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "Alerts: Off",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "prayer"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "Automatic snapshots: On · Reminder: Off",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "backup"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "App lock: Off · Real-data permission: Not allowed",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "privacy"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "Showing: Demo",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "data"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "Plan mode: Normal",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "plan"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "0 of 4 on. Nothing leaves this phone.",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "connections"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "Nothing is deleted until you confirm.",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "delete"
+          },
+          "tKeys": [
+            "set.sum.delete"
+          ]
+        },
+        {
+          "text": "Topics, glossary, safety notes and more",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "about"
+          },
+          "tKeys": [
+            "set.sum.about"
+          ]
+        }
+      ],
+      "fieldCards": [],
+      "visibleWarnings": [
+        {
+          "text": "Demo mode: sample data only, not your real life.",
+          "x": 16,
+          "y": 137,
+          "width": 328,
+          "height": 31.5,
+          "right": 344,
+          "bottom": 168.5
+        }
+      ],
+      "tabs": [
+        {
+          "text": "Today",
+          "x": 4,
+          "y": 684,
+          "width": 68,
+          "height": 56,
+          "right": 72,
+          "bottom": 740
+        },
+        {
+          "text": "Journey",
+          "x": 72,
+          "y": 684,
+          "width": 79,
+          "height": 56,
+          "right": 151,
+          "bottom": 740
+        },
+        {
+          "text": "Diary",
+          "x": 151,
+          "y": 684,
+          "width": 62,
+          "height": 56,
+          "right": 213,
+          "bottom": 740
+        },
+        {
+          "text": "Deen",
+          "x": 213,
+          "y": 684,
+          "width": 62,
+          "height": 56,
+          "right": 275,
+          "bottom": 740
+        },
+        {
+          "text": "Settings",
+          "x": 275,
+          "y": 684,
+          "width": 81,
+          "height": 56,
+          "right": 356,
+          "bottom": 740
+        }
+      ],
+      "quickCard": {
+        "x": 16,
+        "y": 323.796875,
+        "width": 328,
+        "height": 358.890625,
+        "right": 344,
+        "bottom": 682.6875
+      },
+      "navBox": {
+        "x": 0,
+        "y": 683,
+        "width": 360,
+        "height": 57,
+        "right": 360,
+        "bottom": 740
+      },
+      "forms": 0,
+      "settingsAnchors": [
+        "language",
+        "theme",
+        "textsize"
+      ],
+      "errors": [],
+      "blocker": null,
+      "artifactKind": "viewport",
+      "rawFile": "/tmp/contextual-help-release-fold/populated-en-_settings.jpg",
+      "rawFileTracked": false
+    },
+    {
+      "route": "/settings",
+      "lang": "bn",
+      "tag": "populated",
+      "file": "docs/audit/contextual-help/release/populated-bn-_settings.jpg",
+      "viewport": {
+        "width": 360,
+        "height": 740
+      },
+      "actualHash": "#/settings",
+      "mainClasses": "scr scr-settings",
+      "settingsMode": "home",
+      "rootFont": "16px",
+      "rootFontOverride": "100%",
+      "scalePref": null,
+      "demoBanner": {
+        "html": "<div class=\"note\" role=\"status\" data-demo-banner=\"1\" data-compact=\"1\" style=\"padding:6px 12px\"><p style=\"margin:0\"><b>ডেমো মোড: শুধু স্যাম্পল ডাটা, আপনার আসল জীবন নয়।</b></p></div>",
+        "x": 16,
+        "y": 137,
+        "width": 328,
+        "height": 31.5,
+        "right": 344,
+        "bottom": 168.5
+      },
+      "heading": "সেটিংস",
+      "overflow": false,
+      "lazyPending": false,
+      "headings": [
+        {
+          "level": "H1",
+          "text": "সেটিংস",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "দ্রুত সেটিংস",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "ভাষা",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Theme",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "লেখার আকার",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "এখন যেমন আছে",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "দরকারি টুল",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "লুক ও স্ক্রিন",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "নামাজ ও অ্যালার্ট",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "ব্যাকআপ ও এক্সপোর্ট",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "প্রাইভেসি ও লক",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "ডেমো না আসল ডাটা",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "প্ল্যান ও প্রোগ্রেস",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "কানেকশন",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "ডাটা ডিলিট",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "গাইড ও তথ্য",
+          "visible": true
+        }
+      ],
+      "paragraphs": [
+        {
+          "text": "",
+          "visible": false,
+          "class": "muted",
+          "attributes": {
+            "data-search": "status"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "আপনার ডাটা এই ফোনেই থাকে।",
+          "visible": true,
+          "class": "sub",
+          "attributes": {},
+          "tKeys": [
+            "set.intro",
+            "priv.line.phone"
+          ]
+        },
+        {
+          "text": "এখনো কোনো ব্যাকআপ ফাইল নেই",
+          "visible": true,
+          "class": "",
+          "attributes": {},
+          "tKeys": [
+            "set.status.backup.none"
+          ]
+        },
+        {
+          "text": "শুধু ডেমো ডাটা",
+          "visible": true,
+          "class": "",
+          "attributes": {},
+          "tKeys": [
+            "set.status.real.demo"
+          ]
+        },
+        {
+          "text": "অ্যাপ লক: বন্ধ",
+          "visible": true,
+          "class": "",
+          "attributes": {},
+          "tKeys": [
+            "set.status.lock.off",
+            "priv.line.lock.off"
+          ]
+        },
+        {
+          "text": "ডিজাইন: লাইট ফিউচারিস্টিক",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "look"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "অ্যালার্ট: বন্ধ",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "prayer"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "অটোমেটিক কপি: চালু · রিমাইন্ডার: বন্ধ",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "backup"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "অ্যাপ লক: বন্ধ · আসল ডাটার পারমিশন: দেওয়া নেই",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "privacy"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "এখন দেখাচ্ছে: ডেমো",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "data"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "প্ল্যান মোড: সাধারণ",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "plan"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "4টির মধ্যে 0টি চালু। কিছুই এই ফোনের বাইরে যায় না।",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "connections"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "আপনি নিশ্চিত না করা পর্যন্ত কিছু ডিলিট হয় না।",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "delete"
+          },
+          "tKeys": [
+            "set.sum.delete"
+          ]
+        },
+        {
+          "text": "টপিক, শব্দের অর্থ, সেফটি নোট আর কিছু",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "about"
+          },
+          "tKeys": [
+            "set.sum.about"
+          ]
+        }
+      ],
+      "fieldCards": [],
+      "visibleWarnings": [
+        {
+          "text": "ডেমো মোড: শুধু স্যাম্পল ডাটা, আপনার আসল জীবন নয়।",
+          "x": 16,
+          "y": 137,
+          "width": 328,
+          "height": 31.5,
+          "right": 344,
+          "bottom": 168.5
+        }
+      ],
+      "tabs": [
+        {
+          "text": "আজ",
+          "x": 4,
+          "y": 684,
+          "width": 69.390625,
+          "height": 56,
+          "right": 73.390625,
+          "bottom": 740
+        },
+        {
+          "text": "যাত্রা",
+          "x": 73.390625,
+          "y": 684,
+          "width": 65.40625,
+          "height": 56,
+          "right": 138.796875,
+          "bottom": 740
+        },
+        {
+          "text": "ডায়েরি",
+          "x": 138.796875,
+          "y": 684,
+          "width": 77.390625,
+          "height": 56,
+          "right": 216.1875,
+          "bottom": 740
+        },
+        {
+          "text": "দ্বীন",
+          "x": 216.1875,
+          "y": 684,
+          "width": 60.40625,
+          "height": 56,
+          "right": 276.59375,
+          "bottom": 740
+        },
+        {
+          "text": "সেটিংস",
+          "x": 276.59375,
+          "y": 684,
+          "width": 79.40625,
+          "height": 56,
+          "right": 356,
+          "bottom": 740
+        }
+      ],
+      "quickCard": {
+        "x": 16,
+        "y": 323.796875,
+        "width": 328,
+        "height": 358.890625,
+        "right": 344,
+        "bottom": 682.6875
+      },
+      "navBox": {
+        "x": 0,
+        "y": 683,
+        "width": 360,
+        "height": 57,
+        "right": 360,
+        "bottom": 740
+      },
+      "forms": 0,
+      "settingsAnchors": [
+        "language",
+        "theme",
+        "textsize"
+      ],
+      "errors": [],
+      "blocker": null,
+      "artifactKind": "viewport",
+      "rawFile": "/tmp/contextual-help-release-fold/populated-bn-_settings.jpg",
+      "rawFileTracked": false
+    },
+    {
+      "route": "/settings",
+      "lang": "mix",
+      "tag": "populated",
+      "file": "docs/audit/contextual-help/release/populated-mix-_settings.jpg",
+      "viewport": {
+        "width": 360,
+        "height": 740
+      },
+      "actualHash": "#/settings",
+      "mainClasses": "scr scr-settings",
+      "settingsMode": "home",
+      "rootFont": "16px",
+      "rootFontOverride": "100%",
+      "scalePref": null,
+      "demoBanner": {
+        "html": "<div class=\"note\" role=\"status\" data-demo-banner=\"1\" data-compact=\"1\" style=\"padding:6px 12px\"><p style=\"margin:0\"><b>Demo মোড: শুধু Sample Data, আপনার আসল জীবন নয়।</b></p></div>",
+        "x": 16,
+        "y": 137,
+        "width": 328,
+        "height": 31.5,
+        "right": 344,
+        "bottom": 168.5
+      },
+      "heading": "Settings",
+      "overflow": false,
+      "lazyPending": false,
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Settings",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "দ্রুত Settings",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "ভাষা",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Theme",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "লেখার আকার",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "এখন যেমন আছে",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "দরকারি টুল",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "লুক ও স্ক্রিন",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "নামাজ ও Alert",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Backup ও Export",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Privacy ও লক",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Demo না আসল Data",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Plan ও Progress",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Connection",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Data Delete",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "গাইড ও তথ্য",
+          "visible": true
+        }
+      ],
+      "paragraphs": [
+        {
+          "text": "",
+          "visible": false,
+          "class": "muted",
+          "attributes": {
+            "data-search": "status"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "আপনার Data এই ফোনেই থাকে।",
+          "visible": true,
+          "class": "sub",
+          "attributes": {},
+          "tKeys": [
+            "set.intro",
+            "priv.line.phone"
+          ]
+        },
+        {
+          "text": "এখনো কোনো Backup ফাইল নেই",
+          "visible": true,
+          "class": "",
+          "attributes": {},
+          "tKeys": [
+            "set.status.backup.none"
+          ]
+        },
+        {
+          "text": "শুধু Demo Data",
+          "visible": true,
+          "class": "",
+          "attributes": {},
+          "tKeys": [
+            "set.status.real.demo"
+          ]
+        },
+        {
+          "text": "অ্যাপ লক: বন্ধ",
+          "visible": true,
+          "class": "",
+          "attributes": {},
+          "tKeys": [
+            "set.status.lock.off",
+            "priv.line.lock.off"
+          ]
+        },
+        {
+          "text": "ডিজাইন: লাইট ফিউচারিস্টিক",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "look"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "Alert: বন্ধ",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "prayer"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "Automatic Copy: চালু · Reminder: বন্ধ",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "backup"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "অ্যাপ লক: বন্ধ · আসল Data-এর Permission: দেওয়া নেই",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "privacy"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "এখন দেখাচ্ছে: Demo",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "data"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "Plan মোড: সাধারণ",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "plan"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "4টির মধ্যে 0টি চালু। কিছুই এই ফোনের বাইরে যায় না।",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "connections"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "আপনি নিশ্চিত না করা পর্যন্ত কিছু Delete হয় না।",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "delete"
+          },
+          "tKeys": [
+            "set.sum.delete"
+          ]
+        },
+        {
+          "text": "টপিক, শব্দের অর্থ, সেফটি নোট আর কিছু",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "about"
+          },
+          "tKeys": [
+            "set.sum.about"
+          ]
+        }
+      ],
+      "fieldCards": [],
+      "visibleWarnings": [
+        {
+          "text": "Demo মোড: শুধু Sample Data, আপনার আসল জীবন নয়।",
+          "x": 16,
+          "y": 137,
+          "width": 328,
+          "height": 31.5,
+          "right": 344,
+          "bottom": 168.5
+        }
+      ],
+      "tabs": [
+        {
+          "text": "আজ",
+          "x": 4,
+          "y": 684,
+          "width": 63.1875,
+          "height": 56,
+          "right": 67.1875,
+          "bottom": 740
+        },
+        {
+          "text": "Journey",
+          "x": 67.1875,
+          "y": 684,
+          "width": 83.203125,
+          "height": 56,
+          "right": 150.390625,
+          "bottom": 740
+        },
+        {
+          "text": "Diary",
+          "x": 150.390625,
+          "y": 684,
+          "width": 66.203125,
+          "height": 56,
+          "right": 216.59375,
+          "bottom": 740
+        },
+        {
+          "text": "দ্বীন",
+          "x": 216.59375,
+          "y": 684,
+          "width": 54.203125,
+          "height": 56,
+          "right": 270.796875,
+          "bottom": 740
+        },
+        {
+          "text": "Settings",
+          "x": 270.796875,
+          "y": 684,
+          "width": 85.203125,
+          "height": 56,
+          "right": 356,
+          "bottom": 740
+        }
+      ],
+      "quickCard": {
+        "x": 16,
+        "y": 323.796875,
+        "width": 328,
+        "height": 358.890625,
+        "right": 344,
+        "bottom": 682.6875
+      },
+      "navBox": {
+        "x": 0,
+        "y": 683,
+        "width": 360,
+        "height": 57,
+        "right": 360,
+        "bottom": 740
+      },
+      "forms": 0,
+      "settingsAnchors": [
+        "language",
+        "theme",
+        "textsize"
+      ],
+      "errors": [],
+      "blocker": null,
+      "artifactKind": "viewport",
+      "rawFile": "/tmp/contextual-help-release-fold/populated-mix-_settings.jpg",
+      "rawFileTracked": false
+    }
+  ],
+  "checks": [
+    {
+      "name": "en/populated Quick fold",
+      "pass": true,
+      "detail": {
+        "quickBottom": 682.6875,
+        "navTop": 683
+      }
+    },
+    {
+      "name": "bn/populated Quick fold",
+      "pass": true,
+      "detail": {
+        "quickBottom": 682.6875,
+        "navTop": 683
+      }
+    },
+    {
+      "name": "mix/populated Quick fold",
+      "pass": true,
+      "detail": {
+        "quickBottom": 682.6875,
+        "navTop": 683
+      }
+    }
+  ],
+  "sourceNote": "Working tree derived from tracked1a07140; runtime changes were uncommitted when captured. See phase ordering in README. This is not a production deployment claim."
+}

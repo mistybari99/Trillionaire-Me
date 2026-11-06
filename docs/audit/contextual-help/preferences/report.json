@@ -1,0 +1,1130 @@
+{
+  "generated": "2026-11-06T11:41:00.303Z",
+  "phase": "preferences",
+  "root": "/workspace/Trillionaire-Me",
+  "synthetic": true,
+  "viewport": "360x800",
+  "sourceRevision": "current-implementation",
+  "screens": [],
+  "checks": [
+    {
+      "name": "P0 guide fictional/lazy",
+      "pass": true,
+      "detail": {
+        "prefs": {
+          "helpPlacement": "inline",
+          "helpVisuals": "diagram",
+          "helpContent": "guide",
+          "tabNavigation": "navigate",
+          "design": "light-futuristic",
+          "theme": "light"
+        },
+        "lang": "en",
+        "scale": 100
+      }
+    },
+    {
+      "name": "P0 visual preference",
+      "pass": true
+    },
+    {
+      "name": "P0 placement",
+      "pass": true
+    },
+    {
+      "name": "P0 guide excludes private records",
+      "pass": true
+    },
+    {
+      "name": "P0 guide-only no own-map tabs",
+      "pass": true
+    },
+    {
+      "name": "P0 large-text/theme geometry",
+      "pass": true,
+      "detail": {
+        "overflow": false,
+        "left": 16,
+        "right": 344,
+        "dialog": false,
+        "navHeight": 57
+      }
+    },
+    {
+      "name": "P0 dismiss focus/draft/hash",
+      "pass": true
+    },
+    {
+      "name": "P0 navigate mode root links",
+      "pass": true
+    },
+    {
+      "name": "P0 viewing Help writes no records",
+      "pass": true
+    },
+    {
+      "name": "P1 guide fictional/lazy",
+      "pass": true,
+      "detail": {
+        "prefs": {
+          "helpPlacement": "inline",
+          "helpVisuals": "diagram",
+          "helpContent": "guide",
+          "tabNavigation": "menu",
+          "design": "light-futuristic",
+          "theme": "light"
+        },
+        "lang": "bn",
+        "scale": 100
+      }
+    },
+    {
+      "name": "P1 visual preference",
+      "pass": true
+    },
+    {
+      "name": "P1 placement",
+      "pass": true
+    },
+    {
+      "name": "P1 guide excludes private records",
+      "pass": true
+    },
+    {
+      "name": "P1 guide-only no own-map tabs",
+      "pass": true
+    },
+    {
+      "name": "P1 large-text/theme geometry",
+      "pass": true,
+      "detail": {
+        "overflow": false,
+        "left": 16,
+        "right": 344,
+        "dialog": false,
+        "navHeight": 57
+      }
+    },
+    {
+      "name": "P1 dismiss focus/draft/hash",
+      "pass": true
+    },
+    {
+      "name": "P1 menu geometry/focus",
+      "pass": true,
+      "detail": {
+        "panel": 731,
+        "nav": 743,
+        "count": 1,
+        "focus": true
+      }
+    },
+    {
+      "name": "P1 panel Back focus/draft",
+      "pass": true
+    },
+    {
+      "name": "P1 tab switch single Back stop",
+      "pass": true
+    },
+    {
+      "name": "P1 viewing Help writes no records",
+      "pass": true
+    },
+    {
+      "name": "P2 guide fictional/lazy",
+      "pass": true,
+      "detail": {
+        "prefs": {
+          "helpPlacement": "inline",
+          "helpVisuals": "diagram",
+          "helpContent": "guide-and-mine",
+          "tabNavigation": "navigate",
+          "design": "light-futuristic",
+          "theme": "dark"
+        },
+        "lang": "en",
+        "scale": 200
+      }
+    },
+    {
+      "name": "P2 visual preference",
+      "pass": true
+    },
+    {
+      "name": "P2 placement",
+      "pass": true
+    },
+    {
+      "name": "P2 guide excludes private records",
+      "pass": true
+    },
+    {
+      "name": "P2 own map scoped private/draft",
+      "pass": true,
+      "detail": "Local map for this data modeDemo dataWhat should we call you: SAVED_PROFILE_SENTINELDemoFree hours per week for tasks: 6DemoFree time starts (every day): 20:00DemoFree time ends (every day): 22:00DemoOnly this device's current data mode is shown. This view changes no entries."
+    },
+    {
+      "name": "P2 large-text/theme geometry",
+      "pass": true,
+      "detail": {
+        "overflow": false,
+        "left": 16,
+        "right": 344,
+        "dialog": false,
+        "navHeight": 130.59375
+      }
+    },
+    {
+      "name": "P2 dismiss focus/draft/hash",
+      "pass": true
+    },
+    {
+      "name": "P2 navigate mode root links",
+      "pass": true
+    },
+    {
+      "name": "P2 viewing Help writes no records",
+      "pass": true
+    },
+    {
+      "name": "P3 guide fictional/lazy",
+      "pass": true,
+      "detail": {
+        "prefs": {
+          "helpPlacement": "inline",
+          "helpVisuals": "diagram",
+          "helpContent": "guide-and-mine",
+          "tabNavigation": "menu",
+          "design": "light-futuristic",
+          "theme": "dark"
+        },
+        "lang": "bn",
+        "scale": 200
+      }
+    },
+    {
+      "name": "P3 visual preference",
+      "pass": true
+    },
+    {
+      "name": "P3 placement",
+      "pass": true
+    },
+    {
+      "name": "P3 guide excludes private records",
+      "pass": true
+    },
+    {
+      "name": "P3 own map scoped private/draft",
+      "pass": true,
+      "detail": "এই মোডের লোকাল ডাটার ম্যাপDemo dataআপনাকে কী নামে ডাকব: SAVED_PROFILE_SENTINELDemoসপ্তাহে কাজের জন্য ফাঁকা ঘণ্টা: 6Demoকাজের জন্য ফাঁকা সময় শুরু (প্রতিদিন): 20:00Demoকাজের জন্য ফাঁকা সময় শেষ (প্রতিদিন): 22:00Demoশুধু এই ডিভাইসের বর্তমান মোডের ডাটা; এখানে কোনো এন্ট্রি বদলায় না।"
+    },
+    {
+      "name": "P3 large-text/theme geometry",
+      "pass": true,
+      "detail": {
+        "overflow": false,
+        "left": 16,
+        "right": 344,
+        "dialog": false,
+        "navHeight": 130.59375
+      }
+    },
+    {
+      "name": "P3 dismiss focus/draft/hash",
+      "pass": true
+    },
+    {
+      "name": "P3 menu geometry/focus",
+      "pass": true,
+      "detail": {
+        "panel": 657,
+        "nav": 669.40625,
+        "count": 1,
+        "focus": true
+      }
+    },
+    {
+      "name": "P3 panel Back focus/draft",
+      "pass": true
+    },
+    {
+      "name": "P3 tab switch single Back stop",
+      "pass": true
+    },
+    {
+      "name": "P3 viewing Help writes no records",
+      "pass": true
+    },
+    {
+      "name": "P4 guide fictional/lazy",
+      "pass": true,
+      "detail": {
+        "prefs": {
+          "helpPlacement": "inline",
+          "helpVisuals": "illustrated",
+          "helpContent": "guide",
+          "tabNavigation": "navigate",
+          "design": "ink-paper",
+          "theme": "light"
+        },
+        "lang": "en",
+        "scale": 100
+      }
+    },
+    {
+      "name": "P4 visual preference",
+      "pass": true
+    },
+    {
+      "name": "P4 placement",
+      "pass": true
+    },
+    {
+      "name": "P4 guide excludes private records",
+      "pass": true
+    },
+    {
+      "name": "P4 guide-only no own-map tabs",
+      "pass": true
+    },
+    {
+      "name": "P4 large-text/theme geometry",
+      "pass": true,
+      "detail": {
+        "overflow": false,
+        "left": 16,
+        "right": 344,
+        "dialog": false,
+        "navHeight": 57
+      }
+    },
+    {
+      "name": "P4 dismiss focus/draft/hash",
+      "pass": true
+    },
+    {
+      "name": "P4 navigate mode root links",
+      "pass": true
+    },
+    {
+      "name": "P4 viewing Help writes no records",
+      "pass": true
+    },
+    {
+      "name": "P5 guide fictional/lazy",
+      "pass": true,
+      "detail": {
+        "prefs": {
+          "helpPlacement": "inline",
+          "helpVisuals": "illustrated",
+          "helpContent": "guide",
+          "tabNavigation": "menu",
+          "design": "ink-paper",
+          "theme": "light"
+        },
+        "lang": "bn",
+        "scale": 100
+      }
+    },
+    {
+      "name": "P5 visual preference",
+      "pass": true
+    },
+    {
+      "name": "P5 placement",
+      "pass": true
+    },
+    {
+      "name": "P5 guide excludes private records",
+      "pass": true
+    },
+    {
+      "name": "P5 guide-only no own-map tabs",
+      "pass": true
+    },
+    {
+      "name": "P5 large-text/theme geometry",
+      "pass": true,
+      "detail": {
+        "overflow": false,
+        "left": 16,
+        "right": 344,
+        "dialog": false,
+        "navHeight": 57
+      }
+    },
+    {
+      "name": "P5 dismiss focus/draft/hash",
+      "pass": true
+    },
+    {
+      "name": "P5 menu geometry/focus",
+      "pass": true,
+      "detail": {
+        "panel": 731,
+        "nav": 743,
+        "count": 1,
+        "focus": true
+      }
+    },
+    {
+      "name": "P5 panel Back focus/draft",
+      "pass": true
+    },
+    {
+      "name": "P5 tab switch single Back stop",
+      "pass": true
+    },
+    {
+      "name": "P5 viewing Help writes no records",
+      "pass": true
+    },
+    {
+      "name": "P6 guide fictional/lazy",
+      "pass": true,
+      "detail": {
+        "prefs": {
+          "helpPlacement": "inline",
+          "helpVisuals": "illustrated",
+          "helpContent": "guide-and-mine",
+          "tabNavigation": "navigate",
+          "design": "ink-paper",
+          "theme": "dark"
+        },
+        "lang": "en",
+        "scale": 200
+      }
+    },
+    {
+      "name": "P6 visual preference",
+      "pass": true
+    },
+    {
+      "name": "P6 placement",
+      "pass": true
+    },
+    {
+      "name": "P6 guide excludes private records",
+      "pass": true
+    },
+    {
+      "name": "P6 own map scoped private/draft",
+      "pass": true,
+      "detail": "Local map for this data modeDemo dataWhat should we call you: SAVED_PROFILE_SENTINELDemoFree hours per week for tasks: 6DemoFree time starts (every day): 20:00DemoFree time ends (every day): 22:00DemoOnly this device's current data mode is shown. This view changes no entries."
+    },
+    {
+      "name": "P6 large-text/theme geometry",
+      "pass": true,
+      "detail": {
+        "overflow": false,
+        "left": 16,
+        "right": 344,
+        "dialog": false,
+        "navHeight": 130.59375
+      }
+    },
+    {
+      "name": "P6 dismiss focus/draft/hash",
+      "pass": true
+    },
+    {
+      "name": "P6 navigate mode root links",
+      "pass": true
+    },
+    {
+      "name": "P6 viewing Help writes no records",
+      "pass": true
+    },
+    {
+      "name": "P7 guide fictional/lazy",
+      "pass": true,
+      "detail": {
+        "prefs": {
+          "helpPlacement": "inline",
+          "helpVisuals": "illustrated",
+          "helpContent": "guide-and-mine",
+          "tabNavigation": "menu",
+          "design": "ink-paper",
+          "theme": "dark"
+        },
+        "lang": "bn",
+        "scale": 200
+      }
+    },
+    {
+      "name": "P7 visual preference",
+      "pass": true
+    },
+    {
+      "name": "P7 placement",
+      "pass": true
+    },
+    {
+      "name": "P7 guide excludes private records",
+      "pass": true
+    },
+    {
+      "name": "P7 own map scoped private/draft",
+      "pass": true,
+      "detail": "এই মোডের লোকাল ডাটার ম্যাপDemo dataআপনাকে কী নামে ডাকব: SAVED_PROFILE_SENTINELDemoসপ্তাহে কাজের জন্য ফাঁকা ঘণ্টা: 6Demoকাজের জন্য ফাঁকা সময় শুরু (প্রতিদিন): 20:00Demoকাজের জন্য ফাঁকা সময় শেষ (প্রতিদিন): 22:00Demoশুধু এই ডিভাইসের বর্তমান মোডের ডাটা; এখানে কোনো এন্ট্রি বদলায় না।"
+    },
+    {
+      "name": "P7 large-text/theme geometry",
+      "pass": true,
+      "detail": {
+        "overflow": false,
+        "left": 16,
+        "right": 344,
+        "dialog": false,
+        "navHeight": 130.59375
+      }
+    },
+    {
+      "name": "P7 dismiss focus/draft/hash",
+      "pass": true
+    },
+    {
+      "name": "P7 menu geometry/focus",
+      "pass": true,
+      "detail": {
+        "panel": 657,
+        "nav": 669.40625,
+        "count": 1,
+        "focus": true
+      }
+    },
+    {
+      "name": "P7 panel Back focus/draft",
+      "pass": true
+    },
+    {
+      "name": "P7 tab switch single Back stop",
+      "pass": true
+    },
+    {
+      "name": "P7 viewing Help writes no records",
+      "pass": true
+    },
+    {
+      "name": "P8 guide fictional/lazy",
+      "pass": true,
+      "detail": {
+        "prefs": {
+          "helpPlacement": "sheet",
+          "helpVisuals": "diagram",
+          "helpContent": "guide",
+          "tabNavigation": "navigate",
+          "design": "emerald-obsidian",
+          "theme": "light"
+        },
+        "lang": "en",
+        "scale": 100
+      }
+    },
+    {
+      "name": "P8 visual preference",
+      "pass": true
+    },
+    {
+      "name": "P8 placement",
+      "pass": true
+    },
+    {
+      "name": "P8 guide excludes private records",
+      "pass": true
+    },
+    {
+      "name": "P8 guide-only no own-map tabs",
+      "pass": true
+    },
+    {
+      "name": "P8 large-text/theme geometry",
+      "pass": true,
+      "detail": {
+        "overflow": false,
+        "left": 0,
+        "right": 360,
+        "dialog": true,
+        "navHeight": 57
+      }
+    },
+    {
+      "name": "P8 dismiss focus/draft/hash",
+      "pass": true
+    },
+    {
+      "name": "P8 navigate mode root links",
+      "pass": true
+    },
+    {
+      "name": "P8 viewing Help writes no records",
+      "pass": true
+    },
+    {
+      "name": "P9 guide fictional/lazy",
+      "pass": true,
+      "detail": {
+        "prefs": {
+          "helpPlacement": "sheet",
+          "helpVisuals": "diagram",
+          "helpContent": "guide",
+          "tabNavigation": "menu",
+          "design": "emerald-obsidian",
+          "theme": "light"
+        },
+        "lang": "bn",
+        "scale": 100
+      }
+    },
+    {
+      "name": "P9 visual preference",
+      "pass": true
+    },
+    {
+      "name": "P9 placement",
+      "pass": true
+    },
+    {
+      "name": "P9 guide excludes private records",
+      "pass": true
+    },
+    {
+      "name": "P9 guide-only no own-map tabs",
+      "pass": true
+    },
+    {
+      "name": "P9 large-text/theme geometry",
+      "pass": true,
+      "detail": {
+        "overflow": false,
+        "left": 0,
+        "right": 360,
+        "dialog": true,
+        "navHeight": 57
+      }
+    },
+    {
+      "name": "P9 dismiss focus/draft/hash",
+      "pass": true
+    },
+    {
+      "name": "P9 menu geometry/focus",
+      "pass": true,
+      "detail": {
+        "panel": 731,
+        "nav": 743,
+        "count": 1,
+        "focus": true
+      }
+    },
+    {
+      "name": "P9 panel Back focus/draft",
+      "pass": true
+    },
+    {
+      "name": "P9 tab switch single Back stop",
+      "pass": true
+    },
+    {
+      "name": "P9 viewing Help writes no records",
+      "pass": true
+    },
+    {
+      "name": "P10 guide fictional/lazy",
+      "pass": true,
+      "detail": {
+        "prefs": {
+          "helpPlacement": "sheet",
+          "helpVisuals": "diagram",
+          "helpContent": "guide-and-mine",
+          "tabNavigation": "navigate",
+          "design": "emerald-obsidian",
+          "theme": "dark"
+        },
+        "lang": "en",
+        "scale": 200
+      }
+    },
+    {
+      "name": "P10 visual preference",
+      "pass": true
+    },
+    {
+      "name": "P10 placement",
+      "pass": true
+    },
+    {
+      "name": "P10 guide excludes private records",
+      "pass": true
+    },
+    {
+      "name": "P10 own map scoped private/draft",
+      "pass": true,
+      "detail": "Local map for this data modeDemo dataWhat should we call you: SAVED_PROFILE_SENTINELDemoFree hours per week for tasks: 6DemoFree time starts (every day): 20:00DemoFree time ends (every day): 22:00DemoOnly this device's current data mode is shown. This view changes no entries."
+    },
+    {
+      "name": "P10 large-text/theme geometry",
+      "pass": true,
+      "detail": {
+        "overflow": false,
+        "left": 0,
+        "right": 360,
+        "dialog": true,
+        "navHeight": 130.59375
+      }
+    },
+    {
+      "name": "P10 dismiss focus/draft/hash",
+      "pass": true
+    },
+    {
+      "name": "P10 navigate mode root links",
+      "pass": true
+    },
+    {
+      "name": "P10 viewing Help writes no records",
+      "pass": true
+    },
+    {
+      "name": "P11 guide fictional/lazy",
+      "pass": true,
+      "detail": {
+        "prefs": {
+          "helpPlacement": "sheet",
+          "helpVisuals": "diagram",
+          "helpContent": "guide-and-mine",
+          "tabNavigation": "menu",
+          "design": "emerald-obsidian",
+          "theme": "dark"
+        },
+        "lang": "bn",
+        "scale": 200
+      }
+    },
+    {
+      "name": "P11 visual preference",
+      "pass": true
+    },
+    {
+      "name": "P11 placement",
+      "pass": true
+    },
+    {
+      "name": "P11 guide excludes private records",
+      "pass": true
+    },
+    {
+      "name": "P11 own map scoped private/draft",
+      "pass": true,
+      "detail": "এই মোডের লোকাল ডাটার ম্যাপDemo dataআপনাকে কী নামে ডাকব: SAVED_PROFILE_SENTINELDemoসপ্তাহে কাজের জন্য ফাঁকা ঘণ্টা: 6Demoকাজের জন্য ফাঁকা সময় শুরু (প্রতিদিন): 20:00Demoকাজের জন্য ফাঁকা সময় শেষ (প্রতিদিন): 22:00Demoশুধু এই ডিভাইসের বর্তমান মোডের ডাটা; এখানে কোনো এন্ট্রি বদলায় না।"
+    },
+    {
+      "name": "P11 large-text/theme geometry",
+      "pass": true,
+      "detail": {
+        "overflow": false,
+        "left": 0,
+        "right": 360,
+        "dialog": true,
+        "navHeight": 130.59375
+      }
+    },
+    {
+      "name": "P11 dismiss focus/draft/hash",
+      "pass": true
+    },
+    {
+      "name": "P11 menu geometry/focus",
+      "pass": true,
+      "detail": {
+        "panel": 657,
+        "nav": 669.40625,
+        "count": 1,
+        "focus": true
+      }
+    },
+    {
+      "name": "P11 panel Back focus/draft",
+      "pass": true
+    },
+    {
+      "name": "P11 tab switch single Back stop",
+      "pass": true
+    },
+    {
+      "name": "P11 viewing Help writes no records",
+      "pass": true
+    },
+    {
+      "name": "P12 guide fictional/lazy",
+      "pass": true,
+      "detail": {
+        "prefs": {
+          "helpPlacement": "sheet",
+          "helpVisuals": "illustrated",
+          "helpContent": "guide",
+          "tabNavigation": "navigate",
+          "design": "broadsheet",
+          "theme": "light"
+        },
+        "lang": "en",
+        "scale": 100
+      }
+    },
+    {
+      "name": "P12 visual preference",
+      "pass": true
+    },
+    {
+      "name": "P12 placement",
+      "pass": true
+    },
+    {
+      "name": "P12 guide excludes private records",
+      "pass": true
+    },
+    {
+      "name": "P12 guide-only no own-map tabs",
+      "pass": true
+    },
+    {
+      "name": "P12 large-text/theme geometry",
+      "pass": true,
+      "detail": {
+        "overflow": false,
+        "left": 0,
+        "right": 360,
+        "dialog": true,
+        "navHeight": 57
+      }
+    },
+    {
+      "name": "P12 dismiss focus/draft/hash",
+      "pass": true
+    },
+    {
+      "name": "P12 navigate mode root links",
+      "pass": true
+    },
+    {
+      "name": "P12 viewing Help writes no records",
+      "pass": true
+    },
+    {
+      "name": "P13 guide fictional/lazy",
+      "pass": true,
+      "detail": {
+        "prefs": {
+          "helpPlacement": "sheet",
+          "helpVisuals": "illustrated",
+          "helpContent": "guide",
+          "tabNavigation": "menu",
+          "design": "broadsheet",
+          "theme": "light"
+        },
+        "lang": "bn",
+        "scale": 100
+      }
+    },
+    {
+      "name": "P13 visual preference",
+      "pass": true
+    },
+    {
+      "name": "P13 placement",
+      "pass": true
+    },
+    {
+      "name": "P13 guide excludes private records",
+      "pass": true
+    },
+    {
+      "name": "P13 guide-only no own-map tabs",
+      "pass": true
+    },
+    {
+      "name": "P13 large-text/theme geometry",
+      "pass": true,
+      "detail": {
+        "overflow": false,
+        "left": 0,
+        "right": 360,
+        "dialog": true,
+        "navHeight": 57
+      }
+    },
+    {
+      "name": "P13 dismiss focus/draft/hash",
+      "pass": true
+    },
+    {
+      "name": "P13 menu geometry/focus",
+      "pass": true,
+      "detail": {
+        "panel": 731,
+        "nav": 743,
+        "count": 1,
+        "focus": true
+      }
+    },
+    {
+      "name": "P13 panel Back focus/draft",
+      "pass": true
+    },
+    {
+      "name": "P13 tab switch single Back stop",
+      "pass": true
+    },
+    {
+      "name": "P13 viewing Help writes no records",
+      "pass": true
+    },
+    {
+      "name": "P14 guide fictional/lazy",
+      "pass": true,
+      "detail": {
+        "prefs": {
+          "helpPlacement": "sheet",
+          "helpVisuals": "illustrated",
+          "helpContent": "guide-and-mine",
+          "tabNavigation": "navigate",
+          "design": "broadsheet",
+          "theme": "dark"
+        },
+        "lang": "en",
+        "scale": 200
+      }
+    },
+    {
+      "name": "P14 visual preference",
+      "pass": true
+    },
+    {
+      "name": "P14 placement",
+      "pass": true
+    },
+    {
+      "name": "P14 guide excludes private records",
+      "pass": true
+    },
+    {
+      "name": "P14 own map scoped private/draft",
+      "pass": true,
+      "detail": "Local map for this data modeDemo dataWhat should we call you: SAVED_PROFILE_SENTINELDemoFree hours per week for tasks: 6DemoFree time starts (every day): 20:00DemoFree time ends (every day): 22:00DemoOnly this device's current data mode is shown. This view changes no entries."
+    },
+    {
+      "name": "P14 large-text/theme geometry",
+      "pass": true,
+      "detail": {
+        "overflow": false,
+        "left": 0,
+        "right": 360,
+        "dialog": true,
+        "navHeight": 130.59375
+      }
+    },
+    {
+      "name": "P14 dismiss focus/draft/hash",
+      "pass": true
+    },
+    {
+      "name": "P14 navigate mode root links",
+      "pass": true
+    },
+    {
+      "name": "P14 viewing Help writes no records",
+      "pass": true
+    },
+    {
+      "name": "P15 guide fictional/lazy",
+      "pass": true,
+      "detail": {
+        "prefs": {
+          "helpPlacement": "sheet",
+          "helpVisuals": "illustrated",
+          "helpContent": "guide-and-mine",
+          "tabNavigation": "menu",
+          "design": "broadsheet",
+          "theme": "dark"
+        },
+        "lang": "bn",
+        "scale": 200
+      }
+    },
+    {
+      "name": "P15 visual preference",
+      "pass": true
+    },
+    {
+      "name": "P15 placement",
+      "pass": true
+    },
+    {
+      "name": "P15 guide excludes private records",
+      "pass": true
+    },
+    {
+      "name": "P15 own map scoped private/draft",
+      "pass": true,
+      "detail": "এই মোডের লোকাল ডাটার ম্যাপDemo dataআপনাকে কী নামে ডাকব: SAVED_PROFILE_SENTINELDemoসপ্তাহে কাজের জন্য ফাঁকা ঘণ্টা: 6Demoকাজের জন্য ফাঁকা সময় শুরু (প্রতিদিন): 20:00Demoকাজের জন্য ফাঁকা সময় শেষ (প্রতিদিন): 22:00Demoশুধু এই ডিভাইসের বর্তমান মোডের ডাটা; এখানে কোনো এন্ট্রি বদলায় না।"
+    },
+    {
+      "name": "P15 large-text/theme geometry",
+      "pass": true,
+      "detail": {
+        "overflow": false,
+        "left": 0,
+        "right": 360,
+        "dialog": true,
+        "navHeight": 130.59375
+      }
+    },
+    {
+      "name": "P15 dismiss focus/draft/hash",
+      "pass": true
+    },
+    {
+      "name": "P15 menu geometry/focus",
+      "pass": true,
+      "detail": {
+        "panel": 657,
+        "nav": 669.40625,
+        "count": 1,
+        "focus": true
+      }
+    },
+    {
+      "name": "P15 panel Back focus/draft",
+      "pass": true
+    },
+    {
+      "name": "P15 tab switch single Back stop",
+      "pass": true
+    },
+    {
+      "name": "P15 viewing Help writes no records",
+      "pass": true
+    },
+    {
+      "name": "Quick prayer durable record",
+      "pass": true,
+      "detail": [
+        {
+          "id": "prayer-2026-11-06-fajr",
+          "entity": "prayer_log",
+          "ns": "demo",
+          "ownerId": "demo-user",
+          "schemaVersion": 3,
+          "createdAt": "2026-11-06T11:41:11.790Z",
+          "links": {
+            "prayer": "fajr"
+          },
+          "values": {
+            "prayer_log.date": {
+              "state": "value",
+              "value": "2026-11-06",
+              "label": "DEMO"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Full prayer view shares saved mark",
+      "pass": true
+    },
+    {
+      "name": "Prayer undo durable after reload",
+      "pass": true
+    },
+    {
+      "name": "Fasting alias focuses real section",
+      "pass": true
+    }
+  ],
+  "preferenceFrames": [
+    {
+      "file": "docs/audit/contextual-help/preferences/preference-00-en-100.jpg",
+      "rawFile": "/tmp/contextual-help-preferences-final/preference-00-en-100.jpg",
+      "rawFileTracked": false
+    },
+    {
+      "file": "docs/audit/contextual-help/preferences/preference-01-bn-100.jpg",
+      "rawFile": "/tmp/contextual-help-preferences-final/preference-01-bn-100.jpg",
+      "rawFileTracked": false
+    },
+    {
+      "file": "docs/audit/contextual-help/preferences/preference-02-en-200.jpg",
+      "rawFile": "/tmp/contextual-help-preferences-final/preference-02-en-200.jpg",
+      "rawFileTracked": false
+    },
+    {
+      "file": "docs/audit/contextual-help/preferences/preference-03-bn-200.jpg",
+      "rawFile": "/tmp/contextual-help-preferences-final/preference-03-bn-200.jpg",
+      "rawFileTracked": false
+    },
+    {
+      "file": "docs/audit/contextual-help/preferences/preference-04-en-100.jpg",
+      "rawFile": "/tmp/contextual-help-preferences-final/preference-04-en-100.jpg",
+      "rawFileTracked": false
+    },
+    {
+      "file": "docs/audit/contextual-help/preferences/preference-05-bn-100.jpg",
+      "rawFile": "/tmp/contextual-help-preferences-final/preference-05-bn-100.jpg",
+      "rawFileTracked": false
+    },
+    {
+      "file": "docs/audit/contextual-help/preferences/preference-06-en-200.jpg",
+      "rawFile": "/tmp/contextual-help-preferences-final/preference-06-en-200.jpg",
+      "rawFileTracked": false
+    },
+    {
+      "file": "docs/audit/contextual-help/preferences/preference-07-bn-200.jpg",
+      "rawFile": "/tmp/contextual-help-preferences-final/preference-07-bn-200.jpg",
+      "rawFileTracked": false
+    },
+    {
+      "file": "docs/audit/contextual-help/preferences/preference-08-en-100.jpg",
+      "rawFile": "/tmp/contextual-help-preferences-final/preference-08-en-100.jpg",
+      "rawFileTracked": false
+    },
+    {
+      "file": "docs/audit/contextual-help/preferences/preference-09-bn-100.jpg",
+      "rawFile": "/tmp/contextual-help-preferences-final/preference-09-bn-100.jpg",
+      "rawFileTracked": false
+    },
+    {
+      "file": "docs/audit/contextual-help/preferences/preference-10-en-200.jpg",
+      "rawFile": "/tmp/contextual-help-preferences-final/preference-10-en-200.jpg",
+      "rawFileTracked": false
+    },
+    {
+      "file": "docs/audit/contextual-help/preferences/preference-11-bn-200.jpg",
+      "rawFile": "/tmp/contextual-help-preferences-final/preference-11-bn-200.jpg",
+      "rawFileTracked": false
+    },
+    {
+      "file": "docs/audit/contextual-help/preferences/preference-12-en-100.jpg",
+      "rawFile": "/tmp/contextual-help-preferences-final/preference-12-en-100.jpg",
+      "rawFileTracked": false
+    },
+    {
+      "file": "docs/audit/contextual-help/preferences/preference-13-bn-100.jpg",
+      "rawFile": "/tmp/contextual-help-preferences-final/preference-13-bn-100.jpg",
+      "rawFileTracked": false
+    },
+    {
+      "file": "docs/audit/contextual-help/preferences/preference-14-en-200.jpg",
+      "rawFile": "/tmp/contextual-help-preferences-final/preference-14-en-200.jpg",
+      "rawFileTracked": false
+    },
+    {
+      "file": "docs/audit/contextual-help/preferences/preference-15-bn-200.jpg",
+      "rawFile": "/tmp/contextual-help-preferences-final/preference-15-bn-200.jpg",
+      "rawFileTracked": false
+    }
+  ],
+  "sourceNote": "Working tree derived from tracked1a07140; runtime changes were uncommitted when captured. See phase ordering in README. This is not a production deployment claim."
+}

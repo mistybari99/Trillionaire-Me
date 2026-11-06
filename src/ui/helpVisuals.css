@@ -1,0 +1,21 @@
+.help-guide,.help-own-map{min-width:0;overflow-wrap:anywhere;line-height:1.7}
+.help-guide h3,.help-own-map h3{margin:0 0 12px;font-size:1.125rem}
+.help-guide h4,.help-own-map h4{font:600 1rem/1.6 "Hind Siliguri",sans-serif;margin:0 0 6px}
+.help-guide p,.help-own-map p{margin-block:12px}
+.help-diagram{list-style:none;counter-reset:help-step;padding:0;margin-block:20px;display:grid;gap:12px}
+.help-diagram>li{counter-increment:help-step;display:flex;align-items:flex-start;gap:12px;position:relative;background:var(--card);border:1px solid var(--rule);border-inline-start:3px solid var(--primary);padding:12px;border-radius:10px;min-width:0}
+.help-diagram>li:before{content:counter(help-step);flex:0 0 auto;color:var(--primary);font-weight:600}
+.help-diagram>li>span{min-width:0;overflow-wrap:anywhere}
+.help-diagram-steps>li:not(:last-child):after,.help-diagram-cycle>li:not(:last-child):after{content:"";position:absolute;inset-block-end:-10px;inset-inline-start:24px;width:7px;height:7px;border-inline-end:2px solid var(--muted);border-block-end:2px solid var(--muted);transform:rotate(45deg)}
+.help-diagram-branches>li:not(:first-child){margin-inline-start:min(16px,4vw)}
+.help-example{padding:12px;border-inline-start:3px solid var(--calm);background:color-mix(in srgb,var(--calm) 5%,var(--card));border-radius:8px}
+.help-caution{border-top:1px solid var(--rule);padding-top:12px;color:var(--muted)}
+.help-illustration{max-width:140px;margin:12px auto;color:var(--primary)}
+.help-illustration svg{display:block;width:100%;height:auto;fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.help-map-list{padding:0;list-style:none;margin-block:12px;display:grid;gap:12px}
+.help-map-node{border:1px solid var(--rule);border-inline-start:3px solid var(--primary);padding:12px;border-radius:10px;min-width:0;overflow-wrap:anywhere}
+.help-map-node .help-map-list{margin-inline-start:min(16px,4vw)}
+.help-map-node a,.help-own-map>a{display:inline-flex;align-items:center;min-height:44px;max-width:100%;color:var(--primary);overflow-wrap:anywhere}
+.help-own-map summary{min-height:44px;display:list-item;cursor:pointer;padding-block:8px;overflow-wrap:anywhere}
+.help-own-map [data-label]{white-space:normal}
+@media(min-width:440px){.help-diagram-matrix{grid-template-columns:repeat(2,minmax(0,1fr))}}

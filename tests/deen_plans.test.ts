@@ -1,7 +1,7 @@
 // M13 Deen plans and reminders, end to end: input -> storage -> view -> Today/report links -> EN/BN/mix. Own numbers only for zakat;
 // no score, rank, streak or ruling; private by default; real mode needs the real-data tick; included in backup and Delete, left out of CSV.
 import "fake-indexeddb/auto";
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { render } from "../src/app";
 import { consentKv, store } from "../src/ui/state";
 import { grantConsent } from "../src/core/consent";
@@ -100,13 +100,15 @@ describe("screens (demo)", () => {
     go("#/journey/report"); const rc = $('[data-deen-card="report"]')!; expect(rc.classList.contains("no-print")).toBe(true); expect(rc.textContent).not.toMatch(/Read ten minutes/);
     go("#/deen"); expect($('a[href="#/deen/plans"]')).not.toBeNull();
   });
-  it("a salah plan tied to a prayer shares the prayer mark of the Deen page; a fasting plan shares the fast mark", () => {
+  it("a salah plan tied to a prayer shares the prayer mark of the Deen page; a fasting plan shares the fast mark", async () => {
     addPlan({ kind: "salah", title: "Fajr on time", prayer: "fajr" }); addPlan({ kind: "fasting", title: "Monday fast" });
     const [salah, fast] = planRows(store.demo.list()); expect(markKind(salah!)).toEqual({ via: "prayer", prayer: "fajr" }); expect(markKind(fast!)).toEqual({ via: "fast" });
     go("#/today"); for (const b of $$('[data-act="plan-mark"]')) (b as HTMLButtonElement).click();
+    await vi.waitFor(() => expect($('[data-act="plan-mark"][data-prayer="fajr"]')!.getAttribute("aria-busy")).toBe("false"));
     expect(markedOn(store.demo.list(), day()).has("fajr")).toBe(true); expect(isFastMarked(store.demo.list(), day())).toBe(true); expect(store.demo.list().some((r) => r.entity === "deen_mark")).toBe(false);
     go("#/deen"); expect($('[data-act="prayer-mark"][data-prayer="fajr"]')!.getAttribute("aria-pressed")).toBe("true");
     go("#/today"); for (const b of $$('[data-act="plan-mark"]')) (b as HTMLButtonElement).click();
+    await vi.waitFor(() => expect($('[data-act="plan-mark"][data-prayer="fajr"]')!.getAttribute("aria-busy")).toBe("false"));
     expect(markedOn(store.demo.list(), day()).size).toBe(0); expect(isFastMarked(store.demo.list(), day())).toBe(false);
   });
   it("pause hides the reminder, resume brings it back, remove deletes; a plan with a future date is not on Today", () => {

@@ -11,7 +11,8 @@ import { disclaimers } from "./components";
 import { fieldById } from "../catalog/fields";
 import { checkFreeText } from "../core/safety";
 import { dhakaNow, isoDate } from "../core/prayer";
-import { prayerLogId, prayerLogRecord } from "../core/prayerLog";
+import { prayerMarkButton } from "./prayerMarksUi";
+import { setPrayerMarked, prayerMarkState } from "./prayerMarkCommand";
 import { fastLogId, fastLogRecord } from "../core/fastLog";
 import { NOTE_AREAS, PLAN_KINDS, PRAYER_LINKS, REPEATS, daysUntil, dueToday, isMarked, markKind, noteRows, parseNumber, planMarkId, planMarkRecord, planRows, validateNote, validatePlan, validateZakat,
   zakatFigure, zakatRow, ZAKAT_ID, type PlanRow } from "../core/deenPlans";
@@ -28,15 +29,23 @@ const secretFree = (...xs: string[]) => xs.every((x) => checkFreeText(x).ok);
 /** One tap marks today; a second tap removes the mark. Prayer and fasting plans use the very same marks as the Deen page. */
 export function togglePlanMark(p: PlanRow, day: string): void {
   const k = markKind(p); const ns = store[activeNs()];
-  const id = k.via === "prayer" ? prayerLogId(day, k.prayer) : k.via === "fast" ? fastLogId(day) : planMarkId(p.id, day);
+  if (k.via === "prayer") {
+    const namespace = p.ns;
+    void setPrayerMarked({ namespace, date: day, prayer: k.prayer, desiredMarked: !prayerMarkState({ namespace, date: day, prayer: k.prayer }).marked });
+    return;
+  }
+  const id = k.via === "fast" ? fastLogId(day) : planMarkId(p.id, day);
   if (ns.get(id)) { ns.delete(id); return; }
   const now = new Date().toISOString();
-  putMode(k.via === "prayer" ? prayerLogRecord(day, k.prayer, now) : k.via === "fast" ? fastLogRecord(day, now) : planMarkRecord(p.id, day, now));
+  putMode(k.via === "fast" ? fastLogRecord(day, now) : planMarkRecord(p.id, day, now));
 }
 
-const markButton = (p: PlanRow, day: string, lang: Locale, marked: boolean) =>
-  h("button", { class: marked ? "btn btn-sm" : "btn ghost btn-sm", type: "button", "data-act": "plan-mark", "data-plan": p.id, "aria-pressed": String(marked),
+const markButton = (p: PlanRow, day: string, lang: Locale, marked: boolean): HTMLElement => {
+  const kind = markKind(p);
+  if (kind.via === "prayer") return prayerMarkButton(kind.prayer, lang, { "data-act": "plan-mark", "data-plan": p.id });
+  return h("button", { class: marked ? "btn btn-sm" : "btn ghost btn-sm", type: "button", "data-act": "plan-mark", "data-plan": p.id, "aria-pressed": String(marked),
     onclick: () => { togglePlanMark(p, day); rerender(); } }, marked ? t("dp.marked", lang) : t("dp.mark", lang));
+};
 
 /** Today: plans due today with a one-tap mark. Quiet; nothing when no plan is due. No count of what was missed. */
 export function deenTodayCard(lang: Locale): HTMLElement | null {

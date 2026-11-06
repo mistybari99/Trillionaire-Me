@@ -30,6 +30,10 @@ export const ROWS: SettingRow[] = [
   R("theme", "home", "more.theme", "#/settings/home/theme", ["theme", "dark", "light", "night", "mode", "auto"], ["theme"], ["tm:ui:theme"]),
   R("textsize", "home", "more.textsize", "#/settings/home/textsize", ["text size", "font", "bigger", "larger", "zoom", "scale"], ["scale"], ["tm:ui:scale"]),
 
+  R("helpplacement", "look", "set.row.helpplacement", "#/settings/look/helpplacement", ["help info panel inline sheet"], [], ["tm:ui:helpPlacement"]),
+  R("helpvisuals", "look", "set.row.helpvisuals", "#/settings/look/helpvisuals", ["help diagram illustration visual"], [], ["tm:ui:helpVisuals"]),
+  R("helpcontent", "look", "set.row.helpcontent", "#/settings/look/helpcontent", ["guide own map examples"], [], ["tm:ui:helpContent"]),
+  R("tabnavigation", "look", "set.row.tabnavigation", "#/settings/look/tabnavigation", ["tab navigation menu quick tools"], [], ["tm:ui:tabNavigation"]),
   R("design", "look", "more.design", "#/settings/look/design", ["design", "version", "look", "style", "colour", "color"], ["design"], ["tm:ui:design"]),
   R("density", "look", "set.row.density", "#/settings/look/density", ["detailed", "compact", "full", "screen view", "template"], [], ["tm:ui:view:*"]),
   R("horizon", "look", "set.row.horizon", "#/journey/horizon", ["horizon", "layout", "stack"], ["horizonView"], ["tm:ui:horizonView"]),

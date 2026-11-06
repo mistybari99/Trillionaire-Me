@@ -240,14 +240,16 @@ describe("M13 Deen screen and alerts (UI)", () => {
   beforeEach(() => { reset(); vi.useFakeTimers(); vi.setSystemTime(new Date("2026-10-24T04:00:00Z")); window.addEventListener("hashchange", render); });
   afterEach(() => { window.removeEventListener("hashchange", render); vi.useRealTimers(); });
 
-  it("one tap marks a prayer, a second tap undoes it, and no score or streak text appears", () => {
+  it("one tap marks a prayer, a second tap undoes it, and no score or streak text appears", async () => {
     location.hash = "#/deen"; render();
     const btn = () => document.querySelector("[data-act=prayer-mark][data-prayer=fajr]") as HTMLButtonElement;
     expect(btn().getAttribute("aria-pressed")).toBe("false");
     btn().click();
+    await vi.waitFor(() => expect(btn().getAttribute("aria-pressed")).toBe("true"));
     expect(store.demo.get(prayerLogId("2026-10-24", "fajr"))).not.toBeNull();
     expect(document.querySelector("[data-act=prayer-mark][data-prayer=fajr]")!.getAttribute("aria-pressed")).toBe("true");
     (document.querySelector("[data-act=prayer-mark][data-prayer=fajr]") as HTMLButtonElement).click();
+    await vi.waitFor(() => expect(btn().getAttribute("aria-pressed")).toBe("false"));
     expect(store.demo.get(prayerLogId("2026-10-24", "fajr"))).toBeNull();
     const text = document.querySelector("[data-prayer-times]")!.textContent ?? "";
     expect(text).toContain("04:44");

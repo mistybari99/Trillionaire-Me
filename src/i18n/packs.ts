@@ -1,6 +1,11 @@
 // UI string packs. `en` is the source; `bn` is typed against it so a missing key is a compile error (i18n skill §3).
 // Bangla copy is a working draft pending native-reviewer sign-off (TM-TST-161).
 const en = {
+  "set.row.helpplacement": "Help placement",
+  "set.row.helpvisuals": "Help visuals",
+  "set.row.helpcontent": "Guide and own map",
+  "set.row.tabnavigation": "Tab navigation",
+
   "desk.tools.plan": "Goals and plan",
   "desk.tools.review": "Review and history",
   "desk.tools.explore": "Explore tools",
@@ -1660,7 +1665,7 @@ const en = {
   "enc.contains": "Contains: demo and real entries.",
   "nav.settings": "Settings",
   "set.title": "Settings",
-  "set.intro": "Everything you can change is here. Your data stays on this phone.",
+  "set.intro": "Your data stays on this phone.",
   "set.quick": "Quick settings",
   "set.status.title": "Right now",
   "set.status.backup.last": "Last backup file: {when}",
@@ -1917,6 +1922,11 @@ const en = {
 export type Key = keyof typeof en;
 
 const bn: Record<Key, string> = {
+  "set.row.helpplacement": "হেল্প কোথায় দেখাবে",
+  "set.row.helpvisuals": "হেল্পের ভিজুয়াল",
+  "set.row.helpcontent": "গাইড ও নিজের ম্যাপ",
+  "set.row.tabnavigation": "ট্যাব নেভিগেশন",
+
   "desk.tools.plan": "গোল ও প্ল্যান",
   "desk.tools.review": "রিভিউ ও হিস্ট্রি",
   "desk.tools.explore": "টুল দেখুন",
@@ -3904,7 +3914,7 @@ const bn: Record<Key, string> = {
   "enc.contains": "এতে আছে: ডেমো ও আসল এন্ট্রি।",
   "nav.settings": "সেটিংস",
   "set.title": "সেটিংস",
-  "set.intro": "যা বদলানো যায়, সব এখানে। আপনার ডাটা এই ফোনেই থাকে।",
+  "set.intro": "আপনার ডাটা এই ফোনেই থাকে।",
   "set.quick": "দ্রুত সেটিংস",
   "set.status.title": "এখন যেমন আছে",
   "set.status.backup.last": "শেষ ব্যাকআপ ফাইল: {when}",

@@ -1,0 +1,940 @@
+{
+  "generated": "2026-11-06T11:45:51.614Z",
+  "phase": "real-fold",
+  "root": "/workspace/Trillionaire-Me",
+  "synthetic": true,
+  "viewport": "360x800",
+  "sourceRevision": "latest-compact-settings",
+  "screens": [
+    {
+      "route": "/settings",
+      "lang": "en",
+      "tag": "empty-real",
+      "file": "docs/audit/contextual-help/real-fold/empty-real-en-_settings.jpg",
+      "actualHash": "#/settings",
+      "heading": "Settings",
+      "overflow": false,
+      "lazyPending": false,
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Settings",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "Quick settings",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Language",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Theme",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Text size",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "Right now",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "Quick tools",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Look & screens",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Prayer & alerts",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Backup & export",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Privacy & lock",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Demo or real data",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Plan & progress",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Connections",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Delete data",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Guides & info",
+          "visible": true
+        }
+      ],
+      "paragraphs": [
+        {
+          "text": "",
+          "visible": false,
+          "class": "muted",
+          "attributes": {
+            "data-search": "status"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "Everything you can change is here. Your data stays on this phone.",
+          "visible": true,
+          "class": "sub",
+          "attributes": {},
+          "tKeys": [
+            "set.intro"
+          ]
+        },
+        {
+          "text": "No backup file yet",
+          "visible": true,
+          "class": "",
+          "attributes": {},
+          "tKeys": [
+            "set.status.backup.none"
+          ]
+        },
+        {
+          "text": "Real data: permission on",
+          "visible": true,
+          "class": "",
+          "attributes": {},
+          "tKeys": [
+            "set.status.real.on"
+          ]
+        },
+        {
+          "text": "App lock: off",
+          "visible": true,
+          "class": "",
+          "attributes": {},
+          "tKeys": [
+            "set.status.lock.off",
+            "priv.line.lock.off"
+          ]
+        },
+        {
+          "text": "Design: Light Futuristic",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "look"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "Alerts: Off",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "prayer"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "Automatic snapshots: On · Reminder: Off",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "backup"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "App lock: Off · Real-data permission: Allowed",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "privacy"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "Showing: Real",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "data"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "Plan mode: Normal",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "plan"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "0 of 4 on. Nothing leaves this phone.",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "connections"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "Nothing is deleted until you confirm.",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "delete"
+          },
+          "tKeys": [
+            "set.sum.delete"
+          ]
+        },
+        {
+          "text": "Topics, glossary, safety notes and more",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "about"
+          },
+          "tKeys": [
+            "set.sum.about"
+          ]
+        }
+      ],
+      "fieldCards": [],
+      "visibleWarnings": [],
+      "tabs": [
+        {
+          "text": "Today",
+          "x": 4,
+          "y": 684,
+          "width": 68,
+          "height": 56,
+          "right": 72,
+          "bottom": 740
+        },
+        {
+          "text": "Journey",
+          "x": 72,
+          "y": 684,
+          "width": 79,
+          "height": 56,
+          "right": 151,
+          "bottom": 740
+        },
+        {
+          "text": "Diary",
+          "x": 151,
+          "y": 684,
+          "width": 62,
+          "height": 56,
+          "right": 213,
+          "bottom": 740
+        },
+        {
+          "text": "Deen",
+          "x": 213,
+          "y": 684,
+          "width": 62,
+          "height": 56,
+          "right": 275,
+          "bottom": 740
+        },
+        {
+          "text": "Settings",
+          "x": 275,
+          "y": 684,
+          "width": 81,
+          "height": 56,
+          "right": 356,
+          "bottom": 740
+        }
+      ],
+      "quickCard": {
+        "x": 16,
+        "y": 297.796875,
+        "width": 328,
+        "height": 374.890625,
+        "right": 344,
+        "bottom": 672.6875
+      },
+      "navBox": {
+        "x": 0,
+        "y": 683,
+        "width": 360,
+        "height": 57,
+        "right": 360,
+        "bottom": 740
+      },
+      "forms": 0,
+      "settingsAnchors": [
+        "language",
+        "theme",
+        "textsize"
+      ],
+      "errors": [],
+      "blocker": null,
+      "artifactKind": "viewport",
+      "rawFile": "/tmp/contextual-help-real-fold/empty-real-en-_settings.jpg",
+      "rawFileTracked": false
+    },
+    {
+      "route": "/settings",
+      "lang": "bn",
+      "tag": "empty-real",
+      "file": "docs/audit/contextual-help/real-fold/empty-real-bn-_settings.jpg",
+      "actualHash": "#/settings",
+      "heading": "সেটিংস",
+      "overflow": false,
+      "lazyPending": false,
+      "headings": [
+        {
+          "level": "H1",
+          "text": "সেটিংস",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "দ্রুত সেটিংস",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "ভাষা",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Theme",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "লেখার আকার",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "এখন যেমন আছে",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "দরকারি টুল",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "লুক ও স্ক্রিন",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "নামাজ ও অ্যালার্ট",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "ব্যাকআপ ও এক্সপোর্ট",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "প্রাইভেসি ও লক",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "ডেমো না আসল ডাটা",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "প্ল্যান ও প্রোগ্রেস",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "কানেকশন",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "ডাটা ডিলিট",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "গাইড ও তথ্য",
+          "visible": true
+        }
+      ],
+      "paragraphs": [
+        {
+          "text": "",
+          "visible": false,
+          "class": "muted",
+          "attributes": {
+            "data-search": "status"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "যা বদলানো যায়, সব এখানে। আপনার ডাটা এই ফোনেই থাকে।",
+          "visible": true,
+          "class": "sub",
+          "attributes": {},
+          "tKeys": [
+            "set.intro"
+          ]
+        },
+        {
+          "text": "এখনো কোনো ব্যাকআপ ফাইল নেই",
+          "visible": true,
+          "class": "",
+          "attributes": {},
+          "tKeys": [
+            "set.status.backup.none"
+          ]
+        },
+        {
+          "text": "আসল ডাটা: পারমিশন চালু",
+          "visible": true,
+          "class": "",
+          "attributes": {},
+          "tKeys": [
+            "set.status.real.on"
+          ]
+        },
+        {
+          "text": "অ্যাপ লক: বন্ধ",
+          "visible": true,
+          "class": "",
+          "attributes": {},
+          "tKeys": [
+            "set.status.lock.off",
+            "priv.line.lock.off"
+          ]
+        },
+        {
+          "text": "ডিজাইন: লাইট ফিউচারিস্টিক",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "look"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "অ্যালার্ট: বন্ধ",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "prayer"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "অটোমেটিক কপি: চালু · রিমাইন্ডার: বন্ধ",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "backup"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "অ্যাপ লক: বন্ধ · আসল ডাটার পারমিশন: দেওয়া আছে",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "privacy"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "এখন দেখাচ্ছে: আসল",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "data"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "প্ল্যান মোড: সাধারণ",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "plan"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "4টির মধ্যে 0টি চালু। কিছুই এই ফোনের বাইরে যায় না।",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "connections"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "আপনি নিশ্চিত না করা পর্যন্ত কিছু ডিলিট হয় না।",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "delete"
+          },
+          "tKeys": [
+            "set.sum.delete"
+          ]
+        },
+        {
+          "text": "টপিক, শব্দের অর্থ, সেফটি নোট আর কিছু",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "about"
+          },
+          "tKeys": [
+            "set.sum.about"
+          ]
+        }
+      ],
+      "fieldCards": [],
+      "visibleWarnings": [],
+      "tabs": [
+        {
+          "text": "আজ",
+          "x": 4,
+          "y": 684,
+          "width": 69.390625,
+          "height": 56,
+          "right": 73.390625,
+          "bottom": 740
+        },
+        {
+          "text": "যাত্রা",
+          "x": 73.390625,
+          "y": 684,
+          "width": 65.40625,
+          "height": 56,
+          "right": 138.796875,
+          "bottom": 740
+        },
+        {
+          "text": "ডায়েরি",
+          "x": 138.796875,
+          "y": 684,
+          "width": 77.390625,
+          "height": 56,
+          "right": 216.1875,
+          "bottom": 740
+        },
+        {
+          "text": "দ্বীন",
+          "x": 216.1875,
+          "y": 684,
+          "width": 60.40625,
+          "height": 56,
+          "right": 276.59375,
+          "bottom": 740
+        },
+        {
+          "text": "সেটিংস",
+          "x": 276.59375,
+          "y": 684,
+          "width": 79.40625,
+          "height": 56,
+          "right": 356,
+          "bottom": 740
+        }
+      ],
+      "quickCard": {
+        "x": 16,
+        "y": 272.296875,
+        "width": 328,
+        "height": 374.890625,
+        "right": 344,
+        "bottom": 647.1875
+      },
+      "navBox": {
+        "x": 0,
+        "y": 683,
+        "width": 360,
+        "height": 57,
+        "right": 360,
+        "bottom": 740
+      },
+      "forms": 0,
+      "settingsAnchors": [
+        "language",
+        "theme",
+        "textsize"
+      ],
+      "errors": [],
+      "blocker": null,
+      "artifactKind": "viewport",
+      "rawFile": "/tmp/contextual-help-real-fold/empty-real-bn-_settings.jpg",
+      "rawFileTracked": false
+    },
+    {
+      "route": "/settings",
+      "lang": "mix",
+      "tag": "empty-real",
+      "file": "docs/audit/contextual-help/real-fold/empty-real-mix-_settings.jpg",
+      "actualHash": "#/settings",
+      "heading": "Settings",
+      "overflow": false,
+      "lazyPending": false,
+      "headings": [
+        {
+          "level": "H1",
+          "text": "Settings",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "দ্রুত Settings",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "ভাষা",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Theme",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "লেখার আকার",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "এখন যেমন আছে",
+          "visible": true
+        },
+        {
+          "level": "H2",
+          "text": "দরকারি টুল",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "লুক ও স্ক্রিন",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "নামাজ ও Alert",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Backup ও Export",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Privacy ও লক",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Demo না আসল Data",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Plan ও Progress",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Connection",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "Data Delete",
+          "visible": true
+        },
+        {
+          "level": "H3",
+          "text": "গাইড ও তথ্য",
+          "visible": true
+        }
+      ],
+      "paragraphs": [
+        {
+          "text": "",
+          "visible": false,
+          "class": "muted",
+          "attributes": {
+            "data-search": "status"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "যা বদলানো যায়, সব এখানে। আপনার Data এই ফোনেই থাকে।",
+          "visible": true,
+          "class": "sub",
+          "attributes": {},
+          "tKeys": [
+            "set.intro"
+          ]
+        },
+        {
+          "text": "এখনো কোনো Backup ফাইল নেই",
+          "visible": true,
+          "class": "",
+          "attributes": {},
+          "tKeys": [
+            "set.status.backup.none"
+          ]
+        },
+        {
+          "text": "আসল Data: Permission চালু",
+          "visible": true,
+          "class": "",
+          "attributes": {},
+          "tKeys": [
+            "set.status.real.on"
+          ]
+        },
+        {
+          "text": "অ্যাপ লক: বন্ধ",
+          "visible": true,
+          "class": "",
+          "attributes": {},
+          "tKeys": [
+            "set.status.lock.off",
+            "priv.line.lock.off"
+          ]
+        },
+        {
+          "text": "ডিজাইন: লাইট ফিউচারিস্টিক",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "look"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "Alert: বন্ধ",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "prayer"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "Automatic Copy: চালু · Reminder: বন্ধ",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "backup"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "অ্যাপ লক: বন্ধ · আসল Data-এর Permission: দেওয়া আছে",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "privacy"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "এখন দেখাচ্ছে: আসল",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "data"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "Plan মোড: সাধারণ",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "plan"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "4টির মধ্যে 0টি চালু। কিছুই এই ফোনের বাইরে যায় না।",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "connections"
+          },
+          "tKeys": []
+        },
+        {
+          "text": "আপনি নিশ্চিত না করা পর্যন্ত কিছু Delete হয় না।",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "delete"
+          },
+          "tKeys": [
+            "set.sum.delete"
+          ]
+        },
+        {
+          "text": "টপিক, শব্দের অর্থ, সেফটি নোট আর কিছু",
+          "visible": true,
+          "class": "muted",
+          "attributes": {
+            "data-summary": "about"
+          },
+          "tKeys": [
+            "set.sum.about"
+          ]
+        }
+      ],
+      "fieldCards": [],
+      "visibleWarnings": [],
+      "tabs": [
+        {
+          "text": "আজ",
+          "x": 4,
+          "y": 684,
+          "width": 63.1875,
+          "height": 56,
+          "right": 67.1875,
+          "bottom": 740
+        },
+        {
+          "text": "Journey",
+          "x": 67.1875,
+          "y": 684,
+          "width": 83.203125,
+          "height": 56,
+          "right": 150.390625,
+          "bottom": 740
+        },
+        {
+          "text": "Diary",
+          "x": 150.390625,
+          "y": 684,
+          "width": 66.203125,
+          "height": 56,
+          "right": 216.59375,
+          "bottom": 740
+        },
+        {
+          "text": "দ্বীন",
+          "x": 216.59375,
+          "y": 684,
+          "width": 54.203125,
+          "height": 56,
+          "right": 270.796875,
+          "bottom": 740
+        },
+        {
+          "text": "Settings",
+          "x": 270.796875,
+          "y": 684,
+          "width": 85.203125,
+          "height": 56,
+          "right": 356,
+          "bottom": 740
+        }
+      ],
+      "quickCard": {
+        "x": 16,
+        "y": 297.796875,
+        "width": 328,
+        "height": 374.890625,
+        "right": 344,
+        "bottom": 672.6875
+      },
+      "navBox": {
+        "x": 0,
+        "y": 683,
+        "width": 360,
+        "height": 57,
+        "right": 360,
+        "bottom": 740
+      },
+      "forms": 0,
+      "settingsAnchors": [
+        "language",
+        "theme",
+        "textsize"
+      ],
+      "errors": [],
+      "blocker": null,
+      "artifactKind": "viewport",
+      "rawFile": "/tmp/contextual-help-real-fold/empty-real-mix-_settings.jpg",
+      "rawFileTracked": false
+    }
+  ],
+  "checks": [
+    {
+      "name": "en/empty-real Quick fold",
+      "pass": true,
+      "detail": {
+        "quickBottom": 672.6875,
+        "navTop": 683
+      }
+    },
+    {
+      "name": "bn/empty-real Quick fold",
+      "pass": true,
+      "detail": {
+        "quickBottom": 647.1875,
+        "navTop": 683
+      }
+    },
+    {
+      "name": "mix/empty-real Quick fold",
+      "pass": true,
+      "detail": {
+        "quickBottom": 672.6875,
+        "navTop": 683
+      }
+    }
+  ],
+  "sourceNote": "Working tree derived from tracked1a07140; runtime changes were uncommitted when captured. See phase ordering in README. This is not a production deployment claim."
+}

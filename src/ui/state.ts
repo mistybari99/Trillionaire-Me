@@ -1,3 +1,4 @@
+import { resetPresentationPreferences } from "./presentationPreferences";
 import { DEFAULT_LOCALE, LOCALES, isLocale, type Locale } from "../i18n/registry";
 import { LocalKV, MemoryKV, REAL_DATA_ENABLED, Store } from "../core/store";
 import { readConsent } from "../core/consent";
@@ -83,8 +84,10 @@ export const clearScreenView = (s: ViewScreen) => { try { localStorage.removeIte
 /** Screens whose own choice differs from the master (shown in Settings > Look & screens). */
 export const screensDifferingFromMaster = (): ViewScreen[] => VIEW_SCREENS.filter((s) => { const o = screenViewOwn(s); return o !== null && o !== masterView(); });
 /** Reset look & layout: design, every Detailed/Compact key (master included), horizon, universe, habit grid, reduce motion. Never data, consent, lock, prayer, connections, language, theme or text size. */
-export function resetLookLayout(): void {
-  for (const k of ["tm:ui:design", "tm:ui:horizonView", "tm:ui:universeView", "tm:ui:habitGrid", "tm:ui:reduceMotion", VIEW_KEY("_default"), ...VIEW_SCREENS.map(VIEW_KEY)]) { try { localStorage.removeItem(k); } catch { /* ignore */ } }
+export function resetLookLayout(): { saved: boolean } {
+  let { saved } = resetPresentationPreferences();
+  for (const k of ["tm:ui:design", "tm:ui:horizonView", "tm:ui:universeView", "tm:ui:habitGrid", "tm:ui:reduceMotion", VIEW_KEY("_default"), ...VIEW_SCREENS.map(VIEW_KEY)]) { try { localStorage.removeItem(k); } catch { saved = false; } }
+  return { saved };
 }
 export const MOVED_NOTE_DAYS = 14;
 export type ReduceMotion = "system" | "always";

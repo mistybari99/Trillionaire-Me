@@ -51,7 +51,7 @@ for (const snapshot of ledger.archives) {
   const digest = createHash('sha256').update(readFileSync(snapshot.path)).digest('hex');
   assert.equal(digest, snapshot.sha256, `Archive changed: ${snapshot.path}`);
 }
-const docs = ['README.md', 'docs/PLAN.md', 'docs/TODO.md', 'docs/ROADMAP.md', 'docs/plan/PLAN_TRACKER.md',
+const docs = ['docs/audit/CONTEXTUAL_HELP_2026-11-06.md', 'docs/audit/contextual-help/CLASSIFICATION_LEDGER.md', 'docs/deployment/PREVIEWS.md', 'README.md', 'docs/PLAN.md', 'docs/TODO.md', 'docs/ROADMAP.md', 'docs/plan/PLAN_TRACKER.md',
   'docs/audit/REPOSITORY_AUDIT_2026-11-05.md', 'docs/audit/RELIABILITY_FIXES_2026-11-05.md',
   'docs/audit/ACTION_DESK_UI_2026-11-05.md', 'docs/audit/USABILITY_CONTROLS_2026-11-05.md', 'docs/audit/TEXT_SIZE_SLIDER_2026-11-06.md', 'docs/audit/FEATURE_DETAILS_2026-11-06.md', 'docs/audit/MULTISELECT_AUDIT_2026-11-05.md', 'docs/audit/usability-controls/README.md', 'docs/audit/action-desk-ui/README.md',
   'docs/deployment/CI_GATE.md', 'docs/design/UI_REFRESH_2026-11-05_A.md',

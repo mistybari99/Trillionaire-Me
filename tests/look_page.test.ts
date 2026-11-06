@@ -1,9 +1,10 @@
 // Settings redesign PR 3a: Look & screens. Master Detailed/Compact (additive key), screens that differ, reduce motion, reset.
 import "fake-indexeddb/auto";
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { render } from "../src/app";
 import { consentKv, prefs, screenView, setScreenView, store, VIEW_SCREENS } from "../src/ui/state";
 import { grantConsent } from "../src/core/consent";
+import { getPresentationPreferences, resetPresentationPreferences } from "../src/ui/presentationPreferences";
 
 const app = () => document.getElementById("app")!;
 const q = <T extends Element>(s: string) => app().querySelector(s) as T;
@@ -63,5 +64,32 @@ describe("links, motion, reset", () => {
   });
   it("design version cards live here", () => {
     go("#/settings/look"); expect(app().querySelectorAll("[data-design-opt]").length).toBeGreaterThanOrEqual(3);
+  });
+  it.each(["tm:ui:helpPlacement", "tm:ui:design"])("reports a blocked reset of %s without stale saved/success claims and allows retry", (blockedKey) => {
+    go("#/settings/look");
+    const select = q<HTMLSelectElement>("[data-presentation=helpPlacement]");
+    select.value = "sheet"; select.dispatchEvent(new Event("change"));
+    expect(q("[data-presentation-save]").textContent).toMatch(/Saved on this device/);
+    localStorage.setItem("tm:ui:design", "emerald-obsidian");
+    const original = Storage.prototype.removeItem;
+    const blocked = vi.spyOn(Storage.prototype, "removeItem").mockImplementation(function (this: Storage, key: string) {
+      if (key === blockedKey) throw Error("blocked");
+      return original.call(this, key);
+    });
+    try {
+      q<HTMLButtonElement>("[data-act=reset-look]").click(); render();
+      q<HTMLButtonElement>("[data-act=reset-look-yes]").click(); render();
+      expect(q("[data-look=reset-failed]").textContent).toMatch(/could not be reset/);
+      expect(app().querySelector("[data-look=reset-done]")).toBeNull();
+      expect(q("[data-presentation-save]").textContent).not.toMatch(/Saved on this device/);
+      expect(getPresentationPreferences().helpPlacement).toBe("inline");
+      expect(localStorage.getItem(blockedKey)).not.toBeNull();
+    } finally { blocked.mockRestore(); }
+    q<HTMLButtonElement>("[data-act=reset-look]").click(); render();
+    q<HTMLButtonElement>("[data-act=reset-look-yes]").click(); render();
+    expect(app().querySelector("[data-look=reset-failed]")).toBeNull();
+    expect(q("[data-look=reset-done]").textContent).toMatch(/Look and layout are back/);
+    expect(localStorage.getItem(blockedKey)).toBeNull();
+    resetPresentationPreferences();
   });
 });
