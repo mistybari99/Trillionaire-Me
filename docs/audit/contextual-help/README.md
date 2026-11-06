@@ -30,3 +30,7 @@ The initial invalid preference probe used an incorrect field fixture ID and was 
 ## Limits
 
 These artifacts verify layout geometry and specific interactions, not every screen-reader announcement, every content claim or human usability. Physical phone, TalkBack, Bangla reviewer and official prayer-timetable comparison remain tracked separately. Production release and exact-SHA deployment receipts belong in the parent implementation report.
+
+## Subsequent production integration
+
+The earlier phases above predate integration with production38c8c2f. The [merge audit](MERGE_AUDIT.md), [merged report](merged/report.json) and [merged dark report](merged-dark/report.json) supersede those phases for the changed runtime. They include107whole-app checks and explicit storage-failure/draft/Back regressions. Old failures remain historical evidence.

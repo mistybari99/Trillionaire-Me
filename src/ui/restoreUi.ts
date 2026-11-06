@@ -36,7 +36,7 @@ function showResult(el: HTMLElement, lang: Locale) {
   el.replaceChildren(h("div", { class: "card", role: "status", "data-restore": "result" },
     h("p", { class: r.bad ? "err" : "ok-msg", "data-restore": "msg" }, t(r.msg, lang, r.args)),
     r.goBackId ? h("p", { class: "muted" }, t("restore.goBack.note", lang)) : null,
-    r.goBackId ? h("button", { class: "btn ghost", type: "button", "data-act": "restore-goback", style: "min-height:44px", onclick: () => void doGoBack(r.goBackId!, lang) }, t("restore.goBack", lang)) : null));
+    r.goBackId ? h("button", { class: "btn ghost", type: "button", "data-act": "restore-goback", onclick: () => void doGoBack(r.goBackId!, lang) }, t("restore.goBack", lang)) : null));
 }
 
 async function doGoBack(id: string, lang: Locale) {
@@ -61,16 +61,16 @@ export async function startRestore(kind: RestoreKind, src: RestoreSource, lang: 
   catch (e) { result = { msg: "restore.failed", args: { why: (e as Error).message }, goBackId: null, bad: true }; showResult(el, lang); return; }
   const close = () => { el.replaceChildren(); onCancel?.(); };
   const heading = h("h3", { tabindex: "-1", "data-restore": "title" }, t("restore.title", lang));
-  const cancel = h("button", { class: "btn ghost", type: "button", "data-act": `${kind}-cancel`, style: "min-height:44px", onclick: close }, t("restore.cancel", lang));
+  const cancel = h("button", { class: "btn ghost", type: "button", "data-act": `${kind}-cancel`, onclick: close }, t("restore.cancel", lang));
   if (plan.realBlocked) {
     el.replaceChildren(h("div", { class: "note", role: "alertdialog", "aria-label": t("restore.title", lang), "data-restore": "blocked" }, heading,
-      h("p", {}, t("restore.realBlocked", lang)), h("a", { href: "#/settings/privacy/consent", class: "btn ghost", style: "min-height:44px", "data-act": "restore-open-consent" }, t("restore.realBlocked.open", lang)), cancel));
+      h("p", {}, t("restore.realBlocked", lang)), h("a", { href: "#/settings/privacy/consent", class: "btn ghost", "data-act": "restore-open-consent" }, t("restore.realBlocked.open", lang)), cancel));
     cancel.focus(); return;
   }
   const lockOn = lockEnabled(consentKv);
-  const pin = h("input", { id: "restore-pin", type: "password", inputmode: "numeric", autocomplete: "off", "aria-label": t("restore.pin", lang), "data-restore": "pin", style: "min-height:44px" }) as HTMLInputElement;
+  const pin = h("input", { id: "restore-pin", type: "password", inputmode: "numeric", autocomplete: "off", "aria-label": t("restore.pin", lang), "data-restore": "pin" }) as HTMLInputElement;
   const err = h("p", { class: "err", role: "alert", "data-restore": "err" });
-  const confirm = h("button", { class: "btn", type: "button", "data-act": `${kind}-confirm`, style: "min-height:44px", onclick: async () => {
+  const confirm = h("button", { class: "btn", type: "button", "data-act": `${kind}-confirm`, onclick: async () => {
     err.textContent = "";
     if (lockOn) { const v = await verifyPin(consentKv, pin.value, Date.now()); if (!v.ok) { pin.value = ""; err.textContent = t("restore.pin.wrong", lang); return; } }
     confirm.disabled = true; cancel.disabled = true;

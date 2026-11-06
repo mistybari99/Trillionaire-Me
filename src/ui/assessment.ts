@@ -94,8 +94,8 @@ function weightsCard(weights: Weights, custom: boolean, recs: readonly TMRecord[
   const err = h("p", { class: "muted", role: "alert", "data-err": "weights" }); // calm text: this section shows no red
   const form = h("form", { novalidate: true, "data-form": "path-weights" }, consentOn() ? null : consentPrompt(lang),
     ...srcs.flatMap((s, i) => [h("label", { for: `pw-${s}` }, tb(fieldById(`path_weights.${s}`)!.label, lang)), inputs[i]!]), err,
-    h("button", { class: "btn ghost", type: "submit", style: "width:auto;min-height:44px" }, t("fit.w.save", lang)), " ",
-    h("button", { class: "btn ghost", type: "button", "data-act": "pw-reset", style: "width:auto;min-height:44px" }, t("fit.w.reset", lang)));
+    h("button", { class: "btn ghost btn-sm", type: "submit" }, t("fit.w.save", lang)), " ",
+    h("button", { class: "btn ghost btn-sm", type: "button", "data-act": "pw-reset" }, t("fit.w.reset", lang)));
   const rerender = () => window.dispatchEvent(new HashChangeEvent("hashchange"));
   form.addEventListener("submit", (ev) => {
     ev.preventDefault(); err.textContent = "";
@@ -139,7 +139,7 @@ function approachCard(recs: readonly TMRecord[], lang: Locale): HTMLElement {
   const err = h("p", { class: "muted", role: "alert", "data-err": "approach" });
   const form = h("form", { novalidate: true, "data-form": "approach" }, consentOn() ? null : consentPrompt(lang),
     ...APPROACH_FIELDS.flatMap((f, i) => [h("label", { for: `ap-${i}` }, tb(fieldById(f)!.label, lang)), sels[i]!]), err,
-    h("button", { class: "btn ghost", type: "submit", style: "width:auto;min-height:44px" }, t("ap.save", lang)));
+    h("button", { class: "btn ghost btn-sm", type: "submit" }, t("ap.save", lang)));
   form.addEventListener("submit", (ev) => {
     ev.preventDefault(); err.textContent = "";
     if (!consentOn()) { err.textContent = saveBlockedText(lang); return; }

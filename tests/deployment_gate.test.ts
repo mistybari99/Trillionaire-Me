@@ -48,6 +48,27 @@ describe("production deployment gate", () => {
     expect(pause).toHaveBeenCalledTimes(2);
     expect(fetchImpl.mock.calls[3]![0]).toContain("/attempts/2/jobs");
   });
+  it("keeps waiting through a temporary rate limit, network blip or server error, then verifies", async () => {
+    for (const first of [() => new Response("", { status: 403 }), () => new Response("", { status: 429 }), () => new Response("", { status: 503 }), () => { throw new Error("socket hang up"); }]) {
+      const pause = vi.fn(async () => {});
+      const ok = responses({ workflow_runs: [run()] }, { jobs: [job] });
+      const fetchImpl = vi.fn<typeof fetch>().mockImplementationOnce(async () => first() as Response).mockImplementation(ok);
+      await waitForCi(sha, { ...options, attempts: 3, pause, fetchImpl });
+      expect(pause).toHaveBeenCalledTimes(1);
+    }
+  });
+  it("still fails closed when every attempt hits the temporary problem, with the last reason", async () => {
+    const pause = vi.fn(async () => {});
+    await expect(waitForCi(sha, { ...options, attempts: 3, pause, fetchImpl: vi.fn(async () => new Response("", { status: 403 })) })).rejects.toThrow(/HTTP 403/);
+    expect(pause).toHaveBeenCalledTimes(2);
+  });
+  it("does not retry hard failures: 404, redirect, wrong answer or a failed CI run", async () => {
+    for (const fetchImpl of [vi.fn(async () => new Response("", { status: 404 })), responses({}), responses({ workflow_runs: [run({ conclusion: "failure" })] })]) {
+      const pause = vi.fn(async () => {});
+      await expect(waitForCi(sha, { ...options, attempts: 3, pause, fetchImpl })).rejects.toThrow();
+      expect(pause).not.toHaveBeenCalled();
+    }
+  });
   it("fails closed on rate limits, malformed responses, and network errors", async () => {
     await expect(waitForCi(sha, { ...options, fetchImpl: vi.fn(async () => new Response("", { status: 403 })) })).rejects.toThrow(/HTTP 403/);
     await expect(waitForCi(sha, { ...options, fetchImpl: responses({}) })).rejects.toThrow(/Invalid GitHub/);

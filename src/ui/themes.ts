@@ -29,11 +29,11 @@ export const DESIGNS: Design[] = [
     light: { paper: "#F2F5FF", card: "#FFFFFF", ink: "#12162B", muted: "#4A5370", rule: "#6B7699", primary: "#4B3FD8", "on-primary": "#FFFFFF", ember: "#B3135A", moss: "#0A7656", demo: "#7A4B00", "demo-bg": "#FFEFC7", danger: "#B3261E", calm: "#2D4F9E" },
     dark: { paper: "#0B0E1F", card: "#151A33", ink: "#EEF1FF", muted: "#A9B2CF", rule: "#7882A6", primary: "#A9B8FF", "on-primary": "#0B0E1F", ember: "#FF8DB8", moss: "#6EE0B4", demo: "#FFD27A", "demo-bg": "#2E2410", danger: "#FF9A8F", calm: "#B9C8FF" },
     extraCss: `
+:root[data-design="light-futuristic"]{--r-sm:8px;--r-md:12px;--r-lg:18px;--e1:0 1px 3px color-mix(in srgb,var(--primary) 12%,transparent);--e2:0 8px 26px color-mix(in srgb,var(--primary) 16%,transparent);--hair:1px solid color-mix(in srgb,var(--primary) 16%,var(--rule) 30%)}
 :root[data-design="light-futuristic"] body{background:radial-gradient(120% 60% at 100% 0,color-mix(in srgb,var(--primary) 16%,transparent),transparent 60%),radial-gradient(90% 50% at 0 8%,color-mix(in srgb,var(--ember) 12%,transparent),transparent 60%),var(--paper)}
-:root[data-design="light-futuristic"] .card{background:color-mix(in srgb,var(--card) 86%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-radius:16px;box-shadow:0 6px 22px color-mix(in srgb,var(--primary) 14%,transparent)}
-:root[data-design="light-futuristic"] .cta,:root[data-design="light-futuristic"] .btn:not(.ghost){background:linear-gradient(135deg,var(--primary),color-mix(in srgb,var(--primary) 70%,var(--ink)));border-radius:14px}
+:root[data-design="light-futuristic"] .card{background:color-mix(in srgb,var(--card) 86%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+:root[data-design="light-futuristic"] .cta,:root[data-design="light-futuristic"] .btn:not(.ghost){background:linear-gradient(135deg,var(--primary),color-mix(in srgb,var(--primary) 70%,var(--ink)))}
 :root[data-design="light-futuristic"] nav{background:color-mix(in srgb,var(--card) 90%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
-:root[data-design="light-futuristic"] .seg button{border-radius:12px}
 @media (prefers-reduced-motion:no-preference){:root[data-design="light-futuristic"] .card,:root[data-design="light-futuristic"] .cta{transition:box-shadow .2s ease}}`,
   },
   { id: "ink-paper", label: "design.ip", desc: "design.ip.desc", swatch: ["#F5F1E8", "#243B6B", "#B0431A"] },
@@ -43,8 +43,9 @@ export const DESIGNS: Design[] = [
     light: { paper: "#F6F3EA", card: "#FFFFFF", ink: "#0B1216", muted: "#4A5654", rule: "#6D7B77", primary: "#1B6F57", "on-primary": "#FFFFFF", ember: "#7A5C1E", moss: "#1B6F57", demo: "#7A4B00", "demo-bg": "#FFEFC7", danger: "#B3261E", calm: "#1D5C6E" },
     dark: { paper: "#0B1216", card: "#121D22", ink: "#F2EBDD", muted: "#A9B3B0", rule: "#7C8F8A", primary: "#C9A96E", "on-primary": "#0B1216", ember: "#E3C98F", moss: "#5FCFA5", demo: "#FFD27A", "demo-bg": "#2E2410", danger: "#FF9A8F", calm: "#9CD3DA" },
     extraCss: `
-:root[data-design="emerald-obsidian"] .card{border-radius:12px;border-color:color-mix(in srgb,var(--ember) 45%,var(--rule))}
-:root[data-design="emerald-obsidian"] .cta,:root[data-design="emerald-obsidian"] .btn{border-radius:10px}
+:root[data-design="emerald-obsidian"]{--r-sm:6px;--r-md:10px;--r-lg:12px;--e1:inset 0 0 0 1px color-mix(in srgb,var(--ember) 18%,transparent);--e2:0 0 0 1px color-mix(in srgb,var(--ember) 35%,transparent),0 10px 28px color-mix(in srgb,var(--ink) 14%,transparent);--hair:1px solid color-mix(in srgb,var(--ember) 30%,var(--rule) 25%)}
+:root[data-design="emerald-obsidian"] .card{border-color:color-mix(in srgb,var(--ember) 45%,var(--rule))}
+:root[data-design="emerald-obsidian"] .cta,:root[data-design="emerald-obsidian"] .btn:not(.ghost){box-shadow:inset 0 -1px 0 var(--ember)}
 :root[data-design="emerald-obsidian"] h1,:root[data-design="emerald-obsidian"] h2{letter-spacing:.01em}
 @media (prefers-reduced-motion:no-preference){:root[data-design="emerald-obsidian"] .card,:root[data-design="emerald-obsidian"] .cta{transition:border-color .2s ease}}`,
   },
@@ -54,9 +55,9 @@ export const DESIGNS: Design[] = [
     light: { paper: "#F3F2F2", card: "#FAFAFA", ink: "#201E1D", muted: "#55514E", rule: "#77726E", primary: "#00698A", "on-primary": "#FFFFFF", ember: "#A8135C", moss: "#1F6B4A", demo: "#7A4B00", "demo-bg": "#FFEFC7", danger: "#B3261E", calm: "#2F5873" },
     dark: { paper: "#1A1817", card: "#242120", ink: "#F1EFEE", muted: "#B5B0AC", rule: "#8A8480", primary: "#5CC8E8", "on-primary": "#11181B", ember: "#FF8FBF", moss: "#7AD6A6", demo: "#FFD27A", "demo-bg": "#2E2410", danger: "#FF9A8F", calm: "#A9CFE8" },
     extraCss: `
+:root[data-design="broadsheet"]{--r-sm:0;--r-md:0;--r-lg:0;--e1:none;--e2:none;--hair:1px solid color-mix(in srgb,var(--ink) 35%,transparent)}
 :root[data-design="broadsheet"] body{font-family:"Noto Serif Bengali","Fraunces",Georgia,serif}
-:root[data-design="broadsheet"] .card{border-width:1px 0 0;border-radius:0;border-top:2px solid var(--ink)}
-:root[data-design="broadsheet"] .cta,:root[data-design="broadsheet"] .btn{border-radius:0}`,
+:root[data-design="broadsheet"] .card{border-width:1px 0 0;border-top:2px solid var(--ink)}`,
   },
 ];
 

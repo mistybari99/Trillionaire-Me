@@ -16,7 +16,7 @@ export const todayIsoRisk = (): string => { const d = new Date(); return `${d.ge
 export function riskReviewBox(r: RiskRow, lang: Locale, open: boolean): HTMLElement {
   const sel = h("select", { id: `rv-days-${r.id}` }, ...REVIEW_DAYS.map((d) => h("option", { value: String(d) }, t(`risk.review.in.${d}` as Key, lang))));
   const msg = h("p", { class: "err", role: "alert" });
-  const notYet = h("button", { class: "btn ghost", type: "button", "data-act": "risk-notyet", "data-risk-id": r.id, style: "width:auto;margin:6px 0 0;min-height:44px" }, t("risk.review.notyet", lang));
+  const notYet = h("button", { class: "btn ghost btn-sm", type: "button", "data-act": "risk-notyet", "data-risk-id": r.id }, t("risk.review.notyet", lang));
   notYet.addEventListener("click", () => {
     const rec = allRecs().find((x) => x.id === r.id); if (!rec) return;
     if (!entryNs()) { msg.textContent = saveBlockedText(lang); return; }
@@ -25,7 +25,7 @@ export function riskReviewBox(r: RiskRow, lang: Locale, open: boolean): HTMLElem
     putMode(loopLogRecord({ id: `rvlog-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`, eventId: null, createdAt: new Date().toISOString(), text: t("risk.review.logged", lang, { text: r.text, date: todayIsoRisk() }) }));
     rerender();
   });
-  const happened = h("button", { class: "btn ghost", type: "button", "data-act": "risk-happened", "data-risk-id": r.id, style: "width:auto;margin:6px 0 0;min-height:44px" }, t("risk.review.happened", lang));
+  const happened = h("button", { class: "btn ghost btn-sm", type: "button", "data-act": "risk-happened", "data-risk-id": r.id }, t("risk.review.happened", lang));
   happened.addEventListener("click", () => {
     const rec = allRecs().find((x) => x.id === r.id); if (!rec) return;
     const id = `ev-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`;

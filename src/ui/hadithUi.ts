@@ -31,8 +31,8 @@ export function hadithScreen(): HTMLElement {
     h("p", { class: "muted", "data-hadith-sourcenote": "1" }, t("hd.sourceNote", lang))];
   if (!on) {
     return h("main", { class: "scr scr-hadith" }, ...head, h("div", { class: "card", "data-hadith-off": "1" }, h("h2", { class: "card-h" }, t("hd.off.title", lang)), h("p", {}, t("hd.off.p", lang)),
-      h("label", { style: "display:flex;gap:8px;align-items:center;margin:8px 0" }, h("input", { type: "checkbox", id: "hadith-tick", style: "width:24px;margin:0" }), t("hd.tick", lang)),
-      h("button", { class: "btn", type: "button", "data-act": "hadith-on", style: "min-height:44px", onclick: () => { if (!(document.getElementById("hadith-tick") as HTMLInputElement | null)?.checked) { missing = true; rerender(); return; } missing = false; enableHadith(consentKv, new Date().toISOString()); rerender(); } }, t("hd.on", lang)),
+      h("label", { class: "k-check" }, h("input", { type: "checkbox", id: "hadith-tick" }), t("hd.tick", lang)),
+      h("button", { class: "btn", type: "button", "data-act": "hadith-on", onclick: () => { if (!(document.getElementById("hadith-tick") as HTMLInputElement | null)?.checked) { missing = true; rerender(); return; } missing = false; enableHadith(consentKv, new Date().toISOString()); rerender(); } }, t("hd.on", lang)),
       missing ? h("p", { class: "need", role: "alert" }, t("data.consent.needTick", lang)) : null), disclaimers(lang, ["noFatwa"]));
   }
   const input = h("input", { id: "hd-q", type: "search", autocomplete: "off", value: q }) as HTMLInputElement;
@@ -47,5 +47,5 @@ export function hadithScreen(): HTMLElement {
   import("../library/hadithPack.json").then((m) => { pack = loadPack(m.default); draw(); }).catch(() => { body.replaceChildren(h("p", { class: "muted" }, t("lazy.failed", lang))); });
   draw();
   return h("main", { class: "scr scr-hadith" }, ...head, h("label", { for: "hd-q" }, t("hd.search", lang)), input, chips, body,
-    h("button", { class: "btn ghost", type: "button", "data-act": "hadith-off", style: "width:auto;min-height:44px", onclick: () => { disableHadith(consentKv); rerender(); } }, t("hd.off.btn", lang)), disclaimers(lang, ["noFatwa", "noGuarantee"]));
+    h("button", { class: "btn ghost btn-sm", type: "button", "data-act": "hadith-off", onclick: () => { disableHadith(consentKv); rerender(); } }, t("hd.off.btn", lang)), disclaimers(lang, ["noFatwa", "noGuarantee"]));
 }

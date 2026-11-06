@@ -21,7 +21,7 @@ Owner Profile is globally available through the named header icon. It reuses the
 - [Classification ledger](contextual-help/CLASSIFICATION_LEDGER.md): 144 explanatory keys, baseline34 settings rows,12guides,186catalog fields. Current settings add4 presentation rows; route patterns extend57→59 with Owner Profile and Deen targets.
 - [Preview operations](../deployment/PREVIEWS.md): pinned Wrangler, empty Preview opt-in and separate exact-CI nonproduction gate. Production gate stays production-only.
 - Static checks: source TypeScript and ordinary production build passed during integration.
-- Focused regressions: help15, shared prayer9, overlay5, navigation4, preference3, combined presentation18, reset regressions2; full suite and browser release verification are recorded below when complete.
+- Focused regressions: help15, shared prayer9, overlay regressions, navigation4, preference3, combined presentation18, reset regressions2; full suite and browser release verification are recorded below when complete.
 - Fresh baseline/current route captures are produced by `tools/contextual_audit.mjs`. No real owner data is used in testing.
 
 ## Deferred design choices
@@ -35,3 +35,7 @@ A second two-agent debate recommends one prominent Today action **কাজে �
 Local unit verification: **2102 tests in177files passed**; production build and typecheck passed. New presentation interaction audit: **164checks passed across16combinations**. All104whole-app browser checks passed. The populated-demo Settings first-fold regression is fixed and all3final-language fold checks pass. The [full audit evidence](contextual-help/README.md) retains the earlier failures and final passing results:96all-look geometry checks and16additional dark-overlay checks also pass. Wrangler packaging dry run passed with no bindings.
 
 Implementation in progress. Do not treat local code, a URL, a screenshot or a CI status as evidence of a live release. Final exact-SHA CI, Preview, production deployment and offline smoke receipts are required.
+
+## Integration with newer production work
+
+Production38c8c2f was merged without dropping its kit/audio changes. [Independent merge audit](contextual-help/MERGE_AUDIT.md) records Prompt-Engineer scope, separate Audit PASS,2151full-suite unit tests plus20latest storage/prayer regressions,107whole-app browser checks,263merged presentation checks and16additional dark-overlay checks. It also records the two actual history/draft-loss failures and permanent fixes. Contextual-help work is now UI-05; production retains UI-04 for its component kit. Remote exact-SHA release verification remains outstanding.

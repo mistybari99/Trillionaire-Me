@@ -17,7 +17,7 @@ const rerender = () => window.dispatchEvent(new HashChangeEvent("hashchange"));
 const link = (href: string, cls: string, ...kids: Array<Node | string>) => h("a", { href, class: cls }, ...kids);
 const typed = (value: unknown): FieldValue => ({ state: "value", value, label: "FACT" });
 const kindLabel = (k: string | null, lang: Locale) => (k === null ? t("unknown.unknown", lang) : tb(fieldById("source.kind")!.options!.find((o) => o.code === k)?.label ?? { bn: k, en: k }, lang));
-const remove = (id: string, lang: Locale) => h("button", { class: "btn ghost", type: "button", "data-remove": id, style: "width:auto;margin:0;min-height:44px", onclick: () => { store[activeNs()].delete(id); rerender(); } }, t("risk.remove", lang));
+const remove = (id: string, lang: Locale) => h("button", { class: "btn ghost btn-sm", type: "button", "data-remove": id, onclick: () => { store[activeNs()].delete(id); rerender(); } }, t("risk.remove", lang));
 const newId = (p: string) => `${p}-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`;
 
 function freshTag(f: "recent" | "stale" | "unknown", on0: string | null, lang: Locale): HTMLElement {
@@ -60,7 +60,7 @@ function sourcesSection(lang: Locale, rows: SourceRow[]): HTMLElement {
   return h("section", { class: "card", "data-kn-section": "sources" }, h("h2", { class: "card-h" }, t("kn.s.title", lang)), h("p", { class: "muted" }, t("kn.s.intro", lang)),
     rows.length ? h("ul", { class: "plain" }, ...rows.map((s) => h("li", { "data-source": s.id }, nsTag(s.ns, lang), " ", h("strong", {}, s.title), h("span", { class: "muted" }, ` · ${kindLabel(s.kind, lang)}`),
       s.reference ? h("p", { class: "muted", "data-source-ref": "1" }, s.reference) : null, s.note ? h("p", {}, s.note) : null, freshTag(s.fresh, s.checkedOn, lang), " ",
-      h("button", { class: "btn ghost", type: "button", "data-act": "source-checked", "data-source-id": s.id, style: "width:auto;margin:0;min-height:44px", onclick: () => touch(s.id, "source.checked_on") }, t("kn.checkedToday", lang)), " ", remove(s.id, lang))))
+      h("button", { class: "btn ghost btn-sm", type: "button", "data-act": "source-checked", "data-source-id": s.id, onclick: () => touch(s.id, "source.checked_on") }, t("kn.checkedToday", lang)), " ", remove(s.id, lang))))
       : h("p", { class: "muted", "data-kn-empty": "sources" }, t("kn.s.none", lang)),
     h("h3", { class: "card-h" }, t("kn.s.add", lang)), form);
 }
@@ -121,7 +121,7 @@ function sopSection(lang: Locale, recs: ReturnType<typeof allRecs>, rows: SopRow
     rows.length ? h("div", {}, ...rows.map((p) => h("article", { class: "card", "data-sop": p.id }, nsTag(p.ns, lang), h("h3", { class: "card-h" }, p.title),
       p.roleId ? h("p", { class: "muted", "data-sop-role": p.roleId }, t("kn.p.forRole", lang, { r: roleName(p.roleId) })) : null,
       h("ol", {}, ...p.steps.map((s) => h("li", {}, s))), freshTag(p.fresh, p.reviewedOn, lang), " ",
-      h("button", { class: "btn ghost", type: "button", "data-act": "sop-reviewed", "data-sop-id": p.id, style: "width:auto;margin:0;min-height:44px", onclick: () => touch(p.id, "sop.reviewed_on") }, t("kn.reviewedToday", lang)), " ", remove(p.id, lang))))
+      h("button", { class: "btn ghost btn-sm", type: "button", "data-act": "sop-reviewed", "data-sop-id": p.id, onclick: () => touch(p.id, "sop.reviewed_on") }, t("kn.reviewedToday", lang)), " ", remove(p.id, lang))))
       : h("p", { class: "muted", "data-kn-empty": "sops" }, t("kn.p.none", lang)),
     h("h3", { class: "card-h" }, t("kn.p.add", lang)), form);
 }

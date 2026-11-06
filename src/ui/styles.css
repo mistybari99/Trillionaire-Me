@@ -27,6 +27,28 @@ html{--brand-obsidian:#0B1216;--brand-champagne:#C9A96E;--brand-emerald:#1B6F57}
   --primary:#8FA8E6; --on-primary:#0F1218; --ember:#F08A56; --moss:#8BC49A;
   --demo:#E3C566; --demo-bg:#2C2610; --danger:#F08A56; --calm:#9CC8E4;}}
 
+/* K0 design tokens (ui-polish-spec 1.1): spacing, radius, elevation, control, type, line, motion. Base values are Ink & Paper; the other looks override only what differs (themes.ts). Components use these, not raw px. */
+:root{
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px; --s7:48px; --gutter:16px;
+  --r-sm:2px; --r-md:4px; --r-lg:4px; --r-pill:999px;
+  --e0:none; --e1:0 1px 0 var(--rule); --e2:0 6px 20px color-mix(in srgb,var(--ink) 10%,transparent);
+  --hair:1px solid color-mix(in srgb,var(--rule) 55%,transparent);
+  --ctl-h:48px; --tap:44px; --ctl-bw:1.5px;
+  --tint-primary:color-mix(in srgb,var(--primary) 10%,var(--card));
+  --tint-calm:color-mix(in srgb,var(--calm) 10%,var(--card));
+  --tint-moss:color-mix(in srgb,var(--moss) 10%,var(--card));
+  --tint-demo:var(--demo-bg);
+  --focus:3px solid var(--ember);
+  --scrim:color-mix(in srgb,var(--ink) 55%,transparent);
+  --line:var(--rule);
+  --fs-xs:.75rem; --fs-sm:.875rem; --fs-md:1rem; --fs-lg:1.125rem; --fs-xl:1.25rem; --fs-2xl:1.75rem; --fs-hero:4rem;
+  --lh-tight:1.35; --lh-body:1.7; --lh-ui:1.5;
+  --dur-fast:120ms; --dur:200ms; --dur-reward:600ms; --ease:cubic-bezier(.2,.7,.2,1);
+  color-scheme:light;
+}
+:root[data-theme="dark"]{color-scheme:dark}
+@media (prefers-color-scheme:dark){:root[data-theme="auto"]{color-scheme:dark}}
+
 *{box-sizing:border-box;margin:0}
 body{background:var(--paper);color:var(--ink);font:400 1.0625rem/1.7 "Hind Siliguri",system-ui,sans-serif;max-width:480px;margin:0 auto;padding:16px 16px calc(var(--nav-clearance) + var(--update-clearance));overflow-wrap:anywhere}
 .top{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:0.875rem;color:var(--muted);flex-wrap:wrap}
@@ -114,7 +136,7 @@ dl{margin:6px 0} .hrow{display:grid;grid-template-columns:96px 1fr;gap:8px;paddi
 .menu-btn{min-height:44px;min-width:44px;background:none;border:1.5px solid var(--rule);color:var(--ink);font:600 1.125rem system-ui;cursor:pointer}
 .drawer{position:fixed;inset:0;z-index:30;display:none}
 .drawer.open{display:block}
-.drawer .scrim{position:absolute;inset:0;background:rgba(0,0,0,.45)}
+.drawer .scrim{position:absolute;inset:0;background:var(--scrim)}
 .drawer .panel{position:absolute;inset-block:0;inset-inline-start:0;width:min(88%,360px);background:var(--paper);border-inline-end:1px solid var(--rule);overflow-y:auto;padding:16px 16px var(--nav-clearance)}
 .drawer h2{margin-top:16px}
 .drawer a.item{display:block;padding:10px 0;border-bottom:1px solid var(--rule);color:var(--ink);text-decoration:none;min-height:44px}
@@ -139,10 +161,10 @@ dl{margin:6px 0} .hrow{display:grid;grid-template-columns:96px 1fr;gap:8px;paddi
 
 /* Daily inspiration card (R1): calm fade-in, theme accent, reduced-motion safe */
 .inspire{position:relative;overflow:hidden;border-inline-start:3px solid var(--rule);animation:inspireIn .6s ease-out both}
-.inspire.motivation{border-inline-start-color:#C9A227}
-.inspire.discipline{border-inline-start-color:#3E6E8E}
-.inspire.patience{border-inline-start-color:#4F7A5A}
-.inspire.care{border-inline-start-color:#9A6B8E}
+.inspire.motivation{border-inline-start-color:var(--ember)}
+.inspire.discipline{border-inline-start-color:var(--calm)}
+.inspire.patience{border-inline-start-color:var(--moss)}
+.inspire.care{border-inline-start-color:var(--primary)}
 .inspire-bn{font:600 1.125rem/1.6 "Hind Siliguri",sans-serif;color:var(--ink);margin:6px 0 2px}
 .inspire-en{font-size:0.875rem;margin:0}
 @keyframes inspireIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
@@ -153,13 +175,6 @@ dl{margin:6px 0} .hrow{display:grid;grid-template-columns:96px 1fr;gap:8px;paddi
 .next-step p{margin:4px 0 0;font-size:0.9375rem}
 
 /* Visual polish pass (Today + Journey). Layout and rhythm only; colours come from the tokens above, so dark mode follows them. */
-.scr-today h1,.scr-journey h1{margin-top:18px;margin-bottom:6px}
-.scr-today .stage{margin:20px 0 16px;padding:16px 0 14px}
-.scr-today .stage small{display:block;letter-spacing:.02em}
-.scr-today .stage .n{font-size:4rem;line-height:1.1;margin-top:6px}
-.scr-today .rungs{margin-top:12px}
-.scr-today .rungs li{height:6px}
-.scr-today h2{margin:24px 0 2px}
 /* Daily inspiration card: its own surface, clear hierarchy (theme chip, Bangla line, English line) */
 .inspire{margin:14px 0 12px;padding:16px 18px 16px 16px;background:var(--card);border:1px solid var(--rule);border-inline-start-width:4px}
 .inspire .chip{margin:0 0 4px;display:inline-block}
@@ -175,118 +190,32 @@ dl{margin:6px 0} .hrow{display:grid;grid-template-columns:96px 1fr;gap:8px;paddi
 .actions .cta{grid-column:1/-1}
 .actions .btn.ghost{font-size:1.0625rem;padding:12px 16px}
 /* Journey: stage panel and picture get more air, the picture gets a framed caption area */
-.scr-journey .card[data-stage-panel]{padding:16px 16px 14px;margin:14px 0 12px}
 .reward{margin:14px 0 8px;box-shadow:0 2px 0 var(--rule)}
 .reward svg{border-bottom:1px solid var(--rule)}
 .reward+p{margin:0 4px}
-.scr-journey .actions{margin-bottom:8px}
 
 /* Visual polish pass 2 (Plan, Money, Deen, More). Rhythm, headings and card grouping only; colours come from the tokens above. */
-.scr-plan h1,.scr-money h1,.scr-deen h1,.scr-more h1{margin-top:18px;margin-bottom:6px}
-.scr-plan h2,.scr-money h2,.scr-deen h2,.scr-more h2{margin:26px 0 6px}
-.scr-plan .sub,.scr-money .sub,.scr-deen .sub{margin-bottom:4px}
-.scr-plan .card,.scr-money .card,.scr-deen .card,.scr-more .card{padding:14px 16px}
-.scr-plan .card h2.card-h,.scr-money .card h2.card-h,.scr-deen .card h2.card-h,.scr-more .card h2.card-h{margin-bottom:4px}
 /* Plan: flow and assessment cards get their own inner rhythm */
-.scr-plan [data-flow-card]{padding:16px 16px 14px;margin:14px 0 12px}
-.scr-plan [data-flow-card] .flow{margin:10px auto 0}
-.scr-plan [data-flow-card] .muted{margin-bottom:4px}
-.scr-plan section[data-assessment] .card{margin:8px 0}
-.scr-plan section[data-assessment] .card[data-fit-card]{margin-top:14px;padding:16px}
-.scr-plan section[data-assessment] .card[data-path]{margin:10px 0 0;background:var(--paper)}
-.scr-plan section[data-assessment] .card[data-path] p{margin-top:4px}
-.scr-plan .seg{margin-bottom:6px}
-.scr-plan form .field,.scr-plan form>label{margin-top:12px}
-.scr-plan form .btn{margin-top:14px}
 /* Money: summary cards read as figures, items as a list */
-.scr-money [data-scope]{padding:16px 16px 14px;margin:8px 0}
-.scr-money [data-scope] h2.card-h{margin-bottom:6px}
-.scr-money [data-scope] p{margin:4px 0;line-height:1.5}
-.scr-money [data-fin]{margin:8px 0}
-.scr-money [data-fin] .row{align-items:center}
-.scr-money [data-fin] button{flex:none}
-.scr-money form>label{margin-top:12px}
-.scr-money form .btn{margin-top:14px}
 /* Deen: one private group per card, help links tucked under the description */
-.scr-deen [data-entity]{padding:16px 16px 12px;margin:12px 0}
-.scr-deen [data-entity] .row{align-items:center;margin-bottom:4px}
-.scr-deen [data-entity] .row .tag{margin-top:0}
-.scr-deen [data-entity] p.muted{margin-bottom:6px}
-.scr-deen [data-entity] details.help{margin-top:2px;padding-top:6px;border-top:1px solid var(--rule)}
-.scr-deen [data-entity] details.help:last-of-type{margin-bottom:0}
-.scr-deen [data-entity] details.help summary{min-height:44px;display:flex;align-items:center}
-.scr-deen .card[data-module]{margin:12px 0}
 /* More: menu cards with clear title/description, settings grouped */
-.scr-more .card.link{padding:14px 16px;margin:10px 0}
-.scr-more .card.link h2.card-h{margin-bottom:2px}
-.scr-more .card.link p{line-height:1.5}
-.scr-more .card:not(.link){margin:10px 0}
-.scr-more .card:not(.link) .seg{margin-top:8px}
-.scr-more .seg{gap:8px}
-.scr-more .seg button{flex:1 1 0;min-width:max-content;padding-inline:8px}
-.scr-more .card .tags{margin-top:8px}
 /* Card titles are h2 for heading order (screens have no h3 directly under h1); they keep the h3 look. */
 h2.card-h{font:600 1.0625rem/1.4 "Hind Siliguri",sans-serif;margin:0 0 2px}
 
 /* Visual polish pass 3 (Focus, Reward/picture, Stuck, Diary, Intake). Rhythm, grouping and touch targets only; colours come from the tokens above. */
-.scr-diary h1,.scr-intake h1,.scr-stuck h1,.scr-reward h1,.scr-focus h1{margin-top:18px;margin-bottom:6px}
-.scr-diary h2,.scr-stuck h2,.scr-reward h2,.scr-focus h2{margin:26px 0 6px}
-.scr-diary .sub,.scr-stuck .sub,.scr-focus .sub,.scr-reward .sub{margin-bottom:4px}
 /* Diary: completeness and next-step cards, then action buttons with even gaps */
-.scr-diary .card{padding:16px 16px 14px;margin:12px 0}
-.scr-diary .card h2.card-h{margin-bottom:8px}
-.scr-diary .card .bar{margin:8px 0 10px}
-.scr-diary .card p{margin:0}
-.scr-diary [data-next] p{line-height:1.6}
-.scr-diary .cta,.scr-diary .btn{margin-top:12px}
-.scr-diary .btn.ghost{margin-top:10px}
-.scr-diary .card.link{margin:10px 0}
-.scr-diary .card.link h3{margin-bottom:4px}
 /* Intake: one question per field block, label and tag on one line, help tucked under */
-.scr-intake .top{margin:8px 0 4px}
-.scr-intake form .field{margin:14px 0;padding-bottom:14px}
-.scr-intake form .field label{margin-bottom:2px;display:flex;flex-wrap:wrap;align-items:center;gap:6px;line-height:1.5}
-.scr-intake form .field label .tag{margin-top:0;font-weight:400}
-.scr-intake form .field .unk{margin-top:8px}
-.scr-intake form .field .err{margin-top:6px}
-.scr-intake details.help{margin-top:8px;padding-top:6px;border-top:1px solid var(--rule)}
-.scr-intake details.help summary{min-height:44px;display:flex;align-items:center}
-.scr-intake form>.btn{margin-top:20px}
-.scr-intake>p.muted{margin:12px 0 0}
 /* Stuck: each question is a row with its three answers in equal columns */
-.scr-stuck .field{margin:12px 0;padding:0 0 14px}
-.scr-stuck .field p{margin:0 0 8px;font-weight:600;line-height:1.5}
-.scr-stuck .field .seg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:0}
-.scr-stuck .field .seg button{min-width:0;padding-inline:6px;font-size:1rem}
-.scr-stuck .btn{margin-top:18px}
-.scr-stuck section.card,.scr-stuck .card{padding:16px 16px 14px;margin:12px 0}
-.scr-stuck section.card h2,.scr-stuck .card h2.card-h{font:600 1.125rem/1.4 "Hind Siliguri",sans-serif;margin:0 0 6px}
-.scr-stuck section.card ul{margin:0 0 6px}
-.scr-stuck section.card p{margin:0}
-.scr-stuck [data-card] .muted{margin-top:8px}
-.scr-stuck .card+.card{margin-top:12px}
-.scr-stuck .note{margin-top:20px}
 /* Focus: the timer is the centre of the screen; adjust and pause/stop sit under it */
-.scr-focus .note{margin:12px 0}
 .scr-focus .stage{margin:16px 0 14px;text-align:center}
 .scr-focus .stage .n{font-variant-numeric:tabular-nums}
 .scr-focus .stage .bar{margin:10px auto 0;max-width:280px}
 .scr-focus .row{justify-content:center;gap:10px;margin-top:4px}
 .scr-focus .row .btn{flex:1 1 0;min-width:0;margin-top:0}
-.scr-focus .btn{margin-top:12px}
-.scr-focus .seg{margin-top:10px}
-.scr-focus .seg button{flex:1 1 calc(50% - 6px);min-width:0}
 /* Reward / picture: framed picture, message card above it, one clear action */
-.scr-reward .card{padding:16px 16px 14px;margin:12px 0}
-.scr-reward .card h2.card-h{margin-bottom:4px}
-.scr-reward .card p{margin:0}
-.scr-reward .reward{margin:12px 0 10px}
-.scr-reward .reward+p{margin:0 2px 6px;line-height:1.6}
-.scr-reward .reward+p+p{margin:0 2px}
-.scr-reward .cta{margin-top:16px}
 @media (prefers-reduced-motion:no-preference){.scr-reward [data-fresh]{animation:inspireIn .6s ease-out both}}
 @media (prefers-reduced-motion:reduce){.scr-reward [data-fresh]{animation:none!important}}
-.list-compact{list-style:none;padding:0;margin:8px 0} .list-compact li{padding:8px 0;border-bottom:1px solid var(--line,#ddd)} .table-compact{width:100%;border-collapse:collapse;margin:8px 0} .table-compact td,.table-compact th{padding:8px 4px;text-align:start;border-bottom:1px solid var(--line,#ddd)} .ladder-compact li{padding:6px 0}
+.list-compact{list-style:none;padding:0;margin:8px 0} .list-compact li{padding:8px 0;border-bottom:1px solid var(--line)} .table-compact{width:100%;border-collapse:collapse;margin:8px 0} .table-compact td,.table-compact th{padding:8px 4px;text-align:start;border-bottom:1px solid var(--line)} .ladder-compact li{padding:6px 0}
 
 /* step 3 charts (inline SVG, static; colours from tokens only) */
 .chart-svg{display:block;width:100%;height:auto;max-width:360px;margin:6px 0}
@@ -454,9 +383,6 @@ textarea[data-swot]{width:100%;box-sizing:border-box;font:inherit;padding:8px}
 .view-compact .card-h,.view-compact h2{font-size:1rem;margin:4px 0}
 .view-compact p{margin:4px 0}
 /* Settings area */
-.scr-settings .card.link{padding:14px 16px;margin:10px 0}
-.scr-settings .card.link h3.card-h{margin:0 0 2px}
-.scr-settings .seg{gap:8px} .scr-settings .seg button{flex:1 1 0;min-width:max-content;padding-inline:8px}
 .scr-settings .set-delete{margin-top:24px;background:transparent}
 .set-hl{outline:3px solid var(--primary);outline-offset:2px}
 /* Print / Save as PDF (M20): paper layout. Chrome, buttons and links that only make sense on a screen are hidden; system colours on a light page; cards do not split across pages. */
@@ -483,21 +409,6 @@ textarea[data-swot]{width:100%;box-sizing:border-box;font:inherit;padding:8px}
 .goal-chips{display:inline-flex;flex-wrap:wrap;gap:6px;vertical-align:middle}
 .goal-chips .tag{text-decoration:none;color:var(--ink);display:inline-flex;align-items:center;min-height:24px}
 .chip-link{display:inline-flex;align-items:center;min-height:44px;font-size:0.875rem}
-
-/* One vertical rhythm (UI bug fix 3 Nov 2026): stacked buttons, rows and boxes never touch. --gap is the only spacing value used here.
-   Many compact buttons carry inline margin:0, so these rules use !important on purpose; flex/grid button groups (which have their own gap) are excluded below.
-   The full component kit is a later pass (docs/design/ui-polish-spec.md). */
-:root{--gap:10px}
-main :is(.btn,.cta) + :is(.btn,.cta,.row,.card,.next-step,.note){margin-top:var(--gap) !important}
-main :is(.card,.advice-item) > :is(.btn,.cta){display:block;width:100% !important;margin-top:var(--gap) !important;margin-inline:0 !important}
-main :is(.card,.advice-item) > .btn.ghost{width:fit-content !important;max-width:100%}
-main .row + .row{margin-top:var(--gap)}
-main details.help + details.help{margin-top:var(--gap) !important}
-main :is(.row,.actions,.snap-btns,.update-banner,.tags,.goal-chips,.btn-row) > .btn + .btn{margin-top:0 !important}
-main :is(.row,.snap-btns,.update-banner) > .btn{width:auto !important}
-.btn-row{display:flex;flex-wrap:wrap;gap:var(--gap)}
-main details + details{margin-top:var(--gap) !important}
-
 /* Action Desk: work first, with quiet opaque surfaces instead of a stack of glass. */
 .action-desk{min-width:0}
 .action-desk :is(.row,.task,.home-grid,.tool-grid)>*{min-width:0}
@@ -592,3 +503,4 @@ main :is(.row,.btn-row,.snap-btns)>.btn{flex:1 1 8rem;min-width:0;max-width:100%
 /* Keep the three everyday Settings controls ahead of secondary tools on a phone. */
 .scr-settings [data-card="quick"]>h2{margin-top:8px}
 .scr-settings [data-card="quick"]>.card{margin-block:6px;padding-block:8px}
+.scr-settings .seg button{min-width:min(max-content,100%);padding-inline:8px}

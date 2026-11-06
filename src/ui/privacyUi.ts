@@ -38,11 +38,11 @@ function consentSection(lang: Locale): HTMLElement {
   return h("section", { class: "card", "data-setting-row": "consent" }, h("h2", { class: "card-h" }, t("set.row.consent", lang)),
     h("p", { "data-priv": "consent-on" }, t("priv.consent.on", lang, { d: day(consentSince(consentKv)) })), h("p", { class: "muted" }, t("priv.consent.n", lang, { n: num(n, lang) })),
     h("p", { class: "muted" }, t("priv.withdraw.note", lang)),
-    h("button", { class: "btn ghost", type: "button", "data-act": "withdraw-consent", style: "min-height:44px", onclick: () => { withdrawRealConsent(); withdrawn = true; rerender(); } }, t("priv.withdraw", lang)));
+    h("button", { class: "btn ghost", type: "button", "data-act": "withdraw-consent", onclick: () => { withdrawRealConsent(); withdrawn = true; rerender(); } }, t("priv.withdraw", lang)));
 }
 
 function lockScreenSection(lang: Locale): HTMLElement {
-  const seg = (label: string, active: boolean, on: () => void) => h("button", { type: "button", "aria-pressed": String(active), style: "min-height:44px", onclick: on }, label);
+  const seg = (label: string, active: boolean, on: () => void) => h("button", { type: "button", "aria-pressed": String(active), onclick: on }, label);
   return h("section", { class: "card", "data-lock-settings": "", "data-setting-row": "lockscreen" }, h("h2", { class: "card-h" }, t("more.lock", lang)), h("p", { class: "muted" }, t("more.lock.desc", lang)),
     ...NOTIFY_CATEGORIES.map((c) => {
       const shown = prefs.notifyShow[c] === true;
@@ -50,8 +50,8 @@ function lockScreenSection(lang: Locale): HTMLElement {
       return h("div", { class: "row", "data-lock-cat": c }, h("span", {}, t(`privacy.${c}` as Key, lang)),
         h("div", { class: "seg" }, seg(t("more.lock.hide", lang), !shown, () => set(false)), seg(t("more.lock.show", lang), shown, () => { if (shown) return; showAsk = c; rerender(); })),
         showAsk === c ? h("div", { role: "alertdialog", "aria-label": t("priv.show.ask", lang), "data-lock-ask": c }, h("p", {}, t("priv.show.ask", lang)),
-          h("button", { class: "btn ghost", type: "button", "data-act": "lock-show-no", style: "min-height:44px", onclick: () => { showAsk = null; rerender(); } }, t("del.cancel", lang)),
-          h("button", { class: "btn", type: "button", "data-act": "lock-show-yes", style: "min-height:44px", onclick: () => set(true) }, t("priv.show.yes", lang))) : null);
+          h("button", { class: "btn ghost", type: "button", "data-act": "lock-show-no", onclick: () => { showAsk = null; rerender(); } }, t("del.cancel", lang)),
+          h("button", { class: "btn", type: "button", "data-act": "lock-show-yes", onclick: () => set(true) }, t("priv.show.yes", lang))) : null);
     }),
     h("p", { class: "muted" }, t("more.lock.preview", lang, { text: notifyText(NEUTRAL_TITLE, lang) })));
 }
@@ -65,7 +65,7 @@ export function privacyPage(row: string | undefined, lang: Locale): HTMLElement 
     h("a", { href: "#/settings", class: "crumb" }, `← ${t("nav.settings", lang)}`), h("h1", {}, t("set.cat.privacy", lang)),
     h("section", { class: "card", "data-card": "readout", "aria-label": t("priv.readout.title", lang) }, h("h2", { class: "card-h" }, t("priv.readout.title", lang)),
       h("ul", { style: "list-style:none;padding:0;margin:0" },
-        ...lines.map((l) => h("li", { style: "margin:6px 0", "data-priv-line": l.id }, h("a", { href: l.href }, l.text), ...(l.weak ? [" · ", h("a", { href: l.href, class: "muted" }, t("priv.turnon", lang))] : []))), storage)),
+        ...lines.map((l) => h("li", { class: "k-linkrow", "data-priv-line": l.id }, h("a", { href: l.href }, l.text), ...(l.weak ? [" · ", h("a", { href: l.href, class: "muted" }, t("priv.turnon", lang))] : []))), storage)),
     consentSection(lang), lockScreenSection(lang),
     h("section", { "data-setting-row": "applock" }, lockCard(lang), h("p", { class: "muted", "data-priv": "forgot" }, t("priv.forgot", lang, { m: num(RESET_WAIT_MIN, lang) }))));
   const el = row ? main.querySelector<HTMLElement>(`[data-setting-row="${row}"]`) : null;
@@ -77,5 +77,5 @@ export function privacyPage(row: string | undefined, lang: Locale): HTMLElement 
 export function pausedCard(lang: Locale): HTMLElement | null {
   if (prefs.dataMode !== "real" || readConsent(consentKv)) return null;
   return h("aside", { class: "card", role: "status", "data-paused": "1" }, h("h2", { class: "card-h" }, t("priv.paused.title", lang)), h("p", {}, t("priv.paused.p", lang)),
-    h("a", { href: settingsHash("privacy", "consent"), class: "btn ghost", style: "width:auto;margin:0;min-height:44px" }, t("priv.paused.open", lang)));
+    h("a", { href: settingsHash("privacy", "consent"), class: "btn ghost btn-sm" }, t("priv.paused.open", lang)));
 }

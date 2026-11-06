@@ -243,7 +243,7 @@ function taskEditForm(r: TMRecord, lang: Locale): HTMLElement {
   const pick = goalPicker(allRecs(), goalIdsOf(r), lang, `edit-${r.id}`);
   const f = h("form", { novalidate: true, "data-task-edit": r.id },
     h("label", { for: `te-t-${r.id}` }, t("plan.task.title", lang)), title, h("label", { for: `te-m-${r.id}` }, t("plan.task.minutes", lang)), mins,
-    h("label", { for: `te-p-${r.id}` }, t("plan.task.priority", lang)), prio, h("p", {}, h("strong", {}, t("gl.pick.label", lang))), pick.el, whereThisGoes(r, lang), msg, h("button", { class: "btn ghost", type: "submit", style: "width:auto;margin:6px 0 0;min-height:44px" }, t("plan.task.update", lang)));
+    h("label", { for: `te-p-${r.id}` }, t("plan.task.priority", lang)), prio, h("p", {}, h("strong", {}, t("gl.pick.label", lang))), pick.el, whereThisGoes(r, lang), msg, h("button", { class: "btn ghost btn-sm", type: "submit" }, t("plan.task.update", lang)));
   f.addEventListener("submit", (ev) => {
     ev.preventDefault(); msg.className = "err"; msg.textContent = "";
     if (!entryNs()) { msg.textContent = saveBlockedText(lang); return; }
@@ -323,8 +323,8 @@ export function planScreen(): HTMLElement {
         r.links?.role && roleRecs.some((g) => g.id === r.links!.role) ? h("p", { class: "muted", "data-role-of": r.links.role }, t("plan.role.shown", lang, { title: roleTitle(roleRecs.find((g) => g.id === r.links!.role)!) }), r.values["task.delegated_on"]?.state === "value" && r.values["task.done_on"]?.state !== "value" ? h("span", { class: "tag off", "data-delegated": r.id }, ` ${t("team.step.delegated", lang)}`) : null, " ", link("#/diary/team", "crumb", t("plan.role.open", lang))) : null),
       r.values["task.done_on"]?.state === "value" ? h("span", { class: "tag ok" }, t("reward.done", lang))
         : isParkedTask(r) ? h("div", {}, h("span", { class: "tag off", "data-parked": r.id }, t("rl.parked.tag", lang, { date: String((r.values["task.parked_on"] as { value?: unknown }).value) })), h("p", { class: "muted" }, t("rl.parked.note", lang)), link("#/journey/reality", "crumb", t("rl.parked.open", lang)))
-        : r.values["task.not_true_on"]?.state === "value" ? h("div", {}, h("span", { class: "tag off" }, t("reality.tag", lang, { date: String((r.values["task.not_true_on"] as { value?: unknown }).value) })), h("p", { class: "muted" }, t("reality.note", lang)), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => { storeOf(r).delete(r.id); rerender(); } }, t("plan.task.remove", lang)))
-        : h("div", {}, doneBtn(r.id, lang), focusBtn(r.id, lang), h("button", { class: "btn ghost", type: "button", "data-act": "reality-changed", "data-task-id": r.id, style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => markRealityChanged(r.id, lang) }, t("reality.btn", lang)), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => { storeOf(r).delete(r.id); rerender(); } }, t("plan.task.remove", lang)))));
+        : r.values["task.not_true_on"]?.state === "value" ? h("div", {}, h("span", { class: "tag off" }, t("reality.tag", lang, { date: String((r.values["task.not_true_on"] as { value?: unknown }).value) })), h("p", { class: "muted" }, t("reality.note", lang)), h("button", { class: "btn ghost btn-sm", type: "button", onclick: () => { storeOf(r).delete(r.id); rerender(); } }, t("plan.task.remove", lang)))
+        : h("div", {}, doneBtn(r.id, lang), focusBtn(r.id, lang), h("button", { class: "btn ghost btn-sm", type: "button", "data-act": "reality-changed", "data-task-id": r.id, onclick: () => markRealityChanged(r.id, lang) }, t("reality.btn", lang)), h("button", { class: "btn ghost btn-sm", type: "button", onclick: () => { storeOf(r).delete(r.id); rerender(); } }, t("plan.task.remove", lang)))));
     if (r.values["task.done_on"]?.state !== "value") { el.append(remindRow("task", r.id, lang, { planned: cp.plan.placements.some((p) => p.taskId === r.id) }), taskEditForm(r, lang)); }
     return el;
   });
@@ -443,7 +443,7 @@ export function moneyScreen(): HTMLElement {
     const inp = h("input", { id: `fxr-${r.id}`, type: "text", inputmode: "decimal", autocomplete: "off", value: f.rate === null ? "" : String(f.rate) });
     const msg = h("p", { class: "err", role: "alert" });
     const form2 = h("form", { novalidate: true, "data-fx-edit": r.id }, h("label", { for: `fxr-${r.id}` }, t("money.fx.setRate", lang, { c: f.code })), inp, msg,
-      h("button", { class: "btn ghost", type: "submit", style: "width:auto;margin:0;min-height:44px" }, t("money.fx.update", lang)));
+      h("button", { class: "btn ghost btn-sm", type: "submit" }, t("money.fx.update", lang)));
     form2.addEventListener("submit", (ev) => {
       ev.preventDefault(); msg.textContent = "";
       const rt = parseRate(inp.value); if (rt === null) { msg.textContent = t("money.err.rate", lang); return; }
@@ -469,7 +469,7 @@ export function moneyScreen(): HTMLElement {
       h("p", { class: "muted" }, amountView(r)), periodTag(r), rateForm(r),
       r.values["finance.on"]?.state === "value" && ["expense", "liability"].includes(String((r.values["finance.kind"] as { value?: unknown } | undefined)?.value)) ? remindRow("bill", r.id, lang) : null,
       r.links?.venture && vRows.some((v) => v.id === r.links!.venture) ? h("p", { class: "muted", "data-fin-venture": r.links.venture }, t("ven.money.tag", lang, { v: vRows.find((v) => v.id === r.links!.venture)!.name })) : null),
-      h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0;min-height:44px", onclick: () => { storeOf(r).delete(r.id); rerender(); } }, t("money.remove", lang))));
+      h("button", { class: "btn ghost btn-sm", type: "button", onclick: () => { storeOf(r).delete(r.id); rerender(); } }, t("money.remove", lang))));
   });
   const moneyCompact = screenView("money") === "compact";
   const moneyTable = h("table", { class: "table-compact", "data-view": "compact" }, h("tbody", {}, ...recs.filter((r) => r.entity === "finance_item").sort((a, b) => a.id.localeCompare(b.id)).map((r) => {
@@ -622,7 +622,7 @@ export function captureScreen(): HTMLElement {
     if (!checkFreeText(text).ok) { err.textContent = t("intake.secretRejected", lang); return; }
     const cands = extract(text); const edits = new Map<string, string>(); const checks = new Map<string, HTMLInputElement>();
     const rows = cands.map((c) => {
-      const cb = h("input", { type: "checkbox", id: `cb-${c.id}`, ...(c.confidence === "high" ? { checked: true } : {}), style: "width:24px;margin:0" }) as HTMLInputElement; checks.set(c.id, cb);
+      const cb = h("input", { type: "checkbox", id: `cb-${c.id}`, ...(c.confidence === "high" ? { checked: true } : {}) }) as HTMLInputElement; checks.set(c.id, cb);
       const shown = c.kind === "decision" ? (c.text ?? "") : c.kind === "date" ? (c.date ?? "") : String(c.number ?? "");
       const edit = h("input", { type: "text", value: shown, "data-edit": c.id, "aria-label": t(`capture.kind.${c.kind}` as Key, lang) }) as HTMLInputElement;
       edit.addEventListener("input", () => edits.set(c.id, edit.value));
@@ -772,7 +772,7 @@ function markDone(taskId: string) {
   try { sessionStorage.setItem("tm:newStar", "1"); } catch { /* ignore */ }
   const was = location.hash; location.hash = "#/reward"; if (was === "#/reward") rerender(); // a changed hash re-renders by itself; a second render would eat the one-time "new star" flag
 }
-const doneBtn = (taskId: string, lang: Locale) => h("button", { class: "btn ghost", type: "button", "data-act": "task-done", "data-task-id": taskId, style: "width:auto;margin:0;min-height:44px", onclick: () => markDone(taskId) }, t("reward.doneBtn", lang));
+const doneBtn = (taskId: string, lang: Locale) => h("button", { class: "btn ghost btn-sm", type: "button", "data-act": "task-done", "data-task-id": taskId, onclick: () => markDone(taskId) }, t("reward.doneBtn", lang));
 
 function pictureBlock(lang: Locale, opts: { newest?: boolean; milestone?: boolean } = {}): HTMLElement {
   const n = completedCount(); const k = Math.min(stageData().passed.length, 8);
@@ -843,7 +843,7 @@ export function focusScreen(taskId: string | undefined): HTMLElement {
     const pauseBtn = h("button", { class: "btn", type: "button", "data-act": "focus-pause" }, t("focus.pause", lang));
     const draw = () => { const now = Date.now(); time.textContent = Focus.fmt(Focus.remainingMs(s, now)); (ring.firstChild as HTMLElement).style.width = `${Math.round((Focus.elapsedMs(s, now) / (s.minutes * 60_000)) * 100)}%`; pauseBtn.textContent = t(s.pausedAt === null ? "focus.pause" : "focus.resume", lang); };
     pauseBtn.addEventListener("click", () => { s = s.pausedAt === null ? Focus.pause(s, Date.now()) : Focus.resume(s, Date.now()); saveFocus({ taskId: task.id, session: s }); draw(); });
-    const adj = (d: number) => h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0", "data-adj": String(d), onclick: () => { s = Focus.adjust(s, d, Date.now()); saveFocus({ taskId: task.id, session: s }); draw(); } }, t(d > 0 ? "focus.plus" : "focus.minus", lang));
+    const adj = (d: number) => h("button", { class: "btn ghost btn-sm", type: "button", "data-adj": String(d), onclick: () => { s = Focus.adjust(s, d, Date.now()); saveFocus({ taskId: task.id, session: s }); draw(); } }, t(d > 0 ? "focus.plus" : "focus.minus", lang));
     const stop = h("button", { class: "btn ghost", type: "button", "data-act": "focus-stop" }, t("focus.stop", lang));
     stop.addEventListener("click", () => { const m = Focus.focusedMinutes(s, Date.now()); stopTimer(); saveFocus(null); if (s.phase === "focus") { recordFocus(task.id, m); if (m >= 1) prefs.lastFocusEnd = { at: Date.now(), minutes: m }; } else prefs.lastRestAt = Date.now(); refreshTotal(); body.replaceChildren(h("p", { class: "ok-msg", role: "status", "data-focus-stopped": "1" }, t("focus.stopped", lang, { m: num(m, lang) })), h("button", { class: "btn", type: "button", onclick: picker }, t("focus.again", lang))); });
     body.replaceChildren(h("h2", {}, t(s.phase === "focus" ? "focus.title" : "focus.restOn", lang)), h("div", { class: "stage" }, time, ring), h("div", { class: "row" }, adj(-5), adj(5)), pauseBtn, stop);
@@ -851,7 +851,7 @@ export function focusScreen(taskId: string | undefined): HTMLElement {
     timer = setInterval(() => { if (!document.getElementById("focus-root")) { stopTimer(); return; } if (Focus.isFinished(s, Date.now())) finish(s); else draw(); }, 1000);
   };
   const begin = (phase: Focus.Phase, minutes: number) => run(Focus.start(phase, minutes, Date.now()));
-  root.append(link("#/today", "crumb", `← ${t("nav.today", lang)}`), h("h1", {}, t("focus.title", lang)), h("p", { class: "sub" }, title), h("p", { class: "muted" }, t("focus.intro", lang)), h("p", { class: "note", "data-focus-tip": "1" }, t("focus.tip", lang)), total, body, disclaimers(lang, ["noGuarantee"]));
+  root.append(link("#/today", "crumb", `← ${t("nav.today", lang)}`), h("h1", {}, t("focus.title", lang)), h("p", { class: "sub" }, title), h("p", { class: "muted" }, t("focus.intro", lang)), h("p", { class: "note", "data-focus-tip": "1" }, t("focus.tip", lang)), total, body, ...[disclaimers(lang, ["noGuarantee"])].filter((x): x is HTMLElement => !!x));
   const saved = loadFocus();
   if (saved && saved.taskId === task.id) { if (Focus.isFinished(saved.session, Date.now())) finish(saved.session); else run(saved.session); } else picker();
   return root;
@@ -864,7 +864,7 @@ function habitGoalsRow(id: string, lang: Locale): HTMLElement {
   const r = findRec(id); if (!r) return h("span", {});
   const pick = goalPicker(allRecs(), goalIdsOf(r), lang, `habit-${id}`); const ok = h("p", { class: "ok-msg", role: "status" });
   return h("div", { "data-habit-goals": id }, goalChips(r, lang) ?? "", h("details", { class: "help" }, h("summary", {}, t("gl.habit.goals", lang)), pick.el,
-    h("button", { class: "btn ghost", type: "button", "data-act": "habit-goals-save", style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => { saveGoalLinks(id, pick.ids()); ok.textContent = t("gl.habit.saved", lang); rerender(); } }, t("gl.habit.save", lang)), ok));
+    h("button", { class: "btn ghost btn-sm", type: "button", "data-act": "habit-goals-save", onclick: () => { saveGoalLinks(id, pick.ids()); ok.textContent = t("gl.habit.saved", lang); rerender(); } }, t("gl.habit.save", lang)), ok));
 }
 function habitsFromStore() {
   const recs = allRecs(); const g = (r: TMRecord, k: string) => (r.values[k] as { value?: unknown } | undefined)?.value;
@@ -910,7 +910,7 @@ export function habitsScreen(): HTMLElement {
     if (habitCompact) return h("li", { "data-habit-card": hb.id }, nsTag(findRec(hb.id)?.ns ?? activeNs(), lang), " ", h("strong", {}, hb.title), " ", main,
       h("span", { class: "muted", "data-consistency": "1" }, c.planned ? valueEl(t("habits.month", lang, { d: num(c.done, lang), p: num(c.planned, lang) }), "INFERENCE", lang) : t("habits.noPlanned", lang)));
     return h("div", { class: "card", "data-habit-card": hb.id },
-      h("div", { class: "row" }, h("div", {}, nsTag(findRec(hb.id)?.ns ?? activeNs(), lang), h("h2", { class: "card-h", }, hb.title)), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0;min-height:44px", onclick: () => { removeHabit(hb.id); rerender(); } }, t("habits.remove", lang))),
+      h("div", { class: "row" }, h("div", {}, nsTag(findRec(hb.id)?.ns ?? activeNs(), lang), h("h2", { class: "card-h", }, hb.title)), h("button", { class: "btn ghost btn-sm", type: "button", onclick: () => { removeHabit(hb.id); rerender(); } }, t("habits.remove", lang))),
       main, dots, habitChart(hb, logs, today, lang), habitGoalsRow(hb.id, lang), remindRow("habit", hb.id, lang),
       h("p", { class: "muted", "data-per-week": String(perWeek(hb)) }, t("habits.perWeek", lang, { n: num(perWeek(hb), lang) })),
       h("p", { class: "muted", "data-consistency": "1" }, c.planned ? valueEl(t("habits.month", lang, { d: num(c.done, lang), p: num(c.planned, lang) }), "INFERENCE", lang) : t("habits.noPlanned", lang)),
@@ -978,7 +978,7 @@ function cardsScreenInner(): HTMLElement {
   return h("main", {}, link("#/topics", "crumb", `← ${t("topics.title", lang)}`), h("h1", {}, t("cards.title", lang)), h("p", { class: "sub" }, t("cards.intro", lang)),
     all.length ? h("div", {}, h("p", { "data-cards-due": String(queue.length) }, valueEl(queue.length ? t("cards.due", lang, { n: num(queue.length, lang) }) : t("cards.none", lang), "INFERENCE", lang)), ...(queue.length ? [go] : []), study,
       h("h2", { class: "card-h", }, t("cards.boxes", lang)), h("div", { class: "seg", role: "img", "aria-label": boxes.join(", ") }, ...boxes.map((n, i) => h("span", { class: "tag" }, `${num(i + 1, lang)}: ${num(n, lang)}`)))) : h("p", { class: "muted" }, t("cards.empty", lang)),
-    h("h2", {}, t("cards.add", lang)), form, ...all.map((c) => h("div", { class: "card", "data-card": c.id }, h("div", { class: "row" }, h("span", {}, nsTag(activeNs(), lang), " ", c.front), h("button", { class: "btn ghost", type: "button", style: "width:auto;margin:0;min-height:44px", onclick: () => { store[activeNs()].delete(c.id); rerender(); } }, t("cards.remove", lang))))), disclaimers(lang));
+    h("h2", {}, t("cards.add", lang)), form, ...all.map((c) => h("div", { class: "card", "data-card": c.id }, h("div", { class: "row" }, h("span", {}, nsTag(activeNs(), lang), " ", c.front), h("button", { class: "btn ghost btn-sm", type: "button", onclick: () => { store[activeNs()].delete(c.id); rerender(); } }, t("cards.remove", lang))))), disclaimers(lang));
 }
 
 // ---- screens ----
@@ -1258,7 +1258,7 @@ export function intake(stepParam: string | undefined): HTMLElement {
     const err = h("p", { class: "err", role: "alert" });
     readers.push({ f, read: ip.read, err });
     form.append(h("div", { class: "field", "data-field": f.id },
-      h("label", { for: `f-${f.id}` }, tb(f.label, lang), " ", h("span", { class: "tag" }, t(`requirement.${f.requirement}` as Key, lang))),
+      h("label", { for: `f-${f.id}` }, tb(f.label, lang)), h("div", { class: "tags" }, h("span", { class: "tag" }, t(`requirement.${f.requirement}` as Key, lang))),
       ip.el, err, SUGGESTABLE.has(f.id) ? suggestPanel(f, lang, () => document.getElementById(`f-${f.id}`) as HTMLInputElement) : null, fieldHelp(f, lang)));
   }
   form.addEventListener("submit", (ev) => {

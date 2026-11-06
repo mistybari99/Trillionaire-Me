@@ -50,7 +50,7 @@ export function lockScreen(): HTMLElement {
   const main = h("main", { "data-lock-screen": "1" },
     h("h1", {}, t("lock.screen.title", lang)),
     h("form", { onsubmit: (e: Event) => void submit(e) }, h("label", { for: "lock-pin" }, t("lock.screen.label", lang)), input, count, pad, msg),
-    h("button", { class: "btn ghost", type: "button", "data-act": "lock-forgot", style: "min-height:44px", onclick: () => { forgotOpen = !forgotOpen; if (forgotOpen) startForgot(consentKv, Date.now()); rerender(); } }, t("lock.forgot", lang)),
+    h("button", { class: "btn ghost", type: "button", "data-act": "lock-forgot", onclick: () => { forgotOpen = !forgotOpen; if (forgotOpen) startForgot(consentKv, Date.now()); rerender(); } }, t("lock.forgot", lang)),
     forgotOpen ? forgotPanel(lang) : null);
   setTimeout(() => input.focus(), 0);
   return main;
@@ -65,11 +65,11 @@ function forgotPanel(lang: Locale): HTMLElement {
     h("p", {}, t("lock.forgot.p1", lang, { m: RESET_WAIT_MIN })),
     can ? h("p", {}, t("lock.forgot.ready", lang)) : h("p", {}, t("lock.forgot.p2", lang, { when: hhmm(ready) })),
     can ? h("label", { for: "lock-forgot-tick" }, tick, " ", t("lock.forgot.tick", lang)) : null,
-    can ? h("button", { class: "btn", type: "button", "data-act": "lock-forgot-remove", style: "min-height:44px", onclick: () => {
+    can ? h("button", { class: "btn", type: "button", "data-act": "lock-forgot-remove", onclick: () => {
       if (!tick.checked) { showNeed(msg, t("lock.forgot.needTick", lang)); return; }
       if (finishForgot(consentKv, Date.now(), true)) { locked = false; forgotOpen = false; rerender(); }
     } }, t("lock.forgot.btn", lang)) : null, msg,
-    h("button", { class: "btn ghost", type: "button", "data-act": "lock-forgot-back", style: "min-height:44px", onclick: () => { forgotOpen = false; rerender(); } }, t("lock.forgot.back", lang)));
+    h("button", { class: "btn ghost", type: "button", "data-act": "lock-forgot-back", onclick: () => { forgotOpen = false; rerender(); } }, t("lock.forgot.back", lang)));
 }
 
 let cardNote: { key: Key; bad: boolean } | null = null;
@@ -78,24 +78,24 @@ export function lockCard(lang: Locale): HTMLElement {
   const msg = h("p", { role: "status", "data-lock": "card-msg" });
   const say = (key: Key, bad: boolean, args?: Record<string, string | number>) => { msg.className = bad ? "err" : "ok-msg"; msg.textContent = t(key, lang, args); };
   if (cardNote) { say(cardNote.key, cardNote.bad); cardNote = null; }
-  const field = (id: string, label: Key) => h("input", { id, type: "password", inputmode: "numeric", pattern: "[0-9]*", autocomplete: "off", maxlength: String(PIN_MAX), "aria-label": t(label, lang), "data-lock": id, style: "min-height:44px" }) as HTMLInputElement;
+  const field = (id: string, label: Key) => h("input", { id, type: "password", inputmode: "numeric", pattern: "[0-9]*", autocomplete: "off", maxlength: String(PIN_MAX), "aria-label": t(label, lang), "data-lock": id }) as HTMLInputElement;
   if (!on) {
     const a = field("lock-new", "lock.pin"), b = field("lock-new2", "lock.pin2");
     return h("div", { class: "card", "data-card": "applock" }, h("h2", { class: "card-h" }, t("lock.title", lang)), h("p", { class: "muted" }, t("lock.note", lang)),
       h("label", { for: "lock-new" }, t("lock.pin", lang)), a, h("label", { for: "lock-new2" }, t("lock.pin2", lang)), b,
-      h("button", { class: "btn", type: "button", "data-act": "lock-set", style: "min-height:44px", onclick: async () => {
+      h("button", { class: "btn", type: "button", "data-act": "lock-set", onclick: async () => {
         const p = pinProblem(a.value, b.value); if (p) return say(p === "format" ? "lock.err.format" : "lock.err.mismatch", true);
         await setPin(consentKv, a.value, b.value); locked = false; cardNote = { key: "lock.saved", bad: false }; rerender();
       } }, t("lock.set", lang)), msg);
   }
   const off = field("lock-off-pin", "lock.offPin");
-  const sel = h("select", { id: "lock-auto", "data-lock": "auto", style: "min-height:44px", onchange: (e: Event) => setAuto(consentKv, Number((e.target as HTMLSelectElement).value)) },
+  const sel = h("select", { id: "lock-auto", "data-lock": "auto", onchange: (e: Event) => setAuto(consentKv, Number((e.target as HTMLSelectElement).value)) },
     ...AUTO_CHOICES.map((n) => h("option", { value: String(n), ...(readLock(consentKv)?.auto === n ? { selected: true } : {}) }, t(`lock.auto.${n}` as Key, lang))));
   return h("div", { class: "card", "data-card": "applock" }, h("h2", { class: "card-h" }, t("lock.title", lang)), h("p", {}, t("lock.on", lang)),
     h("label", { for: "lock-auto" }, t("lock.auto", lang)), sel,
-    h("button", { class: "btn ghost", type: "button", "data-act": "lock-now", style: "min-height:44px", onclick: () => lockNow() }, t("lock.now", lang)),
+    h("button", { class: "btn ghost", type: "button", "data-act": "lock-now", onclick: () => lockNow() }, t("lock.now", lang)),
     h("label", { for: "lock-off-pin" }, t("lock.offPin", lang)), off,
-    h("button", { class: "btn ghost", type: "button", "data-act": "lock-off", style: "min-height:44px", onclick: async () => {
+    h("button", { class: "btn ghost", type: "button", "data-act": "lock-off", onclick: async () => {
       const r = await removeWithPin(consentKv, off.value, Date.now());
       if (r.ok) { cardNote = { key: "lock.removed", bad: false }; rerender(); }
       else say(r.reason === "wait" ? "lock.err.wait" : "lock.err.notright", true, { s: r.ok ? 0 : r.waitSeconds ?? 30 });

@@ -23,10 +23,10 @@ let missing = false;
 function gate(lang: Locale): HTMLElement | null {
   if (activeNs() === "demo") return null;
   if (readHealthConsent(consentKv)) return h("p", { class: "muted", "data-health-consent": "on" }, t("hl.consent.on", lang), " ",
-    h("button", { class: "btn ghost", type: "button", "data-act": "health-withdraw", style: "width:auto;margin:0;min-height:44px", onclick: () => { revokeHealthConsent(consentKv); rerender(); } }, t("hl.consent.withdraw", lang)));
+    h("button", { class: "btn ghost btn-sm", type: "button", "data-act": "health-withdraw", onclick: () => { revokeHealthConsent(consentKv); rerender(); } }, t("hl.consent.withdraw", lang)));
   return h("div", { class: "card", "data-health-consent": "off" }, h("h2", { class: "card-h" }, t("hl.consent.title", lang)), h("p", {}, t("hl.consent.p1", lang)), h("p", {}, t("hl.consent.p2", lang)),
-    h("label", { style: "display:flex;gap:8px;align-items:center;margin:8px 0" }, h("input", { type: "checkbox", id: "health-tick", style: "width:24px;margin:0" }), t("hl.consent.tick", lang)),
-    h("button", { class: "btn", type: "button", "data-act": "health-consent", style: "min-height:44px", onclick: () => {
+    h("label", { class: "k-check" }, h("input", { type: "checkbox", id: "health-tick" }), t("hl.consent.tick", lang)),
+    h("button", { class: "btn", type: "button", "data-act": "health-consent", onclick: () => {
       if (!(document.getElementById("health-tick") as HTMLInputElement | null)?.checked) { missing = true; rerender(); return; }
       missing = false; grantHealthConsent(consentKv, new Date().toISOString()); rerender(); } }, t("hl.consent.btn", lang)),
     missing ? h("p", { class: "need", role: "alert" }, t("data.consent.needTick", lang)) : null);
@@ -79,7 +79,7 @@ export function healthScreen(): HTMLElement {
       sum.length ? h("section", { class: "card", "data-health-summary": "1" }, h("h2", { class: "card-h" }, t("hl.recent", lang)), h("ul", { class: "plain" }, ...sum.map((s) => h("li", { "data-health-kind": s.kind }, h("strong", {}, kindLabel(s.kind, lang)), ` · ${t("hl.days", lang, { n: fmtNumber(s.daysWithEntry, lang) })} · ${t("hl.latest", lang, { d: s.latest!.date, v: valueText(s.latest!, lang) })}`))))
         : h("p", { class: "muted", "data-health-empty": "1" }, t("hl.none", lang)),
       rows.length ? h("section", { class: "card" }, h("h2", { class: "card-h" }, t("hl.all", lang)), h("ul", { class: "plain" }, ...rows.slice(0, 60).map((r) => h("li", { "data-health-row": r.id }, nsTag(r.ns, lang), ` ${r.date} · ${kindLabel(r.kind, lang)} · ${valueText(r, lang)}`, r.note ? ` · ${r.note}` : "", " ",
-        h("button", { class: "btn ghost", type: "button", "data-remove": r.id, style: "width:auto;margin:0;min-height:44px", onclick: () => { store[activeNs()].delete(r.id); rerender(); } }, t("risk.remove", lang)))))) : null)
+        h("button", { class: "btn ghost btn-sm", type: "button", "data-remove": r.id, onclick: () => { store[activeNs()].delete(r.id); rerender(); } }, t("risk.remove", lang)))))) : null)
       : h("p", { class: "muted", "data-health-locked": "1" }, t("hl.locked", lang)),
     h("p", { class: "muted" }, t("hl.note", lang)), disclaimers(lang, ["advice"]));
 }

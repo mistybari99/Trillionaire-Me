@@ -1,6 +1,8 @@
 import "./ui/styles.css";
+import "./ui/kit.css";
 import { render, renderApp } from "./app";
-import { applyPrefs, initStorage, repairListNamespaces, saveMonitor } from "./ui/state";
+import { refreshSaveFailedBanner } from "./ui/saveBanner";
+import { applyPrefs, initStorage, repairListNamespaces, saveMonitor, prefs } from "./ui/state";
 import { updateNetBadge } from "./ui/net";
 import { startPrayerAlerts } from "./ui/prayerAlerts";
 import { startReminders } from "./ui/reminders";
@@ -23,7 +25,7 @@ const onRoute = () => {
 /** The brand splash in index.html (pre-JS) goes away once the first screen is drawn. */
 const hideSplash = () => { const el = document.getElementById("tm-splash"); if (!el) return; el.classList.add("tm-out"); setTimeout(() => el.remove(), 300); };
 window.addEventListener("hashchange", onRoute);
-saveMonitor.subscribe(() => onRoute());
+saveMonitor.subscribe(() => refreshSaveFailedBanner(prefs.lang));
 installCrossTab(onRoute);
 window.addEventListener("online", () => { updateNetBadge(); void maybeSyncPrayerTimes(); });
 document.addEventListener("visibilitychange", () => { if (document.visibilityState === "visible") void maybeSyncPrayerTimes(); });

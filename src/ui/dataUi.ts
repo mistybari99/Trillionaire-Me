@@ -21,7 +21,7 @@ export function dataPage(row: string | undefined, lang: Locale): HTMLElement {
     h("div", { "data-setting-row": "mode" }, modeSwitchCard()),
     h("div", { class: "card", "data-ns": "real" }, h("h2", { class: "card-h" }, t("data.real", lang)), h("p", {}, t("data.real.count", lang, { n: num(store.real.list().length, lang) })), h("p", { class: "muted" }, t(realOn ? "data.real.on" : "data.real.locked", lang))),
     realOn ? null : consentGate(lang),
-    h("div", { class: "card", "data-ns": "demo" }, h("h2", { class: "card-h" }, t("data.demo", lang), " ", demoBadge(lang)), h("p", {}, t("data.demo.count", lang, { n: num(store.demo.list().length, lang) }))),
+    h("div", { class: "card", "data-ns": "demo" }, h("div", { class: "row" }, h("h2", { class: "card-h" }, t("data.demo", lang)), demoBadge(lang)), h("p", {}, t("data.demo.count", lang, { n: num(store.demo.list().length, lang) }))),
     h("p", { class: "muted" }, t("data.nopromote", lang)),
     link("#/settings/delete", "card link", h("h2", { class: "card-h" }, t("set.cat.delete", lang)), h("p", { class: "muted" }, t("set.sum.delete", lang))),
     link("#/settings/privacy", "card link", h("h2", { class: "card-h" }, t("set.cat.privacy", lang)), h("p", { class: "muted" }, categorySummary("privacy", lang))),

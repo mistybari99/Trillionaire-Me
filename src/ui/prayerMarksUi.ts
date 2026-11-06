@@ -18,7 +18,7 @@ export function prayerMarkButton(prayer: PrayerKey, lang: Locale, attrs: Record<
   const status = h('span', { class: 'prayer-mark-status', role: 'status', 'aria-live': 'polite' });
   const button = h('button', { type: 'button', 'data-act': 'prayer-mark', 'data-prayer': prayer, ...attrs });
   const hint = h('span', { class: 'prayer-mark-status muted', 'data-prayer-pending': prayer });
-  const wrap = h('div', { class: 'prayer-mark-control' }, button, status, hint);
+  const wrap = h('div', { class: 'prayer-mark-control k-row__trail' }, button, status, hint);
   let stale = false;
   const update = () => {
     const state = prayerMarkState({ namespace, date, prayer });
@@ -26,7 +26,7 @@ export function prayerMarkButton(prayer: PrayerKey, lang: Locale, attrs: Record<
     button.disabled = pending;
     hint.hidden = state.marked || pending || failed;
     hint.textContent = hint.hidden ? '' : t('deen.prayer.notYet', lang);
-    button.className = state.marked && !failed ? 'btn prayer-mark-btn' : 'btn ghost prayer-mark-btn';
+    button.className = state.marked && !failed ? 'btn btn-sm prayer-mark-btn' : 'btn ghost btn-sm prayer-mark-btn';
     button.setAttribute('aria-pressed', failed ? 'mixed' : String(state.marked));
     button.setAttribute('aria-busy', String(pending));
     const action = pending ? copy(lang, 'Saving…', 'সেভ হচ্ছে…') : failed ? copy(lang, 'Retry', 'আবার চেষ্টা') : state.marked ? t('deen.prayer.marked', lang) : t('deen.prayer.mark', lang);
@@ -67,8 +67,8 @@ export function prayerControls(lang: Locale, variant: 'compact' | 'full' = 'comp
     h('p', { class: 'muted' }, copy(lang, 'Your private marks for today. Tap again to undo.', 'আজকের প্রাইভেট চিহ্ন। মুছতে আবার চাপুন।')));
   const times = new Map<PrayerKey, HTMLElement>();
   for (const prayer of PRAYER_KEYS) {
-    const time = h('span', { class: 'muted', 'data-prayer-time': prayer }); times.set(prayer, time);
-    card.append(h('div', { class: 'prayer-mark-row', 'data-prayer-row': prayer }, h('div', {}, h('strong', {}, t(`deen.prayer.name.${prayer}` as Key, lang)), ' ', time), prayerMarkButton(prayer, lang)));
+    const time = h('span', { class: 'muted k-row__sub', 'data-prayer-time': prayer }); times.set(prayer, time);
+    card.append(h('div', { class: 'prayer-mark-row k-row', 'data-prayer-row': prayer }, h('div', { class: 'k-row__main' }, h('strong', { class: 'k-row__title' }, t(`deen.prayer.name.${prayer}` as Key, lang)), ' ', time), prayerMarkButton(prayer, lang)));
   }
   const details = h('div', { class: 'prayer-times-details' });
   const refresh = () => {

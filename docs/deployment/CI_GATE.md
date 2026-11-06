@@ -36,3 +36,13 @@ The gate relies on the maintained `ci.yml` job named `check`; keep that job and 
 Running the entire browser suite inside Cloudflare was avoided because Chromium system dependency installation is already supported in GitHub's runner and is unverified in the Workers build image. The current Wrangler `build` configuration cannot enforce this remote setting: Workers Builds explicitly does not honor Wrangler custom build configuration.
 
 References: [Workers build configuration and default variables](https://developers.cloudflare.com/workers/ci-cd/builds/configuration/), [GitHub workflow runs API](https://docs.github.com/en/rest/actions/workflow-runs), [GitHub workflow jobs API](https://docs.github.com/en/rest/actions/workflow-jobs).
+
+## First-build failures and the retry fix — 6 November 2026
+
+Observed: the first Workers Build of many pushes failed (e.g. `6b14df4`, `73545d2`) while GitHub CI for the same commit passed, and a manual Retry after CI finished succeeded. The gate already polled for up to about 15 minutes, so waiting alone was not the gap. In the old code any temporary problem during the poll stopped the build at once: HTTP 403 or 429 (the public GitHub API's answer when the build network's shared address has used its hourly allowance of about 60 requests, which several concurrent builds each polling once a minute can exhaust), HTTP 5xx, a network error or the 10-second timeout. A Retry after CI is done needs only about two requests, which is why it passed.
+
+Most likely root cause, **not yet confirmed from a Cloudflare build log** (the log is not reachable from the builder). Confirm on the next first-build failure: the last lines of the log will say `HTTP 403`, `HTTP 429`, a network error or `Timed out`.
+
+Change (`tools/check_branch_ci.mjs`, shared by the production and preview gates): a temporary problem (403, 429, 5xx, network error, timeout, unreadable body) is logged and counts as one used attempt; polling continues. If every attempt hits it, the build still fails closed and reports the last reason. Hard failures stay immediate: failed or cancelled CI, missing check job, 404/401, redirects and wrong answer shape. The wait budget is unchanged (16 attempts, 60 seconds apart). `tests/deployment_gate.test.ts` covers retry-then-verify for 403, 429, 503 and a network error, all-attempts-temporary failing closed, and no retry for hard failures.
+
+Remaining limits: a CI run longer than the budget (the browser checks took about 13 minutes once) still ends with the "Timed out ... Retry" message, and an exhausted shared rate limit that lasts the whole budget still blocks the build. A longer budget or an authenticated read would need a Cloudflare build-time limit check and a token, which needs the owner (not done).

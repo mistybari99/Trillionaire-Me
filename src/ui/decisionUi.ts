@@ -17,7 +17,7 @@ let decAnswers: DecisionAnswers = {};
 const triAnswers = new Map<string, TriageAnswers>();
 
 function choice(group: string, cur: YN | null | undefined, onPick: (v: YN) => void, lang: typeof prefs.lang): HTMLElement {
-  return h("div", { class: "seg", role: "group", "data-choice": group }, ...YNS.map((v) => h("button", { type: "button", "data-opt": v, "aria-pressed": String(cur === v), style: "min-height:44px", onclick: () => { onPick(v); rerender(); } }, t(`dec.${v}` as Key, lang))));
+  return h("div", { class: "seg", role: "group", "data-choice": group }, ...YNS.map((v) => h("button", { type: "button", "data-opt": v, "aria-pressed": String(cur === v), onclick: () => { onPick(v); rerender(); } }, t(`dec.${v}` as Key, lang))));
 }
 
 export function decisionScreen(): HTMLElement {
@@ -30,7 +30,7 @@ export function decisionScreen(): HTMLElement {
     ...qs,
     h("section", { class: "card", "data-dec-result": d.outcome, role: "status" }, h("h2", { class: "card-h" }, t("dec.result", lang)),
       h("p", {}, h("strong", {}, t(`dec.out.${d.outcome}` as Key, lang))), h("p", { "data-dec-why": d.reason }, why)),
-    h("button", { class: "btn ghost", type: "button", "data-act": "dec-reset", style: "width:auto;min-height:44px", onclick: () => { decAnswers = {}; rerender(); } }, t("dec.reset", lang)),
+    h("button", { class: "btn ghost btn-sm", type: "button", "data-act": "dec-reset", onclick: () => { decAnswers = {}; rerender(); } }, t("dec.reset", lang)),
     h("p", { class: "muted" }, t("dec.note", lang)), disclaimers(lang, ["advice"]));
 }
 

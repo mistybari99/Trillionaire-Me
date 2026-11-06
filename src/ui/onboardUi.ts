@@ -37,7 +37,7 @@ function frame(lang: Locale, n: 2 | 3, ...kids: Array<HTMLElement | null>): HTML
 }
 
 function goalScreen(lang: Locale): HTMLElement {
-  const input = h("input", { type: "text", id: "onb-goal", name: "goal", maxlength: "160", autocomplete: "off", placeholder: t("onb.goal.ph", lang), style: "min-height:44px" });
+  const input = h("input", { type: "text", id: "onb-goal", name: "goal", maxlength: "160", autocomplete: "off", placeholder: t("onb.goal.ph", lang) });
   const err = h("p", { class: "err", role: "alert", "data-onb-err": "1" }, errKey ? t(errKey, lang) : "");
   const form = h("form", { class: "card", novalidate: true }, h("h1", { class: "card-h" }, t("onb.goal.h", lang)), h("p", {}, t("onb.goal.p", lang)),
     h("label", { for: "onb-goal" }, t("onb.goal.label", lang)), input, err,
@@ -54,8 +54,8 @@ function goalScreen(lang: Locale): HTMLElement {
 }
 
 function stepScreen(lang: Locale): HTMLElement {
-  const input = h("input", { type: "text", id: "onb-step", name: "step", maxlength: "160", autocomplete: "off", placeholder: t("onb.step.ph", lang), style: "min-height:44px" });
-  const mins = h("select", { id: "onb-min", name: "minutes", style: "min-height:44px" },
+  const input = h("input", { type: "text", id: "onb-step", name: "step", maxlength: "160", autocomplete: "off", placeholder: t("onb.step.ph", lang) });
+  const mins = h("select", { id: "onb-min", name: "minutes" },
     ...FIRST_MINUTES.map((m) => h("option", { value: String(m), ...(m === DEFAULT_FIRST_MINUTES ? { selected: true } : {}) }, t(`onb.min.${m}` as Key, lang))),
     h("option", { value: "" }, t("onb.min.unknown", lang)));
   const err = h("p", { class: "err", role: "alert", "data-onb-err": "1" }, errKey ? t(errKey, lang) : "");

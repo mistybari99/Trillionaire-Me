@@ -196,7 +196,7 @@ function goalsScreenInner(): HTMLElement {
     st.steps ? h("p", { class: "muted", "data-link-stats": "1" }, t("gl.ov.fact", lang, { n: num(st.steps, lang), s: num(st.shared, lang), u: num(st.unlinked, lang) }), " ", t("gl.ov.note", lang)) : null,
     ...active.map((n) => rootCard(n, recs, lang)),
     st.unlinked ? h("a", { href: "#/diary/plan", class: "card link", "data-unlinked-card": String(st.unlinked) }, h("p", {}, t("gl.unlinked", lang, { n: num(st.unlinked, lang) }))) : null,
-    quiet.length ? h("details", { class: "card", "data-quiet-goals": String(quiet.length) }, h("summary", { style: "min-height:44px" }, t("gl.paused.row", lang, { n: num(quiet.length, lang) })),
+    quiet.length ? h("details", { class: "card", "data-quiet-goals": String(quiet.length) }, h("summary", { }, t("gl.paused.row", lang, { n: num(quiet.length, lang) })),
       ...quiet.map((n) => h("div", { "data-root-goal": n.id }, h("strong", {}, n.title), " ", h("span", { class: "tag off" }, t(`gl.status.${goalStatusOf(byId.get(n.id)!)}` as Key, lang)), " ", link(`#/journey/goal/${n.id}`, "crumb", t("gl.card.open", lang))))) : null,
     roots.length ? null : h("p", { class: "muted" }, t("goals.none", lang)),
     treeView(roots, lang),
@@ -259,7 +259,7 @@ function placeCard(rec: TMRecord, lang: Locale): HTMLElement {
   const form = h("form", { novalidate: true, "data-form": "goal-place" },
     h("label", { for: "gp-kind" }, tb(fieldById("goal.kind")!.label, lang)), kind, h("label", { for: "gp-parent" }, t("gt.parent.label", lang)), parent,
     h("label", { for: "gp-metric" }, tb(fieldById("goal.metric_label")!.label, lang)), metric, err, ok,
-    h("button", { class: "btn ghost", type: "submit", style: "width:auto;margin:0;min-height:44px" }, t("gt.save", lang)));
+    h("button", { class: "btn ghost btn-sm", type: "submit" }, t("gt.save", lang)));
   form.addEventListener("submit", (ev) => {
     ev.preventDefault(); err.textContent = ""; ok.textContent = "";
     if (!entryNs()) { err.textContent = saveBlockedText(lang); return; }

@@ -39,4 +39,17 @@ describe("shared overlay ownership", () => {
     expect(location.hash).toBe("#/settings"); expect(history.state?.["tm:overlay"]).toBeUndefined();
     history.back(); await vi.waitFor(() => expect(location.hash).toBe(""));
   });
+  it.each([false, true])("underlying route links consume the menu stop, including an outside-pointer dismissal (%s)", async (outsideDismissal) => {
+    history.pushState({}, "", "#/journey"); history.pushState({}, "", "#/today");
+    const link = document.createElement("a"); link.href = "#/profile"; document.body.append(link);
+    openTransientOverlay({ id: "menu", close: vi.fn(), history: true });
+    if (outsideDismissal) closeTransientOverlay("dismiss");
+    link.click();
+    await vi.waitFor(() => expect(location.hash).toBe("#/profile"));
+    expect(history.state?.["tm:overlay"]).toBeUndefined();
+    history.back(); await vi.waitFor(() => expect(location.hash).toBe("#/today"));
+    expect(history.state?.["tm:overlay"]).toBeUndefined();
+    history.back(); await vi.waitFor(() => expect(location.hash).toBe("#/journey"));
+  });
+
 });

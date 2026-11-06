@@ -43,7 +43,7 @@ export function togglePlanMark(p: PlanRow, day: string): void {
 const markButton = (p: PlanRow, day: string, lang: Locale, marked: boolean): HTMLElement => {
   const kind = markKind(p);
   if (kind.via === "prayer") return prayerMarkButton(kind.prayer, lang, { "data-act": "plan-mark", "data-plan": p.id });
-  return h("button", { class: marked ? "btn" : "btn ghost", type: "button", "data-act": "plan-mark", "data-plan": p.id, "aria-pressed": String(marked), style: "width:auto;margin:0;min-height:44px",
+  return h("button", { class: marked ? "btn btn-sm" : "btn ghost btn-sm", type: "button", "data-act": "plan-mark", "data-plan": p.id, "aria-pressed": String(marked),
     onclick: () => { togglePlanMark(p, day); rerender(); } }, marked ? t("dp.marked", lang) : t("dp.mark", lang));
 };
 
@@ -100,7 +100,7 @@ function zakatCard(lang: Locale, allowed: boolean): HTMLElement {
   return h("section", { class: "card", "data-zakat": "1" }, h("h2", { class: "card-h" }, t("dp.z.title", lang)), h("p", { class: "muted" }, t("dp.z.hint", lang)),
     allowed ? h("div", {}, form, result,
       left !== null ? h("p", { class: "muted", "data-zakat-days": String(left) }, left >= 0 ? t("dp.z.daysLeft", lang, { n: fmtNumber(left, lang) }) : t("dp.z.datePassed", lang)) : null,
-      z ? h("button", { class: "btn ghost", type: "button", "data-act": "zakat-clear", style: "width:auto;min-height:44px", onclick: () => { store[z.ns].delete(ZAKAT_ID); rerender(); } }, t("risk.remove", lang)) : null) : null,
+      z ? h("button", { class: "btn ghost btn-sm", type: "button", "data-act": "zakat-clear", onclick: () => { store[z.ns].delete(ZAKAT_ID); rerender(); } }, t("risk.remove", lang)) : null) : null,
     h("p", { class: "note" }, t("dp.z.note", lang)));
 }
 
@@ -144,8 +144,8 @@ export function deenPlansScreen(): HTMLElement {
       p.note ? h("p", { "data-plan-note": "1" }, p.note) : null,
       p.active ? h("div", { class: "row" }, markButton(p, day, lang, marked), h("span", { class: "muted" }, t("dp.mark.hint", lang))) : h("p", { class: "muted", "data-plan-paused": "1" }, t("dp.paused", lang)),
       h("div", { class: "row" },
-        h("button", { class: "btn ghost", type: "button", "data-act": p.active ? "plan-pause" : "plan-resume", "data-plan": p.id, style: "width:auto;margin:0;min-height:44px", onclick: () => setStatus(p, p.active ? "paused" : "active") }, p.active ? t("dp.pause", lang) : t("dp.resume", lang)),
-        h("button", { class: "btn ghost", type: "button", "data-remove": p.id, style: "width:auto;margin:0;min-height:44px", onclick: () => { store[p.ns].delete(p.id); rerender(); } }, t("risk.remove", lang))));
+        h("button", { class: "btn ghost btn-sm", type: "button", "data-act": p.active ? "plan-pause" : "plan-resume", "data-plan": p.id, onclick: () => setStatus(p, p.active ? "paused" : "active") }, p.active ? t("dp.pause", lang) : t("dp.resume", lang)),
+        h("button", { class: "btn ghost btn-sm", type: "button", "data-remove": p.id, onclick: () => { store[p.ns].delete(p.id); rerender(); } }, t("risk.remove", lang))));
   };
   // ---- private notes and figures ----
   const area = h("select", { id: "dn-area" }, ...NOTE_AREAS.map((a) => h("option", { value: a.code }, t(`dp.area.${a.code}` as Key, lang)))) as HTMLSelectElement;
@@ -175,6 +175,6 @@ export function deenPlansScreen(): HTMLElement {
     h("section", { class: "card", "data-deen-notes": "1" }, h("h2", { class: "card-h" }, t("dp.notes.title", lang)), h("p", { class: "muted" }, t("dp.notes.hint", lang)),
       allowed ? h("div", {}, nform, notes.length ? h("ul", { class: "plain" }, ...notes.slice(0, 60).map((n) => h("li", { "data-deen-note": n.id }, nsTag(n.ns, lang), ` ${n.day} · ${t(`dp.area.${n.area}` as Key, lang)} · `,
         n.amount !== null ? `${fmtNumber(n.amount, lang)} ${fieldById("giving.amount")!.unit ?? "BDT"}` : n.text ?? "", " ",
-        h("button", { class: "btn ghost", type: "button", "data-remove": n.id, style: "width:auto;margin:0;min-height:44px", onclick: () => { store[n.ns].delete(n.id); rerender(); } }, t("risk.remove", lang))))) : h("p", { class: "muted" }, t("dp.notes.none", lang))) : null),
+        h("button", { class: "btn ghost btn-sm", type: "button", "data-remove": n.id, onclick: () => { store[n.ns].delete(n.id); rerender(); } }, t("risk.remove", lang))))) : h("p", { class: "muted" }, t("dp.notes.none", lang))) : null),
     h("p", { class: "muted" }, t("dp.privacy", lang)), disclaimers(lang, ["noFatwa", "noGuarantee"]));
 }

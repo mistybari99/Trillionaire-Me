@@ -59,8 +59,8 @@ export function switchMode(m: DataMode): void {
   switchNeedConsent = false; prefs.dataMode = m; rerender();
 }
 
-const tickRow = (lang: Locale) => h("label", { style: "display:flex;gap:8px;align-items:center;margin:8px 0" },
-  h("input", { type: "checkbox", id: "mode-tick", style: "width:24px;margin:0" }), t("data.consent.tick", lang));
+const tickRow = (lang: Locale) => h("label", { class: "k-check" },
+  h("input", { type: "checkbox", id: "mode-tick" }), t("data.consent.tick", lang));
 const ticked = () => (document.getElementById("mode-tick") as HTMLInputElement | null)?.checked === true;
 
 function langButtons(): HTMLElement {
@@ -105,9 +105,9 @@ export function demoPanels(): HTMLElement[] {
   if (!inSettings && askDue()) out.push(h("div", { class: "card", role: "status", "data-mode-ask": "1" }, h("h2", { class: "card-h" }, t("mode.ask.title", lang)), h("p", {}, t("mode.ask.p", lang)),
     h("button", { class: "btn", type: "button", "data-act": "demo-ask-yes", onclick: openStartReal }, t("mode.ask.yes", lang)),
     h("button", { class: "btn ghost", type: "button", "data-act": "demo-ask-no", onclick: declineStartReal }, t("mode.ask.no", lang))));
-  if (inSettings) { out.push(h("div", { class: "note", role: "status", "data-demo-banner": "1", "data-compact": "1", style: "padding:6px 12px" }, h("p", { style: "margin:0" }, h("b", {}, t("mode.banner", lang))))); return out; }
+  if (inSettings) { out.push(h("div", { class: "note", role: "status", "data-demo-banner": "1", "data-compact": "1" }, h("p", {}, h("b", {}, t("mode.banner", lang))))); return out; }
   out.push(h("div", { class: "note", role: "status", "data-demo-banner": "1" }, h("p", {}, h("b", {}, t("mode.banner", lang))),
-    h("button", { class: "btn ghost", type: "button", "data-act": "start-real-banner", style: "width:auto;margin:6px 0 0;min-height:44px", onclick: openStartReal }, t("mode.banner.start", lang))));
+    h("button", { class: "btn ghost btn-sm", type: "button", "data-act": "start-real-banner", onclick: openStartReal }, t("mode.banner.start", lang))));
   return out;
 }
 
@@ -132,7 +132,7 @@ export function startRealPage(lang: Locale): HTMLElement {
     h("a", { href: "#/settings/data", class: "crumb" }, `← ${t("set.cat.data", lang)}`), h("h1", {}, t("set.row.startreal", lang)),
     h("p", { class: "sub" }, t("del.intro", lang)),
     h("div", { class: "card" }, h("h2", { class: "card-h" }, t("del.demo.copy", lang)),
-      h("button", { class: "btn ghost", type: "button", "data-act": "start-demo-copy", style: "min-height:44px", onclick: async () => {
+      h("button", { class: "btn ghost", type: "button", "data-act": "start-demo-copy", onclick: async () => {
         const b = await createBackup(new StoreRepo(store), "demo");
         const a = h("a", { href: URL.createObjectURL(new Blob([JSON.stringify(b)], { type: "application/json" })), download: `tm-demo-backup-${b.createdAt.slice(0, 10)}.json` });
         document.body.append(a); a.click(); a.remove(); saved = true; msg.textContent = saved ? t("del.demo.copied", lang) : "";

@@ -1,0 +1,17 @@
+{
+  "profile": {
+    "hash": "#/profile",
+    "state": null,
+    "length": 4
+  },
+  "back1": {
+    "hash": "#/today",
+    "state": null,
+    "length": 4
+  },
+  "back2": {
+    "hash": "#/journey",
+    "state": null,
+    "length": 4
+  }
+}

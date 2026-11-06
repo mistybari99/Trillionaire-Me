@@ -20,23 +20,23 @@ describe("GitHub gate HTTP handling", () => {
     await expect(waitForCi(sha, { ...options, fetchImpl })).rejects.toThrow(/HTTP 403.*API rate limit exceeded.*x-ratelimit-remaining=0.*x-github-request-id=ABC/);
     expect(fetchImpl).toHaveBeenCalledTimes(1);
   });
-  it("does not retry ordinary Forbidden or bypass verification", async () => {
+  it("fails closed on ordinary Forbidden when its attempt budget is exhausted", async () => {
     const fetchImpl = vi.fn<typeof fetch>().mockResolvedValue(new Response(JSON.stringify({ message: "User agent required" }), { status: 403 }));
     await expect(waitForCi(sha, { ...options, fetchImpl })).rejects.toThrow(/User agent required/);
     expect(fetchImpl).toHaveBeenCalledTimes(1);
   });
-  it.each([403, 429])("retries one explicit short rate wait for HTTP %s, then verifies run and job", async (status) => {
+  it.each([403, 429])("uses the next bounded poll after HTTP %s, then verifies run and job", async (status) => {
     const pause = vi.fn(async () => {});
     const fetchImpl = vi.fn<typeof fetch>().mockResolvedValueOnce(new Response("{}", { status, headers: { "retry-after": "0" } })).mockResolvedValueOnce(success()).mockResolvedValueOnce(jobs());
-    await waitForCi(sha, { ...options, pause, fetchImpl });
+    await waitForCi(sha, { ...options, attempts: 2, intervalMs: 0, pause, fetchImpl });
     expect(pause).toHaveBeenCalledTimes(1); expect(fetchImpl).toHaveBeenCalledTimes(3);
   });
-  it("fails closed after its single rate retry", async () => {
+  it("fails closed after its finite polling budget", async () => {
     const fetchImpl = vi.fn<typeof fetch>().mockImplementation(async () => new Response("{}", { status: 429, headers: { "retry-after": "0" } }));
-    await expect(waitForCi(sha, { ...options, fetchImpl })).rejects.toThrow(/HTTP 429/);
+    await expect(waitForCi(sha, { ...options, attempts: 2, intervalMs: 0, fetchImpl })).rejects.toThrow(/HTTP 429/);
     expect(fetchImpl).toHaveBeenCalledTimes(2);
   });
-  it.each(["invalid", "60"])("does not retry malformed or long Retry-After: %s", async (retry) => {
+  it.each(["invalid", "60"])("does not extend its exhausted budget for Retry-After: %s", async (retry) => {
     const fetchImpl = vi.fn<typeof fetch>().mockResolvedValue(new Response("{}", { status: 429, headers: { "retry-after": retry } }));
     await expect(waitForCi(sha, { ...options, fetchImpl })).rejects.toThrow(/HTTP 429/);
     expect(fetchImpl).toHaveBeenCalledTimes(1);

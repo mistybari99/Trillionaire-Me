@@ -50,7 +50,7 @@ function handoverBody(lang: Locale): HTMLElement {
   const a = teamAnalysis(); const sops = sopRows(allRecs(), new Date());
   return h("div", { "data-print-handover": String(views.length) },
     h("section", { class: "card" }, h("h2", { class: "card-h" }, t("print.ho.title", lang)), ...analysisLines(a, lang),
-      h("label", { class: "no-print", style: "display:flex;gap:8px;align-items:center;margin:8px 0" }, h("input", { type: "checkbox", style: "width:24px;margin:0", "data-act": "ho-goal-names", ...(withGoalNames ? { checked: true } : {}),
+      h("label", { class: "no-print k-inline" }, h("input", { type: "checkbox", "data-act": "ho-goal-names", ...(withGoalNames ? { checked: true } : {}),
         onchange: (e: Event) => { withGoalNames = (e.target as HTMLInputElement).checked; window.dispatchEvent(new HashChangeEvent("hashchange")); } }), t("print.ho.names", lang))),
     ...views.map((v) => h("section", { class: "card", "data-print-role": v.row.id },
       h("h2", { class: "card-h" }, v.row.role),
@@ -82,7 +82,7 @@ export function printScreen(kindRaw?: string): HTMLElement {
   const body = kind === "plan" ? planBody(lang) : kind === "handover" ? handoverBody(lang) : reportBody(lang);
   return h("main", { class: "scr scr-print", "data-print-kind": kind }, back, h("h1", {}, t(`print.kind.${kind}` as Key, lang)),
     h("p", { class: "sub no-print" }, t("print.intro", lang)),
-    h("p", { class: "muted", "data-print-made": "1" }, nsTag(ns, lang), " ", t("print.made", lang, { d: day })),
+    h("div", { class: "muted k-inline", "data-print-made": "1" }, nsTag(ns, lang), h("span", {}, t("print.made", lang, { d: day }))),
     save, h("p", { class: "muted no-print" }, t("print.saveNote", lang)),
     body, disclaimers(lang),
     h("p", { class: "muted no-print" }, ...PRINT_KINDS.filter((k) => k !== kind).flatMap((k) => [printLink(k, lang, "crumb"), " "]), link("#/journey/print", "crumb", t("print.all", lang))));

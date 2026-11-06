@@ -9,7 +9,9 @@ import { activeNs, consentOn, consentPrompt, nsTag, saveBlockedText } from "./en
 import { DHAKA_COORDS, PRAYER_KEYS, parseCoord } from "../core/prayer";
 import { METHOD_IDS, MAX_OFFSET_MIN, parsePrayerSettings, type PrayerSettings } from "../core/prayerMethod";
 import { DEFAULT_ALERT_PREFS, parseAlertPrefs } from "../core/prayerAlerts";
-import { azanAvailability, notifyState, previewAzan, refreshAzanAvailability } from "./prayerAlerts";
+import { azanAvailability, notifyState, refreshAzanAvailability } from "./prayerAlerts";
+import { hasAnyAzan } from "../core/azanSlots";
+import { azanSoundBlock } from "./azanSoundUi";
 import { settingsHash } from "./settingsRegistry";
 import { prayerSyncCard } from "./prayerSyncUi";
 import { remindersCard } from "./remindersSettingsUi";
@@ -20,10 +22,10 @@ export function prayerMethodCard(lang: Locale): HTMLElement {
   const cur = parsePrayerSettings(prefs.prayerSettings);
   const save = (next: PrayerSettings) => { prefs.prayerSettings = next; rerender(); };
   const opt = (v: string, label: string, on: boolean) => h("option", { value: v, ...(on ? { selected: true } : {}) }, label);
-  const method = h("select", { id: "pm-method", "data-prayer-method-select": "1", style: "min-height:44px" },
+  const method = h("select", { id: "pm-method", "data-prayer-method-select": "1" },
     ...METHOD_IDS.map((m) => opt(m, t(`deen.method.${m}` as Key, lang), cur.method === m))) as HTMLSelectElement;
   method.addEventListener("change", () => save({ ...cur, method: parsePrayerSettings({ method: method.value }).method }));
-  const asr = h("select", { id: "pm-asr", "data-prayer-asr-select": "1", style: "min-height:44px" },
+  const asr = h("select", { id: "pm-asr", "data-prayer-asr-select": "1" },
     opt("standard", t("deen.asr.standard", lang), cur.asr === "standard"), opt("hanafi", t("deen.asr.hanafi", lang), cur.asr === "hanafi")) as HTMLSelectElement;
   asr.addEventListener("change", () => save({ ...cur, asr: asr.value === "hanafi" ? "hanafi" : "standard" }));
   const offs = PRAYER_KEYS.map((k) => {
@@ -31,7 +33,7 @@ export function prayerMethodCard(lang: Locale): HTMLElement {
     inp.addEventListener("change", () => { const n = Number(inp.value); save({ ...cur, offsets: { ...cur.offsets, [k]: Number.isInteger(n) && Math.abs(n) <= MAX_OFFSET_MIN ? n : 0 } }); });
     return h("div", { class: "row" }, h("label", { for: `pm-off-${k}` }, t(`deen.prayer.name.${k}` as Key, lang)), inp);
   });
-  const reset = h("button", { class: "btn ghost", type: "button", "data-act": "prayer-method-reset", style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => save(parsePrayerSettings(null)) }, t("deen.set.methodReset", lang));
+  const reset = h("button", { class: "btn ghost btn-sm", type: "button", "data-act": "prayer-method-reset", onclick: () => save(parsePrayerSettings(null)) }, t("deen.set.methodReset", lang));
   return h("div", { class: "card", "data-prayer-method-card": "1" },
     h("h2", { class: "card-h" }, t("deen.set.methodTitle", lang)),
     h("p", { class: "note", "data-prayer-verify": "1" }, t("deen.set.verify", lang)),
@@ -57,7 +59,7 @@ export function prayerSettingsCard(lang: Locale): HTMLElement {
     if (!consentOn()) { err.textContent = saveBlockedText(lang); return; } // a typed place is personal data: real mode needs the tick
     save({ lat: la, lon: lo });
   });
-  const dhaka = h("button", { class: "btn ghost", type: "button", "data-act": "prayer-dhaka", style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => save({ ...DHAKA_COORDS }) }, t("deen.set.dhaka", lang));
+  const dhaka = h("button", { class: "btn ghost btn-sm", type: "button", "data-act": "prayer-dhaka", onclick: () => save({ ...DHAKA_COORDS }) }, t("deen.set.dhaka", lang));
   const onOff = (label: Key, active: boolean, on: () => void) => h("button", { type: "button", "aria-pressed": String(active), onclick: on }, t(label, lang));
   const setAlerts = (next: typeof alerts) => { prefs.prayerAlerts = next; rerender(); };
   const toggle = (key: "preAlert" | "azan") => (on: boolean) => {
@@ -68,17 +70,18 @@ export function prayerSettingsCard(lang: Locale): HTMLElement {
   };
   const mins = h("input", { id: "pr-min", type: "number", min: "1", max: "60", step: "1", inputmode: "numeric", value: String(alerts.preMinutes), "aria-label": t("deen.set.preMin", lang), style: "width:6em" }) as HTMLInputElement;
   mins.addEventListener("change", () => { const n = Number(mins.value); setAlerts({ ...alerts, preMinutes: Number.isInteger(n) && n >= 1 && n <= 60 ? n : DEFAULT_ALERT_PREFS.preMinutes }); });
-  const hasAzan = azanAvailability().main || azanAvailability().fajr;
-  void refreshAzanAvailability().then((a) => { if ((a.main || a.fajr) !== hasAzan) rerender(); });
+  const hasAzan = hasAnyAzan(azanAvailability());
+  const sigOf = (a: ReturnType<typeof azanAvailability>) => a.slots.map((x) => `${x.main ?? ""}|${x.fajr ?? ""}|${x.source ?? ""}`).join(";");
+  const sig = sigOf(azanAvailability());
+  void refreshAzanAvailability().then((a) => { if (sigOf(a) !== sig) rerender(); });
   const vol = h("input", { id: "azan-vol", type: "range", min: "0", max: "100", step: "5", value: String(alerts.volume), "aria-label": t("deen.set.volume", lang), style: "width:100%;min-height:44px" }) as HTMLInputElement;
   vol.addEventListener("change", () => setAlerts({ ...alerts, volume: Number(vol.value) }));
-  const note = h("p", { class: "muted", "data-preview-note": "1", role: "status" });
   const ns = notifyState();
   const perm = ns === "unsupported" ? t("deen.set.permUnsupported", lang) : ns === "granted" ? t("deen.set.permOk", lang) : ns === "denied" ? t("deen.set.permDenied", lang) : t("deen.set.permAsk", lang);
   const prayerBtns = PRAYER_KEYS.map((k) => h("button", { type: "button", "data-alert-prayer": k, "aria-pressed": String(alerts.prayers[k]), style: "min-height:44px;min-width:44px", onclick: () => setAlerts({ ...alerts, prayers: { ...alerts.prayers, [k]: !alerts.prayers[k] } }) }, t(`deen.prayer.name.${k}` as Key, lang)));
   return h("div", { class: "card", "data-prayer-settings": "1" },
     h("h2", { class: "card-h" }, t("deen.set.title", lang)),
-    h("h3", {}, t("deen.set.place", lang), " ", nsTag(activeNs(), lang)),
+    h("div", { class: "row" }, h("h3", {}, t("deen.set.place", lang)), nsTag(activeNs(), lang)),
     activeNs() === "real" ? h("p", { class: "muted", "data-place-note": "1" }, t("entry.real.note", lang)) : null,
     form, dhaka,
     h("h3", {}, t("deen.set.pre", lang)),
@@ -93,8 +96,7 @@ export function prayerSettingsCard(lang: Locale): HTMLElement {
     h("p", { class: "muted", "data-sound-note": "1", "data-azan-file": hasAzan ? "yes" : "no" }, t(hasAzan ? "deen.set.soundNote" : "deen.set.soundNoFile", lang)),
     h("label", { for: "azan-vol" }, t("deen.set.volume", lang), ": ", String(alerts.volume)),
     vol,
-    h("button", { class: "btn ghost", type: "button", "data-act": "azan-preview", style: "width:auto;margin:6px 0 0;min-height:44px", onclick: () => { if (!previewAzan("dhuhr")) note.textContent = t(hasAzan ? "deen.set.previewSilent" : "deen.set.previewNone", lang); } }, t("deen.set.preview", lang)),
-    note,
+    ...azanSoundBlock(alerts, setAlerts, lang),
     h("p", { class: "muted", "data-azan-doc": "1" }, t("deen.set.azanDoc", lang)),
     h("p", { class: "muted" }, t("deen.set.defaultNote", lang)),
     h("p", { class: "muted", "data-perm": ns }, perm),

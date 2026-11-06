@@ -39,13 +39,13 @@ function reminderRow(lang: Locale): HTMLElement {
   const why = own ? t("bak.reminder.own", lang) : t(on ? "bak.reminder.on" : "bak.reminder.off", lang);
   const box = h("input", { type: "checkbox", id: "snap-remind", "data-snap": "remind", ...(on ? { checked: true } : {}), onchange: (e: Event) => { prefs.backupRemind = (e.target as HTMLInputElement).checked; rerender(); } });
   return h("section", { class: "card", "data-setting-row": "reminder" }, h("h2", { class: "card-h" }, t("set.row.reminder", lang)),
-    h("label", { class: "snap-check", for: "snap-remind", style: "min-height:44px" }, box, t("snap.remind", lang), " ", h("b", { "data-priv": "remind-state" }, t(on ? "set.on" : "set.off", lang))),
+    h("label", { class: "snap-check", for: "snap-remind" }, box, t("snap.remind", lang), " ", h("b", { "data-priv": "remind-state" }, t(on ? "set.on" : "set.off", lang))),
     h("p", { class: "muted" }, t("snap.remind.note", lang)), h("p", { class: "muted", "data-bak": "reminder-why" }, why));
 }
 
 function jsonSave(lang: Locale): HTMLElement {
   return h("section", { class: "card", "data-card": "json-backup" }, h("h2", { class: "card-h" }, t("backup.title", lang)), h("p", { class: "muted" }, t("backup.note", lang)),
-    h("button", { class: "btn", type: "button", "data-act": "backup", style: "min-height:44px", onclick: async () => {
+    h("button", { class: "btn", type: "button", "data-act": "backup", onclick: async () => {
       const b = await createBackup(new StoreRepo(store), "demo");
       const a = h("a", { href: URL.createObjectURL(new Blob([JSON.stringify(b)], { type: "application/json" })), download: `tm-demo-backup-${b.createdAt.slice(0, 10)}.json` });
       document.body.append(a); a.click(); a.remove(); markBackupFile(0); rerender();
@@ -63,8 +63,8 @@ export function backupPage(row: string | undefined, lang: Locale): HTMLElement {
     h("section", { "data-setting-row": "restore" }, h("a", { href: settingsHash("backup", "restore"), class: "card link" }, h("h2", { class: "card-h" }, t("set.row.restore", lang)), h("p", { class: "muted" }, t("bak.restore.note", lang)))),
     reminderRow(lang),
     h("section", { "data-setting-row": "storage" }, storageCard(lang)),
-    h("details", { "data-setting-row": "snapshots" }, h("summary", { style: "min-height:44px" }, t("bak.fold.snap", lang)), snapshotsCard(lang, "settings")),
-    h("details", { "data-setting-row": "csv" }, h("summary", { style: "min-height:44px" }, t("bak.fold.csv", lang)), csvCard(realOn, lang), importCard(lang)),
+    h("details", { "data-setting-row": "snapshots" }, h("summary", { }, t("bak.fold.snap", lang)), snapshotsCard(lang, "settings")),
+    h("details", { "data-setting-row": "csv" }, h("summary", { }, t("bak.fold.csv", lang)), csvCard(realOn, lang), importCard(lang)),
     h("section", { class: "card", "data-card": "pdf", "aria-label": t("print.title", lang) }, h("h2", { class: "card-h" }, t("print.title", lang)), h("p", { class: "muted" }, t("print.card.note", lang)),
       h("div", { class: "actions" }, ...PRINT_KINDS.map((k) => printLink(k, lang)))),
     h("p", { class: "muted", "data-bak": "settings-note" }, t("bak.settingsNote", lang)));

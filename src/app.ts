@@ -2,7 +2,7 @@ import { ownerProfileLink, ownerProfileScreen } from "./ui/ownerProfileUi";
 import { h } from "./ui/dom";
 import { applyPrefs, prefs } from "./ui/state";
 import { t, tb } from "./i18n/t";
-import { demoBadge } from "./ui/components";
+import { demoBadge, resetNotices } from "./ui/components";
 import { langMenu } from "./ui/langMenu";
 import * as S from "./ui/screens";
 import * as LS from "./ui/libraryScreens";
@@ -123,6 +123,7 @@ export function renderApp() {
 export function render() {
   if (isLocked()) { renderApp(); return; }
   applyPrefs();
+  resetNotices();
   trackDemoDay();
   const lang = prefs.lang;
   let path = location.hash.replace(/^#/, "") || "/today";
@@ -156,7 +157,7 @@ export function render() {
   // In-app prayer reminders (M13) show above the screen when the phone cannot show a notification.
   const reminders = inAppReminders().map((r) => h("div", { class: "card", role: "status", "data-inapp-reminder": r.id },
     h("h2", { class: "card-h" }, t("deen.alert.title", lang)), h("p", {}, notifyText(r.text, lang)),
-    h("button", { class: "btn ghost", type: "button", "data-act": "reminder-dismiss", style: "width:auto;margin:0;min-height:44px", onclick: () => { dismissReminder(r.id); render(); } }, t("deen.alert.dismiss", lang))));
+    h("button", { class: "btn ghost btn-sm", type: "button", "data-act": "reminder-dismiss", onclick: () => { dismissReminder(r.id); render(); } }, t("deen.alert.dismiss", lang))));
   // Keep the reader's place on taps inside the same screen; jump to top only when the screen changes.
   const savedY = window.scrollY;
   const routeChanged = path !== lastRenderedPath;

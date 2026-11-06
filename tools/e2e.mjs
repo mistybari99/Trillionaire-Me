@@ -483,6 +483,43 @@ for (const lang of ["en", "bn"]) {
   await page.emulateMedia({ media: "screen" });
   check("PDF-PRINT", "Save as PDF opens the print window; the paper layout hides tabs and buttons", printed === 1 && hidden, `printed=${printed} hidden=${hidden}`);
 }
+// A quick prayer failure/retry must never replace a different unfinished form.
+{
+  const draftContext = await browser.newContext({ viewport: { width: 360, height: 740 }, serviceWorkers: "block" });
+  await draftContext.addInitScript(() => {
+    localStorage.setItem("tm:ui:dataMode", "demo"); localStorage.setItem("tm:ui:lang", "en"); localStorage.setItem("tm:ui:tabNavigation", "menu");
+    Object.defineProperty(window, "indexedDB", { value: undefined });
+    window.__originalSet = Storage.prototype.setItem;
+    Storage.prototype.setItem = function(key, value) { if (/^tm:(demo|real):/.test(key)) throw new DOMException("Synthetic save rejection", "QuotaExceededError"); return window.__originalSet.call(this, key, value); };
+  });
+  const draftPage = await draftContext.newPage();
+  draftPage.on("request", r => { if (!r.url().startsWith("http://localhost:4174") && /^https?:/.test(r.url())) external.push(r.url()); });
+  await draftPage.goto("http://localhost:4174/#/diary/intake/1");
+  const draft = draftPage.locator('[id="f-profile.display_name"]'); await draft.fill("Synthetic unsaved draft");
+  await draft.evaluate(el => { window.__draftNode = el; el.setSelectionRange(3, 10); });
+  await draftPage.locator('.bottom-tabs [data-tab-menu="deen"]').click();
+  await draftPage.locator('.quick-panel button[data-prayer="fajr"]').click();
+  await draftPage.waitForSelector("[data-save-failed]");
+  const draftState = () => draftPage.evaluate(() => ({ same: window.__draftNode.isConnected && document.querySelector('[id="f-profile.display_name"]') === window.__draftNode,
+    value: window.__draftNode.value, selection: [window.__draftNode.selectionStart, window.__draftNode.selectionEnd], panels: document.querySelectorAll(".quick-panel").length }));
+  const failed = await draftState();
+  check("PRAYER-DRAFT-FAIL", "storage rejection shows recovery without replacing an unfinished form or its selection", failed.same && failed.value === "Synthetic unsaved draft" && failed.selection.join() === "3,10" && failed.panels === 1, JSON.stringify(failed));
+  await draftPage.evaluate(() => { Storage.prototype.setItem = window.__originalSet; });
+  await draftPage.locator('.quick-panel button[data-prayer="fajr"]').click();
+  await draftPage.waitForSelector('.quick-panel button[data-prayer="fajr"][aria-pressed="true"]');
+  await draftPage.locator("[data-save-failed]").waitFor({ state: "detached" });
+  const recovered = await draftState();
+  check("PRAYER-DRAFT-RETRY", "durable retry clears only the failure banner and keeps the original draft", recovered.same && recovered.value === failed.value && recovered.selection.join() === "3,10", JSON.stringify(recovered));
+  await draftPage.goto("http://localhost:4174/#/journey"); await draftPage.waitForSelector(".scr-journey");
+  await draftPage.evaluate(() => { location.hash = "#/today"; }); await draftPage.waitForSelector(".scr-today");
+  await draftPage.locator('.bottom-tabs [data-tab-menu="journey"]').click();
+  await draftPage.locator("[data-owner-profile]").focus(); await draftPage.keyboard.press("Enter"); await draftPage.waitForSelector("[data-owner-profile-screen]");
+  await draftPage.goBack(); await draftPage.waitForSelector(".scr-today");
+  const firstBack = await draftPage.evaluate(() => ({ hash: location.hash, marker: history.state?.["tm:overlay"] }));
+  await draftPage.goBack(); await draftPage.waitForSelector(".scr-journey");
+  check("MENU-UNDERLYING-BACK", "keyboard navigation through the underlying Owner Profile leaves no duplicate Back stop", firstBack.hash === "#/today" && !firstBack.marker && new URL(draftPage.url()).hash === "#/journey");
+  await draftContext.close();
+}
 check("SEC-CSP", "page policy (CSP meta) blocks nothing the app needs: 0 violations in the whole run", cspHits.length === 0, JSON.stringify(cspHits));
 check("G1-NONET", "0 third-party/external requests during all of the above", external.length === 0, JSON.stringify(external));
 

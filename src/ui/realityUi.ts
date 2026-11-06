@@ -100,7 +100,7 @@ function optionBlock(ev: EventRow, evRec: TMRecord, imp: Impact, option: LoopOpt
     const ch = planChange(recs, imp, option, { today: iso(), days, mode: prefs.mode });
     const diff = planDiff(snapshotOf(recs, prefs.mode), snapshotOf(applyToRecords(recs, ch), ch.mode ?? prefs.mode));
     const tick = h("input", { type: "checkbox", id: `rl-tick-${ev.id}-${option}` });
-    const approve = h("button", { class: "btn", type: "button", "data-act": "approve", "data-option": option, style: "width:auto;margin:6px 0 0;min-height:44px" }, t("rl.approve", lang));
+    const approve = h("button", { class: "btn btn-sm", type: "button", "data-act": "approve", "data-option": option }, t("rl.approve", lang));
     approve.addEventListener("click", () => {
       msg.className = "err"; msg.textContent = "";
       if (!consentOn()) { msg.textContent = saveBlockedText(lang); return; }
@@ -131,7 +131,7 @@ function waitingCard(ev: EventRow, lang: Locale): HTMLElement {
   const imp = impactOf(recs, ev);
   const opts = optionsFor(imp, prefs.mode);
   const goalTitle = ev.goalId ? imp.goals.find((g) => g.id === ev.goalId)?.title ?? null : null;
-  const noteBtn = h("button", { class: "btn ghost", type: "button", "data-act": "note-only", style: "width:auto;margin:6px 0 0;min-height:44px" }, t("rl.noteOnly", lang));
+  const noteBtn = h("button", { class: "btn ghost btn-sm", type: "button", "data-act": "note-only" }, t("rl.noteOnly", lang));
   const msg = h("p", { class: "err", role: "alert" });
   noteBtn.addEventListener("click", () => { if (!noteOnly(evRec, lang)) { msg.textContent = saveBlockedText(lang); return; } rerender(); });
   return h("div", { class: "card", "data-event": ev.id, "data-event-state": "open" },
@@ -181,7 +181,7 @@ function resumeCard(lang: Locale): HTMLElement | null {
   const ch = resumeChange(recs, { today: iso(), mode: prefs.mode });
   const diff = planDiff(snapshotOf(recs, prefs.mode), snapshotOf(applyToRecords(recs, ch), ch.mode ?? prefs.mode));
   const msg = h("p", { class: "err", role: "alert" });
-  const btn = h("button", { class: "btn", type: "button", "data-act": "resume", style: "width:auto;margin:6px 0 0;min-height:44px" }, t("rl.resume.btn", lang));
+  const btn = h("button", { class: "btn btn-sm", type: "button", "data-act": "resume" }, t("rl.resume.btn", lang));
   btn.addEventListener("click", () => {
     const fresh = allRecs(); const real = resumeChange(fresh, { today: iso(), mode: prefs.mode });
     const n = commitChange({ ch: real, option: "resume", event: null, recs: fresh, lang });
@@ -199,7 +199,7 @@ function parkedList(lang: Locale): HTMLElement {
   return h("section", { "data-parked-list": String(rows.length) },
     h("h2", {}, t("rl.parked.title", lang)),
     rows.length ? h("ul", { class: "plain" }, ...rows.map((r) => h("li", { "data-parked": r.id }, h("strong", {}, r.title || "—"), " · ", r.since ? t("rl.parked.tag", lang, { date: r.since }) : "", " ",
-      h("button", { class: "btn ghost", type: "button", "data-act": "bring-back", style: "width:auto;margin:0;min-height:44px", onclick: () => {
+      h("button", { class: "btn ghost btn-sm", type: "button", "data-act": "bring-back", onclick: () => {
         const fresh = allRecs(); const rec = fresh.find((x) => x.id === r.id); if (!rec) return;
         const ch: PlanChange = { puts: [unparkTask(rec)], mode: null, itemCount: 1, big: false };
         if (commitChange({ ch, option: "resume", event: null, recs: fresh, lang }) === null) return;

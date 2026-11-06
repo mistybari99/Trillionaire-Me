@@ -59,6 +59,18 @@ export function setOverlayContext(key: string): void {
   context = key;
 }
 if (typeof window !== "undefined") {
+// Nonmodal menus leave the page usable. Route links outside the menu, and links
+// inside a help sheet, must consume the same transient Back stop as menu links.
+document.addEventListener("click", (event) => {
+  if ((!active?.history && !returning) || event.defaultPrevented || event.button !== 0
+    || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+  const anchor = event.target instanceof Element ? event.target.closest<HTMLAnchorElement>("a[href]") : null;
+  const href = anchor?.getAttribute("href");
+  if (!anchor || !href?.startsWith("#/") || anchor.hasAttribute("download")
+    || (anchor.target && anchor.target !== "_self")) return;
+  event.preventDefault();
+  navigateFromOverlay(() => { location.hash = href; });
+});
 window.addEventListener("popstate", () => {
   if (returning) {
     returning = false; owned = undefined;

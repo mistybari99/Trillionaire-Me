@@ -54,7 +54,7 @@ export function homeSummaryCards(lang: Locale): HTMLElement {
     h("div", { class: "row" }, h("h2", {}, t("home.sum.title", lang)), nsTag(activeNs(), lang)),
     h("div", { class: "home-grid" }, ...METRICS.map(([id, pick, key]) => metricCard(id, key, pick, scopes, lang))),
     h("p", { class: "muted" }, t("home.sum.note", lang), " ", t("home.saved", lang)),
-    h("a", { href: "#/diary/money", class: "btn ghost", style: "width:auto;margin:0;min-height:44px" }, t("home.sum.open", lang)));
+    h("a", { href: "#/diary/money", class: "btn ghost btn-sm" }, t("home.sum.open", lang)));
 }
 
 const BTN: Record<NextAction["id"], Key> = { add_goal: "next.btn.diary", link_task: "next.btn.plan", add_task: "next.btn.plan", do_task: "next.btn.plan", add_money: "next.btn.money", rate_life: "next.btn.wheel", review_plan: "next.btn.plan" };
@@ -66,7 +66,7 @@ export function nextActionCard(lang: Locale, a = nextBestAction(allRecs()), comp
     h("h2", { class: "card-h" }, t("next.title", lang)),
     h("p", { class: "next-title", "data-next-title": "1" }, t(`next.${a.id}.title` as Key, lang, args)),
     h("p", { class: "next-why", "data-next-reason": "1" }, h("strong", {}, `${t("next.why", lang)} `), t(`next.${a.id}.reason` as Key, lang)),
-    h("a", { href: a.href, class: "btn", "data-act": "next-go", style: "width:auto;margin:0;min-height:44px" }, t(BTN[a.id], lang)),
+    h("a", { href: a.href, class: "btn btn-sm", "data-act": "next-go" }, t(BTN[a.id], lang)),
     h("p", { class: "muted" }, t("next.note", lang)));
 }
 
@@ -93,7 +93,7 @@ export function adviceCardsView(lang: Locale): HTMLElement | null {
       h("p", { class: "next-title" }, t(`advice.${c.rule}.title` as Key, lang, c.args)),
       h("p", { class: "next-why", "data-advice-reason": "1" }, h("strong", {}, `${t("advice.why", lang)} `), t(`advice.${c.rule}.reason` as Key, lang, c.args)),
       h("p", { class: "muted", "data-advice-prov": `${c.provenance.kind}/${c.provenance.source}/${c.provenance.reviewer}` }, t("advice.draft", lang)),
-      h("a", { href: `#/topic/${TOPICS.some((x) => x.id === c.topic) ? c.topic : "goal-strategy"}`, class: "btn ghost", "data-act": "advice-open", style: "width:auto;margin:0 8px 0 0;min-height:44px" }, t("advice.open", lang)),
-      h("a", { href: c.href, class: "btn ghost", style: "width:auto;margin:0;min-height:44px" }, t("next.btn.plan", lang)))),
+      h("a", { href: `#/topic/${TOPICS.some((x) => x.id === c.topic) ? c.topic : "goal-strategy"}`, class: "btn ghost btn-sm", "data-act": "advice-open" }, t("advice.open", lang)),
+      h("a", { href: c.href, class: "btn ghost btn-sm" }, t("next.btn.plan", lang)))),
     h("p", { class: "muted" }, t("advice.note", lang)));
 }

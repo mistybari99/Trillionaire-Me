@@ -803,3 +803,29 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 - Owner questioned the always-open module descriptions and Input/Storage/Calculation/Built lists shown in Journey screenshots. Put these reference cards inside one native closed disclosure per Journey/Diary/Deen screen, using a plain localized Feature details label.
 - Retain all module data/build information and the fully expanded dedicated Build status page. Keep tools, save/consent warnings and ordinary guidance in their existing positions. No calculation, data schema, record or preference change.
 - Evidence: `docs/audit/FEATURE_DETAILS_2026-11-06.md`. Undo by reverting this presentation change; there is no stored state to migrate.
+
+
+## 6 Nov 2026 — UI component kit over every screen (ui-polish-spec K0-K6, reconciled with Action Desk)
+
+- Decision: add a token layer (spacing, radius, elevation, hairline, control, type, motion, tints) to `styles.css`, per-look overrides in `themes.ts`, and one component kit (`src/ui/kit.css` plus builders in `src/ui/kit/index.ts`). Old class names (`.btn .cta .card .row .tag .chip .note .need .seg .field`) stay as aliases that receive the kit look, so tests, e2e selectors and the merged Action Desk markup keep working. The 96 `.scr-*` per-screen spacing repairs and the old "one vertical rhythm" `!important` block were deleted.
+- Fixes root causes: buttons no longer own margins (container gap), checkboxes/radios are a 24px drawn box (no 100% width), notices replace left-rule quotes, disclaimers render as one legal notice and once per route (`resetNotices`), chips never sit inside a sentence (labelled value `.val` is the one exception because TM-REQ-006 needs its label next to the figure), inline `style:` attributes cut from 195 to 42 (test allowlist only shrinks).
+- Kept: all logic, data, consent/Deen/D-B wording, Bangla copy, no-red-for-missed-goals. Action Desk and text-size slider (rem tokens scale with it) unchanged in behaviour.
+- Alternatives: keep per-screen CSS (rejected: root cause of touching buttons). Undo: revert the kit commits; aliases mean each step reverts alone.
+- Evidence: tests/ui_kit_rules.test.ts, tests/kit_components.test.ts, looks matrix (tools/screenshots.mjs, 60 routes x 4 looks x EN/BN x light/dark x 100/200%, gap >= 8px check added).
+
+
+## 6 Nov 2026 — Azan recording slots and playback speed (AZAN-01)
+
+- Owner request: the owner will supply azan mp3 files later; build the system first. No audio is added by the builder (no licence).
+- What: 4 slots (`azan-1..4.mp3`, optional `azan-N-fajr.mp3`; old `azan.mp3` / `azan-fajr.mp3` still work as slot 1). Optional `public/audio/azan-manifest.json` gives each slot a neutral label and a source/licence note only; file names are fixed by pattern so a bad manifest cannot break playback. Missing slots show "Not added" and cannot be chosen. Default = first added slot. Speed 0.75-1.5x, step 0.05, default 1.0, `playbackRate` with `preservesPitch`; live length line from the file's own metadata, "unknown" (never 0) when not read. New pure modules `src/core/azanSlots.ts`, `src/core/azanSpeed.ts`; screen block `src/ui/azanSoundUi.ts` (kit rows/buttons, 44px controls).
+- Settings: `tm:ui:prayerAlerts` gets two additive fields, `azanSlot` ("" or "1".."4") and `azanSpeed`. This is a per-device pref (not the IndexedDB record schema), so `SCHEMA_VERSION` stays; the parser is the migration: a value saved before these fields is read with the defaults (tested in `tests/azan_slots.test.ts`). Kept record fixtures and fingerprint are unchanged.
+- Offline: the build already lists every file in `dist/` (`tools/precache.ts`), so the manifest and each added slot file are saved at install; the 3 MB cap per file is unchanged (`probeAudio`). No change to `check_deploy`, CSP (`media-src 'self'`) or headers.
+- Alternatives: manifest-driven file names (rejected: path risk); one big hardcoded list in TS (rejected: owner cannot edit notes without code); changing speed by re-encoding (rejected: needs tooling, browser does it).
+- Undo: revert this commit. Saved settings stay readable by the older code (extra fields are ignored). Real playback with the owner's files is still owner task OWNER-08.
+
+
+## 2026-11-06 — Owner process rules: Prompt-Engineer first, Audit PASS last, one voice
+- What: (1) Before work on every non-trivial owner command, a read-only Prompt-Engineer agent turns the short command into an exact work order. (2) A feature, option, function or plan row is done only after a separate read-only Audit agent confirms end-to-end delivery (links, dependents, nothing left, no stubs) with PASS. (3) Only the main Claude Code session replies to the owner; the other chat session must not generate replies. (4) Part A/B full-app review ordered: 3 read-only agents judge every module and screen (enough / partial / missing / ideas), 2 read-only agents propose UI/UX improvements; reports and docs only, no code push.
+- Why: the owner had to repeat tasks because commands were vague, which wastes usage; confirmed by the owner in the chat on 6 Nov 2026.
+- Alternatives: run the chain for every message (rejected: too costly for small fixes; trivial commands skip it and say so); builder audits itself (rejected: not independent).
+- Undo: delete `docs/process/prompt-engineer-agent.md`, `.claude/agents/prompt-engineer.md`, `.claude/agents/audit-verifier.md`, and the two bullets at the top of CLAUDE.md section 3.

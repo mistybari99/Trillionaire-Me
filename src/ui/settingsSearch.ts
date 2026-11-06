@@ -36,9 +36,9 @@ export function withSearch(main: HTMLElement, lang: Locale): HTMLElement {
   const status = h("p", { class: "muted", role: "status", "data-search": "status" });
   const list = h("ul", { style: "list-style:none;padding:0;margin:0", "data-search": "results" });
   const panel = h("section", { class: "card", hidden: true, "data-search": "panel" }, input, status, list);
-  const btn = h("button", { type: "button", class: "btn ghost", "data-act": "search-open", "aria-expanded": "false", "aria-controls": "search-panel", "aria-label": t("set.search", lang), style: "width:44px;min-width:44px;height:44px;margin:0;padding:0" }, "\u{1F50D}") as HTMLButtonElement;
+  const btn = h("button", { type: "button", class: "btn ghost k-iconbtn", "data-act": "search-open", "aria-expanded": "false", "aria-controls": "search-panel", "aria-label": t("set.search", lang) }, "\u{1F50D}") as HTMLButtonElement;
   panel.id = "search-panel";
-  const item = (e: SearchEntry) => h("li", { style: "margin:6px 0" }, h("a", { href: e.href, class: "card link", "data-search-hit": e.id, style: "margin:0", onclick: () => remember(e.id) }, h("strong", {}, t(e.label, lang)), " ", h("span", { class: "tag" }, t(CAT_LABEL[e.cat], lang))));
+  const item = (e: SearchEntry) => h("li", { class: "k-linkrow" }, h("a", { href: e.href, class: "card link", "data-search-hit": e.id, onclick: () => remember(e.id) }, h("strong", {}, t(e.label, lang)), " ", h("span", { class: "tag" }, t(CAT_LABEL[e.cat], lang))));
   const paint = () => {
     const q = input.value; const hits = searchSettings(q);
     if (!norm(q)) { const rec = recentIds().map((id) => entries.find((e) => e.id === id)).filter((e): e is SearchEntry => !!e); status.textContent = rec.length ? t("set.search.recent", lang) : ""; list.replaceChildren(...rec.map(item)); return; }

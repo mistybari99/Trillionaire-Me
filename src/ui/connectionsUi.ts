@@ -17,13 +17,13 @@ let missingTick: FacilityId | null = null;
 let keyMsg: { id: FacilityId; key: Key; bad: boolean } | null = null;
 
 function confirmPanel(id: FacilityId, lang: Locale): HTMLElement {
-  const tick = h("input", { type: "checkbox", id: `conn-tick-${id}`, "data-conn-tick": id, style: "width:24px;margin:0" }) as HTMLInputElement;
+  const tick = h("input", { type: "checkbox", id: `conn-tick-${id}`, "data-conn-tick": id }) as HTMLInputElement;
   return h("div", { class: "card", "data-conn-confirm": id, role: "group", "aria-label": t("conn.confirm.title", lang) },
     h("h3", {}, t("conn.confirm.title", lang)),
     h("p", {}, t("conn.confirm.cost", lang)),
     h("p", {}, t("conn.confirm.leave", lang)),
     h("p", {}, t("conn.confirm.real", lang)),
-    h("label", { style: "display:flex;gap:8px;align-items:center;margin:8px 0" }, tick, t("conn.confirm.tick", lang)),
+    h("label", { class: "k-check" }, tick, t("conn.confirm.tick", lang)),
     h("button", { class: "btn", type: "button", "data-conn-confirm-btn": id, onclick: () => {
       if (!tick.checked) { missingTick = id; rerender(); return; }
       missingTick = null; confirming = null;
@@ -61,7 +61,7 @@ function card(id: FacilityId, lang: Locale): HTMLElement {
   const on = isEnabled(consentKv, id);
   const enable = h("button", { class: "btn ghost", type: "button", "data-conn-enable": id, disabled: !approved, "aria-disabled": String(!approved), onclick: () => { if (setEnabled(consentKv, id, true)) rerender(); } }, t("conn.enable", lang)) as HTMLButtonElement;
   return h("section", { class: "card", "data-conn": id, "data-conn-status": st },
-    h("h2", { class: "card-h" }, t(`conn.${id}.name` as Key, lang), " ", h("span", { class: `tag ${st === "connected" ? "ok" : st === "needs_approval" ? "warn" : "off"}`, "data-conn-tag": id }, t(`conn.status.${st}` as Key, lang))),
+    h("div", { class: "row" }, h("h2", { class: "card-h" }, t(`conn.${id}.name` as Key, lang)), h("span", { class: `tag ${st === "connected" ? "ok" : st === "needs_approval" ? "warn" : "off"}`, "data-conn-tag": id }, t(`conn.status.${st}` as Key, lang))),
     h("p", {}, t(`conn.${id}.does` as Key, lang)),
     h("p", { class: "muted" }, t(`conn.${id}.needs` as Key, lang)),
     id === "aiAssistant" || id === "cloudSync" ? h("p", { class: "muted", "data-conn-slot": id }, t(`conn.${id}.slot` as Key, lang)) : null,
