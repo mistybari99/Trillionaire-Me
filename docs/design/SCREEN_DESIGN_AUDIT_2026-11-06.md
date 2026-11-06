@@ -23,4 +23,4 @@ Help (i): `helpTrigger`, `helpTopics`, `screenHelp` (so `k-help` is not new; it 
 Look D-E (Light, Colorful, Futuristic) and kit tokens; EN/BN/Mix; 360 px; text 50-150% (test steps 50/75/100/125/150; slider min 50 in settingsUi.ts); no scores, ranks or streaks; unknown is not 0; DEMO labels; no scripture text (D-D); nothing that needs AI (D-C). It does not contradict `docs/design/ui-reconcile-plan.md`.
 
 ## Status
-Audit history: first audit FAIL (fixed), second audit FAIL after the Codex merge (re-based on the built help, profile and navigation), third audit pending. See the PLAN_TRACKER row for the result.
+Audit history: first audit FAIL (fixed), second audit FAIL after the Codex merge (re-based on the built help, profile and navigation), **third audit PASS** (6 Nov 2026, commit 04d0bd8: all 7 must-fix items verified, 360 px check run in light and dark, route coverage compared with ROUTES and REDIRECTS).

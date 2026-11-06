@@ -108,3 +108,10 @@ describe("shared contextual help", () => {
     expect(mine).not.toHaveBeenCalled();
   });
 });
+
+describe("field help spacing (found by the 6 Nov screen check on /capture)", () => {
+  it("keeps a gap above the field help so its tap target never touches the control above it", async () => {
+    const { readFileSync } = await import("node:fs");
+    expect(readFileSync("src/ui/helpUi.css", "utf8")).toMatch(/\.field-help\s*\{[^}]*margin-top:\s*8px/);
+  });
+});

@@ -26,3 +26,6 @@
 .screen-help-heading>h1{flex:1 1 min(70%,20rem);min-width:0;margin:0}
 .screen-help-heading>.help-anchor{flex:0 0 44px}
 .screen-help-heading>.help-anchor:has(>.context-help){flex:1 0 100%}
+
+/* Field help follows the control above it (for example the Capture button): keep a gap so the two tap targets never touch. */
+.field-help { margin-top: 8px; }
