@@ -823,3 +823,9 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 - Alternatives: manifest-driven file names (rejected: path risk); one big hardcoded list in TS (rejected: owner cannot edit notes without code); changing speed by re-encoding (rejected: needs tooling, browser does it).
 - Undo: revert this commit. Saved settings stay readable by the older code (extra fields are ignored). Real playback with the owner's files is still owner task OWNER-08.
 
+
+## 2026-11-06 — Owner process rules: Prompt-Engineer first, Audit PASS last, one voice
+- What: (1) Before work on every non-trivial owner command, a read-only Prompt-Engineer agent turns the short command into an exact work order. (2) A feature, option, function or plan row is done only after a separate read-only Audit agent confirms end-to-end delivery (links, dependents, nothing left, no stubs) with PASS. (3) Only the main Claude Code session replies to the owner; the other chat session must not generate replies. (4) Part A/B full-app review ordered: 3 read-only agents judge every module and screen (enough / partial / missing / ideas), 2 read-only agents propose UI/UX improvements; reports and docs only, no code push.
+- Why: the owner had to repeat tasks because commands were vague, which wastes usage; confirmed by the owner in the chat on 6 Nov 2026.
+- Alternatives: run the chain for every message (rejected: too costly for small fixes; trivial commands skip it and say so); builder audits itself (rejected: not independent).
+- Undo: delete `docs/process/prompt-engineer-agent.md`, `.claude/agents/prompt-engineer.md`, `.claude/agents/audit-verifier.md`, and the two bullets at the top of CLAUDE.md section 3.
