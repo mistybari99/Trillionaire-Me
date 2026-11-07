@@ -21,6 +21,13 @@ export const QB1_EN = {
   "qb1.why.h": "Show my why",
   "qb1.why.empty": "You have not written your why yet. Add it in the goal form below.",
   "qb1.why.add": "Add my why",
+  // Q-06 weekly additions
+  "qb1.way.h": "What got in the way this week?", "qb1.way.note": "Optional. It stays on this phone.",
+  "qb1.way.time": "Not enough time", "qb1.way.energy": "Low energy", "qb1.way.unclear": "The next step was unclear", "qb1.way.interrupt": "Many interruptions", "qb1.way.other": "Something else", "qb1.way.skip": "Skip",
+  "qb1.way.saved": "Noted. You can change it any time this week.", "qb1.way.skipped": "Skipped. Nothing was saved.",
+  "qb1.wm.h": "Habits, last 7 days", "qb1.wm.unknown": "No habits yet, so there is nothing to show. This is Unknown, not zero.",
+  "qb1.wm.legend": "✓ done · ○ planned, not done yet · blank = not planned",
+  "qb1.wm.done": "{d}: done", "qb1.wm.open": "{d}: planned, not done yet", "qb1.wm.none": "{d}: not planned",
   // Q-05 Inspiration page + chooser coverage (names in the Look page list)
   "qb1.insp.h": "Inspiration", "qb1.insp.intro": "Short lines in four themes. Read one, then go back to your day.", "qb1.insp.more": "More inspiration",
   "look.screen.deen": "Deen", "look.screen.stuck": "Feeling stuck", "look.screen.topics": "Topics", "look.screen.northstar": "North Star", "look.screen.capture": "Write it",
@@ -42,6 +49,12 @@ export const QB1_BN: Record<keyof typeof QB1_EN, string> = {
   "qb1.why.h": "আমার কারণ দেখুন",
   "qb1.why.empty": "আপনার কারণ এখনো লেখা হয়নি। নিচের গোল ফর্মে লিখুন।",
   "qb1.why.add": "আমার কারণ লিখুন",
+  "qb1.way.h": "এই সপ্তাহে কী বাধা হয়েছে?", "qb1.way.note": "ইচ্ছা হলে বলুন। এটা শুধু এই ফোনে থাকে।",
+  "qb1.way.time": "সময় কম ছিল", "qb1.way.energy": "শক্তি কম ছিল", "qb1.way.unclear": "পরের ধাপ অস্পষ্ট ছিল", "qb1.way.interrupt": "বার বার বিঘ্ন হয়েছে", "qb1.way.other": "অন্য কিছু", "qb1.way.skip": "স্কিপ",
+  "qb1.way.saved": "লেখা হয়েছে। এই সপ্তাহে চাইলে বদলাতে পারেন।", "qb1.way.skipped": "স্কিপ করা হয়েছে। কিছু সেভ হয়নি।",
+  "qb1.wm.h": "অভ্যাস, শেষ 7 দিন", "qb1.wm.unknown": "এখনো কোনো অভ্যাস নেই, তাই দেখানোর কিছু নেই। এটা অজানা, শূন্য না।",
+  "qb1.wm.legend": "✓ হয়েছে · ○ প্ল্যান ছিল, এখনো হয়নি · ফাঁকা = প্ল্যান ছিল না",
+  "qb1.wm.done": "{d}: হয়েছে", "qb1.wm.open": "{d}: প্ল্যান ছিল, এখনো হয়নি", "qb1.wm.none": "{d}: প্ল্যান ছিল না",
   "qb1.insp.h": "অনুপ্রেরণা", "qb1.insp.intro": "চারটা থিমের ছোট কিছু লাইন। একটা পড়ুন, তারপর নিজের কাজে ফিরুন।", "qb1.insp.more": "আরও অনুপ্রেরণা",
   "look.screen.deen": "দ্বীন", "look.screen.stuck": "আটকে গেছেন", "look.screen.topics": "বিষয়", "look.screen.northstar": "নর্থ স্টার", "look.screen.capture": "লিখুন",
 };

@@ -53,7 +53,7 @@ import { progressRing, isMilestone } from "./ring";
 import { logo3d } from "./logo";
 import { goalFunnelHero, horizonArc } from "./horizonArt";
 import { viewBar, withView } from "./viewBar";
-import { concreteBank, effortTip, forkPicture, recoveryLine, timeBands } from "./qb1Ui";
+import { concreteBank, effortTip, forkPicture, recoveryLine, timeBands, wayCard, weekMatrixCard } from "./qb1Ui";
 import { kpiSection, kpiTodayCard, todayIsoKpi } from "./kpiUi";
 import { realityReportCard, realityTodayCard } from "./realityUi";
 import { northStarCard } from "./northStarCard";
@@ -1116,7 +1116,7 @@ export function weeklyScreen(): HTMLElement {
     h("p", { class: "sub" }, t("week.intro", lang)), remindRow("review", "weekly", lang),
     h("p", { class: "muted", "data-week-period": "1" }, valueEl(t("review.period", lang, { from: w.from, to: w.to }), "DEMO", lang)),
     viewBar("weekly", lang),
-    ...body,
+    ...body, weekMatrixCard(recs, w.to, lang), wayCard(w.to, lang),
     kpiSection("week", lang), moneyReviewCard(lang), riskReviewCard(lang),
     w.focusUnknown > 0 ? h("p", { class: "muted" }, t("week.unknownFocus", lang, { n: num(w.focusUnknown, lang) })) : null,
     h("p", { class: "muted" }, t("week.quiet", lang)), link("#/journey/month", "crumb", t("month.link", lang)),

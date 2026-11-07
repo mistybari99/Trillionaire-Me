@@ -5,6 +5,10 @@ import { t } from "../i18n/t";
 import type { Key } from "../i18n/packs";
 import type { Locale } from "../i18n/registry";
 import { CONCRETE_BANK } from "../core/stuck";
+import { WAY_OPTIONS, weekStart, type WayPick } from "../core/qb1Prefs";
+import { weekHabitMatrix } from "../core/weekMatrix";
+import type { TMRecord } from "../core/types";
+import { prefs } from "./state";
 import { TIPS } from "../library/topics";
 import { diagram } from "./diagram";
 
@@ -20,6 +24,36 @@ export function concreteBank(lang: Locale, input: HTMLInputElement): HTMLElement
     return b;
   });
   return h("div", { class: "qb1-bank-wrap", "data-card": "concrete_bank" }, h("h3", {}, t("qb1.bank.h", lang)), h("p", { class: "muted" }, t("qb1.bank.hint", lang)), h("div", { class: "qb1-bank" }, ...rows));
+}
+
+/** Q-06: "what got in the way this week": 5 taps plus Skip, kept in prefs for the calendar week. Optional; unanswered stays unknown. */
+export function wayCard(today: string, lang: Locale): HTMLElement {
+  const week = weekStart(today);
+  const cur = () => { const w = prefs.qbMemo.way; return w && w.week === week ? w.pick : null; };
+  const note = h("p", { class: "muted", role: "status", "data-way-status": "1" });
+  const btns = new Map<WayPick, HTMLButtonElement>();
+  const paint = () => { const c = cur(); for (const [k, b] of btns) b.setAttribute("aria-pressed", String(c === k)); note.textContent = c === null ? "" : c === "skip" ? t("qb1.way.skipped", lang) : t("qb1.way.saved", lang); };
+  const pick = (p: WayPick) => { prefs.qbMemo = { ...prefs.qbMemo, way: { week, pick: p } }; paint(); };
+  const mk = (p: WayPick) => { const b = h("button", { type: "button", class: p === "skip" ? "btn ghost" : "btn ghost qb1-way", "data-way": p, "aria-pressed": "false", onclick: () => pick(p) }, t(`qb1.way.${p}` as Key, lang)); btns.set(p, b); return b; };
+  const card = h("section", { class: "card", "data-card": "way" }, h("h2", { class: "card-h" }, t("qb1.way.h", lang)), h("p", { class: "muted" }, t("qb1.way.note", lang)),
+    h("div", { class: "qb1-ways", role: "group", "aria-label": t("qb1.way.h", lang) }, ...WAY_OPTIONS.map(mk), mk("skip")), note);
+  paint();
+  return card;
+}
+
+/** Q-06: last 7 days of each habit. A real table (text stays); a day that was not planned is blank, never a miss. No habits = an Unknown note. */
+export function weekMatrixCard(recs: readonly TMRecord[], today: string, lang: Locale): HTMLElement {
+  const rows = weekHabitMatrix(recs, today);
+  const head = h("h2", { class: "card-h" }, t("qb1.wm.h", lang));
+  if (!rows) return h("section", { class: "card", "data-card": "week_matrix", "data-matrix-unknown": "1" }, head, h("p", { class: "muted" }, t("qb1.wm.unknown", lang)));
+  const sym = { done: "✓", open: "○", none: "" } as const;
+  const dates = rows[0]!.days.map((d) => d.date);
+  return h("section", { class: "card", "data-card": "week_matrix" }, head,
+    h("div", { class: "qb1-scroll" }, h("table", { class: "qb1-matrix" },
+      h("thead", {}, h("tr", {}, h("th", { scope: "col" }, t("habits.title", lang)), ...dates.map((d) => h("th", { scope: "col" }, String(Number(d.slice(8))))))),
+      h("tbody", {}, ...rows.map((r) => h("tr", { "data-habit-row": r.id }, h("th", { scope: "row" }, r.title),
+        ...r.days.map((d) => h("td", { "data-state": d.state, "aria-label": t(`qb1.wm.${d.state}` as Key, lang, { d: d.date }) }, sym[d.state]))))))),
+    h("p", { class: "muted" }, t("qb1.wm.legend", lang)));
 }
 
 /** Q-04: collapsed details with the user's own goal.why. Empty = a prompt that jumps to the field (the field id is in the SMART form on the same page). */

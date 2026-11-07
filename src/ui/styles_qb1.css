@@ -5,6 +5,15 @@
 .qb1-bank .big{display:block;font-size:0.8125rem;color:var(--muted)}
 details[data-card=show_why] summary{cursor:pointer;min-height:44px;display:flex;align-items:center;color:var(--primary)}
 details[data-card=show_why] p{line-height:1.5;overflow-wrap:anywhere}
+.qb1-ways{display:grid;gap:8px;margin:8px 0}
+.qb1-ways button{min-height:44px;text-align:start;line-height:1.35;overflow-wrap:anywhere}
+.qb1-ways button[aria-pressed=true]{border-color:var(--primary);box-shadow:inset 3px 0 0 var(--primary)}
+.qb1-scroll{overflow-x:auto}
+.qb1-matrix{border-collapse:collapse;width:100%;font-size:0.8125rem}
+.qb1-matrix th,.qb1-matrix td{padding:6px 4px;text-align:center;min-width:28px}
+.qb1-matrix th[scope=row]{text-align:start;font-weight:600;max-width:110px;overflow-wrap:anywhere}
+.qb1-matrix td{border:1px solid var(--rule)}
+.qb1-matrix td[data-state=done]{color:var(--moss);font-weight:700}
 .qb1-fork{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:6px 0 10px;position:relative;padding-top:22px}
 .qb1-fork::before{content:"";position:absolute;top:0;left:50%;width:2px;height:12px;background:var(--rule);transform:translateX(-50%)}
 .qb1-fork::after{content:"";position:absolute;top:12px;left:25%;right:25%;height:2px;background:var(--rule)}
