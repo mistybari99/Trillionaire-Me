@@ -23,6 +23,10 @@ export interface TMRecord {
   values: RecordValues;
   /** structural links, e.g. { parent: "goal-1" } for the Goal → Subgoal → Project → Task hierarchy */
   links?: Record<string, string>;
+  /** At-rest encryption (src/core/dataVault.ts): 1 = `values` (and `links`) are sealed in `ct`/`iv`; only real records are ever sealed. */
+  enc?: 1; iv?: string; ct?: string;
+  /** In memory only: a sealed record that could not be opened. Its ciphertext stays in storage and is never overwritten. */
+  cantOpen?: boolean;
 }
 
 export const isUnknown = (v: FieldValue | undefined): v is { state: UnknownState } =>
