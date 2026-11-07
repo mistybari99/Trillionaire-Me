@@ -102,9 +102,9 @@ export const myFamily: SectorFamily = {
 8. Do not edit `index.ts`, `types.ts`, `engine.ts`, `formulas.ts`, `src/catalog/fields.ts` or any UI file. Create only your data files. If a formula you need is missing from the library, write it as an own expression and tell the integrator.
 9. Check your work: `npx vitest run tests/sector_family_files.test.ts tests/sector_engine.test.ts tests/bangla_plain.test.ts`. The integrator adds your file to `ALL_FAMILIES`, to `tests/fixtures/bangla_counts.json` (the Bangla string count of your file) and runs the full checklist. (`tools/banglaPlainCore.mjs` picks up every file in `families/` by itself.)
 
-## Coverage matrix (skeleton, status filled in phase B)
+## Coverage matrix
 
-ISIC-style sections and common Bangladesh business types, mapped to a family. Status: `done` = data file merged and validated; `todo` = writer pending. Anything not listed maps to `custom`.
+ISIC-style sections and common Bangladesh business types, mapped to a family. Status: `done` = data file written and validated; `todo` = writer pending; `written` = file written in phase B, integrator wiring pending. Anything not listed maps to `custom`.
 
 | # | Family id | Covers (ISIC-style section / Bangladesh business types) | Status |
 |---|---|---|---|
@@ -134,11 +134,66 @@ ISIC-style sections and common Bangladesh business types, mapped to a family. St
 | 24 | `mining-materials-quarry` | B: sand, stone, brick field, clay (light) | todo |
 | 25 | `finance-adjacent` | K64-66: micro-lending coordination, agent banking, MFS cash point, insurance agency (not advice) | todo |
 | 26 | `ngo-social-enterprise` | S94, Q88: NGO project, cooperative, social enterprise, foundation | todo |
-| 27 | `personal-services` | S96: salon, parlour, laundry, tailor, cleaning, photo studio | todo |
-| 28 | `gig-freelance` | N78, M: freelancer, gig worker, online marketplace worker, driver-partner | todo |
+| 27 | `personal-services` | S96: salon, parlour, laundry, tailor, cleaning, photo studio | written |
+| 28 | `gig-freelance` | N78, M: freelancer, gig worker, online marketplace worker, driver-partner, home tutor | written |
 | - | `custom` | Fallback for everything not mapped above: user-defined inputs and formulas | done (phase A) |
 
 ISIC sections with no dedicated family fall to `custom` or to the nearest family: O public administration (not a business), T households as employers, U extra-territorial bodies. Section R (arts, sports) maps to `digital-creator-media` or `custom`; section N (admin and support) maps to `professional-consulting`, `gig-freelance` or `transport-logistics`.
+
+### ISIC Rev.4 sections A-U to families
+
+| Section | Meaning | Family |
+|---|---|---|
+| A | Agriculture, forestry, fishing | `agriculture-crops`, `livestock-poultry-dairy`, `fisheries-aquaculture` |
+| B | Mining and quarrying | `mining-materials-quarry` |
+| C | Manufacturing | `manufacturing-discrete`, `food-processing`, `garments-textile`, `creative-design-print` (printing) |
+| D | Electricity, gas, steam | `energy-utilities-solar` |
+| E | Water, sewerage, waste | `energy-utilities-solar` |
+| F | Construction | `construction-contracting` |
+| G | Wholesale and retail trade | `retail`, `wholesale-trading`, `e-commerce-f-commerce`, `import-export` |
+| H | Transport and storage | `transport-logistics` |
+| I | Accommodation and food service | `hospitality-travel`, `food-service` |
+| J | Information and communication | `ict-software-saas`, `digital-creator-media` |
+| K | Finance and insurance | `finance-adjacent` (record keeping only, not advice) |
+| L | Real estate | `real-estate` |
+| M | Professional, scientific, technical | `professional-consulting`, `gig-freelance` |
+| N | Administrative and support | `professional-consulting`, `gig-freelance`, `transport-logistics`, `hospitality-travel` (travel agency) |
+| O | Public administration | unmapped -> `custom` (not a business) |
+| P | Education | `education-training` |
+| Q | Human health and social work | `healthcare-pharmacy`, `ngo-social-enterprise` |
+| R | Arts, entertainment, recreation | `digital-creator-media`, else `custom` |
+| S | Other service activities | `personal-services`, `repair-maintenance`, `ngo-social-enterprise` |
+| T | Households as employers | unmapped -> `custom` |
+| U | Extra-territorial bodies | unmapped -> `custom` |
+
+### Common Bangladesh business types to families
+
+| Business type | Family |
+|---|---|
+| Tea stall, street food, restaurant | `food-service` |
+| Mobile recharge shop, bKash or Nagad agent | `finance-adjacent` (cash point record keeping) |
+| Pharmacy | `healthcare-pharmacy` (counter sales also fit `retail`) |
+| Poultry farm | `livestock-poultry-dairy` |
+| Garment factory | `garments-textile` |
+| CNG, rickshaw, truck, courier | `transport-logistics` |
+| Coaching centre, home tutor | `education-training` (a lone tutor may also use `gig-freelance`) |
+| Brick field | `mining-materials-quarry` |
+| F-commerce page | `e-commerce-f-commerce` |
+| Freelancer, ride-app driver | `gig-freelance` |
+| Tailor, salon, laundry | `personal-services` |
+| Grocery, mini mart | `retail` |
+| Clinic, diagnostic centre | `healthcare-pharmacy` |
+| NGO, cooperative | `ngo-social-enterprise` |
+| Contractor | `construction-contracting` |
+| Import trader, C and F agent | `import-export` |
+| Aratdar, dealer, distributor | `wholesale-trading` |
+| Mobile or electronics repair | `repair-maintenance` |
+| Rice mill, spice or pickle maker | `food-processing` |
+| Anything else (unmapped) | `custom` |
+
+Unmapped -> `custom`: any business type or ISIC section not in the tables above uses the `custom` family, where the user defines their own inputs and formulas.
+
+Honest statement: coverage is by family plus the `custom` fallback. We do not promise any coverage percentage, such as 99 percent. A business may fit a family only roughly; the user can switch family or use `custom`.
 
 ## Next phases
 
