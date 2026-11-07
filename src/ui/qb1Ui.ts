@@ -9,6 +9,8 @@ import { WAY_OPTIONS, weekStart, type WayPick } from "../core/qb1Prefs";
 import { weekHabitMatrix } from "../core/weekMatrix";
 import type { TMRecord } from "../core/types";
 import { prefs } from "./state";
+import { allRecs } from "./entry";
+import { fourLegs, type AttentionLever } from "../core/legs";
 import { TIPS } from "../library/topics";
 import { diagram } from "./diagram";
 
@@ -24,6 +26,25 @@ export function concreteBank(lang: Locale, input: HTMLInputElement): HTMLElement
     return b;
   });
   return h("div", { class: "qb1-bank-wrap", "data-card": "concrete_bank" }, h("h3", {}, t("qb1.bank.h", lang)), h("p", { class: "muted" }, t("qb1.bank.hint", lang)), h("div", { class: "qb1-bank" }, ...rows));
+}
+
+const todayLocal = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; };
+
+/** Q-07: one calm "Worth a look: X" line on Today. Nothing at all when every leg is steady or unknown (an unknown leg is never a reason to nag). */
+export function legLine(lang: Locale): HTMLElement | null {
+  const r = fourLegs(allRecs(), todayLocal()); if (!r.lookAt.length) return null;
+  const names = r.lookAt.map((x) => t(`legs.leg.${x}` as Key, lang)).join(", ");
+  return h("p", { class: "qb1-leg", "data-leg-line": r.lookAt.join(",") }, h("a", { href: "#/journey/legs" }, t("legs.look", lang, { names })));
+}
+
+/** Q-07: where each leak lever's tip lives (topic cards) */
+export const LEVER_TOPIC: Record<AttentionLever, string> = { silence: "focus", close: "environment", clarify: "procrastination", bound: "time" };
+/** Q-07: link to the matching topic card plus a persistent "Keep this" toggle (kept in prefs, on this phone only). */
+export function leverExtras(lever: AttentionLever, lang: Locale, rerender: () => void): HTMLElement {
+  const kept = prefs.qbMemo.kept.includes(lever);
+  const keep = h("button", { class: "btn ghost btn-sm", type: "button", "data-act": "lever-keep", "aria-pressed": String(kept), onclick: () => {
+    const cur = prefs.qbMemo; prefs.qbMemo = { ...cur, kept: kept ? cur.kept.filter((x) => x !== lever) : [...cur.kept, lever] }; rerender(); } }, kept ? t("qb1.lever.kept", lang) : t("qb1.lever.keep", lang));
+  return h("p", { class: "qb1-lever-links" }, h("a", { href: `#/topic/${LEVER_TOPIC[lever]}`, "data-lever-topic": lever }, t("qb1.lever.tip", lang)), " ", keep);
 }
 
 /** Q-06: "what got in the way this week": 5 taps plus Skip, kept in prefs for the calendar week. Optional; unanswered stays unknown. */

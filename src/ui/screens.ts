@@ -53,7 +53,7 @@ import { progressRing, isMilestone } from "./ring";
 import { logo3d } from "./logo";
 import { goalFunnelHero, horizonArc } from "./horizonArt";
 import { viewBar, withView } from "./viewBar";
-import { concreteBank, effortTip, forkPicture, recoveryLine, timeBands, wayCard, weekMatrixCard } from "./qb1Ui";
+import { concreteBank, effortTip, forkPicture, legLine, recoveryLine, timeBands, wayCard, weekMatrixCard } from "./qb1Ui";
 import { kpiSection, kpiTodayCard, todayIsoKpi } from "./kpiUi";
 import { realityReportCard, realityTodayCard } from "./realityUi";
 import { northStarCard } from "./northStarCard";
@@ -1045,7 +1045,7 @@ export function today(): HTMLElement {
         hasSetupAction ? null : link("#/diary/intake", "cta", t("home.start", lang)),
         link("#/habits", "btn ghost", t("habits.link", lang)),
         link("#/stuck", "btn ghost", t("stuck.link", lang)))),
-    section("attention", "desk.attention", riskDueCard(lang, "today"), gateDueCard(lang, stageData().passed, "today"),
+    section("attention", "desk.attention", legLine(lang), riskDueCard(lang, "today"), gateDueCard(lang, stageData().passed, "today"),
       remindersTodayCard(lang), missedTodayCard(lang), goalDateReminders(lang), backupReminderCard(lang)),
     section("context", "desk.context", welcomeBackCard(lang), movedNoteCard(lang),
       nxt.field ? h("aside", { class: "card next-step", "data-next-step": nxt.field.id }, h("small", {}, "→ "), h("p", {}, t("home.next", lang, { field: tb(nxt.field.label, lang) }))) : null),

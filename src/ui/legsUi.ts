@@ -6,6 +6,7 @@ import { prefs } from "./state";
 import { disclaimers, num, valueEl } from "./components";
 import { allRecs } from "./entry";
 import { ATTENTION_LEVERS, fourLegs, leakReview } from "../core/legs";
+import { leverExtras } from "./qb1Ui";
 
 const rerender = () => window.dispatchEvent(new HashChangeEvent("hashchange"));
 const back = (lang: typeof prefs.lang) => h("a", { href: "#/journey", class: "crumb" }, `← ${t("journey.title", lang)}`);
@@ -38,7 +39,8 @@ export function leakScreen(): HTMLElement {
   const levers = ATTENTION_LEVERS.map((k) => {
     const on = marked.has(k);
     return h("li", { "data-lever": k }, h("strong", {}, t(`leak.att.${k}` as Key, lang)), h("p", {}, t(`leak.att.${k}.tip` as Key, lang)),
-      h("button", { class: "btn ghost btn-sm", type: "button", "data-act": "lever", "aria-pressed": String(on), onclick: () => { if (on) marked.delete(k); else marked.add(k); rerender(); } }, on ? t("leak.att.marked", lang) : t("leak.att.mark", lang)));
+      h("button", { class: "btn ghost btn-sm", type: "button", "data-act": "lever", "aria-pressed": String(on), onclick: () => { if (on) marked.delete(k); else marked.add(k); rerender(); } }, on ? t("leak.att.marked", lang) : t("leak.att.mark", lang)),
+      leverExtras(k, lang, rerender));
   });
   return h("main", { "data-screen": "leak" }, back(lang), h("h1", {}, t("leak.title", lang)), h("p", { class: "sub" }, t("leak.intro", lang)),
     h("section", { class: "card" }, h("h2", { class: "card-h" }, t("leak.money.h", lang)), ...money),

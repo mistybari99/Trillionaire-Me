@@ -21,6 +21,8 @@ export const QB1_EN = {
   "qb1.why.h": "Show my why",
   "qb1.why.empty": "You have not written your why yet. Add it in the goal form below.",
   "qb1.why.add": "Add my why",
+  // Q-07 lever links
+  "qb1.lever.tip": "Read the tip", "qb1.lever.keep": "Keep this", "qb1.lever.kept": "Kept",
   // Q-06 weekly additions
   "qb1.way.h": "What got in the way this week?", "qb1.way.note": "Optional. It stays on this phone.",
   "qb1.way.time": "Not enough time", "qb1.way.energy": "Low energy", "qb1.way.unclear": "The next step was unclear", "qb1.way.interrupt": "Many interruptions", "qb1.way.other": "Something else", "qb1.way.skip": "Skip",
@@ -49,6 +51,7 @@ export const QB1_BN: Record<keyof typeof QB1_EN, string> = {
   "qb1.why.h": "আমার কারণ দেখুন",
   "qb1.why.empty": "আপনার কারণ এখনো লেখা হয়নি। নিচের গোল ফর্মে লিখুন।",
   "qb1.why.add": "আমার কারণ লিখুন",
+  "qb1.lever.tip": "টিপস পড়ুন", "qb1.lever.keep": "এটা রাখুন", "qb1.lever.kept": "রাখা আছে",
   "qb1.way.h": "এই সপ্তাহে কী বাধা হয়েছে?", "qb1.way.note": "ইচ্ছা হলে বলুন। এটা শুধু এই ফোনে থাকে।",
   "qb1.way.time": "সময় কম ছিল", "qb1.way.energy": "শক্তি কম ছিল", "qb1.way.unclear": "পরের ধাপ অস্পষ্ট ছিল", "qb1.way.interrupt": "বার বার বিঘ্ন হয়েছে", "qb1.way.other": "অন্য কিছু", "qb1.way.skip": "স্কিপ",
   "qb1.way.saved": "লেখা হয়েছে। এই সপ্তাহে চাইলে বদলাতে পারেন।", "qb1.way.skipped": "স্কিপ করা হয়েছে। কিছু সেভ হয়নি।",
