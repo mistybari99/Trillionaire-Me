@@ -41,11 +41,15 @@ if (process.env.TM_SHOT_MATRIX === "1") {
   // TM_SHOT_ROUTES (comma list) / TM_SHOT_LANGS / TM_SHOT_OUT: extra verification runs (VERIFY-02); defaults keep the committed matrix unchanged.
   const routes = process.env.TM_SHOT_ROUTES ? process.env.TM_SHOT_ROUTES.split(",") : routes0;
   const LANGS = process.env.TM_SHOT_LANGS ? process.env.TM_SHOT_LANGS.split(",") : ["en", "bn"];
+  const dvw = (v) => ({ state: "value", value: v, label: "DEMO" }); const tdy = new Date(); const tdyIso = `${tdy.getFullYear()}-${String(tdy.getMonth() + 1).padStart(2, "0")}-${String(tdy.getDate()).padStart(2, "0")}`;
+  // TM_SHOT_WORKBLOCKS=1 (BUILD-01): the optional work blocks are switched on and two overlapping DEMO blocks are seeded for today.
+  const wbRec = (id, a, b, ex = {}) => ({ id, entity: "work_block", ns: "demo", ownerId: "demo-user", schemaVersion: 4, createdAt: new Date().toISOString(), values: { "work_block.date": dvw(tdyIso), "work_block.from": dvw(a), "work_block.to": dvw(b), "work_block.repeat": dvw("weekdays"), "work_block.protected": dvw(false), ...ex } });
+  const WB_SEED = process.env.TM_SHOT_WORKBLOCKS === "1" ? [wbRec("shot-wb1", "09:00", "10:30", { "work_block.label": dvw("Write the report"), "work_block.protected": dvw(true) }), wbRec("shot-wb2", "10:00", "11:00")] : [];
   const mdir = "evidence/screenshots-matrix"; mkdirSync(mdir, { recursive: true });
   const visit = new Date(Date.now() - 6 * 86400000); const lastOpen = `${visit.getFullYear()}-${String(visit.getMonth() + 1).padStart(2, "0")}-${String(visit.getDate()).padStart(2, "0")}`;
   for (const design of DESIGNS) for (const lang of LANGS) for (const scheme of ["light", "dark"]) for (const big of [false, true]) {
     const ctx = await browser.newContext({ viewport: { width: 360, height: 740 }, deviceScaleFactor: 1, colorScheme: scheme });
-    await ctx.addInitScript(([d, l, recs, lo]) => { try { localStorage.setItem("tm:ui:lang", l); localStorage.setItem("tm:ui:design", d); localStorage.setItem("tm:ui:dataMode", "demo"); localStorage.setItem("tm:ui:visit", JSON.stringify({ lastOpen: lo, welcome: null })); for (const r of recs) localStorage.setItem(`tm:demo:${r.id}`, JSON.stringify(r)); } catch { /* storage blocked */ } }, [design, lang, SEED, lastOpen]);
+    await ctx.addInitScript(([d, l, recs, lo, wb]) => { try { localStorage.setItem("tm:ui:lang", l); localStorage.setItem("tm:ui:design", d); localStorage.setItem("tm:ui:dataMode", "demo"); localStorage.setItem("tm:ui:visit", JSON.stringify({ lastOpen: lo, welcome: null })); for (const r of recs) localStorage.setItem(`tm:demo:${r.id}`, JSON.stringify(r)); if (wb.length) { localStorage.setItem("tm:ui:workBlocks", "on"); for (const r of wb) localStorage.setItem(`tm:demo:${r.id}`, JSON.stringify(r)); } } catch { /* storage blocked */ } }, [design, lang, SEED, lastOpen, WB_SEED]);
     const page = await ctx.newPage();
     for (const r of routes) {
       await page.goto("about:blank"); await page.goto(`http://localhost:${PORT}/#/${r}`);

@@ -14,7 +14,7 @@ import { dhakaNow, isoDate } from "../core/prayer";
 import { alertSlots } from "../core/prayerAlerts";
 import { buildPlanInput } from "../core/planInputs";
 import { schedule, type CapacityMode } from "../core/planner";
-import { toPlannerBlocks } from "../core/timeBlocks";
+import { expandWorkBlocks, workBlockFromRecord } from "../core/timeBlocks";
 import { notifyText } from "../core/notify";
 import {
   addDaysIso, applyLimits, dueReminders, expandReminders, markHeld, markShown, missedReminders, remindersFromRecords, reminderNotification, weekdayOf,
@@ -24,7 +24,7 @@ import type { FieldValue, TMRecord } from "../core/types";
 
 /** The screen that opens when a reminder notification is tapped. */
 export const ROUTE_FOR: Record<ReminderTarget, string> = {
-  task: "#/diary/plan", plan_step: "#/diary/plan", habit: "#/habits", bill: "#/diary/money", goal: "#/journey/goals", review: "#/journey/month",
+  task: "#/diary/plan", plan_step: "#/diary/plan", habit: "#/habits", bill: "#/diary/money", goal: "#/journey/goals", review: "#/journey/month", work_block: "#/diary/plan",
 };
 
 const str = (v: FieldValue | undefined): string | null => (v && v.state === "value" && typeof v.value === "string" && v.value.trim() ? v.value.trim() : null);
@@ -32,7 +32,7 @@ const isoOrNull = (v: FieldValue | undefined): string | null => { const s = str(
 const privacyOf = (r: TMRecord) => entityById(r.entity)?.defaultPrivacy ?? "personal";
 
 /** What the reminders can point at, read from the active mode's records. Nothing is copied into the reminder itself. */
-export function buildLookup(recs: readonly TMRecord[], placements: ReadonlyMap<string, { date: string; minute: number }>, deferred: ReadonlySet<string>, lang: Locale): TargetLookup {
+export function buildLookup(recs: readonly TMRecord[], placements: ReadonlyMap<string, { date: string; minute: number }>, deferred: ReadonlySet<string>, lang: Locale, today: string = isoDate(dhakaNow(Date.now()).date)): TargetLookup {
   const byId = new Map(recs.map((r) => [r.id, r]));
   return (target, id): TargetInfo | null => {
     const base = { date: null as string | null, days: [] as number[], placed: null as TargetInfo["placed"], deferred: false };
@@ -55,6 +55,11 @@ export function buildLookup(recs: readonly TMRecord[], placements: ReadonlyMap<s
       if (r.entity !== "finance_item") return null;
       return { ...base, title: str(r.values["finance.label"]) ?? untitled, privacy: "financial", date: isoOrNull(r.values["finance.on"]) };
     }
+    if (target === "work_block") { // opt-in reminder on a block the user set by hand; one start per occurrence, 10 days back to 40 days ahead
+      const b = workBlockFromRecord(r); if (!b) return null;
+      const from = addDaysIso(today, -10);
+      return { ...base, title: b.label ?? t("wkb.untitled", lang), privacy: privacyOf(r), occurrences: expandWorkBlocks([b], from, 50).map((o) => ({ date: o.date, minute: o.start })) };
+    }
     if (r.entity !== "goal") return null;
     return { ...base, title: str(r.values["goal.title"]) ?? untitled, privacy: privacyOf(r), date: isoOrNull(r.values["goal.target_date"]) };
   };
@@ -64,12 +69,12 @@ export interface Built { reminders: Reminder[]; schedule: Placed[]; held: Placed
 function context(nowMs: number, lang: Locale) {
   const today = isoDate(dhakaNow(nowMs).date);
   const recs = allRecs(); const reminders = remindersFromRecords(recs);
-  const wk = currentBlocks().week.blocks;
+  const cb = currentBlocks(); const wk = cb.week.blocks;
   // plan placements: the planner starts on today's weekday; weekday d lands on the date `(d - start + 7) % 7` days after today
   const startDay = weekdayOf(today);
   const placements = new Map<string, { date: string; minute: number }>(); const deferred = new Set<string>();
   if (prefs.reminders.planStart || reminders.some((x) => x.target === "plan_step")) {
-    const plan = schedule(buildPlanInput(loadAnswers(), recs, prefs.mode, startDay, toPlannerBlocks(wk)));
+    const plan = schedule(buildPlanInput(loadAnswers(), recs, prefs.mode, startDay, cb.plannerBlocks));
     for (const pl of plan.placements) placements.set(pl.taskId, { date: addDaysIso(today, (pl.day - startDay + 7) % 7), minute: pl.start });
     for (const d of plan.deferred) deferred.add(d.taskId);
   }
@@ -77,7 +82,7 @@ function context(nowMs: number, lang: Locale) {
   // They are not stored; acting on one (done, later, skip) stores a normal reminder record for it (see actOnSlot).
   const withOwn = new Set(reminders.filter((x) => x.target === "plan_step" || x.target === "task").map((x) => x.targetId));
   const all = prefs.reminders.planStart ? [...reminders, ...[...placements.keys()].filter((id) => !deferred.has(id) && !withOwn.has(id)).sort().map((id): Reminder => virtualPlanStep(id))] : reminders;
-  return { today, reminders: all, wk, lookup: buildLookup(recs, placements, deferred, lang) };
+  return { today, reminders: all, wk, lookup: buildLookup(recs, placements, deferred, lang, today) };
 }
 export const virtualPlanStep = (taskId: string): Reminder => ({ id: `rem-plan_step-${taskId}`, target: "plan_step", targetId: taskId, at: null, timeOfDay: null, leadDays: 0, state: "on", snoozedUntil: null });
 
