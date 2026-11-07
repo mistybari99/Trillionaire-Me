@@ -73,7 +73,7 @@ h2.card-h,h3.card-h{font:600 var(--fs-lg)/var(--lh-tight) "Hind Siliguri",system
 .k-row__main{flex:1 1 6rem;min-width:0;display:grid;gap:0}
 .k-row__title{font-weight:600;line-height:var(--lh-ui)}
 .k-row__sub{color:var(--muted);font-size:var(--fs-sm);line-height:var(--lh-ui)}
-.k-row__trail{flex:0 0 auto;min-width:0;display:flex;flex-wrap:wrap;gap:var(--s2)}
+.k-row__trail{flex:0 0 auto;min-width:0;max-width:100%;justify-content:flex-end;display:flex;flex-wrap:wrap;gap:var(--s2)}
 .k-row[data-state="done"] .k-row__lead{background:var(--tint-moss);color:var(--moss);font-weight:700}
 .k-row[data-state="done"] .k-row__title{color:var(--ink)}
 .k-row .k-btn,.k-row .btn{margin:0}

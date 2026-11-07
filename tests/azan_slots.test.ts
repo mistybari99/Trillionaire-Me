@@ -196,4 +196,7 @@ describe("azan settings screen", () => {
     localStorage.setItem("tm:ui:lang", "mix"); render();
     expect(document.querySelector("[data-act=azan-speed-save]")!.textContent).toMatch(/Save/);
   });
+  it("the row trail may wrap inside its row, so four named recordings with Play buttons do not overflow at 200 percent text (CI failure 7 Nov)", () => {
+    expect(readFileSync("src/ui/kit.css", "utf8")).toMatch(/\.k-row__trail\{[^}]*max-width:100%/);
+  });
 });
