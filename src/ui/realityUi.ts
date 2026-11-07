@@ -10,6 +10,7 @@ import { fieldById } from "../catalog/fields";
 import { checkFreeText } from "../core/safety";
 import { activeNs, allRecs, entryNs, findRec, inNs, nsTag, putMode, saveBlockedText, saveTyped, storeOf, consentOn, consentPrompt } from "./entry";
 import { disclaimers, num, showNeed, valueEl } from "./components";
+import { mattersStep } from "./qb1Ui";
 import {
   EVENT_KINDS, MOVE_DAYS, RESUME_STEPS, applyToRecords, decidedEvent, eventRecord, eventRows, impactOf, loopLogRecord, nextVersionNumber, noImpact, optionsFor, parkedRows, planChange,
   planDiff, resumeChange, snapshotOf, unparkTask, validateEvent, versionRecord, versionRows, type DiffRow, type EventRow, type Impact, type LoopOption, type MoveDays, type PlanChange, type VersionOption,
@@ -134,15 +135,17 @@ function waitingCard(ev: EventRow, lang: Locale): HTMLElement {
   const noteBtn = h("button", { class: "btn ghost btn-sm", type: "button", "data-act": "note-only" }, t("rl.noteOnly", lang));
   const msg = h("p", { class: "err", role: "alert" });
   noteBtn.addEventListener("click", () => { if (!noteOnly(evRec, lang)) { msg.textContent = saveBlockedText(lang); return; } rerender(); });
+  const optsEl = opts.length
+    ? h("div", { "data-options": String(opts.length) }, h("h3", { class: "card-h" }, t("rl.options.title", lang)), h("p", { class: "muted" }, t("rl.options.p", lang)), ...opts.map((o) => optionBlock(ev, evRec, imp, o, lang)))
+    : h("p", { class: "muted", "data-options": "0" }, noImpact(imp) ? t("rl.options.none", lang) : t("rl.options.nochange", lang));
   return h("div", { class: "card", "data-event": ev.id, "data-event-state": "open" },
     nsTag(ev.ns, lang),
     h("h2", { class: "card-h" }, opt("reality_event.kind", ev.kind, lang)),
     h("p", { class: "muted" }, ev.on ? valueEl(t("rl.event.on", lang, { d: ev.on }), ownLabel(), lang) : t("rl.date.none", lang), goalTitle ? ` · ${t("rl.event.goal", lang, { t: goalTitle })}` : ""),
     ev.note ? h("p", { "data-event-note": "1" }, ev.note) : null,
     impactView(imp, lang),
-    opts.length
-      ? h("div", { "data-options": String(opts.length) }, h("h3", { class: "card-h" }, t("rl.options.title", lang)), h("p", { class: "muted" }, t("rl.options.p", lang)), ...opts.map((o) => optionBlock(ev, evRec, imp, o, lang)))
-      : h("p", { class: "muted", "data-options": "0" }, noImpact(imp) ? t("rl.options.none", lang) : t("rl.options.nochange", lang)),
+    opts.length ? mattersStep(ev.id, lang, optsEl) : null,
+    optsEl,
     msg, noteBtn);
 }
 

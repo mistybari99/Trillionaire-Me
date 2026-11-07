@@ -1,5 +1,5 @@
 {
-  "keys": 2548,
+  "keys": 2555,
   "perFile": {
     "src/i18n/packs.ts": 2483,
     "src/catalog/fields.ts": 991,
@@ -18,7 +18,7 @@
     "src/core/notify.ts": 2,
     "src/ui/prayerAlerts.ts": 9,
     "src/demo/seed.ts": 21,
-    "src/i18n/q_b1.ts": 54,
+    "src/i18n/q_b1.ts": 61,
     "public/content/pack-001.json": 111,
     "public/content/pack-002.json": 42,
     "public/content/pack-003.json": 60,

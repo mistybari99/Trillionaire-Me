@@ -21,6 +21,10 @@ export const QB1_EN = {
   "qb1.why.h": "Show my why",
   "qb1.why.empty": "You have not written your why yet. Add it in the goal form below.",
   "qb1.why.add": "Add my why",
+  // Q-08 still-matters tap (reality loop)
+  "qb1.matters.q": "Does this still matter to you?", "qb1.matters.yes": "Yes", "qb1.matters.no": "No", "qb1.matters.unsure": "Not sure",
+  "qb1.matters.said.yes": "Good. The options are below.", "qb1.matters.said.no": "Understood. Nothing in your plan changes. You can note it and move on.",
+  "qb1.matters.said.unsure": "That is fine. You can look at the options below without choosing one.",
   // Q-07 lever links
   "qb1.lever.tip": "Read the tip", "qb1.lever.keep": "Keep this", "qb1.lever.kept": "Kept",
   // Q-06 weekly additions
@@ -51,6 +55,9 @@ export const QB1_BN: Record<keyof typeof QB1_EN, string> = {
   "qb1.why.h": "আমার কারণ দেখুন",
   "qb1.why.empty": "আপনার কারণ এখনো লেখা হয়নি। নিচের গোল ফর্মে লিখুন।",
   "qb1.why.add": "আমার কারণ লিখুন",
+  "qb1.matters.q": "এটা কি এখনো আপনার কাছে জরুরি?", "qb1.matters.yes": "হ্যাঁ", "qb1.matters.no": "না", "qb1.matters.unsure": "নিশ্চিত না",
+  "qb1.matters.said.yes": "ঠিক আছে। অপশনগুলো নিচে আছে।", "qb1.matters.said.no": "বুঝেছি। আপনার প্ল্যানে কিছু বদলাবে না। চাইলে নোট করে এগিয়ে যেতে পারেন।",
+  "qb1.matters.said.unsure": "ঠিক আছে। কিছু না বেছেই নিচের অপশনগুলো দেখতে পারেন।",
   "qb1.lever.tip": "টিপস পড়ুন", "qb1.lever.keep": "এটা রাখুন", "qb1.lever.kept": "রাখা আছে",
   "qb1.way.h": "এই সপ্তাহে কী বাধা হয়েছে?", "qb1.way.note": "ইচ্ছা হলে বলুন। এটা শুধু এই ফোনে থাকে।",
   "qb1.way.time": "সময় কম ছিল", "qb1.way.energy": "শক্তি কম ছিল", "qb1.way.unclear": "পরের ধাপ অস্পষ্ট ছিল", "qb1.way.interrupt": "বার বার বিঘ্ন হয়েছে", "qb1.way.other": "অন্য কিছু", "qb1.way.skip": "স্কিপ",

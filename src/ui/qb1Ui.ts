@@ -28,7 +28,21 @@ export function concreteBank(lang: Locale, input: HTMLInputElement): HTMLElement
   return h("div", { class: "qb1-bank-wrap", "data-card": "concrete_bank" }, h("h3", {}, t("qb1.bank.h", lang)), h("p", { class: "muted" }, t("qb1.bank.hint", lang)), h("div", { class: "qb1-bank" }, ...rows));
 }
 
-const todayLocal = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; };
+/** Q-08: "Does this still matter?" Yes / No / Not sure, kept for this visit only. Unanswered and "Not sure" both leave the options visible: only a plain "No" hides them. */
+export type Matters = "yes" | "no" | "unsure";
+const mattersMemory = new Map<string, Matters>();
+export function mattersStep(eventId: string, lang: Locale, options: HTMLElement): HTMLElement {
+  const said = h("p", { class: "muted", role: "status", "data-matters-said": "1" });
+  const btns = new Map<Matters, HTMLButtonElement>();
+  const paint = () => { const c = mattersMemory.get(eventId) ?? null; options.hidden = c === "no"; for (const [k, b] of btns) b.setAttribute("aria-pressed", String(c === k)); said.textContent = c === null ? "" : t(`qb1.matters.said.${c}` as Key, lang); };
+  const mk = (m: Matters) => { const b = h("button", { type: "button", class: "btn ghost btn-sm", "data-matters": m, "aria-pressed": "false", onclick: () => { mattersMemory.set(eventId, m); paint(); } }, t(`qb1.matters.${m}` as Key, lang)); btns.set(m, b); return b; };
+  const row = h("div", { class: "qb1-matters", "data-matters-step": eventId }, h("p", {}, h("strong", {}, t("qb1.matters.q", lang))), h("div", { class: "seg", role: "group", "aria-label": t("qb1.matters.q", lang) }, mk("yes"), mk("no"), mk("unsure")), said);
+  paint();
+  return row;
+}
+export const resetMatters = (): void => mattersMemory.clear();
+
+const todayLocal =() => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; };
 
 /** Q-07: one calm "Worth a look: X" line on Today. Nothing at all when every leg is steady or unknown (an unknown leg is never a reason to nag). */
 export function legLine(lang: Locale): HTMLElement | null {
