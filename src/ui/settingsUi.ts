@@ -4,6 +4,7 @@ import { rootBar } from "./quickNavigationUi";
 // (language, theme, text size) are changed right here and nowhere else except the top-bar globe.
 import { h } from "./dom";
 import { BUILD } from "./buildInfo";
+import { brandAboutCard } from "./brandUi";
 import { stampLine } from "../core/updateBanner";
 import { t } from "../i18n/t";
 import type { Key } from "../i18n/packs";
@@ -168,7 +169,7 @@ function aboutPage(row: string | undefined, lang: Locale): HTMLElement {
     h("button", { class: "btn ghost", type: "button", "data-act": "welcome-again", onclick: () => { resetOnboard(); prefs.onboard = "pending"; location.hash = "#/start"; rerender(); } }, t("set.open", lang)));
   const main = h("main", { class: "scr scr-settings", "data-settings": "about" },
     link("#/settings", "crumb", `← ${t("nav.settings", lang)}`), h("h1", {}, t(CAT_LABEL.about, lang)), h("p", { class: "muted" }, t("set.about.note", lang)),
-    versionCard(lang), ...GUIDES.map((g) => link(g.route, "card link", h("h3", { class: "card-h" }, t(g.label, lang)), h("p", { class: "muted" }, t(g.desc, lang)))), welcome);
+    brandAboutCard(lang), versionCard(lang), ...GUIDES.map((g) => link(g.route, "card link", h("h3", { class: "card-h" }, t(g.label, lang)), h("p", { class: "muted" }, t(g.desc, lang)))), welcome);
   highlight(main, row);
   return main;
 }

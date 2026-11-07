@@ -857,3 +857,8 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 - Native app (draw over other apps): follow the builder's recommendation: not now (D-A: PWA first).
 - PR #1 text and merge: the owner said the builder knows the procedure: update the PR text from docs/audit/PR_RECONCILIATION_2026-11-06.md; merge only at a quiet point with green CI (normal merge commit, no force, no branch deletion).
 - Undo: each item is built behind a setting that is off by default; revert the commits to remove it.
+
+### W5a Brand: "Build Yourself" (7 Nov 2026)
+- What: the app name stays "Trillionaire Me" (Spec sections 0 and 1 name it so). "Build Yourself" (owner wrote "Build Your Self") is the product line, shown as a subtitle: page title, splash, About card, Profile card. Tagline EN "Build yourself, one small step at a time." / BN "নিজেকে গড়ুন, ছোট ছোট ধাপে।". Strings in `src/i18n/q_brand.ts`; test `tests/brand_line.test.ts`.
+- Why: no conflict with the Spec, so a subtitle is the smallest reversible change. Calm wording, no promise.
+- Alternatives: rename the app (rejected: conflicts with the Spec and the installed name). Undo: delete `q_brand.ts`, `brandUi.ts`, the two card calls, the splash lines and the title suffix.

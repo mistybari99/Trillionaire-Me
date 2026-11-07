@@ -2,6 +2,7 @@
 // Bangla copy is a working draft pending native-reviewer sign-off (TM-TST-161).
 import { VAULT_BN, VAULT_EN } from "./vault.ts";
 import { QB1_BN, QB1_EN } from "./q_b1.ts";
+import { QBRAND_BN, QBRAND_EN } from "./q_brand.ts";
 const en = {
   "set.row.helpplacement": "Help placement",
   "set.row.helpvisuals": "Help visuals",
@@ -1921,12 +1922,14 @@ const en = {
   "set.sum.connections.sync": "{n} of 4 on. One exception: automatic prayer times send the city, country and month only.",
   ...VAULT_EN, // registry line: at-rest encryption text lives in vault.ts
   ...QB1_EN, // batch 1 (Q-01..Q-09) keys live in q_b1.ts
+  ...QBRAND_EN, // brand line and tagline live in q_brand.ts
 } as const;
 
 export type Key = keyof typeof en;
 
 const bn: Record<Key, string> = {
   ...QB1_BN,
+  ...QBRAND_BN,
   "set.row.helpplacement": "হেল্প কোথায় দেখাবে",
   "set.row.helpvisuals": "হেল্পের ভিজুয়াল",
   "set.row.helpcontent": "গাইড ও নিজের ম্যাপ",
@@ -4176,7 +4179,7 @@ const bn: Record<Key, string> = {
 
 // Mix mode: Bangla sentences with common English words kept (owner request, decision L-11).
 // Keys listed here show English in Mix (they are already English-first in the Bangla pack).
-export const COMMON_ENGLISH_KEYS: ReadonlySet<string> = new Set(["badge.demo", "status.online", "status.offline", "label.DEMO", "focus.plus", "focus.minus", "habits.plus", "help.format", "more.theme", "data.demo", "backup.title", "suggest.btn", "habits.of"]);
+export const COMMON_ENGLISH_KEYS: ReadonlySet<string> = new Set(["badge.demo", "status.online", "status.offline", "label.DEMO", "focus.plus", "focus.minus", "habits.plus", "help.format", "more.theme", "data.demo", "backup.title", "suggest.btn", "habits.of", "brand.line"]);
 // Mix mode keeps the English word for everyday words people already say in English (owner rule, 1 Nov 2026).
 // Bangla mode writes the same words in Bangla script (for example স্টাফ), so each loanword is listed here with its English form.
 // Longer phrases come first. A Bangla suffix after a swapped word is kept after a hyphen, for example Plan-এর.

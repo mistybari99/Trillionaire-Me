@@ -8,12 +8,15 @@
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" href="./icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="./icon-180.png">
-<title>Trillionaire Me</title>
+<title>Trillionaire Me · Build Yourself</title>
 <style id="tm-splash-css">
 /* Brand splash: obsidian, champagne T + M, drawn in once while the app loads. Removed by src/main.ts after the first screen is drawn. It never takes taps (pointer-events:none). */
 #tm-splash{position:fixed;inset:0;z-index:200;display:grid;place-items:center;background:#0B1216;pointer-events:none;transition:opacity .25s ease}
 #tm-splash.tm-out{opacity:0}
 #tm-splash svg{width:min(34vw,160px);height:auto}
+#tm-splash{align-content:center;justify-items:center;gap:6px;padding:0 16px;text-align:center}
+#tm-splash p{margin:0;color:#C9A96E;font:500 13px/1.4 system-ui,sans-serif}
+#tm-splash .tm-sub{margin-top:14px;font-size:16px;font-weight:600;letter-spacing:.04em}
 #tm-splash path{fill:#C9A96E}
 #tm-splash .tm-ring{fill:none;stroke:#1B6F57;stroke-width:1.5}
 @media (prefers-reduced-motion:no-preference){
@@ -27,7 +30,7 @@
 <noscript><style>#tm-splash{display:none}</style></noscript>
 </head>
 <body>
-<div id="tm-splash" aria-hidden="true"><svg viewBox="0 0 120 120" focusable="false"><rect class="tm-ring" x="6" y="6" width="108" height="108" rx="22"/><path d="M24 20 H96 V31 H24 Z"/><path d="M28 100 V45 H38 L60 77 L82 45 H92 V100 H83 V61 L64 89 H56 L37 61 V100 Z"/></svg></div>
+<div id="tm-splash" aria-hidden="true"><svg viewBox="0 0 120 120" focusable="false"><rect class="tm-ring" x="6" y="6" width="108" height="108" rx="22"/><path d="M24 20 H96 V31 H24 Z"/><path d="M28 100 V45 H38 L60 77 L82 45 H92 V100 H83 V61 L64 89 H56 L37 61 V100 Z"/></svg><p class="tm-sub">Build Yourself</p><p class="tm-tag">Build yourself, one small step at a time.</p><p class="tm-tag">নিজেকে গড়ুন, ছোট ছোট ধাপে।</p></div>
 <div id="app"></div>
 <script type="module" src="/src/main.ts"></script>
 </body>
