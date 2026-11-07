@@ -846,3 +846,14 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 - Alternatives: sealing `links` too was chosen over leaving parent ids plain; one shared password for backup and vault (rejected: a lost recovery file would then equal a lost key); sealing snapshots only when the key is held and dropping the real part otherwise (chosen) over keeping plain snapshots (rejected).
 - Undo: Settings > Privacy > Encrypt real data > Turn off (opens everything in place); or restore the recovery file; or revert the commits of branch `worktree-agent-a5c474167f9775de4`. Schema version unchanged: the extra fields `enc`, `iv`, `ct` exist only on sealed real records, and the read path accepts plain and sealed records.
 
+
+## 2026-11-07 — Owner answers to the open decisions list (DECISION-02, DECISION-04, BUILD-01, BUILD-02, naming, floating head, native app)
+- DECISION-02 (AI, search, online sources): the owner wants the SYSTEM BUILT now and OFF by default; paid AI is connected only when he chooses (key and spend cap entered by him). So: build the AI/search layer end to end (ports, adapters, consent, cap, UI, tests with mocked providers); nothing is sent and nothing is spent until he connects it (D-C still applies at connect time).
+- DECISION-04 (cloud copy, sharing, public/staff edition): build it now, OFF by default, so everything is available when he starts marketing. Real data never leaves the device unless he turns a feature on with consent (D-B unchanged). Hosting or paid accounts still need his account step and approval (CLAUDE.md section 4).
+- BUILD-01 (placement): clarified by the owner: there are NO forced prayer blocks. The app offers an optional, user-set time-block feature: the user blocks their own time for work manually, and the app shows a few suggested timings. Prayer times stay information and optional alerts, never blocks.
+- BUILD-02 (business unit economics): the owner asked the builder to decide. Direction: a sector-aware business toolkit that fits (aim 99 percent of) business sectors, built by expert agents across sector families; the same approach applies to any function or topic. Guardrail unchanged: the app never invents statistics, returns or benchmarks; sector templates define which inputs, formulas and questions apply, the user supplies every number; unknown is not 0.
+- Naming: the product line is "Build Yourself" with a motivational tagline (to be applied in the app and docs).
+- Floating head: yes, add to the queue (inside the app only).
+- Native app (draw over other apps): follow the builder's recommendation: not now (D-A: PWA first).
+- PR #1 text and merge: the owner said the builder knows the procedure: update the PR text from docs/audit/PR_RECONCILIATION_2026-11-06.md; merge only at a quiet point with green CI (normal merge commit, no force, no branch deletion).
+- Undo: each item is built behind a setting that is off by default; revert the commits to remove it.
