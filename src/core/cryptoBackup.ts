@@ -22,7 +22,7 @@ const unb64 = (s: string): Uint8Array => { const bin = atob(s); const u = new Ui
 /** Empty or short passphrases are refused. Returns an error key-less reason or null when fine. */
 export const passphraseProblem = (p: string): "empty" | "short" | null => (p.trim() === "" ? "empty" : p.length < MIN_PASSPHRASE ? "short" : null);
 
-async function deriveKey(pass: string, salt: Uint8Array, iterations: number): Promise<CryptoKey> {
+export async function deriveKey(pass: string, salt: Uint8Array, iterations: number): Promise<CryptoKey> {
   const base = await subtle().importKey("raw", enc.encode(pass), "PBKDF2", false, ["deriveKey"]);
   return subtle().deriveKey({ name: "PBKDF2", salt: salt as BufferSource, iterations, hash: "SHA-256" }, base, { name: "AES-GCM", length: 256 }, false, ["encrypt", "decrypt"]);
 }

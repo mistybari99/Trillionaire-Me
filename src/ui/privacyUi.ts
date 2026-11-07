@@ -12,6 +12,7 @@ import { NEUTRAL_TITLE, NOTIFY_CATEGORIES, notifyText } from "../core/notify";
 import { readStorageStatus, type StorageLike } from "../core/storageStatus";
 import { consentGate, withdrawRealConsent } from "./consentGate";
 import { lockCard } from "./lockUi";
+import { vaultCard } from "./vaultUi";
 import { categorySummary } from "./settingsUi";
 import { settingsHash } from "./settingsRegistry";
 
@@ -67,6 +68,7 @@ export function privacyPage(row: string | undefined, lang: Locale): HTMLElement 
       h("ul", { style: "list-style:none;padding:0;margin:0" },
         ...lines.map((l) => h("li", { class: "k-linkrow", "data-priv-line": l.id }, h("a", { href: l.href }, l.text), ...(l.weak ? [" · ", h("a", { href: l.href, class: "muted" }, t("priv.turnon", lang))] : []))), storage)),
     consentSection(lang), lockScreenSection(lang),
+    h("section", { "data-setting-row": "vault" }, vaultCard(lang)),
     h("section", { "data-setting-row": "applock" }, lockCard(lang), h("p", { class: "muted", "data-priv": "forgot" }, t("priv.forgot", lang, { m: num(RESET_WAIT_MIN, lang) }))));
   const el = row ? main.querySelector<HTMLElement>(`[data-setting-row="${row}"]`) : null;
   if (el) { el.classList.add("set-hl"); setTimeout(() => { try { el.scrollIntoView?.({ block: "center" }); } catch { /* ignore */ } }, 0); }

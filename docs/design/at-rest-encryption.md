@@ -1,6 +1,8 @@
 # At-rest encryption of REAL records (design note, 1 Nov 2026)
 
-Status: **design only. Not built.** Reason: a wrong design can lock the owner out of his own data for good. Needs the owner's choice (section 7) before any code.
+Status: **Built, stage 1** (7 Nov 2026; owner approved option C on 7 Nov 2026). Code: `src/core/dataVault.ts`, `src/core/persist.ts`, `src/ui/vaultUi.ts`, text in `src/i18n/vault.ts`. Tests: `tests/data_vault.test.ts`, `tests/data_vault_persist.test.ts`, `tests/vault_ui.test.ts`, e2e in `tools/e2e.mjs`. Audit PASS is still pending, so nothing is marked Verified. Stage 2 (passkey) is not built.
+
+How it works, in short: a random 256-bit data key is wrapped by AES-GCM under PBKDF2-SHA256 (600 000 rounds) of the passphrase (8+ characters, digits only refused) and the wrapper sits under `tm:secret:vault`. Only `values` and `links` of REAL records are sealed (AES-GCM, new random IV on every write, `real|id` as AAD, marker `enc: 1`); id, entity, namespace, schemaVersion, createdAt and ownerId stay plain. Demo records are never sealed. The key lives in memory only, so the app asks for the passphrase at every start. Turning on needs a warning tick, a recovery file (encrypted backup with its own passphrase, test-decrypted before it is offered), a second tick, and a sealed safety copy; then records are sealed in place, 200 per batch, each batch read back before the next. Turning off opens them in place the same way. Forgot the passphrase: the unlock screen can restore from the recovery file. The design text below is the original note and is kept for the reasons behind the choices.
 
 ## 1. Today
 - Records sit in IndexedDB (Dexie, table `records`) as plain JSON, plus a copy in memory. Snapshots (same database) and plain backup files are also plain.

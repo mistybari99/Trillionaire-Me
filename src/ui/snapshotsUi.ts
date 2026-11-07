@@ -1,6 +1,7 @@
 // More > Data: local snapshots (automatic copies kept in IndexedDB on this phone), restore with a confirm, save to file, and an
 // in-app backup reminder (OFF by default). No cloud, no network. Keys and settings are never copied (records only).
 import { h } from "./dom";
+import { plainExportNote } from "./vaultUi";
 import { t } from "../i18n/t";
 import type { Key } from "../i18n/packs";
 import type { Locale } from "../i18n/registry";
@@ -89,7 +90,7 @@ export function snapshotsCard(lang: Locale, part: "settings" | "restore" = "sett
     h("label", { for: "snap-keep" }, t("snap.keep", lang)), keep,
     h("button", { class: "btn", type: "button", "data-act": "snap-take", onclick: () => void take() }, t("snap.take", lang)),
     h("button", { class: "btn ghost", type: "button", "data-act": "snap-file", onclick: () => void saveFile() }, t("snap.file", lang)),
-    h("p", { class: "muted" }, t("snap.fileNote", lang)),
+    h("p", { class: "muted" }, t("snap.fileNote", lang)), plainExportNote(lang),
     msg, list);
 }
 

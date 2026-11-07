@@ -1,5 +1,6 @@
 // Visible save-failed state: a calm banner (not an error screen) with a retry and a one-tap backup file. No network.
 import { h } from "./dom";
+import { readVault } from "../core/dataVault";
 import { t } from "../i18n/t";
 import type { Locale } from "../i18n/registry";
 import { consentKv, saveMonitor, store } from "./state";
@@ -23,7 +24,7 @@ export function saveFailedBanner(lang: Locale): HTMLElement | null {
       const a = h("a", { href: URL.createObjectURL(new Blob([JSON.stringify(f)], { type: "application/json" })), download: `tm-backup-${f.createdAt.slice(0, 10)}.json` });
       document.body.append(a); a.click(); a.remove();
       markBackupFile(f.real?.count ?? 0);
-      msg.textContent = t("save.fail.backupDone", lang);
+      msg.textContent = t("save.fail.backupDone", lang) + (readVault(consentKv) ? ` ${t("vault.plain.note", lang)}` : "");
     } }, t("save.fail.backup", lang)),
     h("a", { href: "#/settings/backup", class: "btn ghost btn-sm", "data-act": "save-open-backup" }, t("set.cat.backup", lang)), msg);
 }

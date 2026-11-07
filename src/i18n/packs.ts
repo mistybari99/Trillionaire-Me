@@ -1,5 +1,6 @@
 // UI string packs. `en` is the source; `bn` is typed against it so a missing key is a compile error (i18n skill §3).
 // Bangla copy is a working draft pending native-reviewer sign-off (TM-TST-161).
+import { VAULT_BN, VAULT_EN } from "./vault.ts";
 const en = {
   "set.row.helpplacement": "Help placement",
   "set.row.helpvisuals": "Help visuals",
@@ -1917,6 +1918,7 @@ const en = {
   "prayer.src.local": "Calculated on this phone.",
   "prayer.src.offsets": "Your minute changes are added on top.",
   "set.sum.connections.sync": "{n} of 4 on. One exception: automatic prayer times send the city, country and month only.",
+  ...VAULT_EN, // registry line: at-rest encryption text lives in vault.ts
 } as const;
 
 export type Key = keyof typeof en;
@@ -4166,6 +4168,7 @@ const bn: Record<Key, string> = {
   "prayer.src.local": "এই ফোনে হিসাব করা।",
   "prayer.src.offsets": "আপনার মিনিট বাড়ানো-কমানো ওপরে যোগ হয়েছে।",
   "set.sum.connections.sync": "4টির মধ্যে {n}টি চালু। একটি ব্যতিক্রম: নামাজের সময় আপডেটে শুধু শহর, দেশ ও মাস পাঠানো হয়।",
+  ...VAULT_BN,
 };
 
 // Mix mode: Bangla sentences with common English words kept (owner request, decision L-11).

@@ -1,0 +1,14 @@
+{
+  "viewport": "360x740",
+  "generated": "2026-11-07T13:51:37.581Z",
+  "combos": 12,
+  "screens": 36,
+  "problems": 0,
+  "bad": [],
+  "routes": [
+    "settings/privacy/vault",
+    "settings/privacy",
+    "more/safety"
+  ],
+  "matrix": "4 looks x en/bn x light/dark x 100%/200% text"
+}

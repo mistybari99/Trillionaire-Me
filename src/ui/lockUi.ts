@@ -11,6 +11,8 @@ let locked = lockEnabled(consentKv); // a phone with the lock on starts locked
 let hiddenAt = 0;
 let forgotOpen = false;
 const rerender = () => window.dispatchEvent(new HashChangeEvent("hashchange"));
+/** The vault passphrase was just entered: the screen lock does not ask again at start. */
+export function markUnlocked(): void { locked = false; }
 export const isLocked = (): boolean => locked && lockEnabled(consentKv);
 export function lockNow(): void { if (lockEnabled(consentKv)) { locked = true; forgotOpen = false; rerender(); } }
 

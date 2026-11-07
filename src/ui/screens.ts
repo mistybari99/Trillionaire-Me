@@ -1364,6 +1364,7 @@ export function safety(): HTMLElement {
     h("div", { class: "card" }, h("p", {}, t("safety.never", lang))),
     h("div", { class: "card" }, h("p", {}, t("safety.demo", lang))),
     h("div", { class: "card" }, h("p", {}, t("safety.deen", lang))),
+    h("div", { class: "card", "data-safety-vault": "1" }, h("p", {}, t("vault.safety.p", lang)), h("a", { href: "#/settings/privacy/vault", class: "btn ghost btn-sm" }, t("vault.safety.link", lang))),
     disclaimers(lang, ["noGuarantee", "advice", "noFatwa"]));
 }
 
