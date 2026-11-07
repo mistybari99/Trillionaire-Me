@@ -15,6 +15,7 @@ import { DHAKA_COORDS, validCoords, type Coords } from "../core/prayer";
 import { DEFAULT_REMINDER_PREFS, parseLedger, parseReminderPrefs, type LedgerEntry, type ReminderPrefs } from "../core/reminders";
 import { DEFAULT_ALERT_PREFS, parseAlertPrefs, type AlertPrefs } from "../core/prayerAlerts";
 import { parseVisit, type Visit } from "../core/welcomeBack";
+import { parseQb1, type Qb1Prefs } from "../core/qb1Prefs";
 import { parseSyncSettings, type SyncSettings } from "../core/prayerSource";
 import { parsePrayerSettings, type PrayerSettings } from "../core/prayerMethod";
 import { isDataMode, type DataMode } from "../core/dataMode";
@@ -86,7 +87,7 @@ export type PlanMode = "normal" | "minimum_week" | "pause";
 export type HorizonView = "stack" | "compact";
 /** Template chooser for the dashboard screens. "full" is the default; unknown values fall back to it. */
 export type ScreenView = "full" | "compact";
-export const VIEW_SCREENS = ["journey", "money", "habits", "plan", "report", "review", "today", "log", "goals", "risks", "ventures", "team", "history", "cards", "library", "rules", "wheel", "weekly"] as const;
+export const VIEW_SCREENS = ["journey", "money", "habits", "plan", "report", "review", "today", "log", "goals", "risks", "ventures", "team", "history", "cards", "library", "rules", "wheel", "weekly", "deen", "stuck", "topics", "northstar", "capture"] as const;
 export type ViewScreen = typeof VIEW_SCREENS[number];
 const VIEW_KEY = (s: string) => `tm:ui:view:${s}`;
 const isView = (v: unknown): v is ScreenView => v === "compact" || v === "full";
@@ -116,6 +117,9 @@ export const prefs = {
   /** Last day the app was opened and the "welcome back" decision for today (src/core/welcomeBack.ts). Nothing leaves the phone. */
   get visit(): Visit { try { return parseVisit(JSON.parse(get("tm:ui:visit") ?? "null")); } catch { return parseVisit(null); } },
   set visit(v: Visit) { set("tm:ui:visit", JSON.stringify(parseVisit(v))); },
+  /** Batch 1 memory: this week's "what got in the way" answer and the opened lever cards. Per device, never sent anywhere. */
+  get qbMemo(): Qb1Prefs { try { return parseQb1(JSON.parse(get("tm:ui:qb1") ?? "null")); } catch { return parseQb1(null); } },
+  set qbMemo(v: Qb1Prefs) { set("tm:ui:qb1", JSON.stringify(parseQb1(v))); },
   get movedNote(): string { return get("tm:ui:movedNote") ?? ""; },
   set movedNote(v: string) { set("tm:ui:movedNote", v); },
   get reduceMotion(): ReduceMotion { return get("tm:ui:reduceMotion") === "always" ? "always" : "system"; },

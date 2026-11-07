@@ -8,6 +8,7 @@ export const TS_FILES = [
   "src/i18n/packs.ts", "src/i18n/vault.ts", "src/catalog/fields.ts", "src/catalog/glossary.ts", "src/modules/capability.ts", "src/schema/entities.ts",
   "src/library/topics.ts", "src/library/paths.ts", "src/library/inspiration.ts", "src/library/halalFlags.ts", "src/ui/settingsRegistry.ts",
   "src/core/stageTemplates.ts", "src/core/stuck.ts", "src/core/rules.ts", "src/core/stages.ts", "src/core/notify.ts", "src/ui/prayerAlerts.ts", "src/demo/seed.ts",
+  "src/i18n/q_b1.ts",
 ];
 export const JSON_FILES = [
   ...Array.from({ length: 9 }, (_, i) => `public/content/pack-00${i + 1}.json`),

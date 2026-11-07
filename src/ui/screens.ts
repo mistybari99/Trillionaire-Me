@@ -53,6 +53,7 @@ import { progressRing, isMilestone } from "./ring";
 import { logo3d } from "./logo";
 import { goalFunnelHero, horizonArc } from "./horizonArt";
 import { viewBar, withView } from "./viewBar";
+import { concreteBank, effortTip, forkPicture, legLine, recoveryLine, timeBands, wayCard, weekMatrixCard } from "./qb1Ui";
 import { kpiSection, kpiTodayCard, todayIsoKpi } from "./kpiUi";
 import { realityReportCard, realityTodayCard } from "./realityUi";
 import { northStarCard } from "./northStarCard";
@@ -705,12 +706,12 @@ export function stuckScreen(): HTMLElement {
           const nm = name.value.trim(); if (!nm) return; if (!checkFreeText(nm).ok) { msg.textContent = t("intake.secretRejected", lang); return; }
           putMode({ id: `task-${Date.now().toString(36)}s`, entity: "task", ns: "demo", ownerId: "demo-user", schemaVersion: SCHEMA_VERSION, createdAt: new Date().toISOString(),
             values: { "task.title": { state: "value", value: nm, label: "DEMO" }, "task.minutes": { state: "value", value: 5, label: "DEMO" }, "task.priority": { state: "value", value: "high", label: "DEMO" } } });
-          log(d, hp); out.replaceChildren(h("p", { class: "ok-msg", "data-done": hp }, t("stuck.done.tiny_step", lang)), link("#/diary/plan", "btn ghost", t("plan.title", lang)));
+          log(d, hp); out.replaceChildren(h("p", { class: "ok-msg", "data-done": hp }, t("stuck.done.tiny_step", lang)), recoveryLine(lang), link("#/diary/plan", "btn ghost", t("plan.title", lang)));
         });
-        return h("div", { class: "card" }, h("h2", { class: "card-h", }, t("stuck.h.tiny_step", lang)), h("label", { for: "stuck-step" }, t("stuck.stepName", lang)), name, msg, add);
+        return h("div", { class: "card" }, h("h2", { class: "card-h", }, t("stuck.h.tiny_step", lang)), h("label", { for: "stuck-step" }, t("stuck.stepName", lang)), name, concreteBank(lang, name), msg, add);
       }
       const b = h("button", { class: "btn", type: "button", "data-helper": hp }, t(`stuck.h.${hp}` as Key, lang));
-      b.addEventListener("click", () => { prefs.mode = hp; log(d, hp); out.replaceChildren(h("p", { class: "ok-msg", "data-done": hp }, t(`stuck.done.${hp}` as Key, lang)), h("p", { class: "muted", "data-stuck-back": "1" }, t("plan.set.back", lang), " ", link(settingsHash("plan", "planmode"), "crumb", t("plan.set.change", lang))), link("#/diary/plan", "btn ghost", t("plan.title", lang))); });
+      b.addEventListener("click", () => { prefs.mode = hp; log(d, hp); out.replaceChildren(h("p", { class: "ok-msg", "data-done": hp }, t(`stuck.done.${hp}` as Key, lang)), h("p", { class: "muted", "data-stuck-back": "1" }, t("plan.set.back", lang), " ", link(settingsHash("plan", "planmode"), "crumb", t("plan.set.change", lang))), recoveryLine(lang), link("#/diary/plan", "btn ghost", t("plan.title", lang))); });
       return h("div", { class: "card" }, b);
     });
     out.replaceChildren(h("h2", {}, t("stuck.causes", lang)),
@@ -724,11 +725,11 @@ export function stuckScreen(): HTMLElement {
 // Calm, static reflection cards (ROADMAP B7/B8). Plain text only: no colour cue, nothing counted or ordered.
 function reflectionCards(lang: Locale): HTMLElement[] {
   return [
-    h("section", { class: "card", "data-card": "two_paths" }, h("h2", {}, t("stuck.two.h", lang)),
+    h("section", { class: "card", "data-card": "two_paths" }, h("h2", {}, t("stuck.two.h", lang)), forkPicture(lang),
       h("ul", { style: "padding-inline-start:20px" }, h("li", {}, t("stuck.two.fun", lang)), h("li", {}, t("stuck.two.struggle", lang))),
       h("p", { class: "muted" }, t("stuck.two.note", lang))),
-    h("section", { class: "card", "data-card": "effort_timing" }, h("h2", {}, t("stuck.timing.h", lang)), h("p", {}, t("stuck.timing.body", lang))),
-    h("section", { class: "card", "data-card": "where_time_goes" }, h("h2", {}, t("stuck.time.h", lang)),
+    h("section", { class: "card", "data-card": "effort_timing" }, h("h2", {}, t("stuck.timing.h", lang)), h("p", {}, t("stuck.timing.body", lang)), ...effortTip(lang)),
+    h("section", { class: "card", "data-card": "where_time_goes" }, h("h2", {}, t("stuck.time.h", lang)), timeBands(lang),
       h("ul", { style: "padding-inline-start:20px" }, h("li", {}, t("stuck.time.1", lang)), h("li", {}, t("stuck.time.2", lang)), h("li", {}, t("stuck.time.3", lang))),
       h("p", { class: "muted" }, t("stuck.time.note", lang))),
   ];
@@ -1044,7 +1045,7 @@ export function today(): HTMLElement {
         hasSetupAction ? null : link("#/diary/intake", "cta", t("home.start", lang)),
         link("#/habits", "btn ghost", t("habits.link", lang)),
         link("#/stuck", "btn ghost", t("stuck.link", lang)))),
-    section("attention", "desk.attention", riskDueCard(lang, "today"), gateDueCard(lang, stageData().passed, "today"),
+    section("attention", "desk.attention", legLine(lang), riskDueCard(lang, "today"), gateDueCard(lang, stageData().passed, "today"),
       remindersTodayCard(lang), missedTodayCard(lang), goalDateReminders(lang), backupReminderCard(lang)),
     section("context", "desk.context", welcomeBackCard(lang), movedNoteCard(lang),
       nxt.field ? h("aside", { class: "card next-step", "data-next-step": nxt.field.id }, h("small", {}, "→ "), h("p", {}, t("home.next", lang, { field: tb(nxt.field.label, lang) }))) : null),
@@ -1057,7 +1058,7 @@ export function today(): HTMLElement {
       h("p", { class: "muted" }, t("home.step", lang)), rungs),
     h("aside", { class: `card inspire ${insp.theme}`, "aria-label": "Inspiration" },
       h("span", { class: "chip" }, `${THEME_LABEL[insp.theme].bn} · ${THEME_LABEL[insp.theme].en}`),
-      h("p", { class: "inspire-bn" }, insp.bn), h("p", { class: "muted inspire-en" }, insp.en)),
+      h("p", { class: "inspire-bn" }, insp.bn), h("p", { class: "muted inspire-en" }, insp.en), link("#/diary/inspiration", "crumb", t("qb1.insp.more", lang))),
     rulesTodayCard(lang), disclaimers(lang));
 }
 
@@ -1115,7 +1116,7 @@ export function weeklyScreen(): HTMLElement {
     h("p", { class: "sub" }, t("week.intro", lang)), remindRow("review", "weekly", lang),
     h("p", { class: "muted", "data-week-period": "1" }, valueEl(t("review.period", lang, { from: w.from, to: w.to }), "DEMO", lang)),
     viewBar("weekly", lang),
-    ...body,
+    ...body, weekMatrixCard(recs, w.to, lang), wayCard(w.to, lang),
     kpiSection("week", lang), moneyReviewCard(lang), riskReviewCard(lang),
     w.focusUnknown > 0 ? h("p", { class: "muted" }, t("week.unknownFocus", lang, { n: num(w.focusUnknown, lang) })) : null,
     h("p", { class: "muted" }, t("week.quiet", lang)), link("#/journey/month", "crumb", t("month.link", lang)),

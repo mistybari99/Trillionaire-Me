@@ -1,0 +1,128 @@
+// Batch 1 UI builders (Q-01..Q-09). Kept out of screens.ts so that file only gets import and call-site lines.
+import "./styles_qb1.css";
+import { h } from "./dom";
+import { t, tb } from "../i18n/t";
+import type { Key } from "../i18n/packs";
+import type { Locale } from "../i18n/registry";
+import { CONCRETE_BANK } from "../core/stuck";
+import { WAY_OPTIONS, weekStart, type WayPick } from "../core/qb1Prefs";
+import { weekHabitMatrix } from "../core/weekMatrix";
+import type { TMRecord } from "../core/types";
+import { prefs } from "./state";
+import { levelIcon, type LevelIcon } from "./svg";
+import { fieldById } from "../catalog/fields";
+import { planByOf } from "../core/backwardPlan";
+import { allRecs } from "./entry";
+import { fourLegs, type AttentionLever } from "../core/legs";
+import { TIPS } from "../library/topics";
+import { diagram } from "./diagram";
+
+/** Q-01: one calm line shown after any Stuck helper. No judging words. */
+export const recoveryLine = (lang: Locale): HTMLElement => h("p", { class: "qb1-recovery", "data-recovery": "1" }, t("qb1.recovery", lang));
+
+/** Q-02: fixed bank; a tap puts the tiny first action into the step name field (nothing is saved until the user adds the step). */
+export function concreteBank(lang: Locale, input: HTMLInputElement): HTMLElement {
+  const rows = CONCRETE_BANK.map((n) => {
+    const tiny = t(`qb1.bank.${n}.tiny` as Key, lang);
+    const b = h("button", { type: "button", class: "btn ghost", "data-bank": String(n) }, h("span", { class: "big" }, t(`qb1.bank.${n}.big` as Key, lang)), tiny);
+    b.addEventListener("click", () => { input.value = tiny.slice(0, 80); input.focus(); });
+    return b;
+  });
+  return h("div", { class: "qb1-bank-wrap", "data-card": "concrete_bank" }, h("h3", {}, t("qb1.bank.h", lang)), h("p", { class: "muted" }, t("qb1.bank.hint", lang)), h("div", { class: "qb1-bank" }, ...rows));
+}
+
+/** Q-09: a level name with its small icon beside it (the icon is decorative; the name is the text). */
+export const levelTag = (level: LevelIcon, name: string, cls = "tag off"): HTMLElement => h("span", { class: `${cls} lvl-tag`, "data-level": level }, levelIcon(level), name);
+
+/** Q-09: which icon a goal level wears (a sub-goal is still a goal). */
+export const kindIcon = (k: "goal" | "subgoal" | "project"): LevelIcon => (k === "project" ? "project" : "goal");
+
+/** Q-09: priority tag for a step row (First / Normal / Can wait, from the user's own task.priority) plus "Today" when the step is planned for today. Nothing when unknown. */
+export function stepTags(r: TMRecord, lang: Locale): Array<HTMLElement> {
+  const out: HTMLElement[] = [];
+  const pv = r.values["task.priority"]; const code = pv && pv.state === "value" && typeof pv.value === "string" ? pv.value : "";
+  const o = fieldById("task.priority")?.options?.find((x) => x.code === code);
+  if (o) out.push(h("span", { class: "tag", "data-priority": code }, tb(o.label, lang)));
+  const done = r.values["task.done_on"]?.state === "value"; const by = planByOf(r);
+  if (!done && by !== null && by === todayLocal()) out.push(h("span", { class: "tag ok", "data-planned-today": "1" }, t("qb1.tag.today", lang)));
+  return out;
+}
+
+/** Q-08: "Does this still matter?" Yes / No / Not sure, kept for this visit only. Unanswered and "Not sure" both leave the options visible: only a plain "No" hides them. */
+export type Matters = "yes" | "no" | "unsure";
+const mattersMemory = new Map<string, Matters>();
+export function mattersStep(eventId: string, lang: Locale, options: HTMLElement): HTMLElement {
+  const said = h("p", { class: "muted", role: "status", "data-matters-said": "1" });
+  const btns = new Map<Matters, HTMLButtonElement>();
+  const paint = () => { const c = mattersMemory.get(eventId) ?? null; options.hidden = c === "no"; for (const [k, b] of btns) b.setAttribute("aria-pressed", String(c === k)); said.textContent = c === null ? "" : t(`qb1.matters.said.${c}` as Key, lang); };
+  const mk = (m: Matters) => { const b = h("button", { type: "button", class: "btn ghost btn-sm", "data-matters": m, "aria-pressed": "false", onclick: () => { mattersMemory.set(eventId, m); paint(); } }, t(`qb1.matters.${m}` as Key, lang)); btns.set(m, b); return b; };
+  const row = h("div", { class: "qb1-matters", "data-matters-step": eventId }, h("p", {}, h("strong", {}, t("qb1.matters.q", lang))), h("div", { class: "seg", role: "group", "aria-label": t("qb1.matters.q", lang) }, mk("yes"), mk("no"), mk("unsure")), said);
+  paint();
+  return row;
+}
+export const resetMatters = (): void => mattersMemory.clear();
+
+const todayLocal =() => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; };
+
+/** Q-07: one calm "Worth a look: X" line on Today. Nothing at all when every leg is steady or unknown (an unknown leg is never a reason to nag). */
+export function legLine(lang: Locale): HTMLElement | null {
+  const r = fourLegs(allRecs(), todayLocal()); if (!r.lookAt.length) return null;
+  const names = r.lookAt.map((x) => t(`legs.leg.${x}` as Key, lang)).join(", ");
+  return h("p", { class: "qb1-leg", "data-leg-line": r.lookAt.join(",") }, h("a", { href: "#/journey/legs" }, t("legs.look", lang, { names })));
+}
+
+/** Q-07: where each leak lever's tip lives (topic cards) */
+export const LEVER_TOPIC: Record<AttentionLever, string> = { silence: "focus", close: "environment", clarify: "procrastination", bound: "time" };
+/** Q-07: link to the matching topic card plus a persistent "Keep this" toggle (kept in prefs, on this phone only). */
+export function leverExtras(lever: AttentionLever, lang: Locale, rerender: () => void): HTMLElement {
+  const kept = prefs.qbMemo.kept.includes(lever);
+  const keep = h("button", { class: "btn ghost btn-sm", type: "button", "data-act": "lever-keep", "aria-pressed": String(kept), onclick: () => {
+    const cur = prefs.qbMemo; prefs.qbMemo = { ...cur, kept: kept ? cur.kept.filter((x) => x !== lever) : [...cur.kept, lever] }; rerender(); } }, kept ? t("qb1.lever.kept", lang) : t("qb1.lever.keep", lang));
+  return h("p", { class: "qb1-lever-links" }, h("a", { href: `#/topic/${LEVER_TOPIC[lever]}`, "data-lever-topic": lever }, t("qb1.lever.tip", lang)), " ", keep);
+}
+
+/** Q-06: "what got in the way this week": 5 taps plus Skip, kept in prefs for the calendar week. Optional; unanswered stays unknown. */
+export function wayCard(today: string, lang: Locale): HTMLElement {
+  const week = weekStart(today);
+  const cur = () => { const w = prefs.qbMemo.way; return w && w.week === week ? w.pick : null; };
+  const note = h("p", { class: "muted", role: "status", "data-way-status": "1" });
+  const btns = new Map<WayPick, HTMLButtonElement>();
+  const paint = () => { const c = cur(); for (const [k, b] of btns) b.setAttribute("aria-pressed", String(c === k)); note.textContent = c === null ? "" : c === "skip" ? t("qb1.way.skipped", lang) : t("qb1.way.saved", lang); };
+  const pick = (p: WayPick) => { prefs.qbMemo = { ...prefs.qbMemo, way: { week, pick: p } }; paint(); };
+  const mk = (p: WayPick) => { const b = h("button", { type: "button", class: p === "skip" ? "btn ghost" : "btn ghost qb1-way", "data-way": p, "aria-pressed": "false", onclick: () => pick(p) }, t(`qb1.way.${p}` as Key, lang)); btns.set(p, b); return b; };
+  const card = h("section", { class: "card", "data-card": "way" }, h("h2", { class: "card-h" }, t("qb1.way.h", lang)), h("p", { class: "muted" }, t("qb1.way.note", lang)),
+    h("div", { class: "qb1-ways", role: "group", "aria-label": t("qb1.way.h", lang) }, ...WAY_OPTIONS.map(mk), mk("skip")), note);
+  paint();
+  return card;
+}
+
+/** Q-06: last 7 days of each habit. A real table (text stays); a day that was not planned is blank, never a miss. No habits = an Unknown note. */
+export function weekMatrixCard(recs: readonly TMRecord[], today: string, lang: Locale): HTMLElement {
+  const rows = weekHabitMatrix(recs, today);
+  const head = h("h2", { class: "card-h" }, t("qb1.wm.h", lang));
+  if (!rows) return h("section", { class: "card", "data-card": "week_matrix", "data-matrix-unknown": "1" }, head, h("p", { class: "muted" }, t("qb1.wm.unknown", lang)));
+  const sym = { done: "✓", open: "○", none: "" } as const;
+  const dates = rows[0]!.days.map((d) => d.date);
+  return h("section", { class: "card", "data-card": "week_matrix" }, head,
+    h("div", { class: "qb1-scroll" }, h("table", { class: "qb1-matrix" },
+      h("thead", {}, h("tr", {}, h("th", { scope: "col" }, t("habits.title", lang)), ...dates.map((d) => h("th", { scope: "col" }, String(Number(d.slice(8))))))),
+      h("tbody", {}, ...rows.map((r) => h("tr", { "data-habit-row": r.id }, h("th", { scope: "row" }, r.title),
+        ...r.days.map((d) => h("td", { "data-state": d.state, "aria-label": t(`qb1.wm.${d.state}` as Key, lang, { d: d.date }) }, sym[d.state]))))))),
+    h("p", { class: "muted" }, t("qb1.wm.legend", lang)));
+}
+
+/** Q-04: collapsed details with the user's own goal.why. Empty = a prompt that jumps to the field (the field id is in the SMART form on the same page). */
+export function whyCard(why: string, fieldId: string, lang: Locale): HTMLElement {
+  const own = why.trim();
+  const body = own ? h("p", { "data-why-text": "1" }, own)
+    : h("div", { "data-why-empty": "1" }, h("p", { class: "muted" }, t("qb1.why.empty", lang)),
+      h("button", { type: "button", class: "btn ghost", "data-why-add": "1", onclick: () => { const el = document.getElementById(fieldId); el?.scrollIntoView?.({ block: "center" }); el?.focus(); } }, t("qb1.why.add", lang)));
+  return h("details", { class: "card", "data-card": "show_why" }, h("summary", {}, levelIcon("mission"), t("qb1.why.h", lang)), body);
+}
+
+/** Q-03: the 'matrix' diagram tip (Hard now / Easy later) shown on the effort-timing card. diagram() already gives it role=img plus a text label. */
+export const effortTip = (lang: Locale): HTMLElement[] => { const tip = TIPS.find((x) => x.id === "pr3"); return tip ? [diagram(tip, lang)] : []; };
+
+/** Q-03: decorative pictures, aria-hidden. The lists next to them stay as the text equivalent. */
+export const forkPicture = (lang: Locale): HTMLElement => h("div", { class: "qb1-fork", "aria-hidden": "true", "data-pic": "fork" }, h("span", {}, t("qb1.fork.easy", lang)), h("span", {}, t("qb1.fork.hard", lang)));
+export const timeBands = (lang: Locale): HTMLElement => h("div", { class: "qb1-bands", "aria-hidden": "true", "data-pic": "bands" }, h("span", {}, t("qb1.band.time", lang)), h("span", {}, t("qb1.band.dist", lang)), h("span", {}, t("qb1.band.goals", lang)));

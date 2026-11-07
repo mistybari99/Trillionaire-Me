@@ -28,6 +28,8 @@ import { goalIdsOf } from "../core/taskGoals";
 import { linkStats } from "../core/goalPlan";
 import { planByTag } from "./backwardUi";
 import { HORIZONS } from "../core/horizon";
+import { kindIcon, levelTag, stepTags, whyCard } from "./qb1Ui";
+import { levelIcon } from "./svg";
 import type { FieldValue, TMRecord } from "../core/types";
 
 const L = () => prefs.lang;
@@ -120,7 +122,7 @@ const placeErrText = (e: PlaceError, lang: Locale) => t(`gt.err.${e}` as Key, la
 
 function treeView(roots: TreeNode[], lang: Locale): HTMLElement {
   const item = (n: TreeNode): HTMLElement => h("li", { "data-tree-node": n.id, "data-kind": n.kind, "data-depth": String(n.depth), "data-tree-percent": n.branch.percent === null ? "unknown" : String(n.branch.percent) },
-    nsTag(n.ns, lang), " ", h("span", { class: "tag off" }, kindLabel(n.kind, lang)), " ", link(`#/journey/goal/${n.id}`, "crumb", n.title),
+    nsTag(n.ns, lang), " ", levelTag(kindIcon(n.kind), kindLabel(n.kind, lang)), " ", link(`#/journey/goal/${n.id}`, "crumb", n.title),
     n.orphan ? h("span", { class: "muted", "data-orphan": "1" }, ` ${t("gt.orphan", lang)}`) : null,
     h("p", { class: "muted" }, branchLine(n, lang), n.metricLabel ? ` · ${t("gt.metric.shown", lang, { m: n.metricLabel })}` : ""),
     n.branch.percent === null ? null : h("div", { class: "bar", role: "img", "aria-label": branchLine(n, lang) }, h("i", { style: `width:${n.branch.percent}%` })),
@@ -217,10 +219,10 @@ function stepsCard(rec: TMRecord, lang: Locale): HTMLElement {
     const mine = all.filter((r) => r.values["task.not_true_on"]?.state !== "value" && goalIdsOf(r).includes(n.id)).sort((a, b) => a.id.localeCompare(b.id));
     return h("div", { "data-steps-of": n.id }, h("h3", {}, n.depth === 0 ? n.title : `${"· ".repeat(n.depth)}${n.title}`),
       ...habitRows(n, recs, lang),
-      mine.length ? h("ul", { class: "plain" }, ...mine.map((r) => h("li", { "data-step": r.id }, h("strong", {}, textOf(r, "task.title")), doneOf(r) ? h("span", { class: "tag ok" }, ` ${t("gl.steps.done", lang)}`) : null, " ", planByTag(r, lang), " ", goalChips(r, lang, recs, { exclude: n.id, prefix: "gl.also", fullTitles: true }))))
+      mine.length ? h("ul", { class: "plain" }, ...mine.map((r) => h("li", { "data-step": r.id }, h("strong", {}, textOf(r, "task.title")), doneOf(r) ? h("span", { class: "tag ok" }, ` ${t("gl.steps.done", lang)}`) : null, " ", planByTag(r, lang), " ", ...stepTags(r, lang).flatMap((x) => [x, " "]), goalChips(r, lang, recs, { exclude: n.id, prefix: "gl.also", fullTitles: true }))))
         : h("p", { class: "muted" }, t("gl.steps.none", lang)));
   };
-  return h("section", { class: "card", "data-goal-steps": rec.id }, h("h2", { class: "card-h" }, t("gl.steps.title", lang)), ...flatten([node]).map(block),
+  return h("section", { class: "card", "data-goal-steps": rec.id }, h("h2", { class: "card-h" }, levelIcon("task"), " ", t("gl.steps.title", lang)), ...flatten([node]).map(block),
     link(`#/journey/backward/${rec.id}`, "btn ghost", t("bw.link", lang)));
 }
 
@@ -280,7 +282,7 @@ function placeCard(rec: TMRecord, lang: Locale): HTMLElement {
     h("p", {}, kindLabel(node.kind, lang), parentNode ? " · " : null, parentNode ? `${t("gt.partof", lang)} ` : null, parentNode ? link(`#/journey/goal/${parentNode.id}`, "crumb", parentNode.title) : null, !parentNode && node.orphan ? ` · ${t("gt.orphan", lang)}` : null),
     h("p", { class: "muted", "data-branch": node.branch.percent === null ? "unknown" : String(node.branch.percent) }, branchLine(node, lang)),
     node.metricLabel ? h("p", { "data-metric-label": "1" }, t("gt.metric.shown", lang, { m: node.metricLabel })) : null,
-    node.children.length ? h("div", {}, h("h3", {}, t("gt.parts", lang)), h("ul", { class: "plain", "data-parts": String(node.children.length) }, ...node.children.map((c) => h("li", { "data-part": c.id }, kindLabel(c.kind, lang), " · ", link(`#/journey/goal/${c.id}`, "crumb", c.title), h("span", { class: "muted" }, ` · ${branchLine(c, lang)}`))))) : null,
+    node.children.length ? h("div", {}, h("h3", {}, t("gt.parts", lang)), h("ul", { class: "plain", "data-parts": String(node.children.length) }, ...node.children.map((c) => h("li", { "data-part": c.id }, levelTag(kindIcon(c.kind), kindLabel(c.kind, lang), "lvl-name"), " · ", link(`#/journey/goal/${c.id}`, "crumb", c.title), h("span", { class: "muted" }, ` · ${branchLine(c, lang)}`))))) : null,
     form);
 }
 
@@ -352,9 +354,9 @@ export function goalScreen(id: string): HTMLElement {
   const parent = node.parentId ? findRec(node.parentId) : null;
   const context = h("header", { class: "action-desk-header", "data-goal-context": id },
     h("h1", {}, textOf(rec, "goal.title")),
-    h("p", { class: "tags" }, nsTag(rec.ns, lang), h("span", { class: "tag" }, t(`goal.status.${goalStatusOf(rec)}` as Key, lang)), h("span", { class: "tag" }, kindLabel(node.kind, lang))),
+    h("p", { class: "tags" }, nsTag(rec.ns, lang), h("span", { class: "tag" }, t(`goal.status.${goalStatusOf(rec)}` as Key, lang)), levelTag(kindIcon(node.kind), kindLabel(node.kind, lang), "tag")),
     parent ? h("p", { class: "muted" }, t("gt.partof", lang), " ", link(`#/journey/goal/${parent.id}`, "crumb", textOf(parent, "goal.title"))) : null);
-  return h("main", { class: "action-desk action-desk-goal" }, back, context, progress, textOf(rec, "goal.target_date") ? remindRow("goal", id, lang) : null, stepsCard(rec, lang), weightCard(rec, lang), placeCard(rec, lang), statusCard(rec, lang), goalAreaCard(rec, lang), smartForm, swotView, swotForm, goalDeleteCard(rec, lang));
+  return h("main", { class: "action-desk action-desk-goal" }, back, context, progress, whyCard(textOf(rec, "goal.why"), "sm-r", lang), textOf(rec, "goal.target_date") ? remindRow("goal", id, lang) : null, stepsCard(rec, lang), weightCard(rec, lang), placeCard(rec, lang), statusCard(rec, lang), goalAreaCard(rec, lang), smartForm, swotView, swotForm, goalDeleteCard(rec, lang));
 }
 
 // Weighting of this goal's steps: equal or by size. Changing it never changes the overall percent (each step is counted once there).
