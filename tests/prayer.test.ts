@@ -187,10 +187,10 @@ describe("M13 alerts: per-prayer choice and sound plan", () => {
     expect(soundPlan({ kind: "azan" }, true, null, true)).toBe("vibrate");
     expect(soundPlan({ kind: "azan" }, true, null, false)).toBe("none");
   });
-  it("no audio file is bundled, and the slots are same-origin relative paths", () => {
+  it("the owner's four recordings are bundled in the slot files; no old-name or Fajr variants exist; the slots are same-origin relative paths", () => {
     expect(existsSync("public/audio/azan.mp3")).toBe(false);
     expect(existsSync("public/audio/azan-fajr.mp3")).toBe(false);
-    for (const n of [1, 2, 3, 4]) { expect(existsSync(`public/audio/azan-${n}.mp3`)).toBe(false); expect(existsSync(`public/audio/azan-${n}-fajr.mp3`)).toBe(false); }
+    for (const n of [1, 2, 3, 4]) { expect(existsSync(`public/audio/azan-${n}.mp3`)).toBe(true); expect(existsSync(`public/audio/azan-${n}-fajr.mp3`)).toBe(false); }
     for (const f of [AZAN_FILE, AZAN_FAJR_FILE]) expect(f).toMatch(/^\.\/audio\//);
   });
   const resp = (ok: boolean, type: string, len?: number) => async () => ({ ok, headers: { get: (n: string) => (n === "content-type" ? type : n === "content-length" && len !== undefined ? String(len) : null) } });

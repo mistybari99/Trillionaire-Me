@@ -1,6 +1,8 @@
 # Add your own azan files
 
-The app ships with no azan recording. You add up to **4**; the app does the rest. Nothing is downloaded from the internet.
+**Update 7 Nov 2026:** the owner supplied 4 recordings; they are bundled as `azan-1.mp3` to `azan-4.mp3` with the labels Noor (নূর), Sakinah (সাকিনা), Salam (সালাম) and Hidayah (হিদায়াত) in `public/audio/azan-manifest.json`. The labels are only display names, not claims about the reciter. The manifest notes that the builder did not check the licence; the owner confirms the right to use them (files 1 and 2 carry the tag www.islamcan.com). The app also works with fewer or other files as described below; you can replace them any time.
+
+The app otherwise ships with no azan recording. You add up to **4**; the app does the rest. Nothing is downloaded from the internet.
 
 ## Steps
 1. Get azan recordings you have the right to use (see Licence below).

@@ -72,12 +72,31 @@ describe("azan slots", () => {
     expect(m[2]!.label).toBeUndefined(); expect(m).toHaveLength(4);
     expect(parseManifest("junk")).toEqual(defaultSlots()); expect(parseManifest(null)).toEqual(defaultSlots());
   });
-  it("the shipped manifest is valid, has 4 slots and no licence claim", () => {
+  it("the shipped manifest is valid, has 4 slots, named labels (not numbers) and no licence claim; the owner's 4 recordings are present, real MP3 and within the size cap", () => {
     expect(existsSync("public/audio/azan-manifest.json")).toBe(true);
     const raw = JSON.parse(readFileSync("public/audio/azan-manifest.json", "utf8"));
     expect(raw.slots.map((s: { id: string }) => s.id)).toEqual(["1", "2", "3", "4"]);
     expect(parseManifest(raw).every((s) => s.label)).toBe(true);
-    for (const n of [1, 2, 3, 4]) expect(existsSync(`public/audio/azan-${n}.mp3`)).toBe(false);
+    for (const n of [1, 2, 3, 4]) {
+      const f = `public/audio/azan-${n}.mp3`;
+      expect(existsSync(f), f).toBe(true);
+      const buf = readFileSync(f);
+      expect(buf.length, f).toBeGreaterThan(100_000);
+      expect(buf.length, f).toBeLessThanOrEqual(3 * 1024 * 1024);
+      // Some files carry a few empty padding bytes before the first sound frame (azan-2 has 216); browsers skip them. Allow at most 1 KB.
+      let i = 0; while (i < buf.length && buf[i] === 0) i++;
+      expect(i, `${f} padding`).toBeLessThan(1024);
+      const id3 = buf.subarray(i, i + 3).toString("latin1") === "ID3";
+      const frame = buf[i] === 0xff && (buf[i + 1]! & 0xe0) === 0xe0;
+      expect(id3 || frame, `${f} must start like an MP3`).toBe(true);
+    }
+    for (const s of raw.slots as Array<{ label: { en: string; bn: string }; source: string }>) {
+      expect(s.label.en).not.toMatch(/recording|\d/i);
+      expect(s.label.bn).not.toMatch(/রেকর্ডিং|\d/);
+      expect(s.source).toMatch(/owner/i);
+      expect(s.source).not.toMatch(/licen[cs]ed under|public domain|free to use/i);
+    }
+    expect(new Set(raw.slots.map((s: { label: { en: string } }) => s.label.en)).size).toBe(4);
   });
   it("the saved choice and speed are additive: an old saved value gets the defaults", () => {
     const old = { preAlert: true, preMinutes: 15, azan: true, sound: true, volume: 40 }; // saved before slots existed

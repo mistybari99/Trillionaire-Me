@@ -1,10 +1,10 @@
 {
   "version": 1,
-  "note": "Optional. Gives each recording slot a neutral label and a source or licence note. File names are fixed: azan-1.mp3 to azan-4.mp3, with optional azan-N-fajr.mp3. See docs/azan.md.",
+  "note": "Optional. Gives each recording slot a label and a source or licence note. File names are fixed: azan-1.mp3 to azan-4.mp3, with optional azan-N-fajr.mp3. See docs/azan.md.",
   "slots": [
-    { "id": "1", "label": { "en": "Recording 1", "bn": "রেকর্ডিং 1" }, "source": "" },
-    { "id": "2", "label": { "en": "Recording 2", "bn": "রেকর্ডিং 2" }, "source": "" },
-    { "id": "3", "label": { "en": "Recording 3", "bn": "রেকর্ডিং 3" }, "source": "" },
-    { "id": "4", "label": { "en": "Recording 4", "bn": "রেকর্ডিং 4" }, "source": "" }
+    { "id": "1", "label": { "en": "Noor", "bn": "নূর" }, "source": "Supplied by the owner, 7 Nov 2026 (file tag: www.islamcan.com). Licence not checked by the builder; the owner confirms the right to use it." },
+    { "id": "2", "label": { "en": "Sakinah", "bn": "সাকিনা" }, "source": "Supplied by the owner, 7 Nov 2026 (file tag: www.islamcan.com). Licence not checked by the builder; the owner confirms the right to use it." },
+    { "id": "3", "label": { "en": "Salam", "bn": "সালাম" }, "source": "Supplied by the owner, 7 Nov 2026 (no source tag in the file). Licence not checked by the builder; the owner confirms the right to use it." },
+    { "id": "4", "label": { "en": "Hidayah", "bn": "হিদায়াত" }, "source": "Supplied by the owner, 7 Nov 2026 (no source tag in the file). Licence not checked by the builder; the owner confirms the right to use it." }
   ]
 }
