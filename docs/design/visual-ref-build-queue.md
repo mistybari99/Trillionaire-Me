@@ -166,7 +166,7 @@ Every task keeps: no scores/ranks/streaks/grades, unknown is not 0 (show "Unknow
 Ordering note: Q-01 to Q-09 are small and independent; Q-10 to Q-20 are medium; Q-21 to Q-34 are larger or lower value. Q-28 follows Q-01, Q-19 follows Q-17, Q-25 follows Q-09, Q-33 follows Q-05.
 
 ## 3b. Build status (7 Nov 2026)
-Batch 1 (Q-01 to Q-09) is **built, audit pending** (not Verified). Tests: tests/q_b1_stuck.test.ts, concrete_bank.test.ts, q_b1_goal.test.ts, q_b1_inspiration.test.ts, q_b1_weekly.test.ts, q_b1_legs.test.ts, q_b1_reality.test.ts, goal_icons.test.ts, q_batch1_screens.test.ts. New text lives in src/i18n/q_b1.ts, new styles in src/ui/styles_qb1.css, the new route in src/ui/routes_qb1.ts. Q-10 (starter cards) and Q-11 (worksheet fields + plan table) are **built, audit pending** (batch 2; tests/q_b2_start.test.ts, tests/q_b2_worksheet.test.ts). Q-12 to Q-34 are not built here.
+Batch 1 (Q-01 to Q-09) is **built, audit pending** (not Verified). Tests: tests/q_b1_stuck.test.ts, concrete_bank.test.ts, q_b1_goal.test.ts, q_b1_inspiration.test.ts, q_b1_weekly.test.ts, q_b1_legs.test.ts, q_b1_reality.test.ts, goal_icons.test.ts, q_batch1_screens.test.ts. New text lives in src/i18n/q_b1.ts, new styles in src/ui/styles_qb1.css, the new route in src/ui/routes_qb1.ts. Q-10 (starter cards), Q-11 (worksheet fields + plan table) and Q-30 (SMART wizard) are **built, audit pending** (batch 2; tests/q_b2_start.test.ts, q_b2_worksheet.test.ts, q_b2_smart.test.ts, q_batch2_screens.test.ts; text in src/i18n/q_b2.ts, styles in src/ui/styles_qb2.css, route in src/ui/routes_qb2.ts). The other queue rows are not built here.
 
 ## 4. BLOCKED list
 | id | item | waits for |

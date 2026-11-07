@@ -8,7 +8,8 @@ import { fieldById } from "../catalog/fields";
 import { allRecs, consentOn, consentPrompt, findRec, labelFor, saveBlockedText, storeOf } from "./entry";
 import { checkFreeText } from "../core/safety";
 import type { FieldValue, TMRecord } from "../core/types";
-import { PROBLEM_FIELDS, RESOURCES_FIELD, TINY_ACTIONS, WFD_FIELDS, WORKSHEET_FIELDS, isEmptyGoal, planTable, textOfField } from "../core/goalWorksheet";
+import { CHECK_ITEMS, PROBLEM_FIELDS, RESOURCES_FIELD, TINY_ACTIONS, WFD_FIELDS, WIZARD_STEPS, WORKSHEET_FIELDS, checkSummary, isEmptyGoal, parseCheck, planTable, serializeCheck, textOfField } from "../core/goalWorksheet";
+import { validDay } from "../core/backwardPlan";
 import { prefs } from "./state";
 
 const fid = (f: string): string => `q2-${f.replace(/[^a-z0-9]+/g, "-")}`;
@@ -83,3 +84,54 @@ export function planTableScreen(id: string): HTMLElement {
 
 /** Q-11: link from the goal page to the table view. */
 export const tableLink = (goalId: string, lang: Locale): HTMLElement => h("a", { href: `#/journey/goal/${goalId}/table`, class: "btn ghost", "data-act": "plan-table" }, t("q2.tbl.link", lang));
+
+let justDone: string | null = null; // the goal whose wizard just finished: its rebuilt page shows the calm "Done" line once
+const rerender = (): void => { window.dispatchEvent(new HashChangeEvent("hashchange")); };
+const put = (goalId: string, f: string, text: string, lang: Locale): string | null => {
+  if (!consentOn()) return saveBlockedText(lang);
+  const cur = findRec(goalId); if (!cur) return null;
+  if (text && !checkFreeText(text).ok) return t("intake.secretRejected", lang);
+  if (f === "goal.target_date" && text && !validDay(text)) return t("intake.invalidNumber", lang);
+  const values: Record<string, FieldValue> = { ...cur.values };
+  if (text) values[f] = { state: "value", value: text, label: labelFor(cur.ns) }; else if (values[f]) values[f] = { state: "unknown" };
+  storeOf(cur).put({ ...cur, values }); return null;
+};
+
+/** Q-30: SMART wizard (five questions, one at a time) and a 7-question yes/no checklist. "Not sure" is always allowed and changes nothing. The one-page form and the funnel stay below it and read the same fields. */
+export function smartWizardCard(goalId: string, lang: Locale): HTMLElement {
+  const rec = findRec(goalId)!;
+  let mode: "wiz" | "chk" = "wiz", step = 0, answers = parseCheck(textOfField(rec, "goal.smart_check"));
+  const body = h("div", { "data-wizard-body": "1" });
+  const modes = (["wiz", "chk"] as const).map((m) => h("button", { type: "button", class: "btn ghost", "data-mode": m, onclick: () => { mode = m; paint(); } }, t(`q2.sm.mode.${m}` as Key, lang)));
+  const wiz = (): HTMLElement => {
+    const s = WIZARD_STEPS[step]!; const last = step === WIZARD_STEPS.length - 1; const cur = findRec(goalId)!;
+    const input = h("input", { id: "q2-wz-input", type: s.kind === "date" ? "date" : "text", maxlength: "160", autocomplete: "off", value: textOfField(cur, s.field) }) as HTMLInputElement;
+    const err = h("p", { class: "err", role: "alert" });
+    const next = (save: boolean) => { if (save) { const e = put(goalId, s.field, input.value.trim(), lang); if (e) { err.textContent = e; return; } } if (last) { justDone = goalId; rerender(); return; } step++; paint(); };
+    return h("div", { "data-wizard-step": s.part }, h("p", { class: "muted", "data-wizard-pos": "1" }, t("q2.wz.of", lang, { n: String(step + 1), m: String(WIZARD_STEPS.length) })),
+      h("label", { for: "q2-wz-input" }, t(`q2.wz.q.${s.part}` as Key, lang)), input, err,
+      h("div", { class: "q2-start" },
+        h("button", { type: "button", class: "btn", "data-wz": "next", onclick: () => next(true) }, t(last ? "q2.wz.finish" : "q2.wz.next", lang)),
+        h("button", { type: "button", class: "btn ghost", "data-wz": "skip", onclick: () => next(false) }, t("q2.wz.skip", lang)),
+        step > 0 ? h("button", { type: "button", class: "btn ghost", "data-wz": "back", onclick: () => { step--; paint(); } }, t("q2.wz.back", lang)) : null));
+  };
+  const done = justDone === goalId; if (done) justDone = null;
+  const chk = (): HTMLElement => {
+    const sum = checkSummary(answers); const msg = h("p", { class: "muted", role: "status", "data-check-sum": "1" }, t("q2.ck.sum", lang, { y: String(sum.yes), n: String(sum.no), u: String(sum.unknown) }));
+    const err = h("p", { class: "err", role: "alert" });
+    const rows = CHECK_ITEMS.map((id, i) => h("div", { class: "q2-ck", "data-check": id },
+      h("p", {}, t(`q2.ck.q.${id}` as Key, lang)),
+      h("div", { class: "seg", role: "group", "aria-label": t(`q2.ck.q.${id}` as Key, lang) }, ...(["yes", "no", "unknown"] as const).map((a) =>
+        h("button", { type: "button", class: "btn ghost btn-sm", "data-answer": a, "aria-pressed": String(answers[i] === a), onclick: () => {
+          const next = answers.map((x, j) => (j === i ? a : x)); const e = put(goalId, "goal.smart_check", serializeCheck(next), lang);
+          if (e) { err.textContent = e; return; } answers = next; paint(); } }, t(`q2.ck.${a}` as Key, lang))))));
+    return h("div", {}, ...rows, msg, err);
+  };
+  const paint = (): void => {
+    for (const b of modes) b.setAttribute("aria-pressed", String(b.getAttribute("data-mode") === mode));
+    body.replaceChildren(done ? h("p", { class: "ok-msg", role: "status", "data-wizard-done": "1" }, t("q2.wz.done", lang)) : mode === "wiz" ? wiz() : chk());
+  };
+  paint();
+  return h("section", { class: "card", id: "smart_wizard-card", "data-card": "smart_wizard" }, h("h2", { class: "card-h" }, t("q2.sm.h", lang)), h("p", { class: "muted" }, t("q2.sm.intro", lang)),
+    consentOn() ? null : consentPrompt(lang), h("div", { class: "seg", role: "group", "aria-label": t("q2.sm.h", lang) }, ...modes), body);
+}

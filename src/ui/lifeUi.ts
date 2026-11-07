@@ -29,7 +29,7 @@ import { linkStats } from "../core/goalPlan";
 import { planByTag } from "./backwardUi";
 import { HORIZONS } from "../core/horizon";
 import { kindIcon, levelTag, stepTags, whyCard } from "./qb1Ui";
-import { problemFrameCard, startCard, tableLink, wantFeelDoCard, worksheetCard } from "./qb2Ui";
+import { problemFrameCard, smartWizardCard, startCard, tableLink, wantFeelDoCard, worksheetCard } from "./qb2Ui";
 import { levelIcon } from "./svg";
 import type { FieldValue, TMRecord } from "../core/types";
 
@@ -357,7 +357,7 @@ export function goalScreen(id: string): HTMLElement {
     h("h1", {}, textOf(rec, "goal.title")),
     h("p", { class: "tags" }, nsTag(rec.ns, lang), h("span", { class: "tag" }, t(`goal.status.${goalStatusOf(rec)}` as Key, lang)), levelTag(kindIcon(node.kind), kindLabel(node.kind, lang), "tag")),
     parent ? h("p", { class: "muted" }, t("gt.partof", lang), " ", link(`#/journey/goal/${parent.id}`, "crumb", textOf(parent, "goal.title"))) : null);
-  return h("main", { class: "action-desk action-desk-goal" }, back, context, startCard(id, lang), progress, whyCard(textOf(rec, "goal.why"), "sm-r", lang), textOf(rec, "goal.target_date") ? remindRow("goal", id, lang) : null, stepsCard(rec, lang), tableLink(id, lang), weightCard(rec, lang), placeCard(rec, lang), statusCard(rec, lang), goalAreaCard(rec, lang), problemFrameCard(id, lang), wantFeelDoCard(id, lang), worksheetCard(id, lang), smartForm, swotView, swotForm, goalDeleteCard(rec, lang));
+  return h("main", { class: "action-desk action-desk-goal" }, back, context, startCard(id, lang), progress, whyCard(textOf(rec, "goal.why"), "sm-r", lang), textOf(rec, "goal.target_date") ? remindRow("goal", id, lang) : null, stepsCard(rec, lang), tableLink(id, lang), weightCard(rec, lang), placeCard(rec, lang), statusCard(rec, lang), goalAreaCard(rec, lang), problemFrameCard(id, lang), wantFeelDoCard(id, lang), worksheetCard(id, lang), smartWizardCard(id, lang), smartForm, swotView, swotForm, goalDeleteCard(rec, lang));
 }
 
 // Weighting of this goal's steps: equal or by size. Changing it never changes the overall percent (each step is counted once there).

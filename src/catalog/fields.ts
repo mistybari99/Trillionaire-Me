@@ -405,6 +405,11 @@ export const FIELDS: FieldDef[] = [
     what: bi("এই গোলের জন্য সময়, জিনিস বা মানুষ, যা লাগবে।", "The time, things or people this goal needs."),
     why: bi("কী লাগবে জানলে প্ল্যান বাস্তব হয়।", "Knowing what is needed makes the plan real."),
     example: bi("সপ্তাহে 3 ঘণ্টা, একটা ল্যাপটপ", "3 hours a week, a laptop"), format: bi("এক লাইন", "One line") }),
+  f({ id: "goal.smart_check", entity: "goal", family: "FAM-03", type: "text", purpose: "planning", importance: "optional",
+    label: bi("SMART চেকলিস্টের উত্তর", "SMART checklist answers"),
+    what: bi("7টা হ্যাঁ/না প্রশ্নের উত্তর। অ্যাপ নিজে ভরে, আপনাকে লিখতে হয় না।", "Answers to 7 yes/no questions. The app fills it; you do not type it."),
+    why: bi("পরে এসে নিজের উত্তর আবার দেখতে।", "To see your own answers again later."),
+    example: bi("y,n,u,u,u,u,u (প্রথমটা হ্যাঁ, দ্বিতীয়টা না)", "y,n,u,u,u,u,u (first yes, second no)"), format: bi("y = হ্যাঁ, n = না, u = নিশ্চিত না", "y = yes, n = no, u = not sure") }),
   // ── end batch 2 ──
   // ── life wheel (FAM-35): one record per area, rating 1-5 or unknown ──
   f({ id: "life_area.key", entity: "life_area", family: "FAM-35", type: "choice", purpose: "assessment", importance: "useful",
