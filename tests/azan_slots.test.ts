@@ -8,7 +8,7 @@ import { precacheList } from "../tools/precache";
 import { PACKS } from "../src/i18n/packs";
 import { render } from "../src/app";
 import { prefs, store } from "../src/ui/state";
-import { previewAzan, setAzanAvailability } from "../src/ui/prayerAlerts";
+import { previewAzan, setAzanAvailability, stopAzanPlayer } from "../src/ui/prayerAlerts";
 import { readoutText } from "../src/ui/azanSoundUi";
 
 const av = (mains: Array<string | null>, fajr: Array<string | null> = []): AzanAvailability => ({ slots: mains.map((m, i) => ({ id: String(i + 1) as "1", main: m, fajr: fajr[i] ?? null })) });
@@ -72,7 +72,7 @@ describe("azan slots", () => {
     expect(m[2]!.label).toBeUndefined(); expect(m).toHaveLength(4);
     expect(parseManifest("junk")).toEqual(defaultSlots()); expect(parseManifest(null)).toEqual(defaultSlots());
   });
-  it("the shipped manifest is valid, has 4 slots, labels numbered in sequence with a name (1 · Noor) and no licence claim; the owner's 4 recordings are present, real MP3 and within the size cap", () => {
+  it("the shipped manifest is valid, has 4 slots, labels numbered in sequence (Azaan 1 to 4) and no licence claim; the owner's 4 recordings are present, real MP3 and within the size cap", () => {
     expect(existsSync("public/audio/azan-manifest.json")).toBe(true);
     const raw = JSON.parse(readFileSync("public/audio/azan-manifest.json", "utf8"));
     expect(raw.slots.map((s: { id: string }) => s.id)).toEqual(["1", "2", "3", "4"]);
@@ -91,8 +91,8 @@ describe("azan slots", () => {
       expect(id3 || frame, `${f} must start like an MP3`).toBe(true);
     }
     for (const s of raw.slots as Array<{ label: { en: string; bn: string }; source: string }>) {
-      expect(s.label.en).toMatch(/^[1-4] · \D+$/);
-      expect(s.label.bn).toMatch(/^[1-4] · \D+$/);
+      expect(s.label.en).toMatch(/^Azaan [1-4]$/);
+      expect(s.label.bn).toMatch(/^আজান [1-4]$/);
       expect(s.label.en).not.toMatch(/recording/i);
       expect(s.label.bn).not.toMatch(/রেকর্ডিং/);
       expect(s.source).toMatch(/owner/i);
@@ -124,17 +124,19 @@ describe("azan settings screen", () => {
   const q = <T extends HTMLElement>(s: string) => document.querySelector<T>(s)!;
   type PlayEvt = { src: string; vol: number; rate: number; pitch: boolean | undefined };
   const plays: PlayEvt[] = [];
+  const all: Array<{ paused: boolean; src: string }> = [];
   let metaSec: number | null = null; // what the fake file's metadata says; null = never loads
   class FakeAudio {
     volume = 1; playbackRate = 1; defaultPlaybackRate = 1; preservesPitch: boolean | undefined; preload = ""; duration = NaN; private _src = "";
-    private l: Record<string, Array<() => void>> = {};
-    constructor(src?: string) { if (src) this._src = src; }
+    paused = true; currentTime = 0; private l: Record<string, Array<() => void>> = {};
+    constructor(src?: string) { if (src) this._src = src; all.push(this); }
+    pause() { if (!this.paused) { this.paused = true; (this.l.pause ?? []).forEach((f) => f()); } }
     get src() { return this._src; }
     set src(v: string) { this._src = v; if (metaSec !== null) queueMicrotask(() => { this.duration = metaSec as number; (this.l.loadedmetadata ?? []).forEach((f) => f()); }); }
     addEventListener(e: string, f: () => void) { (this.l[e] ??= []).push(f); }
-    play() { plays.push({ src: this._src, vol: this.volume, rate: this.playbackRate, pitch: this.preservesPitch }); return Promise.resolve(); }
+    play() { this.paused = false; plays.push({ src: this._src, vol: this.volume, rate: this.playbackRate, pitch: this.preservesPitch }); (this.l.play ?? []).forEach((f) => f()); return Promise.resolve(); }
   }
-  beforeEach(() => { reset(); plays.length = 0; metaSec = null; vi.stubGlobal("Audio", FakeAudio); window.addEventListener("hashchange", render); });
+  beforeEach(() => { stopAzanPlayer(); reset(); plays.length = 0; all.length = 0; metaSec = null; vi.stubGlobal("Audio", FakeAudio); window.addEventListener("hashchange", render); });
   afterEach(() => { window.removeEventListener("hashchange", render); vi.unstubAllGlobals(); setAzanAvailability(NO_AZAN); });
 
   it("with nothing added, all 4 slots say Not added and cannot be chosen; length is unknown", () => {
@@ -181,6 +183,31 @@ describe("azan settings screen", () => {
     expect(q("[data-azan-readout]").textContent).toBe("Length: 4:10 → 3:20, 50 s shorter (at 1.25x)");
     slider.value = "0.75"; slider.dispatchEvent(new Event("input"));
     expect(q("[data-azan-readout]").textContent).toBe("Length: 4:10 → 5:33, 83 s longer (at 0.75x)");
+  });
+  it("Play becomes Pause while a recording plays; starting another one stops the first (only one plays at a time); Pause then Play resumes", () => {
+    setAzanAvailability(av(["./audio/azan-1.mp3", "./audio/azan-2.mp3", "./audio/azan-3.mp3"])); location.hash = "#/settings/prayer"; render();
+    const b = (n: string) => q<HTMLButtonElement>(`[data-azan-play='${n}']`);
+    const playing = () => all.filter((a) => !a.paused).map((a) => a.src);
+    expect(b("1").textContent).toMatch(/Play/); expect(b("1").getAttribute("aria-pressed")).toBe("false");
+    b("1").click();
+    expect(playing()).toEqual(["./audio/azan-1.mp3"]); expect(b("1").textContent).toMatch(/Pause/); expect(b("1").getAttribute("aria-pressed")).toBe("true");
+    b("2").click();
+    expect(playing()).toEqual(["./audio/azan-2.mp3"]); // the first one stopped
+    expect(b("1").textContent).toMatch(/Play/); expect(b("2").textContent).toMatch(/Pause/);
+    const first2 = all.find((a) => !a.paused);
+    b("2").click(); // pause the same one
+    expect(playing()).toEqual([]); expect(b("2").textContent).toMatch(/Play/);
+    b("2").click(); // resume it (same player, not a second one)
+    expect(playing()).toEqual(["./audio/azan-2.mp3"]); expect(all.filter((a) => !a.paused)).toHaveLength(1); expect(all.find((a) => !a.paused)).toBe(first2);
+    b("3").click(); b("1").click();
+    expect(playing()).toEqual(["./audio/azan-1.mp3"]);
+    expect(all.filter((a) => !a.paused).length).toBeLessThanOrEqual(1);
+  });
+  it("the main Preview button shares the same single player", () => {
+    setAzanAvailability(av(["./audio/azan-1.mp3", "./audio/azan-2.mp3"])); location.hash = "#/settings/prayer"; render();
+    q<HTMLButtonElement>("[data-azan-play='2']").click();
+    q<HTMLButtonElement>("[data-act=azan-preview]").click();
+    expect(all.filter((a) => !a.paused).map((a) => a.src)).toEqual(["./audio/azan-1.mp3"]); // chosen default is slot 1; slot 2 stopped
   });
   it("preview of another slot plays that file; with nothing added, preview says so", () => {
     setAzanAvailability(av(["./audio/azan-1.mp3", "./audio/azan-2.mp3"])); location.hash = "#/settings/prayer"; render();

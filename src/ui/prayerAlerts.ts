@@ -54,8 +54,24 @@ export function setAzanAvailability(a: AzanAvailability) { azanAvail = a; azanPr
 
 const reducedMotion = (): boolean => prefs.reduceMotion === "always" || (typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches);
 
-/** Plays one file at the chosen volume and speed. The pitch stays natural when the speed changes. Needs a tap or an open app; a blocked play is ignored. */
-function playFile(file: string, volume: number, speed: number) {
+// One azan player at a time: starting any recording stops the one before it. The preview buttons toggle Play and Pause for their own slot.
+let player: { a: HTMLAudioElement; slot: string | null } | null = null;
+const playerListeners = new Set<() => void>();
+const notifyPlayer = () => { for (const f of [...playerListeners]) { try { f(); } catch { /* a listener must never break playback */ } } };
+/** Called whenever the player starts, pauses or stops. Returns the way to stop listening. */
+export function onAzanPlayerChange(fn: () => void): () => void { playerListeners.add(fn); return () => { playerListeners.delete(fn); }; }
+/** Which slot is loaded in the player (null when none or when a chosen-default alert plays) and whether it is playing right now. */
+export const azanPlayerState = (): { slot: string | null; playing: boolean } => ({ slot: player?.slot ?? null, playing: !!player && player.a.paused === false });
+/** Stops and clears the player. Safe to call at any time. */
+export function stopAzanPlayer(): void {
+  const cur = player; player = null;
+  if (cur) { try { cur.a.pause(); cur.a.currentTime = 0; } catch { /* a stopped or mocked player */ } }
+  notifyPlayer();
+}
+
+/** Plays one file at the chosen volume and speed, after stopping any earlier one. The pitch stays natural when the speed changes. Needs a tap or an open app; a blocked play is ignored. */
+function playFile(file: string, volume: number, speed: number, slot: string | null = null) {
+  stopAzanPlayer();
   const a = new Audio(file); a.volume = Math.min(1, Math.max(0, volume / 100));
   const rate = clampSpeed(speed);
   try {
@@ -64,7 +80,10 @@ function playFile(file: string, volume: number, speed: number) {
     (a as unknown as { webkitPreservesPitch?: boolean }).webkitPreservesPitch = true;
     (a as unknown as { mozPreservesPitch?: boolean }).mozPreservesPitch = true;
   } catch { /* an old browser plays at normal speed */ }
-  void a.play().catch(() => { /* the phone may block sound until a tap */ });
+  player = { a, slot };
+  try { a.addEventListener?.("ended", () => { if (player?.a === a) { player = null; } notifyPlayer(); }); a.addEventListener?.("pause", notifyPlayer); a.addEventListener?.("play", notifyPlayer); } catch { /* mocked audio */ }
+  void a.play().catch(() => { if (player?.a === a) player = null; notifyPlayer(); /* the phone may block sound until a tap */ });
+  notifyPlayer();
 }
 
 /** Sound or vibration for an azan alert, only if switched on. Works while the app is open; a closed page cannot play audio. Never throws. */
@@ -86,7 +105,19 @@ export function previewAzan(prayer: PrayerKey = "dhuhr", opts: { slot?: string; 
   const { volume, azanSlot, azanSpeed } = prefs.prayerAlerts;
   const file = azanFileFor(prayer, azanAvail, opts.slot ?? azanSlot);
   if (!file || volume <= 0) return false;
-  try { playFile(file, volume, opts.speed ?? azanSpeed); return true; } catch { return false; }
+  try { playFile(file, volume, opts.speed ?? azanSpeed, opts.slot ?? null); return true; } catch { return false; }
+}
+
+/** Play / Pause for one slot's preview. Same slot playing: pause it. Same slot paused: resume it. Another slot or nothing loaded: stop the other one and start this one.
+ *  Returns what the button should now show ("playing" or "paused"), or "none" when nothing could be played (no file, or volume 0). */
+export function toggleAzanPreview(opts: { slot: string; speed?: number }): "playing" | "paused" | "none" {
+  if (player && player.slot === opts.slot) {
+    try {
+      if (player.a.paused === false) { player.a.pause(); notifyPlayer(); return "paused"; }
+      void player.a.play().catch(() => { /* blocked until a tap */ }); notifyPlayer(); return "playing";
+    } catch { /* fall through and start again */ }
+  }
+  return previewAzan("dhuhr", opts) ? "playing" : "none";
 }
 
 const durations = new Map<string, number>();

@@ -4,12 +4,13 @@ import { h } from "./dom";
 import { t } from "../i18n/t";
 import type { Locale } from "../i18n/registry";
 import { kBtn, kChip, kList, kRow } from "./kit";
-import { azanAvailability, azanDuration, chosenAzanFile, previewAzan } from "./prayerAlerts";
+import { azanAvailability, azanDuration, azanPlayerState, chosenAzanFile, onAzanPlayerChange, toggleAzanPreview } from "./prayerAlerts";
 import { chooseSlot, hasAnyAzan, type AzanSlotState } from "../core/azanSlots";
 import { SPEED_MAX, SPEED_MIN, SPEED_STEP, clampSpeed, speedReadout } from "../core/azanSpeed";
 import type { AlertPrefs } from "../core/prayerAlerts";
 
 const speedText = (x: number): string => x.toFixed(2).replace(/0$/, "");
+let unsubscribePlayer: (() => void) | null = null;
 export const slotLabel = (s: AzanSlotState, lang: Locale): string => (s.label ? (lang === "en" ? s.label.en : s.label.bn) : t("deen.azan.slotName", lang, { n: s.id }));
 
 /** Text of the length line for a known or unknown length and a speed. */
@@ -29,7 +30,10 @@ export function azanSoundBlock(alerts: AlertPrefs, setAlerts: (next: AlertPrefs)
   let duration: number | null = null;
 
   const note = h("p", { class: "muted", "data-preview-note": "1", role: "status" });
-  const play = (slot?: string) => { if (!previewAzan("dhuhr", { speed: pending, ...(slot ? { slot } : {}) })) note.textContent = t(any ? "deen.set.previewSilent" : "deen.set.previewNone", lang); else note.textContent = ""; };
+  const playBtns = new Map<string, HTMLElement>();
+  const refreshPlay = () => { const st = azanPlayerState(); for (const [id, b] of playBtns) { const on = st.playing && st.slot === id; b.textContent = t(on ? "deen.azan.pause" : "deen.azan.play", lang); b.setAttribute("aria-pressed", String(on)); b.setAttribute("data-azan-playing", on ? "1" : "0"); } };
+  unsubscribePlayer?.(); unsubscribePlayer = onAzanPlayerChange(refreshPlay);
+  const play = (slot?: string) => { const id = slot ?? active?.id ?? ""; const r = toggleAzanPreview({ slot: id, speed: pending }); if (r === "none") note.textContent = t(any ? "deen.set.previewSilent" : "deen.set.previewNone", lang); else note.textContent = ""; refreshPlay(); };
 
   const rows = av.slots.map((s) => {
     const added = s.main !== null, chosen = active?.id === s.id;
@@ -39,7 +43,7 @@ export function azanSoundBlock(alerts: AlertPrefs, setAlerts: (next: AlertPrefs)
       trail: [
         kChip(t(added ? "deen.azan.slotAdded" : "deen.azan.slotMissing", lang), added ? "ok" : "unk"),
         kBtn(t(chosen ? "deen.azan.chosen" : "deen.azan.choose", lang), { variant: chosen ? "primary" : "secondary", size: "sm", attrs: { "data-act": "azan-choose", "aria-pressed": String(chosen), ...(added ? {} : { disabled: true }), onclick: () => { if (added && !chosen) setAlerts({ ...alerts, azanSlot: s.id }); } } }),
-        added ? kBtn(t("deen.azan.play", lang), { variant: "ghost", size: "sm", attrs: { "data-act": "azan-play", "data-azan-play": s.id, onclick: () => play(s.id) } }) : null,
+        added ? (() => { const b = kBtn(t("deen.azan.play", lang), { variant: "ghost", size: "sm", attrs: { "data-act": "azan-play", "data-azan-play": s.id, "aria-pressed": "false", "aria-label": `${t("deen.azan.play", lang)} / ${t("deen.azan.pause", lang)}: ${slotLabel(s, lang)}`, onclick: () => play(s.id) } }); playBtns.set(s.id, b); return b; })() : null,
       ],
       attrs: { "data-azan-slot": s.id, "data-azan-state": added ? (chosen ? "chosen" : "added") : "missing" },
     });
