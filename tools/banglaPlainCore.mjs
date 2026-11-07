@@ -5,7 +5,7 @@ import { scanStrings } from "./banglaLex.mjs";
 
 export const BN = /[ঀ-৿]/;
 export const TS_FILES = [
-  "src/i18n/packs.ts", "src/catalog/fields.ts", "src/catalog/glossary.ts", "src/modules/capability.ts", "src/schema/entities.ts",
+  "src/i18n/packs.ts", "src/i18n/vault.ts", "src/catalog/fields.ts", "src/catalog/glossary.ts", "src/modules/capability.ts", "src/schema/entities.ts",
   "src/library/topics.ts", "src/library/paths.ts", "src/library/inspiration.ts", "src/library/halalFlags.ts", "src/ui/settingsRegistry.ts",
   "src/core/stageTemplates.ts", "src/core/stuck.ts", "src/core/rules.ts", "src/core/stages.ts", "src/core/notify.ts", "src/ui/prayerAlerts.ts", "src/demo/seed.ts",
 ];

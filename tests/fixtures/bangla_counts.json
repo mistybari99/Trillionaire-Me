@@ -1,7 +1,8 @@
 {
-  "keys": 2494,
+  "keys": 2565,
   "perFile": {
     "src/i18n/packs.ts": 2483,
+    "src/i18n/vault.ts": 71,
     "src/catalog/fields.ts": 991,
     "src/catalog/glossary.ts": 68,
     "src/modules/capability.ts": 53,
@@ -10,7 +11,7 @@
     "src/library/paths.ts": 106,
     "src/library/inspiration.ts": 19,
     "src/library/halalFlags.ts": 12,
-    "src/ui/settingsRegistry.ts": 99,
+    "src/ui/settingsRegistry.ts": 104,
     "src/core/stageTemplates.ts": 35,
     "src/core/stuck.ts": 12,
     "src/core/rules.ts": 8,

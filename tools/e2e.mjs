@@ -520,6 +520,84 @@ for (const lang of ["en", "bn"]) {
   check("MENU-UNDERLYING-BACK", "keyboard navigation through the underlying Owner Profile leaves no duplicate Back stop", firstBack.hash === "#/today" && !firstBack.marker && new URL(draftPage.url()).hash === "#/journey");
   await draftContext.close();
 }
+// At-rest encryption (option C, stage 1) in a real browser: turn on, reload, locked, wrong passphrase, unlock, data visible, turn off; a forced failure; 10 000 records timing.
+{
+  const NAME = "Real secret goal";
+  const seed = (pg, n) => pg.evaluate(({ n, NAME }) => new Promise((res, rej) => { const q = indexedDB.open("tm-db"); q.onerror = () => rej(q.error); q.onsuccess = () => { const db = q.result; const tx = db.transaction("records", "readwrite"); const st = tx.objectStore("records");
+    for (let i = 0; i < n; i++) st.put({ id: `vault-goal-${String(i).padStart(5, "0")}`, entity: "goal", ns: "real", ownerId: "owner", schemaVersion: 3, createdAt: new Date().toISOString(), values: { "goal.title": { state: "value", value: `${NAME} ${i}`, label: "FACT" } } });
+    tx.oncomplete = () => { db.close(); res(); }; tx.onerror = () => rej(tx.error); }; }), { n, NAME });
+  const raw = (pg) => idb(pg).then((rows) => rows.filter((r) => r.ns === "real" && String(r.id).startsWith("vault-goal-")));
+  const open = async (n) => {
+    const c = await browser.newContext({ viewport: { width: 360, height: 740 }, serviceWorkers: "block", acceptDownloads: true }); const p = await c.newPage();
+    p.on("request", (r) => { const u = r.url(); if (!u.startsWith("http://localhost:4174") && /^https?:/.test(u)) external.push(u); });
+    await p.addInitScript(() => { localStorage.setItem("tm:ui:dataMode", "real"); localStorage.setItem("tm:ui:lang", "en"); localStorage.setItem("tm:consent:real:v1", JSON.stringify({ v: 1, at: new Date().toISOString() })); });
+    await p.goto("http://localhost:4174/#/settings/privacy"); await p.waitForSelector("[data-card=vault]");
+    await seed(p, n); await p.reload(); await p.waitForSelector("[data-card=vault]");
+    return { c, p };
+  };
+  const turnOn = async (p) => {
+    await p.click("[data-act=vault-start]"); await p.check("#vault-tick1"); await p.click("[data-act=vault-next]");
+    await p.fill("#vault-pass", "blue-tea-42"); await p.fill("#vault-pass2", "blue-tea-42"); await p.fill("#vault-rec", "recovery-pass-9"); await p.fill("#vault-rec2", "recovery-pass-9");
+    const dl = p.waitForEvent("download"); await p.click("[data-act=vault-save-recovery]"); const file = (await dl).suggestedFilename();
+    await p.waitForSelector("#vault-tick2"); await p.check("#vault-tick2"); const t0 = Date.now(); await p.click("[data-act=vault-go]");
+    return { file, t0 };
+  };
+  const unlock = async (p, pass) => { await p.fill("#vault-unlock-pass", pass); await p.click("[data-act=vault-unlock]"); };
+
+  // A. full path with 25 records
+  {
+    const { c, p } = await open(25); const secrets = async () => (await raw(p)).map((r) => JSON.stringify(r)).join("");
+    check("VAULT-E2E-PLAIN-BEFORE", "before encryption the real records are plain in IndexedDB", (await secrets()).includes(NAME));
+    const { file } = await turnOn(p);
+    await p.waitForSelector("[data-vault-state=on]", { timeout: 120000 });
+    const rows = await raw(p); const body = JSON.stringify(rows);
+    check("VAULT-E2E-ON", "activation seals all 25 real records (enc 1), no plain text left, recovery file saved", rows.length === 25 && rows.every((r) => r.enc === 1 && r.iv && r.ct && Object.keys(r.values).length === 0) && !body.includes(NAME) && /^tm-recovery-/.test(file), `rows=${rows.length} file=${file}`);
+    const ls = await p.evaluate(() => JSON.stringify(Object.entries(localStorage)));
+    check("VAULT-E2E-NOKEY", "no raw key or passphrase in localStorage; only the wrapper under tm:secret:vault", !ls.includes("blue-tea-42") && !ls.includes("recovery-pass-9") && ls.includes("tm:secret:vault"));
+    await p.reload(); await p.waitForSelector("[data-vault-screen]");
+    check("VAULT-E2E-LOCKED", "after reload the app is locked: the unlock screen shows and no real data is on screen", (await p.locator("[data-vault-screen]").count()) === 1 && !(await p.textContent("body")).includes(NAME));
+    await unlock(p, "wrong-pass-11"); await p.waitForFunction(() => /not right/.test(document.querySelector("[data-vault=unlock-msg]")?.textContent ?? ""));
+    const stillSealed = (await raw(p)).every((r) => r.enc === 1);
+    await unlock(p, "blue-tea-42"); await p.waitForSelector("[data-vault-screen]", { state: "detached", timeout: 60000 });
+    await p.goto("http://localhost:4174/#/journey/goals"); await p.waitForSelector("main");
+    check("VAULT-E2E-UNLOCK", "wrong passphrase leaves data untouched; the right one shows the real data again", stillSealed && (await p.textContent("body")).includes(NAME), `sealed=${stillSealed}`);
+    await p.goto("http://localhost:4174/#/settings/privacy/vault"); await p.waitForSelector("[data-act=vault-off]"); await p.click("[data-act=vault-off]");
+    await p.fill("#vault-off-pass", "blue-tea-42"); await p.click("[data-act=vault-off-go]"); await p.waitForSelector("[data-vault-state=off]", { timeout: 120000 });
+    const after = await raw(p);
+    check("VAULT-E2E-OFF", "turn off opens every record again in place and removes the vault settings", after.length === 25 && after.every((r) => !r.enc && JSON.stringify(r).includes(NAME)) && (await p.evaluate(() => localStorage.getItem("tm:secret:vault"))) === null);
+    await c.close();
+  }
+
+  // B. forced failure half way: data stays readable and the card offers to continue
+  {
+    const { c, p } = await open(12);
+    await p.click("[data-act=vault-start]"); await p.check("#vault-tick1"); await p.click("[data-act=vault-next]");
+    await p.fill("#vault-pass", "blue-tea-42"); await p.fill("#vault-pass2", "blue-tea-42"); await p.fill("#vault-rec", "recovery-pass-9"); await p.fill("#vault-rec2", "recovery-pass-9");
+    const dl = p.waitForEvent("download"); await p.click("[data-act=vault-save-recovery]"); await dl; await p.waitForSelector("#vault-tick2"); await p.check("#vault-tick2");
+    await p.evaluate(() => { const orig = IDBObjectStore.prototype.put; window.__failAfter = 6; IDBObjectStore.prototype.put = function (...a) { if (window.__failAfter-- <= 0) throw new DOMException("forced", "QuotaExceededError"); return orig.apply(this, a); }; });
+    await p.click("[data-act=vault-go]"); await p.waitForFunction(() => /Something stopped/.test(document.querySelector("[data-vault=msg]")?.textContent ?? ""), null, { timeout: 120000 });
+    const mid = await raw(p); const sealed = mid.filter((r) => r.enc === 1).length;
+    const visible = await p.evaluate(() => document.querySelector("[data-card=vault]")?.getAttribute("data-vault-state"));
+    check("VAULT-E2E-FAIL-READABLE", "a forced storage failure half way keeps every record (plain or sealed), stays 'turning on', offers Continue and Turn off", mid.length === 12 && sealed > 0 && sealed < 12 && visible === "turning" && (await p.locator("[data-act=vault-resume]").count()) === 1 && (await p.locator("[data-act=vault-off]").count()) === 1, `sealed=${sealed}/12 state=${visible}`);
+    await p.reload(); await p.waitForSelector("[data-vault-screen]"); await unlock(p, "blue-tea-42"); await p.waitForSelector("[data-vault-screen]", { state: "detached", timeout: 60000 });
+    await p.goto("http://localhost:4174/#/journey/goals"); await p.waitForSelector("main");
+    const readable = (await p.textContent("body")).includes(NAME);
+    await p.goto("http://localhost:4174/#/settings/privacy/vault"); await p.waitForSelector("[data-act=vault-resume]"); await p.click("[data-act=vault-resume]"); await p.waitForSelector("[data-vault-state=on]", { timeout: 120000 });
+    const fin = await raw(p);
+    check("VAULT-E2E-RESUME", "after reload the mixed state opens with the passphrase, shows the data, and Continue finishes with 0 plain left", readable && fin.length === 12 && fin.every((r) => r.enc === 1));
+    await c.close();
+  }
+
+  // C. timing with 10 000 real records in real Chromium IndexedDB
+  {
+    const { c, p } = await open(10000);
+    const { t0 } = await turnOn(p); await p.waitForSelector("[data-vault-state=on]", { timeout: 600000 }); const ms = Date.now() - t0;
+    const rows = await raw(p);
+    console.log(`VAULT-TIMING-10K real Chromium IndexedDB, headless sandbox: turn on (safety copy + seal + read back) ${ms} ms`);
+    check("VAULT-E2E-10K", `10 000 real records sealed in real Chromium IndexedDB (${ms} ms)`, rows.length === 10000 && rows.every((r) => r.enc === 1), `ms=${ms}`);
+    await c.close();
+  }
+}
 check("SEC-CSP", "page policy (CSP meta) blocks nothing the app needs: 0 violations in the whole run", cspHits.length === 0, JSON.stringify(cspHits));
 check("G1-NONET", "0 third-party/external requests during all of the above", external.length === 0, JSON.stringify(external));
 

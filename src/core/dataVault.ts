@@ -244,3 +244,37 @@ export class VaultSession {
   clearOpaque(): void { this.opaque.clear(); }
   get opaqueCount(): number { return this.opaque.size; }
 }
+
+/** Removes the vault settings after a rollback run with keepConfig. Refuses while a sealed real record is left. */
+export async function finishDeactivate(repo: RecordRepo, kv: KV): Promise<void> {
+  if ((await repo.list("real")).some(isEncRecord)) throw new VaultError("Some entries are still sealed; the vault settings were kept.");
+  kv.remove(VAULT_KEY);
+}
+
+/**
+ * Forgot the passphrase: bring back the real records of the recovery file (already opened by the caller with the recovery passphrase) and turn the vault off.
+ * Order: every file record is written and read back first; only then are sealed records the file does not hold removed, and the vault settings last.
+ * Any failure stops before the settings are removed, so a retry (or the passphrase, if remembered) still works.
+ */
+export async function recoverWithoutKey(repo: RecordRepo, kv: KV, real: TMRecord[]): Promise<number> {
+  for (const r of real) {
+    if (r.ns !== "real") throw new VaultError("The file holds an entry outside the real data.");
+    await repo.put(r);
+    const back = await repo.get("real", r.id);
+    if (!back || isEncRecord(back) || canon(back) !== canon(r)) throw new VaultError(`Could not verify ${r.id}.`);
+  }
+  const keep = new Set(real.map((r) => r.id));
+  for (const r of await repo.list("real")) if (!keep.has(r.id)) await repo.delete("real", r.id);
+  kv.remove(VAULT_KEY);
+  return real.length;
+}
+
+/** A repo whose real writes are sealed while the vault is on (used by the schema migration, which writes records straight to storage). With no key it throws and writes nothing. */
+export function sealingRepo(inner: RecordRepo, session: VaultSession): RecordRepo {
+  return {
+    list: (ns) => inner.list(ns), get: (ns, id) => inner.get(ns, id), delete: (ns, id) => inner.delete(ns, id), clear: (ns) => inner.clear(ns),
+    async put(rec) {
+      if (rec.ns === "real" && session.active()) { const k = session.key(); if (!k) throw new VaultError("vault locked"); await inner.put(await encryptRecord(k, rec)); } else await inner.put(rec);
+    },
+  };
+}

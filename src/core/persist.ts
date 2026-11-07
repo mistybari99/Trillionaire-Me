@@ -53,9 +53,12 @@ export async function hydrate(mem: KV, repo: RecordRepo, legacy: KV, gate?: Vaul
   }
 }
 
+/** Drops every real record from memory only (storage is not touched). Used when the vault locks. */
+export function forgetReal(mem: KV): void { for (const k of mem.keys()) if (k.startsWith("tm:real:")) mem.remove(k); }
+
 /** After unlock: replaces every real record in memory with the opened ones. */
 export async function rehydrateReal(mem: KV, repo: RecordRepo, gate: VaultGate): Promise<void> {
-  for (const k of mem.keys()) if (k.startsWith("tm:real:")) mem.remove(k);
+  forgetReal(mem);
   gate.clearOpaque();
   for (const r of await repo.list("real")) await intoMemory(mem, r, gate);
 }

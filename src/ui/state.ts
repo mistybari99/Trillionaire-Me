@@ -3,7 +3,8 @@ import { DEFAULT_LOCALE, LOCALES, isLocale, type Locale } from "../i18n/registry
 import { LocalKV, MemoryKV, REAL_DATA_ENABLED, Store } from "../core/store";
 import { readConsent } from "../core/consent";
 import { isTemplateId, type TemplateId } from "../core/stageTemplates";
-import { MirrorKV, SaveMonitor, hydrate, mirrorToRepo } from "../core/persist";
+import { MirrorKV, SaveMonitor, hydrate, mirrorToRepo, rehydrateReal, forgetReal } from "../core/persist";
+import { VaultSession, VaultSnapshotRepo, sealingRepo } from "../core/dataVault";
 import { LazyDexieRepo } from "../adapters/lazyDexie";
 import { migrateAll } from "../core/migrate";
 import { moveListsToReal } from "../core/savedLists";
@@ -29,7 +30,9 @@ const mem = new MemoryKV();
 // Consent lives in the per-device store (localStorage). Real writes to IndexedDB need the same gate as memory.
 const repo = typeof indexedDB !== "undefined" ? new LazyDexieRepo("tm-db", () => REAL_DATA_ENABLED && readConsent(legacy)) : null;
 // With IndexedDB: memory is mirrored to it. Without (private mode/old browser): fall back to the old localStorage store.
-const mirror = repo ? mirrorToRepo(repo, saveMonitor) : null;
+/** At-rest encryption of real records (src/core/dataVault.ts). The key lives only in this session's memory. */
+export const vault = new VaultSession(legacy);
+const mirror = repo ? mirrorToRepo(repo, saveMonitor, vault) : null;
 const kv = mirror ? new MirrorKV(mem, mirror) : legacy;
 if (!repo) saveMonitor.bind(() => { for (const [k, v] of saveMonitor.entries()) if (v !== null) legacy.set(k, v); else legacy.remove(k); });
 /** Restore must wait for durable writes rather than reporting only the memory change. */
@@ -44,20 +47,35 @@ export async function retryStorage(): Promise<void> {
 }
 export const store = new Store(kv, { consentKv: legacy });
 /** Local snapshot storage (same IndexedDB). null when IndexedDB is not available (private mode, old browser). */
-export const snapshotRepo: SnapshotRepo | null = repo ? repo.snapshots() : null;
+export const snapshotRepo: SnapshotRepo | null = repo ? new VaultSnapshotRepo(repo.snapshots(), () => vault.key(), () => vault.active()) : null;
+/** The raw snapshot store (real parts sealed or not), used only to turn the vault on or off. */
+export const rawSnapshotRepo: SnapshotRepo | null = repo ? repo.snapshots() : null;
+/** The record store itself, for the vault runs (batches are written and read back there). null without IndexedDB. */
+export const vaultRepo = repo;
 /** Per-device consent record (src/core/consent.ts). Same place as the other small per-device settings. */
 export const consentKv = legacy;
 /** Call once before the first render. */
 export async function initStorage(): Promise<void> {
-  if (repo) { try { await hydrate(mem, repo, legacy); } catch { /* start empty rather than crash */ } }
-  // Old-version records are upgraded after a snapshot copy is saved; if the copy cannot be saved, nothing is changed.
+  if (repo) { try { await hydrate(mem, repo, legacy, vault); } catch { /* start empty rather than crash */ } }
+  await upgradeRecords();
+}
+/** Old-version records are upgraded after a snapshot copy is saved; if the copy cannot be saved, nothing is changed. Records are sealed on the way back while the vault is on. */
+async function upgradeRecords(): Promise<void> {
   try {
-    await migrateAll(mem, repo, async () => {
+    await migrateAll(mem, repo && sealingRepo(repo, vault), async () => {
       if (!snapshotRepo) return; // no IndexedDB: nothing to copy into; the migration steps never drop values
       await takeSnapshot(new StoreRepo(store), snapshotRepo, { reason: "before_migrate", keep: 10, realOk: readConsent(legacy) });
     });
   } catch { /* records stay as they are */ }
 }
+/** The passphrase was right: the real records are opened into memory and the screens can start. */
+export async function openVault(key: CryptoKey): Promise<void> {
+  vault.setKey(key);
+  if (repo) { try { await rehydrateReal(mem, repo, vault); } catch { /* the records stay out of memory; nothing is written */ } }
+  await upgradeRecords();
+}
+/** Lock again: the key and every real record leave memory. */
+export function closeVault(): void { vault.lock(); forgetReal(mem); }
 
 const get = (k: string) => { try { return localStorage.getItem(k); } catch { return null; } };
 const normalizeScale = (n: number) => Number.isFinite(n) && n > 0 ? Math.min(150, Math.max(50, Math.round(n))) : 100;

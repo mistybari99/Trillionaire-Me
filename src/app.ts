@@ -27,6 +27,7 @@ import { demoPanels, firstRunScreen, trackDemoDay } from "./ui/modeUi";
 import { LAYERS, TOPICS } from "./library/topics";
 import { dismissReminder, inAppReminders } from "./ui/prayerAlerts";
 import { isLocked, lockScreen } from "./ui/lockUi";
+import { isVaultLocked, vaultUnlockScreen } from "./ui/vaultUi";
 import { saveFailedBanner } from "./ui/saveBanner";
 import { notifyText } from "./core/notify";
 import { observeNavLayout } from "./ui/navLayout";
@@ -112,6 +113,7 @@ function toggleDrawer(open: boolean) { const d = document.getElementById("drawer
 
 /** Entry point for the browser: the first-run choice comes before anything else, once per device. */
 export function renderApp() {
+  if (isVaultLocked()) { setOverlayContext("locked"); stopNavLayout?.(); applyPrefs(); document.getElementById("app")!.replaceChildren(vaultUnlockScreen()); return; }
   if (isLocked()) { setOverlayContext("locked"); stopNavLayout?.(); applyPrefs(); document.getElementById("app")!.replaceChildren(lockScreen()); return; }
   if (prefs.dataModeChoice !== null) { render(); return; }
   applyPrefs();
@@ -121,7 +123,7 @@ export function renderApp() {
 }
 
 export function render() {
-  if (isLocked()) { renderApp(); return; }
+  if (isVaultLocked() || isLocked()) { renderApp(); return; }
   applyPrefs();
   resetNotices();
   trackDemoDay();

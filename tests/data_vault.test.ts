@@ -18,7 +18,7 @@ import { grantConsent } from "../src/core/consent";
 const IT = 1000; // low iteration count for tests only
 let n = 0;
 const rec = (id: string, ns: "real" | "demo" = "real", label: "FACT" | "DEMO" = ns === "real" ? "FACT" : "DEMO"): TMRecord => ({
-  id, entity: "profile", ns, ownerId: "u", schemaVersion: 3, createdAt: "2026-11-07T00:00:00Z", links: { parent: "p1" },
+  id, entity: "profile", ns, ownerId: "u", schemaVersion: 3, createdAt: "2026-11-07T00:00:00Z", links: { parent: "parent-xyz-777" },
   values: { "profile.display_name": { state: "value", value: `Name ${id}`, label }, "profile.birth_year": { state: "unknown" } },
 });
 const fill = async (repo: DexieRepo, count: number) => { for (let i = 0; i < count; i++) await repo.put(rec(`r${String(i).padStart(5, "0")}`)); };
@@ -45,7 +45,7 @@ describe("record crypto", () => {
     const r = rec("a"); const e1 = await encryptRecord(key, r); const e2 = await encryptRecord(key, r);
     expect(isEncRecord(e1)).toBe(true); expect(e1.enc).toBe(1);
     expect({ id: e1.id, ns: e1.ns, entity: e1.entity, schemaVersion: e1.schemaVersion, createdAt: e1.createdAt }).toEqual({ id: "a", ns: "real", entity: "profile", schemaVersion: 3, createdAt: "2026-11-07T00:00:00Z" });
-    expect(e1.values).toEqual({}); expect(JSON.stringify(e1)).not.toContain("Name a"); expect(JSON.stringify(e1)).not.toContain("p1");
+    expect(e1.values).toEqual({}); expect(JSON.stringify(e1)).not.toContain("Name a"); expect(JSON.stringify(e1)).not.toContain("parent-xyz-777");
     expect(e1.iv).not.toBe(e2.iv); expect(e1.ct).not.toBe(e2.ct);
     expect(await decryptRecord(key, e1)).toEqual(r);
   });
@@ -156,6 +156,26 @@ describe("rollback (turn off)", () => {
     await activateInPlace(repo, v.key, kv, { batch: 10 }); await repo.put(await encryptRecord(other.key, rec("zzz")));
     await expect(deactivateInPlace(repo, v.key, kv, { batch: 10 })).rejects.toThrow();
     expect(kv.get(VAULT_KEY)).not.toBeNull(); expect((await repo.get("real", "zzz"))!.enc).toBe(1);
+  });
+});
+
+describe("forgot the passphrase: recovery file", () => {
+  it("restores the file's records, removes sealed ones it does not hold, then removes the settings", async () => {
+    const kv = new MemoryKV(); const repo = fresh(); await fill(repo, 3);
+    const v = await newVault("blue-tea-42", IT); writeVault(kv, { ...v.config, state: "migrating" });
+    await activateInPlace(repo, v.key, kv);
+    const { recoverWithoutKey } = await import("../src/core/dataVault");
+    const fromFile = [rec("r00000"), rec("r00009")];
+    expect(await recoverWithoutKey(repo, kv, fromFile)).toBe(2);
+    const now = await repo.list("real"); expect(now.map((r) => r.id).sort()).toEqual(["r00000", "r00009"]); expect(now.some(isEncRecord)).toBe(false);
+    expect(kv.get(VAULT_KEY)).toBeNull();
+  });
+  it("a failure keeps the settings", async () => {
+    const kv = new MemoryKV(); const base = fresh(); const v = await newVault("blue-tea-42", IT); writeVault(kv, v.config);
+    const { recoverWithoutKey } = await import("../src/core/dataVault");
+    const bad = { list: base.list.bind(base), get: base.get.bind(base), delete: base.delete.bind(base), clear: base.clear.bind(base), put: async () => { throw new Error("disk full"); } };
+    await expect(recoverWithoutKey(bad, kv, [rec("a")])).rejects.toThrow(); expect(kv.get(VAULT_KEY)).not.toBeNull();
+    await expect(recoverWithoutKey(base, kv, [rec("a", "demo")])).rejects.toThrow();
   });
 });
 

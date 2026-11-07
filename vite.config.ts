@@ -12,7 +12,7 @@ export default defineConfig({
   // Static, always-needed code is split into parallel chunks (text packs, built-in library); heavy screens are lazy (src/ui/lazyScreens.ts).
   // tools/precache.ts lists every file of dist/, so all chunks are saved for offline use at install.
   build: { target: "es2022", rolldownOptions: { output: { codeSplitting: { groups: [
-    { name: "i18n", test: /src\/i18n\/packs/ },
+    { name: "i18n", test: /src\/i18n\/(packs|vault)/ },
     { name: "library", test: /src\/library\/(topics|paths|inspiration|systemList|systems)/ },
   ] } } } },
   define: { __APP_VERSION__: JSON.stringify(version), __APP_SHA__: JSON.stringify(sha), __APP_BUILT__: JSON.stringify(new Date().toISOString().slice(0, 10)) },

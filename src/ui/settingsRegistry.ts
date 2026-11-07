@@ -58,6 +58,7 @@ export const ROWS: SettingRow[] = [
   R("lockscreen", "privacy", "more.lock", "#/settings/privacy/lockscreen", ["lock screen", "notification", "private", "show details", "hide"], ["notifyShow"], ["tm:ui:notifyShow"]),
   R("consent", "privacy", "set.row.consent", "#/settings/privacy/consent", ["consent", "permission", "real data", "tick", "private"], [], ["tm:consent:real:v1", "tm:consent:health:v1", "tm:consent:hadith:v1"]),
   R("applock", "privacy", "set.row.applock", "#/settings/privacy/applock", ["pin", "lock", "password", "app lock", "forgot"], [], ["tm:secret:applock"]),
+  R("vault", "privacy", "set.row.vault", "#/settings/privacy/vault", ["encrypt", "encryption", "passphrase", "vault", "recovery file", "lock data", "at rest", "secure"], [], ["tm:secret:vault"]),
 
   R("mode", "data", "set.row.mode", "#/settings/data/mode", ["demo", "real", "mode", "switch"], ["dataMode", "dataModeChoice", "demoAskedOn", "demoDays"], ["tm:ui:dataMode", "tm:ui:demoAskedOn", "tm:ui:demoDays"]),
   R("startreal", "data", "set.row.startreal", "#/settings/data/start-real", ["start real", "begin", "own data"], [], [], true),
@@ -108,7 +109,7 @@ export const SEARCH_BN: Record<string, string[]> = {
   motion: ["অ্যানিমেশন", "নড়াচড়া", "মোশন"], resetlook: ["রিসেট", "আগের মতো"],
   prayersync: ["নামাজের সময়", "আপডেট", "ইন্টারনেট", "অনলাইন", "নিজে থেকে"], prayermethod: ["নামাজ", "আসর", "ফজর", "মেথড"], prayerplace: ["জায়গা", "শহর", "ঢাকা", "লোকেশন"], prayeralerts: ["অ্যালার্ট", "আজান", "নামাজ", "সাউন্ড"],
   reminder: ["রিমাইন্ডার", "ব্যাকআপ"], reminders: ["রিমাইন্ডার", "মনে করান", "অ্যালার্ট", "ক্যালেন্ডার", "শান্ত সময়"], storage: ["স্টোরেজ", "নিরাপদ"], savebackup: ["ব্যাকআপ", "সেভ", "পাসফ্রেজ"], restore: ["ফেরান", "রিস্টোর", "ব্যাকআপ"], snapshots: ["কপি", "কপি"], csv: ["স্প্রেডশিট", "এক্সেল"],
-  lockscreen: ["লক স্ক্রিন", "নোটিফিকেশন"], consent: ["পারমিশন", "আসল", "অনুমতি"], applock: ["পিন", "লক", "পাসওয়ার্ড"],
+  lockscreen: ["লক স্ক্রিন", "নোটিফিকেশন"], consent: ["পারমিশন", "আসল", "অনুমতি"], applock: ["পিন", "লক", "পাসওয়ার্ড"], vault: ["এনক্রিপ্ট", "এনক্রিপশন", "পাসফ্রেজ", "রিকভারি", "লক"],
   mode: ["ডেমো", "আসল", "মোড"], startreal: ["আসল শুরু", "শুরু"],
   rules: ["নিয়ম", "অটোমেটিক"], planmode: ["প্ল্যান", "পজ", "কমপক্ষে"], stages: ["স্টেজ", "নাম"], weighting: ["প্রোগ্রেস", "ওজন"],
   connections: ["কানেকশন", "এআই", "ক্লাউড"], deletedemo: ["ডিলিট", "ডেমো", "মুছুন"], deletereal: ["ডিলিট", "আসল", "মুছুন"], welcome: ["স্বাগত", "শুরুর ধাপ"],

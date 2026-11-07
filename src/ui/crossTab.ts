@@ -4,8 +4,9 @@
 // It only redraws; it never writes anything.
 import { CONSENT_KEY } from "../core/consent";
 import { LOCK_KEY } from "../core/appLock";
+import { VAULT_KEY } from "../core/dataVault";
 
-export const WATCHED_KEYS: readonly string[] = [CONSENT_KEY, LOCK_KEY, "tm:ui:dataMode"];
+export const WATCHED_KEYS: readonly string[] = [CONSENT_KEY, LOCK_KEY, VAULT_KEY, "tm:ui:dataMode"];
 
 /** True when a storage event touches consent, lock or data mode (key === null means the whole storage was cleared). */
 export const isWatchedChange = (key: string | null): boolean => key === null || WATCHED_KEYS.includes(key);
