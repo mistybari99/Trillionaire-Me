@@ -166,7 +166,7 @@ Every task keeps: no scores/ranks/streaks/grades, unknown is not 0 (show "Unknow
 Ordering note: Q-01 to Q-09 are small and independent; Q-10 to Q-20 are medium; Q-21 to Q-34 are larger or lower value. Q-28 follows Q-01, Q-19 follows Q-17, Q-25 follows Q-09, Q-33 follows Q-05.
 
 ## 3b. Build status (7 Nov 2026)
-Batch 1 (Q-01 to Q-09) is **built, audit pending** (not Verified). Tests: tests/q_b1_stuck.test.ts, concrete_bank.test.ts, q_b1_goal.test.ts, q_b1_inspiration.test.ts, q_b1_weekly.test.ts, q_b1_legs.test.ts, q_b1_reality.test.ts, goal_icons.test.ts, q_batch1_screens.test.ts. New text lives in src/i18n/q_b1.ts, new styles in src/ui/styles_qb1.css, the new route in src/ui/routes_qb1.ts. Q-10 to Q-34 are not built.
+Batch 1 (Q-01 to Q-09) is **built, audit pending** (not Verified). Tests: tests/q_b1_stuck.test.ts, concrete_bank.test.ts, q_b1_goal.test.ts, q_b1_inspiration.test.ts, q_b1_weekly.test.ts, q_b1_legs.test.ts, q_b1_reality.test.ts, goal_icons.test.ts, q_batch1_screens.test.ts. New text lives in src/i18n/q_b1.ts, new styles in src/ui/styles_qb1.css, the new route in src/ui/routes_qb1.ts. Q-10 (starter cards) is **built, audit pending** (batch 2; tests/q_b2_start.test.ts). Q-11 to Q-34 are not built.
 
 ## 4. BLOCKED list
 | id | item | waits for |

@@ -2,6 +2,7 @@
 // Bangla copy is a working draft pending native-reviewer sign-off (TM-TST-161).
 import { VAULT_BN, VAULT_EN } from "./vault.ts";
 import { QB1_BN, QB1_EN } from "./q_b1.ts";
+import { QB2_BN, QB2_EN } from "./q_b2.ts";
 const en = {
   "set.row.helpplacement": "Help placement",
   "set.row.helpvisuals": "Help visuals",
@@ -1921,12 +1922,14 @@ const en = {
   "set.sum.connections.sync": "{n} of 4 on. One exception: automatic prayer times send the city, country and month only.",
   ...VAULT_EN, // registry line: at-rest encryption text lives in vault.ts
   ...QB1_EN, // batch 1 (Q-01..Q-09) keys live in q_b1.ts
+  ...QB2_EN, // batch 2 (Q-10, Q-11, Q-30) keys live in q_b2.ts
 } as const;
 
 export type Key = keyof typeof en;
 
 const bn: Record<Key, string> = {
   ...QB1_BN,
+  ...QB2_BN,
   "set.row.helpplacement": "হেল্প কোথায় দেখাবে",
   "set.row.helpvisuals": "হেল্পের ভিজুয়াল",
   "set.row.helpcontent": "গাইড ও নিজের ম্যাপ",
