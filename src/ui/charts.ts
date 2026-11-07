@@ -6,7 +6,7 @@ import { t } from "../i18n/t";
 import type { Key } from "../i18n/packs";
 import type { Locale } from "../i18n/registry";
 import { num } from "./components";
-import { GRID_RANGES, activityBars, flowBars, goalRings, habitGrid, habitRange, weekdayIndex, type Cell, type GridRange, type PeriodState } from "../core/chartData";
+import { GRID_RANGES, activityBars, flowBars, goalRings, habitGrid, habitRange, weekdayIndex, type Cell, type GoalGridRow, type GridRange, type PeriodState } from "../core/chartData";
 import type { Habit, Log } from "../core/habits";
 import type { TMRecord } from "../core/types";
 
@@ -123,23 +123,17 @@ export function habitChart(hb: Habit, logs: Log[], today: string, lang: Locale):
   return box("habit", title, summary, lines, lang, svg, h("p", { class: "muted chart-legend" }, `● ${t("chart.cell.done", lang)} · ○ ${t("chart.cell.open", lang)} · – ${t("chart.cell.rest", lang)}`));
 }
 
-// ---- Habits: long view (31 days / 12 weeks / 12 months), one row per habit ----
-const STATE_KEY: Record<PeriodState, Key> = { full: "grid.cell.full", some: "grid.cell.some", open: "grid.cell.open", none: "grid.cell.none" };
-export function habitGridTracker(habits: readonly Habit[], logs: Log[], since: ReadonlyMap<string, string | null>, today: string, range: GridRange, onRange: (r: GridRange) => void, lang: Locale): HTMLElement {
-  const title = t("grid.title", lang);
-  const bar = h("div", { class: "seg", role: "group", "aria-label": t("grid.range.label", lang), "data-grid-range": range },
+// ---- Shared by the habit long view and the goal long view (Q-34): same cells, same range bar ----
+function rangeBar(range: GridRange, onRange: (r: GridRange) => void, lang: Locale): HTMLElement {
+  return h("div", { class: "seg", role: "group", "aria-label": t("grid.range.label", lang), "data-grid-range": range },
     ...GRID_RANGES.map((r) => h("button", { type: "button", "data-range": r, "aria-pressed": String(r === range), onclick: () => onRange(r) }, t(`grid.range.${r}` as Key, lang))));
-  if (!habits.length) return h("section", { class: "card chart", "data-chart": "habit-grid", "data-chart-empty": "1" }, h("h2", { class: "card-h" }, title), bar, h("p", { class: "muted" }, t("grid.empty", lang)));
-  const rows = habits.map((hb) => ({ hb, periods: habitRange(hb, logs, today, range, since.get(hb.id) ?? null) }));
+}
+function gridSvg(rows: ReadonlyArray<{ title: string; periods: ReadonlyArray<{ from: string; state: PeriodState }> }>, title: string, summary: string, range: GridRange): SVGSVGElement {
   const n = rows[0]!.periods.length; const pitch = Math.floor(300 / n), sz = Math.max(7, pitch - (n > 20 ? 2 : 6)), RH = 44, W = 320;
-  const lines = rows.flatMap(({ hb, periods }) => periods.map((p) => (p.planned
-    ? t("grid.line", lang, { name: hb.title, from: p.from, to: p.to, d: num(p.done, lang), p: num(p.planned, lang) })
-    : t("grid.line.none", lang, { name: hb.title, from: p.from, to: p.to }))));
-  const summary = `${title}. ${t(`grid.range.${range}` as Key, lang)}. ${rows.map(({ hb, periods }) => { const pl = periods.reduce((a, x) => a + x.planned, 0), dn = periods.reduce((a, x) => a + x.done, 0); return pl ? t("grid.sum", lang, { name: hb.title, d: num(dn, lang), p: num(pl, lang) }) : t("grid.sum.none", lang, { name: hb.title }); }).join(" ")}`;
   const svg = svgRoot(W, rows.length * RH, title, summary); svg.setAttribute("data-habit-long", range);
-  rows.forEach(({ hb, periods }, r) => {
+  rows.forEach(({ title: rowTitle, periods }, r) => {
     const y0 = r * RH;
-    svg.append(s("text", { x: 0, y: y0 + 13, class: "chart-t" }, hb.title));
+    svg.append(s("text", { x: 0, y: y0 + 13, class: "chart-t" }, rowTitle));
     periods.forEach((p, i) => {
       const x = i * pitch + 2, y = y0 + 20;
       const g = s("g", { "data-period": p.from, "data-state": p.state });
@@ -150,6 +144,34 @@ export function habitGridTracker(habits: readonly Habit[], logs: Log[], since: R
       svg.append(g);
     });
   });
+  return svg;
+}
+
+/** Q-34: the long view for goals. A done cell = at least one finished step of that goal in the period; a blank cell = no entry (not zero). */
+export function goalGridTracker(rows: readonly GoalGridRow[], range: GridRange, onRange: (r: GridRange) => void, lang: Locale): HTMLElement {
+  const title = t("q3.tg.h", lang); const bar = rangeBar(range, onRange, lang);
+  if (!rows.length) return h("section", { class: "card chart", "data-chart": "goal-grid", "data-chart-empty": "1" }, h("h2", { class: "card-h" }, title), bar, h("p", { class: "muted" }, t("q3.tg.empty", lang)));
+  const per = (g: GoalGridRow) => g.periods.map((p) => ({ from: p.from, state: (p.state === "done" ? "full" : "none") as PeriodState }));
+  const lines = rows.flatMap((g) => g.periods.map((p) => t(p.state === "done" ? "q3.tg.cell.on" : "q3.tg.cell.off", lang, { p: `${g.title}, ${p.from} - ${p.to}` })));
+  const summary = `${title}. ${t(`grid.range.${range}` as Key, lang)}. ${rows.map((g) => `${g.title}: ${t("q3.tg.sum", lang, { n: num(g.periods.filter((p) => p.state === "done").length, lang), total: num(g.periods.length, lang) })}`).join(" ")}`;
+  const svg = gridSvg(rows.map((g) => ({ title: g.title, periods: per(g) })), title, summary, range); svg.setAttribute("data-goal-long", range);
+  return h("section", { class: "card chart", "data-chart": "goal-grid" }, h("h2", { class: "card-h" }, title), bar, svg,
+    h("p", { class: "sr-only", "data-chart-summary": "goal-grid" }, summary), h("p", { class: "muted" }, t("q3.tg.note", lang)),
+    h("details", { class: "help", "data-chart-text": "goal-grid" }, h("summary", {}, t("chart.showText", lang)), h("ul", { class: "chart-lines" }, ...lines.map((l) => h("li", {}, l)))));
+}
+
+// ---- Habits: long view (31 days / 12 weeks / 12 months), one row per habit ----
+const STATE_KEY: Record<PeriodState, Key> = { full: "grid.cell.full", some: "grid.cell.some", open: "grid.cell.open", none: "grid.cell.none" };
+export function habitGridTracker(habits: readonly Habit[], logs: Log[], since: ReadonlyMap<string, string | null>, today: string, range: GridRange, onRange: (r: GridRange) => void, lang: Locale): HTMLElement {
+  const title = t("grid.title", lang);
+  const bar = rangeBar(range, onRange, lang);
+  if (!habits.length) return h("section", { class: "card chart", "data-chart": "habit-grid", "data-chart-empty": "1" }, h("h2", { class: "card-h" }, title), bar, h("p", { class: "muted" }, t("grid.empty", lang)));
+  const rows = habits.map((hb) => ({ hb, periods: habitRange(hb, logs, today, range, since.get(hb.id) ?? null) }));
+  const lines = rows.flatMap(({ hb, periods }) => periods.map((p) => (p.planned
+    ? t("grid.line", lang, { name: hb.title, from: p.from, to: p.to, d: num(p.done, lang), p: num(p.planned, lang) })
+    : t("grid.line.none", lang, { name: hb.title, from: p.from, to: p.to }))));
+  const summary = `${title}. ${t(`grid.range.${range}` as Key, lang)}. ${rows.map(({ hb, periods }) => { const pl = periods.reduce((a, x) => a + x.planned, 0), dn = periods.reduce((a, x) => a + x.done, 0); return pl ? t("grid.sum", lang, { name: hb.title, d: num(dn, lang), p: num(pl, lang) }) : t("grid.sum.none", lang, { name: hb.title }); }).join(" ")}`;
+  const svg = gridSvg(rows.map(({ hb, periods }) => ({ title: hb.title, periods })), title, summary, range);
   const legend = (["full", "some", "open", "none"] as const).map((k) => t(STATE_KEY[k], lang)).join(" · ");
   return h("section", { class: "card chart", "data-chart": "habit-grid" }, h("h2", { class: "card-h" }, title), bar, svg,
     h("p", { class: "sr-only", "data-chart-summary": "habit-grid" }, summary),
