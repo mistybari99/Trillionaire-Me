@@ -168,6 +168,8 @@ Ordering note: Q-01 to Q-09 are small and independent; Q-10 to Q-20 are medium; 
 ## 3b. Build status (7 Nov 2026)
 Batch 1 (Q-01 to Q-09) is **built, audit pending** (not Verified). Tests: tests/q_b1_stuck.test.ts, concrete_bank.test.ts, q_b1_goal.test.ts, q_b1_inspiration.test.ts, q_b1_weekly.test.ts, q_b1_legs.test.ts, q_b1_reality.test.ts, goal_icons.test.ts, q_batch1_screens.test.ts. New text lives in src/i18n/q_b1.ts, new styles in src/ui/styles_qb1.css, the new route in src/ui/routes_qb1.ts. Q-10 to Q-34 are not built.
 
+Batch 3 (Q-12, Q-13, Q-34) is **built, audit pending** (not Verified). Tests: tests/buffer_bar.test.ts (Q-12), tests/goal_grid.test.ts (Q-34), tests/micro_habit.test.ts (Q-13), tests/q_batch3_screens.test.ts. New text lives in src/i18n/q_b3.ts, new styles in src/ui/styles_qb3.css, the UI builders in src/ui/qb3Ui.ts. Q-13 adds five optional habit fields (see DECISIONS_LOG.md, 7 Nov 2026, batch 3); SCHEMA_VERSION stays 3. Q-34 covers goals (the tracker the owner source row #4 names).
+
 ## 4. BLOCKED list
 | id | item | waits for |
 |---|---|---|
