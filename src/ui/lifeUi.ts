@@ -28,6 +28,7 @@ import { goalIdsOf } from "../core/taskGoals";
 import { linkStats } from "../core/goalPlan";
 import { planByTag } from "./backwardUi";
 import { HORIZONS } from "../core/horizon";
+import { whyCard } from "./qb1Ui";
 import type { FieldValue, TMRecord } from "../core/types";
 
 const L = () => prefs.lang;
@@ -354,7 +355,7 @@ export function goalScreen(id: string): HTMLElement {
     h("h1", {}, textOf(rec, "goal.title")),
     h("p", { class: "tags" }, nsTag(rec.ns, lang), h("span", { class: "tag" }, t(`goal.status.${goalStatusOf(rec)}` as Key, lang)), h("span", { class: "tag" }, kindLabel(node.kind, lang))),
     parent ? h("p", { class: "muted" }, t("gt.partof", lang), " ", link(`#/journey/goal/${parent.id}`, "crumb", textOf(parent, "goal.title"))) : null);
-  return h("main", { class: "action-desk action-desk-goal" }, back, context, progress, textOf(rec, "goal.target_date") ? remindRow("goal", id, lang) : null, stepsCard(rec, lang), weightCard(rec, lang), placeCard(rec, lang), statusCard(rec, lang), goalAreaCard(rec, lang), smartForm, swotView, swotForm, goalDeleteCard(rec, lang));
+  return h("main", { class: "action-desk action-desk-goal" }, back, context, progress, whyCard(textOf(rec, "goal.why"), "sm-r", lang), textOf(rec, "goal.target_date") ? remindRow("goal", id, lang) : null, stepsCard(rec, lang), weightCard(rec, lang), placeCard(rec, lang), statusCard(rec, lang), goalAreaCard(rec, lang), smartForm, swotView, swotForm, goalDeleteCard(rec, lang));
 }
 
 // Weighting of this goal's steps: equal or by size. Changing it never changes the overall percent (each step is counted once there).

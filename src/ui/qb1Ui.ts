@@ -22,6 +22,15 @@ export function concreteBank(lang: Locale, input: HTMLInputElement): HTMLElement
   return h("div", { class: "qb1-bank-wrap", "data-card": "concrete_bank" }, h("h3", {}, t("qb1.bank.h", lang)), h("p", { class: "muted" }, t("qb1.bank.hint", lang)), h("div", { class: "qb1-bank" }, ...rows));
 }
 
+/** Q-04: collapsed details with the user's own goal.why. Empty = a prompt that jumps to the field (the field id is in the SMART form on the same page). */
+export function whyCard(why: string, fieldId: string, lang: Locale): HTMLElement {
+  const own = why.trim();
+  const body = own ? h("p", { "data-why-text": "1" }, own)
+    : h("div", { "data-why-empty": "1" }, h("p", { class: "muted" }, t("qb1.why.empty", lang)),
+      h("button", { type: "button", class: "btn ghost", "data-why-add": "1", onclick: () => { const el = document.getElementById(fieldId); el?.scrollIntoView?.({ block: "center" }); el?.focus(); } }, t("qb1.why.add", lang)));
+  return h("details", { class: "card", "data-card": "show_why" }, h("summary", {}, t("qb1.why.h", lang)), body);
+}
+
 /** Q-03: the 'matrix' diagram tip (Hard now / Easy later) shown on the effort-timing card. diagram() already gives it role=img plus a text label. */
 export const effortTip = (lang: Locale): HTMLElement[] => { const tip = TIPS.find((x) => x.id === "pr3"); return tip ? [diagram(tip, lang)] : []; };
 

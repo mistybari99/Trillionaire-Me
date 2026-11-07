@@ -17,6 +17,10 @@ export const QB1_EN = {
   // Q-03 Stuck card pictures (decorative; the lists stay as the text)
   "qb1.fork.easy": "Easy first", "qb1.fork.hard": "Hard first",
   "qb1.band.time": "Time", "qb1.band.dist": "Distractions", "qb1.band.goals": "Goals",
+  // Q-04 Show my why
+  "qb1.why.h": "Show my why",
+  "qb1.why.empty": "You have not written your why yet. Add it in the goal form below.",
+  "qb1.why.add": "Add my why",
 } as const;
 export const QB1_BN: Record<keyof typeof QB1_EN, string> = {
   "qb1.recovery": "পজ নেওয়াও পথের অংশ। তৈরি হলে ফিরে আসুন।",
@@ -32,4 +36,7 @@ export const QB1_BN: Record<keyof typeof QB1_EN, string> = {
   "qb1.bank.8.big": "নতুন স্কিল শেখা", "qb1.bank.8.tiny": "5 মিনিট পড়ুন বা দেখুন",
   "qb1.fork.easy": "আগে সহজ", "qb1.fork.hard": "আগে কঠিন",
   "qb1.band.time": "সময়", "qb1.band.dist": "বিঘ্ন", "qb1.band.goals": "গোল",
+  "qb1.why.h": "আমার কারণ দেখুন",
+  "qb1.why.empty": "আপনার কারণ এখনো লেখা হয়নি। নিচের গোল ফর্মে লিখুন।",
+  "qb1.why.add": "আমার কারণ লিখুন",
 };
