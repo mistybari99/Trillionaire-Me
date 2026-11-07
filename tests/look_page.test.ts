@@ -37,7 +37,7 @@ describe("master Detailed / Compact", () => {
     setScreenView("money", "compact"); expect(localStorage.getItem("tm:ui:view:money")).toBeNull(); expect(screenView("money")).toBe("compact");
     setScreenView("money", "full"); expect(localStorage.getItem("tm:ui:view:money")).toBe("full");
   });
-  it("every one of the 18 screens is in the list with a name", () => { go("#/settings/look"); expect(app().querySelectorAll("[data-look-screen]").length).toBe(VIEW_SCREENS.length); });
+  it("every one of the 23 screens is in the list with a name", () => { go("#/settings/look"); expect(app().querySelectorAll("[data-look-screen]").length).toBe(VIEW_SCREENS.length); });
 });
 
 describe("links, motion, reset", () => {

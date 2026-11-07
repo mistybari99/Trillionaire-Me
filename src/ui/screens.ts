@@ -1058,7 +1058,7 @@ export function today(): HTMLElement {
       h("p", { class: "muted" }, t("home.step", lang)), rungs),
     h("aside", { class: `card inspire ${insp.theme}`, "aria-label": "Inspiration" },
       h("span", { class: "chip" }, `${THEME_LABEL[insp.theme].bn} · ${THEME_LABEL[insp.theme].en}`),
-      h("p", { class: "inspire-bn" }, insp.bn), h("p", { class: "muted inspire-en" }, insp.en)),
+      h("p", { class: "inspire-bn" }, insp.bn), h("p", { class: "muted inspire-en" }, insp.en), link("#/diary/inspiration", "crumb", t("qb1.insp.more", lang))),
     rulesTodayCard(lang), disclaimers(lang));
 }
 

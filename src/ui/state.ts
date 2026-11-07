@@ -68,7 +68,7 @@ export type PlanMode = "normal" | "minimum_week" | "pause";
 export type HorizonView = "stack" | "compact";
 /** Template chooser for the dashboard screens. "full" is the default; unknown values fall back to it. */
 export type ScreenView = "full" | "compact";
-export const VIEW_SCREENS = ["journey", "money", "habits", "plan", "report", "review", "today", "log", "goals", "risks", "ventures", "team", "history", "cards", "library", "rules", "wheel", "weekly"] as const;
+export const VIEW_SCREENS = ["journey", "money", "habits", "plan", "report", "review", "today", "log", "goals", "risks", "ventures", "team", "history", "cards", "library", "rules", "wheel", "weekly", "deen", "stuck", "topics", "northstar", "capture"] as const;
 export type ViewScreen = typeof VIEW_SCREENS[number];
 const VIEW_KEY = (s: string) => `tm:ui:view:${s}`;
 const isView = (v: unknown): v is ScreenView => v === "compact" || v === "full";

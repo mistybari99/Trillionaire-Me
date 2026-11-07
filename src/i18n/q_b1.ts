@@ -1,5 +1,5 @@
 // Keys for build-queue batch 1 (Q-01..Q-09). Merged into the packs by spread lines in packs.ts; Mix is derived from the Bangla text there.
-// Plain Bangla per CLAUDE.md 2b / pass 2, Latin digits. No scores, ranks, streaks or judging words.
+// Plain Bangla per CLAUDE.md 2b / pass 2, Latin digits. Calm wording only; nothing is rated or counted.
 export const QB1_EN = {
   // Q-01 recovery line
   "qb1.recovery": "A pause is part of the path. Come back when ready.",
@@ -21,6 +21,9 @@ export const QB1_EN = {
   "qb1.why.h": "Show my why",
   "qb1.why.empty": "You have not written your why yet. Add it in the goal form below.",
   "qb1.why.add": "Add my why",
+  // Q-05 Inspiration page + chooser coverage (names in the Look page list)
+  "qb1.insp.h": "Inspiration", "qb1.insp.intro": "Short lines in four themes. Read one, then go back to your day.", "qb1.insp.more": "More inspiration",
+  "look.screen.deen": "Deen", "look.screen.stuck": "Feeling stuck", "look.screen.topics": "Topics", "look.screen.northstar": "North Star", "look.screen.capture": "Write it",
 } as const;
 export const QB1_BN: Record<keyof typeof QB1_EN, string> = {
   "qb1.recovery": "পজ নেওয়াও পথের অংশ। তৈরি হলে ফিরে আসুন।",
@@ -39,4 +42,6 @@ export const QB1_BN: Record<keyof typeof QB1_EN, string> = {
   "qb1.why.h": "আমার কারণ দেখুন",
   "qb1.why.empty": "আপনার কারণ এখনো লেখা হয়নি। নিচের গোল ফর্মে লিখুন।",
   "qb1.why.add": "আমার কারণ লিখুন",
+  "qb1.insp.h": "অনুপ্রেরণা", "qb1.insp.intro": "চারটা থিমের ছোট কিছু লাইন। একটা পড়ুন, তারপর নিজের কাজে ফিরুন।", "qb1.insp.more": "আরও অনুপ্রেরণা",
+  "look.screen.deen": "দ্বীন", "look.screen.stuck": "আটকে গেছেন", "look.screen.topics": "বিষয়", "look.screen.northstar": "নর্থ স্টার", "look.screen.capture": "লিখুন",
 };

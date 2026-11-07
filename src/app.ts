@@ -35,10 +35,12 @@ import { isTabId } from "./ui/tabActions";
 import { setOverlayContext } from "./ui/overlayCoordinator";
 import { consentOn } from "./ui/entry";
 import { enhanceScreenHelp } from "./ui/screenHelp";
+import { ROUTES_QB1, viewed } from "./ui/routes_qb1";
 
 let stopNavLayout: (() => void) | undefined;
 
 export const ROUTES: Array<[RegExp, (m: RegExpMatchArray) => HTMLElement, string]> = [
+  ...ROUTES_QB1, // batch 1: /diary/inspiration
   [/^\/profile$/, () => ownerProfileScreen(), "settings"],
   [/^\/start$/, () => onboardScreen(), "today"],
   [/^\/today$/, () => S.today(), "today"],
@@ -53,7 +55,7 @@ export const ROUTES: Array<[RegExp, (m: RegExpMatchArray) => HTMLElement, string
   [/^\/diary\/intake(?:\/(\d+))?$/, (m) => S.intake(m[1]), "diary"],
   [/^\/diary\/plan$/, () => S.planScreen(), "diary"],
   [/^\/diary\/money$/, () => S.moneyScreen(), "diary"],
-  [/^\/capture$/, () => S.captureScreen(), "today"],
+  [/^\/capture$/, () => viewed("capture", S.captureScreen), "today"],
   [/^\/journey\/report$/, () => S.reportScreen(), "journey"],
   [/^\/journey\/print(?:\/([a-z]+))?$/, (m) => printScreen(m[1]), "journey"],
   [/^\/journey\/week$/, () => S.weeklyScreen(), "journey"],
@@ -65,7 +67,7 @@ export const ROUTES: Array<[RegExp, (m: RegExpMatchArray) => HTMLElement, string
   [/^\/journey\/review$/, () => S.reviewScreen(), "journey"],
   [/^\/journey\/risks$/, () => viaLazy(PLAN, (m) => m.riskScreen()), "journey"],
   [/^\/journey\/history$/, () => viaLazy(PLAN, (m) => m.planHistoryScreen()), "journey"],
-  [/^\/journey\/northstar$/, () => viaLazy(PLAN, (m) => m.northStarScreen()), "journey"],
+  [/^\/journey\/northstar$/, () => viaLazy(PLAN, (m) => viewed("northstar", m.northStarScreen)), "journey"],
   [/^\/journey\/reality$/, () => RL.realityScreen(), "journey"],
   [/^\/journey\/boards$/, () => boardsScreen(), "journey"],
   [/^\/journey\/backward$/, () => backwardListScreen(), "journey"],
@@ -75,8 +77,8 @@ export const ROUTES: Array<[RegExp, (m: RegExpMatchArray) => HTMLElement, string
   [/^\/diary\/ventures$/, () => viaLazy(PLAN, (m) => m.ventureScreen()), "diary"],
   [/^\/diary\/health$/, () => healthScreen(), "diary"],
   [/^\/diary\/team$/, () => viaLazy(PLAN, (m) => m.teamScreen()), "diary"],
-  [/^\/stuck$/, () => S.stuckScreen(), "today"],
-  [/^\/topics$/, () => S.topicsIndex(), "settings"],
+  [/^\/stuck$/, () => viewed("stuck", S.stuckScreen), "today"],
+  [/^\/topics$/, () => viewed("topics", S.topicsIndex), "settings"],
   [/^\/topic\/([\w-]+)$/, (m) => S.topicScreen(m[1]), "settings"],
   [/^\/reward$/, () => S.rewardScreen(), "today"],
   [/^\/journey\/art$/, () => S.artScreen(), "journey"],
@@ -85,8 +87,8 @@ export const ROUTES: Array<[RegExp, (m: RegExpMatchArray) => HTMLElement, string
   [/^\/hadith$/, () => hadithScreen(), "settings"],
   [/^\/cards$/, () => S.cardsScreen(), "settings"],
   [/^\/notes$/, () => notesScreen(), "settings"],
-  [/^\/deen$/, () => S.deen(), "deen"],
-  [/^\/deen\/(?:prayers|fasting)$/, () => S.deen(), "deen"],
+  [/^\/deen$/, () => viewed("deen", S.deen), "deen"],
+  [/^\/deen\/(?:prayers|fasting)$/, () => viewed("deen", S.deen), "deen"],
   [/^\/deen\/plans$/, () => deenPlansScreen(), "deen"],
   [/^\/settings\/connections$/, () => viaLazy(CONN, (m) => m.connectionsScreen(prefs.lang)), "settings"],
   [/^\/settings(?:\/([a-z]+))?(?:\/([a-z-]+))?$/, (m) => settingsScreen(m[1], m[2]), "settings"],

@@ -1,12 +1,12 @@
 {
-  "keys": 2521,
+  "keys": 2529,
   "perFile": {
     "src/i18n/packs.ts": 2483,
     "src/catalog/fields.ts": 991,
     "src/catalog/glossary.ts": 68,
     "src/modules/capability.ts": 53,
     "src/schema/entities.ts": 47,
-    "src/library/topics.ts": 154,
+    "src/library/topics.ts": 157,
     "src/library/paths.ts": 106,
     "src/library/inspiration.ts": 19,
     "src/library/halalFlags.ts": 12,
@@ -18,7 +18,7 @@
     "src/core/notify.ts": 2,
     "src/ui/prayerAlerts.ts": 9,
     "src/demo/seed.ts": 21,
-    "src/i18n/q_b1.ts": 27,
+    "src/i18n/q_b1.ts": 35,
     "public/content/pack-001.json": 111,
     "public/content/pack-002.json": 42,
     "public/content/pack-003.json": 60,
