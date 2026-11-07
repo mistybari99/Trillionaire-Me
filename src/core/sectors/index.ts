@@ -69,8 +69,10 @@ export function validateFamily(f: SectorFamily): string[] {
   if (!f.custom) {
     if (f.inputs.length < MIN_INPUTS) p(`needs at least ${MIN_INPUTS} inputs`);
     if (f.formulas.length < MIN_FORMULAS) p(`needs at least ${MIN_FORMULAS} formulas`);
-    if (f.questions.length < 1) p("needs questions");
-    if (f.risks.length < 1) p("needs risks");
+    if (f.questions.length < 3) p("needs at least 3 questions");
+    if (f.risks.length < 3) p("needs at least 3 risks");
+    if (f.aliases.en.length < 5) p("needs at least 5 English aliases");
+    if (f.aliases.bn.length < 4) p("needs at least 4 Bangla aliases");
   }
   for (const q of [...f.questions, ...f.risks]) if (!bi(q)) p("every question and risk needs EN and BN");
   const kinds: Record<string, UnitKind> = {}; const ids = new Set<string>();

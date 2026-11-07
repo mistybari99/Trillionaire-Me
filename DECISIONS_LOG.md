@@ -857,3 +857,9 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 - Native app (draw over other apps): follow the builder's recommendation: not now (D-A: PWA first).
 - PR #1 text and merge: the owner said the builder knows the procedure: update the PR text from docs/audit/PR_RECONCILIATION_2026-11-06.md; merge only at a quiet point with green CI (normal merge commit, no force, no branch deletion).
 - Undo: each item is built behind a setting that is off by default; revert the commits to remove it.
+
+## 2026-11-07 — BUILD-02 phase A: sector toolkit core (types, safe formula engine, shared library, registry, custom family)
+- What: `src/core/sectors/` (pure, no UI): safe expression parser (no eval), unit-kind check, 21 shared formulas in EN and BN, registry with alias search, `custom` family, two worked example families (retail, food-service). Schema and writer template: `docs/design/sector-model.md`. No venture migration or UI yet (phase C).
+- Why: owner asked for a sector-aware toolkit; the app supplies inputs, formulas, questions and risks, the user supplies every number. Unknown is never 0; no benchmarks.
+- Alternatives: JSON data files (rejected: Bangla scanner and typed checks fit TS files better); a spreadsheet-style formula engine with eval (rejected: unsafe).
+- Undo: revert the BUILD-02 phase A commits; nothing else reads the folder yet.

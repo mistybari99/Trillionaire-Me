@@ -197,7 +197,10 @@ describe("registry", () => {
     expect(probs({ ...base, formulas: [...base.formulas, { id: "bad", use: "nope", map: {} }] })).toMatch(/unknown library formula/);
     expect(probs({ ...base, formulas: [...base.formulas, { id: "bad", name: { en: "b", bn: "খ" }, expr: "price / varCost", needs: ["price", "varCost"], result: "money" }] })).toMatch(/result kind money does not match/);
     expect(probs({ ...base, formulas: [...base.formulas, { id: "bad", name: { en: "b", bn: "খ" }, expr: "price; 1", needs: ["price"], result: "money" }] })).toMatch(/unexpected character/);
-    expect(probs({ ...base, aliases: { en: ["Shop"], bn: ["দোকান"] } })).toMatch(/lower-case/);
+    expect(probs({ ...base, aliases: { en: ["Shop", "a", "b", "c", "d"], bn: ["দোকান", "ক", "খ", "গ"] } })).toMatch(/lower-case/);
+    expect(probs({ ...base, questions: base.questions.slice(0, 2) })).toMatch(/at least 3 questions/);
+    expect(probs({ ...base, risks: [] })).toMatch(/at least 3 risks/);
+    expect(probs({ ...base, aliases: { en: ["a"], bn: ["ক"] } })).toMatch(/at least 5 English aliases/);
     expect(validateRegistry([base, base]).join()).toMatch(/family id twice/);
   });
   it("evaluateFamily: worked example for retail (fixture) and Unknown for the rest", () => {
