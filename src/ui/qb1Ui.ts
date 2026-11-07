@@ -5,6 +5,8 @@ import { t } from "../i18n/t";
 import type { Key } from "../i18n/packs";
 import type { Locale } from "../i18n/registry";
 import { CONCRETE_BANK } from "../core/stuck";
+import { TIPS } from "../library/topics";
+import { diagram } from "./diagram";
 
 /** Q-01: one calm line shown after any Stuck helper. No judging words. */
 export const recoveryLine = (lang: Locale): HTMLElement => h("p", { class: "qb1-recovery", "data-recovery": "1" }, t("qb1.recovery", lang));
@@ -19,6 +21,9 @@ export function concreteBank(lang: Locale, input: HTMLInputElement): HTMLElement
   });
   return h("div", { class: "qb1-bank-wrap", "data-card": "concrete_bank" }, h("h3", {}, t("qb1.bank.h", lang)), h("p", { class: "muted" }, t("qb1.bank.hint", lang)), h("div", { class: "qb1-bank" }, ...rows));
 }
+
+/** Q-03: the 'matrix' diagram tip (Hard now / Easy later) shown on the effort-timing card. diagram() already gives it role=img plus a text label. */
+export const effortTip = (lang: Locale): HTMLElement[] => { const tip = TIPS.find((x) => x.id === "pr3"); return tip ? [diagram(tip, lang)] : []; };
 
 /** Q-03: decorative pictures, aria-hidden. The lists next to them stay as the text equivalent. */
 export const forkPicture = (lang: Locale): HTMLElement => h("div", { class: "qb1-fork", "aria-hidden": "true", "data-pic": "fork" }, h("span", {}, t("qb1.fork.easy", lang)), h("span", {}, t("qb1.fork.hard", lang)));

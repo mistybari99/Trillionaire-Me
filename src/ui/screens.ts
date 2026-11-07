@@ -53,7 +53,7 @@ import { progressRing, isMilestone } from "./ring";
 import { logo3d } from "./logo";
 import { goalFunnelHero, horizonArc } from "./horizonArt";
 import { viewBar, withView } from "./viewBar";
-import { concreteBank, recoveryLine } from "./qb1Ui";
+import { concreteBank, effortTip, forkPicture, recoveryLine, timeBands } from "./qb1Ui";
 import { kpiSection, kpiTodayCard, todayIsoKpi } from "./kpiUi";
 import { realityReportCard, realityTodayCard } from "./realityUi";
 import { northStarCard } from "./northStarCard";
@@ -725,11 +725,11 @@ export function stuckScreen(): HTMLElement {
 // Calm, static reflection cards (ROADMAP B7/B8). Plain text only: no colour cue, nothing counted or ordered.
 function reflectionCards(lang: Locale): HTMLElement[] {
   return [
-    h("section", { class: "card", "data-card": "two_paths" }, h("h2", {}, t("stuck.two.h", lang)),
+    h("section", { class: "card", "data-card": "two_paths" }, h("h2", {}, t("stuck.two.h", lang)), forkPicture(lang),
       h("ul", { style: "padding-inline-start:20px" }, h("li", {}, t("stuck.two.fun", lang)), h("li", {}, t("stuck.two.struggle", lang))),
       h("p", { class: "muted" }, t("stuck.two.note", lang))),
-    h("section", { class: "card", "data-card": "effort_timing" }, h("h2", {}, t("stuck.timing.h", lang)), h("p", {}, t("stuck.timing.body", lang))),
-    h("section", { class: "card", "data-card": "where_time_goes" }, h("h2", {}, t("stuck.time.h", lang)),
+    h("section", { class: "card", "data-card": "effort_timing" }, h("h2", {}, t("stuck.timing.h", lang)), h("p", {}, t("stuck.timing.body", lang)), ...effortTip(lang)),
+    h("section", { class: "card", "data-card": "where_time_goes" }, h("h2", {}, t("stuck.time.h", lang)), timeBands(lang),
       h("ul", { style: "padding-inline-start:20px" }, h("li", {}, t("stuck.time.1", lang)), h("li", {}, t("stuck.time.2", lang)), h("li", {}, t("stuck.time.3", lang))),
       h("p", { class: "muted" }, t("stuck.time.note", lang))),
   ];
