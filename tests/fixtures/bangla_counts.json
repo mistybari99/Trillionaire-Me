@@ -34,6 +34,10 @@
     "src/library/systems/job-search-week.json": 9,
     "src/library/systems/morning-routine.json": 7,
     "src/library/systems/study-block.json": 7,
-    "src/library/systems/weekly-money-check.json": 7
+    "src/library/systems/weekly-money-check.json": 7,
+    "src/core/sectors/formulas.ts": 68,
+    "src/core/sectors/custom.ts": 11,
+    "src/core/sectors/families/food-service.ts": 32,
+    "src/core/sectors/families/retail.ts": 27
   }
 }
