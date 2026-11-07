@@ -1,0 +1,66 @@
+[
+  {
+    "id": "TM-REQ-174",
+    "requirement": "'I'm stuck' problem loop: Identify → Diagnose → Intervene → Execute → Measure",
+    "gate": "G3"
+  },
+  {
+    "id": "TM-REQ-175",
+    "requirement": "Rule-based diagnosis of stuck causes; unknown answers never forced into a cause",
+    "gate": "G3"
+  },
+  {
+    "id": "TM-REQ-178",
+    "requirement": "Habits use recovery/restart plans; no streak counters or shaming copy",
+    "gate": "G3"
+  },
+  {
+    "id": "TM-REQ-181",
+    "requirement": "Quick capture: free note/decision → rule-based extraction of amounts, percents, durations, dates, decisions → user confirms → reports use only confirmed items; original note stays on device",
+    "gate": "G3"
+  },
+  {
+    "id": "TM-REQ-182",
+    "requirement": "Field rules: one fact per field, taps over typing, short text ≤80 chars, every field shows what/why/example/format",
+    "gate": "G1"
+  },
+  {
+    "id": "TM-REQ-183",
+    "requirement": "Topic library: every owner topic (20 + Deen) has short practical tips with a visual; tips share tags so related tips appear across topics; all drafts marked unreviewed; sensitive topics carry safety notes",
+    "gate": "G3"
+  },
+  {
+    "id": "TM-REQ-184",
+    "requirement": "Reward picture: each finished task adds a star, each passed stage adds a garden layer; milestone moments; no points/ranks/streaks/comparison; text equivalent",
+    "gate": "G3"
+  },
+  {
+    "id": "TM-REQ-185",
+    "requirement": "Hideable side drawer listing all topics while the 5 phone tabs stay primary",
+    "gate": "G3"
+  },
+  {
+    "id": "TM-REQ-186",
+    "requirement": "Settings registry: every setting has one home, one search entry and one owner of its storage key; a link check fails on any orphan route, key or label",
+    "gate": "G2",
+    "status": "Draft - built 2 Nov 2026; tests linked: tests/settings_shell.test.ts, tests/settings_search.test.ts; not marked Verified until the owner reviews"
+  },
+  {
+    "id": "TM-REQ-187",
+    "requirement": "Restore safety: preview, automatic Before restore copy (7 days), replace that cannot leave an empty store, rollback, PIN asked again, Go back",
+    "gate": "G2",
+    "status": "Draft - built 2 Nov 2026; tests linked: tests/restore_safety.test.ts, tests/restore_ui.test.ts; not marked Verified until the owner reviews"
+  },
+  {
+    "id": "TM-REQ-188",
+    "requirement": "Typed-word guard for Clear all real data (delete, DELETE, ডিলিট, ডিলেট) with a no-typing fallback and PIN again; one consent gate; Withdraw revokes only",
+    "gate": "G2",
+    "status": "Draft - built 2 Nov 2026; tests linked: tests/delete_page.test.ts, tests/privacy_page.test.ts; not marked Verified until the owner reviews"
+  },
+  {
+    "id": "TM-REQ-189",
+    "requirement": "Focus moves to the new heading and the page title follows the screen on every route change",
+    "gate": "G2",
+    "status": "Draft - built 2 Nov 2026; tests linked: tests/settings_a11y_i18n.test.ts; not marked Verified until the owner reviews"
+  }
+]

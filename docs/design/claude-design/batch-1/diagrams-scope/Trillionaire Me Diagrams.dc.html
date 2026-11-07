@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="design_doc_mode" content="canvas">
+  <link rel="stylesheet" href="_ds/modernist-9b44c2bb-05ef-4030-bdba-b89b9f6ce549/styles.css">
+  <script src="_ds/modernist-9b44c2bb-05ef-4030-bdba-b89b9f6ce549/_ds_bundle.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+  <style>
+    body{margin:0;background:#f3f2f2;color:#201e1d;font-family:Archivo,system-ui,sans-serif}
+    .mmd svg{max-width:100%;height:auto}
+    a{color:#201e1d}a:hover{color:#ec3013}
+  </style>
+</helmet>
+
+<div style="max-width:1280px;margin:0 auto;padding:48px 32px;display:flex;flex-direction:column;gap:48px">
+
+  <header style="display:flex;flex-direction:column;gap:12px;border-bottom:2px solid #201e1d;padding-bottom:24px">
+    <div style="font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#201e1d">Trillionaire Me · Diagram system</div>
+    <h1 style="margin:0;font-size:44px;line-height:1.1;font-weight:700">Ten diagrams, one visual language</h1>
+    <p style="margin:0;max-width:760px;font-size:17px;line-height:1.5">Source: Canonical Spec v2.0 and CLAUDE.md from the repository. Each diagram answers where you are now, what happens next and what changes when real life differs from plan.</p>
+  </header>
+
+  <section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px;border-bottom:2px solid #201e1d;padding-bottom:32px">
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div style="font-weight:700">Legend: node type</div>
+      <div style="font-size:14px;line-height:1.6">Rectangle: core module or process<br>Stadium: goal, stage or milestone<br>Diamond: decision or approval<br>Dashed: external service or future phase<br>Dotted arrow: feedback or change loop</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div style="font-weight:700">Legend: status tags</div>
+      <div style="font-size:14px;line-height:1.6">[C] Confirmed requirement (spec)<br>[P] Proposed design, not yet approved<br>[X] External dependency<br>[U] Unresolved decision<br>[F] Future phase</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div style="font-weight:700">Index: how the set connects</div>
+      <div style="font-size:14px;line-height:1.6">A is the master map. B and C take a user from current reality to tasks. D sets resources for C. E handles reality changes for B and C. F feeds options into B. G expands on B. H sits beside C as a parallel track. I shows what runs offline under A. J is the journey through all of them.</div>
+    </div>
+  </section>
+
+  <!-- A -->
+  <section style="display:flex;flex-direction:column;gap:12px">
+    <div style="display:flex;gap:12px;align-items:baseline"><span style="background:#ec3013;color:#f3f2f2;padding:2px 10px;font-weight:700">A</span><h2 style="margin:0;font-size:26px">Master system architecture</h2></div>
+    <p style="margin:0;max-width:820px;font-size:15px;line-height:1.5">Purpose: shows the whole ecosystem and how information moves between modules. Core modules sit in the centre. Supporting modules surround them. External services are dashed.</p>
+    <div class="mmd" style="background:#fff;border:1px solid #201e1d;padding:24px;overflow:auto">
+<pre class="mermaid">
+flowchart TB
+  UA["User-controlled action: confirm, edit, approve [C]"]
+  subgraph CORE["Core system"]
+    direction LR
+    PRO["User profile and baseline [C]"]
+    GOA(["Goals and long-term vision [C]"])
+    FIN["Finance: income, expenses, assets, liabilities, savings [C]"]
+    RES["Skills, knowledge, time, energy, resources [C]"]
+    GDE["Goal decomposition and execution engine [C]"]
+    ADP["Adaptive planning and progress evaluation [C]"]
+  end
+  subgraph MOD["Supporting modules"]
+    direction LR
+    LIFE["Personal life and responsibilities [C]"]
+    BIZ["Business operations and entrepreneurship [C]"]
+    OPP["Opportunity research and evidence [C]"]
+    TSK["Tasks, habits, milestones, scheduling [C]"]
+    DEEN["Deen and Akhirah [C]"]
+  end
+  subgraph SYS["Platform"]
+    direction LR
+    LOC[("Offline local storage [C]")]
+    SYN["Sync queue and cloud sync [U]"]
+    SEC["Security, privacy, backup, audit history [C]"]
+  end
+  AI(["AI reasoning, Gate 6 [F]"]):::ext
+  WEB(["Live research sources [X]"]):::ext
+  PRO --> GOA
+  GOA --> GDE
+  FIN --> GDE
+  RES --> GDE
+  LIFE --> GDE
+  BIZ --> FIN
+  OPP --> BIZ
+  GDE --> TSK
+  DEEN --> TSK
+  TSK --> ADP
+  ADP -.->|"progress feedback"| GOA
+  ADP --> UA
+  UA --> GDE
+  GDE --> LOC
+  LOC --> SYN
+  SEC --- LOC
+  OPP -.-> WEB
+  ADP -.-> AI
+  classDef ext stroke-dasharray:5 4,fill:#f3f2f2
+</pre>
+    </div>
+  </section>
+
+  <!-- B -->
+  <section style="display:flex;flex-direction:column;gap:12px">
+    <div style="display:flex;gap:12px;align-items:baseline"><span style="background:#ec3013;color:#f3f2f2;padding:2px 10px;font-weight:700">B</span><h2 style="margin:0;font-size:26px">Current reality to future vision map</h2></div>
+    <p style="margin:0;max-width:820px;font-size:15px;line-height:1.5">Purpose: moves from the actual starting point toward larger goals through stage gates. Milestone ladder values are calculation steps, not forecasts. No financial outcome is guaranteed.</p>
+    <div class="mmd" style="background:#fff;border:1px solid #201e1d;padding:24px;overflow:auto">
+<pre class="mermaid">
+flowchart TB
+  CR["Current reality [C]"] --> BA["Baseline assessment [C]"]
+  BA --> CG["Capability gaps: skills, money, time, people, assets [C]"]
+  CG --> SO{"Strategic options: 2 to 3 routes [C]"}
+  SO --> SP["Selected path, or customised path [C]"]
+  SO -.->|"alternative route"| ALT["Alternative route [C]"]
+  SP --> MS(["Milestone ladder: calculation steps [C]"])
+  MS --> EX["Execution: tasks and habits [C]"]
+  EX --> EV{"Evaluation at gate review [C]"}
+  EV -->|"gate passed"| EXP(["Expansion to next gate [C]"])
+  EV -.->|"reality changed"| SO
+  RISK["Risks and stop criteria [C]"] -.-> EV
+  DEP["Dependencies: relationships, assets [C]"] -.-> CG
+  FINR["Financial requirements: runway, capital [C]"] -.-> CG
+  TIMER["Time and energy limits [C]"] -.-> EX
+</pre>
+    </div>
+  </section>
+
+  <!-- C -->
+  <section style="display:flex;flex-direction:column;gap:12px">
+    <div style="display:flex;gap:12px;align-items:baseline"><span style="background:#ec3013;color:#f3f2f2;padding:2px 10px;font-weight:700">C</span><h2 style="margin:0;font-size:26px">Goal decomposition tree</h2></div>
+    <p style="margin:0;max-width:820px;font-size:15px;line-height:1.5">Purpose: shows how one vision becomes next actions. Each goal carries its purpose, deadline, resources, success criteria, dependencies and progress. Dotted lines show a change propagating upward.</p>
+    <div class="mmd" style="background:#fff;border:1px solid #201e1d;padding:24px;overflow:auto">
+<pre class="mermaid">
+flowchart TB
+  LV(["Life vision [C]"]) --> SO1["Strategic objective: financial strength [P]"]
+  LV --> SO2["Strategic objective: Deen and Akhirah [C]"]
+  SO1 --> G1(["Goal: first validated income [C]"])
+  SO1 --> G2(["Goal: repeatable local model [C]"])
+  G1 --> P1["Project: offer test [P]"]
+  P1 --> M1(["Milestone: first paid result [C]"])
+  M1 --> T1["Task: draft offer [C]"]
+  T1 --> N1["Next action: write three lines [C]"]
+  G2 --> P2["Project: operations SOP [P]"]
+  P2 --> T2["Task: document steps [C]"]
+  SO2 --> G3(["Goal: regular worship routine [C]"])
+  G3 --> T3["Task: prayer reminders [C]"]
+  G1 -.->|"time or money change"| G2
+  T1 -.->|"task slips"| G1
+  META["Each goal records: purpose, deadline, resources, success criteria, dependencies, progress [C]"]:::note
+  classDef note fill:#f3f2f2,stroke-dasharray:4 3
+</pre>
+    </div>
+  </section>
+
+  <!-- D -->
+  <section style="display:flex;flex-direction:column;gap:12px">
+    <div style="display:flex;gap:12px;align-items:baseline"><span style="background:#ec3013;color:#f3f2f2;padding:2px 10px;font-weight:700">D</span><h2 style="margin:0;font-size:26px">Resource allocation map</h2></div>
+    <p style="margin:0;max-width:820px;font-size:15px;line-height:1.5">Purpose: money is one resource among eight. Shortages, competing priorities and alternatives are shown next to the plan. Unknown values stay unknown and are never set to zero.</p>
+    <div class="mmd" style="background:#fff;border:1px solid #201e1d;padding:24px;overflow:auto">
+<pre class="mermaid">
+flowchart TB
+  PLAN(["Execution plan [C]"])
+  MON["Money and cash flow [C]"] --> PLAN
+  TIM["Time and calendar [C]"] --> PLAN
+  SKL["Skills and learning needs [C]"] --> PLAN
+  AST["Physical and digital assets [C]"] --> PLAN
+  PPL["People and networks [C]"] --> PLAN
+  ENR["Energy, capacity, workload [C]"] --> PLAN
+  TOO["Tools, technology, information [C]"] --> PLAN
+  CON["Ethical, legal, religious constraints [C]"] --> PLAN
+  PLAN --> SHT{"Shortage found? [C]"}
+  SHT -->|"yes"| ALT["Alternatives: delay, reduce scope, delegate, borrow [P]"]
+  SHT -->|"no"| OK["Plan stays as set [C]"]
+  CON -.->|"hard limit, blocks plan"| PLAN
+  ENR -.->|"overload mode: no new tasks [C]"| PLAN
+</pre>
+    </div>
+  </section>
+
+  <!-- E -->
+  <section style="display:flex;flex-direction:column;gap:12px">
+    <div style="display:flex;gap:12px;align-items:baseline"><span style="background:#ec3013;color:#f3f2f2;padding:2px 10px;font-weight:700">E</span><h2 style="margin:0;font-size:26px">Reality-change and adaptive planning loop</h2></div>
+    <p style="margin:0;max-width:820px;font-size:15px;line-height:1.5">Purpose: handles a real-life event. The previous plan is kept as a version. Consequential financial or external actions wait for user approval.</p>
+    <div class="mmd" style="background:#fff;border:1px solid #201e1d;padding:24px;overflow:auto">
+<pre class="mermaid">
+flowchart TB
+  EVT(["Real-life event: unexpected expense, lost time, new opportunity, failed milestone, new duty, market change [C]"])
+  EVT --> REC["Record event [C]"]
+  REC --> VAL{"Validate information [C]"}
+  VAL -->|"unverified"| REC
+  VAL -->|"verified"| AFF["Identify affected goals and tasks [C]"]
+  AFF --> IMP["Calculate impact: dates, budget, risk [C]"]
+  IMP --> ALTP["Generate up to 3 alternative plans [C]"]
+  ALTP --> CMP["Compare trade-offs: plan diff [C]"]
+  CMP --> APR{"User approval needed? [C]"}
+  APR -->|"yes, for large or irreversible change"| UPD["Update plan as new PlanVersion [C]"]
+  APR -->|"no"| UPD
+  UPD --> HIS[("Previous plan kept, change history [C]")]
+  UPD --> MON["Monitor results [C]"]
+  MON -.->|"new event"| EVT
+  EXT["Money or external action: never automatic [C]"] -.-> APR
+</pre>
+    </div>
+  </section>
+
+  <!-- F -->
+  <section style="display:flex;flex-direction:column;gap:12px">
+    <div style="display:flex;gap:12px;align-items:baseline"><span style="background:#ec3013;color:#f3f2f2;padding:2px 10px;font-weight:700">F</span><h2 style="margin:0;font-size:26px">Opportunity research and decision system</h2></div>
+    <p style="margin:0;max-width:820px;font-size:15px;line-height:1.5">Purpose: separates verified facts from estimates, assumptions and AI hypotheses. Every source carries a date and a refresh flag. Live research is an external dependency.</p>
+    <div class="mmd" style="background:#fff;border:1px solid #201e1d;padding:24px;overflow:auto">
+<pre class="mermaid">
+flowchart TB
+  Q(["Question or opportunity [C]"]) --> RS["Research [X]"]
+  RS --> SV["Source verification, dated [C]"]
+  SV --> MA["Market assessment [C]"]
+  MA --> FA["Feasibility analysis [C]"]
+  FA --> RA["Risk assessment [C]"]
+  RA --> RE["Resource estimation [C]"]
+  RE --> CO{"Compare 2 to 3 strong options [C]"}
+  CO --> CU["Customise [C]"]
+  CU --> SA[("Save decision: save, revisit, replace [C]")]
+  SA --> TO["Track outcome [C]"]
+  TO -.->|"circumstances change"| CO
+  LBL["Labels on every item: Verified fact, Estimate, Assumption, AI hypothesis [C]"]:::note
+  RS -.-> LBL
+  classDef note fill:#f3f2f2,stroke-dasharray:4 3
+</pre>
+    </div>
+  </section>
+
+  <!-- G -->
+  <section style="display:flex;flex-direction:column;gap:12px">
+    <div style="display:flex;gap:12px;align-items:baseline"><span style="background:#ec3013;color:#f3f2f2;padding:2px 10px;font-weight:700">G</span><h2 style="margin:0;font-size:26px">Local-to-global expansion roadmap</h2></div>
+    <p style="margin:0;max-width:820px;font-size:15px;line-height:1.5">Purpose: expansion depends on evidence and readiness. Not every business expands. Each stage has entry and exit conditions. Stages after G-F are unresolved until the owner decides on them.</p>
+    <div class="mmd" style="background:#fff;border:1px solid #201e1d;padding:24px;overflow:auto">
+<pre class="mermaid">
+flowchart TB
+  CO["Current operations [C]"] --> LV["Local validation: real demand [C]"]
+  LV --> RM["Repeatable business model [C]"]
+  RM --> OS["Operational systems: SOP, roles [C]"]
+  OS --> NE["National expansion [C]"]
+  NE -.-> IMR["International market research [F]"]
+  IMR --> CP["Controlled pilot [F]"]
+  CP --> IS(["International scale, owner approval [F]"])
+  LV -.->|"no evidence: stay local"| CO
+  CP -.->|"pilot fails: exit"| NE
+  NE --- LEG["Each stage shows: readiness, capital, operations, legal, evidence, risks, exit or progress conditions [C]"]
+</pre>
+    </div>
+  </section>
+
+  <!-- H -->
+  <section style="display:flex;flex-direction:column;gap:12px">
+    <div style="display:flex;gap:12px;align-items:baseline"><span style="background:#ec3013;color:#f3f2f2;padding:2px 10px;font-weight:700">H</span><h2 style="margin:0;font-size:26px">Deen and Akhirah life integration map</h2></div>
+    <p style="margin:0;max-width:820px;font-size:15px;line-height:1.5">Purpose: spiritual responsibilities run alongside worldly goals as planning domains. No score, rank or leaderboard. Religious rulings are not issued by the tool. Scholarly guidance is marked as a separate step.</p>
+    <div class="mmd" style="background:#fff;border:1px solid #201e1d;padding:24px;overflow:auto">
+<pre class="mermaid">
+flowchart TB
+  DN(["Deen and Akhirah [C]"])
+  DN --> SAL["Salah and worship routine [C]"]
+  DN --> QUR["Quran and Islamic learning [C]"]
+  DN --> RAM["Ramadan and fasting [C]"]
+  DN --> ZAK["Zakat and financial obligations [C]"]
+  DN --> HAJ["Hajj and Umrah planning [C]"]
+  DN --> SAD["Sadaqah and charitable giving [C]"]
+  DN --> HAL["Halal livelihood and ethical business [C]"]
+  DN --> FAM["Family responsibilities and people's rights [C]"]
+  DN --> CHR["Character, accountability, preparation for Akhirah [C]"]
+  ZAK -.->|"rules need qualified guidance [U]"| SCH["Qualified scholarly guidance [X]"]
+  HAJ -.->|"rules need qualified guidance [U]"| SCH
+  HAL -.->|"screening, not a fatwa [P]"| SCH
+  GUARD["Guardrails: no piety score, private by default, no scripture text until decision D-D [C]"]:::note
+  DN -.- GUARD
+  classDef note fill:#f3f2f2,stroke-dasharray:4 3
+</pre>
+    </div>
+  </section>
+
+  <!-- I -->
+  <section style="display:flex;flex-direction:column;gap:12px">
+    <div style="display:flex;gap:12px;align-items:baseline"><span style="background:#ec3013;color:#f3f2f2;padding:2px 10px;font-weight:700">I</span><h2 style="margin:0;font-size:26px">Offline-first and AI architecture</h2></div>
+    <p style="margin:0;max-width:820px;font-size:15px;line-height:1.5">Purpose: separates what works offline from what needs a connection. Live AI research does not work offline unless a supported on-device implementation exists. None is approved yet.</p>
+    <div class="mmd" style="background:#fff;border:1px solid #201e1d;padding:24px;overflow:auto">
+<pre class="mermaid">
+flowchart TB
+  subgraph OFF["Works offline [C]"]
+    direction TB
+    UI["Mobile user interface [C]"] --> LDB[("Local database [C]")]
+    LDB --> RUL["Offline rules and calculations [C]"]
+    RUL --> CP2["Cached plans and saved research [C]"]
+    LDB --> Q["Pending sync queue [C]"]
+  end
+  subgraph ON["Needs internet [U]"]
+    direction TB
+    CDB[("Cloud database [U]")]
+    AIS(["AI reasoning service [F]"])
+    LRS(["Live research sources [X]"])
+  end
+  Q -.->|"sync when online"| CDB
+  CDB -.->|"conflict resolution, backup"| LDB
+  CP2 -.->|"refresh when online"| LRS
+  UI -.->|"optional, Gate 6"| AIS
+  PRIV["Permissions and privacy controls [C]"] --- UI
+  ERR["Error handling, retry, restore [C]"] --- Q
+</pre>
+    </div>
+  </section>
+
+  <!-- J -->
+  <section style="display:flex;flex-direction:column;gap:12px">
+    <div style="display:flex;gap:12px;align-items:baseline"><span style="background:#ec3013;color:#f3f2f2;padding:2px 10px;font-weight:700">J</span><h2 style="margin:0;font-size:26px">Complete user journey</h2></div>
+    <p style="margin:0;max-width:820px;font-size:15px;line-height:1.5">Purpose: the app guides the user to the next field, so they do not need to remember what to enter. Optional information can be added later without blocking other features.</p>
+    <div class="mmd" style="background:#fff;border:1px solid #201e1d;padding:24px;overflow:auto">
+<pre class="mermaid">
+flowchart TB
+  OP["Open app [C]"] --> EXP["Explore prebuilt structure [C]"]
+  EXP --> CP3["Create profile [C]"]
+  CP3 --> GF["Complete guided fields [C]"]
+  GF --> RB["Review baseline [C]"]
+  RB --> CMPP["Compare recommended paths [C]"]
+  CMPP --> SEL{"Select or customise plan [C]"}
+  SEL --> EXE["Execute tasks [C]"]
+  EXE --> REC["Record real-life events [C]"]
+  REC --> RV["Review changes [C]"]
+  RV --> AD["Adapt plan [C]"]
+  AD -.->|"repeat"| EXE
+  OPT["Optional fields, added later, never block other features [C]"] -.-> GF
+</pre>
+    </div>
+  </section>
+
+  <footer style="border-top:2px solid #201e1d;padding-top:16px;font-size:14px;line-height:1.5">Open decisions: D-A stack, D-B real data, D-C AI provider, D-D scripture content, D-E theme direction. None of these is approved. Diagram labels follow the spec. Edit the Mermaid blocks above to change any diagram.</footer>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() {
+    let tries = 0;
+    const run = () => {
+      if (window.mermaid) {
+        mermaid.initialize({ startOnLoad: false, theme: 'base', flowchart: { htmlLabels: true, curve: 'basis' },
+          themeVariables: { fontFamily: 'Archivo, system-ui, sans-serif', fontSize: '14px', primaryColor: '#ffffff', primaryTextColor: '#201e1d', primaryBorderColor: '#201e1d', lineColor: '#201e1d', clusterBkg: '#f3f2f2', clusterBorder: '#201e1d' } });
+        mermaid.run({ querySelector: '.mermaid' });
+      } else if (tries++ < 50) setTimeout(run, 200);
+    };
+    run();
+  }
+}
+</script>
+</body>
+</html>

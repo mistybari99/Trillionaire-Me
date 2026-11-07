@@ -1,0 +1,19 @@
+{
+ "checked": 176,
+ "stats": {
+  "paths": 179,
+  "symbols": 36
+ },
+ "unresolved": {
+  "SET-6.05": [
+   "nopath:settings_i18n.test.ts",
+   "nosym:latin_digits"
+  ],
+  "TD-5.2": [
+   "nopath:sync.ts"
+  ],
+  "TD-7.4": [
+   "nopath:override.ts"
+  ]
+ }
+}

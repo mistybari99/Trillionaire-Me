@@ -1,0 +1,42 @@
+{
+ "schemaVersion": 0,
+ "records": [
+  {
+   "id": "g1",
+   "entity": "goal",
+   "ns": "real",
+   "ownerId": "owner",
+   "createdAt": "2026-10-20T08:00:00.000Z",
+   "values": {
+    "goal.title": {
+     "state": "value",
+     "value": "Learn bookkeeping",
+     "label": "FACT"
+    },
+    "goal.target_date": {
+     "state": "unknown"
+    },
+    "goal.amount": {
+     "state": "prefer_not"
+    }
+   }
+  },
+  {
+   "id": "demo-p",
+   "entity": "profile",
+   "ns": "demo",
+   "ownerId": "demo-user",
+   "createdAt": "2026-10-20T08:00:00.000Z",
+   "values": {
+    "profile.display_name": {
+     "state": "value",
+     "value": "Rahim",
+     "label": "DEMO"
+    },
+    "profile.birth_year": {
+     "state": "later"
+    }
+   }
+  }
+ ]
+}

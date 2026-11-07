@@ -1,0 +1,43 @@
+{
+ "v": 3,
+ "layout": "files",
+ "createdOnFiles": {
+  "at": "2026-10-25T10:49:02.261Z",
+  "v": 1
+ },
+ "title": "Trillionaire Me",
+ "namespace": "TrillionaireMe",
+ "libraries": [],
+ "sections": {},
+ "groups": [
+  "Logos"
+ ],
+ "assetGroups": {
+  "Logos": {
+   "name": "Logos",
+   "tile": "l",
+   "order": [
+    "trillionaire-me-mark.svg"
+   ],
+   "files": {
+    "trillionaire-me-mark.svg": {
+     "name": "trillionaire-me-mark.svg",
+     "blob": "3c9c0fc409d81d0842c45d94aecc3829",
+     "size": 177,
+     "type": "image/svg+xml"
+    }
+   }
+  }
+ },
+ "blobs": {},
+ "docs": {
+  "readme": "project/README.md",
+  "sections": []
+ },
+ "lastChange": {
+  "by": "MD ALAMIN",
+  "at": "2026-10-25T11:20:00Z",
+  "via": "GitHub \u00b7 mistybari99/Trillionaire-Me@434d66f",
+  "note": "First sync: tokens, components CSS, logo, cover"
+ }
+}

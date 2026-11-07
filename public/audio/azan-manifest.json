@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "note": "Optional. Gives each recording slot a label and a source or licence note. File names are fixed: azan-1.mp3 to azan-4.mp3, with optional azan-N-fajr.mp3. See docs/azan.md.",
+  "slots": [
+    {
+      "id": "1",
+      "label": {
+        "en": "Azaan 1",
+        "bn": "আজান 1"
+      },
+      "source": "Owner-supplied, 7 Nov 2026 (file tag: www.islamcan.com). Licence: owner to confirm."
+    },
+    {
+      "id": "2",
+      "label": {
+        "en": "Azaan 2",
+        "bn": "আজান 2"
+      },
+      "source": "Owner-supplied, 7 Nov 2026 (file tag: www.islamcan.com). Licence: owner to confirm."
+    },
+    {
+      "id": "3",
+      "label": {
+        "en": "Azaan 3",
+        "bn": "আজান 3"
+      },
+      "source": "Owner-supplied, 7 Nov 2026 (no source tag). Licence: owner to confirm."
+    },
+    {
+      "id": "4",
+      "label": {
+        "en": "Azaan 4",
+        "bn": "আজান 4"
+      },
+      "source": "Owner-supplied, 7 Nov 2026 (no source tag). Licence: owner to confirm."
+    }
+  ]
+}

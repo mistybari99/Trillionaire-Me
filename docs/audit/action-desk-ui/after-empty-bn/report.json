@@ -1,0 +1,64 @@
+{
+  "generated": "2026-11-05T13:16:12.725Z",
+  "synthetic": true,
+  "viewport": "360x800",
+  "phase": "after-empty-bn",
+  "screens": [
+    {
+      "state": "empty-real",
+      "lang": "bn",
+      "route": "today",
+      "scale": 100,
+      "file": "/tmp/action-desk-ui-evidence/after-empty-bn/state-empty-real-100-today.png",
+      "overflow": false,
+      "tasks": [],
+      "demoLeak": false,
+      "saveWarning": null,
+      "consentWarning": null,
+      "net": "online",
+      "nav": {
+        "top": 743,
+        "bottom": 800,
+        "height": 57,
+        "width": 360
+      },
+      "update": null,
+      "heading": {
+        "top": 118.5,
+        "bottom": 194.09375,
+        "height": 75.59375,
+        "width": 250
+      },
+      "bodyPadding": "81px",
+      "captureNote": "Bangla delta predates the expanded entry-action selector; setup CTA checked visually. English delta records its entry-action count."
+    },
+    {
+      "state": "empty-real",
+      "lang": "bn",
+      "route": "today",
+      "scale": 200,
+      "file": "/tmp/action-desk-ui-evidence/after-empty-bn/state-empty-real-200-today.png",
+      "overflow": false,
+      "tasks": [],
+      "demoLeak": false,
+      "saveWarning": null,
+      "consentWarning": null,
+      "net": "online",
+      "nav": {
+        "top": 669.40625,
+        "bottom": 800,
+        "height": 130.59375,
+        "width": 360
+      },
+      "update": null,
+      "heading": {
+        "top": 210.390625,
+        "bottom": 588.359375,
+        "height": 377.96875,
+        "width": 250
+      },
+      "bodyPadding": "155px",
+      "captureNote": "Bangla delta predates the expanded entry-action selector; setup CTA checked visually. English delta records its entry-action count."
+    }
+  ]
+}

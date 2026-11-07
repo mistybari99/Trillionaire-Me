@@ -1,0 +1,139 @@
+// Capability status (TM-REQ-144), redefined 2 Nov 2026 (owner): the card answers ONE question: "is the software's own build complete?"
+// It does not depend on whether any data was typed. Whether THIS phone holds demo or real data is a separate line (src/modules/dataStatus.ts).
+//
+// Build pipeline, six boxes per module (BuildBox): input form, storage, calculation or rule, output screens, export/backup, links to dependent screens.
+// Each box is built (B), missing (M) or not needed (-). The label is computed from the boxes, never typed by hand:
+//   complete = no box missing · partial = some box missing (the boxes are listed by name) · not-built = nothing user-reachable ·
+//   blocked  = waits for an owner approval (a D-number), whatever else is missing.
+// tests/m_list_status.test.ts checks every claim against routes, exported functions and tests; tests/field_reach.test.ts checks fields.
+import type { Bi } from "../i18n/registry";
+
+export const BUILD_BOXES = ["input", "store", "calc", "output", "export", "links"] as const;
+export type BuildBox = (typeof BUILD_BOXES)[number];
+export type BoxState = "built" | "missing" | "na";
+export const BOX_STATES: readonly BoxState[] = ["built", "missing", "na"];
+export type BuildLabel = "complete" | "partial" | "not-built" | "blocked";
+/** Small facts about a module. They are not statuses. */
+export type CapAttr = "offline" | "tap-internet" | "private";
+export const CAP_ATTRS: readonly CapAttr[] = ["offline", "tap-internet", "private"];
+
+export interface ModuleDef {
+  id: string; name: Bi; tab: "journey" | "diary" | "deen" | "more";
+  build: Record<BuildBox, BoxState>; attrs: CapAttr[];
+  /** An owner approval this module waits for (D-C, D-D ...). Set only when that approval is the blocker. */
+  blockedBy: string | null;
+  note: Bi; missing: Bi; gate: string;
+}
+
+const CODE: Record<string, BoxState> = { B: "built", M: "missing", "-": "na" };
+const boxes = (s: string): Record<BuildBox, BoxState> => {
+  if (s.length !== BUILD_BOXES.length) throw new Error(`need ${BUILD_BOXES.length} box letters, got ${s}`);
+  return Object.fromEntries(BUILD_BOXES.map((b, i) => [b, CODE[s[i]!]!])) as Record<BuildBox, BoxState>;
+};
+
+export const missingBoxes = (m: Pick<ModuleDef, "build">): BuildBox[] => BUILD_BOXES.filter((b) => m.build[b] === "missing");
+export const builtBoxes = (m: Pick<ModuleDef, "build">): BuildBox[] => BUILD_BOXES.filter((b) => m.build[b] === "built");
+export function buildLabel(m: Pick<ModuleDef, "build" | "blockedBy">): BuildLabel {
+  if (m.blockedBy) return "blocked";
+  const miss = missingBoxes(m).length;
+  if (miss === 0) return "complete";
+  return builtBoxes(m).length === 0 ? "not-built" : "partial";
+}
+
+const m = (id: string, bn: string, en: string, tab: ModuleDef["tab"], b: string, attrs: CapAttr[], blockedBy: string | null, gate: string, nbn: string, nen: string, mbn: string, men: string): ModuleDef =>
+  ({ id, name: { bn, en }, tab, build: boxes(b), attrs, blockedBy, gate, note: { bn: nbn, en: nen }, missing: { bn: mbn, en: men } });
+
+export const MODULES: ModuleDef[] = [
+  m("M01", "Profile ও সম্মতি", "Profile & consent", "diary", "BBBBBB", [], null, "G1",
+    "ধাপে ধাপে ডাটা লেখা, সম্মতি টিক, সেভ ও আবার শুরু করা পুরোটা তৈরি। নাম, জন্মসাল (থেকে আন্দাজ বয়স) ও টাইম জোন ডায়েরির ‘আপনার সম্পর্কে’ কার্ডে দেখায়; নাম আজকের পেজের শুভেচ্ছায় আসে। না লিখলে ‘জানি না’।",
+    "Step-by-step entry, consent tick, save and resume are all built. Name, birth year (and an estimated age) and time zone show on the diary's 'About you' card; the name is used in the greeting on Today. If not written, Unknown.",
+    "", ""),
+  m("M02", "নিজেকে চেনা (মূল্যায়ন)", "Discover (assessment)", "journey", "BBBBBB", ["offline", "private"], null, "G3",
+    "আগ্রহ, শক্তি, মূল্যবোধ ও স্কিল লিখে প্ল্যান পেজে মিলিয়ে কার্ড দেখা যায়। অভিজ্ঞতা, রিস্ক নিয়ে ঝোঁক ও শেখার ধরনের তিনটি প্রশ্ন আছে; যেকোনোটি বাদ দেওয়া যায় (বাদ দিলে ‘জানা নেই’), আর উত্তর পথের কার্ডে ফিরিয়ে দেখানো হয়। এটা টেস্ট নয়।",
+    "Enter interests, strengths, values and skills; the Plan screen shows matching cards. Three questions on experience, leaning on risk and how you like to learn can each be skipped (skipped means Unknown) and your answers are shown back on the path cards. It is not a test.",
+    "", ""),
+  m("M03", "মূল গোল ও ধাপ-সিঁড়ি", "North Star & ladder", "journey", "BBBBBB", ["offline"], null, "G3",
+    "মূল মেট্রিক লিখুন (শুরু, এখন ও টার্গেট)। ‘এখন’ সংখ্যা নিজে লেখা যায়, বা টাকার পেজের নেট ওয়ার্থ বা ব্যবসার দাম ও অংশ থেকে আসে। শুরু থেকে টার্গেট পর্যন্ত ধাপ ও কত ধাপ পার হলেন দেখা যায়। একাধিক মেট্রিকে নিজের ওজন দিলে মোট প্রোগ্রেস হিসাব হয় (সবগুলোর সংখ্যা থাকলে)। যাত্রা, আজকের পেজ ও রিপোর্টে দেখা যায়; গোল মেয়াদ অনুযায়ী সাজানো। না জানলে ফাঁকা, 0 ধরা হয় না।",
+    "Write North Star measures (start, now and target). The ‘now’ number is typed, or taken from net worth on the Money screen or from the value or your share of the ventures. See the steps from start to target and how many you passed. With several measures, your own weights give one overall progress (when every measure has its figure). Shown on Journey, Today and the report; goals are grouped by time horizon. Unknown stays blank, never 0.",
+    "", ""),
+  m("M04", "পথ ও সুযোগ-লাইব্রেরি", "Paths & opportunity library", "journey", "BBBBBB", ["offline"], null, "G3",
+    "প্ল্যান পেজে স্কিল, আগ্রহ ও শক্তি মিলিয়ে পথের কার্ড আসে। প্রতিটা কার্ডে কেন মিলল, মেলার জোর, প্রতিটা কারণের ওজন, সোর্স ও লেখার তারিখ (180 দিনের বেশি পুরোনো হলে ‘আবার দেখুন’ চিহ্ন) এবং হালাল-চেকের প্রশ্নের লিংক আছে। স্কিল, আগ্রহ ও শক্তির ওজন আপনি বদলাতে ও আবার অ্যাপের নিজের ওজনে ফেরাতে পারেন। আপনার নিজের ব্যবসা আলাদা অপশন হিসেবে দেখায়, সিরিয়াল বা নম্বর ছাড়া। লাইব্রেরিতে এখন 10টি ড্রাফট পথ আছে; আরও পথ লেখা কনটেন্টের কাজ, রিভিউয়ারের দরকার।",
+    "Path cards on the Plan screen match your skills, interests and strengths. Each card shows why it matched, the match strength, the weight of each reason, a source and the day it was written (an entry older than 180 days is flagged to check again), and a link to the halal-check questions. You can change the weights of a skill, an interest and a strength and go back to the built-in ones. Your own venture shows as a separate option, unranked and unscored. The library holds 10 draft paths; writing more is content work that needs a reviewer.",
+    "", ""),
+  m("M05", "স্টেজ ও যাত্রা-লগ", "Stages & journey log", "journey", "BBBBBB", ["offline"], null, "G3",
+    "স্টেজের সিঁড়ি, স্টেজ পাস ও যাত্রা-লগ চলে। স্টেজ B থেকে H প্রতিটার জন্য নিজের নিয়ম লেখা যায়: শুরুর শর্ত, মাপা-যায় এমন শর্ত (টাকার পেজ, ব্যবসা, হ্যান্ডওভার, কাজ ও ফোকাস থেকে সংখ্যা নেয়, বা নিজের সংখ্যা), রিভিউয়ের তারিখ ও থামার নিয়ম। সব শর্ত পূরণ না হলে স্টেজ পাস হয় না; সংখ্যা না থাকলে ‘জানা নেই’, 0 নয়। স্টেজ পেজ, আজকের পেজ ও রিপোর্টে দেখা যায়।",
+    "The stage ladder, stage pass and journey log work. For each Stage B to H you can write your own rules: an entry condition, measurable exit conditions (a number read from Money, ventures, hand-overs, tasks and focus, or your own number), a review date and a pause rule. A stage cannot be passed until every exit condition is reached; with no number it shows Unknown, never 0. Shown on the stage page, Today and the report.",
+    "", ""),
+  m("M06", "গোল, কাজ ও অভ্যাস", "Goals, tasks & habits", "journey", "BBBBBB", ["offline"], null, "G3",
+    "গোল, সাব-গোল ও প্রজেক্টের গাছ: নাম, স্তর, কোনটির অংশ, কী দিয়ে মাপা হয়, তারিখ। প্রতিটা শাখার প্রোগ্রেস তার সব কাজ ধরে হিসাব হয় (কাজ না থাকলে ‘জানা নেই’)। একটি কাজ বা অভ্যাস 5টি পর্যন্ত গোলে লিংক করা যায়: কাজ শেষ হলে লিংক করা প্রতিটা গোল পুরো হিসাব পায়, কিন্তু মোট শতাংশে কাজটি একবারই ধরা হয়। প্রতিটা গোলের ধাপ সমান বা আকার অনুযায়ী ধরা যায়। কাজ লেখা ও পরে বদলানো, কাজ আরেকটির পরে রাখা, আজকের কাজ, ফোকাস টাইমার, অভ্যাস (সপ্তাহে কত দিন সহ), ফ্ল্যাশকার্ড, SMART ও SWOT।",
+    "A tree of goals, sub-goals and projects: name, level, what it is part of, how it is measured, date. Each branch's progress is counted from all its steps (Unknown when it has none). A step or habit can serve up to 5 goals: when the step is done, every linked goal gets full credit, and the overall percent still counts it once. Each goal can weigh its steps equally or by size. Write and later change a step, put a step after another, today's tasks, focus timer, habits (with days a week), flashcards, SMART and SWOT.",
+    "", ""),
+  m("M07", "সম্পদ ও অর্থ", "Resources & finance", "diary", "BBBBBB", ["offline", "private"], null, "G3",
+    "ইনকাম, খরচ, সম্পদ ও দায় লিখে নিট ওয়ার্থ, মাসের ক্যাশ ফ্লো, রানওয়ে ও 90 দিনের ক্যাশ ফ্লো দেখা যায় (BDT)। লাইন মাসিক, বার্ষিক (মাসে বারো ভাগের এক ভাগ ধরা) বা একবারের (তারিখ দিলে 90 দিনের হিসেবে আসে) হতে পারে। অন্য কারেন্সিতে লিখলে আপনার নিজের দেওয়া রেটে টাকায় বদলায়; রেট না দিলে ‘জানা নেই’, 0 নয়, আর অ্যাপ নিজে কোনো রেট আনে না। লাইন ব্যবসার সাথে লিংক করা যায়। না জানা হলে ‘জানা নেই’ দেখায়। যাকাতের হিসাব দ্বীন অংশের (M13) ও ইউনিট ইকোনমিক্স নথিতে ফিল্ড-তালিকায় নেই, তাই এখানে বানানো হয়নি।",
+    "Enter income, spending, assets and liabilities to see net worth, monthly cash flow, runway and 90-day cash flow (BDT). A line can be monthly, yearly (counted as one twelfth a month) or one-off (added to the 90-day figure when it has a date). An amount in another currency is converted with the rate you type; with no rate it is Unknown, never 0, and the app never fetches a rate. A line can be tied to a venture. Unknown stays unknown. A zakat figure belongs to the Deen module (M13) and unit economics is not in the documents' field list, so neither is part of this module.",
+    "", ""),
+  m("M08", "সময় ও সক্ষমতা", "Time & capacity", "diary", "BBBBBB", ["offline"], null, "G3",
+    "ফ্রি সময় লিখলে আজকের ও সপ্তাহের কাজের সূচি তৈরি হয়; জায়গা না হলে কারণসহ দেখায়। আলাদা করা সময় (নামাজ, পরিবার, বিশ্রাম, কাজ) যোগ করা যায়: নামাজের সময় ফোনেই হিসাব হয় এবং প্রতি নামাজে কত মিনিট ফাঁকা রাখবেন তা আপনি লেখেন (অ্যাপ নিজে ধরে না); অন্য ধরনে প্রতিদিনের শুরু-শেষ সময়। কোনো কাজ এই ব্লকে বসে না। সপ্তাহে ঘণ্টার যোগফল ফ্রি ঘণ্টার সাথে মিলিয়ে দেখা যায় (না জানলে ‘জানা নেই’)। প্ল্যান পেজ ও আজকের পেজে দেখা যায়। দিনের কোন সময়ে এনার্জি বেশি, তার কোনো ফিল্ড নথির তালিকায় নেই, তাই তা মডেল করা হয়নি। রিমাইন্ডার: কাজ, প্ল্যানের ধাপ, অভ্যাস, বিল, গোলের তারিখ ও রিভিউয়ের জন্য নিজে সময় বেছে নেওয়া যায় (সেটিংস > নামাজ ও অ্যালার্ট > রিমাইন্ডার, শুরুতে বন্ধ)। অ্যাপ খোলা থাকলে ফোনে অ্যালার্ট আসে; অ্যাপ বন্ধ থাকলে নিশ্চয়তা নেই, তাই ফোনের ক্যালেন্ডারে যোগ করার বাটন আছে। শান্ত সময়ে রিমাইন্ডার অপেক্ষা করে এবং নামাজের অ্যালার্ট সবসময় আগে।",
+    "Enter your free time and the day and week schedule is built; steps that do not fit are listed with a reason. You can add committed time (prayer, family, rest, work): prayer times are worked out on this phone and you type how many minutes to keep free at each prayer (the app assumes none); other kinds take a daily start and end. No task is placed in a block. The weekly hours add up and are set beside your free hours (Unknown when not written). Shown on the Plan screen and Today. Energy by time of day has no field in the documents, so it is not modelled. Reminders: pick your own time for a task, plan step, habit, bill, goal date or review (Settings > Prayer & alerts > Reminders, off at the start). Phone alerts work while the app is open; with the app closed they are not guaranteed, so each reminder has an Add to phone calendar button (.ics). Quiet hours hold reminders and prayer alerts always come first.",
+    "", ""),
+  m("M09", "ব্যবসার পোর্টফোলিও", "Venture portfolio", "journey", "BBMBBB", ["offline", "private"], null, "G3",
+    "যেকোনো সংখ্যক ব্যবসা বা সম্পদ: নাম, স্ট্যাটাস, মালিকানা, আন্দাজি দাম, দামে আপনার অংশ, আর ব্যবসার নিজের মাসিক ইনকাম ও খরচ। সব ব্যবসার মোট দেখা যায় (প্রতিটার সংখ্যা থাকলে), টাকার পেজে, আজকের পেজে ও রিপোর্টে। না জানলে ফাঁকা, 0 ধরা হয় না।",
+    "Any number of ventures or assets: name, stage, ownership, estimated value, your share of it, and the venture's own monthly income and expenses. A total across ventures (when each has its figure) shows on the Money screen, Today and the report. Unknown stays blank, never 0.",
+    "হিসাব: ইউনিট ইকোনমিক্স (প্রতি ইউনিটের দাম ও খরচ) নেই।", "Calculation: unit economics (price and cost per unit) is not built."),
+  m("M10", "টিম ও দায়িত্ব বণ্টন", "Team & delegation", "diary", "BBBBBB", ["offline", "private"], null, "G3",
+    "কাজের রোল লেখা, কে দেখছেন বদলানো, কাজ রোলের সাথে লিংক করা, হ্যান্ডওভারের প্ল্যান ও ‘হয়েছে’ চিহ্ন (রোল ‘অন্য কেউ’ হয়, খোলা কাজ আপনার শিডিউল থেকে সরে কিন্তু গোলের প্রোগ্রেসে থাকে), কেউ না থাকলে ‘লোক খোঁজা’ কাজ যোগ, আর ফাঁকের হিসাব (কোন রোল ফাঁকা অথচ কাজ অপেক্ষায়, নিজের রোলের কাজের জানা সময় বনাম ফ্রি সময়)। আজকের পেজ ও রিপোর্টে দেখা যায়। নাম লেখা হয় না। না জানলে ফাঁকা, 0 ধরা হয় না।",
+    "Write work roles, change who covers each one, tie steps to roles, plan a hand-over and mark it done (the role becomes ‘Someone else’; its open steps leave your schedule but still count toward the goal's progress), add a ‘find someone’ step when nobody covers a role, and see the gap analysis (which role is uncovered while steps wait; known estimates of your own roles against your free time). Shown on Today and the report. No names are stored. Unknown stays blank, never 0.",
+    "", ""),
+  m("M11", "গবেষণা ও অপশন", "Research & options", "more", "BBBBBB", ["tap-internet", "private"], null, "G4",
+    "ইনপুট ঘরের 'Suggest options' বাটনে চাপলে Wikipedia থেকে 2-3টি অপশন আসে। প্রথম খোঁজের ফল ফোনে সেভ করা থাকে। অ্যাপ খোলার সময় কোনো খোঁজ যায় না।", "Tap 'Suggest options' in an input to get 2-3 Wikipedia options. The first search is saved on this phone. No search runs when the app opens.",
+    "", ""),
+  m("M12", "বাস্তবতা বদল ও প্ল্যানের হিস্ট্রি", "Reality-changed & plan history", "journey", "BBBBBB", ["offline"], null, "G3",
+    "ঘটনা লেখা (ইনকাম বা খরচ বদল, সময় কমা, নতুন দায়িত্ব, ধাক্কা, সুযোগ, বাজার, অসুস্থতা), নিয়মে প্রভাব দেখা (কাজ, গোল, তারিখ, টাকা, রিস্ক, কোন ধারণা আর ঠিক নয়), বেশি হলে তিনটি অপশন (তারিখ সরানো, কাজ কমানো, পথ বদলানো, পজ), পুরোনো ও নতুন প্ল্যান পাশাপাশি, অনুমোদন, প্ল্যানের ভার্সন, সিদ্ধান্ত-লগ, আর ধীরে ফেরা। পুরোনো ভার্সন কখনো ডিলিট বা বদল হয় না। কাজকে ‘আর ঠিক নেই’ বলাও চলে।",
+    "Write an event (income or spending change, less time, new duty, setback, opportunity, market, illness); see what it touches by fixed rules (steps, goals, dates, money, risks, which assumption no longer holds); up to three options (move dates, reduce scope, change path, pause); old and new plan side by side; approval; saved plan versions; a decision log; and Resume gently. An old version is never deleted or overwritten. A step can still be marked 'no longer true'.",
+    "", ""),
+  m("M13", "দ্বীন, ইবাদত ও আখিরাত", "Deen, ibadah & akhirah", "deen", "BBBBBB", ["offline", "private"], null, "G3",
+    "মালিকের অনুমতিতে (2 Nov 2026) নামাজ, রোজা, যাকাত, শেখা, পরিবার ও দানের প্ল্যান ও রিমাইন্ডার তৈরি। আজকের পেজে রিমাইন্ডার ও এক ট্যাপের চিহ্ন (আবার ট্যাপে উঠে যায়); নামাজ ও রোজার চিহ্ন দ্বীন পেজের সাথে একই। নিজের নোট ও দানের অঙ্ক লেখা যায়। যাকাতের অঙ্ক আসে শুধু আপনার লেখা সম্পদ, নিসাব ও হার থেকে; অ্যাপে কোনো নিসাব বা হার নেই। নম্বর, সিরিয়াল বা দিন গোনা নেই। ডাটা ফোনে থাকে, ব্যাকআপ ও ডিলিটে আছে, CSV-তে নেই। নামাজের সময় এই ফোনে হিসাব হয়; ইন্টারনেট থাকলে ও আপনি চালু করলে আলাদা ফ্রি সেবা থেকে আসে। হিজরি তারিখ ও রমজান ভিউ ফোনের ভেতরের ক্যালেন্ডার থেকে এই ফোনেই হিসাব হয় (আন্দাজ; বাংলাদেশে চাঁদ দেখার ঘোষণা আলাদা হতে পারে)। আজানের শব্দ: 4টি পর্যন্ত রেকর্ডিং যোগ করে একটা বেছে নেওয়া যায়, স্পিড 0.75x থেকে 1.5x ঠিক করা যায় (ফাইল মালিক যোগ করবেন, অ্যাপে কোনো আজান নেই)।",
+    "Built with the owner's approval (2 Nov 2026): plans and reminders for salah, fasting, zakat, learning, family and giving. Today shows the reminders with a one-tap mark (tap again to undo); prayer and fasting marks are the same as on the Deen page. Private notes and giving amounts can be typed. The zakat figure comes only from the wealth, nisab and rate you type; the app holds no nisab or rate. Nothing is rated, ordered or counted by day. Data stays on the phone, is in backup and Delete, and is left out of CSV. Prayer times are worked out on this phone, or come from a free public service when you turn that on. The Hijri date and a Ramadan view are worked out on this phone from the built-in calendar (approximate; the announced moon sighting in Bangladesh can differ). Plan reminders show inside the app on Today; phone notifications exist only for prayer times. Scripture text is separate (D-D). Azan sound: up to 4 recordings can be added and one chosen, and the speed set from 0.75x to 1.5x (the owner adds the files; the app holds no azan audio).",
+    "", ""),
+  m("M14", "স্বাস্থ্য ও পরিবার", "Health & family", "diary", "BBBBBB", ["offline", "private"], null, "G3",
+    "মালিকের অনুমতিতে (2 Nov 2026) তৈরি। ঘুম, হাঁটা, পানি, ব্যায়াম, পরিবারের সময় ও নিজের মাপা সংখ্যা নিজে লেখা যায়। কোনো স্বাভাবিক মান, অ্যালার্ট, রোগ নির্ণয়, ওষুধ বা পরামর্শ নেই; কোনো রেটিং নেই। আসল মোডে আলাদা পারমিশন-টিক লাগে; ডাটা ফোনেই থাকে, ব্যাকআপে যায়, CSV-তে যায় না। আজকের পেজ ও রিপোর্টে শুধু কত দিনে এন্ট্রি আছে তা দেখায়।",
+    "Built with the owner's approval (2 Nov 2026). You type sleep, walking, water, exercise, family time and numbers you measured yourself. No normal range, alert, diagnosis, medicine or advice; nothing is rated. Real mode needs a separate permission tick; data stays on the phone, goes into the backup, and stays out of CSV. Today and the report show only on how many days there is an entry.",
+    "", ""),
+  m("M15", "রিস্ক ও থামার শর্ত", "Risk & stop criteria", "journey", "BBBBBB", ["offline"], null, "G3",
+    "রিস্ক লিখে রিভিউয়ের তারিখ ও থামার শর্ত রাখা যায়। তারিখ এলে রিস্কটি আজকের পেজ, রিপোর্ট ও রিস্কের পেজে শান্তভাবে দেখায় এবং থামার শর্তটি আপনাকে ফেরত দেখিয়ে জিজ্ঞেস করে ঘটেছে কি না। ‘এখনো না’ বললে পরের রিভিউয়ের তারিখ বসে; ‘ঘটেছে’ বললে ‘বাস্তবতা বদলালে’ পেজে একটি ঘটনা তৈরি হয়। থামার শর্ত না থাকলে ধরা হয়। তারিখ না থাকলে কোনো ট্রিগার নেই।",
+    "Write a risk with a review date and a stop rule. When the date comes, the risk shows calmly on Today, the report and the risk page, the app shows your stop rule back and asks whether it has happened. If you say it has not happened, the next review date is set; ‘It has happened’ starts an event on the reality-changed page. Risks without a stop rule are counted. With no date there is no trigger.",
+    "", ""),
+  m("M16", "রিভিউ ও KPI", "Reviews & KPIs", "journey", "BBBBBB", ["offline"], null, "G3",
+    "সাপ্তাহিক (7 দিন), মাসিক (30 দিন) ও 90 দিনের রিভিউ এবং রিপোর্ট পেজ আছে। KPI টার্গেট নিজের রেকর্ডের পাশে দেখা যায়। তিনটি রিভিউতেই আপনার লেখা মাসিক টাকার অঙ্ক ও নজরে রাখার রিস্ক আসে (না জানলে ‘জানা নেই’, 0 নয়)। মাসিক রিভিউতে ধরে নেওয়া কথা দেখা: ফ্রি সময়, মাসিক ইনকাম ও খরচ ‘এখনো ঠিক’ না ‘বদলে গেছে’ আপনি বলেন; বদলালে বাস্তবতা-বদলের ঘটনা শুরু হয়।",
+    "Weekly (7 days), monthly (30 days) and 90-day reviews and the report screen exist. KPI targets show beside your own records. All three reviews show your monthly money figures and the risks to keep in view (Unknown when not known, never 0). The monthly review has an assumptions check: you say whether free time, monthly income and spending are still true; if one changed, a reality-changed event starts.",
+    "", ""),
+  m("M17", "জ্ঞান ও সূত্র", "Knowledge & sources", "more", "BBBBBB", ["offline"], null, "G4",
+    "21টি বিষয়-গাইড, ফ্ল্যাশকার্ড (বাক্স ও দিন অনুযায়ী) ও শব্দকোষ চলে। নোট, সোর্স ও SOP পেজে নিজের সোর্স (নাম, ধরন, রেফারেন্স, শেষ দেখার তারিখ; 180 দিনের বেশি পুরোনো হলে ‘আবার দেখুন’), সোর্স ও গোলের সাথে লিংক করা নোট, আর রোলের জন্য ধাপে ধাপে SOP লেখা যায়। SOP টিম পেজের রোলে ও হ্যান্ডওভার PDF-এ আসে। অ্যাপ কোনো রেফারেন্স খোলে বা আনে না।",
+    "21 topic guides, flashcards (boxes and due days) and a glossary work. On the Notes, sources and SOPs page you write your own sources (name, kind, reference, last-checked day; older than 180 days is flagged to check again), notes tied to a source and a goal, and step-by-step SOPs for a role. SOPs show on the role on the Team page and in the hand-over PDF. The app never opens or fetches a reference.",
+    "", ""),
+  m("M18", "ভিজ্যুয়াল স্তর", "Visual layer", "more", "--BB-B", ["offline"], null, "G3",
+    "স্টেজের সিঁড়ি, যাত্রার ছবি, টাকার বার, গোলের রিং, অভ্যাসের গ্রিড ও অন্যান্য চার্ট আছে। বোর্ডের পেজে গোলের তারিখের আঁকা টাইমলাইন, গোলের গাছ, কাজের বোর্ড (Kanban), অপশন বোর্ড, রিসোর্স ম্যাপ, রেডিনেস ম্যাপ (জানা, নেই, পুরোনো, তারিখ মিলছে না) ও প্ল্যান বদলের আঁকা ছবি আছে। সবই আপনার নিজের ডাটা থেকে; ডাটা না থাকলে ‘জানি না’। প্রতিটার লেখা অপশন আছে।", "Stage ladder, journey art, money bars, goal rings, habit grid and other charts exist. The boards page adds a drawn timeline of goal dates, a goal tree, a task board (Kanban), an option board, a resource map, a readiness map (known, missing, old, dates disagree) and a drawn picture of plan changes. All of it comes from your own data; with no data it says Unknown. Each has a text version.",
+    "", ""),
+  m("M19", "অটোমেশন নিয়ম", "Automation rules", "more", "BBBBBB", ["offline"], null, "G6",
+    "চারটি ছোট নিয়ম ফোনেই চলে (ডিফল্টে বন্ধ)। কোনো নোটিফিকেশন যায় না, নিয়ম নিজে কাজ যোগ করে না।", "Four small rules run on this phone (off by default). No notifications are sent and a rule never adds a task.",
+    "", ""),
+  m("M20", "Sync, Backup ও export", "Sync, backup & export", "more", "BBBBBB", ["offline", "private"], null, "G2",
+    "ব্যাকআপ সেভ ও ফেরত আনা, এনক্রিপ্টেড ব্যাকআপ, CSV export ও import, সাপ্তাহিক রিমাইন্ডার, আর রিপোর্ট, প্ল্যান ও হ্যান্ডওভার PDF হিসেবে সেভ (ফোনের প্রিন্ট উইন্ডো দিয়ে, নেটওয়ার্ক ছাড়া) চলে। ক্লাউড সিঙ্ক বন্ধ রাখা হয়েছে; তা চালু করতে মালিকের অনুমতি (D-C) লাগবে, তাই এই কার্ডে ধরা হয়নি।",
+    "Backup save and restore, encrypted backup, CSV export and import, the weekly reminder, and the report, plan and hand-over saved as PDF (through the phone's print window, no network) all work. Cloud sync is switched off and needs your approval (D-C), so it is outside this card.",
+    "", ""),
+  m("M21", "নিরাপত্তা ও প্রাইভেসি", "Security & privacy", "more", "BMBBBB", ["offline", "private"], null, "G7",
+    "গোপন তথ্য (পাসওয়ার্ড, OTP ইত্যাদি) লিখতে দেয় না। ঐচ্ছিক PIN লক আছে। লক-স্ক্রিন গোপন থাকে।", "Blocks secrets (passwords, OTP and similar). Optional PIN lock. The lock screen stays private.",
+    "সেভ: ফোনে ডাটা এনক্রিপ্ট করা নেই (PIN শুধু পর্দা ঢাকে)। আইনি রিভিউ G7-এ।", "Storage: data on the device is not encrypted (the PIN only covers the screen). Legal review is at G7."),
+  m("M22", "সক্ষমতার স্ট্যাটাস ও ডেমো", "Capability status & demo", "more", "--BB-B", ["offline"], null, "G1",
+    "এই স্ক্রিন: প্রতিটা মডিউলের বানানোর স্ট্যাটাস ছয় ধাপে ও এই ফোনের ডাটা স্ট্যাটাস আলাদা দেখায়।", "This screen: shows each module's build state in six boxes and this phone's data state separately.",
+    "", ""),
+  m("M23", "AI স্তর", "AI layer", "more", "--MM--", ["private"], "D-C", "G6",
+    "AI পোর্ট ও 'সংযুক্ত নয়' অ্যাডাপ্টার তৈরি আছে। AI ছাড়াই সব চলে।", "The AI port and a 'not connected' adapter exist. Everything works without AI.",
+    "মালিকের অনুমতি (D-C: খরচ, প্রোভাইডার, সীমা) পেলে তবে বাকিটা তৈরি হবে।", "The rest is built only after your approval (D-C: cost, provider, cap)."),
+  m("M24", "template লাইব্রেরি", "Template library", "more", "BBBBBB", ["offline"], null, "G3",
+    "ছয়টি তৈরি সিস্টেম (এক ট্যাপে গোল, কাজ ও অভ্যাস যোগ, আবার সরানো), তিনটি স্টেজ-নামের সেট।", "Six ready systems (one tap adds goals, tasks and habits; remove takes them out) and three stage-name sets.",
+    "", ""),
+  m("M25", "আটকে গেলে", "When stuck", "journey", "BBBBBB", ["offline"], null, "G3",
+    "6টি ট্যাপে সম্ভাব্য কারণ ও ছোট সাহায্য; AI ছাড়া।", "Six taps lead to likely causes and small helpers; no AI.",
+    "", ""),
+];

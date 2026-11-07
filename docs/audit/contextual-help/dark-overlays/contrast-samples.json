@@ -1,0 +1,102 @@
+{
+  "scope": "Sampled default body ink against actual Help/quick-panel backgrounds; excludes every other label/control and is not a comprehensive WCAG audit.",
+  "samples": [
+    {
+      "surface": "light-futuristic/100 help sheet geometry",
+      "foreground": "rgb(238, 241, 255)",
+      "background": "rgb(11, 14, 31)",
+      "ratio": 17.01
+    },
+    {
+      "surface": "light-futuristic/100 quick prayer panel geometry",
+      "foreground": "rgb(238, 241, 255)",
+      "background": "rgb(21, 26, 51)",
+      "ratio": 15.2
+    },
+    {
+      "surface": "light-futuristic/200 help sheet geometry",
+      "foreground": "rgb(238, 241, 255)",
+      "background": "rgb(11, 14, 31)",
+      "ratio": 17.01
+    },
+    {
+      "surface": "light-futuristic/200 quick prayer panel geometry",
+      "foreground": "rgb(238, 241, 255)",
+      "background": "rgb(21, 26, 51)",
+      "ratio": 15.2
+    },
+    {
+      "surface": "ink-paper/100 help sheet geometry",
+      "foreground": "rgb(238, 233, 220)",
+      "background": "rgb(15, 18, 24)",
+      "ratio": 15.47
+    },
+    {
+      "surface": "ink-paper/100 quick prayer panel geometry",
+      "foreground": "rgb(238, 233, 220)",
+      "background": "rgb(23, 27, 36)",
+      "ratio": 14.22
+    },
+    {
+      "surface": "ink-paper/200 help sheet geometry",
+      "foreground": "rgb(238, 233, 220)",
+      "background": "rgb(15, 18, 24)",
+      "ratio": 15.47
+    },
+    {
+      "surface": "ink-paper/200 quick prayer panel geometry",
+      "foreground": "rgb(238, 233, 220)",
+      "background": "rgb(23, 27, 36)",
+      "ratio": 14.22
+    },
+    {
+      "surface": "emerald-obsidian/100 help sheet geometry",
+      "foreground": "rgb(242, 235, 221)",
+      "background": "rgb(11, 18, 22)",
+      "ratio": 15.92
+    },
+    {
+      "surface": "emerald-obsidian/100 quick prayer panel geometry",
+      "foreground": "rgb(242, 235, 221)",
+      "background": "rgb(18, 29, 34)",
+      "ratio": 14.46
+    },
+    {
+      "surface": "emerald-obsidian/200 help sheet geometry",
+      "foreground": "rgb(242, 235, 221)",
+      "background": "rgb(11, 18, 22)",
+      "ratio": 15.92
+    },
+    {
+      "surface": "emerald-obsidian/200 quick prayer panel geometry",
+      "foreground": "rgb(242, 235, 221)",
+      "background": "rgb(18, 29, 34)",
+      "ratio": 14.46
+    },
+    {
+      "surface": "broadsheet/100 help sheet geometry",
+      "foreground": "rgb(241, 239, 238)",
+      "background": "rgb(26, 24, 23)",
+      "ratio": 15.44
+    },
+    {
+      "surface": "broadsheet/100 quick prayer panel geometry",
+      "foreground": "rgb(241, 239, 238)",
+      "background": "rgb(36, 33, 32)",
+      "ratio": 13.95
+    },
+    {
+      "surface": "broadsheet/200 help sheet geometry",
+      "foreground": "rgb(241, 239, 238)",
+      "background": "rgb(26, 24, 23)",
+      "ratio": 15.44
+    },
+    {
+      "surface": "broadsheet/200 quick prayer panel geometry",
+      "foreground": "rgb(241, 239, 238)",
+      "background": "rgb(36, 33, 32)",
+      "ratio": 13.95
+    }
+  ],
+  "minimum": 13.95
+}

@@ -1,0 +1,68 @@
+{
+  "generated": "2026-11-05T19:14:41.357Z",
+  "synthetic": true,
+  "viewport": "360x800",
+  "screens": [],
+  "checks": [
+    {
+      "name": "Native Space selects sibling without parent",
+      "pass": true
+    },
+    {
+      "name": "Task siblings persisted durably",
+      "pass": true,
+      "detail": {
+        "state": "value",
+        "value": [
+          "qa-a1",
+          "qa-a2"
+        ],
+        "label": "DEMO"
+      }
+    },
+    {
+      "name": "Reload restores both siblings",
+      "pass": true
+    },
+    {
+      "name": "Unchecking parent preserves siblings",
+      "pass": true
+    },
+    {
+      "name": "Sixth goal rejected with live limit explanation",
+      "pass": true
+    },
+    {
+      "name": "Exactly five saved goals",
+      "pass": true
+    },
+    {
+      "name": "Remove one preserves sibling after reload",
+      "pass": true
+    },
+    {
+      "name": "Habit siblings saved durably",
+      "pass": true
+    },
+    {
+      "name": "Habit edit restores sibling choices",
+      "pass": true
+    },
+    {
+      "name": "Habit removes only one sibling after reload",
+      "pass": true
+    },
+    {
+      "name": "Real picker contains only real synthetic goal",
+      "pass": true
+    },
+    {
+      "name": "Demo task absent from real namespace",
+      "pass": true
+    },
+    {
+      "name": "Demo edits never create real records",
+      "pass": true
+    }
+  ]
+}

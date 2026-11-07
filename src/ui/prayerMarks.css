@@ -1,0 +1,7 @@
+.prayer-mark-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid var(--line,#ddd)}
+.prayer-mark-control{display:flex;flex-direction:column;align-items:flex-end;gap:4px;max-width:58%}
+.prayer-mark-btn{width:auto!important;margin:0!important;min-height:44px;min-width:90px}
+.prayer-mark-status{font-size:.8rem;line-height:1.4;max-width:28ch;text-align:end}
+.prayer-mark-status:empty{display:none}
+.prayer-marks-compact .prayer-mark-row{padding:8px 0}
+@media(max-width:340px){.prayer-mark-row{gap:8px}.prayer-mark-control{max-width:55%}.prayer-mark-btn{min-width:76px}}
