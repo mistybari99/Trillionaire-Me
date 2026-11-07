@@ -25,3 +25,6 @@ details[data-card=show_why] p{line-height:1.5;overflow-wrap:anywhere}
 .qb1-bands span:nth-child(1){width:100%}
 .qb1-bands span:nth-child(2){width:72%;margin-inline:auto}
 .qb1-bands span:nth-child(3){width:44%;margin-inline:auto}
+.lvl-icon{width:16px;height:16px;vertical-align:-3px;margin-inline-end:6px;flex:none}
+.lvl-tag{display:inline-flex;align-items:center}
+.lvl-tag .lvl-icon{margin-inline-end:4px}

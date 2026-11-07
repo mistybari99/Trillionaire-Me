@@ -1,7 +1,7 @@
 // Batch 1 UI builders (Q-01..Q-09). Kept out of screens.ts so that file only gets import and call-site lines.
 import "./styles_qb1.css";
 import { h } from "./dom";
-import { t } from "../i18n/t";
+import { t, tb } from "../i18n/t";
 import type { Key } from "../i18n/packs";
 import type { Locale } from "../i18n/registry";
 import { CONCRETE_BANK } from "../core/stuck";
@@ -9,6 +9,9 @@ import { WAY_OPTIONS, weekStart, type WayPick } from "../core/qb1Prefs";
 import { weekHabitMatrix } from "../core/weekMatrix";
 import type { TMRecord } from "../core/types";
 import { prefs } from "./state";
+import { levelIcon, type LevelIcon } from "./svg";
+import { fieldById } from "../catalog/fields";
+import { planByOf } from "../core/backwardPlan";
 import { allRecs } from "./entry";
 import { fourLegs, type AttentionLever } from "../core/legs";
 import { TIPS } from "../library/topics";
@@ -26,6 +29,23 @@ export function concreteBank(lang: Locale, input: HTMLInputElement): HTMLElement
     return b;
   });
   return h("div", { class: "qb1-bank-wrap", "data-card": "concrete_bank" }, h("h3", {}, t("qb1.bank.h", lang)), h("p", { class: "muted" }, t("qb1.bank.hint", lang)), h("div", { class: "qb1-bank" }, ...rows));
+}
+
+/** Q-09: a level name with its small icon beside it (the icon is decorative; the name is the text). */
+export const levelTag = (level: LevelIcon, name: string, cls = "tag off"): HTMLElement => h("span", { class: `${cls} lvl-tag`, "data-level": level }, levelIcon(level), name);
+
+/** Q-09: which icon a goal level wears (a sub-goal is still a goal). */
+export const kindIcon = (k: "goal" | "subgoal" | "project"): LevelIcon => (k === "project" ? "project" : "goal");
+
+/** Q-09: priority tag for a step row (First / Normal / Can wait, from the user's own task.priority) plus "Today" when the step is planned for today. Nothing when unknown. */
+export function stepTags(r: TMRecord, lang: Locale): Array<HTMLElement> {
+  const out: HTMLElement[] = [];
+  const pv = r.values["task.priority"]; const code = pv && pv.state === "value" && typeof pv.value === "string" ? pv.value : "";
+  const o = fieldById("task.priority")?.options?.find((x) => x.code === code);
+  if (o) out.push(h("span", { class: "tag", "data-priority": code }, tb(o.label, lang)));
+  const done = r.values["task.done_on"]?.state === "value"; const by = planByOf(r);
+  if (!done && by !== null && by === todayLocal()) out.push(h("span", { class: "tag ok", "data-planned-today": "1" }, t("qb1.tag.today", lang)));
+  return out;
 }
 
 /** Q-08: "Does this still matter?" Yes / No / Not sure, kept for this visit only. Unanswered and "Not sure" both leave the options visible: only a plain "No" hides them. */
@@ -97,7 +117,7 @@ export function whyCard(why: string, fieldId: string, lang: Locale): HTMLElement
   const body = own ? h("p", { "data-why-text": "1" }, own)
     : h("div", { "data-why-empty": "1" }, h("p", { class: "muted" }, t("qb1.why.empty", lang)),
       h("button", { type: "button", class: "btn ghost", "data-why-add": "1", onclick: () => { const el = document.getElementById(fieldId); el?.scrollIntoView?.({ block: "center" }); el?.focus(); } }, t("qb1.why.add", lang)));
-  return h("details", { class: "card", "data-card": "show_why" }, h("summary", {}, t("qb1.why.h", lang)), body);
+  return h("details", { class: "card", "data-card": "show_why" }, h("summary", {}, levelIcon("mission"), t("qb1.why.h", lang)), body);
 }
 
 /** Q-03: the 'matrix' diagram tip (Hard now / Easy later) shown on the effort-timing card. diagram() already gives it role=img plus a text label. */
