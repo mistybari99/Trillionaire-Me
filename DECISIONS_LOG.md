@@ -829,3 +829,9 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 - Why: the owner had to repeat tasks because commands were vague, which wastes usage; confirmed by the owner in the chat on 6 Nov 2026.
 - Alternatives: run the chain for every message (rejected: too costly for small fixes; trivial commands skip it and say so); builder audits itself (rejected: not independent).
 - Undo: delete `docs/process/prompt-engineer-agent.md`, `.claude/agents/prompt-engineer.md`, `.claude/agents/audit-verifier.md`, and the two bullets at the top of CLAUDE.md section 3.
+
+## 2026-11-07 — DECISION-01 approved by the owner: at-rest encryption of real records, plus start the BUILD-03 queue
+- What: the owner answered "yes" in the Claude Code chat (7 Nov 2026) to at-rest encryption of REAL records, as recommended in `docs/design/at-rest-encryption.md` section 6: option C stage 1 (random data key wrapped by a passphrase of 8+ characters, digits-only PIN not accepted, mandatory recovery file before activation, in-place migration after an encrypted backup, rollback path). Demo records stay plain. The owner also ordered the BUILD-03 queue tasks Q-01..Q-34 (`docs/design/visual-ref-build-queue.md`) to be built.
+- Why: the PIN lock only hides the screen; a copied browser profile or backup exposes real records. Forgetting the secret must not silently destroy data, hence the recovery file and the plain-words warning with a tick.
+- Alternatives: A alone with a short PIN (rejected: looks safe, is not); B alone (rejected: copying the whole profile still works); D passkey (later, optional stage 2).
+- Undo: turn off encryption in Settings (decrypts in place) or restore from the encrypted backup taken before activation; revert the commits. Real data stays on the device; nothing leaves it (D-B unchanged).
