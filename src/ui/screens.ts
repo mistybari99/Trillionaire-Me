@@ -53,6 +53,7 @@ import { progressRing, isMilestone } from "./ring";
 import { logo3d } from "./logo";
 import { goalFunnelHero, horizonArc } from "./horizonArt";
 import { viewBar, withView } from "./viewBar";
+import { recoveryLine } from "./qb1Ui";
 import { kpiSection, kpiTodayCard, todayIsoKpi } from "./kpiUi";
 import { realityReportCard, realityTodayCard } from "./realityUi";
 import { northStarCard } from "./northStarCard";
@@ -705,12 +706,12 @@ export function stuckScreen(): HTMLElement {
           const nm = name.value.trim(); if (!nm) return; if (!checkFreeText(nm).ok) { msg.textContent = t("intake.secretRejected", lang); return; }
           putMode({ id: `task-${Date.now().toString(36)}s`, entity: "task", ns: "demo", ownerId: "demo-user", schemaVersion: SCHEMA_VERSION, createdAt: new Date().toISOString(),
             values: { "task.title": { state: "value", value: nm, label: "DEMO" }, "task.minutes": { state: "value", value: 5, label: "DEMO" }, "task.priority": { state: "value", value: "high", label: "DEMO" } } });
-          log(d, hp); out.replaceChildren(h("p", { class: "ok-msg", "data-done": hp }, t("stuck.done.tiny_step", lang)), link("#/diary/plan", "btn ghost", t("plan.title", lang)));
+          log(d, hp); out.replaceChildren(h("p", { class: "ok-msg", "data-done": hp }, t("stuck.done.tiny_step", lang)), recoveryLine(lang), link("#/diary/plan", "btn ghost", t("plan.title", lang)));
         });
         return h("div", { class: "card" }, h("h2", { class: "card-h", }, t("stuck.h.tiny_step", lang)), h("label", { for: "stuck-step" }, t("stuck.stepName", lang)), name, msg, add);
       }
       const b = h("button", { class: "btn", type: "button", "data-helper": hp }, t(`stuck.h.${hp}` as Key, lang));
-      b.addEventListener("click", () => { prefs.mode = hp; log(d, hp); out.replaceChildren(h("p", { class: "ok-msg", "data-done": hp }, t(`stuck.done.${hp}` as Key, lang)), h("p", { class: "muted", "data-stuck-back": "1" }, t("plan.set.back", lang), " ", link(settingsHash("plan", "planmode"), "crumb", t("plan.set.change", lang))), link("#/diary/plan", "btn ghost", t("plan.title", lang))); });
+      b.addEventListener("click", () => { prefs.mode = hp; log(d, hp); out.replaceChildren(h("p", { class: "ok-msg", "data-done": hp }, t(`stuck.done.${hp}` as Key, lang)), h("p", { class: "muted", "data-stuck-back": "1" }, t("plan.set.back", lang), " ", link(settingsHash("plan", "planmode"), "crumb", t("plan.set.change", lang))), recoveryLine(lang), link("#/diary/plan", "btn ghost", t("plan.title", lang))); });
       return h("div", { class: "card" }, b);
     });
     out.replaceChildren(h("h2", {}, t("stuck.causes", lang)),

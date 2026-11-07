@@ -26,6 +26,9 @@ const HELPERS: Record<Cause, Helper[]> = {
   missing: ["tiny_step"], unclear: ["tiny_step"], too_big: ["tiny_step"], fear: ["tiny_step"],
 };
 
+/** Q-02: eight fixed big-task to tiny-first-action pairs (texts: keys qb1.bank.N.big / qb1.bank.N.tiny). Fixed list, nothing generated, nothing scored. */
+export const CONCRETE_BANK = [1, 2, 3, 4, 5, 6, 7, 8] as const;
+
 export interface Diagnosis { causes: Cause[]; helpers: Helper[]; unansweredCount: number }
 
 export function diagnose(answers: Record<string, Answer | undefined>): Diagnosis {

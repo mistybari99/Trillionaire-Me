@@ -1,5 +1,6 @@
 // UI string packs. `en` is the source; `bn` is typed against it so a missing key is a compile error (i18n skill §3).
 // Bangla copy is a working draft pending native-reviewer sign-off (TM-TST-161).
+import { QB1_BN, QB1_EN } from "./q_b1.ts";
 const en = {
   "set.row.helpplacement": "Help placement",
   "set.row.helpvisuals": "Help visuals",
@@ -1917,11 +1918,13 @@ const en = {
   "prayer.src.local": "Calculated on this phone.",
   "prayer.src.offsets": "Your minute changes are added on top.",
   "set.sum.connections.sync": "{n} of 4 on. One exception: automatic prayer times send the city, country and month only.",
+  ...QB1_EN, // batch 1 (Q-01..Q-09) keys live in q_b1.ts
 } as const;
 
 export type Key = keyof typeof en;
 
 const bn: Record<Key, string> = {
+  ...QB1_BN,
   "set.row.helpplacement": "হেল্প কোথায় দেখাবে",
   "set.row.helpvisuals": "হেল্পের ভিজুয়াল",
   "set.row.helpcontent": "গাইড ও নিজের ম্যাপ",
