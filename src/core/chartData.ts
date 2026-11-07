@@ -102,7 +102,7 @@ export function habitRange(hb: Habit, logs: Log[], today: string, range: GridRan
   });
 }
 
-// ---- Q-34: the same periods for the goal tracker. A period with a finished step of the goal is "done"; any other period is blank (no entry), never a 0. No streak, no total, no score. ----
+// ---- Q-34: the same periods for the goal tracker. A period with a finished step of the goal is "done"; any other period is blank (no entry), never a 0. No run-count and no total. ----
 export interface GoalGridPeriod { from: string; to: string; count: number; state: "done" | "none" }
 export interface GoalGridRow { id: string; title: string; periods: GoalGridPeriod[] }
 /** `goals`: the goals to show, each with the ids of its own steps. `recs`: the records that hold those steps. */

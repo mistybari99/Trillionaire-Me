@@ -14,7 +14,7 @@ export const QB3_EN = {
   "q3.bb.unknown": "Unknown: {n} of the steps have no minutes yet. Add minutes to see the bar. Nothing is counted as 0.",
   // Q-34 grids for other trackers
   "q3.tg.h": "Last days, weeks and months",
-  "q3.tg.note": "Blank means no entry. It is not zero. No streaks.",
+  "q3.tg.note": "Blank means no entry. It is not zero.",
   "q3.tg.empty": "No entries yet. Nothing to show.",
   "q3.tg.sum": "{n} of {total} periods have an entry.",
   "q3.tg.cell.on": "{p}: entry",
@@ -37,7 +37,10 @@ export const QB3_EN = {
   "q3.hb.micro.add": "Add tiny habit",
   "q3.hb.micro.skip": "Not now",
   "q3.hb.micro.bad": "Add a name and 1 or 2 minutes.",
-  "q3.hb.outside": "Outside the dates you set",
+  "q3.hb.range.from": "From {a}",
+  "q3.hb.range.until": "Until {b}",
+  "q3.hb.range.both": "From {a} until {b}",
+  "q3.hb.anchor.line": "After I {a} ({m} min)",
 } as const;
 
 export const QB3_BN: Record<keyof typeof QB3_EN, string> = {
@@ -52,7 +55,7 @@ export const QB3_BN: Record<keyof typeof QB3_EN, string> = {
   "q3.bb.extra": "বাফার +25%",
   "q3.bb.unknown": "অজানা: {n}টা ধাপে এখনো মিনিট নেই। মিনিট দিলে বার দেখা যাবে। কিছুই 0 ধরা হয়নি।",
   "q3.tg.h": "শেষ কয়েক দিন, সপ্তাহ ও মাস",
-  "q3.tg.note": "ফাঁকা মানে এন্ট্রি নেই। এটা শূন্য না। কোনো স্ট্রিক নেই।",
+  "q3.tg.note": "ফাঁকা মানে এন্ট্রি নেই। এটা শূন্য না।",
   "q3.tg.empty": "এখনো কোনো এন্ট্রি নেই, তাই দেখানোর কিছু নেই।",
   "q3.tg.sum": "{total}টার মধ্যে {n}টায় এন্ট্রি আছে।",
   "q3.tg.cell.on": "{p}: এন্ট্রি আছে",
@@ -74,5 +77,8 @@ export const QB3_BN: Record<keyof typeof QB3_EN, string> = {
   "q3.hb.micro.add": "ছোট অভ্যাস যোগ করুন",
   "q3.hb.micro.skip": "এখন না",
   "q3.hb.micro.bad": "একটা নাম আর 1 বা 2 মিনিট দিন।",
-  "q3.hb.outside": "আপনার দেওয়া তারিখের বাইরে",
+  "q3.hb.range.from": "{a} থেকে",
+  "q3.hb.range.until": "{b} পর্যন্ত",
+  "q3.hb.range.both": "{a} থেকে {b} পর্যন্ত",
+  "q3.hb.anchor.line": "আমি {a} করার পরে ({m} মিনিট)",
 };

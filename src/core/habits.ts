@@ -1,5 +1,6 @@
 // Habits without shame: no run-counts, no best-ever, no one overall number. Only "x of y planned days" and a gentle restart plan.
-export interface Habit { id: string; title: string; days: number[]; target: number | null; unit: string }
+/** `start` / `end` (Q-13, optional): days outside them are not planned, so they show as "none" in the grids and never count as missed. */
+export interface Habit { id: string; title: string; days: number[]; target: number | null; unit: string; start?: string | null; end?: string | null }
 export interface Log { habitId: string; date: string; count: number }
 
 const iso = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
@@ -7,7 +8,7 @@ export const parseIso = (s: string): Date => { const [y, m, d] = s.split("-").ma
 export const addDays = (s: string, n: number): string => { const d = parseIso(s); d.setDate(d.getDate() + n); return iso(d); };
 export const todayIso = (now = new Date()) => iso(now);
 
-export const isPlanned = (h: Habit, date: string): boolean => h.days.includes(parseIso(date).getDay());
+export const isPlanned = (h: Habit, date: string): boolean => (!h.start || date >= h.start) && (!h.end || date <= h.end) && h.days.includes(parseIso(date).getDay());
 /** Done = a log exists and (no target, or count reaches the target). */
 export function isDone(h: Habit, logs: Log[], date: string): boolean {
   const l = logs.find((x) => x.habitId === h.id && x.date === date);

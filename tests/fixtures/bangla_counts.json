@@ -1,9 +1,9 @@
 {
-  "keys": 2667,
+  "keys": 2670,
   "perFile": {
     "src/i18n/packs.ts": 2484,
     "src/i18n/vault.ts": 76,
-    "src/catalog/fields.ts": 991,
+    "src/catalog/fields.ts": 1013,
     "src/catalog/glossary.ts": 68,
     "src/modules/capability.ts": 53,
     "src/schema/entities.ts": 47,
@@ -20,7 +20,7 @@
     "src/ui/prayerAlerts.ts": 9,
     "src/demo/seed.ts": 21,
     "src/i18n/q_b1.ts": 62,
-    "src/i18n/q_b3.ts": 34,
+    "src/i18n/q_b3.ts": 37,
     "public/content/pack-001.json": 111,
     "public/content/pack-002.json": 42,
     "public/content/pack-003.json": 60,
