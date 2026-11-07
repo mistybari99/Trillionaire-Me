@@ -5,8 +5,34 @@ import { evaluate, ExprError, identifiers, inferKind, kindFits, parse, UnitError
 import { expandLib, getLibFormula } from "./formulas";
 import type { FormulaDef, LibFormulaDef, SectorFamily, SectorFormula, UnitKind, Values } from "./types";
 import { RESULT_KINDS, UNIT_KINDS } from "./types";
+import { agricultureCrops } from "./families/agriculture-crops";
+import { constructionContracting } from "./families/construction-contracting";
+import { creativeDesignPrint } from "./families/creative-design-print";
+import { digitalCreatorMedia } from "./families/digital-creator-media";
+import { eCommerceFCommerce } from "./families/e-commerce-f-commerce";
+import { educationTraining } from "./families/education-training";
+import { energyUtilitiesSolar } from "./families/energy-utilities-solar";
+import { financeAdjacent } from "./families/finance-adjacent";
+import { fisheriesAquaculture } from "./families/fisheries-aquaculture";
+import { foodProcessing } from "./families/food-processing";
 import { foodService } from "./families/food-service";
+import { garmentsTextile } from "./families/garments-textile";
+import { gigFreelance } from "./families/gig-freelance";
+import { healthcarePharmacy } from "./families/healthcare-pharmacy";
+import { hospitalityTravel } from "./families/hospitality-travel";
+import { ictSoftwareSaas } from "./families/ict-software-saas";
+import { importExport } from "./families/import-export";
+import { livestockPoultryDairy } from "./families/livestock-poultry-dairy";
+import { manufacturingDiscrete } from "./families/manufacturing-discrete";
+import { miningMaterialsQuarry } from "./families/mining-materials-quarry";
+import { ngoSocialEnterprise } from "./families/ngo-social-enterprise";
+import { personalServices } from "./families/personal-services";
+import { professionalConsulting } from "./families/professional-consulting";
+import { realEstate } from "./families/real-estate";
+import { repairMaintenance } from "./families/repair-maintenance";
 import { retail } from "./families/retail";
+import { transportLogistics } from "./families/transport-logistics";
+import { wholesaleTrading } from "./families/wholesale-trading";
 
 export { CUSTOM_ID, buildCustomFamily, validateCustomDef } from "./custom";
 export type { CustomDef } from "./custom";
@@ -15,7 +41,7 @@ export { LIB_FORMULAS, getLibFormula } from "./formulas";
 export * from "./types";
 
 /** Every family, custom last. */
-export const ALL_FAMILIES: SectorFamily[] = [retail, foodService, CUSTOM_FAMILY];
+export const ALL_FAMILIES: SectorFamily[] = [agricultureCrops, constructionContracting, creativeDesignPrint, digitalCreatorMedia, eCommerceFCommerce, educationTraining, energyUtilitiesSolar, financeAdjacent, fisheriesAquaculture, foodProcessing, foodService, garmentsTextile, gigFreelance, healthcarePharmacy, hospitalityTravel, ictSoftwareSaas, importExport, livestockPoultryDairy, manufacturingDiscrete, miningMaterialsQuarry, ngoSocialEnterprise, personalServices, professionalConsulting, realEstate, repairMaintenance, retail, transportLogistics, wholesaleTrading, CUSTOM_FAMILY];
 
 export const listFamilies = (): SectorFamily[] => ALL_FAMILIES;
 export const getFamily = (id: string): SectorFamily | undefined => ALL_FAMILIES.find((f) => f.id === id);
