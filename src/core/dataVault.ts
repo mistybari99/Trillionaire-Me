@@ -252,6 +252,15 @@ export async function finishDeactivate(repo: RecordRepo, kv: KV): Promise<void> 
 }
 
 /**
+ * What a recovery restore would throw away: stored real entries (sealed or plain) that the recovery file does not hold. Read-only.
+ * `readable` are the plain ones among them (a half-finished turn-on leaves some); sealed ones cannot be read without the passphrase.
+ */
+export async function recoveryImpact(repo: RecordRepo, fileIds: string[]): Promise<{ inFile: number; lost: number; lostSealed: number; readable: TMRecord[] }> {
+  const keep = new Set(fileIds); const gone = (await repo.list("real")).filter((r) => !keep.has(r.id));
+  return { inFile: keep.size, lost: gone.length, lostSealed: gone.filter(isEncRecord).length, readable: gone.filter((r) => !isEncRecord(r)) };
+}
+
+/**
  * Forgot the passphrase: bring back the real records of the recovery file (already opened by the caller with the recovery passphrase) and turn the vault off.
  * Order: every file record is written and read back first; only then are sealed records the file does not hold removed, and the vault settings last.
  * Any failure stops before the settings are removed, so a retry (or the passphrase, if remembered) still works.

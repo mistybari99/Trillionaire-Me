@@ -1,8 +1,8 @@
 {
-  "keys": 2565,
+  "keys": 2570,
   "perFile": {
     "src/i18n/packs.ts": 2483,
-    "src/i18n/vault.ts": 71,
+    "src/i18n/vault.ts": 76,
     "src/catalog/fields.ts": 991,
     "src/catalog/glossary.ts": 68,
     "src/modules/capability.ts": 53,

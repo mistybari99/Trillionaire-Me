@@ -11,7 +11,9 @@ import { rowById, ROWS } from "../src/ui/settingsRegistry";
 import { isWatchedChange } from "../src/ui/crossTab";
 import type { TMRecord } from "../src/core/types";
 
-vi.setConfig({ testTimeout: 60_000 });
+vi.setConfig({ testTimeout: 180_000 });
+// Root cause of the load flake: vi.waitFor defaults to a 1 s timeout, but these steps run PBKDF2 with 600 000 rounds (twice for the recovery file), which exceeds 1 s on a busy CPU.
+const wf = (fn: () => unknown, o: { timeout?: number } = {}) => vi.waitFor(fn, { timeout: 90_000, interval: 25, ...o });
 const NOW = "2026-11-07T10:00:00.000Z";
 const real = (id: string): TMRecord => ({ id, entity: "goal", ns: "real", ownerId: "owner", schemaVersion: 3, createdAt: NOW, values: { "goal.title": { state: "value", value: `Secret ${id}`, label: "FACT" } } });
 const app = () => document.getElementById("app")!;
@@ -63,19 +65,19 @@ describe("the card: off, warning, recovery file, second tick, turning on, on, lo
     tick("#vault-tick1"); click("[data-act=vault-next]");
     // weak passphrases are refused with a plain message
     type("#vault-pass", "12345678"); type("#vault-pass2", "12345678"); type("#vault-rec", "recovery-pass-9"); type("#vault-rec2", "recovery-pass-9");
-    click("[data-act=vault-save-recovery]"); await vi.waitFor(() => expect(q("[data-vault=msg]").textContent).toMatch(/only is too easy|Digits only/i));
+    click("[data-act=vault-save-recovery]"); await wf(() => expect(q("[data-vault=msg]").textContent).toMatch(/only is too easy|Digits only/i));
     expect(downloads.length).toBe(0); expect(readVault(consentKv)).toBeNull();
     type("#vault-pass", "blue-tea-42"); type("#vault-pass2", "blue-tea-42"); type("#vault-rec", "blue-tea-42"); type("#vault-rec2", "blue-tea-42");
-    click("[data-act=vault-save-recovery]"); await vi.waitFor(() => expect(q("[data-vault=msg]").textContent).toMatch(/different/));
+    click("[data-act=vault-save-recovery]"); await wf(() => expect(q("[data-vault=msg]").textContent).toMatch(/different/));
     type("#vault-pass", "blue-tea-42"); type("#vault-pass2", "blue-tea-42"); type("#vault-rec", "recovery-pass-9"); type("#vault-rec2", "recovery-pass-9");
-    click("[data-act=vault-save-recovery]"); await vi.waitFor(() => expect(downloads.length).toBe(1));
+    click("[data-act=vault-save-recovery]"); await wf(() => expect(downloads.length).toBe(1));
     expect(downloads[0]).toMatch(/^tm-recovery-/);
-    await vi.waitFor(() => expect(q("[data-act=vault-go]")).toBeTruthy());
+    await wf(() => expect(q("[data-act=vault-go]")).toBeTruthy());
     expect(readVault(consentKv)).toBeNull(); // nothing changed yet: the second tick comes first
     click("[data-act=vault-go]"); expect(q("[data-vault=msg]").textContent).toMatch(/Tick the box/); expect(readVault(consentKv)).toBeNull();
     tick("#vault-tick2"); click("[data-act=vault-go]");
-    await vi.waitFor(() => expect(readVault(consentKv)?.state).toBe("on"), { timeout: 30_000 });
-    await vi.waitFor(() => expect(q("[data-card=vault]").getAttribute("data-vault-state")).toBe("on"));
+    await wf(() => expect(readVault(consentKv)?.state).toBe("on"));
+    await wf(() => expect(q("[data-card=vault]").getAttribute("data-vault-state")).toBe("on"));
     const stored = await raw(); expect(stored.length).toBe(2); expect(stored.every(isEncRecord)).toBe(true); expect(JSON.stringify(stored)).not.toContain("Secret g1");
     expect(store.real.get("g1")!.values["goal.title"]).toMatchObject({ value: "Secret g1" }); // screens keep the plain sync store
     // the safety copy before encryption is sealed
@@ -84,16 +86,16 @@ describe("the card: off, warning, recovery file, second tick, turning on, on, lo
     // Lock now: the unlock screen replaces the app and no real record stays in memory
     click("[data-act=vault-lock]"); expect(q("[data-vault-screen]")).toBeTruthy(); expect(store.real.list()).toEqual([]);
     type("#vault-unlock-pass", "wrong-pass-11"); click("[data-act=vault-unlock]");
-    await vi.waitFor(() => expect(q("[data-vault=unlock-msg]").textContent).toMatch(/not right/));
+    await wf(() => expect(q("[data-vault=unlock-msg]").textContent).toMatch(/not right/));
     expect(store.real.list()).toEqual([]); expect((await raw()).every(isEncRecord)).toBe(true); // data untouched
     type("#vault-unlock-pass", "blue-tea-42"); click("[data-act=vault-unlock]");
-    await vi.waitFor(() => expect(q("[data-vault-screen]")).toBeFalsy(), { timeout: 15_000 });
+    await wf(() => expect(q("[data-vault-screen]")).toBeFalsy());
     expect(store.real.list().length).toBe(2);
     // Turn off: needs the passphrase, opens in place, removes the settings
     go("#/settings/privacy/vault"); click("[data-act=vault-off]"); type("#vault-off-pass", "wrong-pass-11"); click("[data-act=vault-off-go]");
-    await vi.waitFor(() => expect(q("[data-vault=msg]").textContent).toMatch(/not right/)); expect(readVault(consentKv)).not.toBeNull();
+    await wf(() => expect(q("[data-vault=msg]").textContent).toMatch(/not right/)); expect(readVault(consentKv)).not.toBeNull();
     type("#vault-off-pass", "blue-tea-42"); click("[data-act=vault-off-go]");
-    await vi.waitFor(() => expect(readVault(consentKv)).toBeNull(), { timeout: 30_000 });
+    await wf(() => expect(readVault(consentKv)).toBeNull());
     const after = await raw(); expect(after.length).toBe(2); expect(after.some(isEncRecord)).toBe(false);
     expect((await snapshotRepo!.list()).every((s) => !("realEnc" in s))).toBe(true);
   });
@@ -105,7 +107,7 @@ describe("the card: off, warning, recovery file, second tick, turning on, on, lo
     go("#/settings/privacy/vault");
     expect(q("[data-card=vault]").getAttribute("data-vault-state")).toBe("turning"); expect(q("[data-act=vault-resume]")).toBeTruthy(); expect(q("[data-act=vault-off]")).toBeTruthy();
     expect(store.real.get("g2")!.values["goal.title"]).toMatchObject({ value: "Secret g2" });
-    click("[data-act=vault-resume]"); await vi.waitFor(() => expect(readVault(consentKv)?.state).toBe("on"), { timeout: 20_000 });
+    click("[data-act=vault-resume]"); await wf(() => expect(readVault(consentKv)?.state).toBe("on"));
     expect((await raw()).every(isEncRecord)).toBe(true);
   });
 

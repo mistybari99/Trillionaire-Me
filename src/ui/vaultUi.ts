@@ -12,7 +12,7 @@ import { StoreRepo } from "../adapters/storeRepo";
 import { createBackup } from "../core/backup";
 import { DecryptError, decryptBackup, encryptBackup } from "../core/cryptoBackup";
 import { takeSnapshot } from "../core/snapshots";
-import { VAULT_KEY, activateInPlace, deactivateInPlace, finishDeactivate, newVault, openSnapshots, readVault, recoverWithoutKey, sealSnapshots, tryExclusive,
+import { VAULT_KEY, activateInPlace, deactivateInPlace, finishDeactivate, newVault, openSnapshots, readVault, recoverWithoutKey, recoveryImpact, sealSnapshots, tryExclusive,
   vaultPassphraseProblem, verifyVaultPassphrase, writeVault } from "../core/dataVault";
 
 const rerender = (): void => { window.dispatchEvent(new HashChangeEvent("hashchange")); };
@@ -212,14 +212,22 @@ function forgotPanel(lang: Locale): HTMLElement {
   const say = (key: Key, bad: boolean, args?: Record<string, string | number>) => { msg.className = bad ? "err" : "ok-msg"; msg.textContent = t(key, lang, args); };
   const check = async () => {
     box.replaceChildren(); const f = file.files?.[0]; if (!f) return say("vault.forgot.nofile", true);
-    let bundle; try { bundle = await decryptBackup(await f.text(), p.el.value); } catch (e) { return say(e instanceof DecryptError || e instanceof Error ? "vault.forgot.wrong" : "vault.forgot.wrong", true); }
-    const real = bundle.real?.records ?? []; say("vault.forgot.found", false, { r: num(real.length, lang) });
+    let bundle; try { bundle = await decryptBackup(await f.text(), p.el.value); } catch (e) {  return say(e instanceof DecryptError || e instanceof Error ? "vault.forgot.wrong" : "vault.forgot.wrong", true); }
+    const real = bundle.real?.records ?? [];
+    if (!vaultRepo) return say("vault.err.nostore", true);
+    const impact = await recoveryImpact(vaultRepo, real.map((r) => r.id)); // read-only: what would be thrown away
+    say("vault.forgot.found", false, { r: num(real.length, lang) });
     const tick = tickRow("vault-forgot-tick", t("vault.forgot.tick", lang));
-    box.append(tick.row, h("button", { class: "btn", type: "button", "data-act": "vault-forgot-go", onclick: async () => {
-      if (!tick.el.checked) return say("vault.err.tick", true);
-      if (!vaultRepo) return say("vault.err.nostore", true);
-      try { await recoverWithoutKey(vaultRepo, consentKv, real); say("vault.forgot.done", false); closeVault(); setTimeout(() => location.reload(), 600); } catch { say("vault.err.failed", true); }
-    } }, t("vault.forgot.go", lang)));
+    const tick2 = impact.lost > 0 ? tickRow("vault-forgot-tick2", t("vault.forgot.tick2", lang, { n: num(impact.lost, lang) })) : null;
+    const lostBox = impact.lost > 0 ? h("div", { "data-vault": "forgot-lost" }, h("p", { class: "need k-notice" }, t("vault.forgot.lost", lang, { n: num(impact.lost, lang) })),
+      impact.readable.length ? h("button", { class: "btn ghost", type: "button", "data-act": "vault-forgot-export", onclick: () => {
+        download(`tm-readable-entries-${new Date().toISOString().slice(0, 10)}.json`, JSON.stringify({ app: "trillionaire-me", kind: "readable-entries", records: impact.readable }));
+        say("vault.forgot.exported", false);
+      } }, t("vault.forgot.export", lang, { n: num(impact.readable.length, lang) })) : h("p", { class: "muted", "data-vault": "forgot-nothing" }, t("vault.forgot.export0", lang))) : null;
+    box.append(...([lostBox, tick.row, tick2?.row, h("button", { class: "btn", type: "button", "data-act": "vault-forgot-go", onclick: async () => {
+      if (!tick.el.checked || (tick2 && !tick2.el.checked)) return say("vault.err.tick", true);
+      try { await recoverWithoutKey(vaultRepo!, consentKv, real); say("vault.forgot.done", false); closeVault(); setTimeout(() => location.reload(), 600); } catch { say("vault.err.failed", true); }
+    } }, t("vault.forgot.go", lang))] as Array<HTMLElement | null | undefined>).filter((x): x is HTMLElement => !!x));
   };
   return h("div", { class: "card", "data-vault": "forgot" }, h("p", {}, t("vault.forgot.p", lang)), h("label", { for: "vault-rf" }, t("vault.forgot.file", lang)), file, p.lab, p.el,
     h("button", { class: "btn ghost", type: "button", "data-act": "vault-forgot-check", onclick: () => void check() }, t("vault.forgot.check", lang)), box, msg);

@@ -72,6 +72,11 @@ export const VAULT_EN = {
   "vault.forgot.wrong": "The passphrase is not right, or the file is damaged. Nothing was changed.",
   "vault.forgot.done": "Restored. The app will restart.",
   "vault.forgot.nofile": "Choose the recovery file first.",
+  "vault.forgot.lost": "{n} entries on this phone are NOT in the recovery file. They would be gone for good.",
+  "vault.forgot.tick2": "I understand that {n} entries will be gone.",
+  "vault.forgot.export": "Save the {n} readable entries first",
+  "vault.forgot.export0": "None of the entries that would be removed can be read now, so there is nothing to save first.",
+  "vault.forgot.exported": "Saved. This file is not encrypted. Keep it private.",
 } as const;
 
 export const VAULT_BN: Record<keyof typeof VAULT_EN, string> = {
@@ -146,4 +151,9 @@ export const VAULT_BN: Record<keyof typeof VAULT_EN, string> = {
   "vault.forgot.wrong": "পাসফ্রেজ ঠিক নয়, বা ফাইলটা ঠিক নেই। কিছু বদলায়নি।",
   "vault.forgot.done": "ফিরে এসেছে। অ্যাপ আবার চালু হবে।",
   "vault.forgot.nofile": "আগে রিকভারি ফাইল বাছুন।",
+  "vault.forgot.lost": "এই ফোনের {n}টি এন্ট্রি রিকভারি ফাইলে নেই। সেগুলো চিরতরে চলে যাবে।",
+  "vault.forgot.tick2": "আমি বুঝেছি, {n}টি এন্ট্রি চলে যাবে।",
+  "vault.forgot.export": "আগে পড়া যায় এমন {n}টি এন্ট্রি সেভ করুন",
+  "vault.forgot.export0": "যে এন্ট্রিগুলো চলে যাবে তার কোনোটাই এখন পড়া যাচ্ছে না, তাই আগে সেভ করার কিছু নেই।",
+  "vault.forgot.exported": "সেভ হয়েছে। এই ফাইল এনক্রিপ্ট করা নয়। প্রাইভেট রাখুন।",
 };

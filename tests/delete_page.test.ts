@@ -1,6 +1,6 @@
 // Settings redesign PR 3c: Delete data page. Typed word (+ fallback), PIN again, two-step demo delete, nothing destructive on the home.
 import "fake-indexeddb/auto";
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { render } from "../src/app";
 import { consentKv, store } from "../src/ui/state";
 import { grantConsent, readConsent, revokeConsent } from "../src/core/consent";
@@ -67,13 +67,13 @@ describe("Delete data page", () => {
   });
   it("with the app lock on, the PIN is asked again and a wrong PIN deletes nothing", async () => {
     await setPin(consentKv, "4821", "4821", 1000); grantConsent(consentKv, NOW); store.real.put(rec("real", "r1")); go("#/settings/delete");
-    word("delete"); q<HTMLInputElement>("[data-delete=pin]").value = "0000"; q<HTMLButtonElement>("[data-act=clear-real-yes]").click(); await wait(200);
+    word("delete"); q<HTMLInputElement>("[data-delete=pin]").value = "0000"; q<HTMLButtonElement>("[data-act=clear-real-yes]").click(); await vi.waitFor(() => expect(q("[data-delete=pin-err]").textContent).toMatch(/not right/), { timeout: 30_000 });
     expect(store.real.list().length).toBe(1); expect(q("[data-delete=pin-err]").textContent).toMatch(/not right/);
-    q<HTMLInputElement>("[data-delete=pin]").value = "4821"; q<HTMLButtonElement>("[data-act=clear-real-yes]").click(); await wait(300);
+    q<HTMLInputElement>("[data-delete=pin]").value = "4821"; q<HTMLButtonElement>("[data-act=clear-real-yes]").click(); await vi.waitFor(() => expect(store.real.list()).toEqual([]), { timeout: 30_000 });
     expect(store.real.list()).toEqual([]);
   });
   it("the result is read from state: after leaving and returning with new real data, no stale 'done' message", async () => {
-    grantConsent(consentKv, NOW); store.real.put(rec("real", "r1")); go("#/settings/delete"); word("delete"); q<HTMLButtonElement>("[data-act=clear-real-yes]").click(); await wait(); render();
+    grantConsent(consentKv, NOW); store.real.put(rec("real", "r1")); go("#/settings/delete"); word("delete"); q<HTMLButtonElement>("[data-act=clear-real-yes]").click(); await vi.waitFor(() => { render(); expect(q("[data-delete=done]")).not.toBeNull(); }, { timeout: 30_000 });
     expect(q("[data-delete=done]")).not.toBeNull();
     grantConsent(consentKv, NOW); store.real.put(rec("real", "r9")); go("#/settings/delete"); expect(app().querySelector("[data-delete=done]")).toBeNull();
   });
