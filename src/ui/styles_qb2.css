@@ -1,3 +1,7 @@
 /* Batch 2 (Q-10, Q-11, Q-30). Tokens only; every picture here has its text next to it. */
 .q2-start,.q2-tiny{display:grid;gap:8px;margin:8px 0}
 .q2-start .btn,.q2-tiny .btn{min-height:44px;text-align:start;line-height:1.4;overflow-wrap:anywhere}
+.q2-table{width:100%;border-collapse:collapse}
+.q2-table th,.q2-table td{border:1px solid var(--rule);padding:8px;text-align:start;vertical-align:top;line-height:1.45;overflow-wrap:anywhere}
+.q2-table th{width:38%;font-weight:600;background:var(--card)}
+.q2-table ol{margin:4px 0 0;padding-inline-start:18px}

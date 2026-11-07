@@ -8,7 +8,8 @@ import { fieldById } from "../catalog/fields";
 import { allRecs, consentOn, consentPrompt, findRec, labelFor, saveBlockedText, storeOf } from "./entry";
 import { checkFreeText } from "../core/safety";
 import type { FieldValue, TMRecord } from "../core/types";
-import { PROBLEM_FIELDS, TINY_ACTIONS, WFD_FIELDS, isEmptyGoal, textOfField } from "../core/goalWorksheet";
+import { PROBLEM_FIELDS, RESOURCES_FIELD, TINY_ACTIONS, WFD_FIELDS, WORKSHEET_FIELDS, isEmptyGoal, planTable, textOfField } from "../core/goalWorksheet";
+import { prefs } from "./state";
 
 const fid = (f: string): string => `q2-${f.replace(/[^a-z0-9]+/g, "-")}`;
 const scrollTo = (id: string): void => { const el = document.getElementById(id); el?.scrollIntoView?.({ block: "start" }); (el?.querySelector("input,textarea") as HTMLElement | null)?.focus(); };
@@ -55,5 +56,30 @@ export function startCard(goalId: string, lang: Locale): HTMLElement | null {
     h("div", { class: "q2-start" },
       h("button", { ...jump("problem_frame"), "data-start": "clarify" }, t("q2.start.clarify", lang)),
       h("a", { href: `#/journey/backward/${goalId}`, class: "btn ghost", "data-start": "break" }, t("q2.start.break", lang)),
-      h("button", { ...jump("want_feel_do"), "data-start": "begin" }, t("q2.start.begin", lang))));
+      h("button", { ...jump("worksheet"), "data-start": "begin" }, t("q2.start.begin", lang))));
 }
+
+/** Q-11: optional obstacle, if-then backup, first action / when, and resources (the table reads this one too). */
+export const worksheetCard = (goalId: string, lang: Locale): HTMLElement => fieldsCard(goalId, lang, { card: "worksheet", head: "q2.ws.h", intro: "q2.ws.intro", fields: [...WORKSHEET_FIELDS, RESOURCES_FIELD] });
+
+/** Q-11: the table itself (a real table, two columns so it fits 360 px). An empty row says "Not set", never 0. */
+export function planTableCard(rec: TMRecord, lang: Locale): HTMLElement {
+  const rows = planTable(rec, allRecs());
+  return h("section", { class: "card", "data-card": "plan_table" }, h("h2", { class: "card-h" }, t("q2.tbl.h", lang)),
+    h("table", { class: "q2-table" }, h("tbody", {}, ...rows.map((r) => h("tr", { "data-row": r.key, ...(r.value === null ? { "data-unset": "1" } : {}) },
+      h("th", { scope: "row" }, t(`q2.tbl.${r.key}` as Key, lang)),
+      h("td", {}, r.value === null ? h("span", { class: "muted" }, t("q2.tbl.notset", lang))
+        : r.key === "steps" ? h("div", {}, h("p", {}, t("q2.tbl.stepsn", lang, { n: r.value })), h("ol", { class: "plain" }, ...(r.list ?? []).map((x) => h("li", {}, x)))) : r.value))))),
+    rows.some((r) => r.value === null) ? h("p", { class: "muted" }, t("q2.tbl.edit", lang)) : null);
+}
+
+/** Q-11: the table view screen, #/journey/goal/<id>/table. */
+export function planTableScreen(id: string): HTMLElement {
+  const lang = prefs.lang; const rec = findRec(id);
+  const back = h("a", { href: rec ? `#/journey/goal/${id}` : "#/journey/goals", class: "crumb" }, `← ${t("q2.tbl.back", lang)}`);
+  if (!rec || rec.entity !== "goal" || !textOfField(rec, "goal.title")) return h("main", {}, back, h("h1", {}, t("q2.tbl.h", lang)), h("p", { class: "muted", "data-goal-missing": "1" }, t("q2.tbl.missing", lang)));
+  return h("main", { "data-plan-table": id }, back, h("h1", {}, textOfField(rec, "goal.title")), planTableCard(rec, lang));
+}
+
+/** Q-11: link from the goal page to the table view. */
+export const tableLink = (goalId: string, lang: Locale): HTMLElement => h("a", { href: `#/journey/goal/${goalId}/table`, class: "btn ghost", "data-act": "plan-table" }, t("q2.tbl.link", lang));

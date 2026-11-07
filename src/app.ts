@@ -37,11 +37,13 @@ import { setOverlayContext } from "./ui/overlayCoordinator";
 import { consentOn } from "./ui/entry";
 import { enhanceScreenHelp } from "./ui/screenHelp";
 import { ROUTES_QB1, viewed } from "./ui/routes_qb1";
+import { ROUTES_QB2 } from "./ui/routes_qb2";
 
 let stopNavLayout: (() => void) | undefined;
 
 export const ROUTES: Array<[RegExp, (m: RegExpMatchArray) => HTMLElement, string]> = [
   ...ROUTES_QB1, // batch 1: /diary/inspiration
+  ...ROUTES_QB2, // batch 2: /journey/goal/<id>/table
   [/^\/profile$/, () => ownerProfileScreen(), "settings"],
   [/^\/start$/, () => onboardScreen(), "today"],
   [/^\/today$/, () => S.today(), "today"],
