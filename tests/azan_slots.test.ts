@@ -72,7 +72,7 @@ describe("azan slots", () => {
     expect(m[2]!.label).toBeUndefined(); expect(m).toHaveLength(4);
     expect(parseManifest("junk")).toEqual(defaultSlots()); expect(parseManifest(null)).toEqual(defaultSlots());
   });
-  it("the shipped manifest is valid, has 4 slots, named labels (not numbers) and no licence claim; the owner's 4 recordings are present, real MP3 and within the size cap", () => {
+  it("the shipped manifest is valid, has 4 slots, labels numbered in sequence with a name (1 · Noor) and no licence claim; the owner's 4 recordings are present, real MP3 and within the size cap", () => {
     expect(existsSync("public/audio/azan-manifest.json")).toBe(true);
     const raw = JSON.parse(readFileSync("public/audio/azan-manifest.json", "utf8"));
     expect(raw.slots.map((s: { id: string }) => s.id)).toEqual(["1", "2", "3", "4"]);
@@ -91,8 +91,10 @@ describe("azan slots", () => {
       expect(id3 || frame, `${f} must start like an MP3`).toBe(true);
     }
     for (const s of raw.slots as Array<{ label: { en: string; bn: string }; source: string }>) {
-      expect(s.label.en).not.toMatch(/recording|\d/i);
-      expect(s.label.bn).not.toMatch(/রেকর্ডিং|\d/);
+      expect(s.label.en).toMatch(/^[1-4] · \D+$/);
+      expect(s.label.bn).toMatch(/^[1-4] · \D+$/);
+      expect(s.label.en).not.toMatch(/recording/i);
+      expect(s.label.bn).not.toMatch(/রেকর্ডিং/);
       expect(s.source).toMatch(/owner/i);
       expect(s.source).not.toMatch(/licen[cs]ed under|public domain|free to use/i);
     }
