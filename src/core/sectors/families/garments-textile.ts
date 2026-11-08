@@ -1,0 +1,60 @@
+// Garments and textile (RMG, knitwear, weaving, dyeing, boutique production). Data only. No numbers, no benchmarks. See docs/design/sector-model.md.
+import type { SectorFamily } from "../types";
+
+export const garmentsTextile: SectorFamily = {
+  id: "garments-textile",
+  name: { en: "Garments and textile (RMG, knitwear, weaving, dyeing)", bn: "গার্মেন্টস ও টেক্সটাইল (আরএমজি, নিটওয়্যার, তাঁত, ডাইং)" },
+  summary: {
+    en: "Makes clothes or fabric, often for buyers on order. Cut-and-make (CM) cost per piece, lead time, line use and buyer payment terms decide the result.",
+    bn: "অর্ডার নিয়ে পোশাক বা কাপড় বানায়। প্রতি পিসের সিএম খরচ, লিড টাইম, লাইন ব্যবহার আর ক্রেতার পেমেন্টের শর্তের ওপর ফলাফল নির্ভর করে।",
+  },
+  aliases: {
+    en: ["rmg", "garments", "readymade garments", "knitwear", "textile", "weaving", "dyeing", "boutique", "tailoring", "cm factory", "export garments"],
+    bn: ["গার্মেন্টস", "আরএমজি", "তৈরি পোশাক", "নিটওয়্যার", "টেক্সটাইল", "তাঁত", "ডাইং", "বুটিক", "দর্জি"],
+  },
+  inputs: [
+    { id: "orderValue", label: { en: "Order price of one piece (FOB or CM, as agreed with buyer)", bn: "এক পিসের অর্ডারের দাম (ক্রেতার সাথে ঠিক করা এফওবি বা সিএম)" }, unit: "money", perPeriod: false, required: true },
+    { id: "fabricCost", label: { en: "Fabric, trims and packing cost of one piece", bn: "এক পিসের কাপড়, ট্রিমস ও প্যাকিং খরচ" }, unit: "money", perPeriod: false, required: true },
+    { id: "cmCost", label: { en: "Your own making cost of one piece (labour, power, overhead share)", bn: "এক পিস বানাতে আপনার নিজের খরচ (শ্রম, বিদ্যুৎ, ওভারহেডের ভাগ)" }, unit: "money", perPeriod: false, required: true },
+    { id: "fixed", label: { en: "Fixed costs for the month (rent, salaries, compliance, loan instalment)", bn: "মাসের ফিক্সড খরচ (ভাড়া, বেতন, কমপ্লায়েন্স, ঋণের কিস্তি)" }, unit: "money", perPeriod: true, required: true },
+    { id: "revenue", label: { en: "Sales or shipment value for the period", bn: "সময়ের বিক্রি বা শিপমেন্টের দাম" }, unit: "money", perPeriod: true },
+    { id: "cogs", label: { en: "Cost of goods shipped in the period", bn: "সময়ে শিপ করা মালের খরচ" }, unit: "money", perPeriod: true },
+    { id: "receivables", label: { en: "Payment due from buyers now (including LC and bank bills)", bn: "ক্রেতার কাছে এখন পাওনা (এলসি ও ব্যাংক বিলসহ)" }, unit: "money", perPeriod: false },
+    { id: "inventory", label: { en: "Value of fabric, work in progress and finished goods now", bn: "কাপড়, চলমান কাজ ও তৈরি মালের এখনকার দাম" }, unit: "money", perPeriod: false },
+    { id: "payables", label: { en: "Amount you owe fabric and trim suppliers now", bn: "কাপড় ও ট্রিমস সাপ্লায়ারকে এখন যা দিতে হবে" }, unit: "money", perPeriod: false },
+    { id: "periodDays", label: { en: "Days in the period", bn: "সময়ের দিন সংখ্যা" }, unit: "days", perPeriod: false },
+    { id: "leadTime", label: { en: "Days from order confirmation to shipment", bn: "অর্ডার কনফার্ম থেকে শিপমেন্ট পর্যন্ত দিন" }, unit: "days", perPeriod: false },
+    { id: "buyerTermDays", label: { en: "Days the buyer takes to pay after shipment", bn: "শিপমেন্টের পর ক্রেতা টাকা দিতে যত দিন নেয়" }, unit: "days", perPeriod: false },
+    { id: "piecesMade", label: { en: "Pieces finished in the period", bn: "সময়ে তৈরি হওয়া পিস" }, unit: "qty", perPeriod: true },
+    { id: "lineCapacity", label: { en: "Pieces the lines could make in the period", bn: "সময়ে লাইনে মোট যত পিস বানানো সম্ভব ছিল" }, unit: "qty", perPeriod: true },
+    { id: "rejectQty", label: { en: "Pieces rejected or sent for rework", bn: "বাতিল বা রিওয়ার্কে পাঠানো পিস" }, unit: "qty", perPeriod: true },
+  ],
+  formulas: [
+    { id: "pieceMargin", name: { en: "Margin on one piece (order price less fabric and making cost)", bn: "এক পিসের মার্জিন (অর্ডারের দাম থেকে কাপড় ও বানানোর খরচ বাদ)" }, expr: "orderValue - fabricCost - cmCost", needs: ["orderValue", "fabricCost", "cmCost"], result: "money" },
+    { id: "fabricMarginPct", use: "contributionMarginPct", map: { price: "orderValue", varCost: "fabricCost" }, name: { en: "Order price left after fabric cost (percent)", bn: "কাপড়ের খরচ বাদে অর্ডারের দামের যতটা থাকে (শতাংশ)" } },
+    { id: "breakEvenPieces", use: "breakEvenUnits", map: { fixed: "fixed", price: "orderValue", varCost: "fabricCost" }, name: { en: "Pieces to cover fixed costs (fabric cost only as per-piece cost)", bn: "ফিক্সড খরচ তুলতে কত পিস লাগবে (শুধু কাপড়ের খরচ প্রতি পিসের খরচ ধরে)" } },
+    { id: "grossMargin", use: "grossMargin", map: { revenue: "revenue", cogs: "cogs" } },
+    { id: "lineUse", use: "capacityUtilisation", map: { used: "piecesMade", capacity: "lineCapacity" } },
+    { id: "rejectPct", use: "shareOfQty", map: { partQty: "rejectQty", wholeQty: "piecesMade" }, name: { en: "Rejected or reworked (percent of pieces made)", bn: "বাতিল বা রিওয়ার্ক (বানানো পিসের শতাংশ)" } },
+    { id: "receivableDays", use: "receivableDays", map: { receivables: "receivables", revenue: "revenue", periodDays: "periodDays" } },
+    { id: "inventoryDays", use: "inventoryDays", map: { inventory: "inventory", cogs: "cogs", periodDays: "periodDays" } },
+    { id: "cashCycle", use: "cashConversion", map: { receivables: "receivables", inventory: "inventory", payables: "payables", revenue: "revenue", cogs: "cogs", periodDays: "periodDays" } },
+    { id: "moneyWait", name: { en: "Days from order to buyer payment (lead time plus buyer terms)", bn: "অর্ডার থেকে ক্রেতার পেমেন্ট পর্যন্ত দিন (লিড টাইম আর ক্রেতার শর্ত মিলিয়ে)" }, expr: "leadTime + buyerTermDays", needs: ["leadTime", "buyerTermDays"], result: "days" },
+  ],
+  questions: [
+    { en: "Does the buyer pay by LC, and how long do bank documents take to clear?", bn: "ক্রেতা কি এলসিতে পেমেন্ট করে, আর ব্যাংকের কাগজ ছাড়াতে কতদিন লাগে?" },
+    { en: "Is your CM cost per piece worked out for each style, including sampling?", bn: "স্যাম্পলিংসহ প্রতিটা স্টাইলের জন্য কি প্রতি পিসের সিএম খরচ হিসাব করেছেন?" },
+    { en: "How many buyers give you most of your orders?", bn: "কতজন ক্রেতা আপনার বেশির ভাগ অর্ডার দেয়?" },
+    { en: "Which buyer audits and compliance checks are due, and what do they cost?", bn: "কোন বায়ার অডিট ও কমপ্লায়েন্স চেক আসছে, আর তাতে কত খরচ?" },
+    { en: "How do you pay staff before the buyer pays you?", bn: "ক্রেতা টাকা দেওয়ার আগে স্টাফের বেতন কীভাবে দেন?" },
+  ],
+  risks: [
+    { en: "A late shipment can mean air freight, discount or a cancelled order.", bn: "শিপমেন্ট দেরি হলে এয়ার ফ্রেইট, ডিসকাউন্ট বা অর্ডার বাতিল হতে পারে।" },
+    { en: "Depending on one or two buyers for most orders.", bn: "বেশির ভাগ অর্ডারের জন্য এক-দুইজন ক্রেতার ওপর নির্ভর করা।" },
+    { en: "Fabric price and exchange rate move after the order price is fixed.", bn: "অর্ডারের দাম ঠিক হওয়ার পর কাপড়ের দাম ও ডলারের রেট বদলে যায়।" },
+    { en: "Wage changes, strikes and gas or power shortage stop the lines.", bn: "মজুরি বদল, ধর্মঘট এবং গ্যাস বা বিদ্যুতের অভাবে লাইন বন্ধ হয়।" },
+    { en: "Factory safety, fire and buyer compliance rules.", bn: "ফ্যাক্টরির সেফটি, ফায়ার ও বায়ারের কমপ্লায়েন্স নিয়ম।" },
+  ],
+  seasonal: true,
+  related: { paths: ["business-starter"] },
+};

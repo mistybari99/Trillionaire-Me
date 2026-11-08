@@ -863,3 +863,9 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 - Schema rule: a record is a free map of field id to value, so an added field needs NO migration and `SCHEMA_VERSION` stays 3 (additive optional fields only; the record-shape fingerprint in `tests/fixtures/schema_fingerprint.json` was updated on purpose). An old record simply has none of them (blank = Unknown, shown as "Not set"). Clearing a saved line writes `{state:"unknown"}`, never empty text or 0. Field catalog counts and the Bangla string counts (`tests/fixtures/bangla_counts.json`) were updated on purpose.
 - Alternatives: one JSON blob per card (rejected: harder to search, backup and edit); reusing `goal.smart_*` fields for the problem frame (rejected: different meaning).
 - Undo: remove the "batch 2" block from `fields.ts` and the cards; stored values of those ids stay in old records and are ignored (nothing else reads them).
+
+## 2026-11-07 — BUILD-02 phase A: sector toolkit core (types, safe formula engine, shared library, registry, custom family)
+- What: `src/core/sectors/` (pure, no UI): safe expression parser (no eval), unit-kind check, 21 shared formulas in EN and BN, registry with alias search, `custom` family, two worked example families (retail, food-service). Schema and writer template: `docs/design/sector-model.md`. No venture migration or UI yet (phase C).
+- Why: owner asked for a sector-aware toolkit; the app supplies inputs, formulas, questions and risks, the user supplies every number. Unknown is never 0; no benchmarks.
+- Alternatives: JSON data files (rejected: Bangla scanner and typed checks fit TS files better); a spreadsheet-style formula engine with eval (rejected: unsafe).
+- Undo: revert the BUILD-02 phase A commits; nothing else reads the folder yet.

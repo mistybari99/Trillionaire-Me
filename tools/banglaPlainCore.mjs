@@ -10,6 +10,9 @@ export const TS_FILES = [
   "src/core/stageTemplates.ts", "src/core/stuck.ts", "src/core/rules.ts", "src/core/stages.ts", "src/core/notify.ts", "src/ui/prayerAlerts.ts", "src/demo/seed.ts",
   "src/i18n/q_b1.ts",
   "src/i18n/q_b2.ts",
+  "src/core/sectors/formulas.ts", "src/core/sectors/custom.ts",
+  // every sector family data file (BUILD-02); a new file is picked up here and must be added to tests/fixtures/bangla_counts.json
+  ...readdirSync("src/core/sectors/families").filter((f) => f.endsWith(".ts")).sort().map((f) => `src/core/sectors/families/${f}`),
 ];
 export const JSON_FILES = [
   ...Array.from({ length: 9 }, (_, i) => `public/content/pack-00${i + 1}.json`),
