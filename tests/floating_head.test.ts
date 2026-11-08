@@ -1,6 +1,7 @@
 // W5b: floating quick-action head. Off by default; shares TAB_ACTIONS; never covers controls; keyboard operable.
+import "fake-indexeddb/auto";
 import { readFileSync } from "node:fs";
-import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { ROUTES } from "../src/app";
 import { ROWS } from "../src/ui/settingsRegistry";
 import { PRESENTATION_DEFAULTS, setPresentationPreference, resetPresentationPreferences } from "../src/ui/presentationPreferences";
@@ -8,6 +9,10 @@ import { TAB_ACTIONS, HEAD_ACTIONS } from "../src/ui/tabActions";
 import { clampPos, freeSpot, fromFractions, toFractions, loadFraction, mountFloatingHead, unmountFloatingHead, overlaps, headLabel, HEAD_SIZE, type Rect } from "../src/ui/floatingHead";
 import { closeTransientOverlay } from "../src/ui/overlayCoordinator";
 import { t } from "../src/i18n/t";
+import { prayerLogId } from "../src/core/prayerLog";
+import { prayerDate, prayerMarkState } from "../src/ui/prayerMarkCommand";
+import { prayerControls } from "../src/ui/prayerMarksUi";
+import { flushStorage, prefs, retryStorage, store } from "../src/ui/state";
 
 const AREA: Rect = { left: 4, top: 8, right: 356, bottom: 660 };
 const tick = (ms = 0) => new Promise((r) => setTimeout(r, ms));
@@ -115,5 +120,38 @@ describe("files", () => {
   });
   it("is mounted by the app after each screen draw and removed on lock", () => {
     const app = readFileSync("src/app.ts", "utf8"); expect(app).toContain("mountFloatingHead(lang)"); expect(app).toContain("unmountFloatingHead()");
+  });
+});
+
+describe("the head's prayer mark is the same mark as Today (shared command, not a copy)", () => {
+  const mark = (root: ParentNode, p: string) => root.querySelector<HTMLButtonElement>(`button[data-prayer="${p}"]`)!;
+  const settled = async (b: HTMLElement) => { await new Promise((r) => setTimeout(r, 0)); await vi.waitFor(() => expect(b.getAttribute("aria-busy")).toBe("false")); };
+  beforeEach(async () => { await retryStorage(); store.demo.clear(); store.real.clear(); await flushStorage(); prefs.dataMode = "demo"; prefs.lang = "en"; });
+  const openHeadPrayer = () => { on(); bubble().click(); document.querySelector<HTMLElement>('[data-head-action="prayers"]')!.click(); return document.getElementById("tm-head-prayer")!; };
+  it("a tap in the head writes the same record as Today's control; a second tap undoes it through the same path", async () => {
+    const box = openHeadPrayer(); const today = prayerControls("en", "full"); document.body.append(today);
+    const id = (p: "fajr" | "dhuhr") => prayerLogId(prayerDate(), p);
+    mark(box, "fajr").click(); await settled(mark(box, "fajr"));
+    mark(today, "dhuhr").click(); await settled(mark(today, "dhuhr"));
+    const a = store.demo.get(id("fajr"))!, b = store.demo.get(id("dhuhr"))!;
+    expect(a).toBeTruthy(); expect(b).toBeTruthy();
+    expect(a.entity).toBe(b.entity); expect(a.ns).toBe(b.ns); expect(Object.keys(a.values).sort()).toEqual(Object.keys(b.values).sort());
+    expect(a.id.startsWith(prayerDate()) || a.id.includes(prayerDate())).toBe(true);
+    mark(box, "fajr").click(); await settled(mark(box, "fajr")); expect(store.demo.get(id("fajr")) ?? null).toBeNull();
+    expect(prayerMarkState({ namespace: "demo", date: prayerDate(), prayer: "fajr" }).marked).toBe(false);
+  });
+  it("a mark made in the head shows on Today and a mark made on Today shows in the head", async () => {
+    const box = openHeadPrayer(); const today = prayerControls("en", "full"); document.body.append(today);
+    mark(box, "asr").click(); await settled(mark(box, "asr"));
+    expect(mark(today, "asr").getAttribute("aria-pressed")).toBe("true");
+    mark(today, "maghrib").click(); await settled(mark(today, "maghrib"));
+    expect(mark(box, "maghrib").getAttribute("aria-pressed")).toBe("true");
+  });
+  it("no counts, totals, streak or score text in the head's prayer area", async () => {
+    const box = openHeadPrayer(); mark(box, "fajr").click(); await settled(mark(box, "fajr"));
+    expect(box.textContent).not.toMatch(/streak|score|rank|total|\d+\s*(\/|of)\s*5|\bday[s]? in a row/i);
+  });
+  it("the head builds its prayer area with prayerControls only (no private copy of the mark code)", () => {
+    const src = readFileSync("src/ui/floatingHead.ts", "utf8"); expect(src).toContain("prayerControls(lang"); expect(src).not.toMatch(/setPrayerMarked|prayerLogRecord|store\./);
   });
 });
