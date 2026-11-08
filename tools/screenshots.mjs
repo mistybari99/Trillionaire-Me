@@ -50,15 +50,22 @@ if (process.env.TM_SHOT_MATRIX === "1") {
   // TM_SHOT_WORKBLOCKS=1 (BUILD-01): the optional work blocks are switched on and two overlapping DEMO blocks are seeded for today.
   const wbRec = (id, a, b, ex = {}) => ({ id, entity: "work_block", ns: "demo", ownerId: "demo-user", schemaVersion: 4, createdAt: new Date().toISOString(), values: { "work_block.date": dvw(tdyIso), "work_block.from": dvw(a), "work_block.to": dvw(b), "work_block.repeat": dvw("none"), "work_block.protected": dvw(false), ...ex } });
   const WB_SEED = process.env.TM_SHOT_WORKBLOCKS === "1" ? [wbRec("shot-wb1", "09:00", "10:30", { "work_block.label": dvw("Write the report"), "work_block.protected": dvw(true) }), wbRec("shot-wb2", "10:00", "11:00")] : [];
+  // TM_SHOT_SECTOR=1 (BUILD-02): a DEMO venture with a business type (retail) and two answers, a monthly income line and a "now" measure are seeded; every business type panel is opened before measuring.
+  const SECTOR = process.env.TM_SHOT_SECTOR === "1";
+  const SEC_SEED = SECTOR ? [
+    { id: "shot-v1", entity: "venture", ns: "demo", ownerId: "demo-user", schemaVersion: 5, createdAt: new Date().toISOString(), values: { "venture.name": dvw("Test fixture venture, not data"), "venture.sector_id": dvw("retail"), "venture.sector_inputs": dvw(JSON.stringify({ price: 50, varCost: 30, fixed: 4000 })), "venture.sector_checks": dvw(JSON.stringify({ q: [0], r: [] })) } },
+    { id: "shot-fin1", entity: "finance_item", ns: "demo", ownerId: "demo-user", schemaVersion: 5, createdAt: new Date().toISOString(), links: { venture: "shot-v1" }, values: { "finance.kind": dvw("income"), "finance.scope": dvw("business"), "finance.label": dvw("Test fixture income"), "finance.amount": dvw(12000), "finance.period": dvw("monthly") } },
+    { id: "shot-ns1", entity: "north_star", ns: "demo", ownerId: "demo-user", schemaVersion: 5, createdAt: new Date().toISOString(), values: { "north_star.metric": dvw("Test fixture measure"), "north_star.source": dvw("own"), "north_star.baseline": dvw(0), "north_star.target": dvw(100) } },
+  ] : [];
   const mdir = "evidence/screenshots-matrix"; mkdirSync(mdir, { recursive: true });
   const visit = new Date(Date.now() - 6 * 86400000); const lastOpen = `${visit.getFullYear()}-${String(visit.getMonth() + 1).padStart(2, "0")}-${String(visit.getDate()).padStart(2, "0")}`;
   for (const design of DESIGNS) for (const lang of LANGS) for (const scheme of ["light", "dark"]) for (const big of BIGS) {
     const ctx = await browser.newContext({ viewport: { width: 360, height: 740 }, deviceScaleFactor: 1, colorScheme: scheme });
-    await ctx.addInitScript(([d, l, recs, lo, wb, head]) => { try { localStorage.setItem("tm:ui:lang", l); localStorage.setItem("tm:ui:design", d); localStorage.setItem("tm:ui:dataMode", "demo"); if (head) localStorage.setItem("tm:ui:floatingHead", "on"); localStorage.setItem("tm:ui:visit", JSON.stringify({ lastOpen: lo, welcome: null })); for (const r of recs) localStorage.setItem(`tm:demo:${r.id}`, JSON.stringify(r)); if (wb.length) { localStorage.setItem("tm:ui:workBlocks", "on"); for (const r of wb) localStorage.setItem(`tm:demo:${r.id}`, JSON.stringify(r)); } } catch { /* storage blocked */ } }, [design, lang, SEED, lastOpen, WB_SEED, HEAD]);
+    await ctx.addInitScript(([d, l, recs, lo, wb, head]) => { try { localStorage.setItem("tm:ui:lang", l); localStorage.setItem("tm:ui:design", d); localStorage.setItem("tm:ui:dataMode", "demo"); if (head) localStorage.setItem("tm:ui:floatingHead", "on"); localStorage.setItem("tm:ui:visit", JSON.stringify({ lastOpen: lo, welcome: null })); for (const r of recs) localStorage.setItem(`tm:demo:${r.id}`, JSON.stringify(r)); if (wb.length) { localStorage.setItem("tm:ui:workBlocks", "on"); for (const r of wb) localStorage.setItem(`tm:demo:${r.id}`, JSON.stringify(r)); } } catch { /* storage blocked */ } }, [design, lang, [...SEED, ...SEC_SEED], lastOpen, WB_SEED, HEAD]);
     const page = await ctx.newPage();
     for (const r of routes) {
       await page.goto("about:blank"); await page.goto(`http://localhost:${PORT}/#/${r}`);
-      await page.waitForSelector("main"); if (big) await page.evaluate((b) => { document.documentElement.style.fontSize = b === true ? "200%" : `${b}%`; }, big); await page.waitForTimeout(500);
+      await page.waitForSelector("main"); if (SECTOR) await page.evaluate(() => document.querySelectorAll("details[data-sector-block]").forEach((d) => { d.open = true; })); if (big) await page.evaluate((b) => { document.documentElement.style.fontSize = b === true ? "200%" : `${b}%`; }, big); await page.waitForTimeout(500);
       const touching = [...(await page.evaluate(TOUCHING_FN)), ...(await page.evaluate(ADJACENT_FN))];
       const m = await page.evaluate(() => {
         const vw = window.innerWidth; const vis = (e) => { const b = e.getBoundingClientRect(); return b.width > 0 && b.height > 0; };

@@ -8,6 +8,7 @@ import type { Label } from "../core/types";
 import { portfolio, ventureViews, type Money, type Total } from "../core/ventures";
 import { activeNs, allRecs, nsTag } from "./entry";
 import { valueEl } from "./components";
+import { sectorPortfolioRows } from "./ventureSectorUi";
 
 /** Typed estimates are ESTIMATE in real mode (never FACT); in demo mode they stay DEMO. */
 export const estimateLabel = (): Label => (activeNs() === "real" ? "ESTIMATE" : "DEMO");
@@ -33,6 +34,7 @@ export function portfolioCard(lang: Locale, where: "page" | "today" | "report"):
     h("div", { class: "row" }, h("h2", { class: "card-h" }, t(where === "today" ? "ven.today.title" : "ven.pf.title", lang)), nsTag(activeNs(), lang)),
     h("p", { class: "muted", "data-pf-count": String(pf.count) }, t("ven.pf.count", lang, { n: fmtNumber(pf.count, lang) })),
     line("value", "ven.pf.value", pf.value), line("share", "ven.pf.share", pf.share), line("net", "ven.pf.net", pf.monthlyNet),
+    ...sectorPortfolioRows(lang),
     h("p", { class: "muted" }, t("ven.pf.note", lang)),
     where === "page" ? null : h("a", { href: "#/diary/ventures", class: "crumb" }, t("ven.pf.open", lang)));
 }

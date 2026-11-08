@@ -15,6 +15,7 @@ export const TS_FILES = [
   ...readdirSync("src/core/sectors/families").filter((f) => f.endsWith(".ts")).sort().map((f) => `src/core/sectors/families/${f}`),
   "src/i18n/q_b3.ts",
   "src/i18n/q_blocks.ts",
+  "src/i18n/q_sector.ts",
   "src/i18n/q_brand.ts",
   "src/i18n/q_head.ts",
 ];

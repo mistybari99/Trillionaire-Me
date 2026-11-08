@@ -21,6 +21,8 @@ export const MIGRATIONS: Record<number, Step> = {
   2: (r) => r,
   // 3 to 4 (optional work blocks): additive. The new entity `work_block` has no old records, so nothing is rewritten; the number only goes up.
   3: (r) => r,
+  // 4 to 5 (sector toolkit, BUILD-02): additive. The new optional `venture.sector_*` values are absent on old ventures (= business type unknown); nothing is rewritten.
+  4: (r) => r,
 };
 
 export type MigrateStatus = "current" | "migrated" | "newer" | "failed";

@@ -2,7 +2,7 @@ import type { Bi } from "../i18n/registry";
 import { UNKNOWN_STATES, type UnknownState } from "../core/types";
 import type { AccessRule, ChoiceOption, FieldDef, FieldType, Importance, PrivacyClass, Purpose, Requirement } from "./types";
 
-export const CATALOG_VERSION = 20;
+export const CATALOG_VERSION = 21;
 
 const bi = (bn: string, en: string): Bi => ({ bn, en });
 const opt = (code: string, bn: string, en: string): ChoiceOption => ({ code, label: bi(bn, en) });
@@ -478,6 +478,27 @@ export const FIELDS: FieldDef[] = [
     what: bi("ব্যবসাটার আন্দাজি বাজারদর।", "Your estimate of what the venture is worth."),
     why: bi("এটা আন্দাজ; পাকা না হওয়া পর্যন্ত তথ্য হিসেবে দেখানো হয় না।", "It is an estimate, not shown as fact until verified."),
     example: bi("5,00,000 টাকা", "BDT 500,000"), format: bi("টাকার অঙ্ক", "Amount in BDT") }),
+  // ── W4 sector toolkit (BUILD-02, M09): app-written; the person picks the business type and answers the questions one by one. ──
+  f({ id: "venture.sector_id", entity: "venture", family: "FAM-36", type: "text", purpose: "venture_registry", importance: "optional",
+    label: bi("ব্যবসার টাইপ (অ্যাপ লেখে)", "Business type (written by the app)"),
+    what: bi("আপনার বাছা ব্যবসার টাইপের আইডি, যেমন রিটেইল বা কাস্টম। আপনি লেখেন না।", "The id of the business type you picked, like shop or custom. You do not type it."),
+    why: bi("টাইপ বাছলে সেই ব্যবসার দরকারি প্রশ্ন আর হিসাব দেখা যায়। না বাছলে অজানা থাকে।", "Picking a type shows the questions and calculations that fit. If you do not pick, it stays unknown."),
+    example: bi("(অ্যাপের নিজের লেখা)", "(written by the app)") }),
+  f({ id: "venture.sector_inputs", entity: "venture", family: "FAM-36", type: "text", purpose: "venture_registry", privacy: "financial", importance: "optional",
+    label: bi("টাইপের উত্তর (অ্যাপ লেখে)", "Business type answers (written by the app)"),
+    what: bi("প্রশ্নগুলোর যে উত্তর আপনি দিয়েছেন। স্কিপ করলে বা ফাঁকা রাখলে কিছু লেখা হয় না।", "The answers you gave to the questions. A skipped or blank question writes nothing."),
+    why: bi("ফাঁকা মানে অজানা, 0 নয়। শুধু আপনার দেওয়া সংখ্যা দিয়ে হিসাব হয়।", "Blank means unknown, not 0. Calculations use only the numbers you gave."),
+    example: bi("(অ্যাপের নিজের লেখা)", "(written by the app)") }),
+  f({ id: "venture.sector_custom", entity: "venture", family: "FAM-36", type: "text", purpose: "venture_registry", importance: "optional",
+    label: bi("নিজের টাইপের সংজ্ঞা (অ্যাপ লেখে)", "Your own type definition (written by the app)"),
+    what: bi("কাস্টম টাইপ বাছলে আপনার লেখা ইনপুট আর ফর্মুলা।", "The inputs and formulas you wrote when you picked the custom type."),
+    why: bi("আপনার নিজের হিসাব আবার খুললে ফিরে পেতে।", "To get your own calculations back when you open the venture again."),
+    example: bi("(অ্যাপের নিজের লেখা)", "(written by the app)") }),
+  f({ id: "venture.sector_checks", entity: "venture", family: "FAM-36", type: "text", purpose: "venture_registry", importance: "optional",
+    label: bi("টিক দেওয়া প্রশ্ন ও ঝুঁকি (অ্যাপ লেখে)", "Ticked questions and risks (written by the app)"),
+    what: bi("যে প্রশ্ন বা ঝুঁকি নিয়ে আপনি ভেবেছেন বলে টিক দিয়েছেন।", "The questions and risks you ticked as thought through."),
+    why: bi("নিজের চেকলিস্ট নিজের কাছে থাকে। কোনো হিসাব বা তুলনা করা হয় না।", "Your own checklist stays with you. Nothing is counted or compared."),
+    example: bi("(অ্যাপের নিজের লেখা)", "(written by the app)") }),
 
   // ── habits (FAM-06) ──
   f({ id: "habit.title", entity: "habit", family: "FAM-06", type: "text", purpose: "habit", importance: "useful",

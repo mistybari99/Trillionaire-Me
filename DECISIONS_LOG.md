@@ -897,3 +897,9 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 - Why: owner asked for a Messenger-style quick head; off by default keeps the app calm and avoids covering content.
 - Alternatives: always-on head (rejected: intrusive); native overlay (rejected: PWA first, D-A).
 - Undo: turn the setting off, or delete `floatingHead.ts`, `q_head.ts` and the HEAD_ACTIONS entries.
+
+### W4 phase C Sector UI on ventures, schema 5 (8 Nov 2026)
+- What: schema 4 to 5 (additive, `MIGRATIONS[4]` only raises the number). Four optional text values on `venture` (type id, answers as JSON, custom definition as JSON, ticked questions and risks as JSON). Catalog 21. Panel "Business type" on each venture card.
+- Why: owner wants sector-aware business inputs; keeping answers in the venture record means backup, CSV and restore work with no new entity.
+- Alternatives: a separate `venture_sector` entity (rejected: more links to break); typed fields per input (rejected: 28 families).
+- Undo: remove the four fields and the panel line in `planScreens.ts`; old data stays readable because unknown values are ignored.

@@ -6,8 +6,9 @@ import type { PrivacyClass } from "../catalog/types";
 
 /** 2 = steps and habits can serve several goals (`task.goals`, `habit.goals`); version 1 records get `task.goals` from `links.goal`.
  *  3 = reminders (entity `reminder`, family FAM-REM): additive, no data rewrite (MIGRATIONS[2] only raises the number).
- *  4 = optional manual work blocks (entity `work_block`, BUILD-01): additive, no data rewrite (MIGRATIONS[3] only raises the number). */
-export const SCHEMA_VERSION = 4;
+ *  4 = optional manual work blocks (entity `work_block`, BUILD-01): additive, no data rewrite (MIGRATIONS[3] only raises the number).
+ *  5 = sector toolkit on ventures (BUILD-02): optional `venture.sector_*` values; additive, old ventures get none (MIGRATIONS[4] only raises the number). */
+export const SCHEMA_VERSION = 5;
 
 export interface EntityDef {
   id: string; family: string; name: Bi; module: string;

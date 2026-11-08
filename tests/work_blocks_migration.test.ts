@@ -11,14 +11,14 @@ const v3 = fx("records_v3.json").records, v4 = fx("records_v4.json").records;
 
 describe("work blocks: schema 4 (additive, no data rewrite)", () => {
   it("the schema is at version 4 and knows the work_block entity", () => {
-    expect(SCHEMA_VERSION).toBe(4);
+    expect(SCHEMA_VERSION).toBeGreaterThanOrEqual(4);
     expect(ENTITIES.map((e) => e.id)).toContain("work_block");
   });
   it("every version-3 record upgrades to the version-4 fixture with all values intact; a second run changes nothing", () => {
-    const up = v3.map((r) => migrateRecord(r));
+    const up = v3.map((r) => migrateRecord(r, 4));
     expect(up.every((u) => u.status === "migrated")).toBe(true);
     expect(up.map((u) => u.rec)).toEqual(v4.filter((r) => r.entity !== "work_block"));
-    for (let i = 0; i < v3.length; i++) { expect(up[i]!.rec.values).toEqual(v3[i]!.values); expect(MIGRATIONS[3]!(up[i]!.rec)).toEqual(up[i]!.rec); expect(migrateRecord(up[i]!.rec).status).toBe("current"); }
+    for (let i = 0; i < v3.length; i++) { expect(up[i]!.rec.values).toEqual(v3[i]!.values); expect(MIGRATIONS[3]!(up[i]!.rec)).toEqual(up[i]!.rec); expect(migrateRecord(up[i]!.rec, 4).status).toBe("current"); }
   });
   it("defaults are empty: old data has no work blocks; the fixture block reads back with an unknown goal kept as not linked", () => {
     expect(workBlocksFromRecords(v3)).toEqual([]);

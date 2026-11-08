@@ -68,6 +68,7 @@ import { habitBackfill, habitExtraInputs, habitMeta, microHabitCard } from "./qb
 import { moneyReviewCard, riskReviewCard } from "./monthUi";
 import { exitConds, gateDueCard, gateReportCard, stageRulesBlock } from "./gateCard";
 import { portfolioCard } from "./ventureCard";
+import { ventureBreakEvenCard } from "./ventureSectorUi";
 import { ventureRows } from "../core/ventures";
 import { backupReminderCard } from "./snapshotsUi";
 import { missedTodayCard, remindRow, remindersTodayCard } from "./remindUi";
@@ -481,6 +482,7 @@ export function moneyScreen(): HTMLElement {
   return h("main", { class: "scr scr-money" },
     link("#/diary", "crumb", `← ${t("diary.title", lang)}`), h("h1", {}, t("money.title", lang)), h("p", { class: "sub" }, t("money.intro", lang)),
     h("h2", {}, t("money.summary", lang)), sum("personal"), sum("business"),
+    ventureBreakEvenCard(lang),
     fv.notMonthly ? h("p", { class: "muted" }, t("money.notMonthly", lang, { n: num(fv.notMonthly, lang) })) : null,
     fv.yearly ? h("p", { class: "muted", "data-yearly-note": String(fv.yearly) }, t("money.yearly.note", lang, { n: num(fv.yearly, lang) })) : null,
     fv.foreign ? h("p", { class: "muted", "data-fx-note": String(fv.foreign) }, t("money.fx.note", lang, { n: num(fv.foreign, lang), m: num(fv.foreignNoRate, lang) })) : null,

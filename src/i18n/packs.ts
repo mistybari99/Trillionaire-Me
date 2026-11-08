@@ -5,6 +5,7 @@ import { QB1_BN, QB1_EN } from "./q_b1.ts";
 import { QB2_BN, QB2_EN } from "./q_b2.ts";
 import { QB3_BN, QB3_EN } from "./q_b3.ts";
 import { QBLOCKS_BN, QBLOCKS_EN } from "./q_blocks.ts";
+import { QSECTOR_BN, QSECTOR_EN } from "./q_sector.ts";
 import { QBRAND_BN, QBRAND_EN } from "./q_brand.ts";
 import { QHEAD_BN, QHEAD_EN } from "./q_head.ts";
 const en = {
@@ -1929,6 +1930,7 @@ const en = {
   ...QB2_EN, // batch 2 (Q-10, Q-11, Q-30) keys live in q_b2.ts
   ...QB3_EN, // batch 3 (Q-12, Q-13, Q-34) keys live in q_b3.ts
   ...QBLOCKS_EN, // optional work time blocks (BUILD-01) keys live in q_blocks.ts
+  ...QSECTOR_EN, // venture business type toolkit (BUILD-02) keys live in q_sector.ts
   ...QBRAND_EN, // brand line and tagline live in q_brand.ts
   ...QHEAD_EN, // floating quick-action head lives in q_head.ts
 } as const;
@@ -1940,6 +1942,7 @@ const bn: Record<Key, string> = {
   ...QB2_BN,
   ...QB3_BN,
   ...QBLOCKS_BN,
+  ...QSECTOR_BN,
   ...QBRAND_BN,
   ...QHEAD_BN,
   "set.row.helpplacement": "হেল্প কোথায় দেখাবে",

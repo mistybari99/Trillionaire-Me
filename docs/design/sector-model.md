@@ -109,33 +109,33 @@ ISIC-style sections and common Bangladesh business types, mapped to a family. St
 | # | Family id | Covers (ISIC-style section / Bangladesh business types) | Status |
 |---|---|---|---|
 | 1 | `retail` | G retail: grocery, mini mart, stall, pharmacy counter sales (not dispensing), general store | done (worked example) |
-| 2 | `wholesale-trading` | G wholesale: aratdar, dealer, distributor, commodity trading | todo |
-| 3 | `manufacturing-discrete` | C: small factory, workshop, furniture, metal, plastics, packaging | todo |
-| 4 | `food-processing` | C10-11: rice mill, flour, spices, pickles, dairy products, bakery production | todo |
-| 5 | `garments-textile` | C13-14: RMG, knitwear, weaving, dyeing, boutique production | todo |
-| 6 | `agriculture-crops` | A01: rice, vegetables, fruits, jute, tea, nursery | todo |
-| 7 | `livestock-poultry-dairy` | A01: cattle, goat, poultry, eggs, dairy farm | todo |
-| 8 | `fisheries-aquaculture` | A03: pond fish, shrimp, hatchery, fishing | todo |
+| 2 | `wholesale-trading` | G wholesale: aratdar, dealer, distributor, commodity trading | done |
+| 3 | `manufacturing-discrete` | C: small factory, workshop, furniture, metal, plastics, packaging | done |
+| 4 | `food-processing` | C10-11: rice mill, flour, spices, pickles, dairy products, bakery production | done |
+| 5 | `garments-textile` | C13-14: RMG, knitwear, weaving, dyeing, boutique production | done |
+| 6 | `agriculture-crops` | A01: rice, vegetables, fruits, jute, tea, nursery | done |
+| 7 | `livestock-poultry-dairy` | A01: cattle, goat, poultry, eggs, dairy farm | done |
+| 8 | `fisheries-aquaculture` | A03: pond fish, shrimp, hatchery, fishing | done |
 | 9 | `food-service` | I56: restaurant, cafe, tea stall, catering, food cart, cloud kitchen | done (worked example) |
-| 10 | `hospitality-travel` | I55, N79: hotel, guest house, resort, tour and travel agency | todo |
-| 11 | `professional-consulting` | M69-74: consultant, lawyer, accountant, architect, engineer, agency | todo |
-| 12 | `healthcare-pharmacy` | Q86, G47: clinic, diagnostic centre, pharmacy, dental | todo |
-| 13 | `education-training` | P85: school, coaching centre, tutor, training institute, online course | todo |
-| 14 | `construction-contracting` | F41-43: builder, civil contractor, electrical, plumbing, interior | todo |
-| 15 | `real-estate` | L68: rental property, brokerage, land development | todo |
-| 16 | `transport-logistics` | H49-53: ride, CNG, truck, bus, courier, warehouse, rider | todo |
-| 17 | `ict-software-saas` | J58-63: software house, SaaS, IT services, app, hosting | todo |
-| 18 | `e-commerce-f-commerce` | G47.9: online store, Facebook page shop, marketplace seller | todo |
-| 19 | `digital-creator-media` | J59-60, R90: YouTube, content creator, photographer, studio, publisher | todo |
-| 20 | `creative-design-print` | M74, C18: graphics, printing press, signage, advertising | todo |
-| 21 | `import-export` | G46, H52: importer, exporter, C and F agent, sourcing | todo |
-| 22 | `repair-maintenance` | S95: mobile, electronics, vehicle, appliance, machine repair | todo |
-| 23 | `energy-utilities-solar` | D35-36, E: solar, generator, water supply, waste collection | todo |
-| 24 | `mining-materials-quarry` | B: sand, stone, brick field, clay (light) | todo |
-| 25 | `finance-adjacent` | K64-66: micro-lending coordination, agent banking, MFS cash point, insurance agency (not advice) | todo |
-| 26 | `ngo-social-enterprise` | S94, Q88: NGO project, cooperative, social enterprise, foundation | todo |
-| 27 | `personal-services` | S96: salon, parlour, laundry, tailor, cleaning, photo studio | written |
-| 28 | `gig-freelance` | N78, M: freelancer, gig worker, online marketplace worker, driver-partner, home tutor | written |
+| 10 | `hospitality-travel` | I55, N79: hotel, guest house, resort, tour and travel agency | done |
+| 11 | `professional-consulting` | M69-74: consultant, lawyer, accountant, architect, engineer, agency | done |
+| 12 | `healthcare-pharmacy` | Q86, G47: clinic, diagnostic centre, pharmacy, dental | done |
+| 13 | `education-training` | P85: school, coaching centre, tutor, training institute, online course | done |
+| 14 | `construction-contracting` | F41-43: builder, civil contractor, electrical, plumbing, interior | done |
+| 15 | `real-estate` | L68: rental property, brokerage, land development | done |
+| 16 | `transport-logistics` | H49-53: ride, CNG, truck, bus, courier, warehouse, rider | done |
+| 17 | `ict-software-saas` | J58-63: software house, SaaS, IT services, app, hosting | done |
+| 18 | `e-commerce-f-commerce` | G47.9: online store, Facebook page shop, marketplace seller | done |
+| 19 | `digital-creator-media` | J59-60, R90: YouTube, content creator, photographer, studio, publisher | done |
+| 20 | `creative-design-print` | M74, C18: graphics, printing press, signage, advertising | done |
+| 21 | `import-export` | G46, H52: importer, exporter, C and F agent, sourcing | done |
+| 22 | `repair-maintenance` | S95: mobile, electronics, vehicle, appliance, machine repair | done |
+| 23 | `energy-utilities-solar` | D35-36, E: solar, generator, water supply, waste collection | done |
+| 24 | `mining-materials-quarry` | B: sand, stone, brick field, clay (light) | done |
+| 25 | `finance-adjacent` | K64-66: micro-lending coordination, agent banking, MFS cash point, insurance agency (not advice) | done |
+| 26 | `ngo-social-enterprise` | S94, Q88: NGO project, cooperative, social enterprise, foundation | done |
+| 27 | `personal-services` | S96: salon, parlour, laundry, tailor, cleaning, photo studio | done |
+| 28 | `gig-freelance` | N78, M: freelancer, gig worker, online marketplace worker, driver-partner, home tutor | done |
 | - | `custom` | Fallback for everything not mapped above: user-defined inputs and formulas | done (phase A) |
 
 ISIC sections with no dedicated family fall to `custom` or to the nearest family: O public administration (not a business), T households as employers, U extra-territorial bodies. Section R (arts, sports) maps to `digital-creator-media` or `custom`; section N (admin and support) maps to `professional-consulting`, `gig-freelance` or `transport-logistics`.
@@ -195,7 +195,8 @@ Unmapped -> `custom`: any business type or ISIC section not in the tables above 
 
 Honest statement: coverage is by family plus the `custom` fallback. We do not promise any coverage percentage, such as 99 percent. A business may fit a family only roughly; the user can switch family or use `custom`.
 
-## Next phases
+## Phases
 
-- B: writer agents add rows 2-28 as data files only.
-- C: integrator wires the UI on the venture screen, the migration (`sectorId`, `sectorInputs`), links to goal measures, Money and the report, the M09 "calc" box (only after Audit PASS), `docs/design/template-pattern.md`, screens and evidence.
+- A and B: done. The registry has 28 families plus `custom`; `validateRegistry()` returns no problem (checked 8 Nov 2026).
+- C: done in code, waiting for the audit. `src/core/ventureSector.ts` (pure), `src/ui/ventureSectorUi.ts` (collapsible "Business type" on each venture card), schema 5 (`venture.sector_id`, `sector_inputs`, `sector_custom`, `sector_checks`; additive, old ventures get none), links: goal measure "now" number (copy once, own-source measures only), Money break-even next to income (both numbers or Unknown), portfolio row on the venture page, Today and the report. The M09 capability box "calc" and PLAN_TRACKER BUILD-02 flip only after the audit PASS.
+- Known gaps: family files use a few plain words such as "late", "lost" and "good" in domain text (not ratings); seasonality answers are typed in the same answer map as the other inputs (ids jan to dec).

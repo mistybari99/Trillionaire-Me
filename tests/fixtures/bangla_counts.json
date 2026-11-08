@@ -1,9 +1,9 @@
 {
-  "keys": 2791,
+  "keys": 2889,
   "perFile": {
     "src/i18n/packs.ts": 2484,
     "src/i18n/vault.ts": 76,
-    "src/catalog/fields.ts": 1111,
+    "src/catalog/fields.ts": 1127,
     "src/catalog/glossary.ts": 68,
     "src/modules/capability.ts": 53,
     "src/schema/entities.ts": 48,
@@ -53,6 +53,7 @@
     "src/core/sectors/families/wholesale-trading.ts": 29,
     "src/i18n/q_b3.ts": 37,
     "src/i18n/q_blocks.ts": 54,
+    "src/i18n/q_sector.ts": 99,
     "src/i18n/q_brand.ts": 2,
     "src/i18n/q_head.ts": 5,
     "public/content/pack-001.json": 111,

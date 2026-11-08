@@ -18,6 +18,7 @@ import { analysisLines, syncDelegationNow, teamAnalysis } from "./teamCard";
 import { loopLogRecord } from "../core/realityLoop";
 import { parseAmount, parseOwnership, ventureViews } from "../core/ventures";
 import { bdt, estimateLabel, moneyEl, portfolioCard } from "./ventureCard";
+import { ventureSectorBlock } from "./ventureSectorUi";
 import { overallProgress, parseWeight, starRows, starViews } from "../core/northStar";
 import { overallEl, starRowView } from "./northStarCard";
 import { planHistory } from "../core/planHistory";
@@ -237,7 +238,7 @@ function ventureScreenInner(): HTMLElement {
       h("p", { "data-acc": "net" }, h("span", { class: "muted" }, `${t("ven.acc.net", lang)}: `), ac.net.state === "none" ? h("span", { class: "muted", "data-unknown": "1" }, t("ven.acc.netNeeds", lang)) : moneyEl(ac.net, lang, est)),
       ac.notMonthly ? h("p", { class: "muted", "data-acc-notmonthly": String(ac.notMonthly) }, t("money.notMonthly", lang, { n: num(ac.notMonthly, lang) })) : null,
       ac.lineIds.length ? h("ul", { class: "plain" }, ...lineRows(v)) : h("p", { class: "muted" }, t("ven.line.empty", lang)),
-      lineForm(row.id), editForm(v)), removeVenture(row.id)));
+      lineForm(row.id), editForm(v), findOne(row.id) ? ventureSectorBlock(findOne(row.id)!, lang) : null), removeVenture(row.id)));
   };
   return h("main", { class: "scr scr-venture" },
     link("#/diary", "crumb", `← ${t("diary.title", lang)}`),
