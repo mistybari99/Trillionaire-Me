@@ -64,6 +64,7 @@ import { healthCard } from "./healthUi";
 import { deenReportCard, deenTodayCard } from "./deenPlansUi";
 import { profileCard } from "./profileCard";
 import { blocksTodayCard, commitCard, currentBlocks } from "./blocksUi";
+import { habitBackfill, habitExtraInputs, habitMeta, microHabitCard } from "./qb3Ui";
 import { toPlannerBlocks } from "../core/timeBlocks";
 import { moneyReviewCard, riskReviewCard } from "./monthUi";
 import { exitConds, gateDueCard, gateReportCard, stageRulesBlock } from "./gateCard";
@@ -871,18 +872,20 @@ function habitsFromStore() {
   const recs = allRecs(); const g = (r: TMRecord, k: string) => (r.values[k] as { value?: unknown } | undefined)?.value;
   const habits: Habits.Habit[] = recs.filter((r) => r.entity === "habit" && r.values["habit.title"]?.state === "value").sort((a, b) => a.id.localeCompare(b.id)).map((r) => ({
     id: r.id, title: String(g(r, "habit.title")), days: String(g(r, "habit.days") ?? "0,1,2,3,4,5,6").split(",").filter((x) => x !== "").map(Number),
-    target: typeof g(r, "habit.target") === "number" && (g(r, "habit.target") as number) > 0 ? (g(r, "habit.target") as number) : null, unit: String(g(r, "habit.unit") ?? "") }));
+    target: typeof g(r, "habit.target") === "number" && (g(r, "habit.target") as number) > 0 ? (g(r, "habit.target") as number) : null, unit: String(g(r, "habit.unit") ?? ""),
+    start: typeof g(r, "habit.start_on") === "string" ? (g(r, "habit.start_on") as string) : null, end: typeof g(r, "habit.end_on") === "string" ? (g(r, "habit.end_on") as string) : null }));
   const logs: Habits.Log[] = recs.filter((r) => r.entity === "habit_log").map((r) => ({ habitId: r.links?.habit ?? "", date: String(g(r, "habit_log.date")), count: Number(g(r, "habit_log.count") ?? 0) }));
   return { habits, logs };
 }
 // A habit's log lives in the same namespace as its habit (real habit, real log).
-function setLog(h0: Habits.Habit, date: string, count: number) {
+function setLog(h0: Habits.Habit, date: string, count: number): boolean {
   const id = `hl-${h0.id}-${date}`;
   const ns = findRec(h0.id)?.ns ?? activeNs(); const lb = labelFor(ns);
-  if (count <= 0) { store[ns].delete(id); return; }
-  if (ns === "real" && !consentOn()) return;
+  if (count <= 0) { store[ns].delete(id); return true; }
+  if (ns === "real" && !consentOn()) return false;
   store[ns].put({ id, entity: "habit_log", ns, ownerId: ownerOf(ns), schemaVersion: SCHEMA_VERSION, createdAt: new Date().toISOString(), links: { habit: h0.id },
     values: { "habit_log.date": { state: "value", value: date, label: lb }, "habit_log.count": { state: "value", value: count, label: lb } } });
+  return true;
 }
 function removeHabit(id: string) {
   const hr = findRec(id); if (hr) storeOf(hr).delete(id);
@@ -912,7 +915,7 @@ export function habitsScreen(): HTMLElement {
       h("span", { class: "muted", "data-consistency": "1" }, c.planned ? valueEl(t("habits.month", lang, { d: num(c.done, lang), p: num(c.planned, lang) }), "INFERENCE", lang) : t("habits.noPlanned", lang)));
     return h("div", { class: "card", "data-habit-card": hb.id },
       h("div", { class: "row" }, h("div", {}, nsTag(findRec(hb.id)?.ns ?? activeNs(), lang), h("h2", { class: "card-h", }, hb.title)), h("button", { class: "btn ghost btn-sm", type: "button", onclick: () => { removeHabit(hb.id); rerender(); } }, t("habits.remove", lang))),
-      main, dots, habitChart(hb, logs, today, lang), habitGoalsRow(hb.id, lang), remindRow("habit", hb.id, lang),
+      habitMeta(findRec(hb.id) ?? null, lang), main, dots, habitBackfill(hb.id, today, (d) => { if (!Habits.canLog(d, today)) return false; if (Habits.isDone(hb, logs, d)) return true; return setLog(hb, d, hb.target ?? 1); }, lang), habitChart(hb, logs, today, lang), habitGoalsRow(hb.id, lang), remindRow("habit", hb.id, lang),
       h("p", { class: "muted", "data-per-week": String(perWeek(hb)) }, t("habits.perWeek", lang, { n: num(perWeek(hb), lang) })),
       h("p", { class: "muted", "data-consistency": "1" }, c.planned ? valueEl(t("habits.month", lang, { d: num(c.done, lang), p: num(c.planned, lang) }), "INFERENCE", lang) : t("habits.noPlanned", lang)),
       Habits.restartPlan(hb, logs, today) === "smallest_version" ? h("p", { class: "note", "data-restart": "1" }, t("habits.restart", lang)) : null);
@@ -924,24 +927,25 @@ export function habitsScreen(): HTMLElement {
   const target = h("input", { id: "hb-target", type: "text", inputmode: "numeric" }) as HTMLInputElement; const unit = h("input", { id: "hb-unit", type: "text", maxlength: "20" }) as HTMLInputElement;
   const err = h("p", { class: "err", role: "alert" });
   const gate = consentOn() ? null : consentPrompt(lang);
-  const hbPick = goalPicker(allRecs(), [], lang, "habit-new");
+  const hbPick = goalPicker(allRecs(), [], lang, "habit-new"); const extras = habitExtraInputs(lang);
   const form = h("form", { novalidate: true, "data-form": "habit" }, gate, h("label", { for: "hb-name" }, t("habits.name", lang)), name, h("label", {}, t("habits.days", lang)), chips,
-    h("label", { for: "hb-target" }, t("habits.target", lang)), target, h("label", { for: "hb-unit" }, t("habits.unit", lang)), unit, h("p", {}, h("strong", {}, t("gl.habit.goals", lang))), hbPick.el, err, h("button", { class: "btn", type: "submit" }, t("habits.save", lang)));
+    h("label", { for: "hb-target" }, t("habits.target", lang)), target, h("label", { for: "hb-unit" }, t("habits.unit", lang)), unit, h("p", {}, h("strong", {}, t("gl.habit.goals", lang))), hbPick.el, ...extras.nodes, err, h("button", { class: "btn", type: "submit" }, t("habits.save", lang)));
   form.addEventListener("submit", (ev) => {
     ev.preventDefault(); err.textContent = ""; const nm = name.value.trim(); if (!nm) return;
     if (!checkFreeText(nm).ok || !checkFreeText(unit.value).ok) { err.textContent = t("intake.secretRejected", lang); return; }
     const raw = target.value.trim().replace(/[০-৯]/g, (c) => String(c.charCodeAt(0) - 0x09e6)); let tv: FieldValue | null = null;
     if (raw !== "") { const n = Number(raw); if (!Number.isFinite(n) || n <= 0 || n > 1000) { err.textContent = t("intake.invalidNumber", lang); return; } tv = typed(Math.round(n)); }
+    const ex = extras.read(); if (ex.bad) { err.textContent = t(ex.bad === "range" ? "q3.hb.range.bad" : "intake.secretRejected", lang); return; }
     const habitId = `habit-${Date.now().toString(36)}${Math.random().toString(36).slice(2, 4)}`;
     if (!saveTyped({ id: habitId, entity: "habit", createdAt: new Date().toISOString(),
-      values: { "habit.title": typed(nm), "habit.days": typed([...chosen].sort().join(",")), "habit.days_per_week": typed(chosen.size), ...(tv ? { "habit.target": tv, "habit.unit": typed(unit.value.trim()) } : {}) } })) { err.textContent = saveBlockedText(lang); return; }
+      values: { "habit.title": typed(nm), "habit.days": typed([...chosen].sort().join(",")), "habit.days_per_week": typed(chosen.size), ...(tv ? { "habit.target": tv, "habit.unit": typed(unit.value.trim()) } : {}), ...ex.values } })) { err.textContent = saveBlockedText(lang); return; }
     saveGoalLinks(habitId, hbPick.ids());
     rerender();
   });
   return h("main", {}, link("#/today", "crumb", `← ${t("nav.today", lang)}`), h("h1", {}, t("habits.title", lang)), h("p", { class: "sub" }, t("habits.intro", lang)),
     viewBar("habits", lang),
     habitGridTracker(habits, logs, new Map(allRecs().filter((r) => r.entity === "habit").map((r) => [r.id, Number.isFinite(Date.parse(r.createdAt)) ? Habits.todayIso(new Date(r.createdAt)) : null] as const)), today, gridRange(), (r) => { setGridRange(r); rerender(); }, lang),
-    ...(cards.length ? (habitCompact ? [h("ul", { class: "list-compact", "data-view": "compact" }, ...cards)] : cards) : [h("p", { class: "muted" }, t("habits.empty", lang))]), h("p", { class: "muted" }, t("habits.tip", lang)), h("h2", {}, t("habits.add", lang)), form, disclaimers(lang, ["noGuarantee"]));
+    ...(cards.length ? (habitCompact ? [h("ul", { class: "list-compact", "data-view": "compact" }, ...cards)] : cards) : [h("p", { class: "muted" }, t("habits.empty", lang))]), h("p", { class: "muted" }, t("habits.tip", lang)), microHabitCard(allRecs(), today, lang), h("h2", {}, t("habits.add", lang)), form, disclaimers(lang, ["noGuarantee"]));
 }
 
 // ---- flashcards ----

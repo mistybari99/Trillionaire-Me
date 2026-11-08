@@ -11,7 +11,8 @@ import { allRecs, entryNs, findRec, inNs, labelFor, saveBlockedText, storeOf } f
 import { todayIsoKpi } from "./kpiUi";
 import { buildTree } from "../core/goalTree";
 import { goalStatusOf } from "../core/goalStatus";
-import { openSteps, planByOf, validDay, withPlanDates, withoutPlanDates, workBack } from "../core/backwardPlan";
+import { openSteps, planByOf, validDay, withPlanDates, withoutPlanDates, workBackBuffered } from "../core/backwardPlan";
+import { bufferStrip } from "./qb3Ui";
 import type { TMRecord } from "../core/types";
 
 const L = () => prefs.lang;
@@ -19,10 +20,10 @@ const link = (href: string, cls: string, ...kids: Array<Node | string>) => h("a"
 const rerender = () => window.dispatchEvent(new HashChangeEvent("hashchange"));
 const textOf = (r: TMRecord, f: string): string => { const v = r.values[f]; return v && v.state === "value" && typeof v.value === "string" ? v.value : ""; };
 
-interface Draft { order: string[]; target: string | null; msg: { key: Key; args?: Record<string, string> } | null }
+interface Draft { order: string[]; target: string | null; keepFree: boolean; msg: { key: Key; args?: Record<string, string> } | null }
 const drafts = new Map<string, Draft>();
 export const resetBackward = (): void => drafts.clear();
-const draftOf = (goal: TMRecord): Draft => { let d = drafts.get(goal.id); if (!d) { d = { order: [], target: textOf(goal, "goal.target_date") || null, msg: null }; drafts.set(goal.id, d); } return d; };
+const draftOf = (goal: TMRecord): Draft => { let d = drafts.get(goal.id); if (!d) { d = { order: [], target: textOf(goal, "goal.target_date") || null, keepFree: false, msg: null }; drafts.set(goal.id, d); } return d; };
 
 /** A small "planned by" tag for a step row. Null when the step has no planned date. */
 export function planByTag(r: TMRecord, lang: Locale): HTMLElement | null {
@@ -49,7 +50,7 @@ export function backwardScreen(goalId: string): HTMLElement {
   const remaining = steps.filter((s) => !d.order.includes(s.id));
   const dateIn = h("input", { id: "bw-date", type: "date", value: d.target ?? "", "data-bw": "date" }) as HTMLInputElement;
   dateIn.addEventListener("change", () => { d.target = validDay(dateIn.value) ? dateIn.value : null; d.msg = null; rerender(); });
-  const result = d.target ? workBack(d.order, d.target, today) : { kind: "no-date" as const };
+  const bw = d.target ? workBackBuffered(d.order, d.target, today, d.keepFree) : null; const result = bw ? bw.plan : { kind: "no-date" as const };
   const gate = entryNs() ? null : h("p", { class: "need", role: "alert" }, saveBlockedText(lang));
   const hasDates = withoutPlanDates(recs, goalId).length > 0;
 
@@ -70,13 +71,17 @@ export function backwardScreen(goalId: string): HTMLElement {
     h("button", { type: "button", class: "btn ghost", "data-act": "bw-undo", onclick: () => { d.order = d.order.slice(0, -1); d.msg = null; rerender(); } }, t("bw.undo", lang))) : null;
   const out = result.kind === "ok" ? h("section", { class: "card", "data-bw": "result" }, h("h2", { class: "card-h" }, t("bw.result", lang)),
       h("ol", {}, ...result.rows.map((r) => h("li", { "data-bw-row": r.id, "data-date": r.date }, `${r.date} · ${title.get(r.id)}`))),
+      bw && bw.buffer === "on" ? h("p", { class: "muted", "data-bw": "buffer-on" }, t("q3.bw.buffer.on", lang, { d: result.rows.at(-1)!.date, free: bw.freeDay! })) : null,
+      bw && bw.buffer === "noroom" ? h("p", { class: "muted", "data-bw": "buffer-noroom", role: "status" }, t("q3.bw.buffer.noroom", lang)) : null,
+      bufferStrip(result.rows.map((r) => recs.find((x) => x.id === r.id)!), lang),
       h("p", { class: "muted" }, t("bw.even", lang)), result.shared ? h("p", { class: "muted", "data-bw": "shared" }, t("bw.shared", lang)) : null,
       steps.length > d.order.length ? h("p", { class: "muted", "data-bw": "unplaced" }, t("bw.unplaced", lang, { n: num(steps.length - d.order.length, lang) })) : null,
       h("button", { type: "button", class: "btn", "data-act": "bw-save", onclick: save }, t("bw.save", lang)))
     : null;
   const dateNote = result.kind === "past" ? h("p", { class: "need", role: "status", "data-bw": "past" }, t("bw.date.past", lang)) : !d.target ? h("p", { class: "need", role: "status", "data-bw": "nodate" }, t("bw.date.unset", lang)) : null;
   return h("main", { "data-backward": goalId }, link("#/journey/backward", "crumb", `← ${t("bw.title", lang)}`), h("h1", {}, t("bw.title", lang)), h("p", { class: "sub" }, textOf(goal, "goal.title")), h("p", {}, t("bw.intro", lang)), gate,
-    h("section", { class: "card" }, h("label", { for: "bw-date" }, t("bw.date", lang)), dateIn, dateNote),
+    h("section", { class: "card" }, h("label", { for: "bw-date" }, t("bw.date", lang)), dateIn, dateNote,
+      h("div", { "data-bw": "buffer" }, h("label", { class: "qb3-toggle" }, h("input", { type: "checkbox", "data-bw": "buffer-toggle", checked: d.keepFree, onchange: (e: Event) => { d.keepFree = (e.target as HTMLInputElement).checked; d.msg = null; rerender(); } }), t("q3.bw.buffer.label", lang)), h("p", { class: "muted" }, t("q3.bw.buffer.hint", lang)))),
     h("section", { class: "card" }, picker, placed),
     out,
     d.msg ? h("p", { class: "ok-msg", role: "status", "data-bw": "msg" }, t(d.msg.key, lang, d.msg.args)) : null,

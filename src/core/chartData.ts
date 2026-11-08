@@ -82,16 +82,36 @@ const monthStart = (date: string, back: number): string => { const d = parseIso(
 const monthEnd = (date: string, back: number): string => { const d = parseIso(date); return iso0(new Date(d.getFullYear(), d.getMonth() - back + 1, 0)); };
 const iso0 = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
 
-export function habitRange(hb: Habit, logs: Log[], today: string, range: GridRange, since: string | null): GridPeriod[] {
+/** The period spans of one range, oldest first (shared by the habit grid and the goal grid). */
+export function gridSpans(today: string, range: GridRange): Array<[string, string]> {
   const spans: Array<[string, string]> = [];
   if (range === "days31") for (let i = 30; i >= 0; i--) { const d = addDays(today, -i); spans.push([d, d]); }
   else if (range === "weeks12") for (let i = 11; i >= 0; i--) { const to = addDays(today, -7 * i); spans.push([addDays(to, -6), to]); }
   else for (let i = 11; i >= 0; i--) { const end = monthEnd(today, i); spans.push([monthStart(today, i), end > today ? today : end]); }
+  return spans;
+}
+
+export function habitRange(hb: Habit, logs: Log[], today: string, range: GridRange, since: string | null): GridPeriod[] {
+  const spans = gridSpans(today, range);
   return spans.map(([from, to]) => {
     const start = since && since > from ? since : from;
     let planned = 0, done = 0;
     for (let d = start; d <= to && d <= today; d = addDays(d, 1)) if (isPlanned(hb, d)) { planned++; if (isDone(hb, logs, d)) done++; }
     const state: PeriodState = planned === 0 ? "none" : done === planned ? "full" : done > 0 ? "some" : "open";
     return { from, to, planned, done, state };
+  });
+}
+
+// ---- Q-34: the same periods for the goal tracker. A period with a finished step of the goal is "done"; any other period is blank (no entry), never a 0. No run-count and no total. ----
+export interface GoalGridPeriod { from: string; to: string; count: number; state: "done" | "none" }
+export interface GoalGridRow { id: string; title: string; periods: GoalGridPeriod[] }
+/** `goals`: the goals to show, each with the ids of its own steps. `recs`: the records that hold those steps. */
+export function goalGrid(goals: ReadonlyArray<{ id: string; title: string; stepIds: readonly string[] }>, recs: readonly TMRecord[], today: string, range: GridRange): GoalGridRow[] {
+  const doneOn = new Map<string, string>();
+  for (const r of recs) if (r.entity === "task") { const d = val(r.values["task.done_on"]); if (typeof d === "string" && /^\d{4}-\d{2}-\d{2}$/.test(d)) doneOn.set(r.id, d); }
+  const spans = gridSpans(today, range);
+  return goals.map((g) => {
+    const days = g.stepIds.map((id) => doneOn.get(id)).filter((d): d is string => d !== undefined && d <= today);
+    return { id: g.id, title: g.title, periods: spans.map(([from, to]) => { const count = days.filter((d) => d >= from && d <= to).length; return { from, to, count, state: count > 0 ? "done" as const : "none" as const }; }) };
   });
 }

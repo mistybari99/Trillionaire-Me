@@ -1,0 +1,15 @@
+/* Batch 3 (Q-12, Q-13, Q-34). Tokens only; pictures are aria-hidden and never carry the only copy. */
+.qb3-toggle{display:flex;align-items:center;gap:10px;min-height:44px;margin:8px 0}
+.qb3-toggle input{width:24px;height:24px;flex:none}
+.qb3-bar{margin:10px 0}
+.qb3-bar .bar{display:flex;height:16px;border:1.5px solid var(--rule);background:var(--card);overflow:hidden;border-radius:4px}
+.qb3-bar [data-seg=own]{background:var(--primary)}
+.qb3-bar [data-seg=extra]{background:var(--primary);opacity:0.35}
+.qb3-bar p{line-height:1.5;overflow-wrap:anywhere}
+.qb3-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(14px,1fr));gap:3px;margin:6px 0}
+.qb3-grid span{display:block;height:14px;border:1px solid var(--rule);border-radius:3px;background:transparent}
+.qb3-grid span[data-on="1"]{background:var(--primary);border-color:var(--primary)}
+.qb3-sec{margin:12px 0}
+.qb3-day{display:grid;gap:8px;margin:10px 0}
+.qb3-day input,.qb3-extra input{min-height:44px}
+.qb3-extra{display:grid;gap:6px}

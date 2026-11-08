@@ -1,9 +1,9 @@
 {
-  "keys": 2692,
+  "keys": 2729,
   "perFile": {
     "src/i18n/packs.ts": 2484,
     "src/i18n/vault.ts": 76,
-    "src/catalog/fields.ts": 1056,
+    "src/catalog/fields.ts": 1078,
     "src/catalog/glossary.ts": 68,
     "src/modules/capability.ts": 53,
     "src/schema/entities.ts": 47,
@@ -51,6 +51,7 @@
     "src/core/sectors/families/retail.ts": 27,
     "src/core/sectors/families/transport-logistics.ts": 37,
     "src/core/sectors/families/wholesale-trading.ts": 29,
+    "src/i18n/q_b3.ts": 37,
     "public/content/pack-001.json": 111,
     "public/content/pack-002.json": 42,
     "public/content/pack-003.json": 60,

@@ -27,6 +27,7 @@ import { habitLines } from "../core/habitGoals";
 import { goalIdsOf } from "../core/taskGoals";
 import { linkStats } from "../core/goalPlan";
 import { planByTag } from "./backwardUi";
+import { goalGridCard } from "./qb3Ui";
 import { HORIZONS } from "../core/horizon";
 import { kindIcon, levelTag, stepTags, whyCard } from "./qb1Ui";
 import { problemFrameCard, smartWizardCard, startCard, tableLink, wantFeelDoCard, worksheetCard } from "./qb2Ui";
@@ -195,6 +196,7 @@ function goalsScreenInner(): HTMLElement {
   const st = linkStats(recs);
   return h("main", {}, link("#/journey", "crumb", `← ${t("journey.title", lang)}`), h("h1", {}, t("goals.title", lang)), h("p", { class: "sub" }, t("goals.intro", lang)),
     overallProgressCard(lang, "journey"),
+    goalGridCard(recs, lang),
     link("#/journey/backward", "btn ghost", t("bw.link", lang)),
     st.steps ? h("p", { class: "muted", "data-link-stats": "1" }, t("gl.ov.fact", lang, { n: num(st.steps, lang), s: num(st.shared, lang), u: num(st.unlinked, lang) }), " ", t("gl.ov.note", lang)) : null,
     ...active.map((n) => rootCard(n, recs, lang)),

@@ -48,3 +48,14 @@ export function withPlanDates(recs: readonly TMRecord[], rows: ReadonlyArray<{ i
 export function withoutPlanDates(recs: readonly TMRecord[], goalId: string): TMRecord[] {
   return recs.filter((r) => r.entity === "task" && goalIdsOf(r).includes(goalId) && r.values[PLAN_BY] !== undefined).map((r) => { const { [PLAN_BY]: _gone, ...rest } = r.values; return { ...r, values: rest }; });
 }
+
+// Q-12 (batch 3): "Keep the last day free". The user end date stays the end date; the last step is planned one day before it.
+export type BufferState = "off" | "on" | "noroom";
+export interface BufferedWorkBack { plan: WorkBack; buffer: BufferState; freeDay: string | null }
+/** With keepLastFree on and at least 2 days left, works back to the day before the end date. With exactly 1 day left there is no room: the plan stays on the end date. A past or missing date is not a room problem ("off"). */
+export function workBackBuffered(lastFirst: readonly string[], target: string, today: string, keepLastFree: boolean): BufferedWorkBack {
+  const plain = workBack(lastFirst, target, today);
+  if (!keepLastFree || plain.kind === "no-date" || plain.kind === "past") return { plan: plain, buffer: "off", freeDay: null };
+  if (daysBetween(today, target) < 2) return { plan: plain, buffer: "noroom", freeDay: null };
+  return { plan: workBack(lastFirst, fromDay(toDay(target) - 1), today), buffer: "on", freeDay: target };
+}
