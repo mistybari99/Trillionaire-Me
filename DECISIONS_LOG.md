@@ -876,7 +876,7 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 - Alternatives: a schema version bump with a no-op migration (rejected: nothing to migrate, and a parallel batch edits the same catalog); a separate micro-habit entity (rejected: it would need its own log and grid).
 - Undo: revert the three Q-12 / Q-34 / Q-13 commits of this branch. Records written with the new habit fields stay readable (unknown fields are ignored by older code).
 
-## 2026-11-07 — Optional manual work time blocks built (BUILD-01, TM-REQ-040), built, audit pending
+## 2026-11-07 — Optional manual work time blocks built (BUILD-01, TM-REQ-040), built and audited (round 1 fixes applied)
 - What: an OPTIONAL feature, OFF by default (pref `workBlocks`, key `tm:ui:workBlocks`, switch on the Plan screen, row "Work time blocks" in the settings registry). The user blocks their own work time by hand: day, start, end, optional name, repeat (none, daily, Monday to Friday, weekly), optional goal link, "protected" tick, optional reminder. Add, edit/move (same id), delete. Ideas (`src/core/blockSuggest.ts`) come from the user's own free slots sized by open steps that have a minutes estimate, plus three neutral windows (morning 08-10, afternoon 14-16, evening 19-21) labelled "ideas, not advice"; a block is created only on a tap. Shown on Plan and Today.
 - Prayer: no forced prayer block anywhere. The old "prayer" kind in Committed time stays as it was (a prayer block exists only if the user typed minutes; with none typed there is none; tested), not removed, so no migration of it. Suggestions take no prayer input. Prayer times are information only and are never subtracted.
 - Planner: a work block is busy only when marked protected (`currentBlocks().plannerBlocks`, used by the Plan screen and by plan-start reminders). Overlap (with another work block, or with committed time the user typed) is a warning only; nothing is moved. With the feature off, work blocks have no effect.
@@ -891,3 +891,9 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 - What: the app name stays "Trillionaire Me" (Spec sections 0 and 1 name it so). "Build Yourself" (owner wrote "Build Your Self") is the product line, shown as a subtitle: page title, splash, About card, Profile card. Tagline EN "Build yourself, one small step at a time." / BN "নিজেকে গড়ুন, ছোট ছোট ধাপে।". Strings in `src/i18n/q_brand.ts`; test `tests/brand_line.test.ts`.
 - Why: no conflict with the Spec, so a subtitle is the smallest reversible change. Calm wording, no promise.
 - Alternatives: rename the app (rejected: conflicts with the Spec and the installed name). Undo: delete `q_brand.ts`, `brandUi.ts`, the two card calls, the splash lines and the title suffix.
+
+### W5b Floating quick-action head (7 Nov 2026)
+- What: an optional floating button (off by default, setting in Settings) that opens four actions: Capture, prayer mark, Stuck, Today. It reuses the same TAB_ACTIONS commands and the same prayer marks as Deen/Today (no copy, no counts). The user can move it and reset its position.
+- Why: owner asked for a Messenger-style quick head; off by default keeps the app calm and avoids covering content.
+- Alternatives: always-on head (rejected: intrusive); native overlay (rejected: PWA first, D-A).
+- Undo: turn the setting off, or delete `floatingHead.ts`, `q_head.ts` and the HEAD_ACTIONS entries.
