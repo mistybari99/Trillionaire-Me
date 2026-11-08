@@ -28,7 +28,7 @@ const R = (id: string, cat: Cat, label: Key, route: string, words: string[], pre
 export const ROWS: SettingRow[] = [
   R("language", "home", "more.language", "#/settings/home/language", ["language", "bangla", "english", "mix", "bn", "en"], ["lang"], ["tm:ui:lang"]),
   R("theme", "home", "more.theme", "#/settings/home/theme", ["theme", "dark", "light", "night", "mode", "auto"], ["theme"], ["tm:ui:theme"]),
-  R("textsize", "home", "more.textsize", "#/settings/home/textsize", ["text size", "font", "bigger", "larger", "zoom", "scale"], ["scale"], ["tm:ui:scale"]),
+  R("textsize", "home", "more.textsize", "#/settings/home/textsize", ["text size", "font", "bigger", "larger", "zoom", "scale", "lock", "unlock"], ["scale", "scaleLocked"], ["tm:ui:scale", "tm:ui:scaleLocked"]),
 
   R("helpplacement", "look", "set.row.helpplacement", "#/settings/look/helpplacement", ["help info panel inline sheet"], [], ["tm:ui:helpPlacement"]),
   R("helpvisuals", "look", "set.row.helpvisuals", "#/settings/look/helpvisuals", ["help diagram illustration visual"], [], ["tm:ui:helpVisuals"]),

@@ -9,7 +9,7 @@ import { stampLine } from "../core/updateBanner";
 import { t } from "../i18n/t";
 import type { Key } from "../i18n/packs";
 import { LOCALES, LOCALE_ORDER, type Locale } from "../i18n/registry";
-import { applyPrefs, prefs, consentKv, MOVED_NOTE_DAYS } from "./state";
+import { applyPrefs, prefs, setScaleLocked, consentKv, MOVED_NOTE_DAYS } from "./state";
 import { num } from "./components";
 import { whenText } from "./snapshotsUi";
 import { readConsent } from "../core/consent";
@@ -87,18 +87,41 @@ function highlight(root: HTMLElement, row: string | undefined) {
 
 /** Live input keeps the same DOM node so pointer dragging and keyboard focus continue. */
 function textSizeSlider(lang: Locale): HTMLElement {
+  const locked = prefs.scaleLocked;
   const current = h("output", { for: "text-size-slider", "aria-live": "off" }, `${num(prefs.scale, lang)}%`);
   const slider = h("input", { type: "range", id: "text-size-slider", min: "50", max: "150", step: "1", value: String(prefs.scale),
-    "aria-label": t("more.textsize", lang), "aria-valuetext": `${num(prefs.scale, lang)}%`, "data-scale": "slider" });
+    "aria-label": t("more.textsize", lang), "aria-valuetext": `${num(prefs.scale, lang)}%`, "aria-describedby": "text-size-lock-state",
+    disabled: locked, "data-scale": "slider" });
   slider.addEventListener("input", () => {
+    if (prefs.scaleLocked) { slider.value = String(prefs.scale); return; }
     prefs.scale = Number(slider.value);
     applyPrefs();
     current.value = `${num(prefs.scale, lang)}%`;
     slider.setAttribute("aria-valuetext", current.value);
     slider.scrollIntoView?.({ block: "nearest" });
   });
-  return h("div", { class: "text-size-control" },
-    h("div", { class: "text-size-readout" }, h("span", { class: "muted" }, "50%"), current, h("span", { class: "muted" }, "150%")), slider);
+  const action = t(locked ? "set.textsize.unlock" : "set.textsize.lock", lang);
+  const lock = h("button", { class: "btn ghost text-size-lock", type: "button", "aria-label": action, "aria-pressed": String(locked),
+    "aria-describedby": "text-size-lock-state", title: action, "data-scale-lock": locked ? "on" : "off" },
+  h("span", { "aria-hidden": "true" }, locked ? "🔒" : "🔓"), h("span", { class: "sr-only" }, action));
+  const state = h("span", { id: "text-size-lock-state", class: "sr-only", "data-scale-lock-state": locked ? "locked" : "unlocked" }, t(locked ? "set.textsize.locked" : "set.textsize.unlocked", lang));
+  const root = h("div", { class: "text-size-control" },
+    h("div", { class: "text-size-readout" }, h("span", { class: "muted" }, "50%"), current, h("span", { class: "muted" }, "150%")),
+    h("div", { class: "text-size-slider-row" }, slider, lock), state);
+  lock.addEventListener("click", () => {
+    const result = setScaleLocked(!prefs.scaleLocked);
+    const nowLocked = prefs.scaleLocked;
+    const nextAction = t(nowLocked ? "set.textsize.unlock" : "set.textsize.lock", lang);
+    slider.disabled = nowLocked;
+    lock.setAttribute("aria-label", nextAction); lock.setAttribute("aria-pressed", String(nowLocked)); lock.setAttribute("title", nextAction); lock.dataset.scaleLock = nowLocked ? "on" : "off";
+    lock.querySelector<HTMLElement>("[aria-hidden=true]")!.textContent = nowLocked ? "🔒" : "🔓";
+    lock.querySelector<HTMLElement>(".sr-only")!.textContent = nextAction;
+    state.dataset.scaleLockState = nowLocked ? "locked" : "unlocked"; state.textContent = t(nowLocked ? "set.textsize.locked" : "set.textsize.unlocked", lang);
+    root.querySelector("[data-scale-lock-error]")?.remove();
+    if (!result.saved) root.append(h("p", { role: "alert", "data-scale-lock-error": "1" }, t("set.textsize.lockSaveFailed", lang)));
+    lock.focus();
+  });
+  return root;
 }
 
 function quickCard(lang: Locale): HTMLElement {

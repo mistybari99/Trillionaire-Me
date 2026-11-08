@@ -304,11 +304,12 @@ for (const lang of ["en", "bn"]) {
 {
   const probe = () => page.evaluate(() => {
     const fs = (sel) => { const e = document.querySelector(sel); return e ? parseFloat(getComputedStyle(e).fontSize) : null; };
+    const target = (sel) => { const e = document.querySelector(sel); if (!e) return null; const r = e.getBoundingClientRect(); return { w: r.width, h: r.height }; };
     const clipped = [...document.querySelectorAll("main *")].filter((e) => { const cs = getComputedStyle(e); return !e.closest(".sr-only") && (cs.overflow === "hidden" || cs.overflowX === "hidden") && e.scrollWidth > e.clientWidth + 1 && e.clientWidth > 0 && e.textContent.trim(); }).length;
-    return { root: fs("html"), h1: fs("main h1"), p: fs("main .muted, main p"), btn: fs("main .seg button, main .btn"), tab: fs("nav a.tab"), input: fs("main input, main select"), scrollOk: document.documentElement.scrollWidth <= window.innerWidth + 1, clipped };
+    return { root: fs("html"), h1: fs("main h1"), p: fs("main .muted, main p"), btn: fs("main .seg button, main .btn"), tab: fs("nav a.tab"), input: fs("main input, main select"), lockTarget: target("[data-scale-lock]"), scrollOk: document.documentElement.scrollWidth <= window.innerWidth + 1, clipped };
   });
-  for (const lang of ["en", "bn"]) {
-    await page.evaluate((l) => localStorage.setItem("tm:ui:lang", l), lang);
+  for (const lang of ["en", "bn", "mix"]) {
+    await page.evaluate((l) => { localStorage.setItem("tm:ui:lang", l); localStorage.setItem("tm:ui:scaleLocked", "off"); sessionStorage.clear(); }, lang);
     await page.goto("http://localhost:4174/#/settings"); await page.reload(); await page.waitForSelector("[data-scale]");
     const sizes = {};
     for (const n of [50, 75, 100, 113, 125, 150]) { await page.locator('[data-scale=slider]').evaluate((el, value) => { el.value = String(value); el.dispatchEvent(new Event('input', { bubbles: true })); }, n); await page.waitForTimeout(150); sizes[n] = await probe(); }
@@ -316,6 +317,7 @@ for (const lang of ["en", "bn"]) {
     const scales = [50, 75, 113, 125, 150].every((n) => ["root", "h1", "p", "btn", "tab"].every((k) => base[k] && Math.abs(sizes[n][k] / base[k] - n / 100) < 0.03));
     check("TEXTSIZE", `${lang}: 50, 75, 113, 125 and 150% scale root, heading, text, buttons and tab bar`, scales, JSON.stringify({ base, s50: sizes[50], s150: sizes[150] }));
     check("TEXTSIZE", `${lang}: slider range fits at 50% and 150%`, [50,150].every(n => sizes[n].scrollOk && sizes[n].clipped === 0), JSON.stringify({s50:sizes[50],s150:sizes[150]}));
+    check("TEXTSIZE-LOCK-TARGET", `${lang}: lock target stays at least 44px at 50, 100 and 150%`, [50,100,150].every(n => sizes[n].lockTarget?.w >= 44 && sizes[n].lockTarget?.h >= 44), JSON.stringify({s50:sizes[50].lockTarget,s100:sizes[100].lockTarget,s150:sizes[150].lockTarget}));
     const slider = page.locator('[data-scale=slider]');
     await slider.focus(); await page.keyboard.press('Home'); const minimum = await slider.inputValue();
     await page.keyboard.press('End'); const maximum = await slider.inputValue(); await page.keyboard.press('ArrowLeft');
@@ -327,6 +329,17 @@ for (const lang of ["en", "bn"]) {
     await page.mouse.move(xFor(100),box.y+box.height/2); await page.mouse.down(); await page.mouse.move(xFor(117),box.y+box.height/2,{steps:12}); await page.mouse.up();
     const dragged = await slider.evaluate(el => ({value:Number(el.value),kept:el.dataset.dragProbe==='kept',saved:localStorage.getItem('tm:ui:scale'),root:document.documentElement.style.fontSize}));
     check("TEXTSIZE-DRAG", `${lang}: dragging selects and saves a non-preset size without replacing the slider`, Math.abs(dragged.value-117)<=1 && dragged.kept && dragged.saved===String(dragged.value) && dragged.root===`${dragged.value}%`, JSON.stringify(dragged));
+    await page.locator('[data-scale-lock]').click();
+    const lockedBefore = await page.locator('[data-scale=slider]').evaluate(el => ({disabled:el.disabled,value:el.value,saved:localStorage.getItem('tm:ui:scale'),lock:localStorage.getItem('tm:ui:scaleLocked'),focus:document.activeElement?.getAttribute('data-scale-lock'),describedBy:el.getAttribute('aria-describedby')}));
+    await page.locator('[data-scale=slider]').evaluate(el => {el.value='50';el.dispatchEvent(new Event('input',{bubbles:true}));});
+    await page.reload(); await page.waitForSelector('[data-scale=slider]');
+    const lockedAfter = await page.locator('[data-scale=slider]').evaluate(el => ({disabled:el.disabled,value:el.value,saved:localStorage.getItem('tm:ui:scale'),root:document.documentElement.style.fontSize,pressed:document.querySelector('[data-scale-lock]')?.getAttribute('aria-pressed'),name:document.querySelector('[data-scale-lock]')?.getAttribute('aria-label')}));
+    check("TEXTSIZE-LOCK", `${lang}: lock blocks changes, keeps focus and persists across reload without changing the size`, lockedBefore.disabled && lockedBefore.lock==='on' && lockedBefore.focus==='on' && lockedBefore.describedBy==='text-size-lock-state' && lockedAfter.disabled && lockedAfter.value===String(dragged.value) && lockedAfter.saved===String(dragged.value) && lockedAfter.root===`${dragged.value}%` && lockedAfter.pressed==='true' && Boolean(lockedAfter.name), JSON.stringify({lockedBefore,lockedAfter}));
+    await page.locator('[data-scale-lock]').click();
+    check("TEXTSIZE-UNLOCK", `${lang}: unlock restores the same focused slider control and current size`, await page.locator('[data-scale=slider]').isEnabled() && await page.locator('[data-scale=slider]').inputValue()===String(dragged.value) && await page.locator('[data-scale-lock]').evaluate(el => document.activeElement === el));
+    await page.evaluate(() => document.documentElement.style.fontSize="200%");
+    const target200 = await page.locator('[data-scale-lock]').boundingBox();
+    check("TEXTSIZE-LOCK-TARGET", `${lang}: lock target stays at least 44px at 200% stress`, Boolean(target200 && target200.width >= 44 && target200.height >= 44), JSON.stringify(target200));
     for (const r of ["today", "journey", "deen", "settings/prayer", "diary/plan"]) {
       await page.goto(`http://localhost:4174/#/${r}`); await page.waitForSelector("main"); await page.evaluate(() => document.documentElement.style.fontSize="200%"); await page.waitForTimeout(200);
       const x = await probe(); check("TEXTSIZE", `${lang}: ${r} at 200% accessibility stress fits`, x.scrollOk && x.clipped === 0 && x.h1 >= 40, JSON.stringify(x));

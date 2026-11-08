@@ -113,3 +113,9 @@ Local verification complete:2102unit tests,104whole-app browser checks,164presen
 ## Contextual-help integration with production38c8c2f
 
 Preserved newer kit/audio/transient-CI work; production UI-04 retained, contextual-help row renamed UI-05. Separate Prompt-Engineer work order and read-only Audit PASS recorded in [merge audit](../audit/contextual-help/MERGE_AUDIT.md). Fresh merged evidence:2151full-suite unit tests plus20latest storage/prayer regressions,107whole-app browser checks,263presentation/layout checks,16extra dark-overlay checks. Fixed reproduced duplicate Back stop and actual save-failure draft loss. Remote release checks remain pending; no physical/human gate marked done.
+
+## 8 November 2026 — recovered Text Size Lock integration
+
+The previous Codex workspace was inaccessible, so the attached 12-file audit package was preserved and reconciled by intent against GitHub default `3a5cc325` in a separate local worktree. The lock keeps the exact 50–150% value, blocks native and dispatched input, restores button focus, provides EN/BN/Mix action/state text, and uses a session-scoped truthful fallback after durable-storage failure. The dropdown audit remains proposal-only; no dropdown conversion, schema change, backup-format change, v2 implementation, push or deployment occurred.
+
+Fresh combined-source verification: 2,688/2,688 tests across 230 files, strict typecheck and production build pass; plan/link check passes with 34 active packages and 141 local links; 138/138 whole-app Chromium checks pass. Physical Android/TalkBack and named Bangla review remain open.

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-06T17:48:04.855Z",
+  "generated": "2026-11-08T10:40:47.599Z",
   "results": [
     {
       "id": "BRAND-SPLASH",
@@ -323,19 +323,19 @@
       "id": "SET-QUICK-FOLD",
       "name": "Settings Quick card fits above the tab bar at 360 px without scrolling (en)",
       "pass": true,
-      "detail": "{\"top\":228,\"bottom\":598,\"nav\":683,\"scrolled\":0}"
+      "detail": "{\"top\":228,\"bottom\":614,\"nav\":683,\"scrolled\":0}"
     },
     {
       "id": "SET-QUICK-FOLD",
       "name": "Settings Quick card fits above the tab bar at 360 px without scrolling (bn)",
       "pass": true,
-      "detail": "{\"top\":228,\"bottom\":598,\"nav\":683,\"scrolled\":0}"
+      "detail": "{\"top\":228,\"bottom\":614,\"nav\":683,\"scrolled\":0}"
     },
     {
       "id": "SET-QUICK-FOLD",
       "name": "Settings Quick card fits above the tab bar at 360 px without scrolling (mix)",
       "pass": true,
-      "detail": "{\"top\":228,\"bottom\":598,\"nav\":683,\"scrolled\":0}"
+      "detail": "{\"top\":228,\"bottom\":614,\"nav\":683,\"scrolled\":0}"
     },
     {
       "id": "UI-SPACING",
@@ -395,13 +395,19 @@
       "id": "TEXTSIZE",
       "name": "en: 50, 75, 113, 125 and 150% scale root, heading, text, buttons and tab bar",
       "pass": true,
-      "detail": "{\"base\":{\"root\":16,\"h1\":28,\"p\":15,\"btn\":17,\"tab\":14,\"input\":17,\"scrollOk\":true,\"clipped\":0},\"s50\":{\"root\":8,\"h1\":14,\"p\":7.5,\"btn\":8.5,\"tab\":7,\"input\":8.5,\"scrollOk\":true,\"clipped\":0},\"s150\":{\"root\":24,\"h1\":42,\"p\":22.5,\"btn\":25.5,\"tab\":21,\"input\":25.5,\"scrollOk\":true,\"clipped\":0}}"
+      "detail": "{\"base\":{\"root\":16,\"h1\":28,\"p\":15,\"btn\":17,\"tab\":14,\"input\":17,\"lockTarget\":{\"w\":44,\"h\":48},\"scrollOk\":true,\"clipped\":0},\"s50\":{\"root\":8,\"h1\":14,\"p\":7.5,\"btn\":8.5,\"tab\":7,\"input\":8.5,\"lockTarget\":{\"w\":44,\"h\":48},\"scrollOk\":true,\"clipped\":0},\"s150\":{\"root\":24,\"h1\":42,\"p\":22.5,\"btn\":25.5,\"tab\":21,\"input\":25.5,\"lockTarget\":{\"w\":44,\"h\":54},\"scrollOk\":true,\"clipped\":0}}"
     },
     {
       "id": "TEXTSIZE",
       "name": "en: slider range fits at 50% and 150%",
       "pass": true,
-      "detail": "{\"s50\":{\"root\":8,\"h1\":14,\"p\":7.5,\"btn\":8.5,\"tab\":7,\"input\":8.5,\"scrollOk\":true,\"clipped\":0},\"s150\":{\"root\":24,\"h1\":42,\"p\":22.5,\"btn\":25.5,\"tab\":21,\"input\":25.5,\"scrollOk\":true,\"clipped\":0}}"
+      "detail": "{\"s50\":{\"root\":8,\"h1\":14,\"p\":7.5,\"btn\":8.5,\"tab\":7,\"input\":8.5,\"lockTarget\":{\"w\":44,\"h\":48},\"scrollOk\":true,\"clipped\":0},\"s150\":{\"root\":24,\"h1\":42,\"p\":22.5,\"btn\":25.5,\"tab\":21,\"input\":25.5,\"lockTarget\":{\"w\":44,\"h\":54},\"scrollOk\":true,\"clipped\":0}}"
+    },
+    {
+      "id": "TEXTSIZE-LOCK-TARGET",
+      "name": "en: lock target stays at least 44px at 50, 100 and 150%",
+      "pass": true,
+      "detail": "{\"s50\":{\"w\":44,\"h\":48},\"s100\":{\"w\":44,\"h\":48},\"s150\":{\"w\":44,\"h\":54}}"
     },
     {
       "id": "TEXTSIZE-KEYBOARD",
@@ -416,46 +422,70 @@
       "detail": "{\"value\":117,\"kept\":true,\"saved\":\"117\",\"root\":\"117%\"}"
     },
     {
+      "id": "TEXTSIZE-LOCK",
+      "name": "en: lock blocks changes, keeps focus and persists across reload without changing the size",
+      "pass": true,
+      "detail": "{\"lockedBefore\":{\"disabled\":true,\"value\":\"117\",\"saved\":\"117\",\"lock\":\"on\",\"focus\":\"on\",\"describedBy\":\"text-size-lock-state\"},\"lockedAfter\":{\"disabled\":true,\"value\":\"117\",\"saved\":\"117\",\"root\":\"117%\",\"pressed\":\"true\",\"name\":\"Unlock text size\"}}"
+    },
+    {
+      "id": "TEXTSIZE-UNLOCK",
+      "name": "en: unlock restores the same focused slider control and current size",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "TEXTSIZE-LOCK-TARGET",
+      "name": "en: lock target stays at least 44px at 200% stress",
+      "pass": true,
+      "detail": "{\"x\":283,\"y\":597.375,\"width\":44,\"height\":66}"
+    },
+    {
       "id": "TEXTSIZE",
       "name": "en: today at 200% accessibility stress fits",
       "pass": true,
-      "detail": "{\"root\":32,\"h1\":56,\"p\":30,\"btn\":32,\"tab\":28,\"input\":null,\"scrollOk\":true,\"clipped\":0}"
+      "detail": "{\"root\":32,\"h1\":56,\"p\":30,\"btn\":32,\"tab\":28,\"input\":null,\"lockTarget\":null,\"scrollOk\":true,\"clipped\":0}"
     },
     {
       "id": "TEXTSIZE",
       "name": "en: journey at 200% accessibility stress fits",
       "pass": true,
-      "detail": "{\"root\":32,\"h1\":56,\"p\":30,\"btn\":34,\"tab\":28,\"input\":null,\"scrollOk\":true,\"clipped\":0}"
+      "detail": "{\"root\":32,\"h1\":56,\"p\":30,\"btn\":34,\"tab\":28,\"input\":null,\"lockTarget\":null,\"scrollOk\":true,\"clipped\":0}"
     },
     {
       "id": "TEXTSIZE",
       "name": "en: deen at 200% accessibility stress fits",
       "pass": true,
-      "detail": "{\"root\":32,\"h1\":56,\"p\":30,\"btn\":32,\"tab\":28,\"input\":null,\"scrollOk\":true,\"clipped\":0}"
+      "detail": "{\"root\":32,\"h1\":56,\"p\":30,\"btn\":32,\"tab\":28,\"input\":null,\"lockTarget\":null,\"scrollOk\":true,\"clipped\":0}"
     },
     {
       "id": "TEXTSIZE",
       "name": "en: settings/prayer at 200% accessibility stress fits",
       "pass": true,
-      "detail": "{\"root\":32,\"h1\":56,\"p\":30,\"btn\":34,\"tab\":28,\"input\":34,\"scrollOk\":true,\"clipped\":0}"
+      "detail": "{\"root\":32,\"h1\":56,\"p\":30,\"btn\":34,\"tab\":28,\"input\":34,\"lockTarget\":null,\"scrollOk\":true,\"clipped\":0}"
     },
     {
       "id": "TEXTSIZE",
       "name": "en: diary/plan at 200% accessibility stress fits",
       "pass": true,
-      "detail": "{\"root\":32,\"h1\":56,\"p\":30,\"btn\":32,\"tab\":28,\"input\":34,\"scrollOk\":true,\"clipped\":0}"
+      "detail": "{\"root\":32,\"h1\":56,\"p\":30,\"btn\":32,\"tab\":28,\"input\":34,\"lockTarget\":null,\"scrollOk\":true,\"clipped\":0}"
     },
     {
       "id": "TEXTSIZE",
       "name": "bn: 50, 75, 113, 125 and 150% scale root, heading, text, buttons and tab bar",
       "pass": true,
-      "detail": "{\"base\":{\"root\":16,\"h1\":28,\"p\":15,\"btn\":17,\"tab\":14,\"input\":17,\"scrollOk\":true,\"clipped\":0},\"s50\":{\"root\":8,\"h1\":14,\"p\":7.5,\"btn\":8.5,\"tab\":7,\"input\":8.5,\"scrollOk\":true,\"clipped\":0},\"s150\":{\"root\":24,\"h1\":42,\"p\":22.5,\"btn\":25.5,\"tab\":21,\"input\":25.5,\"scrollOk\":true,\"clipped\":0}}"
+      "detail": "{\"base\":{\"root\":16,\"h1\":28,\"p\":15,\"btn\":17,\"tab\":14,\"input\":17,\"lockTarget\":{\"w\":44,\"h\":48},\"scrollOk\":true,\"clipped\":0},\"s50\":{\"root\":8,\"h1\":14,\"p\":7.5,\"btn\":8.5,\"tab\":7,\"input\":8.5,\"lockTarget\":{\"w\":44,\"h\":48},\"scrollOk\":true,\"clipped\":0},\"s150\":{\"root\":24,\"h1\":42,\"p\":22.5,\"btn\":25.5,\"tab\":21,\"input\":25.5,\"lockTarget\":{\"w\":44,\"h\":54},\"scrollOk\":true,\"clipped\":0}}"
     },
     {
       "id": "TEXTSIZE",
       "name": "bn: slider range fits at 50% and 150%",
       "pass": true,
-      "detail": "{\"s50\":{\"root\":8,\"h1\":14,\"p\":7.5,\"btn\":8.5,\"tab\":7,\"input\":8.5,\"scrollOk\":true,\"clipped\":0},\"s150\":{\"root\":24,\"h1\":42,\"p\":22.5,\"btn\":25.5,\"tab\":21,\"input\":25.5,\"scrollOk\":true,\"clipped\":0}}"
+      "detail": "{\"s50\":{\"root\":8,\"h1\":14,\"p\":7.5,\"btn\":8.5,\"tab\":7,\"input\":8.5,\"lockTarget\":{\"w\":44,\"h\":48},\"scrollOk\":true,\"clipped\":0},\"s150\":{\"root\":24,\"h1\":42,\"p\":22.5,\"btn\":25.5,\"tab\":21,\"input\":25.5,\"lockTarget\":{\"w\":44,\"h\":54},\"scrollOk\":true,\"clipped\":0}}"
+    },
+    {
+      "id": "TEXTSIZE-LOCK-TARGET",
+      "name": "bn: lock target stays at least 44px at 50, 100 and 150%",
+      "pass": true,
+      "detail": "{\"s50\":{\"w\":44,\"h\":48},\"s100\":{\"w\":44,\"h\":48},\"s150\":{\"w\":44,\"h\":54}}"
     },
     {
       "id": "TEXTSIZE-KEYBOARD",
@@ -470,34 +500,130 @@
       "detail": "{\"value\":117,\"kept\":true,\"saved\":\"117\",\"root\":\"117%\"}"
     },
     {
+      "id": "TEXTSIZE-LOCK",
+      "name": "bn: lock blocks changes, keeps focus and persists across reload without changing the size",
+      "pass": true,
+      "detail": "{\"lockedBefore\":{\"disabled\":true,\"value\":\"117\",\"saved\":\"117\",\"lock\":\"on\",\"focus\":\"on\",\"describedBy\":\"text-size-lock-state\"},\"lockedAfter\":{\"disabled\":true,\"value\":\"117\",\"saved\":\"117\",\"root\":\"117%\",\"pressed\":\"true\",\"name\":\"লেখার আকার আনলক করুন\"}}"
+    },
+    {
+      "id": "TEXTSIZE-UNLOCK",
+      "name": "bn: unlock restores the same focused slider control and current size",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "TEXTSIZE-LOCK-TARGET",
+      "name": "bn: lock target stays at least 44px at 200% stress",
+      "pass": true,
+      "detail": "{\"x\":283,\"y\":599.375,\"width\":44,\"height\":66}"
+    },
+    {
       "id": "TEXTSIZE",
       "name": "bn: today at 200% accessibility stress fits",
       "pass": true,
-      "detail": "{\"root\":32,\"h1\":56,\"p\":30,\"btn\":32,\"tab\":28,\"input\":null,\"scrollOk\":true,\"clipped\":0}"
+      "detail": "{\"root\":32,\"h1\":56,\"p\":30,\"btn\":32,\"tab\":28,\"input\":null,\"lockTarget\":null,\"scrollOk\":true,\"clipped\":0}"
     },
     {
       "id": "TEXTSIZE",
       "name": "bn: journey at 200% accessibility stress fits",
       "pass": true,
-      "detail": "{\"root\":32,\"h1\":56,\"p\":30,\"btn\":34,\"tab\":28,\"input\":null,\"scrollOk\":true,\"clipped\":0}"
+      "detail": "{\"root\":32,\"h1\":56,\"p\":30,\"btn\":34,\"tab\":28,\"input\":null,\"lockTarget\":null,\"scrollOk\":true,\"clipped\":0}"
     },
     {
       "id": "TEXTSIZE",
       "name": "bn: deen at 200% accessibility stress fits",
       "pass": true,
-      "detail": "{\"root\":32,\"h1\":56,\"p\":30,\"btn\":32,\"tab\":28,\"input\":null,\"scrollOk\":true,\"clipped\":0}"
+      "detail": "{\"root\":32,\"h1\":56,\"p\":30,\"btn\":32,\"tab\":28,\"input\":null,\"lockTarget\":null,\"scrollOk\":true,\"clipped\":0}"
     },
     {
       "id": "TEXTSIZE",
       "name": "bn: settings/prayer at 200% accessibility stress fits",
       "pass": true,
-      "detail": "{\"root\":32,\"h1\":56,\"p\":30,\"btn\":34,\"tab\":28,\"input\":34,\"scrollOk\":true,\"clipped\":0}"
+      "detail": "{\"root\":32,\"h1\":56,\"p\":30,\"btn\":34,\"tab\":28,\"input\":34,\"lockTarget\":null,\"scrollOk\":true,\"clipped\":0}"
     },
     {
       "id": "TEXTSIZE",
       "name": "bn: diary/plan at 200% accessibility stress fits",
       "pass": true,
-      "detail": "{\"root\":32,\"h1\":56,\"p\":30,\"btn\":32,\"tab\":28,\"input\":34,\"scrollOk\":true,\"clipped\":0}"
+      "detail": "{\"root\":32,\"h1\":56,\"p\":30,\"btn\":32,\"tab\":28,\"input\":34,\"lockTarget\":null,\"scrollOk\":true,\"clipped\":0}"
+    },
+    {
+      "id": "TEXTSIZE",
+      "name": "mix: 50, 75, 113, 125 and 150% scale root, heading, text, buttons and tab bar",
+      "pass": true,
+      "detail": "{\"base\":{\"root\":16,\"h1\":28,\"p\":15,\"btn\":17,\"tab\":14,\"input\":17,\"lockTarget\":{\"w\":44,\"h\":48},\"scrollOk\":true,\"clipped\":0},\"s50\":{\"root\":8,\"h1\":14,\"p\":7.5,\"btn\":8.5,\"tab\":7,\"input\":8.5,\"lockTarget\":{\"w\":44,\"h\":48},\"scrollOk\":true,\"clipped\":0},\"s150\":{\"root\":24,\"h1\":42,\"p\":22.5,\"btn\":25.5,\"tab\":21,\"input\":25.5,\"lockTarget\":{\"w\":44,\"h\":54},\"scrollOk\":true,\"clipped\":0}}"
+    },
+    {
+      "id": "TEXTSIZE",
+      "name": "mix: slider range fits at 50% and 150%",
+      "pass": true,
+      "detail": "{\"s50\":{\"root\":8,\"h1\":14,\"p\":7.5,\"btn\":8.5,\"tab\":7,\"input\":8.5,\"lockTarget\":{\"w\":44,\"h\":48},\"scrollOk\":true,\"clipped\":0},\"s150\":{\"root\":24,\"h1\":42,\"p\":22.5,\"btn\":25.5,\"tab\":21,\"input\":25.5,\"lockTarget\":{\"w\":44,\"h\":54},\"scrollOk\":true,\"clipped\":0}}"
+    },
+    {
+      "id": "TEXTSIZE-LOCK-TARGET",
+      "name": "mix: lock target stays at least 44px at 50, 100 and 150%",
+      "pass": true,
+      "detail": "{\"s50\":{\"w\":44,\"h\":48},\"s100\":{\"w\":44,\"h\":48},\"s150\":{\"w\":44,\"h\":54}}"
+    },
+    {
+      "id": "TEXTSIZE-KEYBOARD",
+      "name": "mix: Home/End and arrow keys adjust the native slider",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "TEXTSIZE-DRAG",
+      "name": "mix: dragging selects and saves a non-preset size without replacing the slider",
+      "pass": true,
+      "detail": "{\"value\":117,\"kept\":true,\"saved\":\"117\",\"root\":\"117%\"}"
+    },
+    {
+      "id": "TEXTSIZE-LOCK",
+      "name": "mix: lock blocks changes, keeps focus and persists across reload without changing the size",
+      "pass": true,
+      "detail": "{\"lockedBefore\":{\"disabled\":true,\"value\":\"117\",\"saved\":\"117\",\"lock\":\"on\",\"focus\":\"on\",\"describedBy\":\"text-size-lock-state\"},\"lockedAfter\":{\"disabled\":true,\"value\":\"117\",\"saved\":\"117\",\"root\":\"117%\",\"pressed\":\"true\",\"name\":\"লেখার আকার আনলক করুন\"}}"
+    },
+    {
+      "id": "TEXTSIZE-UNLOCK",
+      "name": "mix: unlock restores the same focused slider control and current size",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "TEXTSIZE-LOCK-TARGET",
+      "name": "mix: lock target stays at least 44px at 200% stress",
+      "pass": true,
+      "detail": "{\"x\":283,\"y\":599.375,\"width\":44,\"height\":66}"
+    },
+    {
+      "id": "TEXTSIZE",
+      "name": "mix: today at 200% accessibility stress fits",
+      "pass": true,
+      "detail": "{\"root\":32,\"h1\":56,\"p\":30,\"btn\":32,\"tab\":28,\"input\":null,\"lockTarget\":null,\"scrollOk\":true,\"clipped\":0}"
+    },
+    {
+      "id": "TEXTSIZE",
+      "name": "mix: journey at 200% accessibility stress fits",
+      "pass": true,
+      "detail": "{\"root\":32,\"h1\":56,\"p\":30,\"btn\":34,\"tab\":28,\"input\":null,\"lockTarget\":null,\"scrollOk\":true,\"clipped\":0}"
+    },
+    {
+      "id": "TEXTSIZE",
+      "name": "mix: deen at 200% accessibility stress fits",
+      "pass": true,
+      "detail": "{\"root\":32,\"h1\":56,\"p\":30,\"btn\":32,\"tab\":28,\"input\":null,\"lockTarget\":null,\"scrollOk\":true,\"clipped\":0}"
+    },
+    {
+      "id": "TEXTSIZE",
+      "name": "mix: settings/prayer at 200% accessibility stress fits",
+      "pass": true,
+      "detail": "{\"root\":32,\"h1\":56,\"p\":30,\"btn\":34,\"tab\":28,\"input\":34,\"lockTarget\":null,\"scrollOk\":true,\"clipped\":0}"
+    },
+    {
+      "id": "TEXTSIZE",
+      "name": "mix: diary/plan at 200% accessibility stress fits",
+      "pass": true,
+      "detail": "{\"root\":32,\"h1\":56,\"p\":30,\"btn\":32,\"tab\":28,\"input\":34,\"lockTarget\":null,\"scrollOk\":true,\"clipped\":0}"
     },
     {
       "id": "TEXTSIZE",
@@ -507,7 +633,7 @@
     },
     {
       "id": "PRECACHE",
-      "name": "service worker saved all 61 files of the build (shell, fonts, content packs, page)",
+      "name": "service worker saved all 65 files of the build (shell, fonts, content packs, page)",
       "pass": true,
       "detail": ""
     },
@@ -515,7 +641,7 @@
       "id": "PRECACHE",
       "name": "only the current shell cache and the small runtime cache exist (old ones are deleted)",
       "pass": true,
-      "detail": "tm-runtime-v1,tm-shell-18825e995f3d"
+      "detail": "tm-runtime-v1,tm-shell-5cd86aaf2914"
     },
     {
       "id": "PRECACHE",
@@ -539,7 +665,7 @@
       "id": "UPDATE-INTERRUPTED",
       "name": "503 on a required asset rejects the new worker and preserves the complete active shell",
       "pass": true,
-      "detail": "{\"state\":\"redundant\",\"sameActive\":true,\"waiting\":false,\"oldFiles\":[\"/\",\"/assets/connectionsUi-CH6DqnKA.js\",\"/assets/decisionUi-DhlRdllw.js\",\"/assets/dexie-B2zrUJOC.js\",\"/assets/fraunces-latin-ext-400-normal-D8gbi3Gu.woff2\",\"/assets/fraunces-latin-400-normal-6IfK1voy.woff2\",\"/assets/fraunces-latin-ext-600-normal-BtzmzP0X.woff2\",\"/assets/fraunces-latin-600-normal-BFCDtZfi.woff2\",\"/assets/fraunces-vietnamese-400-normal-CvGt0Ybw.woff2\",\"/assets/fraunces-vietnamese-600-normal-BjlAJixd.woff2\",\"/assets/halalUi-Dh40VsGp.js\",\"/assets/hind-siliguri-bengali-400-normal-rHQ7AW0H.woff2\",\"/assets/hind-siliguri-bengali-500-normal-UuhTmLlo.woff2\",\"/assets/hind-siliguri-bengali-600-normal-DLZF4s8q.woff2\",\"/assets/hind-siliguri-latin-400-normal-esES0U7a.woff2\",\"/assets/hind-siliguri-latin-500-normal-S8HLIV69.woff2\",\"/assets/hind-siliguri-latin-600-normal-DHrLfb92.woff2\",\"/assets/hind-siliguri-latin-ext-400-normal-EIcpWxdl.woff2\",\"/assets/hind-siliguri-latin-ext-500-normal-BzNTYs89.woff2\",\"/assets/hind-siliguri-latin-ext-600-normal-BE5fbvrE.woff2\",\"/assets/hadithPack-DithIlcV.js\",\"/assets/index-Dk-DQDYL.css\",\"/assets/i18n-CduPA7c1.js\",\"/assets/legsUi-CkG8S4aN.js\",\"/assets/index-C2TCxJ8T.js\",\"/assets/library-BOzrJp_9.js\",\"/assets/noto-serif-bengali-bengali-500-normal-izpjMjkk.woff2\",\"/assets/noto-serif-bengali-bengali-700-normal-D6heRmtL.woff2\",\"/assets/noto-serif-bengali-latin-500-normal-ChHikhgt.woff2\",\"/assets/noto-serif-bengali-latin-700-normal-BH4cA-4o.woff2\",\"/assets/noto-serif-bengali-latin-ext-700-normal-ktrNXsDH.woff2\",\"/assets/noto-serif-bengali-latin-ext-500-normal-uqHYh-WD.woff2\",\"/assets/pack-002-C1ATZw8r.js\",\"/assets/pack-001-DUTOTIFf.js\",\"/assets/pack-003-DXXGS0EW.js\",\"/assets/pack-004-CADvCbl_.js\",\"/assets/pack-005-CAXnvOUz.js\",\"/assets/pack-006-DAAVgteg.js\",\"/assets/pack-007-CY0SJsIk.js\",\"/assets/pack-008-DxmvMQLr.js\",\"/assets/pack-009-BTKY__Lk.js\",\"/audio/azan-manifest.json\",\"/assets/planScreens-SOdYRtGf.js\",\"/content/pack-001.json\",\"/content/pack-002.json\",\"/content/pack-004.json\",\"/content/pack-003.json\",\"/content/pack-006.json\",\"/content/pack-005.json\",\"/content/pack-007.json\",\"/icon-180.png\",\"/icon-192.png\",\"/content/pack-009.json\",\"/content/pack-008.json\",\"/icon-512.png\",\"/icon-maskable-192.png\",\"/icon-maskable-512.png\",\"/icon-maskable.svg\",\"/icon.svg\",\"/manifest.webmanifest\",\"/index.html\"]}"
+      "detail": "{\"state\":\"redundant\",\"sameActive\":true,\"waiting\":false,\"oldFiles\":[\"/\",\"/assets/connectionsUi-BaFbPCjO.js\",\"/assets/decisionUi-BI91OSR3.js\",\"/assets/fraunces-latin-600-normal-BFCDtZfi.woff2\",\"/assets/fraunces-latin-400-normal-6IfK1voy.woff2\",\"/assets/fraunces-latin-ext-400-normal-D8gbi3Gu.woff2\",\"/assets/fraunces-latin-ext-600-normal-BtzmzP0X.woff2\",\"/assets/dexie-DwAlfwp4.js\",\"/assets/fraunces-vietnamese-400-normal-CvGt0Ybw.woff2\",\"/assets/fraunces-vietnamese-600-normal-BjlAJixd.woff2\",\"/assets/hind-siliguri-bengali-400-normal-rHQ7AW0H.woff2\",\"/assets/halalUi-9yD188mg.js\",\"/assets/hind-siliguri-bengali-500-normal-UuhTmLlo.woff2\",\"/assets/hind-siliguri-bengali-600-normal-DLZF4s8q.woff2\",\"/assets/hind-siliguri-latin-400-normal-esES0U7a.woff2\",\"/assets/hind-siliguri-latin-500-normal-S8HLIV69.woff2\",\"/assets/hind-siliguri-latin-600-normal-DHrLfb92.woff2\",\"/assets/hind-siliguri-latin-ext-400-normal-EIcpWxdl.woff2\",\"/assets/hind-siliguri-latin-ext-500-normal-BzNTYs89.woff2\",\"/assets/hadithPack-DithIlcV.js\",\"/assets/hind-siliguri-latin-ext-600-normal-BE5fbvrE.woff2\",\"/assets/index-D0Jmyxwq.css\",\"/assets/i18n-CVO-WHAb.js\",\"/assets/legsUi-C0T3jw8h.js\",\"/assets/library-DqultxVJ.js\",\"/assets/noto-serif-bengali-bengali-500-normal-izpjMjkk.woff2\",\"/assets/noto-serif-bengali-bengali-700-normal-D6heRmtL.woff2\",\"/assets/noto-serif-bengali-latin-500-normal-ChHikhgt.woff2\",\"/assets/noto-serif-bengali-latin-700-normal-BH4cA-4o.woff2\",\"/assets/noto-serif-bengali-latin-ext-500-normal-uqHYh-WD.woff2\",\"/assets/noto-serif-bengali-latin-ext-700-normal-ktrNXsDH.woff2\",\"/assets/pack-001-DUTOTIFf.js\",\"/assets/pack-002-C1ATZw8r.js\",\"/assets/index-Dzdokn-U.js\",\"/assets/pack-003-DXXGS0EW.js\",\"/assets/pack-005-CAXnvOUz.js\",\"/assets/pack-004-CADvCbl_.js\",\"/assets/pack-006-DAAVgteg.js\",\"/assets/pack-007-CY0SJsIk.js\",\"/assets/pack-008-DxmvMQLr.js\",\"/assets/pack-009-BTKY__Lk.js\",\"/assets/planScreens-CH2xC7kb.js\",\"/audio/azan-1.mp3\",\"/audio/azan-2.mp3\",\"/audio/azan-manifest.json\",\"/audio/azan-3.mp3\",\"/audio/azan-4.mp3\",\"/content/pack-002.json\",\"/content/pack-001.json\",\"/content/pack-003.json\",\"/content/pack-005.json\",\"/content/pack-004.json\",\"/content/pack-006.json\",\"/content/pack-007.json\",\"/content/pack-009.json\",\"/content/pack-008.json\",\"/icon-180.png\",\"/icon-192.png\",\"/icon-512.png\",\"/icon-maskable-192.png\",\"/icon-maskable-512.png\",\"/icon-maskable.svg\",\"/icon.svg\",\"/index.html\",\"/manifest.webmanifest\"]}"
     },
     {
       "id": "UPDATE-INTERRUPTED",
@@ -563,7 +689,7 @@
       "id": "UPDATE-STAMP",
       "name": "Settings > About shows version, build and date",
       "pass": true,
-      "detail": "Version: 0.1.0-g1 · build b7128bf · 6 Nov 2026"
+      "detail": "Version: 0.1.0-g1 · build 3a5cc32 · 8 Nov 2026"
     },
     {
       "id": "UPDATE-BANNER",
@@ -624,6 +750,66 @@
       "name": "keyboard navigation through the underlying Owner Profile leaves no duplicate Back stop",
       "pass": true,
       "detail": ""
+    },
+    {
+      "id": "VAULT-E2E-PLAIN-BEFORE",
+      "name": "before encryption the real records are plain in IndexedDB",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "VAULT-E2E-ON",
+      "name": "activation seals all 25 real records (enc 1), no plain text left, recovery file saved",
+      "pass": true,
+      "detail": "rows=25 file=tm-recovery-2026-11-08.json"
+    },
+    {
+      "id": "VAULT-E2E-NOKEY",
+      "name": "no raw key or passphrase in localStorage; only the wrapper under tm:secret:vault",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "VAULT-E2E-LOCKED",
+      "name": "after reload the app is locked: the unlock screen shows and no real data is on screen",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "VAULT-E2E-UNLOCK",
+      "name": "wrong passphrase leaves data untouched; the right one shows the real data again",
+      "pass": true,
+      "detail": "sealed=true"
+    },
+    {
+      "id": "VAULT-E2E-OFF",
+      "name": "turn off opens every record again in place and removes the vault settings",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "VAULT-E2E-FAIL-READABLE",
+      "name": "a forced storage failure half way keeps every record (plain or sealed), stays 'turning on', offers Continue and Turn off",
+      "pass": true,
+      "detail": "sealed=5/12 state=turning"
+    },
+    {
+      "id": "VAULT-E2E-RESUME",
+      "name": "after reload the mixed state opens with the passphrase, shows the data, and Continue finishes with 0 plain left",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "VAULT-E2E-10K",
+      "name": "10 000 real records sealed in real Chromium IndexedDB (25731 ms)",
+      "pass": true,
+      "detail": "ms=25731"
+    },
+    {
+      "id": "W1-AI-OFF",
+      "name": "Connect AI opens with the layer off, every button pressed: 0 requests to non-allowed hosts and 0 to /api/",
+      "pass": true,
+      "detail": "[]"
     },
     {
       "id": "SEC-CSP",

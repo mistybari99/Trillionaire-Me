@@ -495,7 +495,10 @@ main :is(.row,.btn-row,.snap-btns)>.btn{flex:1 1 8rem;min-width:0;max-width:100%
 /* A continuous text-size control; retain the native pointer/keyboard behavior. */
 .text-size-readout{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:8px;font-size:0.9375rem}
 .text-size-readout output{font-weight:600;color:var(--ink)}
-.text-size-control input[type="range"]{display:block;width:100%;min-width:0;min-height:44px;margin:0;padding:0;border:0;background:transparent;accent-color:var(--primary);cursor:ew-resize;scroll-margin-block:16px var(--nav-clearance)}
+.text-size-slider-row{display:flex;align-items:center;gap:12px}
+.text-size-control input[type="range"]{display:block;flex:1 1 160px;width:100%;min-width:0;min-height:44px;margin:0;padding:0;border:0;background:transparent;accent-color:var(--primary);cursor:ew-resize;scroll-margin-block:16px var(--nav-clearance)}
+.text-size-control input[type="range"]:disabled{cursor:not-allowed;opacity:.55}
+.text-size-lock{flex:0 0 44px;width:44px;min-width:44px;min-height:44px;margin:0;padding:0}
 
 /* Module notes and build diagnostics are optional, closed details on daily screens. */
 .module-details>summary{min-height:48px;padding-block:10px;font-size:1rem;font-weight:600;line-height:1.6;cursor:pointer;color:var(--primary)}

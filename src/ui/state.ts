@@ -81,6 +81,29 @@ export function closeVault(): void { vault.lock(); forgetReal(mem); }
 const get = (k: string) => { try { return localStorage.getItem(k); } catch { return null; } };
 const normalizeScale = (n: number) => Number.isFinite(n) && n > 0 ? Math.min(150, Math.max(50, Math.round(n))) : 100;
 const set = (k: string, v: string) => { try { localStorage.setItem(k, v); } catch { /* ignore */ } };
+const SCALE_LOCK_KEY = "tm:ui:scaleLocked";
+const SCALE_LOCK_SESSION_KEY = "tm:session:ui:scaleLocked";
+let scaleLockMemoryFallback: boolean | null = null;
+const readSessionScaleLock = (): boolean | null => {
+  try {
+    const v = sessionStorage.getItem(SCALE_LOCK_SESSION_KEY);
+    return v === "on" ? true : v === "off" ? false : scaleLockMemoryFallback;
+  } catch { return scaleLockMemoryFallback; }
+};
+/** Save the preference on this device, or keep it only for this page session when device storage rejects it. */
+export function setScaleLocked(value: boolean): { saved: boolean } {
+  const encoded = value ? "on" : "off";
+  try {
+    localStorage.setItem(SCALE_LOCK_KEY, encoded);
+    try { sessionStorage.removeItem(SCALE_LOCK_SESSION_KEY); } catch { /* the durable value still won */ }
+    scaleLockMemoryFallback = null;
+    return { saved: true };
+  } catch {
+    try { sessionStorage.setItem(SCALE_LOCK_SESSION_KEY, encoded); scaleLockMemoryFallback = null; }
+    catch { scaleLockMemoryFallback = value; }
+    return { saved: false };
+  }
+}
 
 import { parseOnboard, parseTimes, type OnboardState, type OnboardTimes } from "../core/onboarding";
 export type PlanMode = "normal" | "minimum_week" | "pause";
@@ -166,6 +189,9 @@ export const prefs = {
   set remindSnoozedOn(v: string) { set("tm:ui:remindSnoozedOn", v); },
   get scale(): number { return normalizeScale(Number(get("tm:ui:scale"))); },
   set scale(v: number) { set("tm:ui:scale", String(normalizeScale(v))); },
+  /** Missing and unknown values are unlocked. A failed durable write is scoped to this page session. */
+  get scaleLocked(): boolean { return readSessionScaleLock() ?? get(SCALE_LOCK_KEY) === "on"; },
+  set scaleLocked(v: boolean) { setScaleLocked(v); },
   get mode(): PlanMode { const v = get("tm:ui:mode"); return v === "minimum_week" || v === "pause" ? v : "normal"; },
   set mode(v: PlanMode) { set("tm:ui:mode", v); },
   /** Horizon screen template. Unknown or missing value falls back to "stack" (the original view). */
