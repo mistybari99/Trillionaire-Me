@@ -1,5 +1,5 @@
 {
-  "keys": 2889,
+  "keys": 3006,
   "perFile": {
     "src/i18n/packs.ts": 2484,
     "src/i18n/vault.ts": 76,
@@ -56,6 +56,7 @@
     "src/i18n/q_sector.ts": 99,
     "src/i18n/q_brand.ts": 2,
     "src/i18n/q_head.ts": 5,
+    "src/i18n/q_ai.ts": 117,
     "public/content/pack-001.json": 111,
     "public/content/pack-002.json": 42,
     "public/content/pack-003.json": 60,

@@ -8,7 +8,7 @@ import { inputFor } from "./fieldInput";
 import { t, tb, fmtNumber } from "../i18n/t";
 import type { Key } from "../i18n/packs";
 import { intlLocale, type Locale } from "../i18n/registry";
-import { prefs, screenView, store, type HorizonView } from "./state";
+import { consentKv, prefs, screenView, store, type HorizonView } from "./state";
 import { settingsHash } from "./settingsRegistry";
 import { pausedCard } from "./privacyUi";
 import { disclaimers, fieldHelp, num, showNeed, valueEl } from "./components";
@@ -84,6 +84,7 @@ import { bdtAmount, cashFlow90, financeFrom, foreignOf, parseCurrency, parseRate
 import { research, safeQuery } from "../core/research";
 import { ownOptions, saveOwnOption, saveSearchResults, savedSearchResults } from "../core/savedLists";
 import { wikipedia } from "../adapters/wikipedia";
+import { googleSearchFor } from "../adapters/googleSearch";
 import { GLOSSARY } from "../catalog/glossary";
 import { dhakaNow, isoDate } from "../core/prayer";
 import { prayerControls } from "./prayerMarksUi";
@@ -1239,10 +1240,18 @@ function suggestPanel(f: FieldDef, lang: Locale, getInput: () => HTMLInputElemen
         input.value = o.title; out.replaceChildren(); input.focus();
       } }, t("suggest.use", lang))));
     const note = wasSaved && r.status === "options" ? "suggest.savedNote" : r.status === "too_few" ? "suggest.none" : r.status === "offline" ? "suggest.offline" : r.status === "error" ? "suggest.error" : null;
-    out.replaceChildren(...cards, ...(note ? [h("p", { class: "muted" }, t(note, lang))] : []),
+    // W1: when Web search is on and the owner's proxy path is typed, Google cards follow the Wikipedia cards (only after this tap; fewer than 2 show none).
+    const gp = googleSearchFor(consentKv); let google: HTMLElement[] = [];
+    if (gp && r.status !== "offline") {
+      const g = await research(safe, true, { provider: gp, online: () => navigator.onLine });
+      if (g.status === "options") google = [h("h2", { class: "card-h", "data-google-head": "1" }, t("ai.suggest.googleHead", lang)), ...g.options.map((o) => h("div", { class: "card", "data-option": `g-${o.id}`, "data-option-source": "google" },
+        h("h2", { class: "card-h" }, o.title), h("p", { class: "muted" }, o.snippet), h("p", { class: "muted" }, t("suggest.source", lang, { s: o.sourceName, d: o.fetchedAt.slice(0, 10) })),
+        h("button", { class: "btn", type: "button", onclick: () => { input.value = o.title; out.replaceChildren(); input.focus(); } }, t("suggest.use", lang))))];
+    }
+    out.replaceChildren(...cards, ...google, ...(note ? [h("p", { class: "muted" }, t(note, lang))] : []),
       h("button", { class: "btn ghost", type: "button", onclick: () => { out.replaceChildren(); getInput().focus(); } }, t("suggest.own", lang)));
   });
-  box.append(h("p", { class: "muted" }, t("suggest.consent", lang)), ownBox, saveOwn, saveNote, go, out);
+  box.append(h("p", { class: "muted" }, t("suggest.consent", lang)), ...(googleSearchFor(consentKv) ? [h("p", { class: "muted", "data-google-note": "1" }, t("ai.suggest.googleNote", lang))] : []), ownBox, saveOwn, saveNote, go, out);
   return h("details", { class: "help" }, h("summary", {}, t("suggest.btn", lang)), box);
 }
 

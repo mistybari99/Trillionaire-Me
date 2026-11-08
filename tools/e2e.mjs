@@ -598,6 +598,17 @@ for (const lang of ["en", "bn"]) {
     await c.close();
   }
 }
+// W1: the AI and search layer is built but OFF. Opening Connect AI and pressing every button sends 0 requests to any host outside the page policy, and none to a /api/ path.
+{
+  const ctxA = await browser.newContext({ viewport: { width: 360, height: 740 } }); await ctxA.addInitScript(() => { localStorage.setItem("tm:ui:dataMode", "demo"); }); const pA = await ctxA.newPage(); const seenA = [];
+  pA.on("request", (r) => { const u = r.url(); if (/^https?:/.test(u)) seenA.push(u); });
+  await pA.goto("http://localhost:4174/#/settings/connections/ai"); await pA.waitForSelector("[data-ai-sec=ask]");
+  const stateOff = await pA.getAttribute("[data-ai-state]", "data-ai-state");
+  await pA.evaluate(() => document.querySelectorAll("button").forEach((b) => { if (!b.disabled) b.click(); })); await pA.waitForTimeout(400);
+  const bad = seenA.filter((u) => !u.startsWith("http://localhost:4174/") || /\/api\//.test(u));
+  check("W1-AI-OFF", "Connect AI opens with the layer off, every button pressed: 0 requests to non-allowed hosts and 0 to /api/", stateOff === "off" && bad.length === 0, JSON.stringify(bad));
+  await ctxA.close();
+}
 check("SEC-CSP", "page policy (CSP meta) blocks nothing the app needs: 0 violations in the whole run", cspHits.length === 0, JSON.stringify(cspHits));
 check("G1-NONET", "0 third-party/external requests during all of the above", external.length === 0, JSON.stringify(external));
 

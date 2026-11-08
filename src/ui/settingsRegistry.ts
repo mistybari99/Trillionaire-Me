@@ -70,7 +70,7 @@ export const ROWS: SettingRow[] = [
   R("stages", "plan", "set.row.stages", "#/settings/plan/stages", ["stage names", "stage", "template", "journey"], ["stageTemplate"], ["tm:ui:stageTemplate"]),
   R("weighting", "plan", "set.row.weighting", "#/settings/plan/weighting", ["progress", "weight", "equal", "size", "overall"], ["progressMode"], ["tm:ui:progressMode", "tm:ui:overallMem:*"]),
 
-  R("connections", "connections", "more.connections", "#/settings/connections", ["connection", "ai", "cloud", "sync", "web search", "licensed", "api key", "approve"], [], ["tm:ui:conn:*", "tm:secret:conn:*"]),
+  R("connections", "connections", "more.connections", "#/settings/connections", ["connection", "ai", "cloud", "sync", "web search", "licensed", "api key", "approve"], [], ["tm:ui:conn:*", "tm:ui:ai:*", "tm:secret:conn:*"]),
 
   R("deletedemo", "delete", "set.row.deletedemo", "#/settings/delete", ["delete", "demo", "clear", "remove"], [], [], true),
   R("deletereal", "delete", "set.row.deletereal", "#/settings/delete", ["delete", "real", "clear", "erase", "remove all"], [], [], true),

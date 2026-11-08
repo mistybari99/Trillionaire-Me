@@ -65,6 +65,8 @@ function card(id: FacilityId, lang: Locale): HTMLElement {
     h("p", {}, t(`conn.${id}.does` as Key, lang)),
     h("p", { class: "muted" }, t(`conn.${id}.needs` as Key, lang)),
     id === "aiAssistant" || id === "cloudSync" ? h("p", { class: "muted", "data-conn-slot": id }, t(`conn.${id}.slot` as Key, lang)) : null,
+    id === "aiAssistant" ? h("a", { href: "#/settings/connections/ai", class: "btn ghost", "data-conn-ai-link": "1" }, t("ai.link.open", lang))
+      : id === "webSearch" ? h("a", { href: "#/settings/connections/ai", class: "btn ghost", "data-conn-search-link": "1" }, t("ai.link.search", lang)) : null,
     approved ? null : h("button", { class: "btn ghost", type: "button", "data-conn-approve": id, onclick: () => { confirming = id; missingTick = null; rerender(); } }, t("conn.approve.btn", lang)),
     " ",
     on ? h("button", { class: "btn ghost", type: "button", "data-conn-disable": id, onclick: () => { setEnabled(consentKv, id, false); rerender(); } }, t("conn.disable", lang)) : enable,

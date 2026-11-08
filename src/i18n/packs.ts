@@ -8,6 +8,7 @@ import { QBLOCKS_BN, QBLOCKS_EN } from "./q_blocks.ts";
 import { QSECTOR_BN, QSECTOR_EN } from "./q_sector.ts";
 import { QBRAND_BN, QBRAND_EN } from "./q_brand.ts";
 import { QHEAD_BN, QHEAD_EN } from "./q_head.ts";
+import { QAI_BN, QAI_EN } from "./q_ai.ts";
 const en = {
   "set.row.helpplacement": "Help placement",
   "set.row.helpvisuals": "Help visuals",
@@ -1933,6 +1934,7 @@ const en = {
   ...QSECTOR_EN, // venture business type toolkit (BUILD-02) keys live in q_sector.ts
   ...QBRAND_EN, // brand line and tagline live in q_brand.ts
   ...QHEAD_EN, // floating quick-action head lives in q_head.ts
+  ...QAI_EN, // Connect AI, preview sheet and Google cards (W1) live in q_ai.ts
 } as const;
 
 export type Key = keyof typeof en;
@@ -1945,6 +1947,7 @@ const bn: Record<Key, string> = {
   ...QSECTOR_BN,
   ...QBRAND_BN,
   ...QHEAD_BN,
+  ...QAI_BN,
   "set.row.helpplacement": "হেল্প কোথায় দেখাবে",
   "set.row.helpvisuals": "হেল্পের ভিজুয়াল",
   "set.row.helpcontent": "গাইড ও নিজের ম্যাপ",

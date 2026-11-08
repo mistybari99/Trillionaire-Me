@@ -48,7 +48,7 @@ describe("no network at runtime", () => {
       const s = read(f);
       expect(s, f).not.toMatch(/XMLHttpRequest|WebSocket|sendBeacon|EventSource|importScripts|navigator\.share|gtag\(|analytics/);
       const usesFetch = /\bfetch\b/.test(s.replace(/\/\/.*$/gm, ""));
-      if (usesFetch) expect(["src/adapters/wikipedia.ts", "src/adapters/aladhan.ts", "src/ui/prayerAlerts.ts"], f).toContain(f);
+      if (usesFetch) expect(["src/adapters/wikipedia.ts", "src/adapters/aladhan.ts", "src/adapters/googleSearch.ts", "src/ui/prayerAlerts.ts"], f).toContain(f);
     }
   });
   it("the azan check only asks for the app's own relative files", () => {

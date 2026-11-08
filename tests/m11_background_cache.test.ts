@@ -66,7 +66,7 @@ describe("M11 Wikipedia cache: first tap saves, next time works offline", () => 
     const walk = (d: string) => { for (const n of readdirSync(d)) { const p = join(d, n); if (statSync(p).isDirectory()) walk(p); else if (p.endsWith(".ts")) files.push(p); } };
     walk(resolve(ROOT, "src"));
     const withFetch = files.filter((p) => /\bfetch\(|XMLHttpRequest|new WebSocket/.test(readFileSync(p, "utf8"))).map((p) => p.replace(ROOT + "/", ""));
-    expect(withFetch).toEqual(["src/adapters/aladhan.ts", "src/adapters/wikipedia.ts"]); // aladhan: prayer times, only when the user turned the update on
+    expect(withFetch).toEqual(["src/adapters/aladhan.ts", "src/adapters/googleSearch.ts", "src/adapters/wikipedia.ts"]); // aladhan: prayer times, only when the user turned the update on; googleSearch: same-app proxy path, only when Web search is on and a path is typed
     const callers = files.filter((p) => /\bwikipedia\(/.test(readFileSync(p, "utf8")) && !p.endsWith("adapters/wikipedia.ts")).map((p) => p.replace(ROOT + "/", ""));
     expect(callers).toEqual(["src/ui/screens.ts"]);
     const screens = readFileSync(resolve(ROOT, "src/ui/screens.ts"), "utf8");
