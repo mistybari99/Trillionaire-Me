@@ -1,16 +1,16 @@
-// Finance-adjacent coordination: micro-lending groups, agent banking, MFS cash points, insurance agency. Record keeping only, not advice. Data only. See docs/design/sector-model.md.
+// Finance-adjacent coordination: micro-lending groups, agent banking, MFS cash counters, insurance agency. Record keeping only, not advice. Data only. See docs/design/sector-model.md.
 import type { SectorFamily } from "../types";
 
 export const financeAdjacent: SectorFamily = {
   id: "finance-adjacent",
-  name: { en: "Finance-adjacent work (agent, cash point, group coordination)", bn: "ফাইন্যান্স-সংশ্লিষ্ট কাজ (এজেন্ট, ক্যাশ পয়েন্ট, গ্রুপ সমন্বয়)" },
+  name: { en: "Finance-adjacent work (agent, cash counter, group coordination)", bn: "ফাইন্যান্স-সংশ্লিষ্ট কাজ (এজেন্ট, ক্যাশ কাউন্টার, গ্রুপ সমন্বয়)" },
   summary: {
-    en: "Records for work around money services: group loan coordination, agent banking, mobile money cash points, insurance agency. This is record keeping only, not advice. Ask the rule maker about licences and rules.",
-    bn: "মানি সার্ভিস ঘিরে কাজের রেকর্ড: গ্রুপ ঋণের সমন্বয়, এজেন্ট ব্যাংকিং, মোবাইল মানি ক্যাশ পয়েন্ট, বিমা এজেন্সি। এটা শুধু রেকর্ড রাখার জন্য, পরামর্শ নয়। লাইসেন্স ও নিয়ম নিয়মকারী সংস্থার কাছ থেকে জেনে নিন।",
+    en: "Records for work around money services: group loan coordination, agent banking, mobile money cash counters, insurance agency. This is record keeping only, not advice. Ask the rule maker about licences and rules.",
+    bn: "মানি সার্ভিস ঘিরে কাজের রেকর্ড: গ্রুপ ঋণের সমন্বয়, এজেন্ট ব্যাংকিং, মোবাইল মানি ক্যাশ কাউন্টার, বিমা এজেন্সি। এটা শুধু রেকর্ড রাখার জন্য, পরামর্শ নয়। লাইসেন্স ও নিয়ম নিয়মকারী সংস্থার কাছ থেকে জেনে নিন।",
   },
   aliases: {
     en: ["agent banking", "mobile money", "cash point", "mfs agent", "insurance agent", "micro lending", "microfinance", "loan group", "cash in cash out"],
-    bn: ["এজেন্ট ব্যাংকিং", "মোবাইল ব্যাংকিং", "ক্যাশ পয়েন্ট", "ক্যাশ ইন ক্যাশ আউট", "বিমা এজেন্ট", "ক্ষুদ্রঋণ", "সমিতি", "এমএফএস এজেন্ট"],
+    bn: ["এজেন্ট ব্যাংকিং", "মোবাইল ব্যাংকিং", "ক্যাশ কাউন্টার", "ক্যাশ ইন ক্যাশ আউট", "বিমা এজেন্ট", "ক্ষুদ্রঋণ", "সমিতি", "এমএফএস এজেন্ট"],
   },
   inputs: [
     { id: "feePerTxn", label: { en: "Commission or fee you earn per transaction or policy", bn: "প্রতি লেনদেন বা পলিসিতে আপনার কমিশন বা ফি" }, unit: "money", perPeriod: false, required: true },

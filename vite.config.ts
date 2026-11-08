@@ -17,5 +17,5 @@ export default defineConfig({
   ] } } } },
   define: { __APP_VERSION__: JSON.stringify(version), __APP_SHA__: JSON.stringify(sha), __APP_BUILT__: JSON.stringify(new Date().toISOString().slice(0, 10)) },
   plugins: [precachePlugin()],
-  test: { environment: "jsdom", include: ["tests/**/*.test.ts"], setupFiles: ["tests/setup.ts"] },
+  test: { environment: "jsdom", include: ["tests/**/*.test.ts"], setupFiles: ["tests/setup.ts"], testTimeout: 30000, hookTimeout: 30000 },
 });

@@ -6,7 +6,7 @@ export const personalServices: SectorFamily = {
   name: { en: "Personal services (salon, laundry, tailor)", bn: "পারসোনাল সার্ভিস (সেলুন, লন্ড্রি, দর্জি)" },
   summary: {
     en: "Sells your time and skill to customers one by one, often by appointment. Booked hours, repeat customers and supplies decide the result.",
-    bn: "গ্রাহককে একজন একজন করে নিজের সময় ও দক্ষতা বিক্রি, অনেক সময় অ্যাপয়েন্টমেন্টে। বুকড সময়, রিপিট গ্রাহক আর সাপ্লাইয়ের ওপর ফলাফল নির্ভর করে।",
+    bn: "গ্রাহককে একজন একজন করে নিজের সময় ও দক্ষতা বিক্রি, অনেক সময় বুকিং নিয়ে। বুকড সময়, রিপিট গ্রাহক আর সাপ্লাইয়ের ওপর ফলাফল নির্ভর করে।",
   },
   aliases: {
     en: ["salon", "parlour", "barber", "laundry", "dry cleaning", "tailor", "boutique tailoring", "spa", "cleaning service", "photo studio", "repair by appointment"],
