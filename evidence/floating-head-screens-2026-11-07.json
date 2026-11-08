@@ -1,0 +1,23 @@
+{
+  "viewport": "360x740",
+  "generated": "2026-11-07T19:29:02.474Z",
+  "combos": 18,
+  "screens": 216,
+  "problems": 0,
+  "bad": [],
+  "routes": [
+    "today",
+    "journey",
+    "diary",
+    "capture",
+    "stuck",
+    "deen",
+    "settings",
+    "settings/look",
+    "diary/plan",
+    "diary/money",
+    "habits",
+    "topics"
+  ],
+  "matrix": "4 looks x en/bn x light/dark x 100%/200% text"
+}

@@ -5,6 +5,8 @@ import { QB1_BN, QB1_EN } from "./q_b1.ts";
 import { QB2_BN, QB2_EN } from "./q_b2.ts";
 import { QB3_BN, QB3_EN } from "./q_b3.ts";
 import { QBLOCKS_BN, QBLOCKS_EN } from "./q_blocks.ts";
+import { QBRAND_BN, QBRAND_EN } from "./q_brand.ts";
+import { QHEAD_BN, QHEAD_EN } from "./q_head.ts";
 const en = {
   "set.row.helpplacement": "Help placement",
   "set.row.helpvisuals": "Help visuals",
@@ -1927,6 +1929,8 @@ const en = {
   ...QB2_EN, // batch 2 (Q-10, Q-11, Q-30) keys live in q_b2.ts
   ...QB3_EN, // batch 3 (Q-12, Q-13, Q-34) keys live in q_b3.ts
   ...QBLOCKS_EN, // optional work time blocks (BUILD-01) keys live in q_blocks.ts
+  ...QBRAND_EN, // brand line and tagline live in q_brand.ts
+  ...QHEAD_EN, // floating quick-action head lives in q_head.ts
 } as const;
 
 export type Key = keyof typeof en;
@@ -1936,6 +1940,8 @@ const bn: Record<Key, string> = {
   ...QB2_BN,
   ...QB3_BN,
   ...QBLOCKS_BN,
+  ...QBRAND_BN,
+  ...QHEAD_BN,
   "set.row.helpplacement": "হেল্প কোথায় দেখাবে",
   "set.row.helpvisuals": "হেল্পের ভিজুয়াল",
   "set.row.helpcontent": "গাইড ও নিজের ম্যাপ",
@@ -4185,7 +4191,7 @@ const bn: Record<Key, string> = {
 
 // Mix mode: Bangla sentences with common English words kept (owner request, decision L-11).
 // Keys listed here show English in Mix (they are already English-first in the Bangla pack).
-export const COMMON_ENGLISH_KEYS: ReadonlySet<string> = new Set(["badge.demo", "status.online", "status.offline", "label.DEMO", "focus.plus", "focus.minus", "habits.plus", "help.format", "more.theme", "data.demo", "backup.title", "suggest.btn", "habits.of"]);
+export const COMMON_ENGLISH_KEYS: ReadonlySet<string> = new Set(["badge.demo", "status.online", "status.offline", "label.DEMO", "focus.plus", "focus.minus", "habits.plus", "help.format", "more.theme", "data.demo", "backup.title", "suggest.btn", "habits.of", "brand.line"]);
 // Mix mode keeps the English word for everyday words people already say in English (owner rule, 1 Nov 2026).
 // Bangla mode writes the same words in Bangla script (for example স্টাফ), so each loanword is listed here with its English form.
 // Longer phrases come first. A Bangla suffix after a swapped word is kept after a hyphen, for example Plan-এর.

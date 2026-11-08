@@ -886,3 +886,8 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 - Alternatives: forced default blocks (rejected by the owner); a new Dexie table (rejected: records already carry sync, backup, vault and namespace rules).
 - Undo: turn the switch off (data stays, no effect), or revert the commits; the entity is additive so older builds ignore it.
 - Correction (audit round 1, 8 Nov 2026): the earlier note that the `work_block.*` fields are not in the catalog is no longer true. The seven fields are now in `src/catalog/fields.ts` in a separate "W3 work blocks" block (privacy personal, EN/BN help), so CSV export then CSV import keeps the blocks. Fingerprint updated within schema 4 (same release as the migration). Tests: `tests/work_blocks_data.test.ts` (backup, encrypted backup, restore, JSON export, CSV round trip).
+
+### W5a Brand: "Build Yourself" (7 Nov 2026)
+- What: the app name stays "Trillionaire Me" (Spec sections 0 and 1 name it so). "Build Yourself" (owner wrote "Build Your Self") is the product line, shown as a subtitle: page title, splash, About card, Profile card. Tagline EN "Build yourself, one small step at a time." / BN "নিজেকে গড়ুন, ছোট ছোট ধাপে।". Strings in `src/i18n/q_brand.ts`; test `tests/brand_line.test.ts`.
+- Why: no conflict with the Spec, so a subtitle is the smallest reversible change. Calm wording, no promise.
+- Alternatives: rename the app (rejected: conflicts with the Spec and the installed name). Undo: delete `q_brand.ts`, `brandUi.ts`, the two card calls, the splash lines and the title suffix.

@@ -4,6 +4,7 @@ import type { Locale } from "../i18n/registry";
 import { prefs } from "./state";
 import { profileCard } from "./profileCard";
 import { activeNs, nsTag } from "./entry";
+import { brandCard } from "./brandUi";
 import "./ownerProfile.css";
 const title = (lang: Locale) => tb({ en: "Owner profile", bn: "ওনার প্রোফাইল" }, lang);
 /** Device-local owner workspace; editing uses the existing consent-gated profile form. */
@@ -19,7 +20,7 @@ export function ownerProfileScreen(): HTMLElement {
   return h("main", { class: "scr owner-profile", "data-owner-profile-screen": "" },
     h("h1", {}, title(lang)), nsTag(activeNs(), lang),
     h("p", { class: "muted" }, tb({ en: "Your profile and device settings. Profile entries stay on this device; this is not an online account.", bn: "আপনার প্রোফাইল ও ডিভাইসের সেটিংস। প্রোফাইলের এন্ট্রি এই ডিভাইসে থাকে; এটি অনলাইন অ্যাকাউন্ট নয়।" }, lang)),
-    profileCard(lang),
+    brandCard(lang), profileCard(lang),
     h("section", { "aria-label": t("nav.settings", lang) }, h("h2", {}, t("nav.settings", lang)),
       link("#/settings/home/language", t("more.language", lang)),
       link("#/settings/look", t("set.cat.look", lang)),

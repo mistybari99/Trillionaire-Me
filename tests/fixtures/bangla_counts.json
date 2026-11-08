@@ -1,5 +1,5 @@
 {
-  "keys": 2783,
+  "keys": 2791,
   "perFile": {
     "src/i18n/packs.ts": 2484,
     "src/i18n/vault.ts": 76,
@@ -53,6 +53,8 @@
     "src/core/sectors/families/wholesale-trading.ts": 29,
     "src/i18n/q_b3.ts": 37,
     "src/i18n/q_blocks.ts": 54,
+    "src/i18n/q_brand.ts": 2,
+    "src/i18n/q_head.ts": 5,
     "public/content/pack-001.json": 111,
     "public/content/pack-002.json": 42,
     "public/content/pack-003.json": 60,

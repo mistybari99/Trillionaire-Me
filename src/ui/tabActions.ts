@@ -16,5 +16,14 @@ export const TAB_ACTIONS: Record<TabId, readonly TabAction[]> = {
   settings: [action("home", "#/settings", "nav.settings"), action("look", "#/settings/look", "set.cat.look"), action("backup", "#/settings/backup", "set.cat.backup"), action("privacy", "#/settings/privacy", "set.cat.privacy"), action("prayer", "#/settings/prayer", "set.cat.prayer"), action("data", "#/settings/data", "set.cat.data")],
 };
 
+/** Floating quick-action head (W5b): Capture, prayer mark, Stuck, Today. Capture, prayer and Today are the SAME entries as above (shared, not copied). */
+export const STUCK_ACTION: TabAction = action("stuck", "#/stuck", "stuck.title");
+export const HEAD_ACTIONS: readonly TabAction[] = [
+  TAB_ACTIONS.today.find((a) => a.id === "capture")!,
+  TAB_ACTIONS.deen.find((a) => a.quickPrayer)!,
+  STUCK_ACTION,
+  TAB_ACTIONS.today.find((a) => a.id === "home")!,
+];
+
 export function isTabId(value: string): value is TabId { return TAB_DEFINITIONS.some(([id]) => id === value); }
 export const getTabActions = (tab: TabId): readonly TabAction[] => TAB_ACTIONS[tab];

@@ -34,6 +34,7 @@ export const ROWS: SettingRow[] = [
   R("helpvisuals", "look", "set.row.helpvisuals", "#/settings/look/helpvisuals", ["help diagram illustration visual"], [], ["tm:ui:helpVisuals"]),
   R("helpcontent", "look", "set.row.helpcontent", "#/settings/look/helpcontent", ["guide own map examples"], [], ["tm:ui:helpContent"]),
   R("tabnavigation", "look", "set.row.tabnavigation", "#/settings/look/tabnavigation", ["tab navigation menu quick tools"], [], ["tm:ui:tabNavigation"]),
+  R("floatinghead", "look", "set.row.floatinghead", "#/settings/look/floatinghead", ["floating", "bubble", "quick button", "head", "shortcut", "capture", "stuck"], [], ["tm:ui:floatingHead", "tm:ui:headPos"]),
   R("design", "look", "more.design", "#/settings/look/design", ["design", "version", "look", "style", "colour", "color"], ["design"], ["tm:ui:design"]),
   R("density", "look", "set.row.density", "#/settings/look/density", ["detailed", "compact", "full", "screen view", "template"], [], ["tm:ui:view:*"]),
   R("horizon", "look", "set.row.horizon", "#/journey/horizon", ["horizon", "layout", "stack"], ["horizonView"], ["tm:ui:horizonView"]),
