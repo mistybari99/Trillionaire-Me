@@ -40,16 +40,18 @@ if (process.env.TM_SHOT_MATRIX === "1") {
     "diary/intake/4", "journey/week", "journey/review", "journey/universe", "topics", "topic/procrastination", "print/plan", "settings/lock", "capture", "stuck", "focus/shot-t2", "reward", "deen/plans", "more/glossary", "more/safety", "more/fields"];
   // TM_SHOT_ROUTES (comma list) / TM_SHOT_LANGS / TM_SHOT_OUT: extra verification runs (VERIFY-02); defaults keep the committed matrix unchanged.
   const routes = process.env.TM_SHOT_ROUTES ? process.env.TM_SHOT_ROUTES.split(",") : routes0;
+  // TM_SHOT_FONT=50,100,150 runs the given text-size percents instead of 100/200. TM_SHOT_HEAD=1 turns the floating head on and checks it never overlaps the bottom bar, primary buttons or fields.
+  const BIGS = process.env.TM_SHOT_FONT ? process.env.TM_SHOT_FONT.split(",").map(Number) : [false, true]; const HEAD = process.env.TM_SHOT_HEAD === "1";
   const LANGS = process.env.TM_SHOT_LANGS ? process.env.TM_SHOT_LANGS.split(",") : ["en", "bn"];
   const mdir = "evidence/screenshots-matrix"; mkdirSync(mdir, { recursive: true });
   const visit = new Date(Date.now() - 6 * 86400000); const lastOpen = `${visit.getFullYear()}-${String(visit.getMonth() + 1).padStart(2, "0")}-${String(visit.getDate()).padStart(2, "0")}`;
-  for (const design of DESIGNS) for (const lang of LANGS) for (const scheme of ["light", "dark"]) for (const big of [false, true]) {
+  for (const design of DESIGNS) for (const lang of LANGS) for (const scheme of ["light", "dark"]) for (const big of BIGS) {
     const ctx = await browser.newContext({ viewport: { width: 360, height: 740 }, deviceScaleFactor: 1, colorScheme: scheme });
-    await ctx.addInitScript(([d, l, recs, lo]) => { try { localStorage.setItem("tm:ui:lang", l); localStorage.setItem("tm:ui:design", d); localStorage.setItem("tm:ui:dataMode", "demo"); localStorage.setItem("tm:ui:visit", JSON.stringify({ lastOpen: lo, welcome: null })); for (const r of recs) localStorage.setItem(`tm:demo:${r.id}`, JSON.stringify(r)); } catch { /* storage blocked */ } }, [design, lang, SEED, lastOpen]);
+    await ctx.addInitScript(([d, l, recs, lo, head]) => { try { localStorage.setItem("tm:ui:lang", l); localStorage.setItem("tm:ui:design", d); localStorage.setItem("tm:ui:dataMode", "demo"); if (head) localStorage.setItem("tm:ui:floatingHead", "on"); localStorage.setItem("tm:ui:visit", JSON.stringify({ lastOpen: lo, welcome: null })); for (const r of recs) localStorage.setItem(`tm:demo:${r.id}`, JSON.stringify(r)); } catch { /* storage blocked */ } }, [design, lang, SEED, lastOpen, HEAD]);
     const page = await ctx.newPage();
     for (const r of routes) {
       await page.goto("about:blank"); await page.goto(`http://localhost:${PORT}/#/${r}`);
-      await page.waitForSelector("main"); if (big) await page.evaluate(() => { document.documentElement.style.fontSize = "200%"; }); await page.waitForTimeout(500);
+      await page.waitForSelector("main"); if (big) await page.evaluate((b) => { document.documentElement.style.fontSize = b === true ? "200%" : `${b}%`; }, big); await page.waitForTimeout(500);
       const touching = [...(await page.evaluate(TOUCHING_FN)), ...(await page.evaluate(ADJACENT_FN))];
       const m = await page.evaluate(() => {
         const vw = window.innerWidth; const vis = (e) => { const b = e.getBoundingClientRect(); return b.width > 0 && b.height > 0; };
@@ -57,18 +59,28 @@ if (process.env.TM_SHOT_MATRIX === "1") {
         const small = [...document.querySelectorAll("main button, main a.btn, main select, main input:not([type=checkbox]):not([type=radio]):not([type=hidden])")].filter((e) => vis(e) && e.getBoundingClientRect().height < 43).length;
         return { overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth, wide, small, tabsInView: [...document.querySelectorAll("nav a.tab")].every((a) => a.getBoundingClientRect().right <= vw + 1) && [...document.querySelectorAll("nav a.tab")].every((a) => { const r = document.createRange(); r.selectNodeContents(a); return r.getClientRects().length <= 1; }) };
       });
-      const id = `${design}/${lang}/${scheme}/${big ? "200" : "100"}`;
+      if (HEAD) {
+        const hm = await page.evaluate(() => {
+          const el = document.querySelector("[data-floating-head]"); if (!el) return { headMissing: true, headOverlap: 0, headShown: false, headState: "missing" };
+          const shown = !el.hidden; const hb = el.getBoundingClientRect(); const bar = document.querySelector(".bottom-tabs")?.getBoundingClientRect();
+          const hit = (b) => hb.left < b.right && hb.right > b.left && hb.top < b.bottom && hb.bottom > b.top;
+          let n = 0; if (shown) { if (bar && hit(bar)) n++; for (const c of document.querySelectorAll(".cta,.btn:not(.ghost),button[type=submit],input:not([type=hidden]),textarea,select")) { if (el.contains(c)) continue; const b = c.getBoundingClientRect(); if (b.width > 0 && b.height > 0 && hit(b)) n++; } }
+          return { headMissing: false, headOverlap: n, headShown: shown, headState: el.dataset.state, headSize: Math.round(hb.width) };
+        });
+        Object.assign(m, hm); if (hm.headMissing) m.headOverlap = 1;
+      }
+      const id = `${design}/${lang}/${scheme}/${big === true ? "200" : big ? String(big) : "100"}`;
       let file = null;
       if (process.env.TM_SHOT_KEEP) { mkdirSync(process.env.TM_SHOT_KEEP, { recursive: true }); await page.screenshot({ path: `${process.env.TM_SHOT_KEEP}/${id.replace(/\//g, "-")}-${r.replace(/\//g, "_")}.png` }); }
       m.touching = touching.length;
-      if (m.overflow || m.wide || m.small || !m.tabsInView || m.touching) { file = `${mdir}/${id.replace(/\//g, "-")}-${r.replace(/\//g, "_")}.png`; await page.screenshot({ path: file, fullPage: true }); }
+      if (m.overflow || m.wide || m.small || !m.tabsInView || m.touching || m.headOverlap) { file = `${mdir}/${id.replace(/\//g, "-")}-${r.replace(/\//g, "_")}.png`; await page.screenshot({ path: file, fullPage: true }); }
       report.push({ combo: id, route: r, ...m, file });
     }
     await ctx.close();
   }
   await browser.close(); await server.close();
-  const bad = report.filter((x) => x.overflow || x.wide || x.small || !x.tabsInView || x.touching);
-  writeFileSync(process.env.TM_SHOT_OUT ? process.env.TM_SHOT_OUT : process.env.TM_SHOT_ONLY_DESIGN ? `evidence/matrix-part-${process.env.TM_SHOT_ONLY_DESIGN}.json` : "evidence/matrix-report.json", JSON.stringify({ viewport: "360x740", generated: new Date().toISOString(), combos: DESIGNS.length * LANGS.length * 2 * 2, screens: report.length, problems: bad.length, bad, routes, matrix: "4 looks x en/bn x light/dark x 100%/200% text" }, null, 2));
+  const bad = report.filter((x) => x.overflow || x.wide || x.small || !x.tabsInView || x.touching || x.headOverlap);
+  writeFileSync(process.env.TM_SHOT_OUT ? process.env.TM_SHOT_OUT : process.env.TM_SHOT_ONLY_DESIGN ? `evidence/matrix-part-${process.env.TM_SHOT_ONLY_DESIGN}.json` : "evidence/matrix-report.json", JSON.stringify({ viewport: "360x740", generated: new Date().toISOString(), combos: DESIGNS.length * LANGS.length * 2 * BIGS.length, screens: report.length, problems: bad.length, bad, routes, matrix: "4 looks x en/bn x light/dark x 100%/200% text" }, null, 2));
   console.log(report.length, "matrix screens;", bad.length, "with a problem;", report.filter((x) => x.overflow).length, "overflow,", report.filter((x) => x.wide).length, "wide elements,", report.filter((x) => x.small).length, "small targets");
   process.exit(0);
 }

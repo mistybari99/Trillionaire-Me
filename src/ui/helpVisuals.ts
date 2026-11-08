@@ -20,6 +20,7 @@ const SHAPES: Record<HelpTopicId, string[]> = {
   deen: ["M30 90q10-30 40-56q30 26 40 56", "M30 90h80M48 90V74q22-24 44 0v16", "M70 20v8"],
   backup: ["M22 30h44v58H22zM86 30h32v58H86z", "M66 60h20m-6-6 6 6-6 6", "M32 42h24M32 52h16M94 76h16"],
   settings: ["M26 34h88M26 60h88M26 86h88", "M48 26v16m42 10v16M60 78v16"],
+  head: ["M96 30a16 16 0 1 0 0 32a16 16 0 1 0 0-32", "M24 98h92", "M24 84h56M24 70h36", "m92 40-6 10h8l-4 10"],
 };
 /** Local, static decoration only. No embedded text or data; the adjacent guide is authoritative. */
 export function helpIllustration(id: HelpTopicId): HTMLElement {

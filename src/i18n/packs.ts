@@ -3,6 +3,7 @@
 import { VAULT_BN, VAULT_EN } from "./vault.ts";
 import { QB1_BN, QB1_EN } from "./q_b1.ts";
 import { QBRAND_BN, QBRAND_EN } from "./q_brand.ts";
+import { QHEAD_BN, QHEAD_EN } from "./q_head.ts";
 const en = {
   "set.row.helpplacement": "Help placement",
   "set.row.helpvisuals": "Help visuals",
@@ -1923,6 +1924,7 @@ const en = {
   ...VAULT_EN, // registry line: at-rest encryption text lives in vault.ts
   ...QB1_EN, // batch 1 (Q-01..Q-09) keys live in q_b1.ts
   ...QBRAND_EN, // brand line and tagline live in q_brand.ts
+  ...QHEAD_EN, // floating quick-action head lives in q_head.ts
 } as const;
 
 export type Key = keyof typeof en;
@@ -1930,6 +1932,7 @@ export type Key = keyof typeof en;
 const bn: Record<Key, string> = {
   ...QB1_BN,
   ...QBRAND_BN,
+  ...QHEAD_BN,
   "set.row.helpplacement": "হেল্প কোথায় দেখাবে",
   "set.row.helpvisuals": "হেল্পের ভিজুয়াল",
   "set.row.helpcontent": "গাইড ও নিজের ম্যাপ",

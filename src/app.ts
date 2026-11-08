@@ -32,6 +32,7 @@ import { saveFailedBanner } from "./ui/saveBanner";
 import { notifyText } from "./core/notify";
 import { observeNavLayout } from "./ui/navLayout";
 import { createBottomNavigation, focusDeenTarget } from "./ui/quickNavigationUi";
+import { mountFloatingHead, unmountFloatingHead } from "./ui/floatingHead";
 import { isTabId } from "./ui/tabActions";
 import { setOverlayContext } from "./ui/overlayCoordinator";
 import { consentOn } from "./ui/entry";
@@ -120,12 +121,13 @@ export function renderApp() {
   if (prefs.dataModeChoice !== null) { render(); return; }
   applyPrefs();
   stopNavLayout?.();
+  unmountFloatingHead();
   setOverlayContext("first-run");
   document.getElementById("app")!.replaceChildren(firstRunScreen());
 }
 
 export function render() {
-  if (isVaultLocked() || isLocked()) { renderApp(); return; }
+  if (isVaultLocked() || isLocked()) { unmountFloatingHead(); renderApp(); return; }
   applyPrefs();
   resetNotices();
   trackDemoDay();
@@ -170,6 +172,7 @@ export function render() {
   stopNavLayout?.();
   app.replaceChildren(skip, top, ...demoPanels(), ...(saveFailedBanner(lang) ? [saveFailedBanner(lang)!] : []), ...reminders, body, nav, drawer);
   stopNavLayout = observeNavLayout(nav);
+  mountFloatingHead(lang);
   window.scrollTo(0, routeChanged ? 0 : savedY);
   // After a real screen change (not a re-draw of the same screen, not the first load): the screen name becomes the page title and
   // keyboard / screen-reader focus moves to the new heading, so the change is announced.

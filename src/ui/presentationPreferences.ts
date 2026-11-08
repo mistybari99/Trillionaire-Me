@@ -4,10 +4,11 @@ export const PRESENTATION_VALUES = {
   helpVisuals: ["diagram", "illustrated"],
   helpContent: ["guide", "guide-and-mine"],
   tabNavigation: ["navigate", "menu"],
+  floatingHead: ["off", "on"],
 } as const;
 export type PresentationPreferences = { [K in keyof typeof PRESENTATION_VALUES]: typeof PRESENTATION_VALUES[K][number] };
 export const PRESENTATION_DEFAULTS: PresentationPreferences = {
-  helpPlacement: "inline", helpVisuals: "diagram", helpContent: "guide", tabNavigation: "navigate",
+  helpPlacement: "inline", helpVisuals: "diagram", helpContent: "guide", tabNavigation: "navigate", floatingHead: "off",
 };
 const session = new Map<keyof PresentationPreferences, string>();
 const keyFor = (key: keyof PresentationPreferences) => ["tm", "ui", key].join(":");

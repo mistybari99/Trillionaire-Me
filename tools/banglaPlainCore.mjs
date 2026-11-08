@@ -10,6 +10,7 @@ export const TS_FILES = [
   "src/core/stageTemplates.ts", "src/core/stuck.ts", "src/core/rules.ts", "src/core/stages.ts", "src/core/notify.ts", "src/ui/prayerAlerts.ts", "src/demo/seed.ts",
   "src/i18n/q_b1.ts",
   "src/i18n/q_brand.ts",
+  "src/i18n/q_head.ts",
 ];
 export const JSON_FILES = [
   ...Array.from({ length: 9 }, (_, i) => `public/content/pack-00${i + 1}.json`),

@@ -1,0 +1,20 @@
+/* Floating quick-action head (W5b). Off by default; never covers the bottom tab bar (the script keeps it above it). */
+.floating-head{position:fixed;left:0;top:0;z-index:30;width:48px;height:48px;touch-action:none}
+.floating-head[hidden]{display:none}
+.floating-head-btn{width:48px;height:48px;min-height:48px;min-width:48px;padding:0;margin:0;border-radius:50%;display:grid;place-items:center;cursor:grab;touch-action:none;
+  background:var(--primary);color:var(--on-primary);border:2px solid var(--card);box-shadow:0 2px 10px color-mix(in srgb,var(--ink) 28%,transparent)}
+.floating-head-btn[aria-expanded="true"]{outline:3px solid var(--ember);outline-offset:2px}
+.floating-head-btn:active{cursor:grabbing}
+.head-menu{position:fixed;z-index:35;bottom:calc(var(--nav-height) + var(--update-clearance) + 12px);width:min(320px,calc(100vw - 24px));max-height:calc(100dvh - var(--nav-height) - var(--update-clearance) - 32px);overflow:auto;
+  background:var(--card);color:var(--ink);border:1px solid var(--rule);border-radius:14px;padding:12px;box-shadow:0 8px 28px color-mix(in srgb,var(--ink) 25%,transparent)}
+.head-menu[data-side="right"]{right:12px}
+.head-menu[data-side="left"]{left:12px}
+.head-menu-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+.head-menu-top h2{margin:0;min-width:0;font-size:1.05rem}
+.head-menu .quick-access-grid{grid-template-columns:1fr;gap:8px}
+.head-menu .shortcut-link{display:flex;align-items:center;min-height:48px;padding:8px 12px;color:var(--ink);background:var(--card);border:1px solid var(--rule);border-radius:10px;text-decoration:none;font:inherit;text-align:start;cursor:pointer}
+.head-menu .shortcut-link:focus-visible,.head-menu .btn:focus-visible{outline:3px solid var(--primary);outline-offset:3px}
+.head-menu .btn{margin-top:8px;width:100%}
+@media (prefers-reduced-motion:no-preference){.floating-head{transition:opacity .15s ease}}
+@media (forced-colors:active){.floating-head-btn,.head-menu{border:2px solid CanvasText}}
+@media print{.floating-head,.head-menu{display:none !important}}

@@ -8,8 +8,8 @@ import { helpMapRecords, renderOwnMap } from "../src/ui/helpOwnMaps";
 const record = (id: string, entity: string, data: Record<string, unknown>, ns: TMRecord["ns"] = "demo", links?: Record<string, string>): TMRecord => ({ id, entity, ns, ownerId: "test", schemaVersion: 2, createdAt: "2026-11-06T00:00:00Z", values: Object.fromEntries(Object.entries(data).map(([key, value]) => [key, value === undefined ? { state: "unknown" } : { state: "value", value, label: ns === "demo" ? "DEMO" : "FACT" }])), links });
 beforeEach(() => { source.ns = "demo"; source.consent = false; source.locked = false; source.records = []; source.reads.mockClear(); });
 describe("static help guides", () => {
-  it("has twelve real localized guides; illustrations never contain words or data", () => {
-    expect(HELP_TOPIC_IDS).toHaveLength(12);
+  it("has thirteen real localized guides; illustrations never contain words or data", () => {
+    expect(HELP_TOPIC_IDS).toHaveLength(13);
     for (const topic of HELP_TOPIC_IDS) for (const lang of ["en", "bn", "mix"] as const) {
       expect(getHelpTopic(topic).id).toBe(topic);
       const plain = renderGuide(topic, lang, "diagram"), illustrated = renderGuide(topic, lang, "illustrated");

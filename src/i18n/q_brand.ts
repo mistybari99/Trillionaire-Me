@@ -3,7 +3,7 @@
 export const QBRAND_EN = {
   "brand.line": "Build Yourself",
   "brand.tagline": "Build yourself, one small step at a time.",
-  "brand.about": "Trillionaire Me is a personal goal journey app. Build Yourself is its product line: small steps, your own pace. Your entries stay on this device.",
+  "brand.about": "Build Yourself is the product line of Trillionaire Me: small steps, your own pace. Your entries stay on this device.",
 } as const;
 export const QBRAND_BN = {
   "brand.line": "Build Yourself",

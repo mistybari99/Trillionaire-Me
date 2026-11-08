@@ -1,0 +1,13 @@
+{
+  "viewport": "360x740",
+  "generated": "2026-11-07T19:29:47.379Z",
+  "combos": 12,
+  "screens": 24,
+  "problems": 0,
+  "bad": [],
+  "routes": [
+    "profile",
+    "settings/about"
+  ],
+  "matrix": "4 looks x en/bn x light/dark x 100%/200% text"
+}
