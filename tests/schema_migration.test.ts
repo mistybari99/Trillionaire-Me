@@ -10,7 +10,7 @@ import { ENTITIES, SCHEMA_VERSION } from "../src/schema/entities";
 import type { TMRecord } from "../src/core/types";
 
 const fx = (n: string) => JSON.parse(readFileSync(`tests/fixtures/${n}`, "utf8")) as { schemaVersion: number; records: TMRecord[] };
-const v1all = fx("records_v1.json").records, v2 = fx("records_v2.json").records, v3 = fx("records_v3.json").records, v0 = fx("records_v0.json").records;
+const v1all = fx("records_v1.json").records, v2 = fx("records_v2.json").records, v3 = fx("records_v3.json").records, v4 = fx("records_v4.json").records, v0 = fx("records_v0.json").records;
 const v1 = v1all.filter((r) => r.entity !== "task"); // the version-1 goals the version-0 fixture upgrades to
 const noVersion = (r: TMRecord) => { const { schemaVersion: _s, ...rest } = r; return rest; };
 
@@ -23,8 +23,8 @@ describe("record migration", () => {
     }
   });
   it("current records are untouched; records from a newer app are left alone, never downgraded", () => {
-    expect(migrateRecord(v3[0]!)).toEqual({ rec: v3[0], status: "current" });
-    const newer = { ...v3[0]!, schemaVersion: SCHEMA_VERSION + 1 }; expect(migrateRecord(newer)).toEqual({ rec: newer, status: "newer" });
+    expect(migrateRecord(v4[0]!)).toEqual({ rec: v4[0], status: "current" });
+    const newer = { ...v4[0]!, schemaVersion: SCHEMA_VERSION + 1 }; expect(migrateRecord(newer)).toEqual({ rec: newer, status: "newer" });
   });
   it("a chain of steps runs in order and loses nothing; a failing step or missing step keeps the original", () => {
     const steps: Record<number, Step> = { 0: MIGRATIONS[0]!, 1: (r) => ({ ...r, values: { ...r.values, "x.new": { state: "unknown" } } }) };
@@ -82,7 +82,7 @@ describe("multi-goal step 2: schema 2 (task.goals)", () => {
 
 describe("reminders: schema 3 (additive, no data rewrite)", () => {
   it("every version-2 record upgrades to the kept version-3 fixture with all values intact; running it twice changes nothing", () => {
-    const up = v2.map((r) => migrateRecord(r));
+    const up = v2.map((r) => migrateRecord(r, 3));
     expect(up.every((u) => u.status === "migrated")).toBe(true);
     expect(up.map((u) => u.rec)).toEqual(v3);
     for (let i = 0; i < v2.length; i++) { expect(up[i]!.rec.values).toEqual(v2[i]!.values); expect(MIGRATIONS[2]!(up[i]!.rec)).toEqual(up[i]!.rec); }

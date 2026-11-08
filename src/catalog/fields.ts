@@ -1045,6 +1045,30 @@ export const FIELDS: FieldDef[] = [
     what: bi("‘এক ঘণ্টা পরে’ বা ‘কাল সকালে’ বাছলে অ্যাপ নতুন সময় লেখে।", "When you pick ‘In 1 hour’ or ‘Tomorrow morning’ the app writes the new time."),
     why: bi("কাজটি হয়ে গেছে ধরা ছাড়াই শান্তভাবে পরে মনে করাতে।", "A calm ‘not now’ that does not mark the item done."),
     example: bi("(অ্যাপের নিজের লেখা)", "(written by the app)"), format: bi("বছর-মাস-দিন ও ঘণ্টা:মিনিট", "YYYY-MM-DDTHH:MM") }),
+
+  // ── W3 work blocks (BUILD-01, M08): optional time the person blocks by hand for their own work. Nothing is made by the app. ──
+  f({ id: "work_block.date", entity: "work_block", family: "FAM-03", type: "text", purpose: "planning", importance: "core",
+    label: bi("দিন", "Day"), what: bi("ব্লকের দিন, বা রিপিটের প্রথম দিন।", "The day of the block, or the first day of a repeat."),
+    why: bi("কোন দিন সময়টা আলাদা রাখবেন তা ঠিক করতে।", "To decide which day the time is kept."), example: bi("2026-11-09", "2026-11-09"), format: bi("বছর-মাস-দিন", "YYYY-MM-DD") }),
+  f({ id: "work_block.from", entity: "work_block", family: "FAM-03", type: "text", purpose: "planning", importance: "core",
+    label: bi("শুরু", "Starts"), what: bi("ব্লক শুরুর সময়, 24 ঘণ্টার ঘড়িতে।", "When the block starts, on the 24-hour clock."),
+    why: bi("কাজের সময়ের শুরু জানতে।", "To know where the work time begins."), example: bi("09:00", "09:00"), format: bi("ঘণ্টা:মিনিট", "HH:MM") }),
+  f({ id: "work_block.to", entity: "work_block", family: "FAM-03", type: "text", purpose: "planning", importance: "core",
+    label: bi("শেষ", "Ends"), what: bi("ব্লক শেষের সময়, শুরুর পরে।", "When the block ends, later than the start."),
+    why: bi("কাজের সময়ের শেষ জানতে।", "To know where the work time ends."), example: bi("10:30", "10:30"), format: bi("ঘণ্টা:মিনিট", "HH:MM") }),
+  f({ id: "work_block.label", entity: "work_block", family: "FAM-03", type: "text", purpose: "planning", importance: "optional",
+    label: bi("নাম", "Name"), what: bi("ব্লকের ছোট নাম, না লিখলেও চলে।", "A short name for the block. You can leave it out."),
+    why: bi("তালিকায় ব্লক চিনতে সুবিধা হয়।", "It makes the block easy to spot in the list."), example: bi("রিপোর্ট লেখা", "Write the report"), format: bi("60 অক্ষরের মধ্যে", "Up to 60 characters") }),
+  f({ id: "work_block.repeat", entity: "work_block", family: "FAM-03", type: "choice", purpose: "planning", importance: "useful",
+    options: [opt("none", "রিপিট নেই", "No repeat"), opt("daily", "প্রতিদিন", "Every day"), opt("weekdays", "সোমবার থেকে শুক্রবার", "Monday to Friday"), opt("weekly", "প্রতি সপ্তাহে, একই দিন", "Every week, same day")],
+    label: bi("রিপিট", "Repeat"), what: bi("ব্লক একবার হবে, নাকি বার বার।", "Whether the block happens once or again and again."),
+    why: bi("একই সময় রোজ বা প্রতি সপ্তাহে লাগলে আবার লিখতে হয় না।", "You do not retype a time you keep every day or week."), example: bi("প্রতি সপ্তাহে, একই দিন", "Every week, same day") }),
+  f({ id: "work_block.goal", entity: "work_block", family: "FAM-03", type: "text", purpose: "planning", importance: "optional",
+    label: bi("গোল (অ্যাপ লেখে)", "Goal (written by the app)"), what: bi("যে গোলের জন্য ব্লক, তার আইডি। আপনি লেখেন না।", "The id of the goal the block is for. You do not type it."),
+    why: bi("গোলের সাথে ব্লক মেলাতে। না বাছলে লিংক করা নেই ধরা হয়।", "To tie the block to a goal. If you do not choose, it is not linked."), example: bi("(অ্যাপের নিজের লেখা)", "(written by the app)") }),
+  f({ id: "work_block.protected", entity: "work_block", family: "FAM-03", type: "bool", purpose: "planning", importance: "useful",
+    label: bi("প্রোটেক্টেড", "Protected"), what: bi("চালু থাকলে প্ল্যান এই সময়ে কাজ বসায় না।", "When on, the plan places no step in this time."),
+    why: bi("বন্ধ থাকলে ব্লক শুধু একটা চিহ্ন, প্ল্যান বদলায় না।", "When off, the block is only a mark and the plan does not change."), example: bi("চালু", "On") }),
 ];
 
 export const fieldById = (id: string): FieldDef | undefined => FIELDS.find((x) => x.id === id);

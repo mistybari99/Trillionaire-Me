@@ -1,0 +1,11 @@
+/* Optional work time blocks (BUILD-01). Tokens only; 44 px targets; wraps at 360 px and at large text sizes. */
+.wb-card .wb-row{padding:8px 0;border-bottom:1px solid var(--line, rgba(127,127,127,.25));overflow-wrap:anywhere}
+.wb-card .wb-row:last-child{border-bottom:0}
+.wb-card .wb-form{display:grid;gap:8px}
+.wb-card .wb-form input[type=text],.wb-card .wb-form select{min-height:44px;width:100%;box-sizing:border-box}
+.wb-card .wb-check{display:flex;align-items:center;gap:8px;min-height:44px}
+.wb-card .wb-check input{width:24px;height:24px;flex:none}
+.wb-card .row{flex-wrap:wrap;gap:8px}
+.wb-card .btn{min-height:44px}
+.wb-card .wb-ideas li{padding:8px 0;overflow-wrap:anywhere}
+.wb-card .tag{margin-inline-start:6px}

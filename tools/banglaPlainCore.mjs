@@ -14,6 +14,7 @@ export const TS_FILES = [
   // every sector family data file (BUILD-02); a new file is picked up here and must be added to tests/fixtures/bangla_counts.json
   ...readdirSync("src/core/sectors/families").filter((f) => f.endsWith(".ts")).sort().map((f) => `src/core/sectors/families/${f}`),
   "src/i18n/q_b3.ts",
+  "src/i18n/q_blocks.ts",
 ];
 export const JSON_FILES = [
   ...Array.from({ length: 9 }, (_, i) => `public/content/pack-00${i + 1}.json`),

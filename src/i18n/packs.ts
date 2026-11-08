@@ -4,6 +4,7 @@ import { VAULT_BN, VAULT_EN } from "./vault.ts";
 import { QB1_BN, QB1_EN } from "./q_b1.ts";
 import { QB2_BN, QB2_EN } from "./q_b2.ts";
 import { QB3_BN, QB3_EN } from "./q_b3.ts";
+import { QBLOCKS_BN, QBLOCKS_EN } from "./q_blocks.ts";
 const en = {
   "set.row.helpplacement": "Help placement",
   "set.row.helpvisuals": "Help visuals",
@@ -1925,6 +1926,7 @@ const en = {
   ...QB1_EN, // batch 1 (Q-01..Q-09) keys live in q_b1.ts
   ...QB2_EN, // batch 2 (Q-10, Q-11, Q-30) keys live in q_b2.ts
   ...QB3_EN, // batch 3 (Q-12, Q-13, Q-34) keys live in q_b3.ts
+  ...QBLOCKS_EN, // optional work time blocks (BUILD-01) keys live in q_blocks.ts
 } as const;
 
 export type Key = keyof typeof en;
@@ -1933,6 +1935,7 @@ const bn: Record<Key, string> = {
   ...QB1_BN,
   ...QB2_BN,
   ...QB3_BN,
+  ...QBLOCKS_BN,
   "set.row.helpplacement": "হেল্প কোথায় দেখাবে",
   "set.row.helpvisuals": "হেল্পের ভিজুয়াল",
   "set.row.helpcontent": "গাইড ও নিজের ম্যাপ",

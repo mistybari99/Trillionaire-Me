@@ -5,8 +5,9 @@ import { FIELDS } from "../catalog/fields";
 import type { PrivacyClass } from "../catalog/types";
 
 /** 2 = steps and habits can serve several goals (`task.goals`, `habit.goals`); version 1 records get `task.goals` from `links.goal`.
- *  3 = reminders (entity `reminder`, family FAM-REM): additive, no data rewrite (MIGRATIONS[2] only raises the number). */
-export const SCHEMA_VERSION = 3;
+ *  3 = reminders (entity `reminder`, family FAM-REM): additive, no data rewrite (MIGRATIONS[2] only raises the number).
+ *  4 = optional manual work blocks (entity `work_block`, BUILD-01): additive, no data rewrite (MIGRATIONS[3] only raises the number). */
+export const SCHEMA_VERSION = 4;
 
 export interface EntityDef {
   id: string; family: string; name: Bi; module: string;
@@ -66,6 +67,7 @@ export const ENTITIES: EntityDef[] = [
   e("reality_event", "FAM-03", "বাস্তবতা বদলের ঘটনা", "Reality event", "M12", "personal"),
   e("plan_version", "FAM-03", "প্ল্যানের ভার্সন", "Plan version", "M12", "personal"),
   e("reminder", "FAM-REM", "রিমাইন্ডার", "Reminder", "M08", "personal"),
+  e("work_block", "FAM-03", "নিজের কাজের টাইম ব্লক", "Own work time block", "M08", "personal"),
 ];
 
 export const entityById = (id: string): EntityDef | undefined => ENTITIES.find((x) => x.id === id);

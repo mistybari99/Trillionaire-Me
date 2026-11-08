@@ -50,6 +50,7 @@ export function rowValue(r: SettingRow, lang: Locale): string | null {
     case "consent": return t(readConsent(consentKv) ? "set.allowed" : "set.notAllowed", lang);
     case "mode": return t(prefs.dataMode === "real" ? "set.real" : "set.demo", lang);
     case "planmode": return t(`plan.mode.${prefs.mode}` as Key, lang);
+    case "workblocks": return onOff(prefs.workBlocks, lang);
     case "rules": return `${num(RULE_IDS.filter((id) => prefs.ruleSwitches[id] ?? id !== "focus_again").length, lang)}/${num(RULE_IDS.length, lang)}`;
     case "connections": return `${num(connectionsOn(), lang)}/${num(FACILITY_IDS.length, lang)}`;
     case "lockscreen": return num(Object.values(prefs.notifyShow).filter(Boolean).length, lang);

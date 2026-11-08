@@ -142,6 +142,9 @@ export const prefs = {
   get universeView(): "map" | "list" { return get("tm:ui:universeView") === "list" ? "list" : "map"; },
   set universeView(v: "map" | "list") { set("tm:ui:universeView", v === "list" ? "list" : "map"); },
   /** Automatic local snapshot when the app opens (about once a day). On by default; the owner asked for it. */
+  /** Optional manual work time blocks (BUILD-01). OFF by default; the app works fully with it off. */
+  get workBlocks(): boolean { return get("tm:ui:workBlocks") === "on"; },
+  set workBlocks(v: boolean) { set("tm:ui:workBlocks", v ? "on" : "off"); },
   get snapAuto(): boolean { return get("tm:ui:snapAuto") !== "off"; },
   set snapAuto(v: boolean) { set("tm:ui:snapAuto", v ? "on" : "off"); },
   /** How many snapshots to keep: 3, 5 or 10. Unknown or missing value = 5. */

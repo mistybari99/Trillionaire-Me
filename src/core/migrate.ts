@@ -19,6 +19,8 @@ export const MIGRATIONS: Record<number, Step> = {
   },
   // 2 to 3 (reminders): additive. The new entity `reminder` has no old records, so nothing is rewritten; the number only goes up.
   2: (r) => r,
+  // 3 to 4 (optional work blocks): additive. The new entity `work_block` has no old records, so nothing is rewritten; the number only goes up.
+  3: (r) => r,
 };
 
 export type MigrateStatus = "current" | "migrated" | "newer" | "failed";

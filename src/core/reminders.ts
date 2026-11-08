@@ -9,7 +9,7 @@ import { buildNotification, type NotifyPrefs } from "./notify";
 import { dhakaNow, isoDate, type CalDate } from "./prayer";
 import type { FieldValue, TMRecord } from "./types";
 
-export const REMINDER_TARGETS = ["task", "plan_step", "habit", "bill", "goal", "review"] as const;
+export const REMINDER_TARGETS = ["task", "plan_step", "habit", "bill", "goal", "review", "work_block"] as const;
 export type ReminderTarget = (typeof REMINDER_TARGETS)[number];
 export type ReminderState = "on" | "done" | "skipped";
 
@@ -135,6 +135,8 @@ export interface TargetInfo {
   /** plan_step: where the planner placed it, or null; `deferred` is true for needs_estimate, no_room, paused */
   placed: { date: string; minute: number } | null;
   deferred: boolean;
+  /** work_block only: every start of the block in a window the caller chose (Dhaka date and minute); absent = none */
+  occurrences?: ReadonlyArray<{ date: string; minute: number }>;
 }
 export type TargetLookup = (target: ReminderTarget, id: string) => TargetInfo | null;
 
@@ -168,6 +170,8 @@ export function expandReminders(list: readonly Reminder[], from: string, to: str
       if (!rem.at) continue; const ms = atToMs(rem.at); if (!Number.isFinite(ms)) continue; const x = dateMinuteOf(ms); add(x.date, x.minute);
     } else if (rem.target === "plan_step") {
       if (info.deferred || !info.placed) continue; add(info.placed.date, Math.max(0, info.placed.minute - prefs.planLead));
+    } else if (rem.target === "work_block") {
+      for (const o of info.occurrences ?? []) add(o.date, o.minute); // one slot at the start of each occurrence; none while the block has no time
     } else if (rem.target === "habit") {
       if (!info.days.length) continue;
       const minute = rem.timeOfDay ? hhmmToMin(rem.timeOfDay) : defMin;

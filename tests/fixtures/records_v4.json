@@ -1,0 +1,128 @@
+{
+ "schemaVersion": 4,
+ "records": [
+  {
+   "id": "g1",
+   "entity": "goal",
+   "ns": "real",
+   "ownerId": "owner",
+   "schemaVersion": 4,
+   "createdAt": "2026-10-20T08:00:00.000Z",
+   "values": {
+    "goal.title": {
+     "state": "value",
+     "value": "Learn bookkeeping",
+     "label": "FACT"
+    },
+    "goal.target_date": {
+     "state": "unknown"
+    },
+    "goal.amount": {
+     "state": "prefer_not"
+    }
+   }
+  },
+  {
+   "id": "demo-p",
+   "entity": "profile",
+   "ns": "demo",
+   "ownerId": "demo-user",
+   "schemaVersion": 4,
+   "createdAt": "2026-10-20T08:00:00.000Z",
+   "values": {
+    "profile.display_name": {
+     "state": "value",
+     "value": "Rahim",
+     "label": "DEMO"
+    },
+    "profile.birth_year": {
+     "state": "later"
+    }
+   }
+  },
+  {
+   "id": "t1",
+   "entity": "task",
+   "ns": "real",
+   "ownerId": "owner",
+   "schemaVersion": 4,
+   "createdAt": "2026-10-21T08:00:00.000Z",
+   "values": {
+    "task.title": {
+     "state": "value",
+     "value": "Open a ledger",
+     "label": "FACT"
+    },
+    "task.minutes": {
+     "state": "unknown"
+    },
+    "task.goals": {
+     "state": "value",
+     "value": [
+      "g1"
+     ],
+     "label": "FACT"
+    }
+   },
+   "links": {
+    "goal": "g1"
+   }
+  },
+  {
+   "id": "t2",
+   "entity": "task",
+   "ns": "real",
+   "ownerId": "owner",
+   "schemaVersion": 4,
+   "createdAt": "2026-10-21T08:00:00.000Z",
+   "values": {
+    "task.title": {
+     "state": "value",
+     "value": "Unlinked step",
+     "label": "FACT"
+    },
+    "task.minutes": {
+     "state": "unknown"
+    }
+   }
+  },
+  {
+   "id": "wb-fx1",
+   "entity": "work_block",
+   "ns": "real",
+   "ownerId": "owner",
+   "schemaVersion": 4,
+   "createdAt": "2026-11-07T08:00:00.000Z",
+   "values": {
+    "work_block.date": {
+     "state": "value",
+     "value": "2026-11-09",
+     "label": "FACT"
+    },
+    "work_block.from": {
+     "state": "value",
+     "value": "09:00",
+     "label": "FACT"
+    },
+    "work_block.to": {
+     "state": "value",
+     "value": "10:30",
+     "label": "FACT"
+    },
+    "work_block.repeat": {
+     "state": "value",
+     "value": "weekly",
+     "label": "FACT"
+    },
+    "work_block.protected": {
+     "state": "value",
+     "value": false,
+     "label": "FACT"
+    },
+    "work_block.goal": {
+     "state": "unknown"
+    }
+   }
+  }
+ ]
+}

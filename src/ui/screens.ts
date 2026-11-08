@@ -63,9 +63,8 @@ import { printLink } from "./printLink";
 import { healthCard } from "./healthUi";
 import { deenReportCard, deenTodayCard } from "./deenPlansUi";
 import { profileCard } from "./profileCard";
-import { blocksTodayCard, commitCard, currentBlocks } from "./blocksUi";
+import { blocksTodayCard, commitCard, currentBlocks, workBlocksCard, workBlocksTodayCard } from "./blocksUi";
 import { habitBackfill, habitExtraInputs, habitMeta, microHabitCard } from "./qb3Ui";
-import { toPlannerBlocks } from "../core/timeBlocks";
 import { moneyReviewCard, riskReviewCard } from "./monthUi";
 import { exitConds, gateDueCard, gateReportCard, stageRulesBlock } from "./gateCard";
 import { portfolioCard } from "./ventureCard";
@@ -152,7 +151,7 @@ function markRealityChanged(taskId: string, lang: Locale) {
 }
 function currentPlan() {
   const a = loadAnswers(); const recs = allRecs();
-  const input = buildPlanInput(a, recs, prefs.mode, new Date().getDay(), toPlannerBlocks(currentBlocks().week.blocks));
+  const input = buildPlanInput(a, recs, prefs.mode, new Date().getDay(), currentBlocks().plannerBlocks);
   const titles = new Map(recs.filter((r) => r.entity === "task").map((r) => [r.id, String((r.values["task.title"] as { value?: unknown })?.value ?? "")]));
   return { a, recs, input, plan: schedule(input), state: capacityState(a), titles, hasTasks: titles.size > 0 };
 }
@@ -339,6 +338,7 @@ export function planScreen(): HTMLElement {
     h("div", { class: "card", "data-capacity": cp.state }, h("h2", { class: "card-h", }, t("plan.free", lang)), h("p", {}, free)),
     feasibilityNote(cp, lang),
     commitCard(lang, ((x) => (typeof x === "number" ? x : null))((cp.a["constraint.weekly_free_hours"] as { value?: unknown } | undefined)?.value)),
+    workBlocksCard(lang),
     planFlow(cp, lang),
     assessmentSection(cp.recs, lang),
     h("h2", {}, t("plan.mode", lang)), planChip("planmode", "plan.mode", lang),
@@ -1054,7 +1054,7 @@ export function today(): HTMLElement {
     section("context", "desk.context", welcomeBackCard(lang), movedNoteCard(lang),
       nxt.field ? h("aside", { class: "card next-step", "data-next-step": nxt.field.id }, h("small", {}, "→ "), h("p", {}, t("home.next", lang, { field: tb(nxt.field.label, lang) }))) : null),
     section("summary", "desk.summary", overallProgressCard(lang, "today"), homeCountCards(lang), kpiTodayCard(lang), northStarCard(lang, "today"),
-      teamCard(lang, "today"), blocksTodayCard(lang), healthCard(lang, "today"), deenTodayCard(lang), realityTodayCard(lang),
+      teamCard(lang, "today"), blocksTodayCard(lang), workBlocksTodayCard(lang), healthCard(lang, "today"), deenTodayCard(lang), realityTodayCard(lang),
       homeSummaryCards(lang), portfolioCard(lang, "today"), adviceCardsView(lang)),
     h("section", { class: "stage action-desk-stage", "aria-label": t("home.stage", lang) },
       h("h2", { class: "card-h" }, t("home.stage", lang)),

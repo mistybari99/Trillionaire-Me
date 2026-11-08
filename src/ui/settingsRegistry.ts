@@ -65,6 +65,7 @@ export const ROWS: SettingRow[] = [
 
   R("rules", "plan", "more.rules", "#/settings/plan/rules", ["automation", "rules", "smaller step", "break", "focus"], ["ruleSwitches", "lastFocusEnd", "lastRestAt"], ["tm:ui:rules", "tm:ui:focusEnd", "tm:ui:restAt"]),
   R("planmode", "plan", "set.row.planmode", "#/settings/plan/planmode", ["plan mode", "minimum week", "pause", "normal", "stuck"], ["mode"], ["tm:ui:mode"]),
+  R("workblocks", "plan", "set.row.workblocks", "#/diary/plan", ["time block", "block time", "work block", "focus", "calendar", "protected"], ["workBlocks"], ["tm:ui:workBlocks"]),
   R("stages", "plan", "set.row.stages", "#/settings/plan/stages", ["stage names", "stage", "template", "journey"], ["stageTemplate"], ["tm:ui:stageTemplate"]),
   R("weighting", "plan", "set.row.weighting", "#/settings/plan/weighting", ["progress", "weight", "equal", "size", "overall"], ["progressMode"], ["tm:ui:progressMode", "tm:ui:overallMem:*"]),
 
@@ -111,6 +112,6 @@ export const SEARCH_BN: Record<string, string[]> = {
   reminder: ["রিমাইন্ডার", "ব্যাকআপ"], reminders: ["রিমাইন্ডার", "মনে করান", "অ্যালার্ট", "ক্যালেন্ডার", "শান্ত সময়"], storage: ["স্টোরেজ", "নিরাপদ"], savebackup: ["ব্যাকআপ", "সেভ", "পাসফ্রেজ"], restore: ["ফেরান", "রিস্টোর", "ব্যাকআপ"], snapshots: ["কপি", "কপি"], csv: ["স্প্রেডশিট", "এক্সেল"],
   lockscreen: ["লক স্ক্রিন", "নোটিফিকেশন"], consent: ["পারমিশন", "আসল", "অনুমতি"], applock: ["পিন", "লক", "পাসওয়ার্ড"], vault: ["এনক্রিপ্ট", "এনক্রিপশন", "পাসফ্রেজ", "রিকভারি", "লক"],
   mode: ["ডেমো", "আসল", "মোড"], startreal: ["আসল শুরু", "শুরু"],
-  rules: ["নিয়ম", "অটোমেটিক"], planmode: ["প্ল্যান", "পজ", "কমপক্ষে"], stages: ["স্টেজ", "নাম"], weighting: ["প্রোগ্রেস", "ওজন"],
+  workblocks: ["টাইম ব্লক", "ব্লক", "ফোকাস"],   rules: ["নিয়ম", "অটোমেটিক"], planmode: ["প্ল্যান", "পজ", "কমপক্ষে"], stages: ["স্টেজ", "নাম"], weighting: ["প্রোগ্রেস", "ওজন"],
   connections: ["কানেকশন", "এআই", "ক্লাউড"], deletedemo: ["ডিলিট", "ডেমো", "মুছুন"], deletereal: ["ডিলিট", "আসল", "মুছুন"], welcome: ["স্বাগত", "শুরুর ধাপ"],
 };
