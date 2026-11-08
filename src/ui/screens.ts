@@ -79,6 +79,8 @@ import * as Cards from "../core/cards";
 import { CAUSE_TEXT, QUESTIONS, diagnose, type Answer, type Helper } from "../core/stuck";
 import { wordChain } from "../core/learning";
 import { extract, summarize, type Candidate, type Item } from "../core/capture";
+import { ideaEventRecord } from "../core/ideas";
+import { createNextTaskForIdea } from "./ideaUi";
 import { netWorth, monthlyCashFlow, runwayFor, type Calc } from "../core/finance";
 import { bdtAmount, cashFlow90, financeFrom, foreignOf, parseCurrency, parseRate } from "../core/financeInputs";
 import { research, safeQuery } from "../core/research";
@@ -605,12 +607,13 @@ const fmtNum = (n: number, lang: Locale) => fmtNumber(n, lang);
 export function captureScreen(): HTMLElement {
   const lang = L();
   const ta = h("textarea", { id: "cap-note", rows: "4", maxlength: "500", placeholder: t("capture.placeholder", lang) }) as HTMLTextAreaElement;
-  const out = h("div", { role: "status" }); const err = h("p", { class: "err", role: "alert" });
+  const kind = h("select", { id: "cap-kind" }, ...(["idea", "plan", "decision", "note"] as const).map((x) => h("option", { value: x, ...(x === "idea" ? { selected: true } : {}) }, t(`idea.kind.${x}` as Key, lang)))) as HTMLSelectElement;
+  const out = h("div", { "aria-live": "polite" }); const err = h("p", { class: "err", role: "alert" });
   const stamp = () => Date.now().toString(36);
   const saveAll = (picked: Candidate[], edits: Map<string, string>) => {
-    const d = (x: unknown): FieldValue => typed(x); const id = `cap-${stamp()}`;
+    const d = (x: unknown): FieldValue => typed(x); const id = `cap-${stamp()}`; const note = ta.value.trim(); const title = note.replace(/\s+/g, " ").slice(0, 120);
     const base = { createdAt: new Date().toISOString() };
-    if (!saveTyped({ ...base, id, entity: "capture", values: { "capture.note": d(ta.value.trim()) } })) { out.replaceChildren(h("p", { class: "err", role: "alert" }, saveBlockedText(lang))); return; }
+    if (!saveTyped({ ...base, id, entity: "capture", values: { "capture.note": d(note), "capture.title": d(title), "capture.kind": d(kind.value), "capture.state": d("inbox"), "capture.changed_at": d(base.createdAt) } })) { out.replaceChildren(h("p", { class: "err", role: "alert" }, saveBlockedText(lang))); return; }
     picked.forEach((c, i) => {
       const v: Record<string, FieldValue> = { "capture_item.kind": d(c.kind) };
       const ed = edits.get(c.id);
@@ -619,7 +622,12 @@ export function captureScreen(): HTMLElement {
       else { const n = ed !== undefined ? Number(ed.replace(/,/g, "")) : c.number; v["capture_item.number"] = Number.isFinite(n) ? d(n) : { state: "unknown" }; if (c.unit) v["capture_item.unit"] = d(c.unit); }
       saveTyped({ ...base, id: `${id}-i${i}`, entity: "capture_item", links: { note: id }, values: v });
     });
-    out.replaceChildren(h("p", { class: "ok-msg", "data-saved": "1" }, t("capture.saved", lang))); ta.value = "";
+    const saved = findRec(id); if (saved) saveTyped(ideaEventRecord(saved, "created", base.createdAt));
+    const actionMsg = h("p", { class: "ok-msg", "data-idea-action-msg": "1" });
+    const keep = h("button", { class: "btn ghost btn-sm", type: "button", "data-act": "idea-keep", onclick: () => { actionMsg.textContent = t("idea.capture.kept", lang); } }, t("idea.capture.keep", lang));
+    const organize = h("a", { class: "btn ghost btn-sm", href: `#/recall/${id}`, "data-act": "idea-organize" }, t("idea.capture.link", lang));
+    const next = h("button", { class: "btn btn-sm", type: "button", "data-act": "idea-next", onclick: () => { const r = createNextTaskForIdea(id); actionMsg.textContent = t(!r.ok ? "idea.error.write" : r.existing ? "idea.task.exists" : "idea.task.created", lang); } }, t("idea.capture.next", lang));
+    out.replaceChildren(h("p", { class: "ok-msg", "data-saved": "1" }, t("capture.saved", lang)), h("div", { class: "card idea-post-save" }, h("h2", { class: "card-h" }, t("idea.capture.actions", lang)), h("div", { class: "idea-actions" }, keep, organize, next), actionMsg)); ta.value = "";
   };
   const understand = h("button", { class: "btn", type: "button", "data-act": "capture-find" }, t("capture.understand", lang));
   understand.addEventListener("click", () => {
@@ -641,7 +649,9 @@ export function captureScreen(): HTMLElement {
     out.replaceChildren(cands.length ? h("p", {}, t("capture.found", lang)) : h("p", { class: "muted" }, t("capture.none", lang)), ...rows, ...(cands.length ? [saveSel] : []), saveNote);
   });
   return h("main", {}, link("#/today", "crumb", `← ${t("nav.today", lang)}`), h("h1", {}, t("capture.title", lang)), h("p", { class: "sub" }, t("capture.intro", lang)),
+    link("#/recall", "crumb", t("idea.recall.link", lang)),
     consentOn() ? null : consentPrompt(lang),
+    h("label", { for: "cap-kind" }, t("idea.capture.kind", lang)), kind,
     h("label", { for: "cap-note" }, tb(fieldById("capture.note")!.label, lang)), ta, err, understand, out, fieldHelp(fieldById("capture.note")!, lang), disclaimers(lang));
 }
 

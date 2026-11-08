@@ -1,5 +1,5 @@
 {
-  "generated": "2026-11-08T10:40:47.599Z",
+  "generated": "2026-11-08T13:49:43.257Z",
   "results": [
     {
       "id": "BRAND-SPLASH",
@@ -204,6 +204,36 @@
       "name": "finds amount, date and decision from a Bangla note",
       "pass": true,
       "detail": "amount,date,decision"
+    },
+    {
+      "id": "IDEA-CAPTURE",
+      "name": "capture offers Inbox, organize and next-task actions",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "IDEA-FLOW",
+      "name": "organized capture creates one linked task and append-only history",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "IDEA-RECALL",
+      "name": "Recall searches local title, details and tags",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "IDEA-MOBILE",
+      "name": "Recall has no horizontal overflow at 360px and 200% text",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "IDEA-OFFLINE",
+      "name": "Recall and linked task survive an offline reload",
+      "pass": true,
+      "detail": ""
     },
     {
       "id": "G3-CAPTURE",
@@ -641,7 +671,7 @@
       "id": "PRECACHE",
       "name": "only the current shell cache and the small runtime cache exist (old ones are deleted)",
       "pass": true,
-      "detail": "tm-runtime-v1,tm-shell-5cd86aaf2914"
+      "detail": "tm-runtime-v1,tm-shell-c52d972e10b5"
     },
     {
       "id": "PRECACHE",
@@ -665,7 +695,7 @@
       "id": "UPDATE-INTERRUPTED",
       "name": "503 on a required asset rejects the new worker and preserves the complete active shell",
       "pass": true,
-      "detail": "{\"state\":\"redundant\",\"sameActive\":true,\"waiting\":false,\"oldFiles\":[\"/\",\"/assets/connectionsUi-BaFbPCjO.js\",\"/assets/decisionUi-BI91OSR3.js\",\"/assets/fraunces-latin-600-normal-BFCDtZfi.woff2\",\"/assets/fraunces-latin-400-normal-6IfK1voy.woff2\",\"/assets/fraunces-latin-ext-400-normal-D8gbi3Gu.woff2\",\"/assets/fraunces-latin-ext-600-normal-BtzmzP0X.woff2\",\"/assets/dexie-DwAlfwp4.js\",\"/assets/fraunces-vietnamese-400-normal-CvGt0Ybw.woff2\",\"/assets/fraunces-vietnamese-600-normal-BjlAJixd.woff2\",\"/assets/hind-siliguri-bengali-400-normal-rHQ7AW0H.woff2\",\"/assets/halalUi-9yD188mg.js\",\"/assets/hind-siliguri-bengali-500-normal-UuhTmLlo.woff2\",\"/assets/hind-siliguri-bengali-600-normal-DLZF4s8q.woff2\",\"/assets/hind-siliguri-latin-400-normal-esES0U7a.woff2\",\"/assets/hind-siliguri-latin-500-normal-S8HLIV69.woff2\",\"/assets/hind-siliguri-latin-600-normal-DHrLfb92.woff2\",\"/assets/hind-siliguri-latin-ext-400-normal-EIcpWxdl.woff2\",\"/assets/hind-siliguri-latin-ext-500-normal-BzNTYs89.woff2\",\"/assets/hadithPack-DithIlcV.js\",\"/assets/hind-siliguri-latin-ext-600-normal-BE5fbvrE.woff2\",\"/assets/index-D0Jmyxwq.css\",\"/assets/i18n-CVO-WHAb.js\",\"/assets/legsUi-C0T3jw8h.js\",\"/assets/library-DqultxVJ.js\",\"/assets/noto-serif-bengali-bengali-500-normal-izpjMjkk.woff2\",\"/assets/noto-serif-bengali-bengali-700-normal-D6heRmtL.woff2\",\"/assets/noto-serif-bengali-latin-500-normal-ChHikhgt.woff2\",\"/assets/noto-serif-bengali-latin-700-normal-BH4cA-4o.woff2\",\"/assets/noto-serif-bengali-latin-ext-500-normal-uqHYh-WD.woff2\",\"/assets/noto-serif-bengali-latin-ext-700-normal-ktrNXsDH.woff2\",\"/assets/pack-001-DUTOTIFf.js\",\"/assets/pack-002-C1ATZw8r.js\",\"/assets/index-Dzdokn-U.js\",\"/assets/pack-003-DXXGS0EW.js\",\"/assets/pack-005-CAXnvOUz.js\",\"/assets/pack-004-CADvCbl_.js\",\"/assets/pack-006-DAAVgteg.js\",\"/assets/pack-007-CY0SJsIk.js\",\"/assets/pack-008-DxmvMQLr.js\",\"/assets/pack-009-BTKY__Lk.js\",\"/assets/planScreens-CH2xC7kb.js\",\"/audio/azan-1.mp3\",\"/audio/azan-2.mp3\",\"/audio/azan-manifest.json\",\"/audio/azan-3.mp3\",\"/audio/azan-4.mp3\",\"/content/pack-002.json\",\"/content/pack-001.json\",\"/content/pack-003.json\",\"/content/pack-005.json\",\"/content/pack-004.json\",\"/content/pack-006.json\",\"/content/pack-007.json\",\"/content/pack-009.json\",\"/content/pack-008.json\",\"/icon-180.png\",\"/icon-192.png\",\"/icon-512.png\",\"/icon-maskable-192.png\",\"/icon-maskable-512.png\",\"/icon-maskable.svg\",\"/icon.svg\",\"/index.html\",\"/manifest.webmanifest\"]}"
+      "detail": "{\"state\":\"redundant\",\"sameActive\":true,\"waiting\":false,\"oldFiles\":[\"/\",\"/assets/connectionsUi-DQcFn6rR.js\",\"/assets/decisionUi-C4oyiwDn.js\",\"/assets/fraunces-latin-600-normal-BFCDtZfi.woff2\",\"/assets/fraunces-latin-400-normal-6IfK1voy.woff2\",\"/assets/dexie-D0kjTsqt.js\",\"/assets/fraunces-latin-ext-400-normal-D8gbi3Gu.woff2\",\"/assets/fraunces-latin-ext-600-normal-BtzmzP0X.woff2\",\"/assets/fraunces-vietnamese-400-normal-CvGt0Ybw.woff2\",\"/assets/fraunces-vietnamese-600-normal-BjlAJixd.woff2\",\"/assets/hind-siliguri-bengali-400-normal-rHQ7AW0H.woff2\",\"/assets/halalUi-CCSfDOK3.js\",\"/assets/hind-siliguri-bengali-500-normal-UuhTmLlo.woff2\",\"/assets/hind-siliguri-bengali-600-normal-DLZF4s8q.woff2\",\"/assets/hind-siliguri-latin-400-normal-esES0U7a.woff2\",\"/assets/hind-siliguri-latin-500-normal-S8HLIV69.woff2\",\"/assets/hind-siliguri-latin-600-normal-DHrLfb92.woff2\",\"/assets/hind-siliguri-latin-ext-400-normal-EIcpWxdl.woff2\",\"/assets/hind-siliguri-latin-ext-500-normal-BzNTYs89.woff2\",\"/assets/hind-siliguri-latin-ext-600-normal-BE5fbvrE.woff2\",\"/assets/hadithPack-DithIlcV.js\",\"/assets/index-CBWxDJTY.css\",\"/assets/i18n-B46WWgRs.js\",\"/assets/legsUi-BDk6LrFw.js\",\"/assets/library-Dkk-rkq-.js\",\"/assets/noto-serif-bengali-bengali-500-normal-izpjMjkk.woff2\",\"/assets/noto-serif-bengali-bengali-700-normal-D6heRmtL.woff2\",\"/assets/index-NAWqidlf.js\",\"/assets/noto-serif-bengali-latin-700-normal-BH4cA-4o.woff2\",\"/assets/noto-serif-bengali-latin-500-normal-ChHikhgt.woff2\",\"/assets/noto-serif-bengali-latin-ext-500-normal-uqHYh-WD.woff2\",\"/assets/noto-serif-bengali-latin-ext-700-normal-ktrNXsDH.woff2\",\"/assets/pack-001-DUTOTIFf.js\",\"/assets/pack-002-C1ATZw8r.js\",\"/assets/pack-003-DXXGS0EW.js\",\"/assets/pack-004-CADvCbl_.js\",\"/assets/pack-005-CAXnvOUz.js\",\"/assets/pack-006-DAAVgteg.js\",\"/assets/pack-007-CY0SJsIk.js\",\"/assets/pack-008-DxmvMQLr.js\",\"/assets/planScreens-CuZp7OgB.js\",\"/assets/pack-009-BTKY__Lk.js\",\"/audio/azan-1.mp3\",\"/audio/azan-2.mp3\",\"/audio/azan-manifest.json\",\"/audio/azan-3.mp3\",\"/audio/azan-4.mp3\",\"/content/pack-001.json\",\"/content/pack-002.json\",\"/content/pack-003.json\",\"/content/pack-005.json\",\"/content/pack-004.json\",\"/content/pack-006.json\",\"/content/pack-008.json\",\"/content/pack-007.json\",\"/content/pack-009.json\",\"/icon-192.png\",\"/icon-180.png\",\"/icon-512.png\",\"/icon-maskable-192.png\",\"/icon-maskable-512.png\",\"/icon-maskable.svg\",\"/icon.svg\",\"/manifest.webmanifest\",\"/index.html\"]}"
     },
     {
       "id": "UPDATE-INTERRUPTED",
@@ -689,7 +719,7 @@
       "id": "UPDATE-STAMP",
       "name": "Settings > About shows version, build and date",
       "pass": true,
-      "detail": "Version: 0.1.0-g1 · build 3a5cc32 · 8 Nov 2026"
+      "detail": "Version: 0.1.0-g1 · build ba0d2e5 · 8 Nov 2026"
     },
     {
       "id": "UPDATE-BANNER",
@@ -801,9 +831,9 @@
     },
     {
       "id": "VAULT-E2E-10K",
-      "name": "10 000 real records sealed in real Chromium IndexedDB (25731 ms)",
+      "name": "10 000 real records sealed in real Chromium IndexedDB (26495 ms)",
       "pass": true,
-      "detail": "ms=25731"
+      "detail": "ms=26495"
     },
     {
       "id": "W1-AI-OFF",

@@ -23,6 +23,14 @@ export const MIGRATIONS: Record<number, Step> = {
   3: (r) => r,
   // 4 to 5 (sector toolkit, BUILD-02): additive. The new optional `venture.sector_*` values are absent on old ventures (= business type unknown); nothing is rewritten.
   4: (r) => r,
+  // 5 to 6 (idea inbox): old captures were saved notes with no lifecycle. Preserve the note and links, and classify it truthfully as an Inbox note.
+  // `createdAt` is the only known change time; no event is invented for history that did not exist.
+  5: (r) => r.entity !== "capture" ? r : ({ ...r, values: {
+    ...r.values,
+    ...(r.values["capture.kind"] ? {} : { "capture.kind": { state: "value", value: "note", label: r.ns === "real" ? "FACT" : "DEMO" } as const }),
+    ...(r.values["capture.state"] ? {} : { "capture.state": { state: "value", value: "inbox", label: r.ns === "real" ? "FACT" : "DEMO" } as const }),
+    ...(r.values["capture.changed_at"] ? {} : { "capture.changed_at": { state: "value", value: r.createdAt, label: r.ns === "real" ? "FACT" : "DEMO" } as const }),
+  } }),
 };
 
 export type MigrateStatus = "current" | "migrated" | "newer" | "failed";

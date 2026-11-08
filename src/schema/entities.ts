@@ -7,8 +7,9 @@ import type { PrivacyClass } from "../catalog/types";
 /** 2 = steps and habits can serve several goals (`task.goals`, `habit.goals`); version 1 records get `task.goals` from `links.goal`.
  *  3 = reminders (entity `reminder`, family FAM-REM): additive, no data rewrite (MIGRATIONS[2] only raises the number).
  *  4 = optional manual work blocks (entity `work_block`, BUILD-01): additive, no data rewrite (MIGRATIONS[3] only raises the number).
- *  5 = sector toolkit on ventures (BUILD-02): optional `venture.sector_*` values; additive, old ventures get none (MIGRATIONS[4] only raises the number). */
-export const SCHEMA_VERSION = 5;
+ *  5 = sector toolkit on ventures (BUILD-02): optional `venture.sector_*` values; additive, old ventures get none (MIGRATIONS[4] only raises the number).
+ *  6 = idea inbox/recall lifecycle and append-only history. Old captures become truthful Inbox notes; every other record is unchanged. */
+export const SCHEMA_VERSION = 6;
 
 export interface EntityDef {
   id: string; family: string; name: Bi; module: string;
@@ -49,6 +50,7 @@ export const ENTITIES: EntityDef[] = [
   e("deen_mark", "FAM-13", "প্ল্যানের চিহ্ন", "Plan mark", "M13", "worship"),
   e("capture", "FAM-17", "নোট/সিদ্ধান্ত", "Note / decision", "M16", "personal"),
   e("capture_item", "FAM-17", "নোট থেকে নেওয়া তথ্য", "Item from a note", "M16", "personal", "capture"),
+  e("idea_event", "FAM-17", "আইডিয়া/প্ল্যানের হিস্ট্রি", "Idea / plan history", "M16", "personal", "capture"),
   e("stuck_log", "FAM-40", "আটকে-যাওয়ার লগ", "Stuck log", "M25", "personal"),
   e("focus_session", "FAM-08", "ফোকাস সেশন", "Focus session", "M08", "personal", "task"),
   e("habit_log", "FAM-06", "অভ্যাসের দিন", "Habit day", "M06", "personal", "habit"),

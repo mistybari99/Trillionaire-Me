@@ -9,7 +9,7 @@ const action = (id: string, href: string, label: Key, quickPrayer = false): TabA
 
 /** Navigation inventory only: no recommendations, counts or record reads. */
 export const TAB_ACTIONS: Record<TabId, readonly TabAction[]> = {
-  today: [action("home", "#/today", "nav.today"), action("plan", "#/diary/plan", "plan.title"), action("goals", "#/journey/goals", "goals.link"), action("money", "#/diary/money", "money.title"), action("capture", "#/capture", "capture.link"), action("habits", "#/habits", "habits.link")],
+  today: [action("home", "#/today", "nav.today"), action("plan", "#/diary/plan", "plan.title"), action("goals", "#/journey/goals", "goals.link"), action("money", "#/diary/money", "money.title"), action("capture", "#/capture", "capture.link"), action("recall", "#/recall", "idea.recall.link"), action("habits", "#/habits", "habits.link")],
   journey: [action("home", "#/journey", "nav.journey"), action("goals", "#/journey/goals", "goals.link"), action("boards", "#/journey/boards", "bd.link"), action("horizon", "#/journey/horizon", "horizon.link"), action("week", "#/journey/week", "week.link"), action("report", "#/journey/report", "report.link")],
   diary: [action("home", "#/diary", "nav.diary"), action("intake", "#/diary/intake", "diary.start"), action("plan", "#/diary/plan", "plan.title"), action("money", "#/diary/money", "money.title"), action("ventures", "#/diary/ventures", "ven.link"), action("health", "#/diary/health", "hl.title")],
   deen: [action("home", "#/deen", "nav.deen"), action("prayers", "#/deen/prayers", "deen.prayer.title", true), action("fasting", "#/deen/fasting", "deen.fast.title"), action("plans", "#/deen/plans", "dp.title"), action("settings", "#/settings/prayer", "set.cat.prayer")],

@@ -20,6 +20,7 @@ import { deenPlansScreen } from "./ui/deenPlansUi";
 import { boardsScreen } from "./ui/boardsUi";
 import { hadithScreen } from "./ui/hadithUi";
 import { notesScreen } from "./ui/notesUi";
+import { ideaDetailScreen, recallScreen } from "./ui/ideaUi";
 import { printScreen } from "./ui/printUi";
 import { onboardScreen } from "./ui/onboardUi";
 import { settingsScreen } from "./ui/settingsUi";
@@ -62,6 +63,8 @@ export const ROUTES: Array<[RegExp, (m: RegExpMatchArray) => HTMLElement, string
   [/^\/diary\/plan$/, () => S.planScreen(), "diary"],
   [/^\/diary\/money$/, () => S.moneyScreen(), "diary"],
   [/^\/capture$/, () => viewed("capture", S.captureScreen), "today"],
+  [/^\/recall$/, () => recallScreen(), "today"],
+  [/^\/recall\/([\w-]+)$/, (m) => ideaDetailScreen(m[1]!), "today"],
   [/^\/journey\/report$/, () => S.reportScreen(), "journey"],
   [/^\/journey\/print(?:\/([a-z]+))?$/, (m) => printScreen(m[1]), "journey"],
   [/^\/journey\/week$/, () => S.weeklyScreen(), "journey"],

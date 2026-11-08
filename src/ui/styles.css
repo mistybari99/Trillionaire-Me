@@ -507,3 +507,15 @@ main :is(.row,.btn-row,.snap-btns)>.btn{flex:1 1 8rem;min-width:0;max-width:100%
 .scr-settings [data-card="quick"]>h2{margin-top:8px}
 .scr-settings [data-card="quick"]>.card{margin-block:6px;padding-block:8px}
 .scr-settings .seg button{min-width:min(max-content,100%);padding-inline:8px}
+
+/* Personal Idea & Plan Management: compact on phones, wraps cleanly at 200% text. */
+.idea-page-head,.idea-card-head,.idea-actions{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
+.idea-page-head>.btn{flex:0 0 auto}.idea-list{display:grid;gap:12px}.idea-card{overflow-wrap:anywhere}.idea-card .card-h{margin-top:8px}
+.idea-excerpt{white-space:pre-wrap}.idea-tags{display:flex;gap:6px;flex-wrap:wrap}.idea-tags .tag{margin:0}
+.idea-filters summary{font-weight:700;cursor:pointer;min-height:44px;display:flex;align-items:center}.idea-filter-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}
+.idea-filter label,.idea-two label{margin-top:0}.idea-two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.idea-links{border:1px solid var(--rule);border-radius:var(--r-md);padding:12px;margin:14px 0}.idea-links legend{font-weight:700;padding:0 6px}
+.idea-history{padding-left:22px}.idea-history li{margin:10px 0}.idea-post-save{margin-top:14px}.idea-actions{justify-content:flex-start}
+.idea-similar-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,10rem),1fr));gap:10px}.idea-similar-grid .card{margin:0}
+.idea-state-done{background:var(--tint-moss)}.idea-state-archived,.idea-state-paused{opacity:.78}
+@media (max-width:560px){.idea-filter-grid,.idea-two{grid-template-columns:1fr}.idea-page-head>.btn{width:100%}.idea-actions>.btn{flex:1 1 100%}}

@@ -9,7 +9,9 @@ import { QSECTOR_BN, QSECTOR_EN } from "./q_sector.ts";
 import { QBRAND_BN, QBRAND_EN } from "./q_brand.ts";
 import { QHEAD_BN, QHEAD_EN } from "./q_head.ts";
 import { QAI_BN, QAI_EN } from "./q_ai.ts";
+import { QIDEAS_BN, QIDEAS_EN } from "./q_ideas.ts";
 const en = {
+  ...QIDEAS_EN,
   "set.row.helpplacement": "Help placement",
   "set.row.helpvisuals": "Help visuals",
   "set.row.helpcontent": "Guide and own map",
@@ -1942,6 +1944,7 @@ const en = {
 export type Key = keyof typeof en;
 
 const bn: Record<Key, string> = {
+  ...QIDEAS_BN,
   ...QB1_BN,
   ...QB2_BN,
   ...QB3_BN,

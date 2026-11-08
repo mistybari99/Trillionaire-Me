@@ -2,7 +2,7 @@ import type { Bi } from "../i18n/registry";
 import { UNKNOWN_STATES, type UnknownState } from "../core/types";
 import type { AccessRule, ChoiceOption, FieldDef, FieldType, Importance, PrivacyClass, Purpose, Requirement } from "./types";
 
-export const CATALOG_VERSION = 21;
+export const CATALOG_VERSION = 22;
 
 const bi = (bn: string, en: string): Bi => ({ bn, en });
 const opt = (code: string, bn: string, en: string): ChoiceOption => ({ code, label: bi(bn, en) });
@@ -685,6 +685,29 @@ export const FIELDS: FieldDef[] = [
     what: bi("যা মনে আসে স্বাভাবিকভাবে লিখুন, এক-দুই বাক্যেই চলবে।", "Write naturally; one or two sentences is enough."),
     why: bi("অ্যাপ এখান থেকে টাকার অঙ্ক, সময়, তারিখ ও সিদ্ধান্ত আলাদা করে দেখাবে। আপনি ঠিক করে দিলে তবেই সেভ হবে। মূল নোট শুধু আপনার ফোনে থাকে।", "The app pulls out amounts, times, dates and decisions for you to confirm before anything is saved. The note itself stays on your phone."),
     example: bi("কাল সাপ্লায়ারকে 5 হাজার টাকা দেব, ঠিক করলাম নতুন দোকান নেব", "Tomorrow I will pay the supplier 5k taka; decided to take the new shop"), format: bi("এক-দুই বাক্য", "One or two sentences") }),
+  f({ id: "capture.title", entity: "capture", family: "FAM-17", type: "text", purpose: "planning", importance: "core",
+    label: bi("আইডিয়া বা প্ল্যানের নাম", "Idea or plan title"), what: bi("পরে সহজে খুঁজে পাওয়ার ছোট নাম।", "A short name that makes this easy to find later."),
+    why: bi("Recall-এ গুছিয়ে দেখা ও সার্চ করার জন্য।", "To organize and search it in Recall."), example: bi("দোকানের ডেলিভারি টেস্ট", "Test shop delivery"), format: bi("বেশি হলে 120 অক্ষর", "Up to 120 characters") }),
+  f({ id: "capture.kind", entity: "capture", family: "FAM-17", type: "choice", purpose: "planning", importance: "useful",
+    options: [opt("idea", "আইডিয়া", "Idea"), opt("plan", "প্ল্যান", "Plan"), opt("decision", "সিদ্ধান্ত", "Decision"), opt("note", "নোট", "Note")],
+    label: bi("ধরন", "Type"), what: bi("এটা আইডিয়া, প্ল্যান, সিদ্ধান্ত না সাধারণ নোট।", "Whether this is an idea, plan, decision or note."), why: bi("একই Inbox থেকে ধরন অনুযায়ী খুঁজতে।", "To find it by type in the same Inbox."), example: bi("আইডিয়া", "Idea") }),
+  f({ id: "capture.state", entity: "capture", family: "FAM-17", type: "choice", purpose: "planning", importance: "useful",
+    options: [opt("inbox", "ইনবক্স", "Inbox"), opt("active", "চালু", "Active"), opt("waiting", "অপেক্ষায়", "Waiting"), opt("paused", "পজ", "Paused"), opt("done", "শেষ", "Done"), opt("archived", "আর্কাইভ", "Archived")],
+    label: bi("স্ট্যাটাস", "State"), what: bi("এখন এটা কোথায় আছে।", "Where this item is now."), why: bi("পজ বা আর্কাইভ করলেও হারিয়ে না যেতে।", "So paused or archived work remains findable."), example: bi("ইনবক্স", "Inbox") }),
+  f({ id: "capture.changed_at", entity: "capture", family: "FAM-17", type: "text", purpose: "planning", importance: "optional",
+    label: bi("শেষ বদল", "Last changed"), what: bi("শেষবার গুছানো বা স্ট্যাটাস বদলের সময়।", "When it was last organized or changed."), why: bi("সাম্প্রতিক কাজ আগে দেখাতে ও হিস্ট্রি মিলাতে।", "To show recent work first and align history."), example: bi("2026-11-08", "2026-11-08") }),
+  f({ id: "capture.review_on", entity: "capture", family: "FAM-17", type: "date", purpose: "planning", importance: "optional",
+    label: bi("আবার দেখার তারিখ", "Review date"), what: bi("কবে আবার এই আইডিয়া বা প্ল্যান দেখবেন।", "When you want to look at this idea or plan again."), why: bi("অপেক্ষায় থাকা বা পজ করা কাজ ভুলে না যেতে।", "To avoid forgetting waiting or paused work."), example: bi("2026-11-15", "2026-11-15"), format: bi("বছর-মাস-দিন", "YYYY-MM-DD") }),
+  f({ id: "capture.tags", entity: "capture", family: "FAM-17", type: "list", purpose: "planning", importance: "optional",
+    label: bi("ট্যাগ", "Tags"), what: bi("নিজের ভাষায় বেশি হলে আটটি ছোট গ্রুপ।", "Up to eight short groups in your own words."), why: bi("একই বিষয়ের আইডিয়া দ্রুত খুঁজতে।", "To quickly find ideas about the same subject."), example: bi("দোকান, ডেলিভারি", "shop, delivery") }),
+  f({ id: "idea_event.action", entity: "idea_event", family: "FAM-17", type: "choice", purpose: "journey_log", importance: "core",
+    options: [opt("created", "তৈরি", "Created"), opt("edited", "এডিট", "Edited"), opt("state", "স্ট্যাটাস বদল", "State changed"), opt("linked", "লিংক", "Linked"), opt("task_created", "কাজ তৈরি", "Task created")],
+    label: bi("কী বদলেছে", "What changed"), what: bi("আইডিয়া বা প্ল্যানে করা কাজ।", "The action taken on an idea or plan."), why: bi("পুরোনো উদ্দেশ্য না হারিয়ে হিস্ট্রি রাখতে।", "To preserve history without losing earlier intent."), example: bi("স্ট্যাটাস বদল", "State changed") }),
+  f({ id: "idea_event.changed_at", entity: "idea_event", family: "FAM-17", type: "text", purpose: "journey_log", importance: "core",
+    label: bi("কখন", "When"), what: bi("বদলটি যে সময় হয়েছে।", "When the change happened."), why: bi("ঘটনার আগে-পরে রাখতে।", "To keep events in order."), example: bi("2026-11-08", "2026-11-08") }),
+  f({ id: "idea_event.from_state", entity: "idea_event", family: "FAM-17", type: "choice", purpose: "journey_log", importance: "optional", options: [opt("inbox", "ইনবক্স", "Inbox"), opt("active", "চালু", "Active"), opt("waiting", "অপেক্ষায়", "Waiting"), opt("paused", "পজ", "Paused"), opt("done", "শেষ", "Done"), opt("archived", "আর্কাইভ", "Archived")], label: bi("আগের স্ট্যাটাস", "Previous state"), what: bi("বদলের আগের স্ট্যাটাস।", "The state before the change."), why: bi("কীভাবে এগিয়েছে বুঝতে।", "To understand how it moved."), example: bi("ইনবক্স", "Inbox") }),
+  f({ id: "idea_event.to_state", entity: "idea_event", family: "FAM-17", type: "choice", purpose: "journey_log", importance: "optional", options: [opt("inbox", "ইনবক্স", "Inbox"), opt("active", "চালু", "Active"), opt("waiting", "অপেক্ষায়", "Waiting"), opt("paused", "পজ", "Paused"), opt("done", "শেষ", "Done"), opt("archived", "আর্কাইভ", "Archived")], label: bi("নতুন স্ট্যাটাস", "New state"), what: bi("বদলের পরের স্ট্যাটাস।", "The state after the change."), why: bi("এখনকার স্ট্যাটাসের পথে কী হয়েছে দেখতে।", "To see the path to the current state."), example: bi("চালু", "Active") }),
+  f({ id: "idea_event.detail", entity: "idea_event", family: "FAM-17", type: "text", purpose: "journey_log", importance: "optional", label: bi("বদলের কথা", "Change detail"), what: bi("কোন লিংক বা কাজ বদলেছে তার ছোট ডিটেইল।", "A short description of the link or task change."), why: bi("হিস্ট্রি বোঝার জন্য।", "To make the history understandable."), example: bi("গোলের সাথে লিংক", "Linked to goal") }),
   f({ id: "capture_item.kind", entity: "capture_item", family: "FAM-17", type: "choice", purpose: "journey_log", importance: "optional",
     options: [opt("amount", "টাকার অঙ্ক", "Amount"), opt("percent", "পার্সেন্ট", "Percent"), opt("duration", "কত সময়", "Duration"), opt("date", "তারিখ", "Date"), opt("decision", "সিদ্ধান্ত", "Decision")],
     label: bi("কী ধরনের জিনিস", "Kind of item"), what: bi("নোট থেকে যা বেছে নেওয়া হয়েছে তার ধরন।", "The type of fact taken from the note."),

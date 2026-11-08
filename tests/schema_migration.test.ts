@@ -10,7 +10,7 @@ import { ENTITIES, SCHEMA_VERSION } from "../src/schema/entities";
 import type { TMRecord } from "../src/core/types";
 
 const fx = (n: string) => JSON.parse(readFileSync(`tests/fixtures/${n}`, "utf8")) as { schemaVersion: number; records: TMRecord[] };
-const v1all = fx("records_v1.json").records, v2 = fx("records_v2.json").records, v3 = fx("records_v3.json").records, v4 = fx("records_v4.json").records, v5 = fx("records_v5.json").records, v0 = fx("records_v0.json").records;
+const v1all = fx("records_v1.json").records, v2 = fx("records_v2.json").records, v3 = fx("records_v3.json").records, v4 = fx("records_v4.json").records, v5 = fx("records_v5.json").records, v6 = fx("records_v6.json").records, v0 = fx("records_v0.json").records;
 const v1 = v1all.filter((r) => r.entity !== "task"); // the version-1 goals the version-0 fixture upgrades to
 const noVersion = (r: TMRecord) => { const { schemaVersion: _s, ...rest } = r; return rest; };
 
@@ -23,14 +23,20 @@ describe("record migration", () => {
     }
   });
   it("current records are untouched; records from a newer app are left alone, never downgraded", () => {
-    expect(migrateRecord(v5[0]!)).toEqual({ rec: v5[0], status: "current" });
-    const newer = { ...v5[0]!, schemaVersion: SCHEMA_VERSION + 1 }; expect(migrateRecord(newer)).toEqual({ rec: newer, status: "newer" });
+    expect(migrateRecord(v6[0]!)).toEqual({ rec: v6[0], status: "current" });
+    const newer = { ...v6[0]!, schemaVersion: SCHEMA_VERSION + 1 }; expect(migrateRecord(newer)).toEqual({ rec: newer, status: "newer" });
   });
   it("version-4 records upgrade to the version-5 fixture with every value intact; a second run changes nothing; old ventures get no sector values", () => {
-    const up = v4.map((r) => migrateRecord(r));
+    const up = v4.map((r) => migrateRecord(r, 5));
     expect(up.every((u) => u.status === "migrated")).toBe(true);
     expect(up.map((u) => u.rec)).toEqual(v5.filter((r) => r.id !== "v-sector"));
     for (const u of up) { expect(MIGRATIONS[4]!(u.rec)).toEqual(u.rec); expect(Object.keys(u.rec.values).some((k) => k.startsWith("venture.sector_"))).toBe(false); }
+  });
+  it("version-5 captures become Inbox notes without losing content; other records only advance version", () => {
+    const old = { id: "cap-old", entity: "capture", ns: "real", ownerId: "owner", schemaVersion: 5, createdAt: "2026-10-31T10:00:00.000Z", values: { "capture.note": { state: "value", value: "Keep me", label: "FACT" } } } as TMRecord;
+    const up = migrateRecord(old); expect(up.status).toBe("migrated"); expect(up.rec.values["capture.note"]).toEqual(old.values["capture.note"]);
+    expect(up.rec.values["capture.kind"]).toMatchObject({ value: "note" }); expect(up.rec.values["capture.state"]).toMatchObject({ value: "inbox" }); expect(up.rec.values["capture.changed_at"]).toMatchObject({ value: old.createdAt });
+    expect(v5.map((r) => migrateRecord(r).rec)).toEqual(v6);
   });
   it("a chain of steps runs in order and loses nothing; a failing step or missing step keeps the original", () => {
     const steps: Record<number, Step> = { 0: MIGRATIONS[0]!, 1: (r) => ({ ...r, values: { ...r.values, "x.new": { state: "unknown" } } }) };

@@ -15,15 +15,15 @@ beforeEach(() => {
 });
 
 describe("Useful workspace shortcuts", () => {
-  it("keeps five stable, localized navigation entries before daily work in every data mode", () => {
+  it("keeps the stable, localized navigation entries before daily work in every data mode", () => {
     for (const mode of ["demo", "real"]) for (const locale of ["en", "bn", "mix"] as const) {
       localStorage.setItem("tm:ui:dataMode", mode); localStorage.setItem("tm:ui:lang", locale);
       const el = mount(today); const tools = el.querySelector('[data-shortcuts="today"]')!;
-      expect(routes(tools)).toEqual(["#/diary/plan", "#/journey/goals", "#/diary/money", "#/capture", "#/habits"]);
+      expect(routes(tools)).toEqual(["#/diary/plan", "#/journey/goals", "#/diary/money", "#/capture", "#/recall", "#/habits"]);
       expect(before(el.querySelector("[data-workspace-header]")!, tools)).toBe(true);
       expect(before(tools, el.querySelector(".action-desk-agenda")!)).toBe(true);
       expect([...tools.querySelectorAll("a")].map((a) => a.textContent)).toEqual([
-        PACKS[locale]["plan.title"], PACKS[locale]["goals.link"], PACKS[locale]["money.title"], PACKS[locale]["capture.link"], PACKS[locale]["habits.link"],
+        PACKS[locale]["plan.title"], PACKS[locale]["goals.link"], PACKS[locale]["money.title"], PACKS[locale]["capture.link"], PACKS[locale]["idea.recall.link"], PACKS[locale]["habits.link"],
       ]);
       expect(tools.querySelector("button")).toBeNull();
       expect(el.querySelectorAll('a[href="#/capture"]')).toHaveLength(1);
