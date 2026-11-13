@@ -48,7 +48,7 @@ import { activityChart, goalRingsChart, habitChart, habitGridTracker, moneyChart
 import type { GridRange } from "../core/chartData";
 import { rulesTodayCard } from "./libraryScreens";
 import { celebrate, journeyGoalsCard, overallProgressCard } from "./lifeUi";
-import { adviceCardsView, homeCountCards, homeSummaryCards, homeNextAction, nextActionCard, nextTaskReason } from "./homeUi";
+import { adviceCardsView, nextMoreView, homeCountCards, homeSummaryCards, homeNextAction, nextActionCard, nextTaskReason } from "./homeUi";
 import { progressRing, isMilestone } from "./ring";
 import { logo3d } from "./logo";
 import { goalFunnelHero, horizonArc } from "./horizonArt";
@@ -1068,7 +1068,7 @@ export function today(): HTMLElement {
       nxt.field ? h("aside", { class: "card next-step", "data-next-step": nxt.field.id }, h("small", {}, "→ "), h("p", {}, t("home.next", lang, { field: tb(nxt.field.label, lang) }))) : null),
     section("summary", "desk.summary", overallProgressCard(lang, "today"), homeCountCards(lang), kpiTodayCard(lang), northStarCard(lang, "today"),
       teamCard(lang, "today"), blocksTodayCard(lang), workBlocksTodayCard(lang), healthCard(lang, "today"), deenTodayCard(lang), realityTodayCard(lang),
-      homeSummaryCards(lang), portfolioCard(lang, "today"), adviceCardsView(lang)),
+      homeSummaryCards(lang), portfolioCard(lang, "today"), nextMoreView(lang, selected.taskId ? [selected.taskId] : []), adviceCardsView(lang)),
     h("section", { class: "stage action-desk-stage", "aria-label": t("home.stage", lang) },
       h("h2", { class: "card-h" }, t("home.stage", lang)),
       h("p", {}, tb(stage.name, lang), " · ", valueEl(t("stage.progress", lang, { now: num(curStage + 1, lang), total: num(STAGES.length, lang) }), activeNs() === "real" ? "ESTIMATE" : "DEMO", lang)),

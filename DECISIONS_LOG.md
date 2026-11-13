@@ -919,3 +919,10 @@ Format: what · why · alternatives · how to undo. Owner decisions (D-A, D-E) a
 - Alternatives: save results as a goal (needs schema and owner intent); chart library (bundle size, not needed); a separate page only (not reachable from every screen).
 - Undo: delete `src/core/whatif*.ts`, `src/i18n/q_whatif.ts`, `src/ui/whatifUi.ts`, `routes_whatif.ts`, `styles_whatif.css`; remove the three small hooks (`ROUTES_WHATIF` spread and `whatifButton` in `src/app.ts`, `QWI_*` spreads in `src/i18n/packs.ts`, `q_whatif.ts` in `tools/banglaPlainCore.mjs`), regenerate `tests/fixtures/bangla_counts.json`, remove the tracker row. Notes already saved stay as ordinary notes.
 - Not done on purpose: no other tracker row or capability box is changed before the Audit agent says PASS.
+
+## TMV2-04 Cross-venture next-action reasons (13 Nov 2026)
+- What: `nextActions(recs, today, ns, skipIds)` in `src/core/nextAction.ts` (additive; `nextBestAction` unchanged). Reasons: blocker (an open step another open step must follow, via `links.after`), review date reached (`capture.review_on <= today`), waiting (delegated step, idea marked waiting, venture paused). View `nextMoreView` on Today (`data-next-more`), strings `src/i18n/q_nextwhy.ts`.
+- Why: Charter queue row 4; owner wants one calm view across ventures/ideas/steps. Tasks and goals have no venture link in the schema, so "cross-venture" = ideas linked to ventures plus paused ventures; no `task.venture` field was invented.
+- Decided without asking (reversible): max 3; read-only links only; Unknown/missing date never counts as due; no schema or migration change; Mix text derived from BN as elsewhere.
+- Alternatives: new "blocked" field and UI to set it (rejected: schema change, owner intent unclear); adding rules to `adviceCards` (rejected: pinned rule lists in tests).
+- Undo: delete `q_nextwhy.ts`, `nextMoreView` and its one call in `screens.ts`, the `nextActions` block in `nextAction.ts`, the import lines in `packs.ts`, `tests/next_reasons.test.ts`, the tracker row.

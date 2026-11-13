@@ -1,5 +1,5 @@
 {
-  "keys": 3297,
+  "keys": 3306,
   "perFile": {
     "src/i18n/packs.ts": 2489,
     "src/i18n/vault.ts": 76,

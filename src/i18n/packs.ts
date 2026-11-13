@@ -11,8 +11,10 @@ import { QHEAD_BN, QHEAD_EN } from "./q_head.ts";
 import { QAI_BN, QAI_EN } from "./q_ai.ts";
 import { QWI_BN, QWI_EN } from "./q_whatif.ts";
 import { QIDEAS_BN, QIDEAS_EN } from "./q_ideas.ts";
+import { QNEXTWHY_BN, QNEXTWHY_EN } from "./q_nextwhy.ts";
 const en = {
   ...QIDEAS_EN,
+  ...QNEXTWHY_EN,
   "set.row.helpplacement": "Help placement",
   "set.row.helpvisuals": "Help visuals",
   "set.row.helpcontent": "Guide and own map",
@@ -1947,6 +1949,7 @@ export type Key = keyof typeof en;
 
 const bn: Record<Key, string> = {
   ...QIDEAS_BN,
+  ...QNEXTWHY_BN,
   ...QB1_BN,
   ...QB2_BN,
   ...QB3_BN,

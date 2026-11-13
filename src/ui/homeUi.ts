@@ -9,8 +9,9 @@ import { valueEl } from "./components";
 import { financeFrom } from "../core/financeInputs";
 import { moneySummary, type Metric, type ScopeSummary } from "../core/homeSummary";
 import { goalStepCount, taskCount, type Count } from "../core/homeCounts";
-import { nextBestAction, type NextAction } from "../core/nextAction";
+import { nextBestAction, nextActions, type NextAction } from "../core/nextAction";
 import { isOpenTask } from "../core/planInputs";
+import { todayIso } from "../core/habits";
 import { adviceCards } from "../core/advice";
 import { TOPICS } from "../library/topics";
 
@@ -96,4 +97,17 @@ export function adviceCardsView(lang: Locale): HTMLElement | null {
       h("a", { href: `#/topic/${TOPICS.some((x) => x.id === c.topic) ? c.topic : "goal-strategy"}`, class: "btn ghost btn-sm", "data-act": "advice-open" }, t("advice.open", lang)),
       h("a", { href: c.href, class: "btn ghost btn-sm" }, t("next.btn.plan", lang)))),
     h("p", { class: "muted" }, t("advice.note", lang)));
+}
+
+/** Up to three calm "also worth a look" lines (blocker, review date reached, waiting). Read-only: links only, no button that adds a task. */
+export function nextMoreView(lang: Locale, skipIds: readonly string[] = [], today = todayIso()): HTMLElement | null {
+  const rows = nextActions(allRecs(), today, activeNs(), skipIds);
+  if (!rows.length) return null;
+  return h("section", { class: "card next-more", "data-next-more": String(rows.length), "aria-label": t("next.more.title", lang) },
+    h("h2", { class: "card-h" }, t("next.more.title", lang)),
+    ...rows.map((s) => h("article", { class: "advice-item", "data-next-more-reason": s.reason },
+      h("p", { class: "next-title" }, t(`next.more.${s.reason}.title` as Key, lang, { ...s.args, title: s.args.title || t("next.task.untitled", lang), other: s.args.other ?? "" })),
+      h("p", { class: "next-why" }, t(`next.more.${s.reason}.reason` as Key, lang, { other: s.args.other || t("next.task.untitled", lang) })),
+      h("a", { href: s.href, class: "btn ghost btn-sm", "data-act": "next-more-open" }, t("next.more.open", lang)))),
+    h("p", { class: "muted" }, t("next.more.note", lang)));
 }
