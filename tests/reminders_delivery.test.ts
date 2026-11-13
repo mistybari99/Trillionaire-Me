@@ -24,6 +24,7 @@ const stubNotification = (perm: "granted" | "default") => {
 const setVisible = (v: "visible" | "hidden") => Object.defineProperty(document, "visibilityState", { value: v, configurable: true });
 
 beforeEach(() => {
+  vi.useFakeTimers({ toFake: ["Date"] }); vi.setSystemTime(new Date("2026-11-06T12:00:00+06:00")); // tests use fixed 6 Nov dates
   localStorage.clear(); store.demo.clear(); store.real.clear(); revokeConsent(consentKv); resetReminderCards(); shown.length = 0;
   document.body.innerHTML = '<div id="app"></div>'; localStorage.setItem("tm:ui:lang", "en"); localStorage.setItem("tm:ui:dataMode", "demo");
   setVisible("visible");
