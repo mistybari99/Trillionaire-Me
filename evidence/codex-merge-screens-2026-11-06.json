@@ -1,0 +1,29 @@
+{
+  "viewport": "360x740",
+  "generated": "2026-11-06T19:54:45.186Z",
+  "combos": 12,
+  "screens": 216,
+  "problems": 0,
+  "bad": [],
+  "routes": [
+    "capture",
+    "profile",
+    "deen/prayers",
+    "deen/fasting",
+    "deen",
+    "today",
+    "journey",
+    "diary",
+    "habits",
+    "settings",
+    "topics",
+    "cards",
+    "notes",
+    "hadith",
+    "start",
+    "diary/intake/1",
+    "more/fields",
+    "more/glossary"
+  ],
+  "matrix": "4 looks x en/bn x light/dark x 100%/200% text"
+}

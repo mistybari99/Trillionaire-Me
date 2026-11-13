@@ -1,0 +1,19 @@
+{
+  "schema": "tm-system-template",
+  "schemaVersion": 1,
+  "id": "habit-reset",
+  "reviewStatus": "pending_reviewer",
+  "name": { "en": "Habit reset", "bn": "অভ্যাস আবার শুরু" },
+  "summary": { "en": "Restart one habit small. The smallest version, done once a day, counts as a restart.", "bn": "একটি অভ্যাস ছোট করে আবার শুরু করুন। দিনে একবার সবচেয়ে ছোট রূপটি করাই আবার শুরু।" },
+  "goals": [
+    { "key": "g1", "title": { "en": "Restart one habit small", "bn": "একটি অভ্যাস ছোট করে আবার শুরু" }, "horizon": "week" }
+  ],
+  "tasks": [
+    { "key": "t1", "goal": "g1", "title": { "en": "Choose one habit to restart", "bn": "আবার শুরু করার একটি অভ্যাস বাছুন" }, "minutes": 5, "priority": "high" },
+    { "key": "t2", "goal": "g1", "title": { "en": "Pick its smallest version", "bn": "তার সবচেয়ে ছোট রূপটি ঠিক করুন" }, "minutes": 5, "priority": "high" },
+    { "key": "t3", "goal": "g1", "title": { "en": "Do the smallest version once today", "bn": "আজ সেই ছোট রূপটি একবার করুন" }, "minutes": 5, "priority": "normal" }
+  ],
+  "habits": [
+    { "key": "h1", "title": { "en": "Smallest version of the habit", "bn": "অভ্যাসের সবচেয়ে ছোট রূপ" }, "days": [0, 1, 2, 3, 4, 5, 6], "target": 1, "unit": { "en": "time", "bn": "বার" } }
+  ]
+}

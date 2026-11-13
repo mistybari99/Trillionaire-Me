@@ -1,0 +1,1 @@
+`trillionaire-me-mark.svg` is the app icon: a paper-white 'T' on a `primary` square. It carries its own two colours (`#243b6b`, `#fbf8f1`), so show it via `<img>` at 64px or larger and keep the square (no rounding unless the OS masks it).

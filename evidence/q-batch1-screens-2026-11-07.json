@@ -1,0 +1,23 @@
+{
+  "viewport": "360x740",
+  "generated": "2026-11-07T13:52:12.729Z",
+  "combos": 12,
+  "screens": 144,
+  "problems": 0,
+  "bad": [],
+  "routes": [
+    "diary/inspiration",
+    "stuck",
+    "topics",
+    "topic/habits",
+    "capture",
+    "deen",
+    "journey/northstar",
+    "journey/goal/shot-goal",
+    "journey/week",
+    "today",
+    "journey/leak",
+    "journey/reality"
+  ],
+  "matrix": "4 looks x en/bn x light/dark x 100%/200% text"
+}

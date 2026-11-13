@@ -1,0 +1,43 @@
+# Current Capability Evidence Matrix
+
+Date: 2026-11-08
+
+Baseline inspected: `3a5cc3253ccdda98b8486afe574f56215ea0f227` plus the local Text Size Lock integration
+
+Method: code, route, test and maintained capability claims were cross-checked. “Verified” below means automated local evidence exists; it does not replace the open physical Android, TalkBack, Bangla-reviewer or production gates.
+
+Status vocabulary: **Verified** = implemented with directly relevant automated evidence; **Partial** = useful implementation exists but does not yet satisfy the Charter outcome; **Docs only** = proposal/specification without implementation; **Blocked** = requires an owner/reviewer/device decision.
+
+| Feature ID | User intent | Existing code / route | Observed status | Tests / evidence | REUSE / EXTEND / NEW | Blocker | Priority |
+|---|---|---|---|---|---|---|---|
+| REL-01 | Keep demo and real data separate | `src/core/store.ts`, `src/core/dataMode.ts`, `src/core/consent.ts` | Verified | `tests/data_mode.test.ts`, `tests/real_data.test.ts`, `tests/register_real.test.ts` | REUSE | Physical recovery gate remains | P0 |
+| REL-02 | Work offline and recover safely | `src/core/persist.ts`, `src/core/snapshots.ts`, `src/core/restore.ts`, service worker | Verified locally | `tests/persist.test.ts`, `tests/restore_safety.test.ts`, `tests/precache.test.ts` | REUSE + harden | OWNER-01 physical install/interruption/restore | P0 |
+| REL-03 | Protect private records | `src/core/dataVault.ts`, `src/core/cryptoBackup.ts`, `src/core/appLock.ts` | Verified locally; phone gate open | `tests/data_vault*.test.ts`, `tests/crypto_backup.test.ts`, `tests/app_lock.test.ts` | REUSE | Real-phone vault/app-lock recovery | P0 |
+| CAP-01 | Capture a thought before it is forgotten | `src/core/capture.ts`, `#/capture`, capture/capture-item records | Partial | `tests/capture.test.ts`, `tests/screen_views.test.ts` | EXTEND | No unified inbox state/classification workflow | P0 |
+| CAP-02 | Find old, paused or abandoned work later | Notes, goals, tasks, history and Settings each have local views | Partial | `tests/notes_sops.test.ts`, `tests/reality_loop.test.ts`, route/link tests | EXTEND | No cross-entity recall index, dormant state or global query | P0 |
+| CAP-03 | Preserve history instead of destructive replacement | `src/core/realityLoop.ts`, `src/core/planHistory.ts`, snapshots | Verified for plan changes | `tests/reality_loop.test.ts`, `tests/restore_safety.test.ts` | REUSE | Inbox/venture lifecycle history is not unified | P0 |
+| ORG-01 | Manage multiple ventures | `src/core/ventures.ts`, `src/core/ventureSector.ts`, `#/diary/ventures` | Verified for portfolio records | `tests/venture_value.test.ts`, `tests/venture_sector*.test.ts` | REUSE + EXTEND | Cross-venture work view is limited | P0 |
+| ORG-02 | Connect goals, projects, tasks and habits | `goalTree.ts`, `goalPlan.ts`, `goalWorksheet.ts`, `taskGoals.ts` | Verified for current relationships | `tests/goal_tree.test.ts`, `tests/task_goals.test.ts`, `tests/goal_overview.test.ts` | REUSE + EXTEND | Shared dependencies/resources are not one explicit graph | P1 |
+| ORG-03 | Avoid duplicate work without destructive deduplication | Shared task/habit-to-goal links (up to five goals) | Partial | `tests/task_goals.test.ts`, `tests/multi_goal_print.test.ts` | EXTEND | No suggestion/merge-review flow across capture, tasks and notes | P1 |
+| ACT-01 | See one sensible action and why | `src/core/nextAction.ts`, `src/core/advice.ts`, Today route | Verified for present rule set | `tests/home_cards.test.ts`, `tests/advice.test.ts`, `tests/action_desk_today.test.ts` | REUSE + EXTEND | Needs blocked/wait/review reasoning across ventures | P0 |
+| ACT-02 | Plan within real capacity | `planner.ts`, `timeBlocks.ts`, work blocks, plan modes | Verified locally | `tests/time_blocks.test.ts`, `tests/infeasible_plan.test.ts`, `tests/work_blocks*.test.ts` | REUSE | Physical reminder/device behavior open | P1 |
+| GOAL-01 | Break a large goal into understandable steps | Goal tree, worksheet, SMART/SWOT, backward plan | Verified components; workflow partial | `tests/goal_tree.test.ts`, `tests/q_b2_worksheet.test.ts`, `tests/backward_plan.test.ts` | MERGE + EXTEND | Current pieces are spread across routes | P1 |
+| GOAL-02 | Track North Star without false forecasts | `northStar.ts`, `overallProgress.ts`, milestone ladder | Verified current calculations | `tests/north_star.test.ts`, `tests/overall_progress*.test.ts` | REUSE | None for current scope | P1 |
+| GUIDE-01 | Get explainable guidance without AI | `advice.ts`, `rules.ts`, `assessment.ts`, content/system libraries | Partial but useful | `tests/advice.test.ts`, `tests/rules.test.ts`, `tests/o5_assessment_fit.test.ts`, `tests/systems.test.ts` | MERGE + EXTEND | No common domain-pack contract or explanation trace | P2 |
+| GUIDE-02 | Use profession/context packs without separate apps | Sector families and template/content packs | Partial | `tests/sector_family_files.test.ts`, `tests/content_pack.test.ts`, `tests/systems.test.ts` | EXTEND | Pack schema for questions/rules/formulas/guidance is not unified | P2 |
+| SIM-01 | Compare baseline and alternatives safely | Sector formula engine and isolated calculators | Partial foundation | `tests/sector_engine.test.ts`, finance/venture tests | REUSE + NEW | No domain-agnostic Scenario entity or Simulation Lab | P3 |
+| SIM-02 | Keep scenarios separate from facts | FACT/ESTIMATE labels and Reality/PlanVersion mechanisms exist | Partial foundation | `tests/venture_sector.test.ts`, `tests/reality_loop.test.ts` | EXTEND | Scenario persistence/apply-review contract is missing | P3 |
+| SIM-03 | Use embedded quick simulations | No shared quick-simulation component found | Missing | None | NEW after SIM-01 | Requires approved blueprint phase | P3 |
+| ADAPT-01 | Adapt a plan when reality changes | `realityLoop.ts`, plan diff, approval, plan versions | Verified current rule set | `tests/reality_loop.test.ts`, `tests/o6_reality_review_templates.test.ts` | REUSE + EXTEND | Cross-goal/venture impact coverage can expand | P4 |
+| ADAPT-02 | Review evidence, assumptions and KPIs | `kpi.ts`, `weeklyReview.ts`, `monthlyReview.ts` | Verified current scope | `tests/kpi.test.ts`, `tests/weekly_review.test.ts`, `tests/month_review.test.ts` | REUSE + EXTEND | Experiment/sensitivity comparison is missing | P4 |
+| RISK-01 | See risks, stop rules and gentle alternatives | `risk.ts`, `stuck.ts`, `microHabit.ts`, plan modes | Verified current flows | `tests/risk_review.test.ts`, `tests/stuck.test.ts`, `tests/micro_habit.test.ts` | REUSE | No blocker | P4 |
+| UX-01 | Use EN, BN and Mix on a 360px phone | i18n packs, responsive CSS, language route | Verified in automation; human review open | `tests/i18n_modes.test.ts`, `tests/a11y.test.ts`, browser matrix evidence | REUSE + harden | OWNER-04 native Bangla review; physical TalkBack | P0 |
+| UX-02 | Adjust text size without accidental change | Settings slider + local lock integration | Verified locally after this work | `tests/text_size.test.ts`, `tools/e2e.mjs` | REUSE | Physical Android/TalkBack gate | P0 |
+| UX-03 | Reduce vertical space safely | Recovered dropdown audit only | Docs only | `docs/audit/DROPDOWN_SPACE_AUDIT_2026-11-07.md` | DEFER | Prototype + phone usability check | Backlog |
+| DATA-01 | Export, restore and inspect data | JSON/encrypted backup, snapshots, CSV, print/PDF | Verified current formats | backup/restore/CSV/print test families | REUSE + EXTEND | Scenario entities would need explicit migration/export policy | P0 |
+| AI-01 | Keep AI private and off until approved | Null ports, guards and disabled connection layer | Built but blocked/off | `tests/ai_guard.test.ts`, `tests/ai_adapters.test.ts`, `tests/ai_csp.test.ts` | DEFER | DECISION-02: provider, purpose, consent, spend | P5 |
+| INT-01 | Optional ERP/cloud/public edition later | Ports and docs only; cloud sync remains off | Blocked | Connection/guard tests establish off state | DEFER | DECISION-04 and separate architecture/release approval | P5 |
+
+## Evidence-based conclusion
+
+The existing app is not an empty shell: it already has strong offline data safety, goal/task/habit relationships, capacity planning, reality-change history, reviews, venture calculations and explainable local rules. The largest Charter gaps are not more dashboards. They are a unified recall lifecycle, a coherent guided-breakdown journey across existing pieces, a common domain-pack contract, and a fact-isolated scenario model. Those gaps should be filled incrementally without replacing the current TypeScript/PWA/Dexie architecture.

@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="bn" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ink and Paper Home</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Hind+Siliguri:wght@400;500;600&family=Noto+Serif+Bengali:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F5F1E8; --card:#FBF8F1; --ink:#14181F; --muted:#5B6270; --rule:#D8D1C0;
+  --primary:#243B6B; --on-primary:#FBF8F1; --ember:#C8501C; --moss:#3F6B4A;
+  --demo:#8A6D1D; --demo-bg:#F1E6C4;
+}
+:root[data-theme="dark"]{
+  --paper:#0F1218; --card:#171B24; --ink:#EEE9DC; --muted:#9AA1AE; --rule:#2A3040;
+  --primary:#8FA8E6; --on-primary:#0F1218; --ember:#F08A56; --moss:#8BC49A;
+  --demo:#E3C566; --demo-bg:#2C2610;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#0F1218; --card:#171B24; --ink:#EEE9DC; --muted:#9AA1AE; --rule:#2A3040;
+  --primary:#8FA8E6; --on-primary:#0F1218; --ember:#F08A56; --moss:#8BC49A;
+  --demo:#E3C566; --demo-bg:#2C2610;}}
+*{box-sizing:border-box;margin:0}
+body{background:var(--paper);color:var(--ink);font:400 17px/1.7 "Hind Siliguri",system-ui,sans-serif;max-width:480px;margin:0 auto;padding:20px 16px 96px}
+:lang(bn){letter-spacing:0}
+.top{display:flex;justify-content:space-between;align-items:center;font-size:14px;color:var(--muted)}
+.badge{font-size:12px;font-weight:600;padding:2px 10px;border:1px solid var(--demo);background:var(--demo-bg);color:var(--demo);border-radius:2px}
+h1{font:700 30px/1.3 "Noto Serif Bengali","Fraunces",serif;margin:28px 0 4px;text-wrap:balance;hyphens:none}
+.sub{color:var(--muted);font-size:16px}
+.gate{margin:24px 0;border-top:2px solid var(--ink);border-bottom:1px solid var(--rule);padding:16px 0}
+.gate small{line-height:1.6;font:600 12px/1.6 "Hind Siliguri";color:var(--muted)}
+.gate .n{font:600 56px/1.25 "Fraunces",serif;color:var(--ember)}
+.rungs{display:flex;gap:4px;margin-top:12px}
+.rungs i{flex:1;height:8px;background:var(--rule)}
+.rungs i.done{background:var(--moss)} .rungs i.now{background:var(--ember)}
+h2{font:700 20px/1.4 "Noto Serif Bengali",serif;margin:28px 0 8px}
+.task{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:start;padding:14px 0;border-bottom:1px solid var(--rule)}
+.task b{display:grid;place-items:center;width:44px;height:44px;border:1.5px solid var(--ink);font:600 20px "Fraunces",serif}
+.task p{font-size:15px;color:var(--muted);line-height:1.5}
+.lbl{font-size:11px;font-weight:600;color:var(--muted);border:1px solid var(--rule);padding:0 6px;margin-left:6px}
+.cta{display:block;width:100%;min-height:52px;margin-top:24px;background:var(--primary);color:var(--on-primary);border:0;font:600 18px "Hind Siliguri";cursor:pointer}
+.cta:focus-visible,.tab:focus-visible{outline:3px solid var(--ember);outline-offset:2px}
+nav{position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--rule);display:flex;justify-content:space-around;max-width:480px;margin:0 auto}
+.tab{flex:1;min-height:56px;display:grid;place-items:center;font-size:13px;color:var(--muted);background:none;border:0;font-family:inherit}
+.tab[aria-current]{color:var(--ink);font-weight:600;box-shadow:inset 0 3px var(--primary)}
+</style>
+</head>
+<body>
+<div class="top"><span>২২ অক্টোবর</span><span class="badge">ডেমো ডেটা</span></div>
+<h1>আজ শুধু একটাই কাজ: ভিত্তি গড়া</h1>
+<p class="sub">বর্তমান ধাপ — ধাপ ২ / ৮</p>
+<section class="gate" aria-label="বর্তমান গেট">
+  <small>GATE · নিজেকে চেনা</small>
+  <div class="n">২<span style="font-size:22px;color:var(--muted)"> / ৮</span></div>
+  <div class="rungs" role="img" aria-label="৮ ধাপের মধ্যে ১টি সম্পন্ন, ২য় চলছে"><i class="done"></i><i class="now"></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+</section>
+<h2>আজকের কাজ</h2>
+<div class="task"><b>১</b><div>দক্ষতা ও আগ্রহের তালিকা পূরণ <span class="lbl">ডেমো</span><p>১০ মিনিট · অজানা থাকলে "পরে" বেছে নিন</p></div></div>
+<div class="task"><b>২</b><div>সপ্তাহের সময়ের সীমা ঠিক করা <span class="lbl">ডেমো</span><p>৫ মিনিট · নামাজ, পরিবার, বিশ্রাম আগে বসবে</p></div></div>
+<button class="cta">কাজ শুরু করুন</button>
+<nav aria-label="প্রধান মেনু">
+  <button class="tab" aria-current="page">আজ</button><button class="tab">যাত্রা</button><button class="tab">ডায়েরি</button><button class="tab">দ্বীন</button><button class="tab">আরও</button>
+</nav>
+</body>
+</html>

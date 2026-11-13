@@ -1,0 +1,14 @@
+{
+  "viewport": "360x740",
+  "generated": "2026-11-08T03:02:44.643Z",
+  "combos": 12,
+  "screens": 36,
+  "problems": 0,
+  "bad": [],
+  "routes": [
+    "journey/backward/shot-goal",
+    "journey/goals",
+    "habits"
+  ],
+  "matrix": "4 looks x en/bn x light/dark x 100%/200% text"
+}

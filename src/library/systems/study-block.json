@@ -1,0 +1,19 @@
+{
+  "schema": "tm-system-template",
+  "schemaVersion": 1,
+  "id": "study-block",
+  "reviewStatus": "pending_reviewer",
+  "name": { "en": "Study block", "bn": "পড়ার ব্লক" },
+  "summary": { "en": "One focused study block a day, then a short note. Start with 25 minutes if 45 feels too long.", "bn": "প্রতিদিন একটি ফোকাস পড়ার ব্লক, পরে ছোট নোট। 45 মিনিট বেশি লাগলে 25 মিনিট দিয়ে শুরু করুন।" },
+  "goals": [
+    { "key": "g1", "title": { "en": "Study regularly", "bn": "নিয়মিত পড়া" }, "horizon": "month" }
+  ],
+  "tasks": [
+    { "key": "t1", "goal": "g1", "title": { "en": "Pick today's topic", "bn": "আজকের বিষয় ঠিক করুন" }, "minutes": 5, "priority": "high" },
+    { "key": "t2", "goal": "g1", "title": { "en": "Focus study block", "bn": "ফোকাস পড়ার ব্লক" }, "minutes": 45, "priority": "high" },
+    { "key": "t3", "goal": "g1", "title": { "en": "Write a three-line note on what you learned", "bn": "যা শিখলেন তার তিন লাইনের নোট লিখুন" }, "minutes": 10, "priority": "normal" }
+  ],
+  "habits": [
+    { "key": "h1", "title": { "en": "Study block done", "bn": "পড়ার ব্লক শেষ" }, "days": [1, 2, 3, 4, 5], "target": null, "unit": null }
+  ]
+}

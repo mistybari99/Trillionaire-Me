@@ -1,0 +1,390 @@
+{
+  "viewport": "360x740",
+  "generated": "2026-10-24T14:47:52.047Z",
+  "screens": [
+    {
+      "lang": "bn",
+      "route": "today",
+      "file": "evidence/screenshots/bn-today.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "journey",
+      "file": "evidence/screenshots/bn-journey.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "diary",
+      "file": "evidence/screenshots/bn-diary.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "diary/intake/1",
+      "file": "evidence/screenshots/bn-diary_intake_1.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "diary/intake/2",
+      "file": "evidence/screenshots/bn-diary_intake_2.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "diary/intake/3",
+      "file": "evidence/screenshots/bn-diary_intake_3.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "diary/intake/4",
+      "file": "evidence/screenshots/bn-diary_intake_4.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "diary/intake/5",
+      "file": "evidence/screenshots/bn-diary_intake_5.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "diary/intake/6",
+      "file": "evidence/screenshots/bn-diary_intake_6.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "diary/intake/7",
+      "file": "evidence/screenshots/bn-diary_intake_7.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "diary/plan",
+      "file": "evidence/screenshots/bn-diary_plan.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "diary/money",
+      "file": "evidence/screenshots/bn-diary_money.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "journey/log",
+      "file": "evidence/screenshots/bn-journey_log.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "journey/report",
+      "file": "evidence/screenshots/bn-journey_report.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "journey/horizon",
+      "file": "evidence/screenshots/bn-journey_horizon.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "capture",
+      "file": "evidence/screenshots/bn-capture.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "stuck",
+      "file": "evidence/screenshots/bn-stuck.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "topics",
+      "file": "evidence/screenshots/bn-topics.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "topic/procrastination",
+      "file": "evidence/screenshots/bn-topic_procrastination.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "topic/emotions",
+      "file": "evidence/screenshots/bn-topic_emotions.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "reward",
+      "file": "evidence/screenshots/bn-reward.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "journey/art",
+      "file": "evidence/screenshots/bn-journey_art.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "habits",
+      "file": "evidence/screenshots/bn-habits.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "cards",
+      "file": "evidence/screenshots/bn-cards.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "deen",
+      "file": "evidence/screenshots/bn-deen.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "more",
+      "file": "evidence/screenshots/bn-more.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "more/status",
+      "file": "evidence/screenshots/bn-more_status.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "more/fields",
+      "file": "evidence/screenshots/bn-more_fields.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "more/glossary",
+      "file": "evidence/screenshots/bn-more_glossary.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "more/safety",
+      "file": "evidence/screenshots/bn-more_safety.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "more/data",
+      "file": "evidence/screenshots/bn-more_data.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "bn",
+      "route": "focus/shot-task",
+      "file": "evidence/screenshots/bn-focus_shot-task.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "today",
+      "file": "evidence/screenshots/en-today.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "journey",
+      "file": "evidence/screenshots/en-journey.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "diary",
+      "file": "evidence/screenshots/en-diary.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "diary/intake/1",
+      "file": "evidence/screenshots/en-diary_intake_1.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "diary/intake/2",
+      "file": "evidence/screenshots/en-diary_intake_2.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "diary/intake/3",
+      "file": "evidence/screenshots/en-diary_intake_3.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "diary/intake/4",
+      "file": "evidence/screenshots/en-diary_intake_4.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "diary/intake/5",
+      "file": "evidence/screenshots/en-diary_intake_5.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "diary/intake/6",
+      "file": "evidence/screenshots/en-diary_intake_6.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "diary/intake/7",
+      "file": "evidence/screenshots/en-diary_intake_7.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "diary/plan",
+      "file": "evidence/screenshots/en-diary_plan.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "diary/money",
+      "file": "evidence/screenshots/en-diary_money.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "journey/log",
+      "file": "evidence/screenshots/en-journey_log.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "journey/report",
+      "file": "evidence/screenshots/en-journey_report.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "journey/horizon",
+      "file": "evidence/screenshots/en-journey_horizon.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "capture",
+      "file": "evidence/screenshots/en-capture.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "stuck",
+      "file": "evidence/screenshots/en-stuck.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "topics",
+      "file": "evidence/screenshots/en-topics.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "topic/procrastination",
+      "file": "evidence/screenshots/en-topic_procrastination.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "topic/emotions",
+      "file": "evidence/screenshots/en-topic_emotions.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "reward",
+      "file": "evidence/screenshots/en-reward.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "journey/art",
+      "file": "evidence/screenshots/en-journey_art.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "habits",
+      "file": "evidence/screenshots/en-habits.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "cards",
+      "file": "evidence/screenshots/en-cards.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "deen",
+      "file": "evidence/screenshots/en-deen.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "more",
+      "file": "evidence/screenshots/en-more.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "more/status",
+      "file": "evidence/screenshots/en-more_status.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "more/fields",
+      "file": "evidence/screenshots/en-more_fields.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "more/glossary",
+      "file": "evidence/screenshots/en-more_glossary.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "more/safety",
+      "file": "evidence/screenshots/en-more_safety.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "more/data",
+      "file": "evidence/screenshots/en-more_data.png",
+      "horizontalOverflow": false
+    },
+    {
+      "lang": "en",
+      "route": "focus/shot-task",
+      "file": "evidence/screenshots/en-focus_shot-task.png",
+      "horizontalOverflow": false
+    }
+  ]
+}

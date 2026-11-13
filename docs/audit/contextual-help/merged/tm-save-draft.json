@@ -1,0 +1,19 @@
+{
+  "sameNode": true,
+  "value": "UNSAVED_DRAFT",
+  "selection": [
+    2,
+    5
+  ],
+  "panels": 1,
+  "error": true,
+  "recovered": {
+    "sameNode": true,
+    "value": "UNSAVED_DRAFT",
+    "selection": [
+      2,
+      5
+    ],
+    "error": false
+  }
+}

@@ -1,0 +1,3263 @@
+{
+  "patterns": [
+    {
+      "pattern": "^\\/start$",
+      "factory": "() => onboardScreen()",
+      "tab": "today",
+      "source": "src/app.ts:39",
+      "sample": "/start",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-01.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_start.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 0
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-01.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_start.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 0
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/today$",
+      "factory": "() => S.today()",
+      "tab": "today",
+      "source": "src/app.ts:40",
+      "sample": "/today",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/route-en-_today.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_today.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "viewport",
+          "contactCell": null
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/route-bn-_today.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_today.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "viewport",
+          "contactCell": null
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/journey$",
+      "factory": "() => S.journey()",
+      "tab": "journey",
+      "source": "src/app.ts:41",
+      "sample": "/journey",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-01.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_journey.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 2
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-01.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 2
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/journey\\/log$",
+      "factory": "() => S.journeyLog()",
+      "tab": "journey",
+      "source": "src/app.ts:42",
+      "sample": "/journey/log",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-01.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_log.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 3
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-01.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_log.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 3
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/journey\\/wheel$",
+      "factory": "() => LF.wheelScreen()",
+      "tab": "journey",
+      "source": "src/app.ts:43",
+      "sample": "/journey/wheel",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-01.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_wheel.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 4
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-01.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_wheel.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 4
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/journey\\/universe$",
+      "factory": "() => UV.universeScreen()",
+      "tab": "journey",
+      "source": "src/app.ts:44",
+      "sample": "/journey/universe",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-01.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_universe.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 5
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-01.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_universe.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 5
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/journey\\/goals$",
+      "factory": "() => LF.goalsScreen()",
+      "tab": "journey",
+      "source": "src/app.ts:45",
+      "sample": "/journey/goals",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-01.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_goals.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 6
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-01.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_goals.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 6
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/journey\\/goal\\/([\\w-]+)$",
+      "factory": "(m) => LF.goalScreen(m[1]!)",
+      "tab": "journey",
+      "source": "src/app.ts:46",
+      "sample": "/journey/goal/qa-goal",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-01.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_goal_qa-goal.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 7
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-01.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_goal_qa-goal.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 7
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/journey\\/horizon$",
+      "factory": "() => S.horizonScreen()",
+      "tab": "journey",
+      "source": "src/app.ts:47",
+      "sample": "/journey/horizon",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-01.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_horizon.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 8
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-01.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_horizon.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 8
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/diary$",
+      "factory": "() => S.diary()",
+      "tab": "diary",
+      "source": "src/app.ts:48",
+      "sample": "/diary",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-01.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_diary.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 9
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-01.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_diary.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 9
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/diary\\/intake(?:\\/(\\d+))?$",
+      "factory": "(m) => S.intake(m[1])",
+      "tab": "diary",
+      "source": "src/app.ts:49",
+      "sample": "/diary/intake/1",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/route-en-_diary_intake_1.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_diary_intake_1.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "viewport",
+          "contactCell": null
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/route-bn-_diary_intake_1.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_diary_intake_1.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "viewport",
+          "contactCell": null
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/diary\\/plan$",
+      "factory": "() => S.planScreen()",
+      "tab": "diary",
+      "source": "src/app.ts:50",
+      "sample": "/diary/plan",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-01.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_diary_plan.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 11
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-01.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_diary_plan.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 11
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/diary\\/money$",
+      "factory": "() => S.moneyScreen()",
+      "tab": "diary",
+      "source": "src/app.ts:51",
+      "sample": "/diary/money",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-01.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_diary_money.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 12
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-01.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_diary_money.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 12
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/capture$",
+      "factory": "() => S.captureScreen()",
+      "tab": "today",
+      "source": "src/app.ts:52",
+      "sample": "/capture",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-01.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_capture.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 13
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-01.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_capture.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 13
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/journey\\/report$",
+      "factory": "() => S.reportScreen()",
+      "tab": "journey",
+      "source": "src/app.ts:53",
+      "sample": "/journey/report",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-01.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_report.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 14
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-01.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_report.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 14
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/journey\\/print(?:\\/([a-z]+))?$",
+      "factory": "(m) => printScreen(m[1])",
+      "tab": "journey",
+      "source": "src/app.ts:54",
+      "sample": "/journey/print/plan",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-01.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_print_plan.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 15
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-01.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_print_plan.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 15
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/journey\\/week$",
+      "factory": "() => S.weeklyScreen()",
+      "tab": "journey",
+      "source": "src/app.ts:55",
+      "sample": "/journey/week",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-02.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_week.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 0
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-02.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_week.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 0
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/journey\\/month$",
+      "factory": "() => monthScreen()",
+      "tab": "journey",
+      "source": "src/app.ts:56",
+      "sample": "/journey/month",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-02.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_month.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 1
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-02.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_month.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 1
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/journey\\/decide$",
+      "factory": "() => viaLazy(DECIDE, (m) => m.decisionScreen())",
+      "tab": "journey",
+      "source": "src/app.ts:57",
+      "sample": "/journey/decide",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-02.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_decide.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 2
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-02.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_decide.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 2
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/journey\\/mine$",
+      "factory": "() => viaLazy(DECIDE, (m) => m.triageScreen())",
+      "tab": "journey",
+      "source": "src/app.ts:58",
+      "sample": "/journey/mine",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-02.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_mine.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 3
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-02.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_mine.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 3
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/journey\\/legs$",
+      "factory": "() => viaLazy(LEGS, (m) => m.legsScreen())",
+      "tab": "journey",
+      "source": "src/app.ts:59",
+      "sample": "/journey/legs",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-02.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_legs.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 4
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-02.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_legs.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 4
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/journey\\/leak$",
+      "factory": "() => viaLazy(LEGS, (m) => m.leakScreen())",
+      "tab": "journey",
+      "source": "src/app.ts:60",
+      "sample": "/journey/leak",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-02.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_leak.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 5
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-02.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_leak.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 5
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/journey\\/review$",
+      "factory": "() => S.reviewScreen()",
+      "tab": "journey",
+      "source": "src/app.ts:61",
+      "sample": "/journey/review",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-02.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_review.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 6
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-02.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_review.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 6
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/journey\\/risks$",
+      "factory": "() => viaLazy(PLAN, (m) => m.riskScreen())",
+      "tab": "journey",
+      "source": "src/app.ts:62",
+      "sample": "/journey/risks",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-02.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_risks.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 7
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-02.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_risks.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 7
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/journey\\/history$",
+      "factory": "() => viaLazy(PLAN, (m) => m.planHistoryScreen())",
+      "tab": "journey",
+      "source": "src/app.ts:63",
+      "sample": "/journey/history",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-02.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_history.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 8
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-02.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_history.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 8
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/journey\\/northstar$",
+      "factory": "() => viaLazy(PLAN, (m) => m.northStarScreen())",
+      "tab": "journey",
+      "source": "src/app.ts:64",
+      "sample": "/journey/northstar",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-02.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_northstar.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 9
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-02.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_northstar.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 9
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/journey\\/reality$",
+      "factory": "() => RL.realityScreen()",
+      "tab": "journey",
+      "source": "src/app.ts:65",
+      "sample": "/journey/reality",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-02.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_reality.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 10
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-02.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_reality.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 10
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/journey\\/boards$",
+      "factory": "() => boardsScreen()",
+      "tab": "journey",
+      "source": "src/app.ts:66",
+      "sample": "/journey/boards",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-02.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_boards.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 11
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-02.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_boards.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 11
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/journey\\/backward$",
+      "factory": "() => backwardListScreen()",
+      "tab": "journey",
+      "source": "src/app.ts:67",
+      "sample": "/journey/backward",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-02.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_backward.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 12
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-02.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_backward.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 12
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/journey\\/backward\\/([\\w-]+)$",
+      "factory": "(m) => backwardScreen(m[1]!)",
+      "tab": "journey",
+      "source": "src/app.ts:68",
+      "sample": "/journey/backward/qa-goal",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-02.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_backward_qa-goal.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 13
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-02.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_backward_qa-goal.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 13
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/journey\\/gates$",
+      "factory": "() => viaLazy(PLAN, (m) => m.gatesScreen())",
+      "tab": "journey",
+      "source": "src/app.ts:69",
+      "sample": "/journey/gates",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-02.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_gates.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 14
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-02.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_gates.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 14
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/journey\\/kpi$",
+      "factory": "() => viaLazy(PLAN, (m) => m.kpiScreen())",
+      "tab": "journey",
+      "source": "src/app.ts:70",
+      "sample": "/journey/kpi",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-02.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_kpi.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 15
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-02.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_kpi.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 15
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/diary\\/ventures$",
+      "factory": "() => viaLazy(PLAN, (m) => m.ventureScreen())",
+      "tab": "diary",
+      "source": "src/app.ts:71",
+      "sample": "/diary/ventures",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-03.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_diary_ventures.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 0
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-03.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_diary_ventures.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 0
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/diary\\/health$",
+      "factory": "() => healthScreen()",
+      "tab": "diary",
+      "source": "src/app.ts:72",
+      "sample": "/diary/health",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-03.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_diary_health.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 1
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-03.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_diary_health.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 1
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/diary\\/team$",
+      "factory": "() => viaLazy(PLAN, (m) => m.teamScreen())",
+      "tab": "diary",
+      "source": "src/app.ts:73",
+      "sample": "/diary/team",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-03.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_diary_team.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 2
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-03.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_diary_team.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 2
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/stuck$",
+      "factory": "() => S.stuckScreen()",
+      "tab": "today",
+      "source": "src/app.ts:74",
+      "sample": "/stuck",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-03.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_stuck.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 3
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-03.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_stuck.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 3
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/topics$",
+      "factory": "() => S.topicsIndex()",
+      "tab": "settings",
+      "source": "src/app.ts:75",
+      "sample": "/topics",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-03.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_topics.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 4
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-03.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_topics.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 4
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/topic\\/([\\w-]+)$",
+      "factory": "(m) => S.topicScreen(m[1])",
+      "tab": "settings",
+      "source": "src/app.ts:76",
+      "sample": "/topic/procrastination",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-03.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_topic_procrastination.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 5
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-03.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_topic_procrastination.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 5
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/reward$",
+      "factory": "() => S.rewardScreen()",
+      "tab": "today",
+      "source": "src/app.ts:77",
+      "sample": "/reward",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-03.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_reward.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 6
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-03.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_reward.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 6
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/journey\\/art$",
+      "factory": "() => S.artScreen()",
+      "tab": "journey",
+      "source": "src/app.ts:78",
+      "sample": "/journey/art",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-03.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_art.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 7
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-03.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_art.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 7
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/focus\\/([\\w-]+)$",
+      "factory": "(m) => S.focusScreen(m[1])",
+      "tab": "today",
+      "source": "src/app.ts:79",
+      "sample": "/focus/qa-task",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-03.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_focus_qa-task.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 8
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-03.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_focus_qa-task.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 8
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/habits$",
+      "factory": "() => S.habitsScreen()",
+      "tab": "today",
+      "source": "src/app.ts:80",
+      "sample": "/habits",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-03.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_habits.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 9
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-03.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_habits.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 9
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/hadith$",
+      "factory": "() => hadithScreen()",
+      "tab": "settings",
+      "source": "src/app.ts:81",
+      "sample": "/hadith",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-03.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_hadith.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 10
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-03.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_hadith.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 10
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/cards$",
+      "factory": "() => S.cardsScreen()",
+      "tab": "settings",
+      "source": "src/app.ts:82",
+      "sample": "/cards",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-03.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_cards.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 11
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-03.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_cards.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 11
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/notes$",
+      "factory": "() => notesScreen()",
+      "tab": "settings",
+      "source": "src/app.ts:83",
+      "sample": "/notes",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-03.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_notes.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 12
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-03.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_notes.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 12
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/deen$",
+      "factory": "() => S.deen()",
+      "tab": "deen",
+      "source": "src/app.ts:84",
+      "sample": "/deen",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/route-en-_deen.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_deen.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "viewport",
+          "contactCell": null
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/route-bn-_deen.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_deen.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "viewport",
+          "contactCell": null
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/deen\\/plans$",
+      "factory": "() => deenPlansScreen()",
+      "tab": "deen",
+      "source": "src/app.ts:85",
+      "sample": "/deen/plans",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-03.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_deen_plans.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 14
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-03.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_deen_plans.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 14
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/settings\\/connections$",
+      "factory": "() => viaLazy(CONN, (m) => m.connectionsScreen(prefs.lang))",
+      "tab": "settings",
+      "source": "src/app.ts:86",
+      "sample": "/settings/connections",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-03.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_connections.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 15
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-03.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_connections.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 15
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/settings(?:\\/([a-z]+))?(?:\\/([a-z-]+))?$",
+      "factory": "(m) => settingsScreen(m[1], m[2])",
+      "tab": "settings",
+      "source": "src/app.ts:87",
+      "sample": "/settings/connections",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-03.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_connections.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 15
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-03.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_connections.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 15
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/more\\/where$",
+      "factory": "() => whereScreen(prefs.lang)",
+      "tab": "settings",
+      "source": "src/app.ts:88",
+      "sample": "/more/where",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_more_where.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 0
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_more_where.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 0
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/more\\/status$",
+      "factory": "() => S.status()",
+      "tab": "settings",
+      "source": "src/app.ts:89",
+      "sample": "/more/status",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_more_status.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 1
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_more_status.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 1
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/more\\/fields$",
+      "factory": "() => S.fieldsGuide()",
+      "tab": "settings",
+      "source": "src/app.ts:90",
+      "sample": "/more/fields",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_more_fields.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 2
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_more_fields.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 2
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/more\\/glossary$",
+      "factory": "() => S.glossary()",
+      "tab": "settings",
+      "source": "src/app.ts:91",
+      "sample": "/more/glossary",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_more_glossary.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 3
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_more_glossary.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 3
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/more\\/safety$",
+      "factory": "() => S.safety()",
+      "tab": "settings",
+      "source": "src/app.ts:92",
+      "sample": "/more/safety",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_more_safety.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 4
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_more_safety.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 4
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/more\\/dictionary$",
+      "factory": "() => IM.dictionaryScreen()",
+      "tab": "settings",
+      "source": "src/app.ts:93",
+      "sample": "/more/dictionary",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_more_dictionary.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 5
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_more_dictionary.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 5
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/more\\/library$",
+      "factory": "() => LS.systemsLibraryScreen()",
+      "tab": "settings",
+      "source": "src/app.ts:94",
+      "sample": "/more/library",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_more_library.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 6
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_more_library.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 6
+        }
+      ]
+    },
+    {
+      "pattern": "^\\/more\\/halal-flags$",
+      "factory": "() => viaLazy(HALAL, (m) => m.halalFlagsScreen())",
+      "tab": "settings",
+      "source": "src/app.ts:95",
+      "sample": "/more/halal-flags",
+      "blocker": null,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_more_halal-flags.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 7
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_more_halal-flags.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 7
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "id": "language",
+      "cat": "home",
+      "label": "more.language",
+      "words": [
+        "language",
+        "bangla",
+        "english",
+        "mix",
+        "bn",
+        "en"
+      ],
+      "prefs": [
+        "lang"
+      ],
+      "keys": [
+        "tm:ui:lang"
+      ],
+      "route": "#/settings/home/language",
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_home_language.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 8
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_home_language.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 8
+        }
+      ]
+    },
+    {
+      "id": "theme",
+      "cat": "home",
+      "label": "more.theme",
+      "words": [
+        "theme",
+        "dark",
+        "light",
+        "night",
+        "mode",
+        "auto"
+      ],
+      "prefs": [
+        "theme"
+      ],
+      "keys": [
+        "tm:ui:theme"
+      ],
+      "route": "#/settings/home/theme",
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_home_theme.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 9
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_home_theme.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 9
+        }
+      ]
+    },
+    {
+      "id": "textsize",
+      "cat": "home",
+      "label": "more.textsize",
+      "words": [
+        "text size",
+        "font",
+        "bigger",
+        "larger",
+        "zoom",
+        "scale"
+      ],
+      "prefs": [
+        "scale"
+      ],
+      "keys": [
+        "tm:ui:scale"
+      ],
+      "route": "#/settings/home/textsize",
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_home_textsize.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 10
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_home_textsize.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 10
+        }
+      ]
+    },
+    {
+      "id": "design",
+      "cat": "look",
+      "label": "more.design",
+      "words": [
+        "design",
+        "version",
+        "look",
+        "style",
+        "colour",
+        "color"
+      ],
+      "prefs": [
+        "design"
+      ],
+      "keys": [
+        "tm:ui:design"
+      ],
+      "route": "#/settings/look/design",
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_look_design.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 11
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_look_design.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 11
+        }
+      ]
+    },
+    {
+      "id": "density",
+      "cat": "look",
+      "label": "set.row.density",
+      "words": [
+        "detailed",
+        "compact",
+        "full",
+        "screen view",
+        "template"
+      ],
+      "prefs": [],
+      "keys": [
+        "tm:ui:view:*"
+      ],
+      "route": "#/settings/look/density",
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_look_density.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 12
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_look_density.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 12
+        }
+      ]
+    },
+    {
+      "id": "horizon",
+      "cat": "look",
+      "label": "set.row.horizon",
+      "words": [
+        "horizon",
+        "layout",
+        "stack"
+      ],
+      "prefs": [
+        "horizonView"
+      ],
+      "keys": [
+        "tm:ui:horizonView"
+      ],
+      "route": "#/journey/horizon",
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-01.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_horizon.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 8
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-01.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_horizon.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 8
+        }
+      ]
+    },
+    {
+      "id": "universe",
+      "cat": "look",
+      "label": "set.row.universe",
+      "words": [
+        "universe",
+        "goal map",
+        "map",
+        "list"
+      ],
+      "prefs": [
+        "universeView"
+      ],
+      "keys": [
+        "tm:ui:universeView"
+      ],
+      "route": "#/journey/universe",
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-01.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_journey_universe.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 5
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-01.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_journey_universe.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 5
+        }
+      ]
+    },
+    {
+      "id": "habitgrid",
+      "cat": "look",
+      "label": "set.row.habitgrid",
+      "words": [
+        "habit",
+        "grid",
+        "days",
+        "weeks",
+        "months",
+        "range"
+      ],
+      "prefs": [
+        "habitGrid"
+      ],
+      "keys": [
+        "tm:ui:habitGrid"
+      ],
+      "route": "#/habits",
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-03.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_habits.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 9
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-03.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_habits.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 9
+        }
+      ]
+    },
+    {
+      "id": "motion",
+      "cat": "look",
+      "label": "set.row.motion",
+      "words": [
+        "motion",
+        "animation",
+        "reduce",
+        "calm",
+        "movement"
+      ],
+      "prefs": [
+        "reduceMotion"
+      ],
+      "keys": [
+        "tm:ui:reduceMotion"
+      ],
+      "route": "#/settings/look/motion",
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_look_motion.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 13
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_look_motion.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 13
+        }
+      ]
+    },
+    {
+      "id": "resetlook",
+      "cat": "look",
+      "label": "set.row.resetlook",
+      "words": [
+        "reset",
+        "default look",
+        "layout",
+        "restore defaults"
+      ],
+      "prefs": [],
+      "keys": [],
+      "route": "#/settings/look/resetlook",
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_look_resetlook.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 14
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_look_resetlook.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 14
+        }
+      ]
+    },
+    {
+      "id": "prayermethod",
+      "cat": "prayer",
+      "label": "set.row.prayermethod",
+      "words": [
+        "prayer",
+        "method",
+        "namaz",
+        "salah",
+        "asr",
+        "offset",
+        "fajr"
+      ],
+      "prefs": [
+        "prayerSettings"
+      ],
+      "keys": [
+        "tm:ui:prayerSettings"
+      ],
+      "route": "#/settings/prayer/prayermethod",
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_prayer_prayermethod.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 15
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_prayer_prayermethod.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 15
+        }
+      ]
+    },
+    {
+      "id": "prayersync",
+      "cat": "prayer",
+      "label": "set.row.prayersync",
+      "words": [
+        "automatic",
+        "auto update",
+        "online",
+        "internet",
+        "aladhan",
+        "timetable",
+        "sync"
+      ],
+      "prefs": [
+        "prayerSync"
+      ],
+      "keys": [
+        "tm:ui:prayerSync"
+      ],
+      "route": "#/settings/prayer/prayersync",
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-05.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_prayer_prayersync.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 0
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-05.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_prayer_prayersync.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 0
+        }
+      ]
+    },
+    {
+      "id": "prayerplace",
+      "cat": "prayer",
+      "label": "set.row.prayerplace",
+      "words": [
+        "place",
+        "location",
+        "city",
+        "dhaka",
+        "coordinates",
+        "latitude"
+      ],
+      "prefs": [
+        "prayerCoords"
+      ],
+      "keys": [
+        "tm:ui:prayerCoords",
+        "tm:ui:prayerCoords:real"
+      ],
+      "route": "#/settings/prayer/prayerplace",
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-05.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_prayer_prayerplace.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 1
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-05.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_prayer_prayerplace.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 1
+        }
+      ]
+    },
+    {
+      "id": "prayeralerts",
+      "cat": "prayer",
+      "label": "set.row.prayeralerts",
+      "words": [
+        "alert",
+        "azan",
+        "adhan",
+        "reminder",
+        "sound",
+        "volume",
+        "notification"
+      ],
+      "prefs": [
+        "prayerAlerts",
+        "prayerFired"
+      ],
+      "keys": [
+        "tm:ui:prayerAlerts",
+        "tm:ui:prayerFired"
+      ],
+      "route": "#/settings/prayer/prayeralerts",
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-05.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_prayer_prayeralerts.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 2
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-05.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_prayer_prayeralerts.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 2
+        }
+      ]
+    },
+    {
+      "id": "reminders",
+      "cat": "prayer",
+      "label": "set.row.reminders",
+      "words": [
+        "reminder",
+        "remind",
+        "alert",
+        "notification",
+        "calendar",
+        "ics",
+        "quiet hours",
+        "snooze",
+        "phone"
+      ],
+      "prefs": [
+        "reminders",
+        "remindersFired",
+        "icsConsent"
+      ],
+      "keys": [
+        "tm:ui:reminders",
+        "tm:ui:remindersFired",
+        "tm:ui:icsConsent"
+      ],
+      "route": "#/settings/prayer/reminders",
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-05.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_prayer_reminders.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 3
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-05.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_prayer_reminders.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 3
+        }
+      ]
+    },
+    {
+      "id": "reminder",
+      "cat": "backup",
+      "label": "set.row.reminder",
+      "words": [
+        "backup",
+        "reminder",
+        "weekly",
+        "remind"
+      ],
+      "prefs": [
+        "backupRemind",
+        "backupRemindChoice",
+        "remindSnoozedOn",
+        "fileBackupAt",
+        "realBackupAt"
+      ],
+      "keys": [
+        "tm:ui:backupRemind",
+        "tm:ui:remindSnoozedOn",
+        "tm:ui:fileBackupAt",
+        "tm:ui:realBackupAt"
+      ],
+      "route": "#/settings/backup/reminder",
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-05.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_backup_reminder.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 4
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-05.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_backup_reminder.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 4
+        }
+      ]
+    },
+    {
+      "id": "storage",
+      "cat": "backup",
+      "label": "set.row.storage",
+      "words": [
+        "storage",
+        "persist",
+        "keep data",
+        "safe"
+      ],
+      "prefs": [],
+      "keys": [],
+      "route": "#/settings/backup/storage",
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-05.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_backup_storage.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 5
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-05.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_backup_storage.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 5
+        }
+      ]
+    },
+    {
+      "id": "savebackup",
+      "cat": "backup",
+      "label": "set.row.savebackup",
+      "words": [
+        "backup",
+        "save",
+        "json",
+        "encrypted",
+        "passphrase",
+        "export",
+        "file"
+      ],
+      "prefs": [],
+      "keys": [],
+      "route": "#/settings/backup/savebackup",
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-05.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_backup_savebackup.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 6
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-05.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_backup_savebackup.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 6
+        }
+      ]
+    },
+    {
+      "id": "restore",
+      "cat": "backup",
+      "label": "set.row.restore",
+      "words": [
+        "restore",
+        "import",
+        "backup",
+        "snapshot file",
+        "go back"
+      ],
+      "prefs": [],
+      "keys": [],
+      "route": "#/settings/backup/restore",
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-05.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_backup_restore.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 7
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-05.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_backup_restore.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 7
+        }
+      ]
+    },
+    {
+      "id": "snapshots",
+      "cat": "backup",
+      "label": "set.row.snapshots",
+      "words": [
+        "snapshot",
+        "automatic",
+        "keep",
+        "copies"
+      ],
+      "prefs": [
+        "snapAuto",
+        "snapKeep"
+      ],
+      "keys": [
+        "tm:ui:snapAuto",
+        "tm:ui:snapKeep"
+      ],
+      "route": "#/settings/backup/snapshots",
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-05.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_backup_snapshots.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 8
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-05.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_backup_snapshots.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 8
+        }
+      ]
+    },
+    {
+      "id": "csv",
+      "cat": "backup",
+      "label": "set.row.csv",
+      "words": [
+        "csv",
+        "spreadsheet",
+        "excel",
+        "export",
+        "import"
+      ],
+      "prefs": [],
+      "keys": [],
+      "route": "#/settings/backup/csv",
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-05.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_backup_csv.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 9
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-05.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_backup_csv.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 9
+        }
+      ]
+    },
+    {
+      "id": "lockscreen",
+      "cat": "privacy",
+      "label": "more.lock",
+      "words": [
+        "lock screen",
+        "notification",
+        "private",
+        "show details",
+        "hide"
+      ],
+      "prefs": [
+        "notifyShow"
+      ],
+      "keys": [
+        "tm:ui:notifyShow"
+      ],
+      "route": "#/settings/privacy/lockscreen",
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-05.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_privacy_lockscreen.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 10
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-05.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_privacy_lockscreen.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 10
+        }
+      ]
+    },
+    {
+      "id": "consent",
+      "cat": "privacy",
+      "label": "set.row.consent",
+      "words": [
+        "consent",
+        "permission",
+        "real data",
+        "tick",
+        "private"
+      ],
+      "prefs": [],
+      "keys": [
+        "tm:consent:real:v1",
+        "tm:consent:health:v1",
+        "tm:consent:hadith:v1"
+      ],
+      "route": "#/settings/privacy/consent",
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-05.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_privacy_consent.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 11
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-05.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_privacy_consent.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 11
+        }
+      ]
+    },
+    {
+      "id": "applock",
+      "cat": "privacy",
+      "label": "set.row.applock",
+      "words": [
+        "pin",
+        "lock",
+        "password",
+        "app lock",
+        "forgot"
+      ],
+      "prefs": [],
+      "keys": [
+        "tm:secret:applock"
+      ],
+      "route": "#/settings/privacy/applock",
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-05.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_privacy_applock.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 12
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-05.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_privacy_applock.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 12
+        }
+      ]
+    },
+    {
+      "id": "mode",
+      "cat": "data",
+      "label": "set.row.mode",
+      "words": [
+        "demo",
+        "real",
+        "mode",
+        "switch"
+      ],
+      "prefs": [
+        "dataMode",
+        "dataModeChoice",
+        "demoAskedOn",
+        "demoDays"
+      ],
+      "keys": [
+        "tm:ui:dataMode",
+        "tm:ui:demoAskedOn",
+        "tm:ui:demoDays"
+      ],
+      "route": "#/settings/data/mode",
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-05.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_data_mode.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 13
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-05.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_data_mode.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 13
+        }
+      ]
+    },
+    {
+      "id": "startreal",
+      "cat": "data",
+      "label": "set.row.startreal",
+      "words": [
+        "start real",
+        "begin",
+        "own data"
+      ],
+      "prefs": [],
+      "keys": [],
+      "route": "#/settings/data/start-real",
+      "danger": true,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-05.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_data_start-real.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 14
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-05.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_data_start-real.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 14
+        }
+      ]
+    },
+    {
+      "id": "rules",
+      "cat": "plan",
+      "label": "more.rules",
+      "words": [
+        "automation",
+        "rules",
+        "smaller step",
+        "break",
+        "focus"
+      ],
+      "prefs": [
+        "ruleSwitches",
+        "lastFocusEnd",
+        "lastRestAt"
+      ],
+      "keys": [
+        "tm:ui:rules",
+        "tm:ui:focusEnd",
+        "tm:ui:restAt"
+      ],
+      "route": "#/settings/plan/rules",
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-05.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_plan_rules.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 15
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-05.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_plan_rules.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 15
+        }
+      ]
+    },
+    {
+      "id": "planmode",
+      "cat": "plan",
+      "label": "set.row.planmode",
+      "words": [
+        "plan mode",
+        "minimum week",
+        "pause",
+        "normal",
+        "stuck"
+      ],
+      "prefs": [
+        "mode"
+      ],
+      "keys": [
+        "tm:ui:mode"
+      ],
+      "route": "#/settings/plan/planmode",
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-06.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_plan_planmode.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 0
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-06.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_plan_planmode.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 0
+        }
+      ]
+    },
+    {
+      "id": "stages",
+      "cat": "plan",
+      "label": "set.row.stages",
+      "words": [
+        "stage names",
+        "stage",
+        "template",
+        "journey"
+      ],
+      "prefs": [
+        "stageTemplate"
+      ],
+      "keys": [
+        "tm:ui:stageTemplate"
+      ],
+      "route": "#/settings/plan/stages",
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-06.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_plan_stages.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 1
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-06.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_plan_stages.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 1
+        }
+      ]
+    },
+    {
+      "id": "weighting",
+      "cat": "plan",
+      "label": "set.row.weighting",
+      "words": [
+        "progress",
+        "weight",
+        "equal",
+        "size",
+        "overall"
+      ],
+      "prefs": [
+        "progressMode"
+      ],
+      "keys": [
+        "tm:ui:progressMode",
+        "tm:ui:overallMem:*"
+      ],
+      "route": "#/settings/plan/weighting",
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-06.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_plan_weighting.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 2
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-06.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_plan_weighting.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 2
+        }
+      ]
+    },
+    {
+      "id": "connections",
+      "cat": "connections",
+      "label": "more.connections",
+      "words": [
+        "connection",
+        "ai",
+        "cloud",
+        "sync",
+        "web search",
+        "licensed",
+        "api key",
+        "approve"
+      ],
+      "prefs": [],
+      "keys": [
+        "tm:ui:conn:*",
+        "tm:secret:conn:*"
+      ],
+      "route": "#/settings/connections",
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-03.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_connections.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 15
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-03.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_connections.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 15
+        }
+      ]
+    },
+    {
+      "id": "deletedemo",
+      "cat": "delete",
+      "label": "set.row.deletedemo",
+      "words": [
+        "delete",
+        "demo",
+        "clear",
+        "remove"
+      ],
+      "prefs": [],
+      "keys": [],
+      "route": "#/settings/delete",
+      "danger": true,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-06.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_delete.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 3
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-06.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_delete.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 3
+        }
+      ]
+    },
+    {
+      "id": "deletereal",
+      "cat": "delete",
+      "label": "set.row.deletereal",
+      "words": [
+        "delete",
+        "real",
+        "clear",
+        "erase",
+        "remove all"
+      ],
+      "prefs": [],
+      "keys": [],
+      "route": "#/settings/delete",
+      "danger": true,
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-06.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_settings_delete.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 3
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-06.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_settings_delete.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 3
+        }
+      ]
+    },
+    {
+      "id": "welcome",
+      "cat": "about",
+      "label": "set.row.welcome",
+      "words": [
+        "welcome",
+        "intro",
+        "first run",
+        "onboarding",
+        "again"
+      ],
+      "prefs": [
+        "onboard",
+        "onboardTimes",
+        "movedNote",
+        "visit"
+      ],
+      "keys": [
+        "tm:ui:onboard",
+        "tm:ui:onboardT",
+        "tm:ui:movedNote",
+        "tm:ui:visit"
+      ],
+      "route": "#/start",
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-01.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_start.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 0
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-01.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_start.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 0
+        }
+      ]
+    }
+  ],
+  "guides": [
+    {
+      "id": "topics",
+      "route": "#/topics",
+      "label": "topics.title",
+      "desc": "topics.intro",
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-03.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_topics.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 4
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-03.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_topics.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 4
+        }
+      ]
+    },
+    {
+      "id": "library",
+      "route": "#/more/library",
+      "label": "more.library",
+      "desc": "more.library.desc",
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_more_library.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 6
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_more_library.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 6
+        }
+      ]
+    },
+    {
+      "id": "cards",
+      "route": "#/cards",
+      "label": "cards.title",
+      "desc": "cards.intro",
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-03.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_cards.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 11
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-03.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_cards.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 11
+        }
+      ]
+    },
+    {
+      "id": "hadith",
+      "route": "#/hadith",
+      "label": "hd.link",
+      "desc": "hd.link.desc",
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-03.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_hadith.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 10
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-03.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_hadith.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 10
+        }
+      ]
+    },
+    {
+      "id": "notes",
+      "route": "#/notes",
+      "label": "kn.title",
+      "desc": "kn.intro.short",
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-03.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_notes.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 12
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-03.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_notes.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 12
+        }
+      ]
+    },
+    {
+      "id": "where",
+      "route": "#/more/where",
+      "label": "where.title",
+      "desc": "where.desc",
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_more_where.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 0
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_more_where.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 0
+        }
+      ]
+    },
+    {
+      "id": "status",
+      "route": "#/more/status",
+      "label": "more.status",
+      "desc": "more.status.desc",
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_more_status.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 1
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_more_status.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 1
+        }
+      ]
+    },
+    {
+      "id": "fields",
+      "route": "#/more/fields",
+      "label": "more.fields",
+      "desc": "more.fields.desc",
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_more_fields.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 2
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_more_fields.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 2
+        }
+      ]
+    },
+    {
+      "id": "glossary",
+      "route": "#/more/glossary",
+      "label": "more.glossary",
+      "desc": "more.glossary.desc",
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_more_glossary.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 3
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_more_glossary.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 3
+        }
+      ]
+    },
+    {
+      "id": "dictionary",
+      "route": "#/more/dictionary",
+      "label": "dict.title",
+      "desc": "dict.intro.short",
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_more_dictionary.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 5
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_more_dictionary.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 5
+        }
+      ]
+    },
+    {
+      "id": "halalflags",
+      "route": "#/more/halal-flags",
+      "label": "more.halal",
+      "desc": "more.halal.desc",
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_more_halal-flags.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 7
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_more_halal-flags.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 7
+        }
+      ]
+    },
+    {
+      "id": "safety",
+      "route": "#/more/safety",
+      "label": "more.safety",
+      "desc": "more.safety.desc",
+      "captures": [
+        {
+          "lang": "en",
+          "file": "docs/audit/contextual-help/baseline/contact-en-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-en-_more_safety.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 4
+        },
+        {
+          "lang": "bn",
+          "file": "docs/audit/contextual-help/baseline/contact-bn-04.jpg",
+          "blocker": null,
+          "rawFile": "/tmp/contextual-help-baseline/route-bn-_more_safety.jpg",
+          "rawFileTracked": false,
+          "artifactKind": "contact-sheet",
+          "contactCell": 4
+        }
+      ]
+    }
+  ],
+  "catalogFieldGuide": [
+    {
+      "lang": "en",
+      "catalogFields": 186,
+      "renderedCards": 186,
+      "blocker": null
+    },
+    {
+      "lang": "bn",
+      "catalogFields": 186,
+      "renderedCards": 186,
+      "blocker": null
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+.owner-profile-link{display:inline-flex;align-items:center;justify-content:center;flex:0 0 44px;min-width:44px;min-height:44px;border:1px solid var(--rule);border-radius:50%;color:var(--ink);text-decoration:none;background:var(--card)}
+.owner-profile-link:hover{outline:2px solid var(--primary);outline-offset:2px}
+.top{gap:8px;flex-wrap:wrap}.top .right{display:flex;align-items:center;gap:6px;flex-wrap:wrap;justify-content:flex-end;max-width:100%}
+.owner-profile .card.link{min-height:44px}
+@media print{.owner-profile-link{display:none}}

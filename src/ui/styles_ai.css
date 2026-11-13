@@ -1,0 +1,15 @@
+/* Connect AI screen and the preview sheet (W1). Tokens only; calm colours, no red. */
+.scr-ai .card{margin:10px 0}
+.scr-ai label{display:block;margin:8px 0 4px;line-height:1.4}
+.scr-ai input[type=text],.scr-ai input[type=password],.scr-ai input[type=number],.scr-ai select,.scr-ai textarea{width:100%;min-height:44px;box-sizing:border-box;font:inherit}
+.scr-ai textarea{min-height:88px}
+.scr-ai .btn{min-height:44px;margin:6px 6px 6px 0}
+.scr-ai ul{margin:6px 0;padding-inline-start:20px;line-height:1.5}
+.scr-ai p{overflow-wrap:anywhere}
+.ai-answer{border-inline-start:4px solid var(--primary);white-space:pre-wrap;line-height:1.55;overflow-wrap:anywhere}
+.ai-sheet-wrap{position:fixed;inset:0;z-index:60;display:flex;align-items:flex-end;justify-content:center;background:rgba(20,20,30,.45)}
+.ai-sheet{width:100%;max-width:560px;max-height:92vh;overflow:auto;box-sizing:border-box;padding:16px;background:var(--bg);color:var(--ink);border-radius:16px 16px 0 0;border:1px solid var(--rule)}
+.ai-sheet h2{margin:0 0 8px}
+.ai-sheet p{line-height:1.5;overflow-wrap:anywhere}
+.ai-sheet pre{white-space:pre-wrap;overflow-wrap:anywhere;word-break:break-word;margin:6px 0;padding:10px;background:var(--card);border:1px solid var(--rule);border-radius:10px;max-height:34vh;overflow:auto;font-size:.9rem}
+.ai-sheet .btn{min-height:44px;margin:6px 6px 6px 0}

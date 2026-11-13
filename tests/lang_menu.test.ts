@@ -1,0 +1,93 @@
+// Language icon in the top bar: on every route, three choices, persists, keyboard, accessible name.
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { readFileSync } from "node:fs";
+import { ROUTES, render, renderApp } from "../src/app";
+import { PACKS } from "../src/i18n/packs";
+import { prefs } from "../src/ui/state";
+
+const SAMPLE = ["/start", "/journey/horizon", "/settings", "/settings/look", "/settings/about", "/settings/connections", "/more/library", "/settings/connections", "/settings/plan/automation", "/today", "/journey", "/journey/risks", "/journey/week", "/journey/legs", "/journey/leak", "/journey/decide", "/journey/mine", "/journey/history", "/journey/northstar", "/journey/kpi", "/journey/boards", "/journey/backward", "/journey/backward/g1", "/more/where", "/journey/reality", "/diary/ventures", "/diary/team", "/diary", "/diary/intake/1", "/diary/intake/2", "/diary/intake/3", "/diary/intake/4", "/diary/intake/5", "/diary/intake/6", "/diary/intake/7", "/diary/plan", "/diary/money", "/journey/log", "/journey/report", "/hadith", "/diary/health", "/notes", "/journey/month", "/journey/gates", "/journey/print/plan", "/journey/wheel", "/journey/universe", "/journey/goals", "/journey/goal/g1", "/journey/review", "/capture", "/recall", "/recall/missing", "/stuck", "/topics", "/topic/procrastination", "/reward", "/journey/art", "/habits", "/cards", "/focus/none", "/deen", "/deen/plans", "/settings", "/more/status", "/more/fields", "/more/glossary", "/more/safety", "/settings/data", "/more/dictionary", "/more/halal-flags"];
+const q = <T extends Element>(s: string) => document.querySelector(s) as T;
+const open = () => q<HTMLButtonElement>('[data-act="lang-open"]');
+const boot = (hash: string) => { document.body.innerHTML = '<div id="app"></div>'; location.hash = "#" + hash; render(); };
+const onHash = () => renderApp();
+
+describe("language icon menu", () => {
+  beforeEach(() => { localStorage.clear(); window.addEventListener("hashchange", onHash); });
+  afterEach(() => { window.removeEventListener("hashchange", onHash); document.body.innerHTML = ""; });
+
+  it("exists on every route in ROUTES", () => {
+    localStorage.setItem("tm:ui:dataModeChoice", "demo");
+    for (const [re] of ROUTES) {
+      const p = [...SAMPLE, "/profile", "/deen/prayers", "/deen/fasting", "/diary/inspiration", "/journey/goal/g1/table", "/settings/connections/ai", "/whatif", "/whatif/r-pages"].find((x) => re.test(x));
+      expect(p, String(re)).toBeDefined();
+      boot(p!); expect(open(), p).not.toBeNull();
+    }
+  });
+
+  it("is on the first-run choice and its consent step", () => {
+    localStorage.removeItem("tm:ui:dataModeChoice");
+    document.body.innerHTML = '<div id="app"></div>'; renderApp();
+    expect(q('[data-first="demo"]')).not.toBeNull(); expect(open()).not.toBeNull();
+    q<HTMLButtonElement>('[data-act="first-real"]').click();
+    expect(q('[data-first="real-confirm"]')).not.toBeNull(); expect(open()).not.toBeNull();
+  });
+
+  it.each(["/profile", "/deen/prayers", "/deen/fasting"])("retains language and owner-profile access on %s", (path) => {
+    localStorage.setItem("tm:ui:dataModeChoice", "demo");
+    boot(path);
+    expect(open()).not.toBeNull();
+    expect(q<HTMLAnchorElement>(".top .right [data-owner-profile]").getAttribute("href")).toBe("#/profile");
+    expect(location.hash).toBe(`#${path}`);
+  });
+
+  it("sits in the top bar after the online badge and demo badge, icon only", () => {
+    localStorage.setItem("tm:ui:dataModeChoice", "demo"); boot("/today");
+    const kids = [...q(".top .right").children];
+    expect(kids.map((k) => k.className.split(" ")[0])).toEqual(["net", "badge", "wi-btn", "lang-wrap", "owner-profile-link"]);
+    expect(open().textContent).toBe(""); expect(open().querySelector("svg")).not.toBeNull();
+    const owner = q<HTMLAnchorElement>(".top .right [data-owner-profile]");
+    expect(owner.getAttribute("href")).toBe("#/profile"); expect(owner.getAttribute("aria-label")).toBeTruthy();
+  });
+
+  it("accessible name comes from i18n in en, bn and mix", () => {
+    localStorage.setItem("tm:ui:dataModeChoice", "demo");
+    for (const l of ["en", "bn", "mix"] as const) {
+      localStorage.setItem("tm:ui:lang", l); boot("/today");
+      expect(open().getAttribute("aria-label")).toBe(PACKS[l]["lang.menu"]);
+      expect(PACKS[l]["lang.menu"].length).toBeGreaterThan(0);
+    }
+    expect(PACKS.en["lang.menu"]).toBe("Language");
+  });
+
+  it("menu lists English, বাংলা, Mix; current is marked; choosing changes language, persists, keeps the route", () => {
+    localStorage.setItem("tm:ui:dataModeChoice", "demo"); localStorage.setItem("tm:ui:lang", "bn"); boot("/settings");
+    open().click();
+    const items = [...document.querySelectorAll<HTMLButtonElement>(".lang-item")];
+    expect(items.map((i) => i.textContent)).toEqual(["English", "✓বাংলা", "Mix"]);
+    expect(items[1]!.getAttribute("aria-pressed")).toBe("true");
+    items[0]!.click();
+    expect(prefs.lang).toBe("en"); expect(localStorage.getItem("tm:ui:lang")).toBe("en");
+    expect(location.hash).toBe("#/settings"); expect(document.documentElement.lang).toBe("en");
+    expect(open().getAttribute("aria-label")).toBe("Language");
+    expect(document.activeElement).toBe(open());
+    open().click(); document.querySelector<HTMLButtonElement>('.lang-item[data-lang="mix"]')!.click();
+    expect(localStorage.getItem("tm:ui:lang")).toBe("mix");
+  });
+
+  it("Esc closes the menu and returns focus to the icon", () => {
+    localStorage.setItem("tm:ui:dataModeChoice", "demo"); boot("/today");
+    open().click();
+    expect(q<HTMLElement>(".lang-menu").hidden).toBe(false); expect(open().getAttribute("aria-expanded")).toBe("true");
+    (document.activeElement as HTMLElement).dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
+    expect(q<HTMLElement>(".lang-menu").hidden).toBe(true); expect(open().getAttribute("aria-expanded")).toBe("false");
+    expect(document.activeElement).toBe(open());
+  });
+
+  it("CSS: 44px target, focus ring covers buttons, nothing animates", () => {
+    const css = readFileSync("src/ui/styles.css", "utf8");
+    expect(css).toMatch(/\.lang-btn\{min-width:44px;min-height:44px/);
+    expect(css).toMatch(/button:focus-visible/);
+    expect(css).toMatch(/prefers-reduced-motion:reduce\)\{\*\{animation:none!important;transition:none!important/);
+    expect(css.match(/\.lang-[^{]*\{[^}]*(animation|transition)/)).toBeNull();
+  });
+});

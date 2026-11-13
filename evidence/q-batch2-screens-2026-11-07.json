@@ -1,0 +1,15 @@
+{
+  "viewport": "360x740",
+  "generated": "2026-11-07T19:07:48.963Z",
+  "combos": 12,
+  "screens": 48,
+  "problems": 0,
+  "bad": [],
+  "routes": [
+    "journey/goal/shot-goal",
+    "journey/goal/shot-goal-empty",
+    "journey/goal/shot-goal/table",
+    "journey/goal/shot-goal-empty/table"
+  ],
+  "matrix": "4 looks x en/bn x light/dark x 100%/200% text"
+}

@@ -1,0 +1,13 @@
+/* Business type panel on a venture card (BUILD-02 phase C). Tokens only; 44 px targets; wraps at 360 px and at large text sizes. */
+.vs-block{margin-top:8px}
+.vs-block input[type=text],.vs-block select{min-height:44px;width:100%;box-sizing:border-box}
+.vs-block .btn{min-height:44px}
+.vs-block .vs-btns{display:flex;flex-wrap:wrap;gap:8px}
+.vs-block .vs-list{display:grid;gap:6px;margin:8px 0}
+.vs-block .vs-list .btn{width:100%;text-align:start;overflow-wrap:anywhere}
+.vs-block .vs-answers li,.vs-block .vs-results li,.vs-block .vs-checks li{padding:6px 0;overflow-wrap:anywhere}
+.vs-block .vs-check{display:flex;align-items:flex-start;gap:8px;min-height:44px}
+.vs-block .vs-check input{width:24px;height:24px;flex:none;min-height:0}
+.vs-block .vs-months,.vs-block .vs-ask,.vs-block .vs-params{display:grid;gap:8px}
+.vs-block h3.card-h{margin-top:12px}
+[data-venture-breakeven-card] p{overflow-wrap:anywhere}

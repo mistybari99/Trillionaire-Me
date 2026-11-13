@@ -1,0 +1,557 @@
+{
+  "generated": "2026-11-05T13:20:40.274Z",
+  "results": [
+    {
+      "id": "BRAND-SPLASH",
+      "name": "the brand splash is gone once the first screen is drawn, and the page links the app icons",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "MODE-FIRST",
+      "name": "first run shows the demo / real choice and no tabs",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "MODE-DEMO",
+      "name": "exploring demo shows the Demo mode banner",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "ONB-OFFER",
+      "name": "after the choice the 3-screen start is offered (step 2 of 3) and can be skipped",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "ONB-SKIP",
+      "name": "skipping the start saves nothing and it does not return",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "id": "TM-TST-143",
+      "name": "empty start: no demo/real records after visiting every tab",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "id": "TM-TST-034",
+      "name": "secret typed into a free-text field is rejected and nothing saved",
+      "pass": true,
+      "detail": "এটা পাসওয়ার্ড, OTP, কার্ড বা আইডি নম্বরের মতো লাগছে। এখানে লিখবেন না। কিছু সেভ হয়নি।"
+    },
+    {
+      "id": "TM-TST-143",
+      "name": "without consent a valid entry saves nothing and shows the prompt",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "TM-TST-143",
+      "name": "after consent the saved intake is in real namespace only, labelled FACT",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "TM-TST-021",
+      "name": "blank skill level/evidence stay unanswered (not 0)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "TM-TST-021",
+      "name": "‘don't know’ hours saved as unknown state, not 0",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "TM-TST-143",
+      "name": "demo namespace stays empty: entries go to real after consent",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G4-SUGGEST",
+      "name": "0 Wikipedia requests before the user taps search",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G4-SUGGEST",
+      "name": "3 option cards with source, no raw HTML",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G4-SUGGEST",
+      "name": "tapping a card fills the field",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G4-SUGGEST",
+      "name": "secret-looking search is blocked before sending",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "M11-CACHE",
+      "name": "same term offline shows the saved options with no new Wikipedia request",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G3-PLAN",
+      "name": "without free hours nothing is planned and the user is asked",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G3-PLAN",
+      "name": "task is placed inside 20:00–22:00",
+      "pass": true,
+      "detail": "20:00–20:30 · Call supplier"
+    },
+    {
+      "id": "G3-PLAN",
+      "name": "Home shows the user's own planned task (today first)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G3-PLAN",
+      "name": "pause mode places nothing, no error text",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G3-MONEY",
+      "name": "blank liability makes personal net worth 'not known', not 0",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G3-MONEY",
+      "name": "business net worth is separate and computed (5,000)",
+      "pass": true,
+      "detail": "\"ব্যবসা\\n\\nমোট সম্পদ বাদ দেনা: 5,000 টাকাআন্দাজ\\n\\nমাসের টাকা আসা-যাওয়া: এখনো কিছু লেখা হয়নি\\n\\n90 দিনের ক্যাশ ফ্লো (মাসের লাইন × 3, সাথে তারিখ দেওয়া একবারের লাইন): এখনো কিছু লেখা হয়নি\""
+    },
+    {
+      "id": "G3-MONEY",
+      "name": "secret-looking name rejected",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G3-STAGE",
+      "name": "Stage A pass button is disabled while conditions are open (no error colour copy)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G3-STAGE",
+      "name": "conditions met -> button enabled",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G3-STAGE",
+      "name": "Stage A passed, Stage B is now current, calm banner shown",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G3-STAGE",
+      "name": "journey log has the entry with before/after",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G3-STAGE",
+      "name": "compact Home stage remains 2 of 8 after passing Stage A",
+      "pass": true,
+      "detail": "স্টেজ 2 / 8\nআন্দাজ"
+    },
+    {
+      "id": "R2-HORIZON",
+      "name": "page renders the 5 horizon sections in order",
+      "pass": true,
+      "detail": "five_year,one_year,month,week,today,unset"
+    },
+    {
+      "id": "R2-HORIZON",
+      "name": "goal with no horizon appears in the 'unset' section",
+      "pass": true,
+      "detail": "five_year,one_year,month,week,today,unset"
+    },
+    {
+      "id": "R2-HORIZON",
+      "name": "goal with horizon one_year lands in the one_year section only",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "R2-HORIZON",
+      "name": "no red/shame words on the horizon page (EN and BN)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G3-CAPTURE",
+      "name": "finds amount, date and decision from a Bangla note",
+      "pass": true,
+      "detail": "amount,date,decision"
+    },
+    {
+      "id": "G3-CAPTURE",
+      "name": "report shows confirmed amount (5,000) and decision; unconfirmed date is absent",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G3-CAPTURE",
+      "name": "secret in a note is rejected before anything is found",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G3-STUCK",
+      "name": "tired offers Minimum week/Pause only (no new task)",
+      "pass": true,
+      "detail": "minimum_week,pause"
+    },
+    {
+      "id": "G3-STUCK",
+      "name": "choosing it switches mode and adds 0 tasks",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G3-STUCK",
+      "name": "plan screen shows Minimum week as active",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "TM-TST-047",
+      "name": "stuck flow: tired offers only lighter modes and adds 0 tasks (browser)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "R5-CARDS",
+      "name": "stuck page shows two paths, effort timing and where-time-goes cards",
+      "pass": true,
+      "detail": "two_paths,effort_timing,where_time_goes"
+    },
+    {
+      "id": "R5-CARDS",
+      "name": "reflection cards have no red error or alert element",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "R5-CHAIN",
+      "name": "journey log shows the what-I-learned card (empty hint or chain)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G3-TOPICS",
+      "name": "sidebar opens, topic page shows tips with a visual and an app link",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G3-REWARD",
+      "name": "finishing a task opens the picture and adds exactly one star",
+      "pass": true,
+      "detail": "0->1"
+    },
+    {
+      "id": "G2-PERSIST",
+      "name": "real entries survive reload via IndexedDB",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G2-PERSIST",
+      "name": "records are not duplicated in localStorage",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G2-INSTALL",
+      "name": "manifest has 192 and 512 PNG icons, standalone",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G1-OFFLINE",
+      "name": "app shell loads and works with network off",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "G1-OFFLINE",
+      "name": "status screen renders offline",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "SET-OFFLINE",
+      "name": "every Settings page opens offline with no horizontal scroll at 360 px",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "SET-200",
+      "name": "Settings home at 200% text: no sideways scroll, all five tabs on screen",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "SET-SEARCH",
+      "name": "search finds Theme offline",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "SET-QUICK-FOLD",
+      "name": "Settings Quick card fits above the tab bar at 360 px without scrolling (en)",
+      "pass": true,
+      "detail": "{\"top\":201,\"bottom\":558,\"nav\":683,\"scrolled\":0}"
+    },
+    {
+      "id": "SET-QUICK-FOLD",
+      "name": "Settings Quick card fits above the tab bar at 360 px without scrolling (bn)",
+      "pass": true,
+      "detail": "{\"top\":175,\"bottom\":533,\"nav\":683,\"scrolled\":0}"
+    },
+    {
+      "id": "SET-QUICK-FOLD",
+      "name": "Settings Quick card fits above the tab bar at 360 px without scrolling (mix)",
+      "pass": true,
+      "detail": "{\"top\":201,\"bottom\":558,\"nav\":683,\"scrolled\":0}"
+    },
+    {
+      "id": "UI-SPACING",
+      "name": "no two neighbouring buttons, rows or boxes touch on Today, Deen, Settings, Where we are, Hadith, Notes, Boards (en, bn, 100 % and 200 %)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "TEXTSIZE",
+      "name": "en: 125, 150 and 200% scale root, heading, text, buttons and tab bar",
+      "pass": true,
+      "detail": "{\"base\":{\"root\":16,\"h1\":28,\"p\":15,\"btn\":18,\"tab\":14,\"input\":17,\"scrollOk\":true,\"clipped\":0},\"s200\":{\"root\":32,\"h1\":56,\"p\":30,\"btn\":36,\"tab\":28,\"input\":34,\"scrollOk\":true,\"clipped\":0}}"
+    },
+    {
+      "id": "TEXTSIZE",
+      "name": "en: 200% has no sideways scroll and no clipped text at 360 px",
+      "pass": true,
+      "detail": "{\"root\":32,\"h1\":56,\"p\":30,\"btn\":36,\"tab\":28,\"input\":34,\"scrollOk\":true,\"clipped\":0}"
+    },
+    {
+      "id": "TEXTSIZE",
+      "name": "en: today at 200% fits",
+      "pass": true,
+      "detail": "{\"root\":32,\"h1\":56,\"p\":30,\"btn\":36,\"tab\":28,\"input\":null,\"scrollOk\":true,\"clipped\":0}"
+    },
+    {
+      "id": "TEXTSIZE",
+      "name": "en: journey at 200% fits",
+      "pass": true,
+      "detail": "{\"root\":32,\"h1\":56,\"p\":30,\"btn\":32,\"tab\":28,\"input\":null,\"scrollOk\":true,\"clipped\":0}"
+    },
+    {
+      "id": "TEXTSIZE",
+      "name": "en: deen at 200% fits",
+      "pass": true,
+      "detail": "{\"root\":32,\"h1\":56,\"p\":30,\"btn\":36,\"tab\":28,\"input\":null,\"scrollOk\":true,\"clipped\":0}"
+    },
+    {
+      "id": "TEXTSIZE",
+      "name": "en: settings/prayer at 200% fits",
+      "pass": true,
+      "detail": "{\"root\":32,\"h1\":56,\"p\":30,\"btn\":36,\"tab\":28,\"input\":34,\"scrollOk\":true,\"clipped\":0}"
+    },
+    {
+      "id": "TEXTSIZE",
+      "name": "en: diary/plan at 200% fits",
+      "pass": true,
+      "detail": "{\"root\":32,\"h1\":56,\"p\":30,\"btn\":36,\"tab\":28,\"input\":34,\"scrollOk\":true,\"clipped\":0}"
+    },
+    {
+      "id": "TEXTSIZE",
+      "name": "bn: 125, 150 and 200% scale root, heading, text, buttons and tab bar",
+      "pass": true,
+      "detail": "{\"base\":{\"root\":16,\"h1\":28,\"p\":15,\"btn\":18,\"tab\":14,\"input\":17,\"scrollOk\":true,\"clipped\":0},\"s200\":{\"root\":32,\"h1\":56,\"p\":30,\"btn\":36,\"tab\":28,\"input\":34,\"scrollOk\":true,\"clipped\":0}}"
+    },
+    {
+      "id": "TEXTSIZE",
+      "name": "bn: 200% has no sideways scroll and no clipped text at 360 px",
+      "pass": true,
+      "detail": "{\"root\":32,\"h1\":56,\"p\":30,\"btn\":36,\"tab\":28,\"input\":34,\"scrollOk\":true,\"clipped\":0}"
+    },
+    {
+      "id": "TEXTSIZE",
+      "name": "bn: today at 200% fits",
+      "pass": true,
+      "detail": "{\"root\":32,\"h1\":56,\"p\":30,\"btn\":36,\"tab\":28,\"input\":null,\"scrollOk\":true,\"clipped\":0}"
+    },
+    {
+      "id": "TEXTSIZE",
+      "name": "bn: journey at 200% fits",
+      "pass": true,
+      "detail": "{\"root\":32,\"h1\":56,\"p\":30,\"btn\":32,\"tab\":28,\"input\":null,\"scrollOk\":true,\"clipped\":0}"
+    },
+    {
+      "id": "TEXTSIZE",
+      "name": "bn: deen at 200% fits",
+      "pass": true,
+      "detail": "{\"root\":32,\"h1\":56,\"p\":30,\"btn\":36,\"tab\":28,\"input\":null,\"scrollOk\":true,\"clipped\":0}"
+    },
+    {
+      "id": "TEXTSIZE",
+      "name": "bn: settings/prayer at 200% fits",
+      "pass": true,
+      "detail": "{\"root\":32,\"h1\":56,\"p\":30,\"btn\":36,\"tab\":28,\"input\":34,\"scrollOk\":true,\"clipped\":0}"
+    },
+    {
+      "id": "TEXTSIZE",
+      "name": "bn: diary/plan at 200% fits",
+      "pass": true,
+      "detail": "{\"root\":32,\"h1\":56,\"p\":30,\"btn\":36,\"tab\":28,\"input\":34,\"scrollOk\":true,\"clipped\":0}"
+    },
+    {
+      "id": "TEXTSIZE",
+      "name": "the saved size is applied at start",
+      "pass": true,
+      "detail": "100%"
+    },
+    {
+      "id": "PRECACHE",
+      "name": "service worker saved all 62 files of the build (shell, fonts, content packs, page)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "PRECACHE",
+      "name": "only the current shell cache and the small runtime cache exist (old ones are deleted)",
+      "pass": true,
+      "detail": "tm-runtime-v1,tm-shell-bee56c398b23"
+    },
+    {
+      "id": "PRECACHE",
+      "name": "cold start offline opens the new screens",
+      "pass": true,
+      "detail": "{\"universe\":true,\"stage rules\":true,\"monthly review\":true,\"journey logo\":true,\"snapshots\":true,\"home cards\":true,\"goals\":true,\"lazy plan chunk (risks)\":true,\"KPI targets form\":true,\"reality-changed loop form\":true,\"North Star measures form\":true,\"team roles form\":true,\"goal tree form\":true,\"lazy connections chunk\":true,\"lazy legs chunk\":true,\"lazy decide chunk\":true,\"topic with content packs\":true}"
+    },
+    {
+      "id": "PRECACHE",
+      "name": "every saved file can be read with the network off",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "TM-TST-084",
+      "name": "headless Chromium with the network off: shell, status screen and cold-start screens open, every saved file readable (not a real-device run)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "UPDATE-INTERRUPTED",
+      "name": "503 on a required asset rejects the new worker and preserves the complete active shell",
+      "pass": true,
+      "detail": "{\"state\":\"redundant\",\"sameActive\":true,\"waiting\":false,\"oldFiles\":[\"/assets/connectionsUi-AgAFIjt7.js\",\"/assets/components-g5XLV962.js\",\"/\",\"/assets/fraunces-latin-400-normal-6IfK1voy.woff2\",\"/assets/decisionUi-kuaWmhDu.js\",\"/assets/dexie-BBjCWFpd.js\",\"/assets/fraunces-latin-600-normal-BFCDtZfi.woff2\",\"/assets/fraunces-latin-ext-600-normal-BtzmzP0X.woff2\",\"/assets/fraunces-latin-ext-400-normal-D8gbi3Gu.woff2\",\"/assets/fraunces-vietnamese-400-normal-CvGt0Ybw.woff2\",\"/assets/fraunces-vietnamese-600-normal-BjlAJixd.woff2\",\"/assets/hind-siliguri-bengali-400-normal-rHQ7AW0H.woff2\",\"/assets/halalUi-By4nl1TI.js\",\"/assets/hind-siliguri-bengali-500-normal-UuhTmLlo.woff2\",\"/assets/hind-siliguri-latin-400-normal-esES0U7a.woff2\",\"/assets/hind-siliguri-bengali-600-normal-DLZF4s8q.woff2\",\"/assets/hind-siliguri-latin-500-normal-S8HLIV69.woff2\",\"/assets/hind-siliguri-latin-600-normal-DHrLfb92.woff2\",\"/assets/hind-siliguri-latin-ext-400-normal-EIcpWxdl.woff2\",\"/assets/hind-siliguri-latin-ext-500-normal-BzNTYs89.woff2\",\"/assets/hind-siliguri-latin-ext-600-normal-BE5fbvrE.woff2\",\"/assets/hadithPack-DithIlcV.js\",\"/assets/index-DXWLpkSN.css\",\"/assets/i18n-Dmlh8ljt.js\",\"/assets/index-OB_1zD1F.js\",\"/assets/legsUi-QmRb_c5B.js\",\"/assets/library-BOzrJp_9.js\",\"/assets/noto-serif-bengali-bengali-500-normal-izpjMjkk.woff2\",\"/assets/noto-serif-bengali-latin-500-normal-ChHikhgt.woff2\",\"/assets/noto-serif-bengali-bengali-700-normal-D6heRmtL.woff2\",\"/assets/noto-serif-bengali-latin-700-normal-BH4cA-4o.woff2\",\"/assets/noto-serif-bengali-latin-ext-500-normal-uqHYh-WD.woff2\",\"/assets/noto-serif-bengali-latin-ext-700-normal-ktrNXsDH.woff2\",\"/assets/pack-002-C1ATZw8r.js\",\"/assets/pack-001-DUTOTIFf.js\",\"/assets/pack-003-DXXGS0EW.js\",\"/assets/pack-004-CADvCbl_.js\",\"/assets/pack-005-CAXnvOUz.js\",\"/assets/pack-006-DAAVgteg.js\",\"/assets/pack-007-CY0SJsIk.js\",\"/assets/pack-008-DxmvMQLr.js\",\"/assets/pack-009-BTKY__Lk.js\",\"/content/pack-001.json\",\"/assets/repo-KRWJRg7U.js\",\"/assets/planScreens-CSfInqWG.js\",\"/content/pack-002.json\",\"/content/pack-003.json\",\"/content/pack-004.json\",\"/content/pack-005.json\",\"/content/pack-006.json\",\"/content/pack-007.json\",\"/content/pack-008.json\",\"/icon-180.png\",\"/content/pack-009.json\",\"/icon-192.png\",\"/icon-512.png\",\"/icon-maskable-192.png\",\"/icon-maskable-512.png\",\"/icon-maskable.svg\",\"/icon.svg\",\"/manifest.webmanifest\",\"/index.html\"]}"
+    },
+    {
+      "id": "UPDATE-INTERRUPTED",
+      "name": "after the failed update a cold offline reload opens and every previous required file remains readable",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "UPDATE-RETRY",
+      "name": "retrying the same deployment waits for approval only after all required assets are cached",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "UPDATE-RETRY",
+      "name": "the successful retry activates, retires the old cache and reloads offline with the recovered asset",
+      "pass": true,
+      "detail": "{\"current\":true,\"oldRemoved\":true,\"probeReadable\":true}"
+    },
+    {
+      "id": "UPDATE-STAMP",
+      "name": "Settings > About shows version, build and date",
+      "pass": true,
+      "detail": "Version: 0.1.0-g1 · build 32bc54b · 5 Nov 2026"
+    },
+    {
+      "id": "UPDATE-BANNER",
+      "name": "a changed worker file waits and the calm banner appears (nothing reloads by itself)",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "id": "UPDATE-APPLY",
+      "name": "Update now reloads once, local data is still there",
+      "pass": true,
+      "detail": "{\"kept\":\"kept\",\"banner\":false}"
+    },
+    {
+      "id": "DESIGN-VER",
+      "name": "light-futuristic is the default; ink-paper applies and persists after reload; switching back works; dark follows the phone",
+      "pass": true,
+      "detail": "{\"d0\":{\"d\":\"light-futuristic\",\"v\":null,\"cardBlur\":\"blur(10px)\"},\"d1\":{\"d\":\"ink-paper\",\"v\":\"ink-paper\",\"checked\":true},\"d2\":{\"d\":\"light-futuristic\",\"primary\":\"#4B3FD8\"},\"dark\":\"#0B0E1F\",\"bgInk\":\"rgb(245, 241, 232)\"}"
+    },
+    {
+      "id": "DESIGN-VER",
+      "name": "old saved value classic migrates to ink-paper",
+      "pass": true,
+      "detail": "{\"d\":\"ink-paper\",\"v\":\"ink-paper\"}"
+    },
+    {
+      "id": "DESIGN-VER",
+      "name": "emerald-obsidian applies",
+      "pass": true,
+      "detail": "emerald-obsidian"
+    },
+    {
+      "id": "DESIGN-VER",
+      "name": "broadsheet applies",
+      "pass": true,
+      "detail": "broadsheet"
+    },
+    {
+      "id": "PDF-PRINT",
+      "name": "Save as PDF opens the print window; the paper layout hides tabs and buttons",
+      "pass": true,
+      "detail": "printed=1 hidden=true"
+    },
+    {
+      "id": "SEC-CSP",
+      "name": "page policy (CSP meta) blocks nothing the app needs: 0 violations in the whole run",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "id": "G1-NONET",
+      "name": "0 third-party/external requests during all of the above",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "id": "MODE-REAL",
+      "name": "start for real needs the tick, then real mode with consent and no demo banner",
+      "pass": true,
+      "detail": ""
+    }
+  ]
+}

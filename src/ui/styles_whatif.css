@@ -1,0 +1,49 @@
+/* Live Calculator / What-if (LIVECALC-01). Colours come only from the shared tokens, so light, dark and every look follow. 44px targets. */
+.top .right{flex-wrap:wrap;justify-content:flex-end}
+.wi-btn{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;padding:0;margin:0;border:var(--ctl-bw,1.5px) solid var(--rule);border-radius:12px;background:var(--card);color:var(--primary);cursor:pointer}
+.wi-btn:focus-visible,.wi-step:focus-visible,.wi-chip:focus-visible{outline:var(--focus);outline-offset:2px}
+.wi-panel{display:block}
+.wi-set{margin:12px 0;padding:12px;border:1px solid var(--rule);border-radius:12px;min-width:0}
+.wi-set legend{padding:0 6px;font-weight:600}
+.wi-row{margin:0 0 16px;min-width:0}
+.wi-row label{display:block;margin:0 0 6px;overflow-wrap:anywhere}
+.wi-ctl{display:flex;gap:8px;align-items:center}
+.wi-ctl input[type=text]{flex:1 1 auto;min-width:0;min-height:44px;box-sizing:border-box;text-align:center;font-size:1.125rem}
+.wi-step{flex:0 0 auto;min-width:44px;min-height:44px;margin:0;padding:0 12px;font-size:1.25rem;line-height:1}
+.wi-row input[type=range]{display:block;width:100%;min-height:44px;margin:8px 0 0;box-sizing:border-box;accent-color:var(--primary)}
+.wi-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.wi-chip{min-height:44px;min-width:44px;margin:0;padding:0 12px}
+.wi-choice{border:0;padding:0;margin:0 0 16px}
+.wi-radios{display:flex;gap:12px;flex-wrap:wrap}
+.wi-radio{display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 12px;border:1px solid var(--rule);border-radius:12px;margin:0}
+.wi-find{margin:8px 0 12px}
+.wi-find select,.wi-sheet select{width:100%;min-height:44px;box-sizing:border-box}
+.wi-cmp{margin:8px 0}
+.wi-results{margin:8px 0}
+.wi-out{margin:0 0 12px;padding:12px;border:1px solid var(--rule);border-radius:12px;background:var(--tint-primary,var(--card))}
+.wi-out-h{margin:0 0 6px;font-size:1rem}
+.wi-value{margin:0;font-size:1.5rem;overflow-wrap:anywhere}
+.wi-line{margin:2px 0;overflow-wrap:anywhere}
+.wi-bars-box{margin:0 0 12px}
+.wi-bars{display:block;width:100%;height:auto;max-height:64px}
+.wi-bar-now{fill:var(--calm)}
+.wi-bar-what{fill:var(--primary)}
+.wi-note{margin:6px 0;line-height:1.5}
+.wi-flag,.wi-invalid{margin:6px 0;line-height:1.5}
+.wi-actions{display:flex;flex-wrap:wrap;gap:12px;margin:12px 0}
+.wi-use{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.wi-use p{flex:1 1 100%;margin:0}
+.wi-list{list-style:none;padding:0;margin:0}
+.wi-list li{margin:0 0 8px}
+.wi-list a{display:block;min-height:44px;box-sizing:border-box;padding:10px 12px}
+.wi-sheet-wrap{position:fixed;inset:0;z-index:60;display:flex;align-items:flex-end;justify-content:center;background:rgba(20,20,30,.45)}
+.wi-sheet{width:100%;max-width:560px;max-height:92vh;overflow:auto;box-sizing:border-box;padding:16px;background:var(--paper);color:var(--ink);border-radius:16px 16px 0 0;border:1px solid var(--rule)}
+.wi-sheet-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.wi-sheet h2{margin:0 0 8px}
+.wi-sheet .wi-panel{margin-top:12px}
+@media (prefers-reduced-motion:no-preference){.wi-bars rect{transition:width .3s ease}}
+/* the shared .btn is full width on phones; these small controls keep their own size */
+.wi-panel .wi-step{width:44px;flex:0 0 44px;display:inline-flex;align-items:center;justify-content:center}
+.wi-panel .wi-chip,.wi-sheet .wi-chip{width:auto;display:inline-flex;align-items:center;justify-content:center}
+.wi-actions .btn{width:auto;flex:1 1 auto}
+.wi-sheet-head .btn{width:auto;flex:0 0 auto}

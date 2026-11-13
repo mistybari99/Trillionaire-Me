@@ -1,0 +1,99 @@
+// Home cards: money summary (net worth, income, expenses) from the user's own Money entries, and a rule-based "Next best action".
+// Unknown when nothing is entered; the DEMO tag shows in demo mode; BDT only; no invented figure, no percent in the action card.
+import { h } from "./dom";
+import { t, fmtNumber } from "../i18n/t";
+import type { Key } from "../i18n/packs";
+import type { Locale } from "../i18n/registry";
+import { activeNs, allRecs, nsTag } from "./entry";
+import { valueEl } from "./components";
+import { financeFrom } from "../core/financeInputs";
+import { moneySummary, type Metric, type ScopeSummary } from "../core/homeSummary";
+import { goalStepCount, taskCount, type Count } from "../core/homeCounts";
+import { nextBestAction, type NextAction } from "../core/nextAction";
+import { isOpenTask } from "../core/planInputs";
+import { adviceCards } from "../core/advice";
+import { TOPICS } from "../library/topics";
+
+const METRICS = [["networth", "netWorth", "home.sum.networth"], ["income", "income", "home.sum.income"], ["expenses", "expenses", "home.sum.expenses"]] as const;
+
+function metricText(m: Metric, lang: Locale): HTMLElement {
+  if (m.state === "value") return valueEl(t("money.bdt", lang, { v: fmtNumber(m.value, lang) }), m.label, lang);
+  return h("span", { class: "muted", "data-unknown": "1" }, m.state === "unknown" ? t("home.sum.missing", lang, { n: fmtNumber(m.missing, lang) }) : t("home.sum.unknown", lang));
+}
+
+function metricCard(id: string, key: Key, pick: "netWorth" | "income" | "expenses", scopes: ScopeSummary[], lang: Locale): HTMLElement {
+  const multi = scopes.length > 1;
+  return h("article", { class: "card home-card", "data-home-card": id },
+    h("h3", { class: "card-h" }, t(key, lang)),
+    ...scopes.map((sc) => { const m = sc[pick]; return h("p", { class: "home-val", "data-scope": sc.scope, "data-state": m.state },
+      multi ? h("small", {}, `${t(`money.${sc.scope}` as Key, lang)}: `) : null, metricText(m, lang)); }));
+}
+
+function countCard(id: string, key: Key, c: Count, href: string, lang: Locale): HTMLElement {
+  const known = c.state === "value";
+  return h("article", { class: "card home-card", "data-home-card": id },
+    h("h3", { class: "card-h" }, t(key, lang)),
+    h("p", { class: "home-val", "data-state": known ? "value" : "unknown" },
+      known ? t("home.cnt.of", lang, { d: fmtNumber(c.done, lang), n: fmtNumber(c.total, lang) }) : h("span", { class: "muted", "data-unknown": "1" }, t("home.cnt.unknown", lang))),
+    h("a", { href, class: "crumb" }, t(known ? "home.cnt.open" : "home.cnt.add", lang)));
+}
+
+/** Two count cards from the user's own entries: Tasks (done of total) and Goal steps (tasks linked to a goal). Unknown when none. */
+export function homeCountCards(lang: Locale): HTMLElement {
+  const recs = allRecs();
+  return h("section", { class: "home-sum", "data-home-counts": activeNs(), "aria-label": t("home.cnt.title", lang) },
+    h("div", { class: "row" }, h("h2", {}, t("home.cnt.title", lang)), nsTag(activeNs(), lang)),
+    h("div", { class: "home-grid" }, countCard("tasks", "home.cnt.tasks", taskCount(recs), "#/diary/plan", lang), countCard("steps", "home.cnt.steps", goalStepCount(recs), "#/journey/goals", lang)),
+    h("p", { class: "muted" }, t("home.cnt.note", lang)));
+}
+
+/** Three summary cards. Personal and business are never added together; business shows only when the user entered business items. */
+export function homeSummaryCards(lang: Locale): HTMLElement {
+  const fv = financeFrom(allRecs()); const scopes = moneySummary(fv.items).scopes;
+  return h("section", { class: "home-sum", "data-home-summary": activeNs(), "aria-label": t("home.sum.title", lang) },
+    h("div", { class: "row" }, h("h2", {}, t("home.sum.title", lang)), nsTag(activeNs(), lang)),
+    h("div", { class: "home-grid" }, ...METRICS.map(([id, pick, key]) => metricCard(id, key, pick, scopes, lang))),
+    h("p", { class: "muted" }, t("home.sum.note", lang), " ", t("home.saved", lang)),
+    h("a", { href: "#/diary/money", class: "btn ghost btn-sm" }, t("home.sum.open", lang)));
+}
+
+const BTN: Record<NextAction["id"], Key> = { add_goal: "next.btn.diary", link_task: "next.btn.plan", add_task: "next.btn.plan", do_task: "next.btn.plan", add_money: "next.btn.money", rate_life: "next.btn.wheel", review_plan: "next.btn.plan" };
+
+/** One rule-based suggestion. The reason is always shown. Only the user's own words are used in the text. */
+export function nextActionCard(lang: Locale, a = nextBestAction(allRecs()), compact = false): HTMLElement {
+  const args = { ...a.args }; if (a.id === "do_task" && !args.task) args.task = t("next.task.untitled", lang);
+  return h("aside", { class: `card next-action${compact ? " action-desk-reason" : ""}`, "data-next-action": a.id, "aria-label": t("next.title", lang) },
+    h("h2", { class: "card-h" }, t("next.title", lang)),
+    h("p", { class: "next-title", "data-next-title": "1" }, t(`next.${a.id}.title` as Key, lang, args)),
+    h("p", { class: "next-why", "data-next-reason": "1" }, h("strong", {}, `${t("next.why", lang)} `), t(`next.${a.id}.reason` as Key, lang)),
+    h("a", { href: a.href, class: "btn btn-sm", "data-act": "next-go" }, t(BTN[a.id], lang)),
+    h("p", { class: "muted" }, t("next.note", lang)));
+}
+
+/** Use the existing rule's ID ordering for identification only; never reorder the daily plan. */
+export function homeNextAction(): { action: NextAction; taskId: string | null } {
+  const recs = allRecs(); const action = nextBestAction(recs);
+  const task = action.id === "do_task" ? recs.filter((r) => r.entity === "task" && isOpenTask(r)).sort((a, b) => a.id.localeCompare(b.id))[0] : undefined;
+  return { action, taskId: task?.id ?? null };
+}
+
+/** Attach the explanation to the selected task's single existing row. */
+export function nextTaskReason(lang: Locale): HTMLElement {
+  return h("p", { class: "next-why", "data-next-reason": "1" },
+    h("strong", {}, `${t("next.why", lang)} `), t("next.do_task.reason", lang));
+}
+
+/** Up to three rule-based suggestion cards. Each shows the rule that chose it. Nothing is shown when no rule applies. */
+export function adviceCardsView(lang: Locale): HTMLElement | null {
+  const cards = adviceCards(allRecs());
+  if (!cards.length) return null;
+  return h("section", { class: "card advice", "data-advice": String(cards.length), "aria-label": t("advice.title", lang) },
+    h("h2", { class: "card-h" }, t("advice.title", lang)),
+    ...cards.map((c) => h("article", { class: "advice-item", "data-advice-rule": c.rule },
+      h("p", { class: "next-title" }, t(`advice.${c.rule}.title` as Key, lang, c.args)),
+      h("p", { class: "next-why", "data-advice-reason": "1" }, h("strong", {}, `${t("advice.why", lang)} `), t(`advice.${c.rule}.reason` as Key, lang, c.args)),
+      h("p", { class: "muted", "data-advice-prov": `${c.provenance.kind}/${c.provenance.source}/${c.provenance.reviewer}` }, t("advice.draft", lang)),
+      h("a", { href: `#/topic/${TOPICS.some((x) => x.id === c.topic) ? c.topic : "goal-strategy"}`, class: "btn ghost btn-sm", "data-act": "advice-open" }, t("advice.open", lang)),
+      h("a", { href: c.href, class: "btn ghost btn-sm" }, t("next.btn.plan", lang)))),
+    h("p", { class: "muted" }, t("advice.note", lang)));
+}
