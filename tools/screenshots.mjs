@@ -53,6 +53,7 @@ if (process.env.TM_SHOT_MATRIX === "1") {
   // TM_SHOT_AI=1 (W1): the AI card is approved and on, a demo-shaped key (not a real key), host, model and a request limit are saved, so every part of the Connect AI screen shows.
   // TM_SHOT_SECTOR=1 (BUILD-02): a DEMO venture with a business type (retail) and two answers, a monthly income line and a "now" measure are seeded; every business type panel is opened before measuring.
   const SECTOR = process.env.TM_SHOT_SECTOR === "1";
+  const WHATIF = process.env.TM_SHOT_WHATIF === "1";
   const SEC_SEED = SECTOR ? [
     { id: "shot-v1", entity: "venture", ns: "demo", ownerId: "demo-user", schemaVersion: 5, createdAt: new Date().toISOString(), values: { "venture.name": dvw("Test fixture venture, not data"), "venture.sector_id": dvw("retail"), "venture.sector_inputs": dvw(JSON.stringify({ price: 50, varCost: 30, fixed: 4000 })), "venture.sector_checks": dvw(JSON.stringify({ q: [0], r: [] })) } },
     { id: "shot-fin1", entity: "finance_item", ns: "demo", ownerId: "demo-user", schemaVersion: 5, createdAt: new Date().toISOString(), links: { venture: "shot-v1" }, values: { "finance.kind": dvw("income"), "finance.scope": dvw("business"), "finance.label": dvw("Test fixture income"), "finance.amount": dvw(12000), "finance.period": dvw("monthly") } },
@@ -66,12 +67,20 @@ if (process.env.TM_SHOT_MATRIX === "1") {
     const page = await ctx.newPage();
     for (const r of routes) {
       await page.goto("about:blank"); await page.goto(`http://localhost:${PORT}/#/${r}`);
-      await page.waitForSelector("main"); if (SECTOR) await page.evaluate(() => document.querySelectorAll("details[data-sector-block]").forEach((d) => { d.open = true; })); if (big) await page.evaluate((b) => { document.documentElement.style.fontSize = b === true ? "200%" : `${b}%`; }, big); await page.waitForTimeout(500);
+      await page.waitForSelector("main"); if (WHATIF) await page.evaluate(() => {
+        // TM_SHOT_WHATIF=1 (LIVECALC-01): calculators are shown with typed fixture numbers, compare mode on and the 10% tax chosen, so cards, bars and notes are all measured.
+        const fire = (e, n) => e.dispatchEvent(new Event(n, { bubbles: true }));
+        if (location.hash === "#/diary/money" && !document.querySelector("[data-wi-sheet]")) { const b = document.querySelector('[data-act="whatif-open"]'); if (b) b.click(); }
+        const cmp = document.getElementById("wi-compare"); if (cmp) { cmp.checked = true; fire(cmp, "change"); }
+        document.querySelectorAll('[data-wi-set="now"] input[type=text]').forEach((e, i) => { e.value = String((i + 2) * 3); fire(e, "input"); });
+        document.querySelectorAll('[data-wi-set="what"] input[type=text]').forEach((e, i) => { e.value = String((i + 2) * 2); fire(e, "input"); });
+        const tax = document.getElementById("wi-what-tax-r-10"); if (tax) { tax.checked = true; fire(tax, "change"); }
+      }); if (SECTOR) await page.evaluate(() => document.querySelectorAll("details[data-sector-block]").forEach((d) => { d.open = true; })); if (big) await page.evaluate((b) => { document.documentElement.style.fontSize = b === true ? "200%" : `${b}%`; }, big); await page.waitForTimeout(500);
       const touching = [...(await page.evaluate(TOUCHING_FN)), ...(await page.evaluate(ADJACENT_FN))];
       const m = await page.evaluate(() => {
         const vw = window.innerWidth; const vis = (e) => { const b = e.getBoundingClientRect(); return b.width > 0 && b.height > 0; };
-        const wide = [...document.querySelectorAll("main *")].filter((e) => vis(e) && e.getBoundingClientRect().right > vw + 1 && !e.closest("svg, .sr-only, [aria-hidden=true], pre, table")).length;
-        const small = [...document.querySelectorAll("main button, main a.btn, main select, main input:not([type=checkbox]):not([type=radio]):not([type=hidden])")].filter((e) => vis(e) && e.getBoundingClientRect().height < 43).length;
+        const wide = [...document.querySelectorAll("main *, .wi-sheet *")].filter((e) => vis(e) && e.getBoundingClientRect().right > vw + 1 && !e.closest("svg, .sr-only, [aria-hidden=true], pre, table")).length;
+        const small = [...document.querySelectorAll("main button, main a.btn, main select, main input:not([type=checkbox]):not([type=radio]):not([type=hidden]), .wi-sheet button, .wi-sheet select, .wi-sheet input:not([type=checkbox]):not([type=radio]):not([type=hidden])")].filter((e) => vis(e) && e.getBoundingClientRect().height < 43).length;
         return { overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth, wide, small, tabsInView: [...document.querySelectorAll("nav a.tab")].every((a) => a.getBoundingClientRect().right <= vw + 1) && [...document.querySelectorAll("nav a.tab")].every((a) => { const r = document.createRange(); r.selectNodeContents(a); return r.getClientRects().length <= 1; }) };
       });
       if (HEAD) {

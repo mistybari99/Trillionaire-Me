@@ -1,0 +1,17 @@
+{
+  "viewport": "360x740",
+  "generated": "2026-11-13T10:48:55.014Z",
+  "combos": 12,
+  "screens": 72,
+  "problems": 0,
+  "bad": [],
+  "routes": [
+    "whatif",
+    "whatif/r-pages",
+    "whatif/m-fdr",
+    "whatif/h-gap",
+    "whatif/d-zakat",
+    "diary/money"
+  ],
+  "matrix": "4 looks x en/bn x light/dark x 100%/200% text"
+}

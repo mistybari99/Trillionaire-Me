@@ -19,6 +19,7 @@ export const TS_FILES = [
   "src/i18n/q_brand.ts",
   "src/i18n/q_head.ts",
   "src/i18n/q_ai.ts",
+  "src/i18n/q_whatif.ts",
 ];
 export const JSON_FILES = [
   ...Array.from({ length: 9 }, (_, i) => `public/content/pack-00${i + 1}.json`),

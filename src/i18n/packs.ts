@@ -9,6 +9,7 @@ import { QSECTOR_BN, QSECTOR_EN } from "./q_sector.ts";
 import { QBRAND_BN, QBRAND_EN } from "./q_brand.ts";
 import { QHEAD_BN, QHEAD_EN } from "./q_head.ts";
 import { QAI_BN, QAI_EN } from "./q_ai.ts";
+import { QWI_BN, QWI_EN } from "./q_whatif.ts";
 import { QIDEAS_BN, QIDEAS_EN } from "./q_ideas.ts";
 const en = {
   ...QIDEAS_EN,
@@ -1939,6 +1940,7 @@ const en = {
   ...QBRAND_EN, // brand line and tagline live in q_brand.ts
   ...QHEAD_EN, // floating quick-action head lives in q_head.ts
   ...QAI_EN, // Connect AI, preview sheet and Google cards (W1) live in q_ai.ts
+  ...QWI_EN, // Live Calculator / What-if (LIVECALC-01) keys live in q_whatif.ts
 } as const;
 
 export type Key = keyof typeof en;
@@ -1953,6 +1955,7 @@ const bn: Record<Key, string> = {
   ...QBRAND_BN,
   ...QHEAD_BN,
   ...QAI_BN,
+  ...QWI_BN,
   "set.row.helpplacement": "হেল্প কোথায় দেখাবে",
   "set.row.helpvisuals": "হেল্পের ভিজুয়াল",
   "set.row.helpcontent": "গাইড ও নিজের ম্যাপ",

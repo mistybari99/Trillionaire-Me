@@ -41,6 +41,8 @@ import { enhanceScreenHelp } from "./ui/screenHelp";
 import { ROUTES_QB1, viewed } from "./ui/routes_qb1";
 import { ROUTES_QB2 } from "./ui/routes_qb2";
 import { ROUTES_AI } from "./ui/routes_ai";
+import { ROUTES_WHATIF } from "./ui/routes_whatif";
+import { whatifButton } from "./ui/whatifUi";
 
 let stopNavLayout: (() => void) | undefined;
 
@@ -48,6 +50,7 @@ export const ROUTES: Array<[RegExp, (m: RegExpMatchArray) => HTMLElement, string
   ...ROUTES_QB1, // batch 1: /diary/inspiration
   ...ROUTES_QB2, // batch 2: /journey/goal/<id>/table
   ...ROUTES_AI, // W1: /settings/connections/ai
+  ...ROUTES_WHATIF, // LIVECALC-01: /whatif and /whatif/<calculator>
   [/^\/profile$/, () => ownerProfileScreen(), "settings"],
   [/^\/start$/, () => onboardScreen(), "today"],
   [/^\/today$/, () => S.today(), "today"],
@@ -154,7 +157,7 @@ export function render() {
       ...(Object.keys(LAYERS) as (keyof typeof LAYERS)[]).flatMap((ly) => [h("h2", {}, tb(LAYERS[ly], lang)), ...TOPICS.filter((x) => x.layer === ly).map((x) => h("a", { class: "item", href: `#/topic/${x.id}`, "data-topic": x.id, onclick: () => toggleDrawer(false) }, tb(x.name, lang)))])));
   const menuBtn = h("button", { class: "menu-btn", type: "button", "data-act": "drawer-open", "aria-label": t("topics.open", lang), "aria-controls": "drawer", onclick: () => toggleDrawer(true) }, "☰");
   const top = h("div", { class: "top" }, h("span", {}, menuBtn, " ", t("app.title", lang)),
-    h("span", { class: "right" }, h("span", { class: "net", "data-net": online ? "online" : "offline" }, t(online ? "status.online" : "status.offline", lang)), prefs.dataMode === "demo" ? demoBadge(lang) : h("span", { class: "tag", "data-mode": "real" }, t("mode.switch.real", lang)), langMenu(lang), ownerProfileLink(lang)));
+    h("span", { class: "right" }, h("span", { class: "net", "data-net": online ? "online" : "offline" }, t(online ? "status.online" : "status.offline", lang)), prefs.dataMode === "demo" ? demoBadge(lang) : h("span", { class: "tag", "data-mode": "real" }, t("mode.switch.real", lang)), whatifButton(lang), langMenu(lang), ownerProfileLink(lang)));
   const nav = createBottomNavigation(isTabId(tab) ? tab : "today", lang);
   const app = document.getElementById("app")!;
   // Skip link (first Tab stop) jumps past the top bar to the screen content.

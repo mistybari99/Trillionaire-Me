@@ -18,7 +18,7 @@ describe("language icon menu", () => {
   it("exists on every route in ROUTES", () => {
     localStorage.setItem("tm:ui:dataModeChoice", "demo");
     for (const [re] of ROUTES) {
-      const p = [...SAMPLE, "/profile", "/deen/prayers", "/deen/fasting", "/diary/inspiration", "/journey/goal/g1/table", "/settings/connections/ai"].find((x) => re.test(x));
+      const p = [...SAMPLE, "/profile", "/deen/prayers", "/deen/fasting", "/diary/inspiration", "/journey/goal/g1/table", "/settings/connections/ai", "/whatif", "/whatif/r-pages"].find((x) => re.test(x));
       expect(p, String(re)).toBeDefined();
       boot(p!); expect(open(), p).not.toBeNull();
     }
@@ -43,7 +43,7 @@ describe("language icon menu", () => {
   it("sits in the top bar after the online badge and demo badge, icon only", () => {
     localStorage.setItem("tm:ui:dataModeChoice", "demo"); boot("/today");
     const kids = [...q(".top .right").children];
-    expect(kids.map((k) => k.className.split(" ")[0])).toEqual(["net", "badge", "lang-wrap", "owner-profile-link"]);
+    expect(kids.map((k) => k.className.split(" ")[0])).toEqual(["net", "badge", "wi-btn", "lang-wrap", "owner-profile-link"]);
     expect(open().textContent).toBe(""); expect(open().querySelector("svg")).not.toBeNull();
     const owner = q<HTMLAnchorElement>(".top .right [data-owner-profile]");
     expect(owner.getAttribute("href")).toBe("#/profile"); expect(owner.getAttribute("aria-label")).toBeTruthy();

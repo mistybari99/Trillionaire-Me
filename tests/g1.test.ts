@@ -219,11 +219,11 @@ describe("i18n parity (completeness gate)", () => {
 
 describe("TM-TST-006 every rendered value is labelled (all routes, both languages)", () => {
   const paths = ["/start", "/settings", "/settings/look", "/settings/about", "/settings/connections", "/settings/connections/ai", "/more/library", "/more/where", "/journey/backward", "/journey/boards", "/settings/connections", "/settings/plan/automation", "/today", "/journey", "/journey/risks", "/journey/week", "/journey/legs", "/journey/leak", "/journey/decide", "/journey/mine", "/journey/history", "/journey/northstar", "/diary/ventures", "/diary/team", "/diary", "/diary/intake/1", "/diary/intake/2", "/diary/intake/3", "/diary/intake/4", "/diary/intake/5", "/diary/intake/6", "/diary/intake/7", "/diary/plan", "/diary/money", "/journey/log", "/journey/report", "/journey/wheel", "/journey/universe", "/journey/goals", "/journey/goal/g1", "/journey/review", "/capture", "/recall", "/recall/missing", "/stuck", "/topics", "/topic/procrastination", "/reward", "/journey/art", "/habits", "/cards", "/focus/none", "/deen", "/deen/plans", "/settings", "/more/status", "/more/fields", "/more/glossary", "/more/safety", "/settings/data", "/more/dictionary", "/more/halal-flags"];
-  paths.push("/journey/goal/g1/table", "/profile", "/deen/prayers", "/deen/fasting", "/journey/backward/g1", "/journey/horizon", "/journey/kpi", "/journey/month", "/journey/reality", "/journey/gates", "/journey/print/plan", "/diary/health", "/hadith", "/notes", "/diary/inspiration");
+  paths.push("/whatif", "/whatif/r-pages", "/journey/goal/g1/table", "/profile", "/deen/prayers", "/deen/fasting", "/journey/backward/g1", "/journey/horizon", "/journey/kpi", "/journey/month", "/journey/reality", "/journey/gates", "/journey/print/plan", "/diary/health", "/hadith", "/notes", "/diary/inspiration");
   it("route table is fully covered", () => {
     for (const p of paths) expect(ROUTES.some(([re]) => re.test(p)), p).toBe(true);
     expect(ROUTES.filter(([route]) => !paths.some((p) => route.test(p))).map(([route]) => String(route))).toEqual([]);
-    expect(ROUTES.length).toBe(64);
+    expect(ROUTES.length).toBe(66);
   });
   for (const lang of ["bn", "en", "mix"] as const) it(`0 unlabelled values in ${lang}`, () => {
     let seen = 0;
